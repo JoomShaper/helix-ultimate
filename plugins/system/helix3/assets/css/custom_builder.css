@@ -1,0 +1,251 @@
+/**
+* @package Helix3 Framework
+* @author JoomShaper http://www.joomshaper.com
+* @copyright Copyright (c) 2010 - 2015 JoomShaper
+* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
+
+.builder-section{
+	background: #ffffff;
+	border: 1px solid #e8ecf2;
+	color: #494949;
+	min-height: 50px;
+	margin: 35px 0;
+	border-radius: 4px;
+	padding: 20px;
+	position: relative;
+	-webkit-box-shadow: 2px 2px 2px 2px #f3f5f7;
+	box-shadow: 2px 2px 2px 2px #f3f5f7;
+}
+.builder-section a{
+	color: #494949;
+}
+
+.builder-section-header{
+	border-bottom: 1px solid #eeeeee;
+	padding-bottom: 20px;
+	/*padding: 20px;*/
+}
+.builder-section-row{
+	margin-top: 10px;
+	/*padding: 20px;*/
+}
+.builder-col{
+	padding: 10px;
+	border: 1px solid #e8ecf2;
+	color: #494949;
+	margin: 10px 0;
+	border-radius: 4px;
+}
+.builder-col-component{
+	background: #eaf2fc;
+	border: 1px solid #b8d3f3;
+	color: #4a90e2;
+}
+.builder-col-component a{
+	color: #4a90e2;
+}
+.builder-col .helix4-col-title{
+	margin: 0;
+}
+.builder-col .pull-right{
+	display: inline-block;
+	padding: 0 3px;
+}
+.helix4-row-placeholder{
+	background: #F9F9F9;
+	border: 3px dashed #eeeeee;
+	min-height: 50px;
+	padding: 20px;
+	margin: 10px 0;
+}
+
+.placeholder{
+	border: 3px dashed #eeeeee;
+}
+.layout-add-row {
+	background: #4a90e2;
+	color: #ffffff !important;
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	width: 40px;
+	text-align: center;
+	border-radius: 50%;
+	left: 50%;
+	margin-left: -20px;
+	position: absolute;
+	bottom: -20px;
+}
+.ui-sortable-placeholder{
+	background: #f4f4f4;
+	border: 1px dashed #dddddd;
+	padding: 10px;
+	visibility: visible !important;
+}
+/**
+Helix4 column settings group button
+ */
+
+
+.helix4-col-settings-group {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.helix4-col-settings-group > li {
+	display: inline-block;
+	position: relative;
+	float: left;
+}
+.helix4-col-settings-group li a {
+	padding: 0 5px;
+}
+.helix4-col-settings-group > li > ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	top: -5px;
+	right: 100%;
+	width: 505px;
+	padding: 10px 5px;
+	background: #b3b3b3;
+	border-radius: 3px;
+	z-index: 999;
+	text-align: center;
+	display: none;
+}
+.helix4-col-settings-group > li:hover > ul {
+	display: block;
+}
+.arrange-column:hover .add-column {
+	background: #36c77b;
+	color: #fff;
+}
+.helix4-col-settings-group > li > ul li{
+	display: block;
+	float: left;
+}
+.helix4-col-settings-group > li > ul li a{
+	text-align: left;
+	display: block;
+	padding: 0;
+	margin: 0 2px;
+	color: #fff;
+	background-color: transparent;
+	width: 29px;
+	height: 17px;
+	border: 0;
+	border-radius: 0;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	-webkit-transition: background-color 400ms;
+	transition: background-color 400ms;
+}
+.helix4-col-settings-group > li > ul li a.column-layout-12 {
+	background-image: url(../images/layout/12.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-3333 {
+	background-image: url(../images/layout/3333.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-444 {
+	background-image: url(../images/layout/444.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-66 {
+	background-image: url(../images/layout/66.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-48 {
+	background-image: url(../images/layout/48.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-39 {
+	background-image: url(../images/layout/39.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-57 {
+	background-image: url(../images/layout/57.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-363 {
+	background-image: url(../images/layout/363.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-264 {
+	background-image: url(../images/layout/264.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-210 {
+	background-image: url(../images/layout/210.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-237{
+	background-image: url(../images/layout/237.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-282{
+	background-image: url(../images/layout/282.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-222222{
+	background-image: url(../images/layout/222222.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-255{
+	background-image: url(../images/layout/255.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-2442{
+	background-image: url(../images/layout/2442.png);
+}
+.helix4-col-settings-group > li > ul li a.column-layout-custom{
+	background-image: url(../images/layout/custom.png);
+}
+.helix4-col-settings-group > li ul li a:hover,
+.helix4-col-settings-group > li ul li a.active{
+	background-color: rgba(0,0,0,.2);
+}
+
+.helixfw-header-block{
+	border: 1px solid #dddddd;
+	padding: 10px;
+}
+.helixfw-block{
+	border: 3px dotted #eeeeee;
+}
+
+.helixfwHeaderMenu ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.helixfwHeaderMenu ul li{
+	display: inline-block;
+}
+.helixfwHeaderMenu ul li a{
+	display: block;
+	padding: 10px;
+}
+
+.helixfw-footer-block{
+	background: #4a4a4a;
+	padding: 10px;
+	color: #ffffff;
+}
+
+.footerSocialIconWrap ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.footerSocialIconWrap ul li{
+	display: inline-block;
+}
+
+.footerSocialIconWrap ul li a {
+	color: #fff;
+	padding: 5px;
+}
+
+ul.footer_social_ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+ul.footer_social_ul li{
+	display: inline-block;
+}
+ul.footer_social_ul li a{
+	color: #fff;
+	padding: 5px;
+}

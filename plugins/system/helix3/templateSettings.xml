@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helix3/fields">
+
+        <field type="asset" />
+        <field
+            type="group"
+            name="global"
+            title="HELIX_GLOBAL"
+        />
+        
+        <field
+            name="preloader"
+            class="parent preloader"
+            group="global"
+            type="radio"
+            default="0"
+            label="HELIX_PRELOADER"
+            description="HELIX_PRELOADER_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+
+        <field
+            name="preloader_animation"
+            class="child preloader preloader_1"
+            group="global"
+            type="list"
+            default="circle"
+            label="HELIX_PRELOADER_ANIMATION" 
+            description="HELIX_PRELOADER_ANIMATION_DESC"
+        >
+            <option value="circle">HELIX_PRELOADER_ANIMATION_CIRCLE</option>
+            <option value="double-loop">HELIX_PRELOADER_ANIMATION_DOUBLE_LOOP</option>
+            <option value="wave-two">HELIX_PRELOADER_ANIMATION_WAVE_TWO</option>
+            <option value="audio-wave">HELIX_PRELOADER_ANIMATION_AUDIO_WAVE</option>
+            <option value="circle-two">HELIX_PRELOADER_ANIMATION_CIRCLE_TWO</option>
+            <option value="clock">HELIX_PRELOADER_ANIMATION_CLOCK</option>
+            <option value="logo">HELIX_PRELOADER_ANIMATION_LOGO</option>
+        </field>
+
+        <field
+            name="preloader_bg"
+            class="child preloader preloader_1"
+            group="global"
+            type="color"
+            default="#f5f5f5"
+            label="HELIX_PRELOADER_BG_COLOR"
+            description="HELIX_PRELOADER_BG_COLOR_DESC"
+        />
+
+        <field
+            name="preloader_tx"
+            class="child preloader preloader_1"
+            group="global"
+            type="color"
+            default="#333333"
+            label="HELIX_PRELOADER_TX_COLOR"
+            description="HELIX_PRELOADER_TX_COLOR_DESC"
+        />
+
+        <field
+            name="goto_top"
+            class="goto-top"
+            group="global"
+            type="radio"
+            default="0"
+            label="HELIX_GOTO_TOP"
+            description="HELIX_GO_TOP_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+
+        <field
+            type="group"
+            name="header"
+            title="HELIX_HEADER"
+        />
+
+        <field
+            name="sticky_header"
+            class="parent mb_logo"
+            group="header"
+            type="radio"
+            default="1"
+            label="HELIX_STICKY_HEADER"
+            description="HELIX_STICKY_HEADER_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+
+        <field
+            name="favicon"
+            type="media"
+            group="header"
+            preview="true"
+            label="HELIX_FAVICON"
+            description="HELIX_FAVICON_DESC"
+        />
+    </fieldset>
+    <!--End Basic Tab-->
+
+    <!--Start Layout Tab-->
+    <fieldset name="layout" label="Layout" addfieldpath="/plugins/system/helix3/fields">
+        <field name="layoutlist" type="layoutlist" />
+        <field
+            name="hrdesign"
+            type="header"
+            preview="true"
+            label="Header Design"
+            description="HELIX_FAVICON_DESC"
+        />
+        <field type="layout" name="layout" />
+    </fieldset>
+    <!--End Layout Tab-->
+
+    <fieldset name="preset" label="Preset"  addfieldpath="/plugins/system/helix3/fields">
+
+        <field name="preset" type="presets" default="preset1" label="Select an option" description="">
+            <preset name="preset1" label="Preset 1" default="#ff1111">
+                <color name="bg_color" value="#ffffff" />
+                <color name="major_color" value="#ff1111" />
+            </preset>
+
+            <preset name="preset2" label="Preset 2" default="#ffff11">
+                <color name="bg_color" value="#ffffff" />
+                <color name="major_color" value="#ffff11" />
+            </preset>
+
+            <preset name="preset3" label="Preset 3" default="#ff11ff">
+                <color name="bg_color" value="#ffffff" />
+                <color name="major_color" value="#ff11ff" />
+            </preset>
+        </field>
+
+        <!--Start Preset1-->
+        <field name="bg_color" class="preset-control" type="color" default="#ffffff" label="HELIX_BACKGROUND_COLOR" description="HELIX_BACKGROUND_COLOR_DESC" />
+        <field name="major_color" class="preset-control" type="color" default="#ff1111" label="HELIX_TEXT_COLOR" description="HELIX_TEXT_COLOR_DESC" />
+        <!--End Preset1-->
+    </fieldset>
+    <!--End Preset-->
+
+    <!--Start Menu Tab-->
+    <fieldset name="menu" label="Navigation">
+
+        <field
+            type="group"
+            title="HELIX_MEGAMENU"
+            name="navops"
+        />
+
+        <field
+            name="menu"
+            type="menu"
+            default="mainmenu"
+            group="navops"
+            label="HELIX_MEGAMENU_SELECT"
+            description="HELIX_MEGAMENU_SELECT_DESC"
+        />
+
+        <field
+            name="menu_type"
+            class="parent menutype"
+            group="navops"
+            type="list"
+            default="mega_offcanvas"
+            label="HELIX_MENU_TYPE"
+            description="HELIX_MENU_TYPE_DESC"
+        >
+            <option value="mega_offcanvas">HELIX_MEGAMENU_OFFCANVAS</option>
+            <option value="mega">HELIX_MEGAMENU</option>
+            <option value="offcanvas">HELIX_OFFCANVAS</option>
+        </field>
+
+        <field
+            name="dropdown_width"
+            type="number"
+            class="child menutype menutype_mega_offcanvas menutype_mega"
+            group="navops"
+            label="HELIX_MEGAMENU_DROPDOWN_WIDTH"
+            description="HELIX_MEGAMENU_DROPDOWN_WIDTH_DESC" hint="240"
+        />
+
+    </fieldset>
+    <!--End Menu Tab-->
+
+    <!--Start Font Tab-->
+    <fieldset name="typography" label="Typography" addfieldpath="/plugins/system/helix3/fields">
+
+        <field
+            type="group"
+            name="googlefont"
+            title="Google Fonts List"
+        />
+
+        <field
+            name="update_fonts"
+            type="button"
+            class="btn-primary btn-update-fonts-list"
+            group="googlefont"
+            url="#"
+            text="HELIX_UPDATE_FONTS_CLICK"
+            label="HELIX_UPDATE_FONTS_LIST"
+            description="HELIX_UPDATE_FONTS_LIST_DESC"
+        />
+
+        <field
+            name="enable_body_font"
+            class="parent body_font"
+            group="googlefont"
+            type="radio"
+            default="1"
+            label="HELIX_ENABLE_FONT"
+            description="HELIX_ENABLE_FONT_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+
+        <field
+            name="body_font"
+            type="typography"
+            class="child body_font body_font_1"
+            group="googlefont"
+            default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}'
+            label="HELIX_SELECT_FONT"
+            description="HELIX_SELECT_FONT_DESC"
+        />
+
+        <field
+            type="group"
+            name="customfont"
+            title="Custom Fonts List"
+        />
+
+        <field
+            name="enable_custom_font"
+            class="parent custom_font group-custfont"
+            type="radio"
+            group="customfont"
+            default="0"
+            label="HELIX_ENABLE_FONT"
+            description="HELIX_ENABLE_FONT_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+
+        <field
+            name="custom_font"
+            type="typography"
+            group="customfont"
+            class="child custom_font custom_font_1 group-custfont"
+            label="HELIX_SELECT_FONT"
+            description="HELIX_SELECT_FONT_DESC"
+        />
+
+        <field
+            name="custom_font_selectors"
+            type="textarea"
+            group="customfont"
+            class="child  custom_font custom_font_1 group-custfont"
+            label="HELIX_FONT_CUSTOM_SELECTORS"
+            description="HELIX_FONT_CUSTOM_SELECTORS_DESC"
+        />
+
+    </fieldset>
+    <!--End Font Tab-->
+
+    <!--Start Custom Code Tab-->
+    <fieldset name="custom_code" label="Custom Code">
+
+        <field
+            type="group"
+            name="customcode"
+            title="HELIX_CUSTOM_CODE"
+        />
+
+        <field
+            name="before_head"
+            type="textarea"
+            group="customcode"
+            rows="5"
+            label="HELIX_BEFORE_HEAD"
+            description="HELIX_BEFORE_HEAD_DESC"
+            filter="raw"
+        />
+
+        <field
+            name="before_body"
+            type="textarea"
+            group="customcode"
+            rows="5"
+            label="HELIX_BEFORE_BODY"
+            description="HELIX_BEFORE_BODY_DESC"
+            filter="raw"
+        />
+
+        <field
+            name="custom_css"
+            type="textarea"
+            group="customcode"
+            rows="5"
+            label="HELIX_CUSTOM_CSS"
+            description="HELIX_CUSTOM_CSS_DESC"
+            filter="raw"
+        />
+
+        <field
+            name="custom_js"
+            type="textarea"
+            group="customcode"
+            rows="5"
+            label="HELIX_CUSTOM_JS"
+            description="HELIX_CUSTOM_JS_DESC"
+            filter="raw"
+        />
+    </fieldset>
+    <!--End Custom Code Tab-->
+
+    <!--Start Advanced Tab-->
+    <fieldset name="advance" label="Advanced">
+
+        <field
+            type="group"
+            name="cache"
+            title="HELIX_CACHE_SETTINGS"
+        />
+
+        <field
+            name="compress_css"
+            type="radio"
+            group="cache"
+            default="0"
+            label="HELIX_CSS_COMPRESS"
+            description="HELIX_CSS_COMPRESS_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+
+        <field
+            name="compress_js"
+            type="radio"
+            group="cache"
+            default="0"
+            label="HELIX_JS_COMPRESS"
+            description="HELIX_CSS_COMPRESS_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+
+        <field
+            name="exclude_js"
+            type="textarea"
+            group="cache"
+            label="HELIX_EXCLUDE_JS"
+            description="HELIX_EXCLUDE_JS_DESC"
+        />
+
+        <field
+            type="group"
+            name="misc"
+            title="HELIX_LESS"
+        />
+
+        <field
+            name="lessoption"
+            type="radio"
+            group="misc"
+            default="0"
+            label="HELIX_ENABLE_LESS"
+            description="HELIX_ENABLE_LESS_DESC"
+        >
+            <option value="1">HELIX_YES</option>
+            <option value="0">HELIX_NO</option>
+        </field>
+        
+        <field
+            name="export_options"
+            type="optionio"
+            group="misc"
+            label="HELIX_IMPORT_EXPORT_FIELD"
+        />
+
+    </fieldset>
+    <!--End Advanced Tab-->
+</form>

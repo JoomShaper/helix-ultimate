@@ -13,6 +13,9 @@ __MACOSX
 /images
 /node_modules
 /build
+/modules
+/media
+/components
 robots.txt.dist
 
 LICENSE.txt

@@ -6,31 +6,33 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-//no direct accees
-defined ('_JEXEC') or die ('resticted aceess');
+namespace HelixULT;
+
+defined ('_JEXEC') or die ('resticted access');
+
 jimport( 'joomla.filesystem.file' );
 jimport('joomla.filesystem.folder');
-require_once __DIR__.'/optionBase.php';
+require_once __DIR__.'/helix-ult-model.php';
 
-use Joomla\CMS\Form as joomlaForm;
+use Joomla\CMS\Form as JoomlaForm;
+use HelixULT\Model\HelixUltModel as HelixUltModel;
 
-class SPOptions extends OptionBase{
+class SPOptions{
     
-    public function __construct(){
-        parent::__construct();
+    public function renderBuilderSidebar()
+    {
         
-    }
+        $input  = \JFactory::getApplication()->input;
+        $id = $input->get('id',NULL);
 
-    public function renderBuilderSidebar(){
-        $options = parent::$fieldset;
+        $tmplStyle = HelixUltModel::getTemplateStyle($id);
+        $formData = array();
 
-        $input  = JFactory::getApplication()->input;
-        $id     = $input->get('id',NULL);
+        if(isset($tmplStyle->params)){
+            $formData = json_decode($tmplStyle->params);
+        }
 
-        $data = $this->getTemplateStyle($id);
-        $formData = json_decode($data);
-
-        $form = new joomlaForm\Form('template');
+        $form = new JoomlaForm\Form('template');
         $form->loadFile( JPATH_PLUGINS.'/system/helix3/templateSettings.xml');
         $form->bind($formData);
 
@@ -38,6 +40,7 @@ class SPOptions extends OptionBase{
 
         $raw_html = '<div id="hexli-ult-options">';
         $raw_html .= '<form id="tmpl-style-form" action="#">';
+
         foreach( $fieldsets as $key => $fieldset ) {
 
             $raw_html .= $this->renderFieldsetStart($fieldset);
@@ -47,7 +50,7 @@ class SPOptions extends OptionBase{
 
             foreach( $fields as $key => $field ) {
                 if ( $field->type == 'Group' ) {
-                    if(!in_array($key, array_keys($fieldArray))){
+                    if( !in_array( $key, array_keys( $fieldArray ) ) ){
                         $fieldArray[$key] = array(
                             'name' => $field->name,
                             'input' => $field->input,
@@ -57,10 +60,11 @@ class SPOptions extends OptionBase{
                 } else {
                     $group = $form->getFieldAttribute( $field->name,'group' );
                     $filed_html = $this->renderInputField( $field, $group );
-                    if($group && $filed_html){
-                        array_push($fieldArray[$group]['fields_html'],$filed_html);
+
+                    if( $group && $filed_html ) {
+                        array_push( $fieldArray[$group]['fields_html'], $filed_html );
                     } else {
-                        array_push($fieldArray['no-group'],$filed_html);
+                        array_push( $fieldArray['no-group'], $filed_html );
                     }
                 }
             }
@@ -75,7 +79,8 @@ class SPOptions extends OptionBase{
         return $raw_html;
     }
     
-    private function renderFieldsetStart( $fieldset ) {
+    private function renderFieldsetStart( $fieldset )
+    {
 
         $html  = '<div class="fieldset-wrap clearfix fieldset-'. $fieldset->name .'">';
         $html .= '<div class="fieldset-toggle-icon"><i class="fa fa-long-arrow-left"></i></div>';
@@ -88,13 +93,15 @@ class SPOptions extends OptionBase{
         return $html;
     }
 
-    private function renderFieldsetEnd(){
+    private function renderFieldsetEnd()
+    {
 
         return '</div></div>';
     }
 
 
-    private function renderGroups($groups){
+    private function renderGroups($groups)
+    {
         $html = '';
         foreach( $groups as $key => $group ){
             if($key == 'no-group'){
@@ -109,7 +116,8 @@ class SPOptions extends OptionBase{
         return $html;
     }
 
-    private function renderGroupStart( $slug, $name ) {
+    private function renderGroupStart( $slug, $name )
+    {
         $html  = '<div class="group-wrap group-'. $slug .'">';
         $html .= '<div class="group-header-box">';
         $html .= '<span class="group-toggle-icon">';
@@ -124,11 +132,13 @@ class SPOptions extends OptionBase{
         return $html;
     }
 
-    private function renderGroupEnd() {
+    private function renderGroupEnd()
+    {
         return '</div></div>';
     }
 
-    private function getFields( $fields ) {
+    private function getFields( $fields )
+    {
         $html = '';
         foreach( $fields as $field ){
             $html .= $field;
@@ -137,7 +147,8 @@ class SPOptions extends OptionBase{
         return $html;
     }
 
-    private function renderInputField($field = '', $group = ''){
+    private function renderInputField($field = '', $group = '')
+    {
         $field_html = '';
         $field_html .= '<div class="control-group ' . (( $group ) ? 'group-style-'.$group : '') . '">';
         $field_html .= '<div class="control-label">' . $field->label .'</div>';
@@ -145,17 +156,5 @@ class SPOptions extends OptionBase{
         $field_html .= '</div>';
 
         return $field_html;
-    }
-
-    private function getTemplateStyle( $id = 0 ){
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('params')));
-        $query->from($db->quoteName('#__template_styles'));
-        $query->where($db->quoteName('client_id') . ' = 0');
-        $query->where($db->quoteName('id') . ' = ' . $db->quote($id));
-        $db->setQuery($query);
-
-        return $db->loadObject()->params;
     }
 }

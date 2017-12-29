@@ -13,7 +13,9 @@ jimport('joomla.plugin.plugin');
 jimport( 'joomla.event.plugin' );
 jimport('joomla.registry.registry');
 
-require_once __DIR__.'/platform/options.php';
+require_once __DIR__.'/platform/platform.php';
+
+use HelixULT\Platform as Platform;
 
 class  plgSystemHelix3 extends JPlugin
 {
@@ -23,9 +25,8 @@ class  plgSystemHelix3 extends JPlugin
     protected $app;
 
     // Copied style
-    function onAfterDispatch() {
-        
-
+    public function onAfterDispatch()
+    {
         if(  !JFactory::getApplication()->isAdmin() ) {
 
             $activeMenu = JFactory::getApplication()->getMenu()->getActive();
@@ -43,7 +44,8 @@ class  plgSystemHelix3 extends JPlugin
         }
     }
 
-    public function onContentPrepareForm($form, $data) {
+    public function onContentPrepareForm($form, $data)
+    {
 
         $doc = JFactory::getDocument();
         $plg_path = JURI::root(true).'/plugins/system/helix3';
@@ -71,7 +73,6 @@ class  plgSystemHelix3 extends JPlugin
             }
 
             $form->loadFile('page-title', false);
-
         }
 
         //Article Post format
@@ -90,12 +91,12 @@ class  plgSystemHelix3 extends JPlugin
 
             $form->loadFile('post-formats', false);
         }
-
     }
 
 
     // Live Update system
-    public function onExtensionAfterSave($option, $data) {
+    public function onExtensionAfterSave($option, $data)
+    {
 
         if ($option == 'com_templates.style' && !empty($data->id)) {
 
@@ -241,54 +242,16 @@ class  plgSystemHelix3 extends JPlugin
 
     }
 
-    public function onAfterRespond(){
+    public function onAfterRespond()
+    {
         if($this->app->isAdmin()){
-            $option     = $this->app->input->get('option','');
-            $preview    = $this->app->input->get('preview','');
-            $view       = $this->app->input->get('view','');
-            $id         = $this->app->input->get('id',NULL);
-            $action     = $this->app->input->get('action','');
-            $data       = $this->app->input->get('data',array(),'ARRAY');
-
-            $report['status'] = 'false';
-            $report['message'] = 'Somethings wrong, Try again';
-
-            if($option == 'com_ajax' && $preview == 'theme' && $view == 'style' && $action == 'save-tmpl-style'){
-                $this->updateTemplateStyle( $data, $id );
-                $report['status'] = 'true';
-                $report['message'] = 'Saved Successfully';
-                echo json_encode($report);
-                die;
-            }
-
-            if($option == 'com_ajax' && $preview == 'theme' && $view == 'style'){
-                $htmlView  = '<div id="sp-helix-container">';
-                $htmlView .= '<div class="sidebar-container">';
-                $htmlView .= '<div class="helix-logo">';
-                $htmlView .= '<img src="'.JURI::root(true).'/plugins/system/helix3/assets/images/helix-ultimate-final-logo.svg" alt="Helix Ultimate Template"/>';
-                $htmlView .= '</div>';
-                $htmlView .= '<div style="margin-top: 15px; margin-left: 10px;">';
-                $htmlView .= '<button class="btn btn-success btn-lg tmpl-style-save" data-tmplID="'. $id .'" data-tmplView="'. $view .'">Save Settings</button>';
-                $htmlView .= '</div>';
-                $htmlView .= '<div>';
-
-                $options = new SPOptions;
-                $htmlView .= $options->renderBuilderSidebar();
-
-                $htmlView .= '</div>';
-                $htmlView .= '</div>';
-                $htmlView .= '<div class="preview-container">';
-                $htmlView .= '<iframe id="theme-preview" src="'.JURI::root(true).'" width="100%" height="100%"></iframe>';
-                $htmlView .= '</div>';
-                $htmlView .= '</div>';
-                    
-
-                echo $htmlView;
-            }
+            $platform = new Platform;
+            $platform->initialize();
         }
     }
 
-    private function updateTemplateStyle($data = '', $id = 0){
+    private function updateTemplateStyle($data = '', $id = 0)
+    {
         $db = JFactory::getDbo();
 
         if(empty($data)){

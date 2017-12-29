@@ -1,112 +1,155 @@
+.form-control {
+  display: block;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,0.6);
+}
+.form-control::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+.form-control:-ms-input-placeholder {
+  color: #999;
+}
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}
+.form-control[disabled],
+.form-control[readonly],
+fieldset[disabled] .form-control {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  opacity: 1;
+}
+textarea.form-control {
+  height: auto;
+}
 a {
-  color: #3d449a;
+  color: #ffff11;
 }
 a:hover {
-  color: #2f3475;
+  color: #dddd00;
 }
 .sp-megamenu-parent >li.active>a,
 .sp-megamenu-parent >li:hover>a {
-  color: #3d449a;
+  color: #ffff11;
 }
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item >a:hover {
-  background: #3d449a;
+  background: #ffff11;
 }
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item.active>a {
-  color: #3d449a;
+  color: #ffff11;
 }
 #offcanvas-toggler >i {
-  color: #000000;
+  color: #ffff11;
 }
 #offcanvas-toggler >i:hover {
-  color: #3d449a;
+  color: #ffff11;
 }
 .btn-primary,
 .sppb-btn-primary {
-  border-color: #343a84;
-  background-color: #3d449a;
+  border-color: #f1f100;
+  background-color: #ffff11;
 }
 .btn-primary:hover,
 .sppb-btn-primary:hover {
-  border-color: #272c63;
-  background-color: #2f3475;
+  border-color: #c4c400;
+  background-color: #dddd00;
 }
 ul.social-icons >li a:hover {
-  color: #3d449a;
+  color: #ffff11;
 }
 .sp-page-title {
-  background: #3d449a;
+  background: #ffff11;
 }
 .layout-boxed .body-innerwrapper {
   background: #ffffff;
 }
 .sp-module ul >li >a {
-  color: #000000;
+  color: #ffff11;
 }
 .sp-module ul >li >a:hover {
-  color: #3d449a;
+  color: #ffff11;
 }
 .sp-module .latestnews >div >a {
-  color: #000000;
+  color: #ffff11;
 }
 .sp-module .latestnews >div >a:hover {
-  color: #3d449a;
+  color: #ffff11;
 }
 .sp-module .tagscloud .tag-name:hover {
-  background: #3d449a;
+  background: #ffff11;
 }
 .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a,
 .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
-  background: #3d449a;
+  background: #ffff11;
 }
 .search .btn-toolbar button {
-  background: #3d449a;
+  background: #ffff11;
 }
 .post-format {
-  background: #3d449a;
+  background: #ffff11;
 }
 .voting-symbol span.star.active:before {
-  color: #3d449a;
+  color: #ffff11;
 }
 .sp-rating span.star:hover:before,
 .sp-rating span.star:hover ~ span.star:before {
-  color: #2f3475;
+  color: #dddd00;
 }
 .entry-link,
 .entry-quote {
-  background: #3d449a;
+  background: #ffff11;
 }
 blockquote {
-  border-color: #3d449a;
+  border-color: #ffff11;
 }
 .carousel-left:hover,
 .carousel-right:hover {
-  background: #3d449a;
+  background: #ffff11;
 }
 #sp-footer {
-  background: #3d449a;
+  background: #ffff11;
 }
 .sp-comingsoon body {
-  background-color: #3d449a;
+  background-color: #ffff11;
 }
 .pagination>li>a,
 .pagination>li>span {
-  color: #000000;
+  color: #ffff11;
 }
 .pagination>li>a:hover,
 .pagination>li>a:focus,
 .pagination>li>span:hover,
 .pagination>li>span:focus {
-  color: #000000;
+  color: #ffff11;
 }
 .pagination>.active>a,
 .pagination>.active>span {
-  border-color: #3d449a;
-  background-color: #3d449a;
+  border-color: #ffff11;
+  background-color: #ffff11;
 }
 .pagination>.active>a:hover,
 .pagination>.active>a:focus,
 .pagination>.active>span:hover,
 .pagination>.active>span:focus {
-  border-color: #3d449a;
-  background-color: #3d449a;
+  border-color: #ffff11;
+  background-color: #ffff11;
 }

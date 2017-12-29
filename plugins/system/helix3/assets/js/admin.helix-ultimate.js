@@ -101,6 +101,7 @@ jQuery(function($){
             'action': 'save-tmpl-style',
             'option' : 'com_ajax',
             'plugin' : 'helix3',
+            'request': 'ajaxHelix',
             'data'   : formData,
             'format' : 'json'
         };

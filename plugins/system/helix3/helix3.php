@@ -21,7 +21,7 @@ class  plgSystemHelix3 extends JPlugin
 {
 
     protected $autoloadLanguage = true;
-    
+
     protected $app;
 
     // Copied style
@@ -139,15 +139,15 @@ class  plgSystemHelix3 extends JPlugin
         $action     = $this->app->input->get('action', '');;
 
         $doc = JFactory::getDocument();
-        
+
         if($this->app->isAdmin()){
-            
+
             if($option == 'com_ajax' && $preview == 'theme' && $view == 'style'){
 
                 JFactory::getLanguage()->load('tpl_shaper_helix3', JPATH_SITE, null, true);;
-    
+
                 $doc->setTitle("Helix Template Framework by JoomShaper");
-                
+
 
                 $helix_plg_url = JURI::root(true).'/plugins/system/helix3';
                 $doc->addScriptdeclaration('var layoutbuilder_base="' . JURI::root() . '";');
@@ -160,25 +160,25 @@ class  plgSystemHelix3 extends JPlugin
                 JHtml::_('behavior.keepalive');
                 JHtml::_('formbehavior.chosen', 'select');
                 JHtml::_('behavior.colorpicker');
-                
+
                 $doc->addScript($helix_plg_url.'/assets/js/helper.js');
                 $doc->addScript($helix_plg_url.'/assets/js/webfont.js');
                 $doc->addScript($helix_plg_url.'/assets/js/modal.js');
                 $doc->addScript($helix_plg_url.'/assets/js/admin.general.js');
                 $doc->addScript($helix_plg_url.'/assets/js/admin.layout.js');
                 // $doc->addScript($helix_plg_url.'/assets/js/custom_builder.js');
-                $doc->addScript('http://localhost/helixUltimate/helix/media/media/js/mediafield.min.js');
-        
+                $doc->addScript(JURI::root(true) . '/media/media/js/mediafield.min.js');
+
                 //CSS
                 $doc->addStyleSheet($helix_plg_url.'/assets/css/bootstrap.css');
                 $doc->addStyleSheet($helix_plg_url.'/assets/css/modal.css');
-                $doc->addStyleSheet('http://localhost/helixUltimate/helix/administrator/templates/isis/css/template.css');
+                $doc->addStyleSheet(JURI::root(true) . '/administrator/templates/isis/css/template.css');
                 // $doc->addStyleSheet($helix_plg_url.'/assets/css/custom_builder.css');
-                $doc->addStyleSheet('http://localhost/helixUltimate/helix/media/system/css/modal.css');
-                
+                $doc->addStyleSheet( JURI::root(true) . '/media/system/css/modal.css');
+
                 $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
                 $doc->addStyleSheet($helix_plg_url.'/assets/css/admin.general.css');
-                
+
                 $doc->addScript( $helix_plg_url. '/assets/js/admin.helix-ultimate.js' );
 
                 echo $doc->render(false,[
@@ -195,11 +195,11 @@ class  plgSystemHelix3 extends JPlugin
 
         $japps = JFactory::getApplication();
 
-        
+
 
         if ( $japps->isAdmin() )
         {
-            
+
             $user = JFactory::getUser();
 
             if( !in_array( 8, $user->groups ) ){

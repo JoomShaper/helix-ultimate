@@ -60,7 +60,7 @@ class plgAjaxHelix3 extends JPlugin
             $report['status'] = 'false';
 
             switch ($action) {
-                case 'remove':
+                case 'remove': // need to collect
                     if (file_exists($filepath)) {
                         unlink($filepath);
                         $report['action'] = 'remove';
@@ -69,7 +69,7 @@ class plgAjaxHelix3 extends JPlugin
                     $report['layout'] = JFolder::files($layoutPath, '.json');
                     break;
 
-                case 'save':
+                case 'save': // need to collect
                     if ($layoutName) {
                         $layoutName = strtolower(str_replace(' ','-',$layoutName));
                     }
@@ -83,7 +83,7 @@ class plgAjaxHelix3 extends JPlugin
                     $report['layout'] = JFolder::files($layoutPath, '.json');
                     break;
 
-                case 'load':
+                case 'load': // need to collect
                     if (file_exists($filepath)) {
                         $content = file_get_contents($filepath);
                     }

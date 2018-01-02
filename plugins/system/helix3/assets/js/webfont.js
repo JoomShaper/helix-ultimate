@@ -134,19 +134,15 @@ jQuery(function($) {
 
     //Update Fonts list
     $('.btn-update-fonts-list').on('click', function(event){
-        
         event.preventDefault();
 
-        var $that   = $(this),
-        data = {
-            action : 'updateFonts',
-            layoutName : ''
-        };
-
+        var $that   = $(this);
         var request = {
+			'action' : 'update-font-list',
             'option' : 'com_ajax',
-            'plugin' : 'helix3',
-            'data'   : data,
+			'plugin' : 'helix3',
+			'request': 'ajaxHelix',			
+            'data'   : {},
             'format' : 'raw'
         };
 
@@ -157,11 +153,14 @@ jQuery(function($) {
                 $that.prepend('<i class="fa fa-spinner fa-spin"></i> ');
             },
             success: function (response) {
-                $that.after(response);
-                $that.find('.fa-spinner').remove();
-                $that.next().delay(1000).fadeOut(300, function(){
-                    $(this).remove();
-                });
+				var data = $.parseJSON(response);
+				if (data.status){
+					$that.after(data.message);
+					$that.find('.fa-spinner').remove();
+					$that.next().delay(1000).fadeOut(300, function(){
+						$(this).remove();
+					});
+				}
             }
         });
 

@@ -16,13 +16,12 @@ jQuery(function($) {
 	});//end ready
 
 	/* ----------   Load existing template   ------------- */
-	$('.form-horizontal').on('click', '.layout-del-action', function(event) {
+	$('#hexli-ult-options').on('click', '.layout-del-action', function(event) {
 		event.preventDefault();
 
 		var $that = $(this),
 			layoutName = $(".layoutlist select").val(),
 			data = {
-				action : $that.data('action'),
 				layoutName : layoutName
 			};
 
@@ -30,13 +29,11 @@ jQuery(function($) {
 			return false;
 		}
 
-		if ( data.action != 'remove' ){
-			alert('You are doing somethings wrong.');
-		}
-
 		var request = {
+				'action' : 'remove-layout-file',
                 'option' : 'com_ajax',
-                'plugin' : 'helix3',
+				'plugin' : 'helix3',
+				'request': 'ajaxHelix',
                 'data'   : data,
                 'format' : 'json'
             };
@@ -48,17 +45,24 @@ jQuery(function($) {
             	$('.layout-del-action .fa-spin').show();
             },
             success: function (response) {
-            	var data = $.parseJSON(response.data),
+            	var data = $.parseJSON(response),
             		layouts = data.layout,
-            		tplHtml = '';
+					tplHtml = '';
 
-            	$('#jform_params_layoutlist').find('option').remove();
+				console.log(data)
+					
+				if ( data.status == false){
+					alert(data.message)
+					return;
+				}
+
+            	$('#layoutlist').find('option').remove();
             	if (layouts.length) {
             		for (var i = 0; i < layouts.length; i++) {
             			tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
             		}
 
-            		$('#jform_params_layoutlist').html(tplHtml);
+            		$('#layoutlist').html(tplHtml);
             	}
 
             	$('.layout-del-action .fa-spin').fadeOut('fast');
@@ -89,7 +93,6 @@ jQuery(function($) {
 		var $that = $(this),
 			layoutName = $that.val(),
 			data = {
-				action : 'load',
 				layoutName : layoutName
 			};
 
@@ -98,8 +101,10 @@ jQuery(function($) {
 		}
 
 		var request = {
+				'action' : 'render-layout',
                 'option' : 'com_ajax',
-                'plugin' : 'helix3',
+				'plugin' : 'helix3',
+				'request': 'ajaxHelix',
                 'data'   : data,
                 'format' : 'raw'
             };
@@ -111,9 +116,12 @@ jQuery(function($) {
             beforeSend: function(){
             },
             success: function (response) {
-               	$('#helix-layout-builder').empty();
-				$('#helix-layout-builder').append(response).fadeIn('normal');
-				jqueryUiLayout();
+				var data = $.parseJSON(response);
+				if(data.status) {
+					$('#helix-layout-builder').empty();
+					$('#helix-layout-builder').append(data.layoutHtml).fadeIn('normal');
+					jqueryUiLayout();
+				}
             }
         });
         return false;
@@ -351,7 +359,6 @@ jQuery(function($) {
 			case 'save-layout':
 					var layoutName = $('#layout-modal .addon-input').val(),
 						data = {
-							action : 'save',
 							layoutName : layoutName,
 							content: JSON.stringify(getGeneratedLayout())
 						};
@@ -362,8 +369,10 @@ jQuery(function($) {
 					}
 
 					var request = {
+						'action' : 'save-layout',
 						'option' : 'com_ajax',
 						'plugin' : 'helix3',
+						'request': 'ajaxHelix',
 						'data'   : data,
 						'format' : 'json'
 					};

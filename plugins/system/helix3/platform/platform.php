@@ -11,10 +11,9 @@ namespace HelixULT;
 defined ('_JEXEC') or die ('resticted access');
 
 require_once __DIR__.'/options.php';
-require_once __DIR__.'/helix-ult-model.php';
+require_once __DIR__.'/request.php';
 
 use HelixULT\SPOptions as SPOptions;
-use HelixULT\Model\HelixUltModel as HelixUltModel;
 
 class Platform{
     
@@ -44,11 +43,9 @@ class Platform{
 
     public function initialize(){
         if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'ajaxHelix' && $this->id ){
-            
-            $data = \JFactory::getApplication()->input->get('data',array(),'ARRAY');
-            HelixUltModel::updateTemplateStyle($this->id, $data);
 
-            echo json_encode(array('status'=>true,'message'=>'Hello World')); die;
+            $request = new Request;
+            $request->initialize();
 
         } else if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->id ) {
             $frmkHTML  = $this->frameworkFormHTMLStart();

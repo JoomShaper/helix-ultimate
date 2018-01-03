@@ -68,6 +68,10 @@ class Request{
             case 'update-font-list':
                 $this->updateGoogleFontList();
                 break;
+
+            case 'fontVariants':
+                $this->changeFontVariants();
+                break;
         }
 
         echo json_encode($this->report);
@@ -78,7 +82,6 @@ class Request{
         if (!$this->id || !is_int($this->id)) return;
 
         $update = HelixUltModel::updateTemplateStyle($this->id, $this->data);
-
         if ($update)
         {
             $this->report['status'] = true;
@@ -180,6 +183,52 @@ class Request{
             $this->report['message'] = '<p class="font-update-success">Google Webfonts list successfully updated! Please refresh your browser.</p>';
         } else {
             $this->report['message'] = '<p class="font-update-failed">Google Webfonts update failed. Please make sure that your template folder is writable.</p>';
+        }
+    }
+
+    private function changeFontVariants()
+    {
+        $tmpl_style = HelixUltModel::getTemplateStyle($this->id);
+        $template   = $tmpl_style->template;
+        $font_name  =  $this->data['fontName'];
+
+        $template_path = JPATH_SITE . '/templates/' . $template . '/webfonts/webfonts.json';
+        $plugin_path   = JPATH_PLUGINS . '/system/helix3/assets/webfonts/webfonts.json';
+
+        if (\JFile::exists( $template_path ))
+        {
+            $json = \JFile::read( $template_path );
+        }
+        else
+        {
+            $json = \JFile::read( $plugin_path );
+        }
+
+        $webfonts   = json_decode($json);
+        $items      = $webfonts->items;
+
+        foreach ($items as $item)
+        {
+            if ($item->family == $font_name)
+            {
+                $fontVariants = '';
+                $fontSubsets = '';
+                //Variants
+                foreach ($item->variants as $variant)
+                {
+                    $fontVariants .= '<option value="'. $variant .'">' . $variant . '</option>';
+                }
+                //Subsets
+                foreach ($item->subsets as $subset)
+                {
+                    $fontSubsets .= '<option value="'. $subset .'">' . $subset . '</option>';
+                }
+                $this->report['status']     = true;
+                $this->report['message']    = 'Font Style Changed';
+                $this->report['variants']   = $fontVariants;
+                $this->report['subsets']    = $fontSubsets;
+                break;
+            }
         }
     }
 

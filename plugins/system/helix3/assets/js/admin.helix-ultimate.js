@@ -85,7 +85,8 @@ jQuery(function($){
 
     $('.tmpl-style-save').on('click',function(e){
         e.preventDefault();
-
+        
+        webFontsFileds();
         $('#layout').val( JSON.stringify(getGeneratedLayout()) );
 
         var tmplID = $(this).data('tmplID'),
@@ -113,11 +114,9 @@ jQuery(function($){
             },
             success: function (response) {
                 var data = $.parseJSON(response)
-
                 if(data.status){
                     document.getElementById('theme-preview').contentWindow.location.reload(true);
                 }
-                console.log(data.message)
             },
             error: function(){
                 alert('Somethings wrong, Try again');
@@ -125,6 +124,20 @@ jQuery(function($){
 
         });
     });
+
+    function webFontsFileds(){
+        $('.webfont').each(function(){
+            var $that = $(this),
+                webfont = {
+                    'fontFamily' : $that.find('.list-font-families').val(),
+                    'fontWeight' : $that.find('.list-font-weight').val(),
+                    'fontSubset' : $that.find('.list-font-subset').val(),
+                    'fontSize'	 : $that.find('.webfont-size').val()
+                };
+    
+            $that.find('.input-webfont').val( JSON.stringify(webfont) )
+        });
+    }
 
     function getGeneratedLayout(){
 		var item = [];

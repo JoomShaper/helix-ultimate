@@ -48,8 +48,6 @@ jQuery(function($) {
             	var data = $.parseJSON(response),
             		layouts = data.layout,
 					tplHtml = '';
-
-				console.log(data)
 					
 				if ( data.status == false){
 					alert(data.message)
@@ -89,7 +87,7 @@ jQuery(function($) {
 
 	// load layout from file
 
-	$(".layoutlist select").chosen().change(function(){
+	$(".layoutlist select").change(function(){
 		var $that = $(this),
 			layoutName = $that.val(),
 			data = {
@@ -412,8 +410,6 @@ jQuery(function($) {
 	$(document).on('click', '.column-layout', function(event) {
 		event.preventDefault();
 
-		console.log('clicked');
-
 		var $that = $(this),
 			colType = $that.data('type'), column;
 
@@ -588,26 +584,4 @@ jQuery(function($) {
 
 		return item;
 	}
-
-	// //On Submit
-	// document.adminForm.onsubmit = function(event){
-
-	// 	//Webfonts
-	// 	$('.webfont').each(function(){
-	// 		var $that = $(this),
-	// 			webfont = {
-	// 				'fontFamily' : $that.find('.list-font-families').val(),
-	// 				'fontWeight' : $that.find('.list-font-weight').val(),
-	// 				'fontSubset' : $that.find('.list-font-subset').val(),
-	// 				'fontSize'	: $that.find('.webfont-size').val()
-	// 			};
-
-	// 		//$that.find('.input-webfont').val( JSON.stringify(webfont) )
-
-	// 	});
-
-	// 	//Generate Layout
-	// 	//$('#jform_params_layout').val( JSON.stringify(getGeneratedLayout()) );
-	// }
-
 });

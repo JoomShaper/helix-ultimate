@@ -12,15 +12,15 @@ jQuery(function($) {
 		event.preventDefault();
 
 		var $that = $(this),
-		layoutName = $(this).val(),
-		data = {
-			action : 'fontVariants',
-			layoutName : layoutName
-		};
+			fontName = $that.val();
+		
+		var data = { fontName : fontName };
 
 		var request = {
+			'action' : 'fontVariants',
 			'option' : 'com_ajax',
 			'plugin' : 'helix3',
+			'request': 'ajaxHelix',
 			'data'   : data,
 			'format' : 'json'
 		};
@@ -29,7 +29,7 @@ jQuery(function($) {
 			type   : 'POST',
 			data   : request,
 			success: function (response) {
-                var font = $.parseJSON(response.data);
+				var font = $.parseJSON(response);
 				$that.closest('.webfont').find('.list-font-weight').html(font.variants);
 				$that.closest('.webfont').find('.list-font-subset').html(font.subsets);
 			}

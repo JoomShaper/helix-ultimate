@@ -60,50 +60,11 @@ class plgAjaxHelix3 extends JPlugin
             $report['status'] = 'false';
 
             switch ($action) {
-                case 'remove': // need to collect
-                    if (file_exists($filepath)) {
-                        unlink($filepath);
-                        $report['action'] = 'remove';
-                        $report['status'] = 'true';
-                    }
-                    $report['layout'] = JFolder::files($layoutPath, '.json');
-                    break;
-
-                case 'save': // need to collect
-                    if ($layoutName) {
-                        $layoutName = strtolower(str_replace(' ','-',$layoutName));
-                    }
-                    $content = $data['content'];
-
-                    if ($content && $layoutName) {
-                        $file = fopen($layoutPath.$layoutName.'.json', 'wb');
-                        fwrite($file, $content);
-                        fclose($file);
-                    }
-                    $report['layout'] = JFolder::files($layoutPath, '.json');
-                    break;
-
-                case 'load': // need to collect
-                    if (file_exists($filepath)) {
-                        $content = file_get_contents($filepath);
-                    }
-
-                    if (isset($content) && $content) {
-                        echo $layoutHtml = self::loadNewLayout(json_decode($content));
-                    }
-                    die();
-                    break;
 
                 case 'resetLayout':
                     if($layoutName){
                         echo self::resetMenuLayout($layoutName);
                     }
-                    die();
-                    break;
-
-                // Upload Image
-                case 'upload_image':
-                    echo "Joomla";
                     die();
                     break;
 
@@ -219,106 +180,6 @@ class plgAjaxHelix3 extends JPlugin
                     $report['action'] = 'failed';
                     $report['status'] = 'false';
                     return json_encode($report);
-                    break;
-
-                //Font variant
-                case 'fontVariants':
-
-                    $template_path = JPATH_SITE . '/templates/' . self::getTemplate()->template . '/webfonts/webfonts.json';
-                    $plugin_path   = JPATH_PLUGINS . '/system/helix3/assets/webfonts/webfonts.json';
-
-                    if(JFile::exists( $template_path )) {
-                        $json = JFile::read( $template_path );
-                    } else {
-                        $json = JFile::read( $plugin_path );
-                    }
-
-                    $webfonts   = json_decode($json);
-                    $items      = $webfonts->items;
-
-                    $output = array();
-                    $fontVariants = '';
-                    $fontSubsets = '';
-                    foreach ($items as $item) {
-                        if($item->family==$layoutName) {
-
-                            //Variants
-                            foreach ($item->variants as $variant) {
-                                $fontVariants .= '<option value="'. $variant .'">' . $variant . '</option>';
-                            }
-
-                            //Subsets
-                            foreach ($item->subsets as $subset) {
-                                $fontSubsets .= '<option value="'. $subset .'">' . $subset . '</option>';
-                            }
-                        }
-                    }
-
-                    $output['variants'] = $fontVariants;
-                    $output['subsets']  = $fontSubsets;
-
-                    return json_encode($output);
-
-                    break;
-
-                //Font variant
-                case 'updateFonts':
-
-                    jimport( 'joomla.filesystem.folder' );
-                    jimport('joomla.http.http');
-
-                    $template_path = JPATH_SITE . '/templates/' . self::getTemplate()->template . '/webfonts';
-
-                    if(!JFolder::exists( $template_path )) {
-                        JFolder::create( $template_path, 0755 );
-                    }
-
-                    $url  = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBVybAjpiMHzNyEm3ncA_RZ4WETKsLElDg';
-                    $http = new JHttp();
-                    $str  = $http->get($url);
-
-                    if ( JFile::write( $template_path . '/webfonts.json', $str->body )) {
-                        echo "<p class='font-update-success'>Google Webfonts list successfully updated! Please refresh your browser.</p>";
-                    } else {
-                        echo "<p class='font-update-failed'>Google Webfonts update failed. Please make sure that your template folder is writable.</p>";
-                    }
-
-                    die();
-
-                    break;
-
-                //Template setting import
-                case 'import':
-
-                    $template_id = filter_var( $data['template_id'], FILTER_VALIDATE_INT );
-
-                    if ( !$template_id ) {
-                        die();
-                        break;
-                    }
-
-                    $settings   = $data['settings'];
-
-                    $db = JFactory::getDbo();
-
-                    $query = $db->getQuery(true);
-
-                    $fields = array(
-                        $db->quoteName( 'params' ) . ' = ' . $db->quote( $settings )
-                    );
-
-                    $conditions = array(
-                        $db->quoteName( 'id' ) . ' = '. $db->quote( $template_id ),
-                        $db->quoteName('client_id') . ' = 0'
-                    );
-
-                    $query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
-
-                    $db->setQuery($query);
-
-                    $db->execute();
-
-                    die();
                     break;
 
                 case 'header_logo_block_load':
@@ -708,12 +569,6 @@ href="#"><i class="fa fa-twitter"></i></a>
                     helixfw_update_option('selected_header', $selected_header);
                     die();
                     break;
-/*
-                case 'helixfw_switch_footer':
-                    $selected_footer = $data['selected_footer'];
-                    helixfw_update_option('selected_footer', $selected_footer);
-                    die();
-                    break;*/
 
                 case  'helixfw_switch_header':
                     $template= helixfw_get_template()->template;

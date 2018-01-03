@@ -6,8 +6,7 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */  
 
-//no direct accees
-defined ('_JEXEC') or die ('resticted aceess');
+defined ('_JEXEC') or die ('Restricted access');
 
 jimport('joomla.form.formfield');
 
@@ -104,9 +103,7 @@ class JFormFieldTypography extends JFormField
         $html .= '<input type="hidden" name="' . $this->name .'" value="'. $this->value .'" class="input-webfont" id="'. $this->id .'">';
         $html .= '</div>';
 
-
         return $html;
-
     }
 
     private function generateSelectOptions( $items = array(), $selected = '' )
@@ -116,7 +113,6 @@ class JFormFieldTypography extends JFormField
         {
             $html .= '<option ' . (($selected !== 'no-selection' && $item == $selected) ? 'selected="selected"' : '') . ' value="'. $item .'">'. $item .'</option>';
         }
-
         return $html;
     }
 

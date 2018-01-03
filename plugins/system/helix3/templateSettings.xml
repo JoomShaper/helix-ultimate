@@ -362,6 +362,14 @@
             description="HELIX_EXCLUDE_JS_DESC"
         />
 
+         <field
+            name="exclude_js_2"
+            type="textarea"
+            group="cache"
+            label="HELIX_EXCLUDE_JS"
+            description="HELIX_EXCLUDE_JS_DESC"
+        />
+
         <field
             type="group"
             name="misc"

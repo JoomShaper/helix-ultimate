@@ -13,7 +13,7 @@ jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filter.filteroutput');
 
-class Helix3{
+class HelixUltimate{
     private static $_instance;
     //private $document;
     //private $importedFiles = array();
@@ -163,7 +163,7 @@ class Helix3{
                     include_once $path . '/' . $file;
                     $name = JFile::stripExt($file);
 
-                    $class = 'Helix3Feature' . ucfirst($name);
+                    $class = 'HelixUltimateFeature' . ucfirst($name);
                     $class = new $class(self::getInstance());
 
                     $position = $class->position;
@@ -206,7 +206,7 @@ class Helix3{
         $pagebuilder = false;
 
         if ($option == 'com_sppagebuilder') {
-            $doc->addStylesheet( JURI::base(true) . '/plugins/system/helix3/assets/css/pagebuilder.css' );
+            $doc->addStylesheet( JURI::base(true) . '/plugins/system/helixultimate/assets/css/pagebuilder.css' );
             $pagebuilder = true;
         }
 
@@ -239,24 +239,24 @@ class Helix3{
         $pagebuilder = false;
 
         if ($option == 'com_sppagebuilder') {
-            $doc->addStylesheet( JURI::base(true) . '/plugins/system/helix3/assets/css/pagebuilder.css' );
+            $doc->addStylesheet( JURI::base(true) . '/plugins/system/helixultimate/assets/css/pagebuilder.css' );
             $pagebuilder = true;
         }
 
         //helper & model
-        $menu_class   = JPATH_ROOT . '/plugins/system/helix3/core/classes/helix3.php';
+        $menu_class   = JPATH_ROOT . '/plugins/system/helixultimate/core/classes/helixultimate.php';
 
         if (file_exists($menu_class)) {
             require_once($menu_class);
         }
         $template       = JFactory::getApplication()->getTemplate();
         $themepath      = JPATH_THEMES . '/' . $template;
-        $carea_file     = $themepath . '/html/layouts/helix3/frontend/conponentarea.php';
-        $module_file    = $themepath . '/html/layouts/helix3/frontend/modules.php';
-        $lyt_thm_path   = $themepath . '/html/layouts/helix3/';
+        $carea_file     = $themepath . '/html/layouts/helixultimate/frontend/conponentarea.php';
+        $module_file    = $themepath . '/html/layouts/helixultimate/frontend/modules.php';
+        $lyt_thm_path   = $themepath . '/html/layouts/helixultimate/';
 
-        $layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helix3/layouts';
-        $layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helix3/layouts';
+        $layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+        $layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 
         $output = '';
         if (! empty($rows) && count($rows)){
@@ -845,7 +845,7 @@ class Helix3{
         $doc = JFactory::getDocument();
         $webfonts = '';
         $tpl_path = JPATH_BASE . '/templates/' . JFactory::getApplication()->getTemplate() . '/webfonts/webfonts.json';
-        $plg_path = JPATH_BASE . '/plugins/system/helix3/assets/webfonts/webfonts.json';
+        $plg_path = JPATH_BASE . '/plugins/system/helixultimate/assets/webfonts/webfonts.json';
 
         if(file_exists($tpl_path)) {
             $webfonts = JFile::read($tpl_path);

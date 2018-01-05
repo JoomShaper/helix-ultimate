@@ -8,12 +8,12 @@
 //no direct accees
 defined ('_JEXEC') or die('resticted aceess');
 
-class Helix3FeatureTitle {
+class HelixUltimateFeatureTitle {
 
-	private $helix3;
+	private $helixUltimate;
 
-	public function __construct($helix){
-		$this->helix3 = $helix;
+	public function __construct($helixUltimate){
+		$this->helixUltimate = $helixUltimate;
 		$this->position = 'title';
 	}
 

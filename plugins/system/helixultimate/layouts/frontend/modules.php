@@ -22,7 +22,7 @@ $output ='';
 
         $output .= '<div class="sp-column ' . ($data->settings->custom_class) . '">';
 
-        $features = (Helix3::hasFeature($data->settings->name))? helix3::getInstance()->loadFeature[$data->settings->name] : array();
+        $features = (HelixUltimate::hasFeature($data->settings->name))? helixUltimate::getInstance()->loadFeature[$data->settings->name] : array();
 
             foreach ($features as $key => $feature){
                 if (isset($feature['feature']) && $feature['load_pos'] == 'before' ) {
@@ -37,11 +37,10 @@ $output ='';
                     $output .= $feature['feature'];
                 }
             }
-        
+
         $output .= '</div>'; //.sp-column
 
     $output .= '</div>'; //.sp-
 
 
 echo $output;
-

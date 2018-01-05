@@ -17,7 +17,7 @@ require_once __DIR__.'/platform/platform.php';
 
 use HelixULT\Platform as Platform;
 
-class  plgSystemHelix3 extends JPlugin
+class  plgSystemHelixultimate extends JPlugin
 {
     protected $autoloadLanguage = true;
 
@@ -45,8 +45,8 @@ class  plgSystemHelix3 extends JPlugin
     public function onContentPrepareForm($form, $data)
     {
         $doc = JFactory::getDocument();
-        $plg_path = JURI::root(true).'/plugins/system/helix3';
-        JForm::addFormPath(JPATH_PLUGINS.'/system/helix3/params');
+        $plg_path = JURI::root(true).'/plugins/system/helixultimate';
+        JForm::addFormPath(JPATH_PLUGINS.'/system/helixultimate/params');
 
         if ($form->getName() == 'com_menus.item')
         {
@@ -86,7 +86,7 @@ class  plgSystemHelix3 extends JPlugin
             }
             else
             {
-                JForm::addFormPath(JPATH_PLUGINS . '/system/helix3/params');
+                JForm::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
             }
             $form->loadFile('post-formats', false);
         }

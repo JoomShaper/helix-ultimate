@@ -76,7 +76,7 @@ class Platform
             $htmlView  = '<div id="helix-ultimate">';
             $htmlView .= '<div class="helix-ultimate-sidebar">';
             $htmlView .= '<div class="helix-ultimate-logo">';
-            $htmlView .= '<img src="'.\JURI::root(true).'/plugins/system/helix3/assets/images/helix-logo.svg" alt="Helix Ultimate by JoomShaper"/>';
+            $htmlView .= '<img src="'.\JURI::root(true).'/plugins/system/helixultimate/assets/images/helix-logo.svg" alt="Helix Ultimate by JoomShaper"/>';
             $htmlView .= '</div>';
             $htmlView .= '<div class="helix-ultimate-options-wrap">';
 
@@ -116,12 +116,12 @@ class Platform
 
     public static function loadFrameworkSystem()
     {
-        \JFactory::getLanguage()->load('tpl_shaper_helix3', JPATH_SITE, null, true);;
+        \JFactory::getLanguage()->load('tpl_shaper_helixultimate', JPATH_SITE, null, true);;
 
         $doc = \JFactory::getDocument();
         $doc->setTitle("Helix Template Framework by JoomShaper");
 
-        $helix_plg_url = \JURI::root(true).'/plugins/system/helix3';
+        $helix_plg_url = \JURI::root(true).'/plugins/system/helixultimate';
         $doc->addScriptdeclaration('var layoutbuilder_base="' . \JURI::root() . '";');
         $doc->addScriptDeclaration("var basepath = '{$helix_plg_url}';");
         $doc->addScriptDeclaration("var pluginVersion = 34;");

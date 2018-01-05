@@ -17,7 +17,7 @@ foreach ($types as $type) {
 }
 
 // require_once 'layout-settings/fields-helper.php';
-require_once 'layout-settings/row-column-settings.php';
+require_once 'settings/settings.php';
 
 echo RowColumnSettings::getRowSettings($rowSettings);
 echo RowColumnSettings::getColumnSettings($columnSettings);

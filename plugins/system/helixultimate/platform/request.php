@@ -209,7 +209,7 @@ class Request{
         $font_name  =  $this->data['fontName'];
 
         $template_path = JPATH_SITE . '/templates/' . $template . '/webfonts/webfonts.json';
-        $plugin_path   = JPATH_PLUGINS . '/system/helix3/assets/webfonts/webfonts.json';
+        $plugin_path   = JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
 
         if (\JFile::exists( $template_path ))
         {
@@ -384,4 +384,3 @@ class Request{
         return $data;
     }
 }
-

@@ -8,34 +8,34 @@
 //no direct accees
 defined ('_JEXEC') or die('resticted aceess');
 
-class Helix3FeatureSocial {
+class HelixUltimateFeatureSocial {
 
-	private $helix3;
+	private $helixUltimate;
 	public $position;
 
-	public function __construct( $helix3 ){
-		$this->helix3 = $helix3;
-		$this->position = $this->helix3->getParam('social_position');
-		$this->load_pos = $this->helix3->getParam('social_load_pos');
+	public function __construct( $helixUltimate ){
+		$this->helixUltimate = $helixUltimate;
+		$this->position = $this->helixUltimate->getParam('social_position');
+		$this->load_pos = $this->helixUltimate->getParam('social_load_pos');
 	}
 
 	public function renderFeature() {
 
-		$facebook 	= $this->helix3->getParam('facebook');
-		$twitter  	= $this->helix3->getParam('twitter');
-		$googleplus = $this->helix3->getParam('googleplus');
-		$pinterest 	= $this->helix3->getParam('pinterest');
-		$youtube 		= $this->helix3->getParam('youtube');
-		$linkedin 	= $this->helix3->getParam('linkedin');
-		$dribbble 	= $this->helix3->getParam('dribbble');
-		$behance 		= $this->helix3->getParam('behance');
-		$skype 			= $this->helix3->getParam('skype');
-		$whatsapp 	= $this->helix3->getParam('whatsapp');
-		$flickr 		= $this->helix3->getParam('flickr');
-		$vk 				= $this->helix3->getParam('vk');
-		$custom 		= $this->helix3->getParam('custom');
+		$facebook 	= $this->helixUltimate->getParam('facebook');
+		$twitter  	= $this->helixUltimate->getParam('twitter');
+		$googleplus = $this->helixUltimate->getParam('googleplus');
+		$pinterest 	= $this->helixUltimate->getParam('pinterest');
+		$youtube 		= $this->helixUltimate->getParam('youtube');
+		$linkedin 	= $this->helixUltimate->getParam('linkedin');
+		$dribbble 	= $this->helixUltimate->getParam('dribbble');
+		$behance 		= $this->helixUltimate->getParam('behance');
+		$skype 			= $this->helixUltimate->getParam('skype');
+		$whatsapp 	= $this->helixUltimate->getParam('whatsapp');
+		$flickr 		= $this->helixUltimate->getParam('flickr');
+		$vk 				= $this->helixUltimate->getParam('vk');
+		$custom 		= $this->helixUltimate->getParam('custom');
 
-		if( $this->helix3->getParam('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
+		if( $this->helixUltimate->getParam('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
 			$html  = '<ul class="social-icons">';
 
 			if( $facebook ) {

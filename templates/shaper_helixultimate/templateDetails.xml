@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.4" type="template" client="site" method="upgrade">
-    <name>shaper_helix3</name>
+    <name>shaper_helixultimate</name>
     <creationDate>Jan 2016</creationDate>
     <author>JoomShaper.com</author>
     <authorEmail>support@joomshaper.com</authorEmail>
@@ -8,14 +8,14 @@
     <copyright>Copyright (C) 2010 - 2017 JoomShaper.com. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GPLv2 or later</license>
     <version>2.4</version>
-    <description>Shaper Helix3 - Starter Template of Helix3 framework</description>
+    <description>Shaper Helix Ultimate - Starter Template of Helix Ultimate framework</description>
 
     <updateservers>
-        <server type="extension" priority="1" name="shaper_helix3">https://www.joomshaper.com/updates/shaper-helix3.xml</server>
+        <server type="extension" priority="1" name="shaper_helixultimate">https://www.joomshaper.com/updates/shaper-helixultimate.xml</server>
     </updateservers>
 
     <languages>
-        <language tag="en-GB">en-GB.tpl_shaper_helix3.ini</language>
+        <language tag="en-GB">en-GB.tpl_shaper_helixultimate.ini</language>
     </languages>
 
     <positions>

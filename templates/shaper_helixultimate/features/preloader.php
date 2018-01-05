@@ -9,35 +9,27 @@
 //no direct accees
 defined ('_JEXEC') or die('resticted aceess');
 
-class Helix3FeaturePreloader {
+class HelixUltimateFeaturePreloader {
 
-	private $helix3;
+	private $helixUltimate;
 
-	public function __construct($helix){
-		$this->helix3 = $helix;
+	public function __construct($helixUltimate){
+		$this->helixUltimate = $helixUltimate;
 		$this->position = 'helixpreloader';
 	}
 
 	public function renderFeature() {
 
 		$app = JFactory::getApplication();
-		//Load Helix
-		$helix3_path = JPATH_PLUGINS . '/system/helix3/core/helix3.php';
-		if (file_exists($helix3_path)) {
-			require_once($helix3_path);
-			$getHelix3 = helix3::getInstance();
-		} else {
-			die('Please install and activate helix plugin');
-		}
 
 		$output = '';
-		if ($getHelix3->getParam('preloader')) {
+		if ($this->helixUltimate->getParam('preloader')) {
            	//Pre-loader -->
             $output .= '<div class="sp-pre-loader">';
-                if ($getHelix3->getParam('preloader_animation') == 'double-loop') {
+                if ($this->helixUltimate->getParam('preloader_animation') == 'double-loop') {
                     // Bubble Loop loader
                     $output .= '<div class="sp-loader-bubble-loop"></div>';
-                } elseif ($getHelix3->getParam('preloader_animation') == 'wave-two') {
+                } elseif ($this->helixUltimate->getParam('preloader_animation') == 'wave-two') {
                     // Audio Wave 2 loader
                     $output .= '<div class="wave-two-wrap">';
                         $output .= '<ul class="wave-two">';
@@ -50,23 +42,23 @@ class Helix3FeaturePreloader {
                         $output .= '</ul>'; //<!-- /.Audio Wave 2 loader -->
                     $output .= '</div> >'; // <!-- /.wave-two-wrap -->
 
-                } elseif ($getHelix3->getParam('preloader_animation') == 'audio-wave') {
+                } elseif ($this->helixUltimate->getParam('preloader_animation') == 'audio-wave') {
                     // Audio Wave loader
                     $output .= '<div class="sp-loader-audio-wave"> </div>';
-                } elseif ($getHelix3->getParam('preloader_animation') == 'circle-two') {
+                } elseif ($this->helixUltimate->getParam('preloader_animation') == 'circle-two') {
                     // Circle two Loader
                     $output .= '<div class="circle-two">';
                         $output .= '<span></span>';
                     $output .= '</div>'; // /.Circle two loader
-                } elseif ($getHelix3->getParam('preloader_animation') == 'clock') {
+                } elseif ($this->helixUltimate->getParam('preloader_animation') == 'clock') {
                     //Clock loader
                     $output .= '<div class="sp-loader-clock"></div>';
-                } elseif ($getHelix3->getParam('preloader_animation') == 'logo') {
+                } elseif ($this->helixUltimate->getParam('preloader_animation') == 'logo') {
 
-                    if ($getHelix3->getParam('logo_image')) {
-                        $logo = JUri::root() . '/' . $getHelix3->getParam('logo_image');
+                    if ($this->helixUltimate->getParam('logo_image')) {
+                        $logo = JUri::root() . '/' . $this->helixUltimate->getParam('logo_image');
                     } else {
-                        $logo = JUri::root() . '/templates/' . $app->getTemplate() . '/images/presets/' . $getHelix3->Preset() . '/logo.png';
+                        $logo = JUri::root() . '/templates/' . $app->getTemplate() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.png';
                     }
 
                     // Line loader with logo

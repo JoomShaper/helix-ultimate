@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helix3/fields" icon="fa fa-cog">
+	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-cog">
 
 		<field name="preloader" helixgroup="preloader" class="parent preloader radio-group" type="radio" default="0" label="HELIX_PRELOADER" description="HELIX_PRELOADER_DESC">
 				<option value="0">HELIX_NO</option>
@@ -156,7 +156,7 @@
 
 	</fieldset>
 
-	<fieldset name="preset" label="Preset" addfieldpath="/plugins/system/helix3/fields" icon="fa fa-paint-brush">
+	<fieldset name="preset" label="Preset" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
 
 		<field name="preset" type="presets" default="preset1" label="Select an option" description="">
 			<preset name="preset1" label="Preset 1" default="#ff1111">
@@ -181,7 +181,7 @@
 		<!--End Preset1-->
 	</fieldset>
 
-	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helix3/fields" icon="fa fa-list-alt">
+	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-list-alt">
 		<field name="layoutlist" type="layoutlist" />
 		<field
 			name="hrdesign"
@@ -222,7 +222,7 @@
 			</field>
 	</fieldset>
 
-	<fieldset name="typography" label="Typography" icon="fa fa-font" addfieldpath="/plugins/system/helix3/fields">
+	<fieldset name="typography" label="Typography" icon="fa fa-font" addfieldpath="/plugins/system/helixultimate/fields">
 			<field type="group" title="Google Fonts List" />
 			<field name="update_fonts" type="button" url="#" text="HELIX_UPDATE_FONTS_CLICK" label="HELIX_UPDATE_FONTS_LIST" description="HELIX_UPDATE_FONTS_LIST_DESC" class="btn-primary btn-update-fonts-list" />
 

@@ -39,9 +39,8 @@ $doc->addStylesheet( $this->baseurl . '/templates/' . $this->template . '/css/fo
 $doc->addStylesheet( $this->baseurl . '/templates/' . $this->template . '/css/template.css' );
 
 $doc->setTitle($this->error->getCode() . ' - '.$this->title);
-require_once(JPATH_LIBRARIES.'/joomla/document/html/renderer/head.php');
-$header_renderer = new JDocumentRendererHead($doc);
-$header_contents = $header_renderer->render(null);
+$renderer = $doc->loadRenderer('head');
+$header_contents = $renderer->render(null);
 
 //background image
 $error_bg = '';

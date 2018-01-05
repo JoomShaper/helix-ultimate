@@ -17,6 +17,7 @@ use HelixULT\SPOptions as SPOptions;
 
 class Platform
 {
+
     protected $app;
 
     protected $option;
@@ -47,54 +48,60 @@ class Platform
         $this->userTmplEditPermission();
     }
 
+
     public function initialize()
     {
-        if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'ajaxHelix' && $this->id )
-        {
-            if (!$this->permission)
-            {
-                throw new \Exception("Permission Denied",403);
-            }
-            $request = new Request;
-            $request->initialize();
-        }
-        else if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->id && $this->permission)
-        {
-            $frmkHTML    = $this->frameworkFormHTMLStart();
-            $frmkOptions = new SPOptions();
-            $frmkHTML    .= $frmkOptions->renderBuilderSidebar();
-            $frmkHTML    .= $this->frameworkFormHTMLEnd();
+      if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'ajaxHelix' && $this->id )
+      {
+          if (!$this->permission)
+          {
+              throw new \Exception("Permission Denied",403);
+          }
+          $request = new Request;
+          $request->initialize();
+      }
+      else if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->id && $this->permission)
+      {
+          $frmkHTML    = $this->frameworkFormHTMLStart();
+          $frmkOptions = new SPOptions();
+          $frmkHTML    .= $frmkOptions->renderBuilderSidebar();
+          $frmkHTML    .= $this->frameworkFormHTMLEnd();
 
-            echo $frmkHTML;
-        }
+          echo $frmkHTML;
+      }
     }
-
+  
     private function frameworkFormHTMLStart()
     {
-        $htmlView  = '<div id="sp-helix-container">';
-        $htmlView .= '<div class="sidebar-container">';
-        $htmlView .= '<div class="helix-logo">';
-        $htmlView .= '<img src="'.\JURI::root(true).'/plugins/system/helix3/assets/images/helix-ultimate-final-logo.svg" alt="Helix Ultimate Template"/>';
-        $htmlView .= '</div>';
-        $htmlView .= '<div style="margin-top: 15px; margin-left: 10px;">';
-        $htmlView .= '<button class="btn btn-success btn-lg tmpl-style-save" data-tmplID="'. $this->id .'" data-tmplView="'. $this->view .'">Save Settings</button>';
-        $htmlView .= '</div>';
-        $htmlView .= '<div>';
+            $htmlView  = '<div id="helix-ultimate">';
+            $htmlView .= '<div class="helix-ultimate-sidebar">';
+            $htmlView .= '<div class="helix-ultimate-logo">';
+            $htmlView .= '<img src="'.\JURI::root(true).'/plugins/system/helix3/assets/images/helix-logo.svg" alt="Helix Ultimate by JoomShaper"/>';
+            $htmlView .= '</div>';
+            $htmlView .= '<div class="helix-ultimate-options-wrap">';
 
-        return $htmlView;
+            return $htmlView;
     }
 
     private function frameworkFormHTMLEnd()
     {
         $htmlView  = '</div>';
+
+        $htmlView .= '<div class="helix-ultimate-footer clearfix">';
+        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate 2.0.1 Beta 1<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
+        $htmlView .= '<div class="helix-ultimate-action"><button class="btn btn-primary action-save-template" data-id="'. $this->id .'" data-view="'. $this->view .'"><span class="fa fa-save"></span> Save</button></div>';
         $htmlView .= '</div>';
-        $htmlView .= '<div class="preview-container">';
-        $htmlView .= '<iframe id="theme-preview" src="'.\JURI::root(true).'" width="100%" height="100%"></iframe>';
+
+        $htmlView .= '</div>';
+
+        $htmlView .= '<div class="helix-ultimate-preview">';
+        $htmlView .= '<iframe id="helix-ultimate-template-preview" src="'.\JURI::root(true).'" style="width: 100%; height: 100%;"></iframe>';
         $htmlView .= '</div>';
         $htmlView .= '</div>';
 
         return $htmlView;
     }
+
 
     private function userTmplEditPermission()
     {
@@ -149,3 +156,4 @@ class Platform
         ]);
     }
 }
+

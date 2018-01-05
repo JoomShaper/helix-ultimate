@@ -13,11 +13,12 @@ defined ('_JEXEC') or die ('resticted access');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 require_once __DIR__.'/helix-ult-model.php';
+require_once __DIR__.'/media.php';
 
 use HelixULT\Model\HelixUltModel as HelixUltModel;
 
 class Request{
-    
+
     protected $app;
 
     protected $id;
@@ -52,7 +53,7 @@ class Request{
             case 'save-layout':
                 $this->copyTemplateLayout();
                 break;
-            
+
             case 'render-layout':
                 $this->renderTemplateLayout();
                 break;
@@ -60,7 +61,22 @@ class Request{
             case 'remove-layout-file':
                 $this->removeLayoutFile();
                 break;
-            
+
+            case 'view-media':
+                HelixUltimateMedia::getFolders();
+                break;
+
+            case 'delete-media':
+                HelixUltimateMedia::deleteMedia();
+                break;
+
+            case 'create-folder':
+                HelixUltimateMedia::createFolder();
+                break;
+
+            case 'upload-media':
+                HelixUltimateMedia::uploadMedia();
+
             case 'import-tmpl-style':
                 $this->importTemplateStyle();
                 break;
@@ -281,7 +297,7 @@ class Request{
                 {
                     $name = $row->settings->name;
                 }
-                
+
                 $html .= '<div class="layoutbuilder-section" '. $rowSettings .'>';
                 $html .= '<div class="settings-section clearfix">';
                 $html .= '<div class="settings-left pull-left">';
@@ -293,7 +309,7 @@ class Request{
                 $html .= '<li>';
                 $html .= '<a class="btn btn-small add-columns" href="#"><i class="fa fa-columns"></i></a>';
                 $html .= '<ul class="column-list">';
-                                        
+
                 $_active = '';
                 foreach ($colGrid as $key => $grid)
                 {
@@ -303,7 +319,7 @@ class Request{
                     $html .= '<li><a href="#" class="column-layout column-layout-' .$key. ' '.$_active.'" data-layout="'.$grid.'"></a></li>';
                     $_active ='';
                 }
-                                        
+
                 $active = '';
                 $customLayout = '';
                 if (!isset($colGrid[$row->layout]))
@@ -329,7 +345,7 @@ class Request{
                 foreach ($row->attr as $column)
                 {
                     $colSettings = $this->getSettings($column->settings);
-                            
+
                     $html .= '<div class="'. $column->className .'" '. $colSettings . '>';
                     $html .= '<div class="column">';
 
@@ -345,7 +361,7 @@ class Request{
                         }
                         $html .= '<h6 class="col-title pull-left">'.$column->settings->name.'</h6>';
                     }
-                    
+
                     $html .= '<a class="col-ops-set pull-right" href="#" ><i class="fa fa-gears"></i></a>';
                     $html .= '</div>';
                     $html .= '</div>';
@@ -368,3 +384,4 @@ class Request{
         return $data;
     }
 }
+

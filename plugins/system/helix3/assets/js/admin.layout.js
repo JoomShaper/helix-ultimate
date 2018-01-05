@@ -16,59 +16,61 @@ jQuery(function($) {
 	});//end ready
 
 	/* ----------   Load existing template   ------------- */
-	$(document).on('click', '.layout-del-action', function(event) {
+	$('#hexli-ult-options').on('click', '.layout-del-action', function(event) {
 		event.preventDefault();
 
 		var $that = $(this),
-		layoutName = $(".layoutlist select").val(),
-		data = {
-			action : $that.data('action'),
-			layoutName : layoutName
-		};
+			layoutName = $(".layoutlist select").val(),
+			data = {
+				layoutName : layoutName
+			};
 
 		if ( confirm("Click Ok button to delete "+layoutName+", Cancel to leave.") != true ){
 			return false;
 		}
 
-		if ( data.action != 'remove' ){
-			alert('You are doing somethings wrong.');
-		}
-
 		var request = {
-			'option' : 'com_ajax',
-			'plugin' : 'helix3',
-			'data'   : data,
-			'format' : 'json'
-		};
+				'action' : 'remove-layout-file',
+                'option' : 'com_ajax',
+				'plugin' : 'helix3',
+				'request': 'ajaxHelix',
+                'data'   : data,
+                'format' : 'json'
+            };
 
-		$.ajax({
-			type   : 'POST',
-			data   : request,
-			beforeSend: function(){
-				$('.layout-del-action .fa-spin').show();
-			},
-			success: function (response) {
-				var data = $.parseJSON(response.data),
-				layouts = data.layout,
-				tplHtml = '';
-
-				$('#jform_params_layoutlist').find('option').remove();
-				if (layouts.length) {
-					for (var i = 0; i < layouts.length; i++) {
-						tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
-					}
-
-					$('#jform_params_layoutlist').html(tplHtml);
+        $.ajax({
+            type   : 'POST',
+            data   : request,
+            beforeSend: function(){
+            	$('.layout-del-action .fa-spin').show();
+            },
+            success: function (response) {
+            	var data = $.parseJSON(response),
+            		layouts = data.layout,
+					tplHtml = '';
+					
+				if ( data.status == false){
+					alert(data.message)
+					return;
 				}
 
-				$('.layout-del-action .fa-spin').fadeOut('fast');
-			},
-			error: function(){
-				alert('Somethings wrong, Try again');
-				$('.layout-del-action .fa-spin').fadeOut('fast');
-			}
-		});
-		return false;
+            	$('#layoutlist').find('option').remove();
+            	if (layouts.length) {
+            		for (var i = 0; i < layouts.length; i++) {
+            			tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
+            		}
+
+            		$('#layoutlist').html(tplHtml);
+            	}
+
+            	$('.layout-del-action .fa-spin').fadeOut('fast');
+            },
+            error: function(){
+            	alert('Somethings wrong, Try again');
+            	$('.layout-del-action .fa-spin').fadeOut('fast');
+            }
+        });
+        return false;
 	});
 
 	// Save new copy of layout
@@ -85,38 +87,42 @@ jQuery(function($) {
 
 	// load layout from file
 
-	$(".layoutlist select").chosen().change(function(){
+	$(".layoutlist select").change(function(){
 		var $that = $(this),
-		layoutName = $that.val(),
-		data = {
-			action : 'load',
-			layoutName : layoutName
-		};
+			layoutName = $that.val(),
+			data = {
+				layoutName : layoutName
+			};
 
 		if ( layoutName == '' || layoutName == ' ' ){
 			alert('You are doing somethings wrong.');
 		}
 
 		var request = {
-			'option' : 'com_ajax',
-			'plugin' : 'helix3',
-			'data'   : data,
-			'format' : 'raw'
-		};
+				'action' : 'render-layout',
+                'option' : 'com_ajax',
+				'plugin' : 'helix3',
+				'request': 'ajaxHelix',
+                'data'   : data,
+                'format' : 'raw'
+            };
 
-		$.ajax({
-			type   : 'POST',
-			data   : request,
-			dataType: "html",
-			beforeSend: function(){
-			},
-			success: function (response) {
-				$('#helix-ultimate-layout-builder').empty();
-				$('#helix-ultimate-layout-builder').append(response).fadeIn('normal');
-				jqueryUiLayout();
-			}
-		});
-		return false;
+        $.ajax({
+            type   : 'POST',
+            data   : request,
+            dataType: "html",
+            beforeSend: function(){
+            },
+            success: function (response) {
+				var data = $.parseJSON(response);
+				if(data.status) {
+					$('#helix-layout-builder').empty();
+					$('#helix-layout-builder').append(data.layoutHtml).fadeIn('normal');
+					jqueryUiLayout();
+				}
+            }
+        });
+        return false;
 	});
 
 	/*********   Lyout Builder JavaScript   **********/
@@ -351,11 +357,10 @@ jQuery(function($) {
 
 			case 'save-layout':
 			var layoutName = $('#layout-modal .addon-input').val(),
-			data = {
-				action : 'save',
-				layoutName : layoutName,
-				content: JSON.stringify(getGeneratedLayout())
-			};
+				data = {
+					layoutName : layoutName,
+					content: JSON.stringify(getGeneratedLayout())
+				};
 
 			if (layoutName =='' || layoutName ==' ') {
 				alert("Without Name Layout Can't be save");
@@ -363,8 +368,10 @@ jQuery(function($) {
 			}
 
 			var request = {
+				'action' : 'save-layout',
 				'option' : 'com_ajax',
 				'plugin' : 'helix3',
+				'request': 'ajaxHelix',
 				'data'   : data,
 				'format' : 'json'
 			};
@@ -456,7 +463,7 @@ jQuery(function($) {
 		}
 
 		var col = [],
-		colAttr = [];
+			colAttr = [];
 
 		$gparent.find('.helix-ultimate-layout-column').each(function(i,val){
 			col[i] = $(this).html();
@@ -536,13 +543,12 @@ jQuery(function($) {
 	});
 
 	// Generate Layout JSON
-
 	function getGeneratedLayout(){
 		var item = [];
 		$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-builder-section').each(function(index){
 			var $row 		= $(this),
-			rowIndex 	= index,
-			rowObj 		= $row.data();
+				rowIndex 	= index,
+				rowObj 		= $row.data();
 			delete rowObj.sortableItem;
 
 			var activeLayout 	= $row.find('.column-layout.active'),
@@ -564,9 +570,9 @@ jQuery(function($) {
 			$row.find('.helix-ultimate-layout-column').each(function(index) {
 
 				var $column 	= $(this),
-				colIndex 	= index,
-				className 	= $column.attr('class'),
-				colObj 		= $column.data();
+					colIndex 	= index,
+					className 	= $column.attr('class'),
+					colObj 		= $column.data();
 				delete colObj.sortableItem;
 
 				item[rowIndex].attr[colIndex] = {
@@ -580,26 +586,4 @@ jQuery(function($) {
 
 		return item;
 	}
-
-	// //On Submit
-	// document.adminForm.onsubmit = function(event){
-
-	// 	//Webfonts
-	// 	$('.webfont').each(function(){
-	// 		var $that = $(this),
-	// 			webfont = {
-	// 				'fontFamily' : $that.find('.list-font-families').val(),
-	// 				'fontWeight' : $that.find('.list-font-weight').val(),
-	// 				'fontSubset' : $that.find('.list-font-subset').val(),
-	// 				'fontSize'	: $that.find('.webfont-size').val()
-	// 			};
-
-	// 		//$that.find('.input-webfont').val( JSON.stringify(webfont) )
-
-	// 	});
-
-	// 	//Generate Layout
-	// 	//$('#jform_params_layout').val( JSON.stringify(getGeneratedLayout()) );
-	// }
-
 });

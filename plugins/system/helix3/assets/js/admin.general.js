@@ -198,11 +198,10 @@ jQuery(function($){
     //Add .btn-group class
 
     //Import Template Settings
-    $( '.form-horizontal' ).on( 'click', '#import-settings', function( event ) {
+    $( '#hexli-ult-options' ).on( 'click', '#import-settings', function( event ) {
         event.preventDefault();
 
         var $that = $( this ),
-            template_id = $that.data( 'template_id' ),
             temp_settings = $.trim( $that.prev().val() );
 
         if ( temp_settings == '' ) {
@@ -214,15 +213,14 @@ jQuery(function($){
         }
 
         var data = {
-            action : 'import',
-            template_id : template_id,
             settings : temp_settings
           };
 
-
         var request = {
+                'action' : 'import-tmpl-style',
                 'option' : 'com_ajax',
                 'plugin' : 'helix3',
+                'request': 'ajaxHelix',
                 'data'   : data,
                 'format' : 'json'
             };
@@ -231,7 +229,10 @@ jQuery(function($){
             type   : 'POST',
             data   : request,
             success: function (response) {
-                window.location.reload();
+                var data = $.parseJSON(response);
+                if ( data.status ){
+                    window.location.reload();
+                }
             },
             error: function(){
                 alert('Somethings wrong, Try again');

@@ -1,31 +1,18 @@
 <?php
 /**
-* @package HelixUltimate Framework
+* @package Helix Ultimate Framework
 * @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2017 JoomShaper
+* @copyright Copyright (c) 2018 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
 //no direct accees
 namespace HelixULT\Model;
 
-class HelixUltModel{
-
-    /*
-
-    protected $db;
-
-    public function __construct(){
-
-    }
-
-    private function intializeDB(){
-        $this->db = JFactory::getDbo();
-    }
-
-    */
-
-    public static function getTemplateStyle($id = 0){
+class HelixUltModel
+{
+    public static function getTemplateStyle($id = 0)
+    {
         $db = \JFactory::getDbo();
 
         $query = $db->getQuery(true);
@@ -39,7 +26,8 @@ class HelixUltModel{
         return $db->loadObject();
     }
 
-    public static function updateTemplateStyle($id = 0, $data = ''){
+    public static function updateTemplateStyle($id = 0, $data = '')
+    {
         $db = \JFactory::getDbo();
 
         if(empty($data)) return;

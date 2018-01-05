@@ -12,15 +12,15 @@ jQuery(function($) {
 		event.preventDefault();
 
 		var $that = $(this),
-		layoutName = $(this).val(),
-		data = {
-			action : 'fontVariants',
-			layoutName : layoutName
-		};
+			fontName = $that.val();
+		
+		var data = { fontName : fontName };
 
 		var request = {
+			'action' : 'fontVariants',
 			'option' : 'com_ajax',
 			'plugin' : 'helix3',
+			'request': 'ajaxHelix',
 			'data'   : data,
 			'format' : 'json'
 		};
@@ -29,7 +29,8 @@ jQuery(function($) {
 			type   : 'POST',
 			data   : request,
 			success: function (response) {
-                var font = $.parseJSON(response.data);
+				var font = $.parseJSON(response);
+				console.log(font)
 				$that.closest('.webfont').find('.list-font-weight').html(font.variants);
 				$that.closest('.webfont').find('.list-font-subset').html(font.subsets);
 			}
@@ -134,19 +135,15 @@ jQuery(function($) {
 
     //Update Fonts list
     $('.btn-update-fonts-list').on('click', function(event){
-        
         event.preventDefault();
 
-        var $that   = $(this),
-        data = {
-            action : 'updateFonts',
-            layoutName : ''
-        };
-
+        var $that   = $(this);
         var request = {
+			'action' : 'update-font-list',
             'option' : 'com_ajax',
-            'plugin' : 'helix3',
-            'data'   : data,
+			'plugin' : 'helix3',
+			'request': 'ajaxHelix',			
+            'data'   : {},
             'format' : 'raw'
         };
 
@@ -157,11 +154,14 @@ jQuery(function($) {
                 $that.prepend('<i class="fa fa-spinner fa-spin"></i> ');
             },
             success: function (response) {
-                $that.after(response);
-                $that.find('.fa-spinner').remove();
-                $that.next().delay(1000).fadeOut(300, function(){
-                    $(this).remove();
-                });
+				var data = $.parseJSON(response);
+				if (data.status){
+					$that.after(data.message);
+					$that.find('.fa-spinner').remove();
+					$that.next().delay(1000).fadeOut(300, function(){
+						$(this).remove();
+					});
+				}
             }
         });
 

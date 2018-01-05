@@ -62,10 +62,6 @@ class Request{
                 $this->removeLayoutFile();
                 break;
 
-            case 'import-tmpl-style':
-                echo  json_encode(array('as'=>'asdasda','dsad'=>'saadad'));
-                break;
-
             case 'view-media':
                 HelixUltimateMedia::getFolders();
                 break;
@@ -80,6 +76,17 @@ class Request{
 
             case 'upload-media':
                 HelixUltimateMedia::uploadMedia();
+
+            case 'import-tmpl-style':
+                $this->importTemplateStyle();
+                break;
+
+            case 'update-font-list':
+                $this->updateGoogleFontList();
+                break;
+
+            case 'fontVariants':
+                $this->changeFontVariants();
                 break;
         }
 
@@ -91,7 +98,6 @@ class Request{
         if (!$this->id || !is_int($this->id)) return;
 
         $update = HelixUltModel::updateTemplateStyle($this->id, $this->data);
-
         if ($update)
         {
             $this->report['status'] = true;
@@ -158,12 +164,87 @@ class Request{
     {
         if (!$this->id || !is_int($this->id)) return;
 
-        $update = HelixUltModel::updateTemplateStyle($this->id, $this->data);
+        $settings = $this->data['settings'];
+        $data = json_decode($settings);
 
-        if ($update)
+        if (json_last_error() === JSON_ERROR_NONE)
         {
-            $this->report['status'] = true;
-            $this->report['message'] = 'Style changed successfully';
+            $update = HelixUltModel::updateTemplateStyle($this->id, $data);
+
+            if ($update)
+            {
+                $this->report['status'] = true;
+                $this->report['message'] = 'Settings imported successfully';
+            }
+        }
+    }
+
+    private function updateGoogleFontList()
+    {
+        $tmpl_style = HelixUltModel::getTemplateStyle($this->id);
+        $template   = $tmpl_style->template;
+
+        $template_path = JPATH_SITE . '/templates/' . $template . '/webfonts';
+
+        if (!\JFolder::exists( $template_path )) {
+            \JFolder::create( $template_path, 0755 );
+        }
+
+        $url  = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBVybAjpiMHzNyEm3ncA_RZ4WETKsLElDg';
+        $http = new \JHttp();
+        $str  = $http->get($url);
+
+        if ( \JFile::write( $template_path . '/webfonts.json', $str->body )) {
+            $this->report['status']  = true;
+            $this->report['message'] = '<p class="font-update-success">Google Webfonts list successfully updated! Please refresh your browser.</p>';
+        } else {
+            $this->report['message'] = '<p class="font-update-failed">Google Webfonts update failed. Please make sure that your template folder is writable.</p>';
+        }
+    }
+
+    private function changeFontVariants()
+    {
+        $tmpl_style = HelixUltModel::getTemplateStyle($this->id);
+        $template   = $tmpl_style->template;
+        $font_name  =  $this->data['fontName'];
+
+        $template_path = JPATH_SITE . '/templates/' . $template . '/webfonts/webfonts.json';
+        $plugin_path   = JPATH_PLUGINS . '/system/helix3/assets/webfonts/webfonts.json';
+
+        if (\JFile::exists( $template_path ))
+        {
+            $json = \JFile::read( $template_path );
+        }
+        else
+        {
+            $json = \JFile::read( $plugin_path );
+        }
+
+        $webfonts   = json_decode($json);
+        $items      = $webfonts->items;
+
+        foreach ($items as $item)
+        {
+            if ($item->family == $font_name)
+            {
+                $fontVariants = '';
+                $fontSubsets = '';
+                //Variants
+                foreach ($item->variants as $variant)
+                {
+                    $fontVariants .= '<option value="'. $variant .'">' . $variant . '</option>';
+                }
+                //Subsets
+                foreach ($item->subsets as $subset)
+                {
+                    $fontSubsets .= '<option value="'. $subset .'">' . $subset . '</option>';
+                }
+                $this->report['status']     = true;
+                $this->report['message']    = 'Font Style Changed';
+                $this->report['variants']   = $fontVariants;
+                $this->report['subsets']    = $fontSubsets;
+                break;
+            }
         }
     }
 
@@ -303,3 +384,4 @@ class Request{
         return $data;
     }
 }
+

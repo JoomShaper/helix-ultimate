@@ -109,7 +109,7 @@ jQuery(function($){
             if($that.hasClass('active')){
                 return;
             }
-        
+
             $('.preset').removeClass('active');
             $that.addClass('active');
 
@@ -196,7 +196,6 @@ jQuery(function($){
 
 
     //Add .btn-group class
-    $( '.radio' ).addClass( 'btn-group' );
 
     //Import Template Settings
     $( '.form-horizontal' ).on( 'click', '#import-settings', function( event ) {

@@ -24,7 +24,7 @@ class HelixUltModel{
     }
 
     */
-    
+
     public static function getTemplateStyle($id = 0){
         $db = \JFactory::getDbo();
 
@@ -41,7 +41,7 @@ class HelixUltModel{
 
     public static function updateTemplateStyle($id = 0, $data = ''){
         $db = \JFactory::getDbo();
-        
+
         if(empty($data)) return;
         $data = json_encode($data);
 

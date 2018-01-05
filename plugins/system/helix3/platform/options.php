@@ -18,10 +18,10 @@ use Joomla\CMS\Form as JoomlaForm;
 use HelixULT\Model\HelixUltModel as HelixUltModel;
 
 class SPOptions{
-    
+
     public function renderBuilderSidebar()
     {
-        
+
         $input  = \JFactory::getApplication()->input;
         $id = $input->get('id',NULL);
 
@@ -38,64 +38,50 @@ class SPOptions{
 
         $fieldsets = $form->getFieldsets();
 
-        $raw_html = '<div id="hexli-ult-options">';
-        $raw_html .= '<form id="tmpl-style-form" action="#">';
+        $raw_html = '<div id="helix-ultimate-options">';
+        $raw_html .= '<form id="helix-ultimate-style-form" action="index.php">';
 
         foreach( $fieldsets as $key => $fieldset ) {
 
             $raw_html .= $this->renderFieldsetStart($fieldset);
-            $fields   = $form->getFieldset($key);
+            $fields = $form->getFieldset($key);
 
-            $fieldArray = array('no-group' => array());
+            $fieldArray = array();
 
             foreach( $fields as $key => $field ) {
-                if ( $field->type == 'Group' ) {
-                    if( !in_array( $key, array_keys( $fieldArray ) ) ){
-                        $fieldArray[$key] = array(
-                            'name' => $field->name,
-                            'input' => $field->input,
-                            'fields_html' => array() 
-                        );
-                    }
-                } else {
-                    $group = $form->getFieldAttribute( $field->name,'group' );
-                    $filed_html = $this->renderInputField( $field, $group );
-
-                    if( $group && $filed_html ) {
-                        array_push( $fieldArray[$group]['fields_html'], $filed_html );
-                    } else {
-                        array_push( $fieldArray['no-group'], $filed_html );
-                    }
-                }
+              $group = $field->getAttribute('helixgroup') ? $field->getAttribute('helixgroup') : 'no-group';
+              $filed_html = $this->renderInputField( $field, $group );
+              $fieldArray[$group]['fields_html'][] = $filed_html;
             }
 
             $raw_html .= $this->renderGroups($fieldArray);
             $raw_html .= $this->renderFieldsetEnd();
         }
-        
+
         $raw_html .= '</form>';
         $raw_html .= '</div>';
 
         return $raw_html;
     }
-    
+
     private function renderFieldsetStart( $fieldset )
     {
 
-        $html  = '<div class="fieldset-wrap clearfix fieldset-'. $fieldset->name .'">';
-        $html .= '<div class="fieldset-toggle-icon"><i class="fa fa-long-arrow-left"></i></div>';
-        $html .= '<div class="fieldset-header">';
-        $html .= '<span class="fieldset-icon"><i class="'. ( ( isset( $fieldset->icon ) && $fieldset->icon )? $fieldset->icon : 'fa fa-address-book-o' ) .'"></i></span>';
-        $html .= '<span class="fieldset-title">'. $fieldset->label .'</span>';
+        $html  = '<div class="helix-ultimate-fieldset helix-ultimate-fieldset-'. $fieldset->name .' clearfix">';
+        $html .= '<div class="helix-ultimate-fieldset-header">';
+        $html .= '<div class="helix-ultimate-fieldset-toggle-icon"><i class="fa fa-long-arrow-left"></i></div>';
+        $html .= '<div class="helix-ultimate-fieldset-header-inner" data-fieldset="'. $fieldset->name .'">';
+        $html .= '<span class="helix-ultimate-fieldset-icon"><i class="'. ( ( isset( $fieldset->icon ) && $fieldset->icon )? $fieldset->icon : 'fa fa-address-book-o' ) .'"></i></span>';
+        $html .= '<span class="helix-ultimate-fieldset-title">'. $fieldset->label .'</span>';
         $html .= '</div>';
-        $html .= '<div class="groups-list">';
+        $html .= '</div>';
+        $html .= '<div class="helix-ultimate-group-list">';
 
         return $html;
     }
 
     private function renderFieldsetEnd()
     {
-
         return '</div></div>';
     }
 
@@ -104,31 +90,33 @@ class SPOptions{
     {
         $html = '';
         foreach( $groups as $key => $group ){
-            if($key == 'no-group'){
-                $html .= $this->getFields($group);
-            } else {
-                $html .= $this->renderGroupStart( $key, $group['name'] );
-                $html .= $this->getFields($group['fields_html']);
-                $html .= $this->renderGroupEnd();
-            }
+          if($key != 'no-group') {
+            $html .= $this->renderGroupStart( $key );
+          }
+
+          $html .= $this->getFields($group['fields_html']);
+
+          if($key != 'no-group') {
+            $html .= $this->renderGroupEnd();
+          }
         }
 
         return $html;
     }
 
-    private function renderGroupStart( $slug, $name )
+    private function renderGroupStart( $group )
     {
-        $html  = '<div class="group-wrap group-'. $slug .'">';
-        $html .= '<div class="group-header-box">';
-        $html .= '<span class="group-toggle-icon">';
-        $html .= '<i class="fa fa-caret-square-o-down" aria-hidden="true"></i>';
-        $html .= '<i class="fa fa-caret-square-o-up" aria-hidden="true"></i>';
+        $html  = '<div class="helix-ultimate-group-wrap helix-ultimate-group-'. $group .'">';
+        $html .= '<div class="helix-ultimate-group-header-box">';
+        $html .= '<span class="helix-ultimate-group-toggle-icon">';
+        $html .= '<i class="fa fa-angle-down" aria-hidden="true"></i>';
+        $html .= '<i class="fa fa-angle-up" aria-hidden="true"></i>';
         $html .= '</span>';
-        $html .= '<span class="group-title">'. $name .'</span>';
-        $html .= '<span class="group-more-icon"></span>';
+        $html .= '<span class="helix-ultimate-group-title">'. \JText::_('HELIX_ULTIMATE_GROUP_' . strtoupper($group)) .'</span>';
+        $html .= '<span class="helix-ultimate-group-more-icon"></span>';
         $html .= '</div>';
-        $html .= '<div class="fields-list">';
-        
+        $html .= '<div class="helix-ultimate-field-list">';
+
         return $html;
     }
 
@@ -152,7 +140,12 @@ class SPOptions{
         $field_html = '';
         $field_html .= '<div class="control-group ' . (( $group ) ? 'group-style-'.$group : '') . '">';
         $field_html .= '<div class="control-label">' . $field->label .'</div>';
-        $field_html .= '<div class="controls">' . $field->input . '</div>';
+        $field_html .= '<div class="controls">';
+        $field_html .= $field->input;
+        if($field->getAttribute('description') != '') {
+            $field_html .= '<div class="control-help">' . \JText::_($field->getAttribute('description')) . '</div>';
+        }
+        $field_html .= '</div>';
         $field_html .= '</div>';
 
         return $field_html;

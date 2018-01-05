@@ -1,392 +1,395 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helix3/fields">
+	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helix3/fields" icon="fa fa-cog">
 
-        <field type="asset" />
-        <field
-            type="group"
-            name="global"
-            title="HELIX_GLOBAL"
-        />
-        
-        <field
-            name="preloader"
-            class="parent preloader"
-            group="global"
-            type="radio"
-            default="0"
-            label="HELIX_PRELOADER"
-            description="HELIX_PRELOADER_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
+		<field name="preloader" helixgroup="preloader" class="parent preloader radio-group" type="radio" default="0" label="HELIX_PRELOADER" description="HELIX_PRELOADER_DESC">
+				<option value="0">HELIX_NO</option>
+				<option value="1">HELIX_YES</option>
+		</field>
 
-        <field
-            name="preloader_animation"
-            class="child preloader preloader_1"
-            group="global"
-            type="list"
-            default="circle"
-            label="HELIX_PRELOADER_ANIMATION" 
-            description="HELIX_PRELOADER_ANIMATION_DESC"
-        >
-            <option value="circle">HELIX_PRELOADER_ANIMATION_CIRCLE</option>
-            <option value="double-loop">HELIX_PRELOADER_ANIMATION_DOUBLE_LOOP</option>
-            <option value="wave-two">HELIX_PRELOADER_ANIMATION_WAVE_TWO</option>
-            <option value="audio-wave">HELIX_PRELOADER_ANIMATION_AUDIO_WAVE</option>
-            <option value="circle-two">HELIX_PRELOADER_ANIMATION_CIRCLE_TWO</option>
-            <option value="clock">HELIX_PRELOADER_ANIMATION_CLOCK</option>
-            <option value="logo">HELIX_PRELOADER_ANIMATION_LOGO</option>
-        </field>
+		<field name="preloader_animation" helixgroup="preloader" class="child preloader preloader_1" type="list" default="circle" label="HELIX_PRELOADER_ANIMATION" description="HELIX_PRELOADER_ANIMATION_DESC">
+				<option value="circle">HELIX_PRELOADER_ANIMATION_CIRCLE</option>
+				<option value="double-loop">HELIX_PRELOADER_ANIMATION_DOUBLE_LOOP</option>
+				<option value="wave-two">HELIX_PRELOADER_ANIMATION_WAVE_TWO</option>
+				<option value="audio-wave">HELIX_PRELOADER_ANIMATION_AUDIO_WAVE</option>
+				<option value="circle-two">HELIX_PRELOADER_ANIMATION_CIRCLE_TWO</option>
+				<option value="clock">HELIX_PRELOADER_ANIMATION_CLOCK</option>
+				<option value="logo">HELIX_PRELOADER_ANIMATION_LOGO</option>
+		</field>
 
-        <field
-            name="preloader_bg"
-            class="child preloader preloader_1"
-            group="global"
-            type="color"
-            default="#f5f5f5"
-            label="HELIX_PRELOADER_BG_COLOR"
-            description="HELIX_PRELOADER_BG_COLOR_DESC"
-        />
+		<field name="preloader_bg" helixgroup="preloader" class="child preloader preloader_1" type="color" default="#f5f5f5" label="HELIX_PRELOADER_BG_COLOR" description="HELIX_PRELOADER_BG_COLOR_DESC" />
+		<field name="preloader_tx" helixgroup="preloader" class="child preloader preloader_1" type="color" default="#333333" label="HELIX_PRELOADER_TX_COLOR" description="HELIX_PRELOADER_TX_COLOR_DESC" />
 
-        <field
-            name="preloader_tx"
-            class="child preloader preloader_1"
-            group="global"
-            type="color"
-            default="#333333"
-            label="HELIX_PRELOADER_TX_COLOR"
-            description="HELIX_PRELOADER_TX_COLOR_DESC"
-        />
+		<field name="goto_top" helixgroup="global" class="goto-top radio-group" type="radio" default="0" label="HELIX_GOTO_TOP" description="HELIX_GO_TOP_DESC">
+				<option value="0">HELIX_NO</option>
+				<option value="1">HELIX_YES</option>
+		</field>
 
-        <field
-            name="goto_top"
-            class="goto-top"
-            group="global"
-            type="radio"
-            default="0"
-            label="HELIX_GOTO_TOP"
-            description="HELIX_GO_TOP_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
+		<field name="logo_type" helixgroup="header" class="parent logotype" type="radio" default="image" label="HELIX_LOGO_TYPE" description="HELIX_LOGO_TYPE_DESC">
+				<option value="image">HELIX_LOGO_TYPE_IMAGE</option>
+				<option value="text">HELIX_LOGO_TYPE_TEXT</option>
+		</field>
+		<field name="logo_position" helixgroup="header" class="child logotype logotype_image logotype_text" type="modpos" default="logo" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" />
+		<field name="logo_load_pos" helixgroup="header" class="child logotype logotype_image logotype_text" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC">
+				<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
+				<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
+				<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
+		</field>
 
-        <field
-            type="group"
-            name="header"
-            title="HELIX_HEADER"
-        />
+		<!-- logo image -->
+		<field name="logo_image" helixgroup="header" class="child logotype logotype_image" type="helixmedia" preview="true" label="HELIX_LOGO_TYPE_IMAGE" description="HELIX_LOGO_TYPE_IMAGE_DESC" />
+		<field name="logo_image_2x" helixgroup="header" class="child logotype logotype_image" type="helixmedia" preview="true" label="HELIX_LOGO_TYPE_IMAGE_RETINA" description="HELIX_LOGO_TYPE_IMAGE_RETINA_DESC" />
+		<field name="mobile_logo" helixgroup="header" type="helixmedia" class="child logotype logotype_image" preview="true" label="HELIX_MOBILE_LOGO" description="HELIX_MOBILE_LOGO_DESC" />
 
-        <field
-            name="sticky_header"
-            class="parent mb_logo"
-            group="header"
-            type="radio"
-            default="1"
-            label="HELIX_STICKY_HEADER"
-            description="HELIX_STICKY_HEADER_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
+		<!-- logo text -->
+		<field name="logo_text" helixgroup="header" class="child logotype logotype_text" type="text" label="HELIX_LOGO_TYPE_TEXT" description="HELIX_LOGO_TYPE_TEXT_DESC" />
+		<field name="logo_slogan" helixgroup="header" class="child logotype logotype_text" type="text" label="HELIX_LOGO_SLOGAN" description="HELIX_LOGO_SLOGAN_DESC" />
 
-        <field
-            name="favicon"
-            type="media"
-            group="header"
-            preview="true"
-            label="HELIX_FAVICON"
-            description="HELIX_FAVICON_DESC"
-        />
-    </fieldset>
-    <!--End Basic Tab-->
+		<field name="sticky_header" helixgroup="header" class="parent mb_logo" type="radio" default="1" label="HELIX_STICKY_HEADER" description="HELIX_STICKY_HEADER_DESC">
+				<option value="1">HELIX_YES</option>
+				<option value="0">HELIX_NO</option>
+		</field>
+		<field name="favicon" helixgroup="header" type="helixmedia" preview="true" label="HELIX_FAVICON" description="HELIX_FAVICON_DESC" />
 
-    <!--Start Layout Tab-->
-    <fieldset name="layout" label="Layout" addfieldpath="/plugins/system/helix3/fields">
-        <field name="layoutlist" type="layoutlist" />
-        <field
-            name="hrdesign"
-            type="header"
-            preview="true"
-            label="Header Design"
-            description="HELIX_FAVICON_DESC"
-        />
-        <field type="layout" name="layout" />
-    </fieldset>
-    <!--End Layout Tab-->
+		<!--Layout Type-->
+		<field name="boxed_layout" helixgroup="body" type="radio" class="radio-group" default="0" label="HELIX_ENABLE_BOXED_LAYOUT" description="HELIX_ENABLE_BOXED_LAYOUT_DESC">
+				<option value="1">HELIX_YES</option>
+				<option value="0">HELIX_NO</option>
+		</field>
 
-    <fieldset name="preset" label="Preset"  addfieldpath="/plugins/system/helix3/fields">
+		<!--Backgroud-->
+		<field name="body_bg_image" helixgroup="body" type="helixmedia" preview="true" label="HELIX_BODY_BACKGROUND_IMAGE" description="HELIX_BODY_BACKGROUND_IMAGE_DESC" />
+		<field name="body_bg_repeat" helixgroup="body" type="list" default="inherit" label="HELIX_BG_REPEAT" description="HELIX_BG_REPEAT_DESC">
+				<option value="no-repeat">HELIX_BG_REPEAT_NO</option>
+				<option value="repeat">HELIX_BG_REPEAT_ALL</option>
+				<option value="repeat-x">HELIX_BG_REPEAT_HORIZ</option>
+				<option value="repeat-y">HELIX_BG_REPEAT_VERTI</option>
+				<option value="inherit">HELIX_BG_REPEAT_INHERIT</option>
+		</field>
+		<field name="body_bg_size" helixgroup="body" type="list" default="inherit" label="HELIX_BG_SIZE" description="HELIX_BG_SIZE_DESC">
+				<option value="cover">HELIX_BG_COVER</option>
+				<option value="contain">HELIX_BG_CONTAIN</option>
+				<option value="inherit">HELIX_BG_INHERIT</option>
+		</field>
+		<field name="body_bg_attachment" helixgroup="body" type="list" default="inherit" label="HELIX_BG_ATTACHMENT" description="HELIX_BG_ATTACHMENT_DESC">
+				<option value="fixed">HELIX_BG_ATTACHMENT_FIXED</option>
+				<option value="scroll">HELIX_BG_ATTACHMENT_SCROLL</option>
+				<option value="inherit">HELIX_BG_ATTACHMENT_INHERIT</option>
+		</field>
+		<field name="body_bg_position" helixgroup="body" type="list" default="0 0" label="HELIX_BG_POSITION" description="HELIX_BG_POSITION_DESC">
+				<option value="0 0">HELIX_BG_POSITION_LEFT_TOP</option>
+				<option value="0 50%">HELIX_BG_POSITION_LEFT_CENTER</option>
+				<option value="0 100%">HELIX_BG_POSITION_LEFT_BOTTOM</option>
+				<option value="50% 0">HELIX_BG_POSITION_CENTER_TOP</option>
+				<option value="50% 50%">HELIX_BG_POSITION_CENTER_CENTER</option>
+				<option value="50% 100%">HELIX_BG_POSITION_CENTER_BOTTOM</option>
+				<option value="100% 0">HELIX_BG_POSITION_RIGHT_TOP</option>
+				<option value="100% 50%">HELIX_BG_POSITION_RIGHT_CENTER</option>
+				<option value="100% 100%">HELIX_BG_POSITION_RIGHT_BOTTOM</option>
+		</field>
 
-        <field name="preset" type="presets" default="preset1" label="Select an option" description="">
-            <preset name="preset1" label="Preset 1" default="#ff1111">
-                <color name="bg_color" value="#ffffff" />
-                <color name="major_color" value="#ff1111" />
-            </preset>
+		<!-- Footer -->
+		<field name="enabled_copyright" helixgroup="footer" type="radio" class="parent copyright radio-group" default="1" label="HELIX_COPYRIGHT" description="HELIX_COPYRIGHT_DESC">
+				<option value="1">HELIX_SHOW</option>
+				<option value="0">HELIX_HIDE</option>
+		</field>
+		<field name="copyright_position" helixgroup="footer" type="moduleposition" default="footer1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child copyright copyright_1" />
 
-            <preset name="preset2" label="Preset 2" default="#ffff11">
-                <color name="bg_color" value="#ffffff" />
-                <color name="major_color" value="#ffff11" />
-            </preset>
+		<field name="copyright_load_pos" helixgroup="footer" class="child copyright copyright_1" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC">
+				<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
+				<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
+				<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
+		</field>
 
-            <preset name="preset3" label="Preset 3" default="#ff11ff">
-                <color name="bg_color" value="#ffffff" />
-                <color name="major_color" value="#ff11ff" />
-            </preset>
-        </field>
+		<field name="copyright" helixgroup="footer" class="child copyright copyright_1" type="textarea" rows="6" cols="30" default="© 2015 Your Company. All Rights Reserved. Designed By JoomShaper" label="HELIX_COMPYRIGHT_TEXT" description="HELIX_COMPYRIGHT_TEXT_DESC" filter="raw" />
 
-        <!--Start Preset1-->
-        <field name="bg_color" class="preset-control" type="color" default="#ffffff" label="HELIX_BACKGROUND_COLOR" description="HELIX_BACKGROUND_COLOR_DESC" />
-        <field name="major_color" class="preset-control" type="color" default="#ff1111" label="HELIX_TEXT_COLOR" description="HELIX_TEXT_COLOR_DESC" />
-        <!--End Preset1-->
-    </fieldset>
-    <!--End Preset-->
+		<!--Social Icons-->
+		<field name="show_social_icons" helixgroup="social_icons" type="radio" default="1" label="HELIX_SOCIAL_ICONS" description="HELIX_SOCIAL_ICONS_DESC" class="parent social_icons radio-group">
+				<option value="1">HELIX_SHOW</option>
+				<option value="0">HELIX_HIDE</option>
+		</field>
+		<field name="social_position" helixgroup="social_icons" type="moduleposition" default="top1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child social_icons social_icons_1" />
+		<field name="social_load_pos" helixgroup="social_icons" class="child social_icons social_icons_1" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC">
+				<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
+				<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
+				<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
+		</field>
+		<field name="facebook" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_FACEBOOK" description="HELIX_SOCIAL_ICON_FACEBOOK_DESC" class="child social_icons social_icons_1" />
+		<field name="twitter" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_TWITTER" description="HELIX_SOCIAL_ICON_TWITTER_DESC" class="child social_icons social_icons_1" />
+		<field name="googleplus" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_GOOGLEPLUS" description="HELIX_SOCIAL_ICON_GOOGLEPLUS_DESC" class="child social_icons social_icons_1" />
+		<field name="pinterest" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_PINTEREST" description="HELIX_SOCIAL_ICON_PINTEREST_DESC" class="child social_icons social_icons_1" />
+		<field name="linkedin" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_LINKEDIN" description="HELIX_SOCIAL_ICON_LINKEDIN_DESC" class="child social_icons social_icons_1" />
+		<field name="dribbble" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_DRIBBBLE" description="HELIX_SOCIAL_ICON_DRIBBBLE_DESC" class="child social_icons social_icons_1" />
+		<field name="behance" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_BEHANCE" description="HELIX_SOCIAL_ICON_BEHANCE_DESC" class="child social_icons social_icons_1" />
+		<field name="youtube" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_YOUTUBE" description="HELIX_SOCIAL_ICON_YOUTUBE_DESC" class="child social_icons social_icons_1" />
+		<field name="flickr" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_FLICKR" description="HELIX_SOCIAL_ICON_FLICKR_DESC" class="child social_icons social_icons_1" />
+		<field name="skype" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_SKYPE" description="HELIX_SOCIAL_ICON_SKYPE_DESC" class="child social_icons social_icons_1" />
+		<field name="whatsapp" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_WHATSAPP" description="HELIX_SOCIAL_ICON_WHATSAPP_DESC" class="child social_icons social_icons_1" />
+		<field name="vk" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_VK" description="HELIX_SOCIAL_ICON_VK_DESC" class="child social_icons social_icons_1" />
+		<field name="custom" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_CUSTOM" description="HELIX_SOCIAL_ICON_CUSTOM_DESC" class="child social_icons social_icons_1" />
 
-    <!--Start Menu Tab-->
-    <fieldset name="menu" label="Navigation">
+		<!--Contact Info-->
+		<field name="enable_contactinfo" helixgroup="contact_info" type="radio" default="1" label="HELIX_ENABLE_CONTACT_INFO" description="HELIX_ENABLE_CONTACT_INFO_DESC" class="parent contactinfo">
+				<option value="0">HELIX_NO</option>
+				<option value="1">HELIX_YES</option>
+		</field>
+		<field name="contact_position" helixgroup="contact_info" type="moduleposition" default="top2" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child contactinfo contactinfo_1" />
+		<field name="contact_phone" helixgroup="contact_info" type="text" hint="+228 872 4444" label="HELIX_CONTACT_PHONE" description="HELIX_CONTACT_PHONE_DESC" class="child contactinfo contactinfo_1" />
+		<field name="contact_mobile" helixgroup="contact_info" type="text" hint="+775 872 4444" label="HELIX_CONTACT_MOBILE" description="HELIX_CONTACT_MOBILE_DESC" class="child contactinfo contactinfo_1" />
+		<field name="contact_email" helixgroup="contact_info" type="email" hint="contact@email.com" label="HELIX_CONTACT_EMAIL" description="HELIX_CONTACT_EMAIL_DESC" class="child contactinfo contactinfo_1" />
+		<field name="contact_time" helixgroup="contact_info" type="text" hint="Mon - Fri 8:00 - 17:30" label="HELIX_CONTACT_OPEN_HOURS" description="HELIX_CONTACT_OPEN_HOURS_DESC" class="child contactinfo contactinfo_1" />
 
-        <field
-            type="group"
-            title="HELIX_MEGAMENU"
-            name="navops"
-        />
+		<!--Coming Soon-->
+		<field name="comingsoon_mode" helixgroup="comingsoon" type="radio" default="0" label="HELIX_COMINGSOON_MODE" description="HELIX_COMINGSOON_MODE_DESC" class="parent comingsoon">
+				<option value="0">HELIX_NO</option>
+				<option value="1">HELIX_YES</option>
+		</field>
+		<field name="comingsoon_bg" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_BG" description="HELIX_COMINGSOON_BG_DESC" class="child comingsoon comingsoon_1" />
+		<field name="comingsoon_logo" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_LOGO" description="HELIX_COMINGSOON_LOGO_DESC" class="child comingsoon comingsoon_1" />
+		<field name="comingsoon_title" helixgroup="comingsoon" type="text" default="Coming Soon Title" label="HELIX_COMINGSOON_TITLE" description="HELIX_COMINGSOON_TITLE_DESC" class="child comingsoon comingsoon_1" />
+		<field name="comingsoon_date" helixgroup="comingsoon" type="calendar" default="5-10-2018" format="%d-%m-%Y" label="HELIX_COMINGSOON_DATE" description="HELIX_COMINGSOON_DATE_DESC" class="child comingsoon comingsoon_1" />
+		<field name="comingsoon_content" helixgroup="comingsoon" type="textarea" default="Coming soon content" label="HELIX_COMINGSOON_CONTENT" description="HELIX_COMINGSOON_CONTENT_DESC" filter="raw" class="child comingsoon comingsoon_1" />
 
-        <field
-            name="menu"
-            type="menu"
-            default="mainmenu"
-            group="navops"
-            label="HELIX_MEGAMENU_SELECT"
-            description="HELIX_MEGAMENU_SELECT_DESC"
-        />
+		<!--Error Page-->
+		<field name="error_bg" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ERRORPAGE_BG" description="HELIX_ERRORPAGE_BG_DESC" />
+		<field name="error_logo" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ERRORPAGE_LOGO" description="HELIX_ERRORPAGE_LOGO_DESC" />
 
-        <field
-            name="menu_type"
-            class="parent menutype"
-            group="navops"
-            type="list"
-            default="mega_offcanvas"
-            label="HELIX_MENU_TYPE"
-            description="HELIX_MENU_TYPE_DESC"
-        >
-            <option value="mega_offcanvas">HELIX_MEGAMENU_OFFCANVAS</option>
-            <option value="mega">HELIX_MEGAMENU</option>
-            <option value="offcanvas">HELIX_OFFCANVAS</option>
-        </field>
+	</fieldset>
 
-        <field
-            name="dropdown_width"
-            type="number"
-            class="child menutype menutype_mega_offcanvas menutype_mega"
-            group="navops"
-            label="HELIX_MEGAMENU_DROPDOWN_WIDTH"
-            description="HELIX_MEGAMENU_DROPDOWN_WIDTH_DESC" hint="240"
-        />
+	<fieldset name="preset" label="Preset" addfieldpath="/plugins/system/helix3/fields" icon="fa fa-paint-brush">
 
-    </fieldset>
-    <!--End Menu Tab-->
+		<field name="preset" type="presets" default="preset1" label="Select an option" description="">
+			<preset name="preset1" label="Preset 1" default="#ff1111">
+				<color name="bg_color" value="#ffffff" />
+				<color name="major_color" value="#ff1111" />
+			</preset>
 
-    <!--Start Font Tab-->
-    <fieldset name="typography" label="Typography" addfieldpath="/plugins/system/helix3/fields">
+			<preset name="preset2" label="Preset 2" default="#ffff11">
+				<color name="bg_color" value="#ffffff" />
+				<color name="major_color" value="#ffff11" />
+			</preset>
 
-        <field
-            type="group"
-            name="googlefont"
-            title="Google Fonts List"
-        />
+			<preset name="preset3" label="Preset 3" default="#ff11ff">
+				<color name="bg_color" value="#ffffff" />
+				<color name="major_color" value="#ff11ff" />
+			</preset>
+		</field>
 
-        <field
-            name="update_fonts"
-            type="button"
-            class="btn-primary btn-update-fonts-list"
-            group="googlefont"
-            url="#"
-            text="HELIX_UPDATE_FONTS_CLICK"
-            label="HELIX_UPDATE_FONTS_LIST"
-            description="HELIX_UPDATE_FONTS_LIST_DESC"
-        />
+		<!--Start Preset1-->
+		<field name="bg_color" class="preset-control" type="color" default="#ffffff" label="HELIX_BACKGROUND_COLOR" description="HELIX_BACKGROUND_COLOR_DESC" />
+		<field name="major_color" class="preset-control" type="color" default="#ff1111" label="HELIX_TEXT_COLOR" description="HELIX_TEXT_COLOR_DESC" />
+		<!--End Preset1-->
+	</fieldset>
 
-        <field
-            name="enable_body_font"
-            class="parent body_font"
-            group="googlefont"
-            type="radio"
-            default="1"
-            label="HELIX_ENABLE_FONT"
-            description="HELIX_ENABLE_FONT_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
+	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helix3/fields" icon="fa fa-list-alt">
+		<field name="layoutlist" type="layoutlist" />
+		<field
+			name="hrdesign"
+			type="header"
+			preview="true"
+			label="Header Design"
+			description="HELIX_FAVICON_DESC"
+			/>
+			<field type="layout" name="layout" />
+		</fieldset>
 
-        <field
-            name="body_font"
-            type="typography"
-            class="child body_font body_font_1"
-            group="googlefont"
-            default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}'
-            label="HELIX_SELECT_FONT"
-            description="HELIX_SELECT_FONT_DESC"
-        />
+	<fieldset name="menu" label="Navigation" icon="fa fa-list">
+			<field type="group" title="HELIX_MEGAMENU" />
+			<field name="menu" type="menu" default="mainmenu" label="HELIX_MEGAMENU_SELECT" description="HELIX_MEGAMENU_SELECT_DESC" />
+			<field name="menu_type" class="parent menutype" type="list" default="mega_offcanvas" label="HELIX_MENU_TYPE" description="HELIX_MENU_TYPE_DESC">
+					<option value="mega_offcanvas">HELIX_MEGAMENU_OFFCANVAS</option>
+					<option value="mega">HELIX_MEGAMENU</option>
+					<option value="offcanvas">HELIX_OFFCANVAS</option>
+			</field>
+			<field name="dropdown_width" type="number" class="child menutype menutype_mega_offcanvas menutype_mega" label="HELIX_MEGAMENU_DROPDOWN_WIDTH" description="HELIX_MEGAMENU_DROPDOWN_WIDTH_DESC" hint="240" />
+			<field name="menu_animation" class="child menutype menutype_mega_offcanvas menutype_mega" type="list" default="menu-fade" label="HELIX_MENU_DROPDOWN_ANIMATION" description="HELIX_MENU_DROPDOWN_ANIMATION_DESC">
+					<option value="none">HELIX_NO_ANIMATION</option>
+					<option value="menu-fade">HELIX_FADE_ANIMATION</option>
+					<option value="menu-zoom">HELIX_ZOOM_ANIMATION</option>
+					<option value="menu-fade-up">HELIX_FADE_UP_ANIMATION</option>
+					<option value="menu-rotate">HELIX_ELASTIC_ANIMATION</option>
+					<option value="menu-slide-down">HELIX_SLIDEDOWN_ANIMATION</option>
+					<option value="menu-drop-in">HELIX_DROPIN_ANIMATION</option>
+					<option value="menu-twist">HELIX_TWIST_ANIMATION</option>
+			</field>
 
-        <field
-            type="group"
-            name="customfont"
-            title="Custom Fonts List"
-        />
+			<field name="offcanvas_animation" class="child" type="list" default="default" label="HELIX_MENU_OFFCANVAS_ANIMATION" description="HELIX_MENU_OFFCANVAS_ANIMATION_DESC">
+					<option value="default">HELIX_OFFANIMATION_DEFAULT</option>
+					<option value="fullscreen">HELIX_OFFANIMATION_FULLSCREEN</option>
+					<option value="fullScreen-top">HELIX_OFFANIMATION_FULLSCREEN_FROM_TOP</option>
+					<option value="slidetop">HELIX_OFFANIMATION_SLIDE_RIGHT</option>
+					<option value="drarkplus">HELIX_OFFANIMATION_DARK_PLUS</option>
+			</field>
+	</fieldset>
 
-        <field
-            name="enable_custom_font"
-            class="parent custom_font group-custfont"
-            type="radio"
-            group="customfont"
-            default="0"
-            label="HELIX_ENABLE_FONT"
-            description="HELIX_ENABLE_FONT_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
+	<fieldset name="typography" label="Typography" icon="fa fa-font" addfieldpath="/plugins/system/helix3/fields">
+			<field type="group" title="Google Fonts List" />
+			<field name="update_fonts" type="button" url="#" text="HELIX_UPDATE_FONTS_CLICK" label="HELIX_UPDATE_FONTS_LIST" description="HELIX_UPDATE_FONTS_LIST_DESC" class="btn-primary btn-update-fonts-list" />
 
-        <field
-            name="custom_font"
-            type="typography"
-            group="customfont"
-            class="child custom_font custom_font_1 group-custfont"
-            label="HELIX_SELECT_FONT"
-            description="HELIX_SELECT_FONT_DESC"
-        />
+			<field type="group" title="HELIX_BODY_FONT" subtitle="HELIX_BODY_FONT_DESC" />
+			<field name="enable_body_font" class="parent body_font" type="radio" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="body_font" type="typography" class="child body_font body_font_1" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-        <field
-            name="custom_font_selectors"
-            type="textarea"
-            group="customfont"
-            class="child  custom_font custom_font_1 group-custfont"
-            label="HELIX_FONT_CUSTOM_SELECTORS"
-            description="HELIX_FONT_CUSTOM_SELECTORS_DESC"
-        />
+			<field type="group" title="HEADING1_FONT" subtitle="HEADING1_FONT_DESC" />
+			<field name="enable_h1_font" class="parent h1_font" type="radio" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="h1_font" type="typography" class="child  h1_font h1_font_1" default='{"fontFamily":"Open Sans","fontWeight":"800","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-    </fieldset>
-    <!--End Font Tab-->
+			<field type="group" title="HEADING2_FONT" subtitle="HEADING2_FONT_DESC" />
+			<field name="enable_h2_font" class="parent h2_font" type="radio" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="h2_font" type="typography" class="child  h2_font h2_font_1" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-    <!--Start Custom Code Tab-->
-    <fieldset name="custom_code" label="Custom Code">
+			<field type="group" title="HEADING3_FONT" subtitle="HEADING3_FONT_DESC" />
+			<field name="enable_h3_font" class="parent h3_font" type="radio" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="h3_font" type="typography" class="child  h3_font h3_font_1" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-        <field
-            type="group"
-            name="customcode"
-            title="HELIX_CUSTOM_CODE"
-        />
+			<field type="group" title="HEADING4_FONT" subtitle="HEADING4_FONT_DESC" />
+			<field name="enable_h4_font" class="parent h4_font" type="radio" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="h4_font" type="typography" class="child  h4_font h4_font_1" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-        <field
-            name="before_head"
-            type="textarea"
-            group="customcode"
-            rows="5"
-            label="HELIX_BEFORE_HEAD"
-            description="HELIX_BEFORE_HEAD_DESC"
-            filter="raw"
-        />
+			<field type="group" title="HEADING5_FONT" subtitle="HEADING5_FONT_DESC" />
+			<field name="enable_h5_font" class="parent h5_font" type="radio" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="h5_font" type="typography" class="child  h5_font h5_font_1" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-        <field
-            name="before_body"
-            type="textarea"
-            group="customcode"
-            rows="5"
-            label="HELIX_BEFORE_BODY"
-            description="HELIX_BEFORE_BODY_DESC"
-            filter="raw"
-        />
+			<field type="group" title="HEADING6_FONT" subtitle="HEADING6_FONT_DESC" />
+			<field name="enable_h6_font" class="parent h6_font" type="radio" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="h6_font" type="typography" class="child  h6_font h6_font_1" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-        <field
-            name="custom_css"
-            type="textarea"
-            group="customcode"
-            rows="5"
-            label="HELIX_CUSTOM_CSS"
-            description="HELIX_CUSTOM_CSS_DESC"
-            filter="raw"
-        />
+			<field type="group" title="NAVIGATION_FONT" subtitle="NAVIGATION_FONT_DESC" />
+			<field name="enable_navigation_font" class="parent navigation_font" type="radio" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="navigation_font" type="typography" class="child  navigation_font navigation_font_1" label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
 
-        <field
-            name="custom_js"
-            type="textarea"
-            group="customcode"
-            rows="5"
-            label="HELIX_CUSTOM_JS"
-            description="HELIX_CUSTOM_JS_DESC"
-            filter="raw"
-        />
-    </fieldset>
-    <!--End Custom Code Tab-->
+			<field type="group" title="CUSTOM_FONT" subtitle="CUSTOM_FONT_DESC" />
+			<field name="enable_custom_font" class="parent custom_font" type="radio" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="custom_font" type="typography" class="child  custom_font custom_font_1" label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="custom_font_selectors" type="textarea" class="child  custom_font custom_font_1" label="HELIX_FONT_CUSTOM_SELECTORS" description="HELIX_FONT_CUSTOM_SELECTORS_DESC" />
 
-    <!--Start Advanced Tab-->
-    <fieldset name="advance" label="Advanced">
+	</fieldset>
 
-        <field
-            type="group"
-            name="cache"
-            title="HELIX_CACHE_SETTINGS"
-        />
+	<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">
+			<field type="group" title="HELIX_CUSTOM_CODE" />
+			<field name="before_head" type="textarea" rows="5" label="HELIX_BEFORE_HEAD" description="HELIX_BEFORE_HEAD_DESC" filter="raw" />
+			<field name="before_body" type="textarea" rows="5" label="HELIX_BEFORE_BODY" description="HELIX_BEFORE_BODY_DESC" filter="raw" />
+			<field name="custom_css" type="textarea" rows="5" label="HELIX_CUSTOM_CSS" description="HELIX_CUSTOM_CSS_DESC" filter="raw" />
+			<field name="custom_js" type="textarea" rows="5" label="HELIX_CUSTOM_JS" description="HELIX_CUSTOM_JS_DESC" filter="raw" />
+	</fieldset>
+	<!--End Custom Code Tab-->
 
-        <field
-            name="compress_css"
-            type="radio"
-            group="cache"
-            default="0"
-            label="HELIX_CSS_COMPRESS"
-            description="HELIX_CSS_COMPRESS_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
+	<!--Start Advanced Tab-->
+	<fieldset name="advance" label="Advanced" icon="fa fa-cog">
+			<field name="compress_css" helixgroup="compression" type="radio" default="0" label="HELIX_CSS_COMPRESS" description="HELIX_CSS_COMPRESS_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="compress_js" helixgroup="compression" type="radio" default="0" label="HELIX_JS_COMPRESS" description="HELIX_CSS_COMPRESS_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="exclude_js" helixgroup="compression" type="textarea" label="HELIX_EXCLUDE_JS" description="HELIX_EXCLUDE_JS_DESC" />
 
-        <field
-            name="compress_js"
-            type="radio"
-            group="cache"
-            default="0"
-            label="HELIX_JS_COMPRESS"
-            description="HELIX_CSS_COMPRESS_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
+			<field name="lessoption" helixgroup="scss" type="radio" default="0" label="HELIX_ENABLE_LESS" description="HELIX_ENABLE_LESS_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
 
-        <field
-            name="exclude_js"
-            type="textarea"
-            group="cache"
-            label="HELIX_EXCLUDE_JS"
-            description="HELIX_EXCLUDE_JS_DESC"
-        />
+			<field name="export_options" helixgroup="importexport" type="optionio" label="HELIX_IMPORT_EXPORT_FIELD"/>
+	</fieldset>
+	<!--End Advanced Tab-->
 
-        <field
-            type="group"
-            name="misc"
-            title="HELIX_LESS"
-        />
+	<!--Start Blog Tab-->
+	<fieldset name="blog" label="Blog" icon="fa fa-font">
+			<field type="group" title="HELIX_POST_FORMAT" />
+			<field name="show_post_format" type="radio" default="1" label="HELIX_SHOW_POST_FORMAT" description="HELIX_SHOW_POST_FORMAT_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
 
-        <field
-            name="lessoption"
-            type="radio"
-            group="misc"
-            default="0"
-            label="HELIX_ENABLE_LESS"
-            description="HELIX_ENABLE_LESS_DESC"
-        >
-            <option value="1">HELIX_YES</option>
-            <option value="0">HELIX_NO</option>
-        </field>
-        
-        <field
-            name="export_options"
-            type="optionio"
-            group="misc"
-            label="HELIX_IMPORT_EXPORT_FIELD"
-        />
+			<field type="group" title="HELIX_COMMENTS" />
+			<field name="commenting_engine" type="list" default="disabled" class="parent comment_engine" label="HELIX_COMMENTING_ENGINE" description="HELIX_COMMENTING_ENGINE_DESC">
+					<option value="disqus">HELIX_DISQUSS</option>
+					<option value="intensedebate">HELIX_INTENSEDEBATE</option>
+					<option value="facebook">HELIX_FB</option>
+					<option value="disabled">HELIX_DISABLED</option>
+			</field>
+			<field name="disqus_subdomain" type="text" class="child comment_engine comment_engine_disqus" label="HELIX_DISQUS_SUBDOMAIN" description="HELIX_DISQUS_SUBDOMAIN_DESC" />
+			<field name="disqus_devmode" type="radio" class="btn-group child comment_engine comment_engine_disqus" default="0" label="HELIX_DISQUS_DEV_MODE" description="HELIX_DISQUS_DEV_MODE_DESC">
+					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
+			</field>
+			<field name="intensedebate_acc" type="text" default="" class="child comment_engine comment_engine_intensedebate" label="HELIX_INTENSEDEBATE_ACC" description="HELIX_INTENSEDEBATE_ACC_DESC" />
+			<field name="fb_appID" type="text" class="child comment_engine comment_engine_facebook" label="HELIX_FB_ID" description="HELIX_FB_ID_DESC" />
+			<field name="fb_width" type="number" default="500" class="child comment_engine comment_engine_facebook" label="HELIX_FB_COMMENTS_WIDTH" description="HELIX_FB_COMMENTS_WIDTH_DESC" />
+			<field name="fb_cpp" type="number" default="10" class="child comment_engine comment_engine_facebook" label="HELIX_FB_COMMENTS_PER_PAGE" description="HELIX_FB_COMMENTS_PER_PAGE_DESC" />
+			<field name="comments_count" type="radio" default="0" class="btn-group child comment_engine comment_engine_disqus comment_engine_intensedebate comment_engine_facebook" label="HELIX_COMMENTS_COUNT" description="HELIX_COMMENTS_COUNT_DESC">
+					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
+			</field>
 
-    </fieldset>
-    <!--End Advanced Tab-->
+			<field type="group" title="HELIX_SOCIAL_SHARE" />
+			<field name="social_share" type="radio" default="1" label="HELIX_ENABLE_SOCIAL_SHARE" description="HELIX_ENABLE_SOCIAL_SHARE_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+
+			<!--Blog Image-->
+			<field type="group" title="HELIX_IMAGE_SIZES" />
+			<field name="image_small" type="radio" default="0" class="parent image_small" label="HELIX_IMAGE_SMALL" description="HELIX_IMAGE_SMALL_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="image_small_size" type="text" default="100X100" hint="100X100" class="child image_small image_small_1" label="HELIX_IMAGE_SMALL_SIZE" description="HELIX_IMAGE_SMALL_SIZE_DESC" />
+
+			<field name="image_thumbnail" type="radio" default="1" class="parent image_thumbnail" label="HELIX_IMAGE_THUMBNAIL" description="HELIX_IMAGE_THUMBNAIL_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="image_thumbnail_size" type="text" default="200X200" hint="200X200" class="child image_thumbnail image_thumbnail_1" label="HELIX_IMAGE_THUMBNAIL_SIZE" description="HELIX_IMAGE_THUMBNAIL_SIZE_DESC" />
+
+			<field name="image_medium" type="radio" default="0" class="parent image_medium" label="HELIX_IMAGE_MEDIUM" description="HELIX_IMAGE_MEDIUM_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="image_medium_size" type="text" default="300X300" hint="300X300" class="child image_medium image_medium_1" label="HELIX_IMAGE_MEDIUM_SIZE" description="HELIX_IMAGE_MEDIUM_SIZE_DESC" />
+
+			<field name="image_large" type="radio" default="0" class="parent image_large" label="HELIX_IMAGE_LARGE" description="HELIX_IMAGE_LARGE_DESC">
+					<option value="1">HELIX_YES</option>
+					<option value="0">HELIX_NO</option>
+			</field>
+			<field name="image_large_size" type="text" default="600X600" hint="600X600" class="child image_large image_large_1" label="HELIX_IMAGE_LARGE_SIZE" description="HELIX_IMAGE_LARGE_SIZE_DESC" />
+
+			<field name="blog_list_image" type="list" default="default" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
+					<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
+					<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
+					<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
+					<option value="medium">HELIX_BLOG_LIST_IMAGE_MEDIUM</option>
+					<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
+			</field>
+	</fieldset>
+
 </form>

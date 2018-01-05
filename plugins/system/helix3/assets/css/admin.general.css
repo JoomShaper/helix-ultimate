@@ -825,18 +825,6 @@ body .minicolors-theme-bootstrap .minicolors-swatch {
     float: left
 }
 
-.sidebar-container{
-    width: 600px;
-    background: rgb(242, 242, 242);
-}
-
-.preview-container{
-    width: 100%;
-    width: -webkit-calc(100% - 600px);
-    width: -moz-calc(100% - 600px);
-    width: calc(100% - 600px);
-}
-
 #theme-preview{
     padding: 0;
     margin: 0;
@@ -851,46 +839,6 @@ body .minicolors-theme-bootstrap .minicolors-swatch {
 
 #hexli-ult-options{
     padding:15px 0;
-}
-
-.fieldset-wrap .fieldset-header {
-    padding: 10px 20px;
-    border-bottom: 2px solid rgb(242, 242, 242);
-    background: #fff;
-}
-
-.fieldset-wrap .fieldset-toggle-icon{
-    padding: 10px 10px 10px 20px;
-    float: left;
-    display: none;
-}
-
-.fieldset-header .fieldset-icon{
-    margin-right: 10px;
-}
-
-.fieldset-wrap .groups-list{
-    padding: 10px;
-    display: none;
-}
-
-.fieldset-wrap .groups-list .group-wrap{
-    margin-bottom: 15px;
-    background: #fff;
-}
-
-.fieldset-wrap .groups-list .group-header-box{
-    padding: 10px;
-    border: 1px solid #F5F7FA;
-}
-
-.groups-list .group-header-box .group-toggle-icon{
-    margin-right: 7px;
-}
-
-.fieldset-wrap .groups-list .fields-list{
-    padding: 10px;
-    display: none;
 }
 
 #hexli-ult-options.active-fieldset .fieldset-wrap{

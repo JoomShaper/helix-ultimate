@@ -1,0 +1,305 @@
+<?php
+/**
+* @package HelixUltimate Framework
+* @author JoomShaper http://www.joomshaper.com
+* @copyright Copyright (c) 2017 JoomShaper
+* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
+
+namespace HelixULT;
+
+defined ('_JEXEC') or die ('resticted access');
+
+jimport('joomla.filesystem.folder');
+jimport('joomla.filesystem.file');
+require_once __DIR__.'/helix-ult-model.php';
+require_once __DIR__.'/media.php';
+
+use HelixULT\Model\HelixUltModel as HelixUltModel;
+
+class Request{
+
+    protected $app;
+
+    protected $id;
+
+    protected $action;
+
+    protected $data;
+
+    protected $layout_name = '';
+
+    protected $report = array();
+
+    public function __construct()
+    {
+        $this->app = \JFactory::getApplication();
+        $input = $this->app->input;
+
+        $this->id       = $input->get('id',NULL,'INT');
+        $this->action   = $input->get('action','');
+        $this->data     = $input->get('data',array(),'ARRAY');
+        $this->report   = array( 'status' => false, 'message' => 'Unexpected error occurs');
+    }
+
+    public function initialize()
+    {
+        switch ($this->action)
+        {
+            case 'save-tmpl-style':
+                $this->saveTemplateStyle();
+                break;
+
+            case 'save-layout':
+                $this->copyTemplateLayout();
+                break;
+
+            case 'render-layout':
+                $this->renderTemplateLayout();
+                break;
+
+            case 'remove-layout-file':
+                $this->removeLayoutFile();
+                break;
+
+            case 'import-tmpl-style':
+                echo  json_encode(array('as'=>'asdasda','dsad'=>'saadad'));
+                break;
+
+            case 'view-media':
+                HelixUltimateMedia::getFolders();
+                break;
+
+            case 'delete-media':
+                HelixUltimateMedia::deleteMedia();
+                break;
+
+            case 'create-folder':
+                HelixUltimateMedia::createFolder();
+                break;
+
+            case 'upload-media':
+                HelixUltimateMedia::uploadMedia();
+                break;
+        }
+
+        echo json_encode($this->report);
+    }
+
+    private function saveTemplateStyle()
+    {
+        if (!$this->id || !is_int($this->id)) return;
+
+        $update = HelixUltModel::updateTemplateStyle($this->id, $this->data);
+
+        if ($update)
+        {
+            $this->report['status'] = true;
+            $this->report['message'] = 'Style changed successfully';
+        }
+    }
+
+    private function copyTemplateLayout()
+    {
+        $this->setLayoutParams();
+        $content = '';
+
+        if (isset($this->data['content']))
+        {
+            $content = $this->data['content'];
+        }
+
+        if ($this->layout_name && $content)
+        {
+            $file_name = $this->layout_file_path . '.json';
+
+            $file = fopen($file_name, 'wb');
+            fwrite($file, $content);
+            fclose($file);
+
+            $this->report['status'] = true;
+            $this->report['message'] = 'Files copy created as you saved';
+            $this->report['layout'] = \JFolder::files($this->layouts_folder_path, '.json');
+        }
+    }
+
+    private function renderTemplateLayout()
+    {
+        $this->setLayoutParams();
+
+        if (file_exists($this->layout_file_path))
+        {
+            $content = file_get_contents($this->layout_file_path);
+            if (isset($content) && $content)
+            {
+                $layoutHtml = $this->generateLayoutHTML(json_decode($content));
+
+                $this->report['status'] = true;
+                $this->report['message'] = 'Files content rendered';
+                $this->report['layoutHtml'] = $layoutHtml;
+            }
+        }
+    }
+
+    private function removeLayoutFile()
+    {
+        $this->setLayoutParams();
+
+        if (file_exists($this->layout_file_path))
+        {
+            unlink($this->layout_file_path);
+            $this->report['status'] = true;
+            $this->report['message'] = 'File removed';
+            $this->report['layout'] = \JFolder::files($this->layouts_folder_path, '.json');
+        }
+    }
+
+    private function importTemplateStyle()
+    {
+        if (!$this->id || !is_int($this->id)) return;
+
+        $update = HelixUltModel::updateTemplateStyle($this->id, $this->data);
+
+        if ($update)
+        {
+            $this->report['status'] = true;
+            $this->report['message'] = 'Style changed successfully';
+        }
+    }
+
+    private function setLayoutParams()
+    {
+        $tmpl_style = HelixUltModel::getTemplateStyle($this->id);
+        $this->template   = $tmpl_style->template;
+
+        if (isset($this->data['layoutName']))
+        {
+            $this->layout_name = $this->data['layoutName'];
+        }
+
+        $this->layouts_folder_path  = JPATH_SITE . '/templates/' . $this->template . '/layout/';
+        $this->layout_file_path     = $this->layouts_folder_path . $this->layout_name;
+    }
+
+    private function generateLayoutHTML($content = '')
+    {
+        $lang = \JFactory::getLanguage();
+        $lang->load('tpl_' . $this->template, JPATH_SITE, $lang->getName(), true);
+
+        $colGrid = array(
+            '12'        => '12',
+            '66'        => '6,6',
+            '444'       => '4,4,4',
+            '3333'      => '3,3,3,3',
+            '48'        => '4,8',
+            '39'        => '3,9',
+            '363'       => '3,6,3',
+            '264'       => '2,6,4',
+            '210'       => '2,10',
+            '57'        => '5,7',
+            '237'       => '2,3,7',
+            '255'       => '2,5,5',
+            '282'       => '2,8,2',
+            '2442'      => '2,4,4,2',
+        );
+
+        $html = '';
+
+        if ($content)
+        {
+            foreach ($content as $row)
+            {
+                $rowSettings = $this->getSettings($row->settings);
+                $name = \JText::_('HELIX_SECTION_TITLE');
+
+                if (isset($row->settings->name))
+                {
+                    $name = $row->settings->name;
+                }
+
+                $html .= '<div class="layoutbuilder-section" '. $rowSettings .'>';
+                $html .= '<div class="settings-section clearfix">';
+                $html .= '<div class="settings-left pull-left">';
+                $html .= '<a class="row-move" href="#"><i class="fa fa-arrows"></i></a>';
+                $html .= '<strong class="section-title">'. $name .'</strong>';
+                $html .= '</div>';
+                $html .= '<div class="settings-right pull-right">';
+                $html .= '<ul class="button-group">';
+                $html .= '<li>';
+                $html .= '<a class="btn btn-small add-columns" href="#"><i class="fa fa-columns"></i></a>';
+                $html .= '<ul class="column-list">';
+
+                $_active = '';
+                foreach ($colGrid as $key => $grid)
+                {
+                    if ($key == $row->layout){
+                        $_active = 'active';
+                    }
+                    $html .= '<li><a href="#" class="column-layout column-layout-' .$key. ' '.$_active.'" data-layout="'.$grid.'"></a></li>';
+                    $_active ='';
+                }
+
+                $active = '';
+                $customLayout = '';
+                if (!isset($colGrid[$row->layout]))
+                {
+                    $active = 'active';
+                    $split = str_split($row->layout);
+                    $customLayout = implode(',',$split);
+                }
+
+                $html .= '<li>';
+                $html .= '<a href="#" class="hasTooltip column-layout-custom column-layout custom ' . $active . '" data-layout="' . $customLayout . '" data-type="custom" data-original-title="<strong>Custom Layout</strong>"></a>';
+                $html .= '</li>';
+                $html .= '</ul>';
+                $html .= '</li>';
+                $html .= '<li><a class="btn btn-small add-row" href="#"><i class="fa fa-bars"></i></a></li>';
+                $html .= '<li><a class="btn btn-small row-ops-set" href="#"><i class="fa fa-gears"></i></a></li>';
+                $html .= '<li><a class="btn btn-danger btn-small remove-row" href="#"><i class="fa fa-times"></i></a></li>';
+                $html .= '</ul>';
+                $html .= '</div>';
+                $html .= '</div>';
+                $html .= '<div class="row ui-sortable">';
+
+                foreach ($row->attr as $column)
+                {
+                    $colSettings = $this->getSettings($column->settings);
+
+                    $html .= '<div class="'. $column->className .'" '. $colSettings . '>';
+                    $html .= '<div class="column">';
+
+                    if (isset($column->settings->column_type) && $column->settings->column_type)
+                    {
+                        $html .= '<h6 class="col-title pull-left">Component</h6>';
+                    }
+                    else
+                    {
+                        if (!isset($column->settings->name))
+                        {
+                            $column->settings->name = 'none';
+                        }
+                        $html .= '<h6 class="col-title pull-left">'.$column->settings->name.'</h6>';
+                    }
+
+                    $html .= '<a class="col-ops-set pull-right" href="#" ><i class="fa fa-gears"></i></a>';
+                    $html .= '</div>';
+                    $html .= '</div>';
+                }
+                $html .= '</div>';
+                $html .= '</div>';
+            }
+        }
+
+        return $html;
+    }
+
+    private function getSettings($config = null){
+        $data = '';
+        if (count($config)) {
+            foreach ($config as $key => $value) {
+                $data .= ' data-'.$key.'="'.$value.'"';
+            }
+        }
+        return $data;
+    }
+}

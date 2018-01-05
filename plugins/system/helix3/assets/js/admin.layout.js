@@ -16,15 +16,15 @@ jQuery(function($) {
 	});//end ready
 
 	/* ----------   Load existing template   ------------- */
-	$('.form-horizontal').on('click', '.layout-del-action', function(event) {
+	$(document).on('click', '.layout-del-action', function(event) {
 		event.preventDefault();
 
 		var $that = $(this),
-			layoutName = $(".layoutlist select").val(),
-			data = {
-				action : $that.data('action'),
-				layoutName : layoutName
-			};
+		layoutName = $(".layoutlist select").val(),
+		data = {
+			action : $that.data('action'),
+			layoutName : layoutName
+		};
 
 		if ( confirm("Click Ok button to delete "+layoutName+", Cancel to leave.") != true ){
 			return false;
@@ -35,40 +35,40 @@ jQuery(function($) {
 		}
 
 		var request = {
-                'option' : 'com_ajax',
-                'plugin' : 'helix3',
-                'data'   : data,
-                'format' : 'json'
-            };
+			'option' : 'com_ajax',
+			'plugin' : 'helix3',
+			'data'   : data,
+			'format' : 'json'
+		};
 
-        $.ajax({
-            type   : 'POST',
-            data   : request,
-            beforeSend: function(){
-            	$('.layout-del-action .fa-spin').show();
-            },
-            success: function (response) {
-            	var data = $.parseJSON(response.data),
-            		layouts = data.layout,
-            		tplHtml = '';
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			beforeSend: function(){
+				$('.layout-del-action .fa-spin').show();
+			},
+			success: function (response) {
+				var data = $.parseJSON(response.data),
+				layouts = data.layout,
+				tplHtml = '';
 
-            	$('#jform_params_layoutlist').find('option').remove();
-            	if (layouts.length) {
-            		for (var i = 0; i < layouts.length; i++) {
-            			tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
-            		}
+				$('#jform_params_layoutlist').find('option').remove();
+				if (layouts.length) {
+					for (var i = 0; i < layouts.length; i++) {
+						tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
+					}
 
-            		$('#jform_params_layoutlist').html(tplHtml);
-            	}
+					$('#jform_params_layoutlist').html(tplHtml);
+				}
 
-            	$('.layout-del-action .fa-spin').fadeOut('fast');
-            },
-            error: function(){
-            	alert('Somethings wrong, Try again');
-            	$('.layout-del-action .fa-spin').fadeOut('fast');
-            }
-        });
-        return false;
+				$('.layout-del-action .fa-spin').fadeOut('fast');
+			},
+			error: function(){
+				alert('Somethings wrong, Try again');
+				$('.layout-del-action .fa-spin').fadeOut('fast');
+			}
+		});
+		return false;
 	});
 
 	// Save new copy of layout
@@ -87,36 +87,36 @@ jQuery(function($) {
 
 	$(".layoutlist select").chosen().change(function(){
 		var $that = $(this),
-			layoutName = $that.val(),
-			data = {
-				action : 'load',
-				layoutName : layoutName
-			};
+		layoutName = $that.val(),
+		data = {
+			action : 'load',
+			layoutName : layoutName
+		};
 
 		if ( layoutName == '' || layoutName == ' ' ){
 			alert('You are doing somethings wrong.');
 		}
 
 		var request = {
-                'option' : 'com_ajax',
-                'plugin' : 'helix3',
-                'data'   : data,
-                'format' : 'raw'
-            };
+			'option' : 'com_ajax',
+			'plugin' : 'helix3',
+			'data'   : data,
+			'format' : 'raw'
+		};
 
-        $.ajax({
-            type   : 'POST',
-            data   : request,
-            dataType: "html",
-            beforeSend: function(){
-            },
-            success: function (response) {
-               	$('#helix-layout-builder').empty();
-				$('#helix-layout-builder').append(response).fadeIn('normal');
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			dataType: "html",
+			beforeSend: function(){
+			},
+			success: function (response) {
+				$('#helix-ultimate-layout-builder').empty();
+				$('#helix-ultimate-layout-builder').append(response).fadeIn('normal');
 				jqueryUiLayout();
-            }
-        });
-        return false;
+			}
+		});
+		return false;
 	});
 
 	/*********   Lyout Builder JavaScript   **********/
@@ -125,7 +125,7 @@ jQuery(function($) {
 
 	function jqueryUiLayout()
 	{
-		$( "#helix-layout-builder" ).sortable({
+		$( "#helix-ultimate-layout-builder" ).sortable({
 			placeholder: "ui-state-highlight",
 			forcePlaceholderSize: true,
 			axis: 'y',
@@ -134,7 +134,7 @@ jQuery(function($) {
 
 		}).disableSelection();
 
-		$('.layoutbuilder-section').find('.row').rowSortable();
+		$('.helix-ultimate-layout-builder-section').find('.row').rowSortable();
 	}
 
 	// setInputValue Callback Function
@@ -178,7 +178,7 @@ jQuery(function($) {
 		}
 	}
 
-    // color picker initialize
+	// color picker initialize
 	$.fn.initColorPicker = function(){
 		this.find('.minicolors').each(function() {
 			$(this).minicolors({
@@ -190,27 +190,28 @@ jQuery(function($) {
 	}
 
 	// Open Row settings Modal
-	$(document).on('click', '.row-ops-set', function(event){
+	$(document).on('click', '.helix-ultimate-row-options', function(event){
 		event.preventDefault();
+		$(this).helixUltimateOptionsModal();
 
-		$('.layoutbuilder-section').removeClass('row-active');
-		$parent = $(this).closest('.layoutbuilder-section');
+		$('.helix-ultimate-layout-builder-section').removeClass('row-active');
+		$parent = $(this).closest('.helix-ultimate-layout-builder-section');
 		$parent.addClass('row-active');
 
-		$('#layout-modal').find('.sp-modal-body').empty();
-		$('#layout-modal .sp-modal-title').text('Row Settings');
-		$('#layout-modal #save-settings').data('flag', 'row-setting');
+		// $('#layout-modal').find('.sp-modal-body').empty();
+		// $('#layout-modal .sp-modal-title').text('Row Settings');
+		// $('#layout-modal #save-settings').data('flag', 'row-setting');
 
 		var $clone = $('.row-settings').clone(true);
 		$clone.find('.sppb-color').each(function(){
 			$(this).addClass('minicolors');
 		});
 
-		$clone = $('#layout-modal').find('.sp-modal-body').append( $clone );
+		//$clone = $('#layout-modal').find('.sp-modal-body').append( $clone );
 
 		$clone.find('.addon-input').each(function(){
 			var $that = $(this),
-				attrValue = $parent.data( $that.data('attrname'));
+			attrValue = $parent.data( $that.data('attrname'));
 			$that.setInputValue({filed: attrValue});
 		});
 
@@ -229,8 +230,8 @@ jQuery(function($) {
 	$(document).on('click','.col-ops-set',function(event) {
 		event.preventDefault();
 
-		$('.layout-column').removeClass('column-active');
-		$parent = $(this).closest('.layout-column');
+		$('.helix-ultimate-layout-column').removeClass('column-active');
+		$parent = $(this).closest('.helix-ultimate-layout-column');
 		$parent.addClass('column-active');
 
 		$('#layout-modal').find('.sp-modal-body').empty();
@@ -246,14 +247,14 @@ jQuery(function($) {
 		var comFlug = false;
 		$clone.find('.addon-input').each(function(){
 			var $that = $(this),
-				$attrname = $that.data('attrname'),
-				attrValue = $parent.data($attrname);
+			$attrname = $that.data('attrname'),
+			attrValue = $parent.data($attrname);
 
-				if ( $attrname == 'column_type' && attrValue == '1' ) {
-					comFlug = true;
-				}else if($attrname == 'name' && comFlug == true){
-					$that.closest('.form-group').slideUp('fast');
-				}
+			if ( $attrname == 'column_type' && attrValue == '1' ) {
+				comFlug = true;
+			}else if($attrname == 'name' && comFlug == true){
+				$that.closest('.form-group').slideUp('fast');
+			}
 
 			$that.setInputValue({filed: attrValue});
 		});
@@ -272,9 +273,9 @@ jQuery(function($) {
 	$('.input-column_type').change(function(event) {
 
 		var $parent = $(this).closest('.column-settings'),
-			flag = false;
+		flag = false;
 
-		$('#helix-layout-builder').find('.layout-column').not( ".column-active" ).each(function(index, val) {
+		$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-column').not( ".column-active" ).each(function(index, val) {
 			if ($(this).data('column_type') == '1') {
 				flag = true;
 				return false;
@@ -303,99 +304,99 @@ jQuery(function($) {
 
 		switch(flag){
 			case 'row-setting':
-				$('#layout-modal').find('.addon-input').each(function(){
-					var $this = $(this),
-					$parent = $('.row-active'),
-					$attrname = $this.data('attrname');
-					$parent.removeData( $attrname );
+			$('#layout-modal').find('.addon-input').each(function(){
+				var $this = $(this),
+				$parent = $('.row-active'),
+				$attrname = $this.data('attrname');
+				$parent.removeData( $attrname );
 
-					if ($attrname == 'name') {
-						var nameVal = $this.val();
+				if ($attrname == 'name') {
+					var nameVal = $this.val();
 
-						if (nameVal  !='' || $this.val() != null) {
-							$('.row-active .section-title').text($this.val());
-						}else{
-							$('.row-active .section-title').text('Section Header');
-						}
+					if (nameVal  !='' || $this.val() != null) {
+						$('.row-active .section-title').text($this.val());
+					}else{
+						$('.row-active .section-title').text('Section Header');
 					}
+				}
 
-					$parent.attr('data-' + $attrname, $this.getInputValue());
-				});
-				break;
+				$parent.attr('data-' + $attrname, $this.getInputValue());
+			});
+			break;
 
 			case 'col-setting':
-				var component = false;
+			var component = false;
 
-				$('#layout-modal').find('.addon-input').each(function(){
+			$('#layout-modal').find('.addon-input').each(function(){
 
-					var $this = $(this),
-					$parent = $('.column-active'),
-					$attrname = $this.data('attrname');
-					$parent.removeData( $attrname ),
-					dataVal = $this.val();
+				var $this = $(this),
+				$parent = $('.column-active'),
+				$attrname = $this.data('attrname');
+				$parent.removeData( $attrname ),
+				dataVal = $this.val();
 
-					if ( $attrname == 'column_type' && $(this).attr("checked") ) {
-						component = true;
-						$('.column-active .col-title').text('Component');
-					}else if( $attrname == 'name' && component != true ) {
-						if (dataVal == '' || dataVal == undefined) {
-							dataVal = 'none';
-						}
-						$('.column-active .col-title').text(dataVal);
+				if ( $attrname == 'column_type' && $(this).attr("checked") ) {
+					component = true;
+					$('.column-active .col-title').text('Component');
+				}else if( $attrname == 'name' && component != true ) {
+					if (dataVal == '' || dataVal == undefined) {
+						dataVal = 'none';
 					}
+					$('.column-active .col-title').text(dataVal);
+				}
 
-					$parent.attr('data-' + $attrname, $this.getInputValue());
-				});
-				break;
+				$parent.attr('data-' + $attrname, $this.getInputValue());
+			});
+			break;
 
 			case 'save-layout':
-					var layoutName = $('#layout-modal .addon-input').val(),
-						data = {
-							action : 'save',
-							layoutName : layoutName,
-							content: JSON.stringify(getGeneratedLayout())
-						};
+			var layoutName = $('#layout-modal .addon-input').val(),
+			data = {
+				action : 'save',
+				layoutName : layoutName,
+				content: JSON.stringify(getGeneratedLayout())
+			};
 
-					if (layoutName =='' || layoutName ==' ') {
-						alert("Without Name Layout Can't be save");
-						return false;
-					}
+			if (layoutName =='' || layoutName ==' ') {
+				alert("Without Name Layout Can't be save");
+				return false;
+			}
 
-					var request = {
-						'option' : 'com_ajax',
-						'plugin' : 'helix3',
-						'data'   : data,
-						'format' : 'json'
-					};
+			var request = {
+				'option' : 'com_ajax',
+				'plugin' : 'helix3',
+				'data'   : data,
+				'format' : 'json'
+			};
 
-					$.ajax({
-						type   : 'POST',
-						data   : request,
-						beforeSend: function(){
-						},
-						success: function (response) {
-							var data = $.parseJSON(response.data),
-								layouts = data.layout,
-								tplHtml = '';
+			$.ajax({
+				type   : 'POST',
+				data   : request,
+				beforeSend: function(){
+				},
+				success: function (response) {
+					var data = $.parseJSON(response.data),
+					layouts = data.layout,
+					tplHtml = '';
 
-							$('#jform_params_layoutlist').find('option').remove();
-							if (layouts.length) {
-								for (var i = 0; i < layouts.length; i++) {
-									tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
-								}
-
-								$('#jform_params_layoutlist').html(tplHtml);
-							}
-						},
-						error: function(){
-							alert('Somethings wrong, Try again');
+					$('#jform_params_layoutlist').find('option').remove();
+					if (layouts.length) {
+						for (var i = 0; i < layouts.length; i++) {
+							tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
 						}
 
-					});
-				break;
+						$('#jform_params_layoutlist').html(tplHtml);
+					}
+				},
+				error: function(){
+					alert('Somethings wrong, Try again');
+				}
+
+			});
+			break;
 
 			default:
-				alert('You are doing somethings wrongs. Try again');
+			alert('You are doing somethings wrongs. Try again');
 		}
 	});
 
@@ -406,7 +407,7 @@ jQuery(function($) {
 		console.log('clicked');
 
 		var $that = $(this),
-			colType = $that.data('type'), column;
+		colType = $that.data('type'), column;
 
 		if ($that.hasClass('active') && colType != 'custom' ) {
 			return;
@@ -416,12 +417,12 @@ jQuery(function($) {
 			column = prompt('Enter your custom layout like 4,2,2,2,2 as total 12 grid','4,2,2,2,2');
 		}
 
-		var $parent 		= $that.closest('.column-list'),
-			$gparent 		= $that.closest('.layoutbuilder-section'),
-			oldLayoutData 	= $parent.find('.active').data('layout'),
-			oldLayout       = ['12'],
-			layoutData 		= $that.data('layout'),
-			newLayout 		= ['12'];
+		var $parent 		= $that.closest('.helix-ultimate-column-list'),
+		$gparent 		= $that.closest('.helix-ultimate-layout-builder-section'),
+		oldLayoutData 	= $parent.find('.active').data('layout'),
+		oldLayout       = ['12'],
+		layoutData 		= $that.data('layout'),
+		newLayout 		= ['12'];
 
 		if ( oldLayoutData != 12 ) {
 			oldLayout = oldLayoutData.split(',');
@@ -455,9 +456,9 @@ jQuery(function($) {
 		}
 
 		var col = [],
-			colAttr = [];
+		colAttr = [];
 
-		$gparent.find('.layout-column').each(function(i,val){
+		$gparent.find('.helix-ultimate-layout-column').each(function(i,val){
 			col[i] = $(this).html();
 			var colData = $(this).data();
 
@@ -482,7 +483,7 @@ jQuery(function($) {
 				});
 			}
 
-			new_item +='<div class="layout-column col-sm-'+ newLayout[i].trim() +'" '+dataAttr+'>';
+			new_item +='<div class="helix-ultimate-layout-column col-sm-'+ newLayout[i].trim() +'" '+dataAttr+'>';
 			if (col[i]) {
 				new_item += col[i];
 			}else{
@@ -491,7 +492,7 @@ jQuery(function($) {
 			new_item +='</div>';
 		}
 
-		$old_column = $gparent.find('.layout-column');
+		$old_column = $gparent.find('.helix-ultimate-layout-column');
 		$gparent.find('.row.ui-sortable').append( new_item );
 
 		$old_column.remove();
@@ -502,10 +503,10 @@ jQuery(function($) {
 	$(document).on('click','.add-row',function(event){
 		event.preventDefault();
 
-		var $parent = $(this).closest('.layoutbuilder-section'),
-			$rowClone = $('#layoutbuilder-section').clone(true);
+		var $parent = $(this).closest('.helix-ultimate-layout-builder-section'),
+		$rowClone = $('#helix-ultimate-layout-builder-section').clone(true);
 
-		$rowClone.addClass('layoutbuilder-section').removeAttr('id');
+		$rowClone.addClass('helix-ultimate-layout-builder-section').removeAttr('id');
 		$($rowClone).insertAfter($parent);
 
 		jqueryUiLayout();
@@ -517,7 +518,7 @@ jQuery(function($) {
 
 		if ( confirm("Click Ok button to delete Row, Cancel to leave.") == true )
 		{
-			$(this).closest('.layoutbuilder-section').slideUp(500, function(){
+			$(this).closest('.helix-ultimate-layout-builder-section').slideUp(500, function(){
 				$(this).remove();
 			});
 		}
@@ -526,7 +527,7 @@ jQuery(function($) {
 	// Remove Media
 	$(document).on('click','.remove-media',function(){
 		var $that = $(this),
-			$imgParent = $that.parent('.media');
+		$imgParent = $that.parent('.media');
 
 		$imgParent.find('img.media-preview').each(function() {
 			$(this).attr('src','');
@@ -538,15 +539,15 @@ jQuery(function($) {
 
 	function getGeneratedLayout(){
 		var item = [];
-		$('#helix-layout-builder').find('.layoutbuilder-section').each(function(index){
+		$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-builder-section').each(function(index){
 			var $row 		= $(this),
-				rowIndex 	= index,
-				rowObj 		= $row.data();
+			rowIndex 	= index,
+			rowObj 		= $row.data();
 			delete rowObj.sortableItem;
 
 			var activeLayout 	= $row.find('.column-layout.active'),
-				layoutArray 	= activeLayout.data('layout'),
-				layout = 12;
+			layoutArray 	= activeLayout.data('layout'),
+			layout = 12;
 
 			if( layoutArray != 12){
 				layout = layoutArray.split(',').join('');
@@ -560,12 +561,12 @@ jQuery(function($) {
 			};
 
 			// Find Column Elements
-			$row.find('.layout-column').each(function(index) {
+			$row.find('.helix-ultimate-layout-column').each(function(index) {
 
 				var $column 	= $(this),
-					colIndex 	= index,
-					className 	= $column.attr('class'),
-					colObj 		= $column.data();
+				colIndex 	= index,
+				className 	= $column.attr('class'),
+				colObj 		= $column.data();
 				delete colObj.sortableItem;
 
 				item[rowIndex].attr[colIndex] = {

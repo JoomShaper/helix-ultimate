@@ -148,7 +148,6 @@ class  plgSystemHelix3 extends JPlugin
 
                 $doc->setTitle("Helix Template Framework by JoomShaper");
 
-
                 $helix_plg_url = JURI::root(true).'/plugins/system/helix3';
                 $doc->addScriptdeclaration('var layoutbuilder_base="' . JURI::root() . '";');
                 $doc->addScriptDeclaration("var basepath = '{$helix_plg_url}';");
@@ -167,18 +166,19 @@ class  plgSystemHelix3 extends JPlugin
                 $doc->addScript($helix_plg_url.'/assets/js/admin.general.js');
                 $doc->addScript($helix_plg_url.'/assets/js/admin.layout.js');
                 // $doc->addScript($helix_plg_url.'/assets/js/custom_builder.js');
-                $doc->addScript(JURI::root(true) . '/media/media/js/mediafield.min.js');
 
                 //CSS
-                $doc->addStyleSheet($helix_plg_url.'/assets/css/bootstrap.css');
-                $doc->addStyleSheet($helix_plg_url.'/assets/css/modal.css');
-                $doc->addStyleSheet(JURI::root(true) . '/administrator/templates/isis/css/template.css');
+                //$doc->addStyleSheet($helix_plg_url.'/assets/css/bootstrap.min.css');
+                $doc->addStyleSheet($helix_plg_url.'/assets/css/helix-ultimate.css');
+                //$doc->addStyleSheet($helix_plg_url.'/assets/css/modal.css');
+                //$doc->addStyleSheet(JURI::root(true) . '/administrator/templates/isis/css/template.css');
                 // $doc->addStyleSheet($helix_plg_url.'/assets/css/custom_builder.css');
-                $doc->addStyleSheet( JURI::root(true) . '/media/system/css/modal.css');
+                //$doc->addStyleSheet( JURI::root(true) . '/media/system/css/modal.css');
 
                 $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
                 $doc->addStyleSheet($helix_plg_url.'/assets/css/admin.general.css');
 
+                $doc->addScript( $helix_plg_url. '/assets/js/media.js' );
                 $doc->addScript( $helix_plg_url. '/assets/js/admin.helix-ultimate.js' );
 
                 echo $doc->render(false,[

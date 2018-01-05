@@ -70,7 +70,7 @@ class Platform
           echo $frmkHTML;
       }
     }
-  
+
     private function frameworkFormHTMLStart()
     {
             $htmlView  = '<div id="helix-ultimate">';
@@ -118,6 +118,7 @@ class Platform
     {
         \JFactory::getLanguage()->load('tpl_shaper_helix3', JPATH_SITE, null, true);;
 
+        $doc = \JFactory::getDocument();
         $doc->setTitle("Helix Template Framework by JoomShaper");
 
         $helix_plg_url = \JURI::root(true).'/plugins/system/helix3';
@@ -153,7 +154,7 @@ class Platform
         $doc->addScript( $helix_plg_url. '/assets/js/media.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin.helix-ultimate.js' );
 
-                
+
 
         echo $doc->render(false,[
             'file' => 'component.php',
@@ -161,4 +162,3 @@ class Platform
         ]);
     }
 }
-

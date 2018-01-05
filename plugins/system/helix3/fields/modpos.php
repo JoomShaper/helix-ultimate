@@ -1,29 +1,54 @@
 <?php
 /**
-* @package Helix Ultimate Framework
+* @package Helix3 Framework
 * @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2010 - 2018 JoomShaper
+* @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/  
+*/
 
+//no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
+
+require_once dirname(__DIR__) . '/platform/helix-ult-model.php';
+use HelixULT\Model\HelixUltModel as HelixUltModel;
 
 JFormHelper::loadFieldClass('text');
 
+/**
+* Supports a modal article picker.
+*
+* @package		Joomla.Administrator
+* @subpackage	com_modules
+* @since		1.6
+*/
 class JFormFieldModPos extends JFormFieldText
 {
+    /**
+    * The form field type.
+    *
+    * @var		string
+    * @since	1.6
+    */
     protected $type = 'ModPos';
 
+    /**
+    * Method to get the field input markup.
+    *
+    * @return	string	The field input markup.
+    * @since	1.6
+    */
     protected function getInput()
     {
+        $input  = \JFactory::getApplication()->input;
+        $style_id = (int) $input->get('id', 0, 'INT');
+        $style = HelixUltModel::getTemplateStyle($style_id);
+        //
         $db = JFactory::getDBO();
         $query = 'SELECT `position` FROM `#__modules` WHERE  `client_id`=0 AND ( `published` !=-2 AND `published` !=0 ) GROUP BY `position` ORDER BY `position` ASC';
 
         $db->setQuery($query);
         $dbpositions = (array) $db->loadAssocList();
-
-        $template = $this->form->getValue('template');
-        $templateXML = JPATH_SITE.'/templates/'.$template.'/templateDetails.xml';
+        $templateXML = JPATH_SITE.'/templates/'.$style->template.'/templateDetails.xml';
         $template = simplexml_load_file( $templateXML );
         $options = array();
 

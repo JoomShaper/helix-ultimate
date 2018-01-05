@@ -134,7 +134,6 @@ class  plgSystemHelix3 extends JPlugin
         $action     = $this->app->input->get('action', '');;
 
         $doc = JFactory::getDocument();
-
         if($this->app->isAdmin())
         {
             if($option == 'com_ajax' && $preview == 'theme' && $view == 'style')

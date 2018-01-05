@@ -9,9 +9,10 @@
 //no direct accees
 namespace HelixULT\Model;
 
-class HelixUltModel{
-    
-    public static function getTemplateStyle($id = 0){
+class HelixUltModel
+{
+    public static function getTemplateStyle($id = 0)
+    {
         $db = \JFactory::getDbo();
 
         $query = $db->getQuery(true);
@@ -25,9 +26,10 @@ class HelixUltModel{
         return $db->loadObject();
     }
 
-    public static function updateTemplateStyle($id = 0, $data = ''){
+    public static function updateTemplateStyle($id = 0, $data = '')
+    {
         $db = \JFactory::getDbo();
-        
+
         if(empty($data)) return;
         $data = json_encode($data);
 

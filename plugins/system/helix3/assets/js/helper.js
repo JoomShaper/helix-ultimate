@@ -40,7 +40,7 @@
 			var $id = random_number();
 
 			$(this).find('.input-media').attr('id', 'media-' + $id);
-			
+
 			//Preview
 			$(this).find('.image-preview').attr('id', 'media-' + $id + '_preview_img');
 			$(this).find('.image-preview').find('img').attr('id', 'media-' + $id + '_preview');

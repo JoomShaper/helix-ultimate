@@ -114,9 +114,12 @@ jQuery(function($){
             },
             success: function (response) {
                 var data = $.parseJSON(response)
+                console.log(data)
+                /*
                 if(data.status){
                     document.getElementById('theme-preview').contentWindow.location.reload(true);
                 }
+                */
             },
             error: function(){
                 alert('Somethings wrong, Try again');

@@ -23,6 +23,7 @@ class plgAjaxHelix3 extends JPlugin
 
     function onAjaxHelix3()
     {
+        echo json_encode(JFactory::getUser()); die;
         $input = JFactory::getApplication()->input;
         $action = $input->post->get('action', '', 'STRING');
 

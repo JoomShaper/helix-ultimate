@@ -116,16 +116,14 @@ class Platform
 
     public static function loadFrameworkSystem()
     {
-        \JFactory::getLanguage()->load('tpl_shaper_helix3', JPATH_SITE, null, true);
-        $doc = \JFactory::getDocument();
-        
+        \JFactory::getLanguage()->load('tpl_shaper_helix3', JPATH_SITE, null, true);;
+
         $doc->setTitle("Helix Template Framework by JoomShaper");
 
         $helix_plg_url = \JURI::root(true).'/plugins/system/helix3';
         $doc->addScriptdeclaration('var layoutbuilder_base="' . \JURI::root() . '";');
         $doc->addScriptDeclaration("var basepath = '{$helix_plg_url}';");
         $doc->addScriptDeclaration("var pluginVersion = 34;");
-        //  $doc->addFavicon(JUri::root(true).'/administrator/templates/isis/favicon.ico');
 
         \JHtml::_('jquery.ui', array('core', 'sortable'));
         \JHtml::_('bootstrap.framework');
@@ -134,21 +132,28 @@ class Platform
         \JHtml::_('formbehavior.chosen', 'select');
         \JHtml::_('behavior.colorpicker');
 
-        $doc->addScript($helix_plg_url .'/assets/js/helper.js');
-        $doc->addScript($helix_plg_url .'/assets/js/webfont.js');
-        $doc->addScript($helix_plg_url . '/assets/js/modal.js');
-        $doc->addScript($helix_plg_url . '/assets/js/admin.general.js');
-        $doc->addScript($helix_plg_url . '/assets/js/admin.layout.js');
-        $doc->addScript(\JURI::root(true) . '/media/media/js/mediafield.min.js');
+        $doc->addScript($helix_plg_url.'/assets/js/helper.js');
+        $doc->addScript($helix_plg_url.'/assets/js/webfont.js');
+        $doc->addScript($helix_plg_url.'/assets/js/modal.js');
+        $doc->addScript($helix_plg_url.'/assets/js/admin.general.js');
+        $doc->addScript($helix_plg_url.'/assets/js/admin.layout.js');
+        // $doc->addScript($helix_plg_url.'/assets/js/custom_builder.js');
 
         //CSS
-        $doc->addStyleSheet($helix_plg_url.'/assets/css/bootstrap.css');
-        $doc->addStyleSheet($helix_plg_url.'/assets/css/modal.css');
-        $doc->addStyleSheet(\JURI::root(true) . '/administrator/templates/isis/css/template.css');
-        $doc->addStyleSheet(\JURI::root(true) . '/media/system/css/modal.css');
+        //$doc->addStyleSheet($helix_plg_url.'/assets/css/bootstrap.min.css');
+        $doc->addStyleSheet($helix_plg_url.'/assets/css/helix-ultimate.css');
+        //$doc->addStyleSheet($helix_plg_url.'/assets/css/modal.css');
+        //$doc->addStyleSheet(JURI::root(true) . '/administrator/templates/isis/css/template.css');
+        // $doc->addStyleSheet($helix_plg_url.'/assets/css/custom_builder.css');
+        //$doc->addStyleSheet( JURI::root(true) . '/media/system/css/modal.css');
+
         $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/admin.general.css');
+
+        $doc->addScript( $helix_plg_url. '/assets/js/media.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin.helix-ultimate.js' );
+
+                
 
         echo $doc->render(false,[
             'file' => 'component.php',

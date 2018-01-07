@@ -35,18 +35,18 @@ web.config.txt
 
 !/plugins/system
 /plugins/system/*
-!/plugins/system/helix3
+!/plugins/system/helixultimate
 
 !/templates/
 /templates/*
-!/templates/shaper_helix3
+!/templates/shaper_helixultimate
 
 !/language
 /language/*
 
 !/language/en-GB
 /language/en-GB/*
-!/language/en-GB/en-GB.tpl_shaper_helix3.ini
+!/language/en-GB/en-GB.tpl_shaper_helixultimate.ini
 
 !/administrator
 /administrator/*
@@ -55,4 +55,4 @@ web.config.txt
 /administrator/language/*
 !/administrator/language/en-GB
 /administrator/language/en-GB/*
-!/administrator/language/en-GB/en-GB.plg_system_helix3.ini
+!/administrator/language/en-GB/en-GB.plg_system_helixultimate.ini

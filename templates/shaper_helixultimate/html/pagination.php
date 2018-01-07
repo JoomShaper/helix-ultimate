@@ -37,10 +37,10 @@ function pagination_item_active(&$item) {
 	if ($item->text == JText::_('First')) { $cls = "first";}
     if ($item->text == JText::_('Last'))   { $cls = "last";}
 
-    return '<li><a class="' . $cls . '" href="' . $item->link . '" title="' . $item->text . '">' . $item->text . '</a></li>';
+    return '<li class="page-item"><a class="page-link ' . $cls . '" href="' . $item->link . '" title="' . $item->text . '">' . $item->text . '</a></li>';
 }
 
 function pagination_item_inactive( &$item ) {
 	$cls = (int)$item->text > 0 ? 'active': 'disabled';
-	return '<li class="' . $cls . '"><a>' . $item->text . '</a></li>';
+	return '<li class="page-item ' . $cls . '"><a class="page-link">' . $item->text . '</a></li>';
 }

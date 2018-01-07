@@ -3,7 +3,7 @@
  * @package     Joomla.Site
  * @subpackage  com_content
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -16,7 +16,7 @@ JHtml::_('behavior.caption');
 // If the page class is defined, add to class as suffix.
 // It will be a separate class if the user starts it with a space
 ?>
-<div class="blog-featured<?php echo $this->pageclass_sfx;?>" itemscope itemtype="http://schema.org/Blog">
+<div class="container-fluid blog-featured<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
 <?php if ($this->params->get('show_page_heading') != 0) : ?>
 <div class="page-header">
 	<h1>
@@ -27,15 +27,15 @@ JHtml::_('behavior.caption');
 
 <?php $leadingcount = 0; ?>
 <?php if (!empty($this->lead_items)) : ?>
-<div class="items-leading clearfix">
+<div class="row items-leading clearfix">
 	<?php foreach ($this->lead_items as &$item) : ?>
-		<article class="item leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?> clearfix" 
-			itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+		<div class="col leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?> clearfix"
+			itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 			<?php
 				$this->item = &$item;
 				echo $this->loadTemplate('item');
 			?>
-		</article>
+		</div>
 		<?php
 			$leadingcount++;
 		?>
@@ -43,7 +43,7 @@ JHtml::_('behavior.caption');
 </div>
 <?php endif; ?>
 <?php
-	$introcount = (count($this->intro_items));
+	$introcount = count($this->intro_items);
 	$counter = 0;
 ?>
 <?php if (!empty($this->intro_items)) : ?>
@@ -54,17 +54,17 @@ JHtml::_('behavior.caption');
 		$rowcount = (((int) $key - 1) % (int) $this->columns) + 1;
 		$row = $counter / $this->columns;
 
-		if ($rowcount == 1) : ?>
+		if ($rowcount === 1) : ?>
 
-		<div class="row cols-<?php echo (int) $this->columns;?>">
+		<div class="row items-row cols-<?php echo (int) $this->columns; ?> <?php echo 'row-' . $row; ?> row">
 		<?php endif; ?>
-			<article class="item column-<?php echo $rowcount;?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?> col-sm-<?php echo round((12 / $this->columns));?>"
-				itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+			<div class="col-md-<?php echo round(12 / $this->columns); ?> item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
+				itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 			<?php
 					$this->item = &$item;
 					echo $this->loadTemplate('item');
 			?>
-			</article>
+			</div>
 			<?php $counter++; ?>
 
 			<?php if (($rowcount == $this->columns) or ($counter == $introcount)) : ?>
@@ -82,13 +82,12 @@ JHtml::_('behavior.caption');
 <?php endif; ?>
 
 <?php if ($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2 && $this->pagination->pagesTotal > 1)) : ?>
-	<div class="pagination">
-
+	<div class="w-100">
 		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-			<p class="counter pull-right">
+			<p class="counter float-right pt-3 pr-2">
 				<?php echo $this->pagination->getPagesCounter(); ?>
 			</p>
-		<?php  endif; ?>
+		<?php endif; ?>
 		<?php echo $this->pagination->getPagesLinks(); ?>
 	</div>
 <?php endif; ?>

@@ -118,3 +118,10 @@ svg {
   color: #333;
   border: 1px solid #bbb;
 }
+.edit.item-page .modal {
+  position: initial;
+}
+.edit.item-page .media-preview.add-on {
+  height: 34px;
+  line-height: 28px;
+}

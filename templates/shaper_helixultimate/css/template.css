@@ -139,7 +139,7 @@
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a, .sp-megamenu-parent .sp-dropdown li.sp-menu-item span {
   display: block;
   padding: 10px;
-  color: #333;
+  color: #141414;
   cursor: pointer;
 }
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a.sp-group-title, .sp-megamenu-parent .sp-dropdown li.sp-menu-item span.sp-group-title {
@@ -1613,7 +1613,7 @@ article.item {
   display: inline-block;
 }
 .helix-social-share .helix-social-share-icon ul li div a:hover, .helix-social-share .helix-social-share-icon ul li div a:focus {
-  background: #f11;
+  background: #22b8f0;
   color: #fff;
 }
 /* ******************   END:: Blog   ****************** */

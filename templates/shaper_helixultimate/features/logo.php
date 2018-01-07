@@ -32,7 +32,7 @@ class HelixUltimateFeatureLogo {
 			}
 
 			if(file_exists($path)) {
-				$image = new JImage( $path );
+				$image = new \JImage( $path );
 				$width 	= $image->getWidth();
 				$height = $image->getHeight();
 			} else {
@@ -44,7 +44,7 @@ class HelixUltimateFeatureLogo {
 
 		$html  = '';
 		$custom_logo_class = '';
-		$sitename = JFactory::getApplication()->get('sitename');
+		$sitename = \JFactory::getApplication()->get('sitename');
 
 		if( $this->helixUltimate->getParam('mobile_logo') ) {
 			$custom_logo_class = ' hidden-xs';
@@ -53,7 +53,7 @@ class HelixUltimateFeatureLogo {
 		if( $this->helixUltimate->getParam('logo_type') == 'image' ) {
 			if( $this->helixUltimate->getParam('logo_image') ) {
 				$html .= '<div class="logo">';
-				$html .= '<a href="' . JURI::base(true) . '/">';
+				$html .= '<a href="' . \JURI::base(true) . '/">';
 					$html .= '<img class="sp-default-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
 					if( $this->helixUltimate->getParam('logo_image_2x') ) {
 						$html .= '<img class="sp-retina-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image_2x') . '" alt="'. $sitename .'" width="' . $width . '" height="' . $height . '">';
@@ -68,7 +68,7 @@ class HelixUltimateFeatureLogo {
 				$html .= '</div>';
 			} else {
 				$html .= '<div class="logo">';
-					$html .= '<a href="' . JURI::base(true) . '/">';
+					$html .= '<a href="' . \JURI::base(true) . '/">';
 						$html .= '<img class="sp-default-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getTemplateUri() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.png" alt="'. $sitename .'">';
 						$html .= '<img class="sp-retina-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getTemplateUri() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo@2x.png" alt="'. $sitename .'" width="' . $width . '" height="' . $height . '">';
 
@@ -81,9 +81,9 @@ class HelixUltimateFeatureLogo {
 
 		} else {
 			if( $this->helixUltimate->getParam('logo_text') ) {
-				$html .= '<h1 class="logo"> <a href="' . JURI::base(true) . '/">' . $this->helixUltimate->getParam('logo_text') . '</a></h1>';
+				$html .= '<h1 class="logo"> <a href="' . \JURI::base(true) . '/">' . $this->helixUltimate->getParam('logo_text') . '</a></h1>';
 			} else {
-				$html .= '<h1 class="logo"> <a href="' . JURI::base(true) . '/">' . $sitename . '</a></h1>';
+				$html .= '<h1 class="logo"> <a href="' . \JURI::base(true) . '/">' . $sitename . '</a></h1>';
 			}
 
 			if( $this->helixUltimate->getParam('logo_slogan') ) {

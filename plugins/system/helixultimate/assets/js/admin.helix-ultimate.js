@@ -11,7 +11,7 @@ jQuery(function($){
     // Swicther
     $('.radio-group').each(function( index ) {
       $(this).find('input').wrapAll( "<span class='helix-ultimate-switcher switcher' />");
-      $('.helix-ultimate-switcher').append('<span class="switch"></span>')
+      $(this).find('.helix-ultimate-switcher').append('<span class="switch"></span>')
       $(this).find('label').wrapAll( "<span class='switcher-labels' />");
 
       var inputs = $('.helix-ultimate-switcher').find('input');

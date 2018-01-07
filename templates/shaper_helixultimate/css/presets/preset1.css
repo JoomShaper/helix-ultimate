@@ -1,155 +1,95 @@
-.form-control {
-  display: block;
-  height: 34px;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.428571429;
-  color: #555555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
-}
-.form-control:focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,0.6);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,0.6);
-}
-.form-control::-moz-placeholder {
-  color: #999;
-  opacity: 1;
-}
-.form-control:-ms-input-placeholder {
-  color: #999;
-}
-.form-control::-webkit-input-placeholder {
-  color: #999;
-}
-.form-control[disabled],
-.form-control[readonly],
-fieldset[disabled] .form-control {
-  cursor: not-allowed;
-  background-color: #eeeeee;
-  opacity: 1;
-}
-textarea.form-control {
-  height: auto;
-}
+/**
+ * $package Helix Framework
+ * $author JoomShaper http://www.joomshaper.com
+ * $copyright Copyright (c) 2010 - 2014 JoomShaper
+ * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
+ */
 a {
-  color: #ff1111;
+  color: #f11;
 }
 a:hover {
-  color: #dd0000;
+  color: #d00;
 }
-.sp-megamenu-parent >li.active>a,
-.sp-megamenu-parent >li:hover>a {
-  color: #ff1111;
+.sp-megamenu-parent > li.active > a, .sp-megamenu-parent > li:hover > a {
+  color: #f11;
 }
-.sp-megamenu-parent .sp-dropdown li.sp-menu-item >a:hover {
-  background: #ff1111;
+.sp-megamenu-parent .sp-dropdown li.sp-menu-item > a:hover {
+  background: #f11;
 }
-.sp-megamenu-parent .sp-dropdown li.sp-menu-item.active>a {
-  color: #ff1111;
+.sp-megamenu-parent .sp-dropdown li.sp-menu-item.active > a {
+  color: #f11;
 }
-#offcanvas-toggler >i {
-  color: #ff1111;
+#offcanvas-toggler > i {
+  color: #333;
 }
-#offcanvas-toggler >i:hover {
-  color: #ff1111;
+#offcanvas-toggler > i:hover {
+  color: #f11;
 }
-.btn-primary,
-.sppb-btn-primary {
-  border-color: #f10000;
-  background-color: #ff1111;
-}
-.btn-primary:hover,
-.sppb-btn-primary:hover {
-  border-color: #c40000;
-  background-color: #dd0000;
-}
-ul.social-icons >li a:hover {
-  color: #ff1111;
+ul.social-icons > li a:hover {
+  color: #f11;
 }
 .sp-page-title {
-  background: #ff1111;
+  background: #f11;
 }
 .layout-boxed .body-innerwrapper {
-  background: #ffffff;
+  background: #fff;
 }
-.sp-module ul >li >a {
-  color: #ff1111;
+.sp-module ul > li > a {
+  color: #333;
 }
-.sp-module ul >li >a:hover {
-  color: #ff1111;
+.sp-module ul > li > a:hover {
+  color: #f11;
 }
-.sp-module .latestnews >div >a {
-  color: #ff1111;
+.sp-module .latestnews > div > a {
+  color: #333;
 }
-.sp-module .latestnews >div >a:hover {
-  color: #ff1111;
+.sp-module .latestnews > div > a:hover {
+  color: #f11;
 }
 .sp-module .tagscloud .tag-name:hover {
-  background: #ff1111;
+  background: #f11;
 }
-.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a,
-.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
-  background: #ff1111;
+.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a, .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
+  background: #f11;
 }
 .search .btn-toolbar button {
-  background: #ff1111;
+  background: #f11;
 }
 .post-format {
-  background: #ff1111;
+  background: #f11;
 }
 .voting-symbol span.star.active:before {
-  color: #ff1111;
+  color: #f11;
 }
-.sp-rating span.star:hover:before,
-.sp-rating span.star:hover ~ span.star:before {
-  color: #dd0000;
+.sp-rating span.star:hover:before, .sp-rating span.star:hover ~ span.star:before {
+  color: #d00;
 }
-.entry-link,
-.entry-quote {
-  background: #ff1111;
+.entry-link, .entry-quote {
+  background: #f11;
 }
 blockquote {
-  border-color: #ff1111;
+  border-color: #f11;
 }
-.carousel-left:hover,
-.carousel-right:hover {
-  background: #ff1111;
+.carousel-left:hover, .carousel-right:hover {
+  background: #f11;
 }
 #sp-footer {
-  background: #ff1111;
+  background: #f11;
 }
 .sp-comingsoon body {
-  background-color: #ff1111;
+  background-color: #f11;
 }
-.pagination>li>a,
-.pagination>li>span {
-  color: #ff1111;
+.pagination > li > a, .pagination > li > span {
+  color: #333;
 }
-.pagination>li>a:hover,
-.pagination>li>a:focus,
-.pagination>li>span:hover,
-.pagination>li>span:focus {
-  color: #ff1111;
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+  color: #333;
 }
-.pagination>.active>a,
-.pagination>.active>span {
-  border-color: #ff1111;
-  background-color: #ff1111;
+.pagination > .active > a, .pagination > .active > span {
+  border-color: #f11;
+  background-color: #f11;
 }
-.pagination>.active>a:hover,
-.pagination>.active>a:focus,
-.pagination>.active>span:hover,
-.pagination>.active>span:focus {
-  border-color: #ff1111;
-  background-color: #ff1111;
+.pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  border-color: #f11;
+  background-color: #f11;
 }

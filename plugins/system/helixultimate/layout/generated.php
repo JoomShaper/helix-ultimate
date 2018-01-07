@@ -24,19 +24,19 @@ echo RowColumnSettings::getColumnSettings($columnSettings);
 
 $colGrid = array(
   '12'        => '12',
-  '66'        => '6,6',
-  '444'       => '4,4,4',
-  '3333'      => '3,3,3,3',
-  '48'        => '4,8',
-  '39'        => '3,9',
-  '363'       => '3,6,3',
-  '264'       => '2,6,4',
-  '210'       => '2,10',
-  '57'        => '5,7',
-  '237'       => '2,3,7',
-  '255'       => '2,5,5',
-  '282'       => '2,8,2',
-  '2442'      => '2,4,4,2',
+  '66'        => '6+6',
+  '444'       => '4+4+4',
+  '3333'      => '3+3+3+3',
+  '48'        => '4+8',
+  '39'        => '3+9',
+  '363'       => '3+6+3',
+  '264'       => '2+6+4',
+  '210'       => '2+10',
+  '57'        => '5+7',
+  '237'       => '2+3+7',
+  '255'       => '2+5+5',
+  '282'       => '2+8+2',
+  '2442'      => '2+4+4+2',
 );
 
 ?>
@@ -68,7 +68,7 @@ $colGrid = array(
               <?php
               foreach ($colGrid as $key => $grid){
                 $active = ($key==12) ? ' active' : '';
-                echo '<li><a href="#" class="column-layout hasTooltip column-layout-' .$key. $active .'" data-layout="'.$grid.'" data-original-title="<strong>'.$grid.'</strong>"></a></li>';
+                echo '<li><a href="#" class="helix-ultimate-column-layout hasTooltip helix-ultimate-column-layout-' .$key. $active .'" data-layout="'.$grid.'" data-original-title="<strong>'.$grid.'</strong>"></a></li>';
                 $active = '';
               }
               ?>
@@ -118,7 +118,7 @@ $colGrid = array(
           <div class="pull-right">
             <ul class="helix-ultimate-row-option-list">
               <li>
-                <a class="helix-ultimate-add-columns" href="#"><i class="fa fa-columns"></i></a>
+                <a class="helix-ultimate-add-columns" href="#"><span class="fa fa-columns"></span></a>
                 <ul class="helix-ultimate-column-list">
                   <?php
                   $active = '';
@@ -126,7 +126,12 @@ $colGrid = array(
                     if($key == $row->layout){
                       $active = 'active';
                     }
-                    echo '<li><a href="#" class="helix-ultimate-column-layout hasTooltip helix-ultimate-column-layout-' .$key. ' '.$active.'" data-layout="'.$grid.'" data-original-title="<strong>'.$grid.'</strong>"></a></li>';
+                    $cols = explode('+', $grid);
+                    $col_output = '';
+                    foreach ($cols as $col) {
+                      $col_output .= '<span class="helix-ultimate-column-layout-col-'. $col .'"><span>'. $col .'</span></span>';
+                    }
+                    echo '<li><a href="#" class="helix-ultimate-column-layout hasTooltip helix-ultimate-column-layout-' .$key. ' '.$active.'" data-layout="'.$grid.'" data-original-title="<strong>'.$grid.'</strong>">'. $col_output .'</a></li>';
                     $active ='';
                   } ?>
 

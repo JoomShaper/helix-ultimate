@@ -163,13 +163,13 @@ jQuery(function($){
 
     function getGeneratedLayout(){
 		var item = [];
-		$('#helix-layout-builder').find('.layoutbuilder-section').each(function(index){
+		$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-section').each(function(index){
 			var $row 		= $(this),
 				rowIndex 	= index,
 				rowObj 		= $row.data();
 			delete rowObj.sortableItem;
 
-			var activeLayout 	= $row.find('.column-layout.active'),
+			var activeLayout 	= $row.find('.helix-ultimate-column-layout.active'),
 				layoutArray 	= activeLayout.data('layout'),
 				layout = 12;
 

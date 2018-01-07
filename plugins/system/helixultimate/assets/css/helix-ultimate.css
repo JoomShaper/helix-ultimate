@@ -2069,6 +2069,15 @@ select:focus::-ms-value {
   border-top: 1px solid #E8EEF3;
 }
 
+.control-group label {
+  font-weight: 400;
+  color: #5E6268;
+}
+
+.control-group label small {
+  font-size: 12px;
+}
+
 .helix-ultimate-field-list > div:first-child {
   margin-top: 0;
   padding-top: 0;

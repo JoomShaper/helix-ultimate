@@ -17,9 +17,9 @@ class JFormFieldMegamenu extends JFormField
 
     public function getInput()
     {
-        $mega_menu_path = JPATH_SITE.'/plugins/system/helixultimate/fields/';
+        $mega_menu_path = \JPATH_SITE.'/plugins/system/helixultimate/fields/';
 
-        $html = $this->getMegaSettings($mega_menu_path,json_decode($this->value));
+        $html = $this->getMegaSettings($mega_menu_path, json_decode($this->value));
         $html .= '<input type="hidden" name="'.$this->name.'" id="'.$this->id.'" value="'.$this->value.'">';
 
         return $html;

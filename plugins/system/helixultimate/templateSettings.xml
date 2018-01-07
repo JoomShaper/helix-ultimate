@@ -88,7 +88,7 @@
 				<option value="1">HELIX_SHOW</option>
 				<option value="0">HELIX_HIDE</option>
 		</field>
-		<field name="copyright_position" helixgroup="footer" type="moduleposition" default="footer1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child copyright copyright_1" />
+		<field name="copyright_position" helixgroup="footer" type="modpos" default="footer1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child copyright copyright_1" />
 
 		<field name="copyright_load_pos" helixgroup="footer" class="child copyright copyright_1" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC">
 				<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
@@ -215,62 +215,62 @@
 	</fieldset>
 
 	<fieldset name="typography" label="Typography" icon="fa fa-font" addfieldpath="/plugins/system/helixultimate/fields">
-			<field name="enable_body_font" class="parent body_font" type="radio" helixgroup="body_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_body_font" class="parent body_font radio-group" type="radio" helixgroup="body_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="body_font" type="typography" helixgroup="body_font" class="child body_font body_font_1" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="body_font" type="typography" helixgroup="body_font" class="child body_font body_font_1" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' hideLabel="true" />
 
-			<field name="enable_h1_font" class="parent h1_font" type="radio" helixgroup="h1_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_h1_font" class="parent h1_font radio-group" type="radio" helixgroup="h1_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="h1_font" type="typography" class="child  h1_font h1_font_1" helixgroup="h1_font" default='{"fontFamily":"Open Sans","fontWeight":"800","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="h1_font" type="typography" class="child h1_font h1_font_1" helixgroup="h1_font" default='{"fontFamily":"Open Sans","fontWeight":"800","fontSubset":"latin","fontSize":""}' hideLabel="true" />
 
-			<field name="enable_h2_font" class="parent h2_font" type="radio" helixgroup="h2_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_h2_font" class="parent h2_font radio-group" type="radio" helixgroup="h2_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="h2_font" type="typography" class="child  h2_font h2_font_1" helixgroup="h2_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="h2_font" type="typography" class="child h2_font h2_font_1" helixgroup="h2_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" />
 
-			<field name="enable_h3_font" class="parent h3_font" type="radio" helixgroup="h3_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_h3_font" class="parent h3_font radio-group" type="radio" helixgroup="h3_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="h3_font" type="typography" class="child  h3_font h3_font_1" helixgroup="h3_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="h3_font" type="typography" class="child h3_font h3_font_1" helixgroup="h3_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" />
 
-			<field name="enable_h4_font" class="parent h4_font" type="radio" helixgroup="h4_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_h4_font" class="parent h4_font radio-group" type="radio" helixgroup="h4_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="h4_font" type="typography" class="child  h4_font h4_font_1" helixgroup="h4_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="h4_font" type="typography" class="child h4_font h4_font_1" helixgroup="h4_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" />
 
-			<field name="enable_h5_font" class="parent h5_font" type="radio" helixgroup="h5_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_h5_font" class="parent h5_font radio-group" type="radio" helixgroup="h5_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="h5_font" type="typography" class="child  h5_font h5_font_1" helixgroup="h5_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="h5_font" type="typography" class="child h5_font h5_font_1" helixgroup="h5_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" />
 
-			<field name="enable_h6_font" class="parent h6_font" type="radio" helixgroup="h6_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_h6_font" class="parent h6_font radio-group" type="radio" helixgroup="h6_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="h6_font" type="typography" class="child  h6_font h6_font_1" helixgroup="h6_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="h6_font" type="typography" class="child h6_font h6_font_1" helixgroup="h6_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" />
 
-			<field name="enable_navigation_font" class="parent navigation_font" helixgroup="nav_font" type="radio" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_navigation_font" class="parent navigation_font radio-group" helixgroup="nav_font" type="radio" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="navigation_font" type="typography" class="child  navigation_font navigation_font_1" helixgroup="nav_font" label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="navigation_font" type="typography" class="child  navigation_font navigation_font_1" helixgroup="nav_font" hideLabel="true" />
 
-			<field name="enable_custom_font" class="parent custom_font" type="radio" helixgroup="custom_font" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
-					<option value="1">HELIX_YES</option>
+			<field name="enable_custom_font" class="parent custom_font radio-group" type="radio" helixgroup="custom_font" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC">
 					<option value="0">HELIX_NO</option>
+					<option value="1">HELIX_YES</option>
 			</field>
-			<field name="custom_font" type="typography" class="child  custom_font custom_font_1" helixgroup="custom_font" label="HELIX_SELECT_FONT" description="HELIX_SELECT_FONT_DESC" />
+			<field name="custom_font" type="typography" class="child  custom_font custom_font_1" helixgroup="custom_font" hideLabel="true" />
 			<field name="custom_font_selectors" type="textarea" class="child  custom_font custom_font_1" helixgroup="custom_font" label="HELIX_FONT_CUSTOM_SELECTORS" description="HELIX_FONT_CUSTOM_SELECTORS_DESC" />
 
-			<field name="update_fonts" type="button" helixgroup="update_font" url="#" text="HELIX_UPDATE_FONTS_CLICK" label="HELIX_UPDATE_FONTS_LIST" description="HELIX_UPDATE_FONTS_LIST_DESC" class="btn-primary btn-update-fonts-list" />
+			<field name="update_fonts" type="button" helixgroup="update_font" url="#" text="HELIX_UPDATE_FONTS_CLICK" hideLabel="true" description="HELIX_UPDATE_FONTS_LIST_DESC" class="btn-primary btn-update-fonts-list" />
 	</fieldset>
 
 	<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">

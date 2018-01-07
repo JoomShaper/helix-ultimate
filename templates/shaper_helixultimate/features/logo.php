@@ -12,6 +12,7 @@ class HelixUltimateFeatureLogo {
 
 	private $helixUltimate;
 	public $position;
+	public $load_pos;
 
 	public function __construct( $helixUltimate ){
 		$this->helixUltimate = $helixUltimate;

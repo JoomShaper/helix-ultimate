@@ -139,7 +139,9 @@ class SPOptions{
     {
         $field_html = '';
         $field_html .= '<div class="control-group ' . (( $group ) ? 'group-style-'.$group : '') . '">';
-        $field_html .= '<div class="control-label">' . $field->label .'</div>';
+        if(!$field->getAttribute('hideLabel')) {
+          $field_html .= '<div class="control-label">' . $field->label .'</div>';
+        }
         $field_html .= '<div class="controls">';
         $field_html .= $field->input;
         if($field->getAttribute('description') != '') {

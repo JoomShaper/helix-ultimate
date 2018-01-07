@@ -14,6 +14,7 @@ jimport('joomla.filesystem.folder');
 jimport('joomla.filter.filteroutput');
 
 class HelixUltimate{
+
     private static $_instance;
     //private $document;
     //private $importedFiles = array();
@@ -151,16 +152,16 @@ class HelixUltimate{
     public $loadFeature = array();
 
     private static function importFeatures(){
-        $template = JFactory::getApplication()->getTemplate();
-        $path     = JPATH_THEMES . '/' . $template . '/features';
+        $template = \JFactory::getApplication()->getTemplate();
+        $path     = \JPATH_THEMES . '/' . $template . '/features';
 
         if (file_exists($path)) {
-            $files = JFolder::files($path, '.php');
+            $files = \JFolder::files($path, '.php');
 
             if (count($files)) {
                 foreach ($files as $key => $file) {
                     include_once $path . '/' . $file;
-                    $name = JFile::stripExt($file);
+                    $name = \JFile::stripExt($file);
 
                     $class = 'HelixUltimateFeature' . ucfirst($name);
                     $class = new $class(self::getInstance());
@@ -188,7 +189,7 @@ class HelixUltimate{
      */
     public static function getColXsNo($col_name){
         //Remove Classes name
-        $class_remove = array('layout-column', 'column-active', 'col-sm-', 'span', 'builder-col');
+        $class_remove = array('layout-column', 'column-active', 'col-sm-', 'span', 'builder-col', 'helix-ultimate-layout-column');
         $col_number = trim(str_replace($class_remove, '', $col_name));
         return $col_number;
     }

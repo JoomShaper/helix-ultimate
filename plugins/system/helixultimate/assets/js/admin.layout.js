@@ -140,7 +140,7 @@ jQuery(function($) {
 
 		}).disableSelection();
 
-		$('.helix-ultimate-layout-builder-section').find('.row').rowSortable();
+		$('.helix-ultimate-layout-section').find('.row').rowSortable();
 	}
 
 	// setInputValue Callback Function
@@ -251,45 +251,6 @@ jQuery(function($) {
 		});
 
 		$clone.initColorPicker();
-
-
-		// $('.helix-ultimate-layout-column').removeClass('column-active');
-		// $parent = $(this).closest('.helix-ultimate-layout-column');
-		// $parent.addClass('column-active');
-		//
-		// $('#layout-modal').find('.sp-modal-body').empty();
-		// $('#layout-modal .sp-modal-title').text('Column Settings');
-		// $('#layout-modal #save-settings').data('flag', 'col-setting');
-		//
-		// var $clone = $('.column-settings').clone(true);
-		// $clone.find('.sppb-color').each(function(){
-		// 	$(this).addClass('minicolors');
-		// });
-		//
-		// $clone = $('#layout-modal').find('.sp-modal-body').append( $clone );
-		// var comFlug = false;
-		// $clone.find('.addon-input').each(function(){
-		// 	var $that = $(this),
-		// 	$attrname = $that.data('attrname'),
-		// 	attrValue = $parent.data($attrname);
-		//
-		// 	if ( $attrname == 'column_type' && attrValue == '1' ) {
-		// 		comFlug = true;
-		// 	}else if($attrname == 'name' && comFlug == true){
-		// 		$that.closest('.form-group').slideUp('fast');
-		// 	}
-		//
-		// 	$that.setInputValue({filed: attrValue});
-		// });
-		//
-		// $clone.initColorPicker();
-		//
-		// $clone.find('select').chosen({
-		// 	allow_single_deselect: true
-		// });
-		//
-		// $('#layout-modal').randomIds();
-		// $('#layout-modal').spmodal();
 	});
 
 
@@ -345,6 +306,10 @@ jQuery(function($) {
 
 				$parent.attr('data-' + $attrname, $this.getInputValue());
 			});
+
+			$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+			$('body').addClass('helix-ultimate-modal-open');
+
 			break;
 
 			case 'column-setting':
@@ -370,8 +335,11 @@ jQuery(function($) {
 
 				$parent.attr('data-' + $attrname, $this.getInputValue());
 			});
+			$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+			$('body').addClass('helix-ultimate-modal-open');
 			break;
 
+			// Need to be removed
 			case 'save-layout':
 			var layoutName = $('#layout-modal .addon-input').val(),
 			data = {
@@ -424,6 +392,13 @@ jQuery(function($) {
 		}
 	});
 
+	// Cancel Modal
+	$(document).on('click', '.helix-ultimate-settings-cancel', function(event) {
+		event.preventDefault();
+		$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+		$('body').addClass('helix-ultimate-modal-open');
+	});
+
 	// Column Layout Arrange
 	$(document).on('click', '.column-layout', function(event) {
 		event.preventDefault();
@@ -438,7 +413,7 @@ jQuery(function($) {
 		}
 
 		if (colType == 'custom') {
-			column = prompt('Enter your custom layout like 4,2,2,2,2 as total 12 grid','4,2,2,2,2');
+			column = prompt('Enter your custom layout like 4+2+2+2+2 as total 12 grid','4+2+2+2+2');
 		}
 
 		var $parent 		= $that.closest('.helix-ultimate-column-list'),
@@ -449,18 +424,18 @@ jQuery(function($) {
 		newLayout 		= ['12'];
 
 		if ( oldLayoutData != 12 ) {
-			oldLayout = oldLayoutData.split(',');
+			oldLayout = oldLayoutData.split('+');
 		}
 
 		if(layoutData != 12 ){
-			newLayout = layoutData.split(',');
+			newLayout = layoutData.split('+');
 		}
 
 		if ( colType == 'custom' ) {
 			var error 	= true;
 
 			if ( column != null ) {
-				var colArray = column.split(',');
+				var colArray = column.split('+');
 
 				var colSum = colArray.reduce(function(a, b) {
 					return Number(a) + Number(b);
@@ -524,7 +499,7 @@ jQuery(function($) {
 	});
 
 	// add row
-	$(document).on('click','.add-row',function(event){
+	$(document).on('click', '.add-row',function(event){
 		event.preventDefault();
 
 		var $parent = $(this).closest('.helix-ultimate-layout-builder-section'),

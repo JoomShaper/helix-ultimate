@@ -17,8 +17,8 @@
 			tolerance: 'pointer',
 
 			start: function(event, ui) {
-				$( ".layoutbuilder-section .row" ).find('.ui-state-highlight').addClass( $(ui.item).attr('class') );
-				$( ".layoutbuilder-section .row" ).find('.ui-state-highlight').css( 'height', $(ui.item).outerHeight() );
+				$( ".helix-ultimate-layout-section .row" ).find('.ui-state-highlight').addClass( $(ui.item).attr('class') );
+				$( ".helix-ultimate-layout-section .row" ).find('.ui-state-highlight').css( 'height', $(ui.item).outerHeight() );
 			}
 
 		}).disableSelection();

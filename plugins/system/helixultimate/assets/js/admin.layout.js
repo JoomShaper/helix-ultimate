@@ -140,7 +140,7 @@ jQuery(function($) {
 
 		}).disableSelection();
 
-		$('.helix-ultimate-layout-builder-section').find('.row').rowSortable();
+		$('.helix-ultimate-layout-section').find('.row').rowSortable();
 	}
 
 	// setInputValue Callback Function
@@ -251,6 +251,7 @@ jQuery(function($) {
 		});
 
 		$clone.initColorPicker();
+<<<<<<< HEAD:plugins/system/helixultimate/assets/js/admin.layout.js
 
 
 		// $('.helix-ultimate-layout-column').removeClass('column-active');
@@ -290,6 +291,8 @@ jQuery(function($) {
 		//
 		// $('#layout-modal').randomIds();
 		// $('#layout-modal').spmodal();
+=======
+>>>>>>> 62cfb2ddc378b8c759fa2e13af29feb90917f5c2:plugins/system/helixultimate/assets/js/admin.layout.js
 	});
 
 
@@ -345,6 +348,10 @@ jQuery(function($) {
 
 				$parent.attr('data-' + $attrname, $this.getInputValue());
 			});
+
+			$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+			$('body').addClass('helix-ultimate-modal-open');
+
 			break;
 
 			case 'column-setting':
@@ -370,8 +377,11 @@ jQuery(function($) {
 
 				$parent.attr('data-' + $attrname, $this.getInputValue());
 			});
+			$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+			$('body').addClass('helix-ultimate-modal-open');
 			break;
 
+			// Need to be removed
 			case 'save-layout':
 			var layoutName = $('#layout-modal .addon-input').val(),
 			data = {
@@ -424,6 +434,13 @@ jQuery(function($) {
 		}
 	});
 
+	// Cancel Modal
+	$(document).on('click', '.helix-ultimate-settings-cancel', function(event) {
+		event.preventDefault();
+		$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+		$('body').addClass('helix-ultimate-modal-open');
+	});
+
 	// Column Layout Arrange
 	$(document).on('click', '.column-layout', function(event) {
 		event.preventDefault();
@@ -438,7 +455,7 @@ jQuery(function($) {
 		}
 
 		if (colType == 'custom') {
-			column = prompt('Enter your custom layout like 4,2,2,2,2 as total 12 grid','4,2,2,2,2');
+			column = prompt('Enter your custom layout like 4+2+2+2+2 as total 12 grid','4+2+2+2+2');
 		}
 
 		var $parent 		= $that.closest('.helix-ultimate-column-list'),
@@ -449,18 +466,18 @@ jQuery(function($) {
 		newLayout 		= ['12'];
 
 		if ( oldLayoutData != 12 ) {
-			oldLayout = oldLayoutData.split(',');
+			oldLayout = oldLayoutData.split('+');
 		}
 
 		if(layoutData != 12 ){
-			newLayout = layoutData.split(',');
+			newLayout = layoutData.split('+');
 		}
 
 		if ( colType == 'custom' ) {
 			var error 	= true;
 
 			if ( column != null ) {
-				var colArray = column.split(',');
+				var colArray = column.split('+');
 
 				var colSum = colArray.reduce(function(a, b) {
 					return Number(a) + Number(b);
@@ -524,7 +541,7 @@ jQuery(function($) {
 	});
 
 	// add row
-	$(document).on('click','.add-row',function(event){
+	$(document).on('click', '.add-row',function(event){
 		event.preventDefault();
 
 		var $parent = $(this).closest('.helix-ultimate-layout-builder-section'),

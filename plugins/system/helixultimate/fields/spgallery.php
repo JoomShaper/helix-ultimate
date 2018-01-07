@@ -4,7 +4,7 @@
 * @author JoomShaper http://www.joomshaper.com
 * @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/  
+*/
 
 //no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
@@ -21,12 +21,12 @@ class JFormFieldSpgallery extends JFormField
 		JHtml::_('jquery.framework');
 		JHtml::_('jquery.ui', array('core', 'sortable'));
 
-		$plg_path = JURI::root(true) . '/plugins/system/helix3';
+		$plg_path = JURI::root(true) . '/plugins/system/helixultimate';
 		$doc->addScript($plg_path . '/assets/js/spgallery.js');
 		$doc->addStyleSheet($plg_path . '/assets/css/spgallery.css');
 
 		$values = json_decode($this->value);
-		
+
 		if(count($values)) {
 			$images = $this->element['name'] . '_images';
 			$values = $values->$images;

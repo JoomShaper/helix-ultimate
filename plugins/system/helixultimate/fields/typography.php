@@ -4,7 +4,7 @@
 * @author JoomShaper http://www.joomshaper.com
 * @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/  
+*/
 
 defined ('_JEXEC') or die ('Restricted access');
 
@@ -17,7 +17,7 @@ class JFormFieldTypography extends JFormField
     protected function getInput()
     {
         $template_path = JPATH_SITE . '/templates/' . self::getTemplate() . '/webfonts/webfonts.json';
-        $plugin_path   = JPATH_PLUGINS . '/system/helix3/assets/webfonts/webfonts.json';
+        $plugin_path   = JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
 
         if(file_exists( $template_path ))
         {
@@ -50,7 +50,7 @@ class JFormFieldTypography extends JFormField
 
         foreach ($items as $item)
         {
-            $html .= '<option '. ((isset($value->fontFamily) && $item->family == $value->fontFamily)?'selected="selected"':'') .' value="'. $item->family .'">'. $item->family .'</option>';    
+            $html .= '<option '. ((isset($value->fontFamily) && $item->family == $value->fontFamily)?'selected="selected"':'') .' value="'. $item->family .'">'. $item->family .'</option>';
         }
 
         $html .= '</select>';
@@ -123,7 +123,7 @@ class JFormFieldTypography extends JFormField
         {
             if ($item->family == $key) return $item;
         }
-        return false;  
+        return false;
     }
 
     private static function getTemplate()

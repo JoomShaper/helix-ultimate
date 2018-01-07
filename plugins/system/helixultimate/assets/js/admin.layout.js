@@ -20,57 +20,57 @@ jQuery(function($) {
 		event.preventDefault();
 
 		var $that = $(this),
-			layoutName = $(".layoutlist select").val(),
-			data = {
-				layoutName : layoutName
-			};
+		layoutName = $(".layoutlist select").val(),
+		data = {
+			layoutName : layoutName
+		};
 
 		if ( confirm("Click Ok button to delete "+layoutName+", Cancel to leave.") != true ){
 			return false;
 		}
 
 		var request = {
-				'action' : 'remove-layout-file',
-                'option' : 'com_ajax',
-				'plugin' : 'helix3',
-				'request': 'ajaxHelix',
-                'data'   : data,
-                'format' : 'json'
-            };
+			'action' : 'remove-layout-file',
+			'option' : 'com_ajax',
+			'plugin' : 'helix3',
+			'request': 'ajaxHelix',
+			'data'   : data,
+			'format' : 'json'
+		};
 
-        $.ajax({
-            type   : 'POST',
-            data   : request,
-            beforeSend: function(){
-            	$('.layout-del-action .fa-spin').show();
-            },
-            success: function (response) {
-            	var data = $.parseJSON(response),
-            		layouts = data.layout,
-					tplHtml = '';
-					
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			beforeSend: function(){
+				$('.layout-del-action .fa-spin').show();
+			},
+			success: function (response) {
+				var data = $.parseJSON(response),
+				layouts = data.layout,
+				tplHtml = '';
+
 				if ( data.status == false){
 					alert(data.message)
 					return;
 				}
 
-            	$('#layoutlist').find('option').remove();
-            	if (layouts.length) {
-            		for (var i = 0; i < layouts.length; i++) {
-            			tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
-            		}
+				$('#layoutlist').find('option').remove();
+				if (layouts.length) {
+					for (var i = 0; i < layouts.length; i++) {
+						tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
+					}
 
-            		$('#layoutlist').html(tplHtml);
-            	}
+					$('#layoutlist').html(tplHtml);
+				}
 
-            	$('.layout-del-action .fa-spin').fadeOut('fast');
-            },
-            error: function(){
-            	alert('Somethings wrong, Try again');
-            	$('.layout-del-action .fa-spin').fadeOut('fast');
-            }
-        });
-        return false;
+				$('.layout-del-action .fa-spin').fadeOut('fast');
+			},
+			error: function(){
+				alert('Somethings wrong, Try again');
+				$('.layout-del-action .fa-spin').fadeOut('fast');
+			}
+		});
+		return false;
 	});
 
 	// Save new copy of layout
@@ -89,40 +89,40 @@ jQuery(function($) {
 
 	$(".layoutlist select").change(function(){
 		var $that = $(this),
-			layoutName = $that.val(),
-			data = {
-				layoutName : layoutName
-			};
+		layoutName = $that.val(),
+		data = {
+			layoutName : layoutName
+		};
 
 		if ( layoutName == '' || layoutName == ' ' ){
 			alert('You are doing somethings wrong.');
 		}
 
 		var request = {
-				'action' : 'render-layout',
-                'option' : 'com_ajax',
-				'plugin' : 'helix3',
-				'request': 'ajaxHelix',
-                'data'   : data,
-                'format' : 'raw'
-            };
+			'action' : 'render-layout',
+			'option' : 'com_ajax',
+			'plugin' : 'helix3',
+			'request': 'ajaxHelix',
+			'data'   : data,
+			'format' : 'raw'
+		};
 
-        $.ajax({
-            type   : 'POST',
-            data   : request,
-            dataType: "html",
-            beforeSend: function(){
-            },
-            success: function (response) {
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			dataType: "html",
+			beforeSend: function(){
+			},
+			success: function (response) {
 				var data = $.parseJSON(response);
 				if(data.status) {
 					$('#helix-layout-builder').empty();
 					$('#helix-layout-builder').append(data.layoutHtml).fadeIn('normal');
 					jqueryUiLayout();
 				}
-            }
-        });
-        return false;
+			}
+		});
+		return false;
 	});
 
 	/*********   Lyout Builder JavaScript   **********/
@@ -154,7 +154,6 @@ jQuery(function($) {
 		}else if(this.hasClass('input-media')){
 			if(options.filed){
 				$imgParent = this.parent('.media');
-				console.log($imgParent);
 				$imgParent.find('img.media-preview').each(function() {
 					$(this).attr('src',layoutbuilder_base+options.filed);
 				});
@@ -198,24 +197,24 @@ jQuery(function($) {
 	// Open Row settings Modal
 	$(document).on('click', '.helix-ultimate-row-options', function(event){
 		event.preventDefault();
-		$(this).helixUltimateOptionsModal();
+		$(this).helixUltimateOptionsModal({
+			flag: 'row-setting',
+			title: "Row Options",
+			class: 'helix-ultimate-modal-small'
+		});
 
-		$('.helix-ultimate-layout-builder-section').removeClass('row-active');
-		$parent = $(this).closest('.helix-ultimate-layout-builder-section');
+		$('.helix-ultimate-layout-section').removeClass('row-active');
+		$parent = $(this).closest('.helix-ultimate-layout-section');
 		$parent.addClass('row-active');
 
-		// $('#layout-modal').find('.sp-modal-body').empty();
-		// $('#layout-modal .sp-modal-title').text('Row Settings');
-		// $('#layout-modal #save-settings').data('flag', 'row-setting');
-
-		var $clone = $('.row-settings').clone(true);
-		$clone.find('.sppb-color').each(function(){
+		var $clone = $('#helix-ultimate-row-settings').clone(true);
+		$clone.find('.helix-ultimate-input-color').each(function(){
 			$(this).addClass('minicolors');
 		});
 
-		//$clone = $('#layout-modal').find('.sp-modal-body').append( $clone );
+		$clone = $('.helix-ultimate-modal-inner').html($clone.removeAttr('id').addClass('helix-ultimate-modal-content'));
 
-		$clone.find('.addon-input').each(function(){
+		$clone.find('.helix-ultimate-input').each(function(){
 			var $that = $(this),
 			attrValue = $parent.data( $that.data('attrname'));
 			$that.setInputValue({filed: attrValue});
@@ -223,56 +222,74 @@ jQuery(function($) {
 
 		$clone.initColorPicker();
 
-		$('#layout-modal').randomIds();
-
-		$clone.find('select').chosen({
-			allow_single_deselect: true
-		});
-
-		$('#layout-modal').spmodal();
 	});
 
 	// Open Column settings Modal
-	$(document).on('click','.col-ops-set',function(event) {
+	$(document).on('click', '.helix-ultimate-column-options',function(event) {
 		event.preventDefault();
+		$(this).helixUltimateOptionsModal({
+			flag: 'column-setting',
+			title: "Column Options",
+			class: 'helix-ultimate-modal-small'
+		});
 
 		$('.helix-ultimate-layout-column').removeClass('column-active');
 		$parent = $(this).closest('.helix-ultimate-layout-column');
 		$parent.addClass('column-active');
 
-		$('#layout-modal').find('.sp-modal-body').empty();
-		$('#layout-modal .sp-modal-title').text('Column Settings');
-		$('#layout-modal #save-settings').data('flag', 'col-setting');
-
-		var $clone = $('.column-settings').clone(true);
-		$clone.find('.sppb-color').each(function(){
+		var $clone = $('#helix-ultimate-column-settings').clone(true);
+		$clone.find('.helix-ultimate-input-color').each(function(){
 			$(this).addClass('minicolors');
 		});
 
-		$clone = $('#layout-modal').find('.sp-modal-body').append( $clone );
-		var comFlug = false;
-		$clone.find('.addon-input').each(function(){
+		$clone = $('.helix-ultimate-modal-inner').html($clone.removeAttr('id').addClass('helix-ultimate-modal-content'));
+
+		$clone.find('.helix-ultimate-input').each(function(){
 			var $that = $(this),
-			$attrname = $that.data('attrname'),
-			attrValue = $parent.data($attrname);
-
-			if ( $attrname == 'column_type' && attrValue == '1' ) {
-				comFlug = true;
-			}else if($attrname == 'name' && comFlug == true){
-				$that.closest('.form-group').slideUp('fast');
-			}
-
+			attrValue = $parent.data( $that.data('attrname'));
 			$that.setInputValue({filed: attrValue});
 		});
 
 		$clone.initColorPicker();
 
-		$clone.find('select').chosen({
-			allow_single_deselect: true
-		});
 
-		$('#layout-modal').randomIds();
-		$('#layout-modal').spmodal();
+		// $('.helix-ultimate-layout-column').removeClass('column-active');
+		// $parent = $(this).closest('.helix-ultimate-layout-column');
+		// $parent.addClass('column-active');
+		//
+		// $('#layout-modal').find('.sp-modal-body').empty();
+		// $('#layout-modal .sp-modal-title').text('Column Settings');
+		// $('#layout-modal #save-settings').data('flag', 'col-setting');
+		//
+		// var $clone = $('.column-settings').clone(true);
+		// $clone.find('.sppb-color').each(function(){
+		// 	$(this).addClass('minicolors');
+		// });
+		//
+		// $clone = $('#layout-modal').find('.sp-modal-body').append( $clone );
+		// var comFlug = false;
+		// $clone.find('.addon-input').each(function(){
+		// 	var $that = $(this),
+		// 	$attrname = $that.data('attrname'),
+		// 	attrValue = $parent.data($attrname);
+		//
+		// 	if ( $attrname == 'column_type' && attrValue == '1' ) {
+		// 		comFlug = true;
+		// 	}else if($attrname == 'name' && comFlug == true){
+		// 		$that.closest('.form-group').slideUp('fast');
+		// 	}
+		//
+		// 	$that.setInputValue({filed: attrValue});
+		// });
+		//
+		// $clone.initColorPicker();
+		//
+		// $clone.find('select').chosen({
+		// 	allow_single_deselect: true
+		// });
+		//
+		// $('#layout-modal').randomIds();
+		// $('#layout-modal').spmodal();
 	});
 
 
@@ -303,14 +320,14 @@ jQuery(function($) {
 	});
 
 	// Save Row Column Settings
-	$(document).on('click', '#save-settings', function(event) {
+	$(document).on('click', '.helix-ultimate-settings-apply', function(event) {
 		event.preventDefault();
 
 		var flag = $(this).data('flag');
 
 		switch(flag){
 			case 'row-setting':
-			$('#layout-modal').find('.addon-input').each(function(){
+			$('.helix-ultimate-modal-content').find('.helix-ultimate-input').each(function(){
 				var $this = $(this),
 				$parent = $('.row-active'),
 				$attrname = $this.data('attrname');
@@ -320,9 +337,9 @@ jQuery(function($) {
 					var nameVal = $this.val();
 
 					if (nameVal  !='' || $this.val() != null) {
-						$('.row-active .section-title').text($this.val());
+						$('.row-active .helix-ultimate-section-title').text($this.val());
 					}else{
-						$('.row-active .section-title').text('Section Header');
+						$('.row-active .helix-ultimate-section-title').text('Section Header');
 					}
 				}
 
@@ -330,10 +347,10 @@ jQuery(function($) {
 			});
 			break;
 
-			case 'col-setting':
+			case 'column-setting':
 			var component = false;
 
-			$('#layout-modal').find('.addon-input').each(function(){
+			$('.helix-ultimate-modal-content').find('.helix-ultimate-input').each(function(){
 
 				var $this = $(this),
 				$parent = $('.column-active'),
@@ -343,12 +360,12 @@ jQuery(function($) {
 
 				if ( $attrname == 'column_type' && $(this).attr("checked") ) {
 					component = true;
-					$('.column-active .col-title').text('Component');
+					$('.column-active .helix-ultimate-column-title').text('Component');
 				}else if( $attrname == 'name' && component != true ) {
 					if (dataVal == '' || dataVal == undefined) {
 						dataVal = 'none';
 					}
-					$('.column-active .col-title').text(dataVal);
+					$('.column-active .helix-ultimate-column-title').text(dataVal);
 				}
 
 				$parent.attr('data-' + $attrname, $this.getInputValue());
@@ -357,10 +374,10 @@ jQuery(function($) {
 
 			case 'save-layout':
 			var layoutName = $('#layout-modal .addon-input').val(),
-				data = {
-					layoutName : layoutName,
-					content: JSON.stringify(getGeneratedLayout())
-				};
+			data = {
+				layoutName : layoutName,
+				content: JSON.stringify(getGeneratedLayout())
+			};
 
 			if (layoutName =='' || layoutName ==' ') {
 				alert("Without Name Layout Can't be save");
@@ -463,7 +480,7 @@ jQuery(function($) {
 		}
 
 		var col = [],
-			colAttr = [];
+		colAttr = [];
 
 		$gparent.find('.helix-ultimate-layout-column').each(function(i,val){
 			col[i] = $(this).html();
@@ -545,10 +562,10 @@ jQuery(function($) {
 	// Generate Layout JSON
 	function getGeneratedLayout(){
 		var item = [];
-		$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-builder-section').each(function(index){
+		$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-section').each(function(index){
 			var $row 		= $(this),
-				rowIndex 	= index,
-				rowObj 		= $row.data();
+			rowIndex 	= index,
+			rowObj 		= $row.data();
 			delete rowObj.sortableItem;
 
 			var activeLayout 	= $row.find('.column-layout.active'),
@@ -570,9 +587,9 @@ jQuery(function($) {
 			$row.find('.helix-ultimate-layout-column').each(function(index) {
 
 				var $column 	= $(this),
-					colIndex 	= index,
-					className 	= $column.attr('class'),
-					colObj 		= $column.data();
+				colIndex 	= index,
+				className 	= $column.attr('class'),
+				colObj 		= $column.data();
 				delete colObj.sortableItem;
 
 				item[rowIndex].attr[colIndex] = {

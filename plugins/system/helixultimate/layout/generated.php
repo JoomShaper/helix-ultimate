@@ -9,11 +9,11 @@
 //no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
 
-$types = JFolder::files( dirname( __FILE__ ) . '/types', '\.php$', false, true);
+$fields = JFolder::files( dirname( __FILE__ ) . '/fields', '\.php$', false, true);
 
 
-foreach ($types as $type) {
-  require_once $type;
+foreach ($fields as $field) {
+  require_once $field;
 }
 
 // require_once 'layout-settings/fields-helper.php';
@@ -51,31 +51,13 @@ $colGrid = array(
   </div>
 </div>
 
-<!-- Modal for all -->
-
-<div class="sp-modal" id="layout-modal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-  <div class="sp-modal-dialog">
-    <div class="sp-modal-content">
-      <div class="sp-modal-header">
-        <button type="button" class="close" data-dismiss="spmodal" aria-hidden="true">&times;</button>
-        <h3 class="sp-modal-title" id="modal-label"></h3>
-      </div>
-      <div class="sp-modal-body"></div>
-      <div class="sp-modal-footer clearfix">
-        <a href="javascript:void(0)" class="sppb-btn sppb-btn-success pull-left" id="save-settings" data-dismiss="spmodal"><?php echo JText::_('HELIX_APPLY'); ?></a>
-        <button class="sppb-btn sppb-btn-danger pull-left" data-dismiss="spmodal" aria-hidden="true"><?php echo JText::_('HELIX_CANCEL'); ?></button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="hidden">
   <div id="helix-ultimate-layout-section">
     <div class="helix-ultimate-section-settings clearfix">
 
       <div class="pull-left">
         <a class="helix-ultimate-move-row" href="#"><i class="fa fa-arrows"></i></a>
-        <strong class="helicx-ultimate-section-title"><?php echo JText::_('HELIX_SECTION_TITLE'); ?></strong>
+        <strong class="helix-ultimate-section-title"><?php echo JText::_('HELIX_SECTION_TITLE'); ?></strong>
       </div>
 
       <div class="pull-right">
@@ -130,7 +112,7 @@ $colGrid = array(
         <div class="helix-ultimate-section-settings clearfix">
           <div class="pull-left">
             <a class="helix-ultimate-move-row" href="#"><i class="fa fa-arrows"></i></a>
-            <strong class="helicx-ultimate-section-title"><?php echo $name; ?></strong>
+            <strong class="helix-ultimate-section-title"><?php echo $name; ?></strong>
           </div>
 
           <div class="pull-right">

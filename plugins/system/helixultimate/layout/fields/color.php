@@ -9,7 +9,7 @@
 //no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
 
-class SpTypeColor{
+class HelixUltimateFieldColor{
 
 	static function getInput($key, $attr)
 	{
@@ -22,13 +22,13 @@ class SpTypeColor{
 		JHtml::_('jquery.framework');
 		JHtml::_('script', 'system/html5fallback.js', false, true);
 
-		$output  = '<div class="form-group">';
+		$output  = '<div class="control-group">';
 		$output .= '<label>'.$attr['title'].'</label>';
-		$output .= '<input type="text" class="sppb-color addon-input" data-attrname="'.$key.'" placeholder="#rrggbb" value="'.$attr['std'].'">';
+		$output .= '<input type="text" class="helix-ultimate-input helix-ultimate-input-color" data-attrname="'.$key.'" placeholder="#rrggbb" value="'.$attr['std'].'">';
 
 		if( ( isset($attr['desc']) ) && ( isset($attr['desc']) != '' ) )
 		{
-			$output .= '<p class="help-block">' . $attr['desc'] . '</p>';
+			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 
 		$output .= '</div>';

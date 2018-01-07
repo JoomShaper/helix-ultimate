@@ -19,23 +19,23 @@ $rowSettings = array(
 			'title'		=> JText::_('HELIX_SECTION_TITLE'),
 			'desc'		=> JText::_('HELIX_SECTION_TITLE_DESC'),
 			'std'		=> ''
-			),
+		),
 		'background_color' => array(
 			'type'		=> 'color',
 			'title'		=> JText::_('HELIX_SECTION_BACKGROUND_COLOR'),
 			'desc'		=> JText::_('HELIX_SECTION_BACKGROUND_COLOR_DESC')
-			),
+		),
 		'color' => array(
 			'type'		=> 'color',
 			'title'		=> JText::_('HELIX_SECTION_TEXT_COLOR'),
 			'desc'		=> JText::_('HELIX_SECTION_TEXT_COLOR_DESC')
-			),
+		),
 		'background_image' => array(
 			'type'		=> 'media',
 			'title'		=> JText::_('HELIX_SECTION_BACKGROUND_IMAGE'),
 			'desc'		=> JText::_('HELIX_SECTION_BACKGROUND_IMAGE_DESC'),
 			'std'		=> '',
-			),
+		),
 		'background_repeat'=>array(
 			'type'=>'select',
 			'title'=>JText::_('HELIX_BG_REPEAT'),
@@ -46,9 +46,9 @@ $rowSettings = array(
 				'repeat-x'=>JText::_('HELIX_BG_REPEAT_HORIZ'),
 				'repeat-y'=>JText::_('HELIX_BG_REPEAT_VERTI'),
 				'inherit'=>JText::_('HELIX_BG_REPEAT_INHERIT'),
-				),
-			'std'=>'no-repeat',
 			),
+			'std'=>'no-repeat',
+		),
 		'background_size' => array(
 			'type'		=> 'select',
 			'title'=>JText::_('HELIX_BG_SIZE'),
@@ -57,9 +57,9 @@ $rowSettings = array(
 				'cover'=>JText::_('HELIX_BG_COVER'),
 				'contain'=>JText::_('HELIX_BG_CONTAIN'),
 				'inherit'=>JText::_('HELIX_BG_INHERIT'),
-				),
-			'std'=>'cover',
 			),
+			'std'=>'cover',
+		),
 		'background_attachment'=>array(
 			'type'=>'select',
 			'title'=>JText::_('HELIX_BG_ATTACHMENT'),
@@ -68,9 +68,9 @@ $rowSettings = array(
 				'fixed'=>JText::_('HELIX_BG_ATTACHMENT_FIXED'),
 				'scroll'=>JText::_('HELIX_BG_ATTACHMENT_SCROLL'),
 				'inherit'=>JText::_('HELIX_BG_ATTACHMENT_INHERIT'),
-				),
-			'std'=>'fixed',
 			),
+			'std'=>'fixed',
+		),
 		'background_position' => array(
 			'type'		=> 'select',
 			'title'=>JText::_('HELIX_BG_POSITION'),
@@ -85,63 +85,63 @@ $rowSettings = array(
 				'100% 0'=>JText::_('HELIX_BG_POSITION_RIGHT_TOP'),
 				'100% 50%'=>JText::_('HELIX_BG_POSITION_RIGHT_CENTER'),
 				'100% 100%'=>JText::_('HELIX_BG_POSITION_RIGHT_BOTTOM'),
-				),
-			'std'=>'0 0',
 			),
+			'std'=>'0 0',
+		),
 		'link_color' => array(
 			'type'		=> 'color',
 			'title'		=> JText::_('HELIX_LINK_COLOR'),
 			'desc'		=> JText::_('HELIX_LINK_COLOR_DESC')
-			),
+		),
 		'link_hover_color' => array(
 			'type'		=> 'color',
 			'title'		=> JText::_('HELIX_LINK_HOVER_COLOR'),
 			'desc'		=> JText::_('HELIX_LINK_HOVER_COLOR_DESC')
-			),
+		),
 		'hidden_xs' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_MOBILE'),
 			'desc'		=> JText::_('HELIX_HIDDEN_MOBILE_DESC'),
 			'std'		=> '',
-			),
+		),
 		'hidden_sm' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_TABLET'),
 			'desc'		=> JText::_('HELIX_HIDDEN_TABLET_DESC'),
 			'std'		=> '',
-			),
+		),
 		'hidden_md' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_DESKTOP'),
 			'desc'		=> JText::_('HELIX_HIDDEN_DESKTOP_DESC'),
 			'std'		=> '',
-			),
+		),
 		'padding' => array(
 			'type'		=> 'text',
 			'title'		=> JText::_('HELIX_PADDING'),
 			'desc'		=> JText::_('HELIX_PADDING_DESC'),
 			'std'		=> ''
-			),
+		),
 		'margin' => array(
 			'type'		=> 'text',
 			'title'		=> JText::_('HELIX_MARGIN'),
 			'desc'		=> JText::_('HELIX_MARGIN_DESC'),
 			'std'		=> ''
-			),
+		),
 		'fluidrow' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_ROW_FULL_WIDTH'),
 			'desc'		=> JText::_('HELIX_ROW_FULL_WIDTH_DESC'),
 			'std'		=> '',
-			),
+		),
 		'custom_class' => array(
 			'type'		=> 'text',
 			'title'		=> JText::_('HELIX_CUSTOM_CLASS'),
 			'desc'		=> JText::_('HELIX_CUSTOM_CLASS_DESC'),
 			'std'		=> ''
-			),
-		)
-	);
+		),
+	)
+);
 
 $columnSettings = array(
 	'type'=>'general',
@@ -153,32 +153,32 @@ $columnSettings = array(
 			'title'		=> JText::_('HELIX_COMPONENT'),
 			'desc'		=> JText::_('HELIX_COMPONENT_DESC'),
 			'std'=>'',
-			),
+		),
 		'name' => array(
 			'type'		=> 'select',
 			'title'		=> JText::_('HELIX_MODULE_POSITION'),
 			'desc'		=> JText::_('HELIX_MODULE_POSITION_DESC'),
 			'values'	=> array(),
 			'std'=>'none',
-			),
+		),
 		'hidden_xs' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_MOBILE'),
 			'desc'		=> JText::_('HELIX_HIDDEN_MOBILE_DESC'),
 			'std'		=> '',
-			),
+		),
 		'hidden_sm' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_TABLET'),
 			'desc'		=> JText::_('HELIX_HIDDEN_TABLET_DESC'),
 			'std'		=> '',
-			),
+		),
 		'hidden_md' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_DESKTOP'),
 			'desc'		=> JText::_('HELIX_HIDDEN_DESKTOP_DESC'),
 			'std'		=> '',
-			),
+		),
 		'sm_col' 		=> array(
 			'type'		=> 'select',
 			'title'		=> JText::_('HELIX_TABLET_LAYOUT'),
@@ -197,9 +197,9 @@ $columnSettings = array(
 				'col-sm-10' => 'col-sm-10',
 				'col-sm-11' => 'col-sm-11',
 				'col-sm-12' => 'col-sm-12',
-				),
-			'std'		=> '',
 			),
+			'std'		=> '',
+		),
 		'xs_col' 		=> array(
 			'type'		=> 'select',
 			'title'		=> JText::_('HELIX_MOBILE_LAYOUT'),
@@ -218,73 +218,73 @@ $columnSettings = array(
 				'col-xs-10' => 'col-xs-10',
 				'col-xs-11' => 'col-xs-11',
 				'col-xs-12' => 'col-xs-12',
-				),
-			'std'		=> '',
 			),
+			'std'		=> '',
+		),
 		'custom_class' => array(
 			'type'		=> 'text',
 			'title'		=> JText::_('HELIX_CUSTOM_CLASS'),
 			'desc'		=> JText::_('HELIX_CUSTOM_CLASS_DESC'),
 			'std'		=> ''
-			),
-		)
-	);
+		),
+	)
+);
 
 class RowColumnSettings{
 
 	private static function getInputElements( $key, $attr )
 	{
-		return call_user_func(array( 'SpType' . ucfirst( $attr['type'] ), 'getInput'), $key, $attr );
+		return call_user_func(array( 'HelixUltimateField' . ucfirst( $attr['type'] ), 'getInput'), $key, $attr );
 	}
 
 
-    static public function getHelixfwHeaderSettings($config = array())
-    {
-        $output = '<div class="hidden">';
-        $output .= '<div class="live-header-settings">';
+	static public function getHelixfwHeaderSettings($config = array())
+	{
+		$output = '<div class="hidden">';
+		$output .= '<div class="live-header-settings">';
 
-        foreach ($config['attr'] as $key => $rowAttr) {
-            $output .= self::getInputElements( $key, $rowAttr );
-        }
-        $output .= '</div>';
-        $output .= '</div>';
+		foreach ($config['attr'] as $key => $rowAttr) {
+			$output .= self::getInputElements( $key, $rowAttr );
+		}
+		$output .= '</div>';
+		$output .= '</div>';
 
-        return $output;
-    }
+		return $output;
+	}
 
-    static public function getHelixfwFooterSettings($config = array())
-    {
-        $output = '<div class="hidden">';
-        $output .= '<div class="helixfw-footer-settings">';
+	static public function getHelixfwFooterSettings($config = array())
+	{
+		$output = '<div class="hidden">';
+		$output .= '<div class="helixfw-footer-settings">';
 
-        foreach ($config['attr'] as $key => $rowAttr) {
-            $output .= self::getInputElements( $key, $rowAttr );
-        }
-        $output .= '</div>';
-        $output .= '</div>';
+		foreach ($config['attr'] as $key => $rowAttr) {
+			$output .= self::getInputElements( $key, $rowAttr );
+		}
+		$output .= '</div>';
+		$output .= '</div>';
 
-        return $output;
-    }
+		return $output;
+	}
 
-    static public function getHelixfwLogoBlockSettings($config = array())
-    {
-        $output = '<div class="hidden">';
-        $output .= '<div class="helixfw-logo-block-settings">';
+	static public function getHelixfwLogoBlockSettings($config = array())
+	{
+		$output = '<div class="hidden">';
+		$output .= '<div class="helixfw-logo-block-settings">';
 
-        foreach ($config['attr'] as $key => $rowAttr) {
-            $output .= self::getInputElements( $key, $rowAttr );
-        }
-        $output .= '</div>';
-        $output .= '</div>';
+		foreach ($config['attr'] as $key => $rowAttr) {
+			$output .= self::getInputElements( $key, $rowAttr );
+		}
+		$output .= '</div>';
+		$output .= '</div>';
 
-        return $output;
-    }
+		return $output;
+	}
 
 	static public function getRowSettings($row_settings = array())
 	{
 
 		$output = '<div class="hidden">';
-		$output .= '<div class="row-settings">';
+		$output .= '<div id="helix-ultimate-row-settings">';
 
 		foreach ($row_settings['attr'] as $key => $rowAttr) {
 			$output .= self::getInputElements( $key, $rowAttr );
@@ -302,7 +302,7 @@ class RowColumnSettings{
 		$col_settings['attr']['name']['values'] = self::getPositionss();
 
 		$output = '<div class="hidden">';
-		$output .= '<div class="column-settings">';
+		$output .= '<div id="helix-ultimate-column-settings">';
 
 		foreach ($col_settings['attr'] as $key => $rowAttr) {
 			$output .= self::getInputElements( $key, $rowAttr );
@@ -331,30 +331,30 @@ class RowColumnSettings{
 	static public function getPositionss()
 	{
 
-	    $db = JFactory::getDBO();
-	    $query = 'SELECT `position` FROM `#__modules` WHERE  `client_id`=0 AND ( `published` !=-2 AND `published` !=0 ) GROUP BY `position` ORDER BY `position` ASC';
+		$db = JFactory::getDBO();
+		$query = 'SELECT `position` FROM `#__modules` WHERE  `client_id`=0 AND ( `published` !=-2 AND `published` !=0 ) GROUP BY `position` ORDER BY `position` ASC';
 
-	    $db->setQuery($query);
-	    $dbpositions = (array) $db->loadAssocList();
+		$db->setQuery($query);
+		$dbpositions = (array) $db->loadAssocList();
 
 		$template  = self::getTemplateName();
 
-	    $templateXML = JPATH_SITE.'/templates/'.$template.'/templateDetails.xml';
-	    $template = simplexml_load_file( $templateXML );
-	    $options = array();
+		$templateXML = JPATH_SITE.'/templates/'.$template.'/templateDetails.xml';
+		$template = simplexml_load_file( $templateXML );
+		$options = array();
 
-	    foreach($dbpositions as $positions) $options[] = $positions['position'];
+		foreach($dbpositions as $positions) $options[] = $positions['position'];
 
-	    foreach($template->positions[0] as $position)  $options[] =  (string) $position;
+		foreach($template->positions[0] as $position)  $options[] =  (string) $position;
 
-	    $options = array_unique($options);
+		$options = array_unique($options);
 
-	    $selectOption = array();
-	    sort($selectOption);
+		$selectOption = array();
+		sort($selectOption);
 
-	    foreach($options as $option) $selectOption[$option] = $option;
+		foreach($options as $option) $selectOption[$option] = $option;
 
-	    return $selectOption;
+		return $selectOption;
 	}
 
 	static public function getSettings($config = null){

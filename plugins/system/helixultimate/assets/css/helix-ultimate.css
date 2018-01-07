@@ -2425,16 +2425,22 @@ select:focus::-ms-value {
 
 .helix-ultimate-modal {
   position: fixed;
-  top: 50%;
+  top: 100px;
   left: 50%;
   width: 820px;
   height: 600px;
-  margin-left: -410px;
-  margin-top: -300px;
   z-index: 9991;
   background: #fff;
   border-radius: 3px;
   box-shadow: 0 1px 4px 0 rgba(0,0,0,0.07);
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+}
+
+.helix-ultimate-modal-small {
+  top: 5%;
+  width: 420px;
+  height: 90%;
 }
 
 .helix-ultimate-modal-header {
@@ -2448,6 +2454,32 @@ select:focus::-ms-value {
   border-radius: 4px 4px 0 0;
   padding: 0 20px;
   z-index: 99;
+  align-items: center;
+}
+
+.helix-ultimate-modal-header-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #6F737A;
+}
+
+.helix-ultimate-modal-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: #E8EEF3;
+  height: 60px;
+  border-radius: 0 0 4px 4px;
+  padding: 0 20px;
+  z-index: 99;
+  align-items: center;
+}
+
+.helix-ultimate-modal-footer .btn {
+  margin-right: 10px;
+  font-size: 12px;
 }
 
 .helix-ultimate-modal-breadcrumbs {
@@ -2491,7 +2523,6 @@ select:focus::-ms-value {
 
 .helix-ultimate-modal-actions-left .btn,
 .helix-ultimate-modal-actions-right .btn {
-  margin-top: 14px;
   font-size: 12px;
   margin-right: 10px;
 }
@@ -2560,13 +2591,18 @@ select:focus::-ms-value {
   vertical-align: middle;
 }
 
-#helix-ultimate-media-manager {
+#helix-ultimate-media-manager,
+.helix-ultimate-modal-content {
   position: absolute;
   top: 80px;
   left: 20px;
   right: 20px;
   bottom: 20px;
   overflow-y: auto;
+}
+
+.helix-ultimate-modal-content {
+  bottom: 80px;
 }
 
 .helix-ultimate-media {

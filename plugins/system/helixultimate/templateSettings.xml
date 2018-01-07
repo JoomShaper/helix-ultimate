@@ -182,16 +182,8 @@
 	</fieldset>
 
 	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-list-alt">
-		<field name="layoutlist" type="layoutlist" />
-		<field
-			name="hrdesign"
-			type="header"
-			preview="true"
-			label="Header Design"
-			description="HELIX_FAVICON_DESC"
-			/>
-			<field type="layout" name="layout" />
-		</fieldset>
+		<field type="layout" name="layout" />
+	</fieldset>
 
 	<fieldset name="menu" label="Navigation" icon="fa fa-list">
 			<field type="group" title="HELIX_MEGAMENU" />

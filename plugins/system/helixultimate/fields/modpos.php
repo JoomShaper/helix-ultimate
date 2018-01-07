@@ -43,7 +43,7 @@ class JFormFieldModPos extends JFormFieldText
         $style_id = (int) $input->get('id', 0, 'INT');
         $style = HelixUltModel::getTemplateStyle($style_id);
         //
-        $db = JFactory::getDBO();
+        $db = \JFactory::getDbo();
         $query = 'SELECT `position` FROM `#__modules` WHERE  `client_id`=0 AND ( `published` !=-2 AND `published` !=0 ) GROUP BY `position` ORDER BY `position` ASC';
 
         $db->setQuery($query);

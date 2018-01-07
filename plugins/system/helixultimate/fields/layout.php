@@ -4,7 +4,7 @@
     * @author JoomShaper http://www.joomshaper.com
     * @copyright Copyright (c) 2010 - 2015 JoomShaper
     * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-    */  
+    */
 
     //no direct accees
     defined ('_JEXEC') or die ('resticted aceess');
@@ -17,7 +17,7 @@
 
         public function getInput()
         {
-            $helix_layout_path = JPATH_SITE.'/plugins/system/helix3/layout/';
+            $helix_layout_path = JPATH_SITE.'/plugins/system/helixultimate/layout/';
 
             $json = json_decode($this->value);
 
@@ -77,6 +77,5 @@
 
             return $json;
         }
-
 
     }

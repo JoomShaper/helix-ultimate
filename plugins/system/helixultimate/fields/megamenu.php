@@ -4,7 +4,7 @@
 * @author JoomShaper http://www.joomshaper.com
 * @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/  
+*/
 
 //no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
@@ -17,7 +17,7 @@ class JFormFieldMegamenu extends JFormField
 
     public function getInput()
     {
-        $mega_menu_path = JPATH_SITE.'/plugins/system/helix3/fields/';
+        $mega_menu_path = JPATH_SITE.'/plugins/system/helixultimate/fields/';
 
         $html = $this->getMegaSettings($mega_menu_path,json_decode($this->value));
         $html .= '<input type="hidden" name="'.$this->name.'" id="'.$this->id.'" value="'.$this->value.'">';

@@ -4,7 +4,7 @@
 * @author JoomShaper http://www.joomshaper.com
 * @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/  
+*/
 
 defined ('_JEXEC') or die ('resticted access');
 
@@ -18,7 +18,7 @@ class JFormFieldOptionio extends JFormField
 	{
 		$input = JFactory::getApplication()->input;
 		$template_id = $input->get('id',0,'INT');
-		
+
 		$url_cureent =  "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 		$export_url = $url_cureent . '&helix3task=export';
@@ -33,5 +33,5 @@ class JFormFieldOptionio extends JFormField
 		$output .= '</div>';
 
 		return $output;
-	}	
+	}
 }

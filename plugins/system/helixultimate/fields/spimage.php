@@ -4,7 +4,7 @@
 * @author JoomShaper http://www.joomshaper.com
 * @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/  
+*/
 
 defined ('_JEXEC') or die ('resticted aceess');
 
@@ -19,7 +19,7 @@ class JFormFieldSpimage extends JFormField
 
 		JHtml::_('jquery.framework');
 
-		$plg_path = JURI::root(true) . '/plugins/system/helix3';
+		$plg_path = JURI::root(true) . '/plugins/system/helixultimate';
 		$doc->addScript($plg_path . '/assets/js/spimage.js');
 		$doc->addStyleSheet($plg_path . '/assets/css/spimage.css');
 
@@ -33,14 +33,14 @@ class JFormFieldSpimage extends JFormField
 
 		$output  = '<div class="sp-image-field clearfix">';
 		$output .= '<div class="sp-image-upload-wrapper">';
-		
+
 		if($this->value) {
 			$data_src = $this->value;
 			$src = JURI::root(true) . '/' . $data_src;
-			
+
 			$basename = basename($data_src);
 			$thumbnail = JPATH_ROOT . '/' . dirname($data_src) . '/' . JFile::stripExt($basename) . '_thumbnail.' . JFile::getExt($basename);
-			
+
 			if(file_exists($thumbnail)) {
 				$src = JURI::root(true) . '/' . dirname($data_src) . '/' . JFile::stripExt($basename) . '_thumbnail.' . JFile::getExt($basename);
 			}

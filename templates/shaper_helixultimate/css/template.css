@@ -1109,11 +1109,8 @@ ul.social-icons > li a {
   z-index: 99;
 }
 #sp-header .logo {
-  display: inline-block;
   height: 90px;
-  display: table;
-  -webkit-transition: all 400ms ease;
-  transition: all 400ms ease;
+  display: inline-flex;
   margin: 0;
 }
 #sp-header .logo a {
@@ -1121,11 +1118,13 @@ ul.social-icons > li a {
   line-height: 1;
   margin: 0;
   padding: 0;
-  display: table-cell;
-  vertical-align: middle;
 }
 #sp-header .logo p {
   margin: 5px 0 0;
+}
+#sp-header .sp-default-logo-svg {
+  width: 100%;
+  height: 100%;
 }
 #sp-header .sp-retina-logo {
   display: none;
@@ -1613,7 +1612,7 @@ article.item {
   display: inline-block;
 }
 .helix-social-share .helix-social-share-icon ul li div a:hover, .helix-social-share .helix-social-share-icon ul li div a:focus {
-  background: #f11;
+  background: #f1f;
   color: #fff;
 }
 /* ******************   END:: Blog   ****************** */

@@ -58,9 +58,14 @@ class HelixUltimateFeatureLogo {
 			if( $this->helixUltimate->getParam('logo_image') ) {
 				$html .= '<div class="logo">';
 				$html .= '<a href="' . \JURI::base(true) . '/">';
-					$html .= '<img class="sp-default-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
-					if( $this->helixUltimate->getParam('logo_image_2x') ) {
-						$html .= '<img class="sp-retina-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image_2x') . '" alt="'. $sitename .'" width="' . $width . '" height="' . $height . '">';
+
+					if($ext != 'svg') {
+						$html .= '<img class="sp-default-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
+						if( $this->helixUltimate->getParam('logo_image_2x') ) {
+							$html .= '<img class="sp-retina-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image_2x') . '" alt="'. $sitename .'" width="' . $width . '" height="' . $height . '">';
+						}
+					} else {
+						$html .= '<img class="sp-default-logo-svg'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
 					}
 
 					if( $this->helixUltimate->getParam('mobile_logo') ) {
@@ -73,8 +78,8 @@ class HelixUltimateFeatureLogo {
 			} else {
 				$html .= '<div class="logo">';
 					$html .= '<a href="' . \JURI::base(true) . '/">';
-						$html .= '<img class="sp-default-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getTemplateUri() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.png" alt="'. $sitename .'">';
-						$html .= '<img class="sp-retina-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getTemplateUri() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo@2x.png" alt="'. $sitename .'" width="' . $width . '" height="' . $height . '">';
+
+					$html .= '<img class="sp-default-logo-svg'. $custom_logo_class .'" src="' . $this->helixUltimate->getTemplateUri() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.svg" alt="'. $sitename .'">';
 
 						if( $this->helixUltimate->getParam('mobile_logo') ) {
 							$html .= '<img class="sp-default-logo visible-xs" src="' . $this->helixUltimate->getParam('mobile_logo') . '" alt="'. $sitename .'">';

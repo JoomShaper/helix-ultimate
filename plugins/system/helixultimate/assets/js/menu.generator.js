@@ -24,13 +24,7 @@ jQuery(function($) {
 
   // Menu Width
   $(document).on('change', '#helix-ultimate-megamenu-width', function(){
-    var width = $(this).val();
-    if(width >= 200){
-      $('#helix-ultimate-megamenu-layout').data('width',width);
-    }else{
-      alert("Width can't be less than 200 Pixels");
-      $(this).val($('#helix-ultimate-megamenu-layout').data('width'));
-    }
+    $('#helix-ultimate-megamenu-layout').data('width', $(this).val());
   });
 
   // Alignment

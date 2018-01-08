@@ -27,12 +27,14 @@ class HelixUltimateFeatureLogo {
 			jimport('joomla.image.image');
 
 			if( $this->helixUltimate->getParam('logo_image') ) {
-				$path = JPATH_ROOT . '/' . $this->helixUltimate->getParam('logo_image');
+				$path = \JPATH_ROOT . '/' . $this->helixUltimate->getParam('logo_image');
 			} else {
-				$path = JPATH_ROOT . '/templates/' . $this->helixUltimate->getTemplate() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.png';
+				$path = \JPATH_ROOT . '/templates/' . $this->helixUltimate->getTemplate() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.png';
 			}
 
-			if(file_exists($path)) {
+			$ext = \JFile::getExt($path);
+
+			if(file_exists($path) && $ext != 'svg') {
 				$image = new \JImage( $path );
 				$width 	= $image->getWidth();
 				$height = $image->getHeight();

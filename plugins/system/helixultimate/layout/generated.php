@@ -61,35 +61,55 @@ $colGrid = array(
       </div>
 
       <div class="pull-right">
-        <ul class="helix-ultimate-btn-group">
+        <ul class="helix-ultimate-row-option-list">
           <li>
-            <a class="btn btn-small helix-ultimate-add-columns" href="#"><i class="fa fa-columns"></i></a>
+            <a class="helix-ultimate-add-columns" href="#"><span class="fa fa-columns"></span></a>
             <ul class="helix-ultimate-column-list">
               <?php
+              $active = '';
               foreach ($colGrid as $key => $grid){
-                $active = ($key==12) ? ' active' : '';
-                echo '<li><a href="#" class="helix-ultimate-column-layout hasTooltip helix-ultimate-column-layout-' .$key. $active .'" data-layout="'.$grid.'" data-original-title="<strong>'.$grid.'</strong>"></a></li>';
-                $active = '';
+                if($key == 12){
+                  $active = 'active';
+                }
+                $cols = explode('+', $grid);
+                $col_output = '';
+                foreach ($cols as $col) {
+                  $col_output .= '<span class="helix-ultimate-column-layout-col-'. $col .'"><span>'. $col .'</span></span>';
+                }
+                echo '<li><a href="#" class="helix-ultimate-column-layout hasTooltip helix-ultimate-column-layout-' .$key. ' '.$active.'" data-layout="'.$grid.'" data-original-title="<strong>'.$grid.'</strong>">'. $col_output .'</a></li>';
+                $active ='';
+              } ?>
+
+              <?php
+              $customLayout = '';
+              if (!isset($colGrid[$row->layout])) {
+                $active = 'active';
+                $split = str_split($row->layout);
+                $customLayout = implode(',',$split);
               }
               ?>
-              <li><a href="#" class="hasTooltip column-layout-custom column-layout custom <?php echo $active; ?>" data-layout="" data-type='custom' data-original-title="<strong>Custom Layout</strong>"></a></li>
+              <li><a href="#" class="hasTooltip helix-ultimate-column-layout-custom helix-ultimate-column-layout helix-ultimate-custom <?php echo $active; ?>" data-layout="<?php echo $customLayout; ?>" data-type='custom' data-original-title="<strong>Custom Layout</strong>"></a></li>
             </ul>
           </li>
-          <li><a class="btn btn-small helix-ultimate-add-row" href="#"><i class="fa fa-bars"></i></a></li>
-          <li><a class="btn btn-small helix-ultimate-row-options" href="#"><i class="fa fa-gears"></i></a></li>
-          <li><a class="btn btn-danger btn-small helix-ultimate-remove-row" href="#"><i class="fa fa-times"></i></a></li>
+          <li><a class="helix-ultimate-row-options" href="#"><i class="fa fa-gears"></i></a></li>
+          <li><a class="helix-ultimate-remove-row" href="#"><i class="fa fa-trash"></i></a></li>
         </ul>
       </div>
-
     </div>
-    <div class="row ui-sortable">
-      <div class="helix-ultimate-layout-column col-sm-12">
-        <div class="helix-ultimate-column">
-          <h6 class="helix-ultimate-column-title"><?php echo JText::_('HELIX_NONE'); ?></h6>
-          <a class="helix-ultimate-column-options" href="#" ><i class="fa fa-gear"></i></a>
+
+    <div class="helix-ultimate-row-container ui-sortable">
+      <div class="row ui-sortable">
+        <div class="helix-ultimate-layout-column col-sm-12">
+          <div class="helix-ultimate-column clearfix">
+            <span class="helix-ultimate-column-title"><?php echo JText::_('HELIX_NONE'); ?></span>
+            <a class="helix-ultimate-column-options" href="#" ><i class="fa fa-gear"></i></a>
+          </div>
         </div>
       </div>
     </div>
+
+    <a class="helix-ultimate-add-row" href="#"><i class="fa fa-plus"></i></a>
+
   </div>
 </div>
 

@@ -14,13 +14,15 @@ class HelixUltimateFeatureLogo {
 	public $position;
 	public $load_pos;
 
-	public function __construct( $helixUltimate ){
+	public function __construct( $helixUltimate )
+	{
 		$this->helixUltimate = $helixUltimate;
 		$this->position = $this->helixUltimate->getParam('logo_position', 'logo');
 		$this->load_pos = $this->helixUltimate->getParam('logo_load_pos');
 	}
 
-	public function renderFeature() {
+	public function renderFeature()
+	{
 
 		//Retina Image
 		if( $this->helixUltimate->getParam('logo_type') == 'image' ) {
@@ -42,7 +44,6 @@ class HelixUltimateFeatureLogo {
 				$width 	= '';
 				$height = '';
 			}
-
 		}
 
 		$html  = '';

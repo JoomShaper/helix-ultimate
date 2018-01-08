@@ -120,6 +120,7 @@ jQuery(function($){
         var self = this;
 
         $('#layout').val( JSON.stringify(getGeneratedLayout()) );
+        webfontData();
 
         var tmplID = $(this).data('id'),
             tmplView = $(this).data('view'),
@@ -161,6 +162,21 @@ jQuery(function($){
         });
     });
 
+    function webfontData(){
+        $('.helix-ultimate-field-webfont').each(function(){
+			var $that = $(this),
+			webfont = {
+				'fontFamily' : $that.find('.list-font-families').val(),
+				'fontWeight' : $that.find('.list-font-weight').val(),
+				'fontSubset' : $that.find('.list-font-subset').val(),
+				'fontSize'	: $that.find('.webfont-size').val()
+			}
+
+			$that.find('.input-webfont').val( JSON.stringify(webfont) )
+
+		});
+    }
+
     function getGeneratedLayout(){
 		var item = [];
 		$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-section').each(function(index){
@@ -189,13 +205,11 @@ jQuery(function($){
 
 				var $column 	= $(this),
 					colIndex 	= index,
-					className 	= $column.attr('class'),
 					colObj 		= $column.data();
 				delete colObj.sortableItem;
 
 				item[rowIndex].attr[colIndex] = {
 					'type' 				: 'sp_col',
-					'className' 		: className,
 					'settings' 			: colObj
 				};
 

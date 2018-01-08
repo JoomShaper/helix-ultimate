@@ -288,104 +288,55 @@ jQuery(function($) {
 	
 			switch(flag){
 				case 'row-setting':
-				$('.helix-ultimate-modal-content').find('.helix-ultimate-input').each(function(){
-					var $this = $(this),
-					$parent = $('.row-active'),
-					$attrname = $this.data('attrname');
-					$parent.removeData( $attrname );
-	
-					if ($attrname == 'name') {
-						var nameVal = $this.val();
-	
-						if (nameVal  !='' || $this.val() != null) {
-							$('.row-active .helix-ultimate-section-title').text($this.val());
-						}else{
-							$('.row-active .helix-ultimate-section-title').text('Section Header');
+					$('.helix-ultimate-modal-content').find('.helix-ultimate-input').each(function(){
+						var $this = $(this),
+						$parent = $('.row-active'),
+						$attrname = $this.data('attrname');
+						$parent.removeData( $attrname );
+		
+						if ($attrname == 'name') {
+							var nameVal = $this.val();
+		
+							if (nameVal  !='' || $this.val() != null) {
+								$('.row-active .helix-ultimate-section-title').text($this.val());
+							}else{
+								$('.row-active .helix-ultimate-section-title').text('Section Header');
+							}
 						}
-					}
-	
-					$parent.attr('data-' + $attrname, $this.getInputValue());
-				});
-	
-				$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
-				$('body').addClass('helix-ultimate-modal-open');
-	
-				break;
+		
+						$parent.attr('data-' + $attrname, $this.getInputValue());
+					});
+		
+					$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+					$('body').addClass('helix-ultimate-modal-open');
+					break;
 	
 				case 'column-setting':
-				var component = false;
-	
-				$('.helix-ultimate-modal-content').find('.helix-ultimate-input').each(function(){
-	
-					var $this = $(this),
-					$parent = $('.column-active'),
-					$attrname = $this.data('attrname');
-					$parent.removeData( $attrname ),
-					dataVal = $this.val();
-	
-					if ( $attrname == 'column_type' && $(this).attr("checked") ) {
-						component = true;
-						$('.column-active .helix-ultimate-column-title').text('Component');
-					}else if( $attrname == 'name' && component != true ) {
-						if (dataVal == '' || dataVal == undefined) {
-							dataVal = 'none';
-						}
-						$('.column-active .helix-ultimate-column-title').text(dataVal);
-					}
-	
-					$parent.attr('data-' + $attrname, $this.getInputValue());
-				});
-				$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
-				$('body').addClass('helix-ultimate-modal-open');
-				break;
-	
-				// Need to be removed
-				case 'save-layout':
-				var layoutName = $('#layout-modal .addon-input').val(),
-				data = {
-					layoutName : layoutName,
-					content: JSON.stringify(getGeneratedLayout())
-				};
-	
-				if (layoutName =='' || layoutName ==' ') {
-					alert("Without Name Layout Can't be save");
-					return false;
-				}
-	
-				var request = {
-					'action' : 'save-layout',
-					'option' : 'com_ajax',
-					'plugin' : 'helix3',
-					'request': 'ajaxHelix',
-					'data'   : data,
-					'format' : 'json'
-				};
-	
-				$.ajax({
-					type   : 'POST',
-					data   : request,
-					beforeSend: function(){
-					},
-					success: function (response) {
-						var data = $.parseJSON(response.data),
-						layouts = data.layout,
-						tplHtml = '';
-	
-						$('#jform_params_layoutlist').find('option').remove();
-						if (layouts.length) {
-							for (var i = 0; i < layouts.length; i++) {
-								tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
+					var component = false;
+		
+					$('.helix-ultimate-modal-content').find('.helix-ultimate-input').each(function(){
+		
+						var $this = $(this),
+						$parent = $('.column-active'),
+						$attrname = $this.data('attrname');
+						$parent.removeData( $attrname ),
+						dataVal = $this.val();
+		
+						if ( $attrname == 'column_type' && $(this).attr("checked") ) {
+							component = true;
+							$('.column-active .helix-ultimate-column-title').text('Component');
+						}else if( $attrname == 'name' && component != true ) {
+							if (dataVal == '' || dataVal == undefined) {
+								dataVal = 'none';
 							}
-	
-							$('#jform_params_layoutlist').html(tplHtml);
+							$('.column-active .helix-ultimate-column-title').text(dataVal);
 						}
-					},
-					error: function(){
-						alert('Somethings wrong, Try again');
-					}
-	
-				});
-				break;
+		
+						$parent.attr('data-' + $attrname, $this.getInputValue());
+					});
+					$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+					$('body').addClass('helix-ultimate-modal-open');
+					break;
 	
 				default:
 				alert('You are doing somethings wrongs. Try again');
@@ -516,8 +467,7 @@ jQuery(function($) {
 		$(document).on('click', '.helix-ultimate-remove-row', function(event){
 			event.preventDefault();
 	
-			if ( confirm("Click Ok button to delete Row, Cancel to leave.") == true )
-			{
+			if ( confirm("Click Ok button to delete Row, Cancel to leave.") == true ) {
 				$(this).closest('.helix-ultimate-layout-section').slideUp(500, function(){
 					$(this).remove();
 				});

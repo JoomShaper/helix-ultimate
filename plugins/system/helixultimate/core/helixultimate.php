@@ -182,18 +182,6 @@ class HelixUltimate{
         return self::getInstance();
     }
 
-    /**
-     * get number from col-xs
-     *
-     * @param string $col_name
-     */
-    public static function getColXsNo($col_name){
-        //Remove Classes name
-        $class_remove = array('layout-column', 'column-active', 'col-sm-', 'span', 'builder-col', 'helix-ultimate-layout-column');
-        $col_number = trim(str_replace($class_remove, '', $col_name));
-        return $col_number;
-    }
-
     public static function generatelayout(){
 
         self::getInstance()->addCSS('custom.css');
@@ -469,7 +457,7 @@ class HelixUltimate{
 
             if (!$column->settings->column_type) {
                 if (!self::countModules($column->settings->name)) {
-                    $col_xs_no = (int) self::getColXsNo($column->className);
+                    $col_xs_no = $column->settings->grid_size;
                     $absspan += $col_xs_no;
                     $totalPublished--;
                 }
@@ -483,10 +471,10 @@ class HelixUltimate{
         //Active
         foreach ($columns as &$column) {
             //print_r($column->attr);
-            $col_xs_no = (int) self::getColXsNo($column->className);
+            $col_xs_no = $column->settings->grid_size;
 
             if ($column->settings->column_type) {
-                $column->className = 'col-sm-' . ($col_xs_no + $absspan) . ' col-md-' . ($col_xs_no + $absspan);
+                $column->className = 'col-md-' . ($col_xs_no + $absspan) . ' col-lg-' . ($col_xs_no + $absspan);
                 $cols[]            = $column;
                 $col_i++;
             }
@@ -494,12 +482,12 @@ class HelixUltimate{
 
                 if (self::countModules($column->settings->name)) {
                     $last_col = ($totalPublished == $col_i) ? $absspan : 0;
-                    $col_grid = (int) self::getColXsNo($column->className);
+                    $col_grid = $column->settings->grid_size;
                     if ($hasComponent) {
-                        $column->className = 'col-sm-' . $col_grid . ' col-md-' . $col_grid;
+                        $column->className = 'col-md-' . $col_grid . ' col-lg-' . $col_grid;
                     }
                     else {
-                        $column->className = 'col-sm-' . ($col_grid + $last_col) . ' col-md-' . ($col_grid + $last_col);
+                        $column->className = 'col-md-' . ($col_grid + $last_col) . ' col-lg-' . ($col_grid + $last_col);
                     }
 
                     $cols[] = $column;

@@ -113,13 +113,6 @@ jQuery(function($) {
     $('#jform_params_menulayout').val(JSON.stringify(menumData));
   };
 
-
-  /**
-  * New Megamenu Layout Started
-  * @since helix.v.4
-  * @date Aug 02, 17
-  */
-
   $(document).on('click', '#helix-ultimate-choose-megamenu-layout', function(e){
     e.preventDefault();
     $('#helix-ultimate-megamenu-layout-modal').toggle();
@@ -173,9 +166,9 @@ jQuery(function($) {
 
   function helix_ultimate_megamenu_sorting_init() {
 
-    $(".hfwmm-item-wrap").sortable({
-      connectWith: ".hfwmm-item-wrap",
-      items: " .widget",
+    $(".helix-ultimate-megamenu-item-list").sortable({
+      connectWith: ".helix-ultimate-megamenu-item-list",
+      items: " .helix-ultimate-megamenu-item",
       placeholder: "drop-highlight",
       start: function(e,ui){
         ui.placeholder.height(ui.item.height());
@@ -201,8 +194,7 @@ jQuery(function($) {
         var module_inner = '<div class="helix-ultimate-megamenu-item-module"><div class="helix-ultimate-megamenu-item-module-title">' + module_title + '</div></div>';
         ui.item.removeAttr('style class').addClass('helix-ultimate-megamenu-item').html(module_inner);
 
-        ui.item.clone().insertAfter(ui.item.html(module_title + '<i class="fa fa-arrows"></i>').removeAttr('class').addClass('helix-ultimate-megamenu-draggable-module'));
-        //ui.item.clone().insertAfter(ui.item.html(module_title+'<i class="fa fa-arrows"></i>').removeAttr('class').addClass('draggable-module'));
+        ui.item.clone().insertAfter(ui.item.html('<span class="fa fa-arrows"></span> ' + module_title).removeAttr('class').addClass('helix-ultimate-megamenu-draggable-module'));
         $(this).sortable('cancel');
 
         helix_ultimate_megamenu_sorting_init();
@@ -235,15 +227,15 @@ jQuery(function($) {
       }
     });
 
-    $(document).on('click', '.text-warning', function (e) {
+    $(document).on('click', '.helix-ultimate-megamenu-remove-module', function (e) {
       e.preventDefault();
-      $(this).closest('.widget').remove();
+      $(this).closest('.helix-ultimate-megamenu-item').remove();
     })
   }
   helix_ultimate_megamenu_sorting_init();
 
-  $(document).on('click', '.hfwmmRowDeleteIcon', function (e) {
+  $(document).on('click', '.helix-ultimate-action-detele-row', function (e) {
     e.preventDefault();
-    $(this).closest('.hfwmm-row').remove();
+    $(this).closest('.helix-ultimate-megamenu-row').remove();
   });
 });

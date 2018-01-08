@@ -299,7 +299,7 @@ if($count > 4 && $count != 6)
                               if ($item->type === 'module')
                               {
                                 $modules = getModuleNameId($item->item_id);
-                                $title = '<span class="pull-left">'.$modules[0]->title.'</span> <a href="javascript:;" class="pull-right helixfw_mod_remove text-warning"><i class="fa fa-remove"></i></a>';
+                                $title = $modules[0]->title . '<a href="javascript:;" class="helix-ultimate-megamenu-remove-module"><span class="fa fa-remove"></span></a>';
                               }
                               elseif ($item->type === 'menu_item')
                               {

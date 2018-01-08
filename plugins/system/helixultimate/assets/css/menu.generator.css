@@ -626,6 +626,7 @@
 }
 
 .helix-ultimate-megamenu-item {
+  position: relative;
 	padding: 10px;
 	background: #F5F5F5;
 	border: 2px solid #E7E7E7;
@@ -697,6 +698,19 @@
 	height: 30px;
 	line-height: 30px;
 	text-align: center;
+}
+
+.helix-ultimate-megamenu-remove-module {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  color: #626262;
+  text-decoration: none;
+  transform: translateY(-50%);
+}
+
+.helix-ultimate-megamenu-remove-module:hover {
+  color: #D0021B;
 }
 
 /*Checkbox*/

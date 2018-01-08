@@ -1,0 +1,95 @@
+/**
+ * $package Helix Framework
+ * $author JoomShaper http://www.joomshaper.com
+ * $copyright Copyright (c) 2010 - 2014 JoomShaper
+ * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
+ */
+a {
+  color: #f1f;
+}
+a:hover {
+  color: #d0d;
+}
+.sp-megamenu-parent > li.active > a, .sp-megamenu-parent > li:hover > a {
+  color: #f1f;
+}
+.sp-megamenu-parent .sp-dropdown li.sp-menu-item > a:hover {
+  background: #f1f;
+}
+.sp-megamenu-parent .sp-dropdown li.sp-menu-item.active > a {
+  color: #f1f;
+}
+#offcanvas-toggler > i {
+  color: #333;
+}
+#offcanvas-toggler > i:hover {
+  color: #f1f;
+}
+ul.social-icons > li a:hover {
+  color: #f1f;
+}
+.sp-page-title {
+  background: #f1f;
+}
+.layout-boxed .body-innerwrapper {
+  background: #fff;
+}
+.sp-module ul > li > a {
+  color: #333;
+}
+.sp-module ul > li > a:hover {
+  color: #f1f;
+}
+.sp-module .latestnews > div > a {
+  color: #333;
+}
+.sp-module .latestnews > div > a:hover {
+  color: #f1f;
+}
+.sp-module .tagscloud .tag-name:hover {
+  background: #f1f;
+}
+.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a, .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
+  background: #f1f;
+}
+.search .btn-toolbar button {
+  background: #f1f;
+}
+.post-format {
+  background: #f1f;
+}
+.voting-symbol span.star.active:before {
+  color: #f1f;
+}
+.sp-rating span.star:hover:before, .sp-rating span.star:hover ~ span.star:before {
+  color: #d0d;
+}
+.entry-link, .entry-quote {
+  background: #f1f;
+}
+blockquote {
+  border-color: #f1f;
+}
+.carousel-left:hover, .carousel-right:hover {
+  background: #f1f;
+}
+#sp-footer {
+  background: #f1f;
+}
+.sp-comingsoon body {
+  background-color: #f1f;
+}
+.pagination > li > a, .pagination > li > span {
+  color: #333;
+}
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+  color: #333;
+}
+.pagination > .active > a, .pagination > .active > span {
+  border-color: #f1f;
+  background-color: #f1f;
+}
+.pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  border-color: #f1f;
+  background-color: #f1f;
+}

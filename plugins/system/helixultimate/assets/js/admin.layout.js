@@ -409,7 +409,7 @@ jQuery(function($) {
 			$gparent.find('.helix-ultimate-layout-column').each(function(i,val){
 				col[i] = $(this).html();
 				var colData = $(this).data();
-	
+
 				if (typeof colData == 'object') {
 					colAttr[i] = $(this).data();
 				}else{
@@ -425,13 +425,16 @@ jQuery(function($) {
 			for(var i=0; i < newLayout.length; i++)
 			{
 				var dataAttr = '';
-				if (typeof colAttr[i] == 'object') {
-					$.each(colAttr[i],function(index,value){
-						dataAttr += ' data-'+index+'="'+value+'"';
-					});
+				if (typeof colAttr[i] != 'object') {
+					colAttr[i] = { grid_size : newLayout[i].trim() }
+				} else {
+					colAttr[i].grid_size = newLayout[i].trim()
 				}
+				$.each(colAttr[i],function(index,value){
+					dataAttr += ' data-'+index+'="'+value+'"';
+				});
 	
-				new_item +='<div class="helix-ultimate-layout-column col-sm-'+ newLayout[i].trim() +'" '+dataAttr+'>';
+				new_item +='<div class="helix-ultimate-layout-column col-md-'+ newLayout[i].trim() +'" '+dataAttr+'>';
 				if (col[i]) {
 					new_item += col[i];
 				}else{

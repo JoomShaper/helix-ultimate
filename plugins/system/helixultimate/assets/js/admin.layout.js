@@ -254,10 +254,10 @@ jQuery(function($) {
 		});
 	
 	
-		$('.input-column_type').change(function(event) {
+		$('.helix-ultimate-input-column_type').change(function(event) {
 	
-			var $parent = $(this).closest('.column-settings'),
-			flag = false;
+			var $parent = $(this).closest('.helix-ultimate-modal-content'),
+				flag = false;
 	
 			$('#helix-ultimate-layout-builder').find('.helix-ultimate-layout-column').not( ".column-active" ).each(function(index, val) {
 				if ($(this).data('column_type') == '1') {
@@ -269,14 +269,16 @@ jQuery(function($) {
 			if (flag) {
 				alert('Component Area Taken');
 				$(this).prop('checked',false);
-				$parent.children('.form-group.name').slideDown('400');
+				$parent.children('.control-group.name').slideDown('400');
 				return false;
 			}
 	
 			if ($(this).attr("checked")) {
-				$parent.children('.form-group.name').slideUp('400');
+				$('.helix-ultimate-layout-column.column-active').find('.helix-ultimate-column').addClass('helix-ultimate-column-component');
+				$parent.children('.control-group.name').slideUp('400');
 			}else{
-				$parent.children('.form-group.name').slideDown('400');
+				$('#helix-ultimate-layout-builder').find('.helix-ultimate-column-component').removeClass('helix-ultimate-column-component');
+				$parent.children('.control-group.name').slideDown('400');
 			}
 		});
 	

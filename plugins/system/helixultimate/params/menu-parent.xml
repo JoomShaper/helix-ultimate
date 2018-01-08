@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fields name="params" addfieldpath="/plugins/system/helixultimate/fields">
-	<fieldset name="spmegamenu" label="HELIX_ULTIMATE_MENU">
-        <field name="menulayout" type="megamenu" />
-        <field name="megamenu" type="hidden" default="0" />
-		<field name="showmenutitle" type="radio" default="1" class="btn-group" label="HELIX_ULTIMATE_MENU_SHOW_TITLE" description="HELIX_ULTIMATE_MENU_SHOW_TITLE_DESC">
-			<option value="1">HELIX_ULTIMATE_YES</option>
-			<option value="0">HELIX_ULTIMATE_NO</option>
-		</field>
-		<field name="icon" type="icon" label="HELIX_ULTIMATE_MENU_ICON" description="HELIX_ULTIMATE_MENU_ICON_DESC" />
-		<field name="class" type="text" label="HELIX_ULTIMATE_MENU_CLASS" description="HELIX_ULTIMATE_MENU_CLASS_DESC" />
-    </fieldset>
+		<fieldset name="spmegamenu" label="HELIX_ULTIMATE_MENU">
+			<field name="menulayout" type="megamenu" />
+			<field name="megamenu" type="hidden" default="0" />
+			<field name="showmenutitle" type="radio" default="1" class="btn-group" label="HELIX_ULTIMATE_MENU_SHOW_TITLE" description="HELIX_ULTIMATE_MENU_SHOW_TITLE_DESC">
+				<option value="1">HELIX_ULTIMATE_YES</option>
+				<option value="0">HELIX_ULTIMATE_NO</option>
+			</field>
+			<field name="icon" type="icon" label="HELIX_ULTIMATE_MENU_ICON" description="HELIX_ULTIMATE_MENU_ICON_DESC" />
+			<field name="class" type="text" label="HELIX_ULTIMATE_MENU_CLASS" description="HELIX_ULTIMATE_MENU_CLASS_DESC" />
+		</fieldset>
 	</fields>
 </form>

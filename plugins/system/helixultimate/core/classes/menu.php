@@ -243,8 +243,8 @@ class Helix3Menu {
         $layout = json_decode($this->_items[$item->id]->params->get('menulayout'));
         $sub_alignment = $this->_items[$item->id]->params->get('dropdown_position', 'right');
 
-        if(isset($layout->menuAlign) && $layout->menuAlign) {
-            $alignment = $layout->menuAlign;
+        if(isset($layout->menualign) && $layout->menualign) {
+            $alignment = $layout->menualign;
         } else {
             $alignment = 'right';
         }
@@ -293,16 +293,16 @@ class Helix3Menu {
 
         $mega_style = 'width: '. $mega->width .'px;';
 
-        if($mega->menuAlign=='center') {
+        if($mega->menualign=='center') {
             $mega_style .= 'left: -' . ($mega->width/2) . 'px;';
         }
 
-        if($mega->menuAlign=='full') {
+        if($mega->menualign=='full') {
             $mega_style = '';
-            $mega->menuAlign = $mega->menuAlign . ' container';
+            $mega->menualign = $mega->menualign . ' container';
         }
 
-        $this->menu .='<div class="sp-dropdown sp-dropdown-main sp-dropdown-mega sp-menu-'. $mega->menuAlign .'" style="' . $mega_style . '">';
+        $this->menu .='<div class="sp-dropdown sp-dropdown-main sp-dropdown-mega sp-menu-'. $mega->menualign .'" style="' . $mega_style . '">';
         $this->menu .='<div class="sp-dropdown-inner">';
         foreach ($layout as $row)
         {

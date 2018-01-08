@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fields name="attribs" addfieldpath="/plugins/system/helixultimate/fields">
-		<fieldset name="sppostformats" label="HELIX_ULTIMATE_BLOG_OPTIONS">
+		<fieldset name="helix_postformats" label="HELIX_ULTIMATE_BLOG_OPTIONS">
 			<field name="spfeatured_image" type="spimage" label="Featured Image" description="BLOG_POST_FORMAT_GALLERY_DESCRIPTION" />
 			<field name="post_format" type="radio" label="Post Format" default="standard" class="btn-group post-formats" description="Mega Menu Layout">
 				<option value="standard">BLOG_POST_FORMAT_STANDARD</option>

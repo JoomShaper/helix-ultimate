@@ -2043,19 +2043,19 @@ input[type="color"],
 .uneditable-input {
   display: block;
   width: 100%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+  padding: 6px 12px;
+  font-size: 12px;
   line-height: 1.5;
-  color: #495057;
+  color: #404244;
   background-color: #fff;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
+  border: 1px solid #DEE2E8;
+  border-radius: 3px;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 select:not([multiple]) {
-  height: calc(2.25rem + 2px);
+  height: calc(30px + 2px);
 }
 
 select:focus::-ms-value {
@@ -2067,6 +2067,15 @@ select:focus::-ms-value {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid #E8EEF3;
+}
+
+.control-group label {
+  font-weight: 400;
+  color: #5E6268;
+}
+
+.control-group label small {
+  font-size: 12px;
 }
 
 .helix-ultimate-field-list > div:first-child {
@@ -2081,6 +2090,33 @@ select:focus::-ms-value {
   font-weight: 300;
   color: #999;
   margin-top: 10px;
+}
+
+.controls > .minicolors {
+  display: block;
+  width: 100%;
+}
+
+.controls .minicolors-theme-bootstrap .minicolors-input {
+  width: 100%;
+  height: 32px;
+  padding-left: 30px;
+  font-size: 12px;
+}
+
+.controls .minicolors-theme-bootstrap .minicolors-swatch {
+  left: 10px;
+  top: 8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100px;
+}
+
+.minicolors-theme-bootstrap .minicolors-panel {
+  top: auto !important;
+  left: 0 !important;
+  margin-top: 10px;
+  box-sizing: initial;
 }
 
 #helix-ultimate {
@@ -2315,7 +2351,7 @@ select:focus::-ms-value {
   box-sizing: content-box;
   display: inline-block;
   width: 60px;
-  height: 26px;
+  height: 32px;
   margin-top: 2px;
   vertical-align: middle;
   cursor: pointer;
@@ -2323,19 +2359,16 @@ select:focus::-ms-value {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: #f1f1f1;
+  background-image: linear-gradient(-53deg, #FF5000 0%, #D53A57 100%);
+  box-shadow: inset 1px 1px 3px 0 rgba(0,0,0,0.10), inset -3px 3px 4px 0 rgba(0,0,0,0.09);
   background-clip: content-box;
-  border: 1px solid rgba(0, 0, 0, .18);
-  border-radius: .25rem;
-  box-shadow: 0 0 0 0 #dfdfdf inset;
-  transition: border .4s ease 0s, box-shadow .4s ease 0s
+  border-radius: 100px;
 }
 
 .helix-ultimate-switcher.active {
-  background-color: #00BBFF;
-  border-color: #438243;
-  box-shadow: 0 0 0 16px #438243 inset;
-  transition: border .4s ease 0s, box-shadow .4s ease 0s, background-color 1.2s ease 0s
+  background-image: linear-gradient(-225deg, #3AD5A7 0%, #00FF4F 100%);
+  box-shadow: inset 1px 1px 3px 0 rgba(0,0,0,0.10), inset -3px 3px 4px 0 rgba(0,0,0,0.09);
+  transition: border .4s ease 0s, background-color 1.2s ease 0s
 }
 
 .helix-ultimate-switcher.switcher-danger.active {
@@ -2365,17 +2398,16 @@ select:focus::-ms-value {
 
 .helix-ultimate-switcher .switch {
   position: absolute;
-  top: 0;
-  width: 30px;
-  height: 26px;
-  background: #fefefe;
-  border-radius: .25rem;
-  box-shadow: 0 0 1px rgba(0, 0, 0, .1) inset, 0 1px 3px rgba(0, 0, 0, .15);
+  top: 2px;
+  width: 28px;
+  height: 28px;
+  background: #FFFFFF;
+  border-radius: 100px;
   transition: left .2s ease 0s
 }
 
 .helix-ultimate-switcher input:checked~.switch {
-  left: 0
+  left: 2px;
 }
 
 .helix-ultimate-switcher input~:checked~.switch {
@@ -2395,7 +2427,7 @@ select:focus::-ms-value {
   position: absolute;
   top: 0;
   left: 0;
-  color: #ced4da;
+  color: #404244;
   visibility: hidden;
   opacity: 0;
   transition: all .2s ease-in-out

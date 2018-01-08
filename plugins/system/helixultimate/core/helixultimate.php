@@ -14,10 +14,10 @@ jimport('joomla.filesystem.folder');
 jimport('joomla.filter.filteroutput');
 
 class HelixUltimate{
+
     private static $_instance;
     //private $document;
     //private $importedFiles = array();
-    private $_less;
 
     private $load_pos;
 
@@ -152,16 +152,16 @@ class HelixUltimate{
     public $loadFeature = array();
 
     private static function importFeatures(){
-        $template = JFactory::getApplication()->getTemplate();
-        $path     = JPATH_THEMES . '/' . $template . '/features';
+        $template = \JFactory::getApplication()->getTemplate();
+        $path     = \JPATH_THEMES . '/' . $template . '/features';
 
         if (file_exists($path)) {
-            $files = JFolder::files($path, '.php');
+            $files = \JFolder::files($path, '.php');
 
             if (count($files)) {
                 foreach ($files as $key => $file) {
                     include_once $path . '/' . $file;
-                    $name = JFile::stripExt($file);
+                    $name = \JFile::stripExt($file);
 
                     $class = 'HelixUltimateFeature' . ucfirst($name);
                     $class = new $class(self::getInstance());
@@ -189,7 +189,7 @@ class HelixUltimate{
      */
     public static function getColXsNo($col_name){
         //Remove Classes name
-        $class_remove = array('layout-column', 'column-active', 'col-sm-', 'span', 'builder-col');
+        $class_remove = array('layout-column', 'column-active', 'col-sm-', 'span', 'builder-col', 'helix-ultimate-layout-column');
         $col_number = trim(str_replace($class_remove, '', $col_name));
         return $col_number;
     }
@@ -630,138 +630,126 @@ class HelixUltimate{
         return self::getInstance();
     }
 
-    /**
-     * Less Init
-     *
-     */
-    public static function lessInit(){
-        require_once __DIR__ . '/classes/lessc.inc.php';
-        self::getInstance()->_less = new helix3_lessc();
-        return self::getInstance();
+    public static function scssInit()
+    {
+      if (!class_exists('Leafo\ScssPhp\Version', false))
+      {
+        include_once __DIR__ . '/classes/scss/Base/Range.php';
+        include_once __DIR__ . '/classes/scss/Block.php';
+        include_once __DIR__ . '/classes/scss/Colors.php';
+        include_once __DIR__ . '/classes/scss/Compiler.php';
+        include_once __DIR__ . '/classes/scss/Compiler/Environment.php';
+        include_once __DIR__ . '/classes/scss/Exception/CompilerException.php';
+        include_once __DIR__ . '/classes/scss/Exception/ParserException.php';
+        include_once __DIR__ . '/classes/scss/Exception/ServerException.php';
+        include_once __DIR__ . '/classes/scss/Formatter.php';
+        include_once __DIR__ . '/classes/scss/Formatter/Compact.php';
+        include_once __DIR__ . '/classes/scss/Formatter/Compressed.php';
+        include_once __DIR__ . '/classes/scss/Formatter/Crunched.php';
+        include_once __DIR__ . '/classes/scss/Formatter/Debug.php';
+        include_once __DIR__ . '/classes/scss/Formatter/Expanded.php';
+        include_once __DIR__ . '/classes/scss/Formatter/Nested.php';
+        include_once __DIR__ . '/classes/scss/Formatter/OutputBlock.php';
+        include_once __DIR__ . '/classes/scss/Node.php';
+        include_once __DIR__ . '/classes/scss/Node/Number.php';
+        include_once __DIR__ . '/classes/scss/Parser.php';
+        include_once __DIR__ . '/classes/scss/Type.php';
+        include_once __DIR__ . '/classes/scss/Util.php';
+        include_once __DIR__ . '/classes/scss/Version.php';
+
+        return new Leafo\ScssPhp\Compiler();
+      }
     }
 
-    /**
-     * Instance of Less
-     */
-    public static function less()
+    public static function addSCSS($scss, $vars = array(), $css = '')
     {
-        return self::getInstance()->_less;
-    }
+      jimport('joomla.filesystem.file');
+      $scss = \JFile::stripExt($scss);
 
-    /**
-     * Set Less Variables using array key and value
-     *
-     * @param mixed $array
-     *
-     * @return self
-     */
-    public static function setLessVariables($array)
-    {
-        self::getInstance()->less()->setVariables($array);
+      if(!empty($css))
+      {
+        $css = \JFile::stripExt($css) . '.css';
+      }
+      else
+      {
+        $css = $scss . '.css';
+      }
 
-        return self::getInstance();
-    }
+      $needsCompile = self::needScssCompile($scss, $vars);
+      if($needsCompile) {
+        $scssInit = self::scssInit();
+        $template  = \JFactory::getApplication()->getTemplate();
+        $scss_path = JPATH_THEMES . '/' . $template . '/scss';
+        $css_path = JPATH_THEMES . '/' . $template . '/css';
 
-    /**
-     * Set less variable using name and value
-     *
-     * @param mixed $name
-     * @param mixed $value
-     *
-     * @return self
-     */
-    public static function setLessVariable($name, $value)
-    {
-        self::getInstance()->less()->setVariables(array($name => $value));
-
-        return self::getInstance();
-    }
-
-    /**
-     * Compile less to css when less modified or css not exist
-     *
-     * @param mixed $less
-     * @param mixed $css
-     *
-     * @return self
-     */
-    private static function autoCompileLess($less, $css)
-    {
-        // load the cache
-        $template  = JFactory::getApplication()->getTemplate();
-        $cachePath = JPATH_CACHE . '/com_templates/templates/' . $template;
-        $cacheFile = $cachePath . '/' . basename($css . ".cache");
-
-        if (file_exists($cacheFile))
+        if(file_exists($scss_path . '/'. $scss . '.scss'))
         {
-            $cache = unserialize(JFile::read($cacheFile));
+          $out = $css_path . '/' . $css;
+          $scssInit->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
+          $scssInit->setImportPaths($scss_path);
+          if(count($vars))
+          {
+            $scssInit->setVariables($vars);
+          }
+          $compiledCss = $scssInit->compile('@import "'. $scss .'.scss"');
+          JFile::write($out, $compiledCss);
 
-            //If root changed then do not compile
-            if (isset($cache['root']) && $cache['root'])
+          $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
+          $scssCache = array();
+          $scssCache['imports'] = $scssInit->getParsedFiles();
+          $scssCache['vars'] = $scssInit->getVariables();
+          JFile::write($cache_path, json_encode($scssCache));
+        }
+      }
+
+      self::addCSS($css);
+    }
+
+    private static function needScssCompile($scss, $existvars = array())
+    {
+      $template  = \JFactory::getApplication()->getTemplate();
+      $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
+
+      if(file_exists($cache_path))
+      {
+        $cache_file = json_decode(file_get_contents($cache_path));
+        $imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
+        $vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
+
+        if(array_diff($vars, $existvars))
+        {
+          return true;
+        }
+
+        if(count($imports))
+        {
+          foreach ($imports as $import => $mtime)
+          {
+            if(file_exists($import))
             {
-                if ($cache['root'] != $less)
-                {
-                    return self::getInstance();
-                }
+              $existmtime = filemtime($import);
+              if($existmtime > $mtime)
+              {
+                return true;
+              }
+              else
+              {
+                return false;
+              }
             }
+            else
+            {
+              return true;
+            }
+          }
         }
         else
         {
-            $cache = $less;
+          return true;
         }
+      }
 
-        $lessInit = self::getInstance()->less();
-        $newCache = $lessInit->cachedCompile($cache);
-
-        if (!is_array($cache) || $newCache["updated"] > $cache["updated"])
-        {
-
-            if (!file_exists($cachePath))
-            {
-                JFolder::create($cachePath, 0755);
-            }
-
-            file_put_contents($cacheFile, serialize($newCache));
-            file_put_contents($css, $newCache['compiled']);
-        }
-
-        return self::getInstance();
-    }
-
-    /**
-     * Add Less
-     *
-     * @param mixed $less
-     * @param mixed $css
-     *
-     * @return self
-     */
-    public static function addLess($less, $css, $attribs = array())
-    {
-        $template  = JFactory::getApplication()->getTemplate();
-        $themepath = JPATH_THEMES . '/' . $template;
-
-        if (self::getParam('lessoption') and self::getParam('lessoption') == '1')
-        {
-            if (file_exists($themepath . "/less/" . $less . ".less"))
-            {
-                self::getInstance()->autoCompileLess($themepath . "/less/" . $less . ".less", $themepath . "/css/" . $css . ".css");
-            }
-        }
-        self::getInstance()->addCSS($css . '.css', $attribs);
-
-        return self::getInstance();
-    }
-
-    private static function addLessFiles($less, $css){
-        $less = self::getInstance()->file('less/' . $less . '.less');
-        $css  = self::getInstance()->file('css/' . $css . '.css');
-        self::getInstance()->less()->compileFile($less, $css);
-
-        echo $less;
-        die;
-
-        return self::getInstance();
+      return true;
     }
 
     private static function resetCookie($name){

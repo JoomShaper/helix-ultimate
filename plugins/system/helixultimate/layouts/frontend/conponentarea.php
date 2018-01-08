@@ -8,8 +8,8 @@
 defined('_JEXEC') or die('Restricted Access');
 
 //Helix3
-HelixUltimate::addLess('frontend-edit', 'frontend-edit');
-HelixUltimate::addJS('frontend-edit.js');
+//HelixUltimate::addLess('frontend-edit', 'frontend-edit');
+//HelixUltimate::addJS('frontend-edit.js');
 
 $data = $displayData;
 

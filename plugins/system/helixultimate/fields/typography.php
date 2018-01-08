@@ -16,8 +16,8 @@ class JFormFieldTypography extends JFormField
 
     protected function getInput()
     {
-        $template_path = JPATH_SITE . '/templates/' . self::getTemplate() . '/webfonts/webfonts.json';
-        $plugin_path   = JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
+        $template_path = \JPATH_SITE . '/templates/' . self::getTemplate() . '/webfonts/webfonts.json';
+        $plugin_path   = \JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
 
         if(file_exists( $template_path ))
         {
@@ -41,11 +41,11 @@ class JFormFieldTypography extends JFormField
         $classes = (!empty($this->element['class'])) ? $this->element['class'] : '';
 
         //Font Family
-        $html .= '<div class="webfont '. $classes .'">';
-        $html .= '<div class="row-fluid">';
+        $html .= '<div class="helix-ultimate-field-webfont '. $classes .'">';
+        $html .= '<div class="row">';
 
-        $html .= '<div class="span3 font-families">';
-        $html .= '<label><strong>'. JText::_('HELIX_FONT_FAMILY') .'</strong></label>';
+        $html .= '<div class="col-6 font-families">';
+        $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_FAMILY') .'</small></label>';
         $html .= '<select class="list-font-families">';
 
         foreach ($items as $item)
@@ -57,8 +57,8 @@ class JFormFieldTypography extends JFormField
         $html .= '</div>';
 
         //Font Weight
-        $html .= '<div class="span2 font-weight">';
-        $html .= '<label><strong>'. JText::_('HELIX_FONT_WEIGHT_STYLE') .'</strong></label>';
+        $html .= '<div class="col-6 font-weight">';
+        $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_WEIGHT') .'</small></label>';
         $html .= '<select class="list-font-weight">';
 
         if (isset($value->fontFamily))
@@ -73,9 +73,16 @@ class JFormFieldTypography extends JFormField
         $html .= '</select>';
         $html .= '</div>';
 
+        //Font Size
+        $fontSize = (isset($value->fontSize))?$value->fontSize:'';
+        $html .= '<div class="col-6 font-size">';
+        $html .= '<p></p><label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SIZE') .'</small></label>';
+        $html .= '<input type="number" value="'. $fontSize .'" class="webfont-size" min="1" placeholder="14">';
+        $html .= '</div>';
+
         //Font Subsets
-        $html .= '<div class="span2 font-subsets">';
-        $html .= '<label><strong>'. JText::_('HELIX_FONT_SUBSET') .'</strong></label>';
+        $html .= '<div class="col-6 font-subsets">';
+        $html .= '<p></p><label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SUBSET') .'</small></label>';
         $html .= '<select class="list-font-subset">';
 
         if(isset($value->fontFamily))
@@ -90,12 +97,6 @@ class JFormFieldTypography extends JFormField
         $html .= '</select>';
         $html .= '</div>';
 
-        //Font Size
-        $fontSize = (isset($value->fontSize))?$value->fontSize:'';
-        $html .= '<div class="span2 font-size">';
-        $html .= '<label><strong>'. JText::_('HELIX_FONT_SIZE') .'</strong></label>';
-        $html .= '<input type="number" value="'. $fontSize .'" class="webfont-size" min="1" placeholder="14">';
-        $html .= '</div>';
         $html .= '</div>';
 
         //Preview

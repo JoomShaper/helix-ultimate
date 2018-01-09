@@ -41,13 +41,15 @@
             content: " \f107";
         }
 
-        /*
+        &.active > a {
+          color: #ffffff;
+        }
+
         &.active:hover>a,
         &:hover>a {
-                background-color: $major_color;
-                color: #fff;
+          background-color: $major_color;
+          color: #fff;
         }
-        */
     }
 
     .sp-module {

@@ -159,9 +159,9 @@
 	<fieldset name="preset" label="Preset" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
 
 		<field name="preset" type="presets" default="preset1" label="Select an option" description="">
-			<preset name="preset1" label="Preset 1" default="#ff1111">
+			<preset name="preset1" label="Preset 1" default="#0075DF">
 				<color name="bg_color" value="#ffffff" />
-				<color name="major_color" value="#ff1111" />
+				<color name="major_color" value="#0075DF" />
 			</preset>
 
 			<preset name="preset2" label="Preset 2" default="#ffff11">

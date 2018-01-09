@@ -55,13 +55,6 @@
   display: inline-block;
   position: relative;
   padding: 0;
-  /*
-   &.active:hover>a,
-   &:hover>a {
-   background-color: $major_color;
-   color: #fff;
-   }
-   */
 }
 .sp-megamenu-parent > li.menu-justify {
   position: static;
@@ -79,6 +72,13 @@
 .sp-megamenu-parent > li.sp-has-child > a:after, .sp-megamenu-parent > li.sp-has-child > span:after {
   font-family: "FontAwesome";
   content: " \f107";
+}
+.sp-megamenu-parent > li.active > a {
+  color: #fff;
+}
+.sp-megamenu-parent > li.active:hover > a, .sp-megamenu-parent > li:hover > a {
+  background-color: #0075df;
+  color: #fff;
 }
 .sp-megamenu-parent .sp-module {
   padding: 10px;
@@ -1616,7 +1616,7 @@ article.item {
   display: inline-block;
 }
 .helix-social-share .helix-social-share-icon ul li div a:hover, .helix-social-share .helix-social-share-icon ul li div a:focus {
-  background: #f11;
+  background: #0075df;
   color: #fff;
 }
 /* ******************   END:: Blog   ****************** */
@@ -2698,13 +2698,6 @@ input[type="text"]:not(.form-control):focus, input[type="email"]:not(.form-contr
   display: inline-block;
   position: relative;
   padding: 0;
-  /*
-   &.active:hover>a,
-   &:hover>a {
-   background-color: $major_color;
-   color: #fff;
-   }
-   */
 }
 .sp-megamenu-parent > li.menu-justify {
   position: static;
@@ -2722,6 +2715,13 @@ input[type="text"]:not(.form-control):focus, input[type="email"]:not(.form-contr
 .sp-megamenu-parent > li.sp-has-child > a:after, .sp-megamenu-parent > li.sp-has-child > span:after {
   font-family: "FontAwesome";
   content: " \f107";
+}
+.sp-megamenu-parent > li.active > a {
+  color: #fff;
+}
+.sp-megamenu-parent > li.active:hover > a, .sp-megamenu-parent > li:hover > a {
+  background-color: #0075df;
+  color: #fff;
 }
 .sp-megamenu-parent .sp-module {
   padding: 10px;

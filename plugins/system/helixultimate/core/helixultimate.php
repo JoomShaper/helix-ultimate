@@ -664,8 +664,8 @@ class HelixUltimate{
       if($needsCompile) {
         $scssInit = self::scssInit();
         $template  = \JFactory::getApplication()->getTemplate();
-        $scss_path = JPATH_THEMES . '/' . $template . '/scss';
-        $css_path = JPATH_THEMES . '/' . $template . '/css';
+        $scss_path = \JPATH_THEMES . '/' . $template . '/scss';
+        $css_path = \JPATH_THEMES . '/' . $template . '/css';
 
         if(file_exists($scss_path . '/'. $scss . '.scss'))
         {
@@ -677,13 +677,13 @@ class HelixUltimate{
             $scssInit->setVariables($vars);
           }
           $compiledCss = $scssInit->compile('@import "'. $scss .'.scss"');
-          JFile::write($out, $compiledCss);
+          \JFile::write($out, $compiledCss);
 
           $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
           $scssCache = array();
           $scssCache['imports'] = $scssInit->getParsedFiles();
           $scssCache['vars'] = $scssInit->getVariables();
-          JFile::write($cache_path, json_encode($scssCache));
+          \JFile::write($cache_path, json_encode($scssCache));
         }
       }
 
@@ -701,9 +701,11 @@ class HelixUltimate{
         $imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
         $vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
 
+        $return = false;
+
         if(array_diff($vars, $existvars))
         {
-          return true;
+          $return = true;
         }
 
         if(count($imports))
@@ -713,28 +715,24 @@ class HelixUltimate{
             if(file_exists($import))
             {
               $existmtime = filemtime($import);
-              if($existmtime > $mtime)
+              if($existmtime != $mtime)
               {
-                return true;
-              }
-              else
-              {
-                return false;
+                $return = true;
               }
             }
             else
             {
-              return true;
+              $return = true;
             }
           }
         }
         else
         {
-          return true;
+          $return = true;
         }
       }
 
-      return true;
+      return $return;
     }
 
     private static function resetCookie($name){

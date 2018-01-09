@@ -165,7 +165,7 @@ $doc->addStyleSheet($this->helixUltimate->getTemplateUri().'/layout/inc/header_f
       'preloader_tx' => $preloader_tx
     );
 
-    $this->helixUltimate->addSCSS('theme', $scssVars, 'template');
+    $this->helixUltimate->addSCSS('master', $scssVars, 'template');
     $this->helixUltimate->addSCSS('presets', $scssVars, 'presets/' . $this->helixUltimate->Preset());
 
     //Before Head

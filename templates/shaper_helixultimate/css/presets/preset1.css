@@ -4,32 +4,35 @@
  * $copyright Copyright (c) 2010 - 2014 JoomShaper
  * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
  */
+#sp-header {
+  background: #0075df;
+}
 a {
-  color: #f11;
+  color: #0075df;
 }
 a:hover {
-  color: #d00;
+  color: #005aac;
 }
 .sp-megamenu-parent > li.active > a, .sp-megamenu-parent > li:hover > a {
-  color: #f11;
+  color: #0075df;
 }
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a:hover {
-  background: #f11;
+  background: #0075df;
 }
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item.active > a {
-  color: #f11;
+  color: #0075df;
 }
 #offcanvas-toggler > i {
   color: #333;
 }
 #offcanvas-toggler > i:hover {
-  color: #f11;
+  color: #0075df;
 }
 ul.social-icons > li a:hover {
-  color: #f11;
+  color: #0075df;
 }
 .sp-page-title {
-  background: #f11;
+  background: #0075df;
 }
 .layout-boxed .body-innerwrapper {
   background: #fff;
@@ -38,46 +41,46 @@ ul.social-icons > li a:hover {
   color: #333;
 }
 .sp-module ul > li > a:hover {
-  color: #f11;
+  color: #0075df;
 }
 .sp-module .latestnews > div > a {
   color: #333;
 }
 .sp-module .latestnews > div > a:hover {
-  color: #f11;
+  color: #0075df;
 }
 .sp-module .tagscloud .tag-name:hover {
-  background: #f11;
+  background: #0075df;
 }
 .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a, .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
-  background: #f11;
+  background: #0075df;
 }
 .search .btn-toolbar button {
-  background: #f11;
+  background: #0075df;
 }
 .post-format {
-  background: #f11;
+  background: #0075df;
 }
 .voting-symbol span.star.active:before {
-  color: #f11;
+  color: #0075df;
 }
 .sp-rating span.star:hover:before, .sp-rating span.star:hover ~ span.star:before {
-  color: #d00;
+  color: #005aac;
 }
 .entry-link, .entry-quote {
-  background: #f11;
+  background: #0075df;
 }
 blockquote {
-  border-color: #f11;
+  border-color: #0075df;
 }
 .carousel-left:hover, .carousel-right:hover {
-  background: #f11;
+  background: #0075df;
 }
 #sp-footer {
-  background: #f11;
+  background: #0075df;
 }
 .sp-comingsoon body {
-  background-color: #f11;
+  background-color: #0075df;
 }
 .pagination > li > a, .pagination > li > span {
   color: #333;
@@ -86,10 +89,10 @@ blockquote {
   color: #333;
 }
 .pagination > .active > a, .pagination > .active > span {
-  border-color: #f11;
-  background-color: #f11;
+  border-color: #0075df;
+  background-color: #0075df;
 }
 .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-  border-color: #f11;
-  background-color: #f11;
+  border-color: #0075df;
+  background-color: #0075df;
 }

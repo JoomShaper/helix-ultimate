@@ -620,8 +620,6 @@ class HelixUltimate{
 
     public static function scssInit()
     {
-      if (!class_exists('Leafo\ScssPhp\Version', false))
-      {
         include_once __DIR__ . '/classes/scss/Base/Range.php';
         include_once __DIR__ . '/classes/scss/Block.php';
         include_once __DIR__ . '/classes/scss/Colors.php';
@@ -646,7 +644,6 @@ class HelixUltimate{
         include_once __DIR__ . '/classes/scss/Version.php';
 
         return new Leafo\ScssPhp\Compiler();
-      }
     }
 
     public static function addSCSS($scss, $vars = array(), $css = '')

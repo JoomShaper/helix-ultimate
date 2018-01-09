@@ -5,91 +5,80 @@
  * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
  */
 a {
-  color: #ff1;
-}
-a:hover {
-  color: #dd0;
-}
+  color: #ff1; }
+  a:hover {
+    color: #dd0; }
+
 .sp-megamenu-parent > li.active > a, .sp-megamenu-parent > li:hover > a {
-  color: #ff1;
-}
-.sp-megamenu-parent .sp-dropdown li.sp-menu-item > a:hover {
-  background: #ff1;
-}
-.sp-megamenu-parent .sp-dropdown li.sp-menu-item.active > a {
-  color: #ff1;
-}
+  color: #ff1; }
+  .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a:hover {
+    background: #ff1; }
+    .sp-megamenu-parent .sp-dropdown li.sp-menu-item.active > a {
+      color: #ff1; }
+
 #offcanvas-toggler > i {
-  color: #333;
-}
-#offcanvas-toggler > i:hover {
-  color: #ff1;
-}
+  color: #333; }
+  #offcanvas-toggler > i:hover {
+    color: #ff1; }
+
 ul.social-icons > li a:hover {
-  color: #ff1;
-}
+  color: #ff1; }
+
 .sp-page-title {
-  background: #ff1;
-}
+  background: #ff1; }
+
 .layout-boxed .body-innerwrapper {
-  background: #fff;
-}
+  background: #fff; }
+
 .sp-module ul > li > a {
-  color: #333;
-}
-.sp-module ul > li > a:hover {
-  color: #ff1;
-}
-.sp-module .latestnews > div > a {
-  color: #333;
-}
-.sp-module .latestnews > div > a:hover {
-  color: #ff1;
-}
-.sp-module .tagscloud .tag-name:hover {
-  background: #ff1;
-}
+  color: #333; }
+  .sp-module ul > li > a:hover {
+    color: #ff1; }
+  .sp-module .latestnews > div > a {
+    color: #333; }
+  .sp-module .latestnews > div > a:hover {
+    color: #ff1; }
+  .sp-module .tagscloud .tag-name:hover {
+    background: #ff1; }
+
 .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a, .sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
-  background: #ff1;
-}
+  background: #ff1; }
+
 .search .btn-toolbar button {
-  background: #ff1;
-}
+  background: #ff1; }
+
 .post-format {
-  background: #ff1;
-}
+  background: #ff1; }
+
 .voting-symbol span.star.active:before {
-  color: #ff1;
-}
+  color: #ff1; }
+
 .sp-rating span.star:hover:before, .sp-rating span.star:hover ~ span.star:before {
-  color: #dd0;
-}
+  color: #dd0; }
+
 .entry-link, .entry-quote {
-  background: #ff1;
-}
+  background: #ff1; }
+
 blockquote {
-  border-color: #ff1;
-}
+  border-color: #ff1; }
+
 .carousel-left:hover, .carousel-right:hover {
-  background: #ff1;
-}
+  background: #ff1; }
+
 #sp-footer {
-  background: #ff1;
-}
+  background: #ff1; }
+
 .sp-comingsoon body {
-  background-color: #ff1;
-}
+  background-color: #ff1; }
+
 .pagination > li > a, .pagination > li > span {
-  color: #333;
-}
-.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
-  color: #333;
-}
+  color: #333; }
+  .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+    color: #333; }
+
 .pagination > .active > a, .pagination > .active > span {
   border-color: #ff1;
-  background-color: #ff1;
-}
-.pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-  border-color: #ff1;
-  background-color: #ff1;
-}
+  background-color: #ff1; }
+  .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    border-color: #ff1;
+    background-color: #ff1; }

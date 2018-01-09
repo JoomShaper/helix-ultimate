@@ -769,3 +769,7 @@ input[type="checkbox"].helix-ultimate-checkbox:focus:checked:not(:disabled):afte
 input[type="checkbox"].helix-ultimate-checkbox:disabled{
   opacity: 0.5;
 }
+
+.hide-menu-builder{
+  display: none!important;
+}

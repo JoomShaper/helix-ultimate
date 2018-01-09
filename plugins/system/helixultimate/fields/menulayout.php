@@ -209,21 +209,6 @@ if($count > 4 && $count != 6)
 
 <div class="helix-ultimate-row">
 
-  <div class="helix-ultimate-col-sm-3">
-    <div class="helix-ultimate-megamenu-sidebar">
-      <h3><span class="fa fa-bars"></span> <?php echo JText::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h3>
-      <div class="helix-ultimate-megamenu-module-list">
-        <?php
-        $modules = getModuleNameId();
-        if($modules) {
-          foreach($modules as $module){
-            echo '<div class="helix-ultimate-megamenu-draggable-module" data-mod_id="' . $module->id . '" data-type="module"><span class="fa fa-arrows"></span> ' . $module->title . '</div>';
-          }
-        }?>
-      </div>
-    </div>
-  </div>
-
   <div class="helix-ultimate-col-sm-9">
 
     <div class="helix-ultimate-megamenu-wrap">
@@ -232,11 +217,11 @@ if($count > 4 && $count != 6)
           <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_ENABLED'); ?></span>
           <input type="checkbox" class="helix-ultimate-checkbox" id="helix-ultimate-megamenu-toggler" <?php echo ($enable_megamenu) ? 'checked' : ''; ?> />
         </div>
-        <div>
+        <div class="helix-ultimate-megamenu-field-control<?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>">
           <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_SUB_WIDTH'); ?></span>
           <input type="number" id="helix-ultimate-megamenu-width" value="<?php echo $menu_width; ?>" placeholder="400">
         </div>
-        <div>
+        <div class="helix-ultimate-megamenu-field-control<?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>">
           <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_SUB_ALIGNMENT'); ?></span>
           <div class="helix-ultimate-megamenu-alignment">
             <select id="helix-ultimate-megamenu-alignment">
@@ -266,7 +251,7 @@ if($count > 4 && $count != 6)
         </div>
       </div>
 
-      <div id="helix-ultimate-megamenu-layout" class="helix-ultimate-megamenu-layout" data-megamenu="<?php echo $enable_megamenu; ?>" data-width="<?php echo $menu_width; ?>" data-menuitem="<?php echo $count; ?>" data-menualign="<?php echo $align; ?>" data-showtitle="<?php echo $show_title; ?>" data-customclass="<?php echo $custom_class; ?>">
+      <div id="helix-ultimate-megamenu-layout" class="helix-ultimate-megamenu-layout helix-ultimate-megamenu-field-control<?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>" data-megamenu="<?php echo $enable_megamenu; ?>" data-width="<?php echo $menu_width; ?>" data-menuitem="<?php echo $count; ?>" data-menualign="<?php echo $align; ?>" data-showtitle="<?php echo $show_title; ?>" data-customclass="<?php echo $custom_class; ?>">
         <?php
 
         if (! empty($layout) && count($layout)) {
@@ -354,7 +339,7 @@ if($count > 4 && $count != 6)
       </div>
     </div>
 
-    <div class="helix-ultimate-megamenu-add-row clearfix">
+    <div class="helix-ultimate-megamenu-add-row helix-ultimate-megamenu-field-control clearfix<?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>">
       <button id="helix-ultimate-choose-megamenu-layout" class="helix-ultimate-choose-megamenu-layout"><span class="fa fa-plus-circle"></span> Add New Row</button>
 
       <div class="helix-ultimate-megamenu-modal" id="helix-ultimate-megamenu-layout-modal" style="display: none;" >
@@ -452,5 +437,20 @@ if($count > 4 && $count != 6)
       </div>
     </div>
 
+  </div>
+
+  <div class="helix-ultimate-col-sm-3">
+    <div class="helix-ultimate-megamenu-sidebar <?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>">
+      <h3><span class="fa fa-bars"></span> <?php echo JText::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h3>
+      <div class="helix-ultimate-megamenu-module-list">
+        <?php
+        $modules = getModuleNameId();
+        if($modules) {
+          foreach($modules as $module){
+            echo '<div class="helix-ultimate-megamenu-draggable-module" data-mod_id="' . $module->id . '" data-type="module"><span class="fa fa-arrows"></span> ' . $module->title . '</div>';
+          }
+        }?>
+      </div>
+    </div>
   </div>
 </div>

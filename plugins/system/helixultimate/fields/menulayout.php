@@ -9,6 +9,8 @@
 //no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
 
+require_once dirname(__DIR__) . '/core/lib/fa.php';
+
 $current_menu_id = $this->form->getValue('id');
 $menu_items = menuItems();
 $JMenuSite = new JMenuSite;
@@ -121,6 +123,7 @@ $layout = '';
 $enable_megamenu = 1;
 $show_title = 1;
 $custom_class = '';
+$fa_icon = '';
 
 if (isset($menu_data->megamenu))
 {
@@ -145,6 +148,11 @@ if (isset($menu_data->layout))
 if (isset($menu_data->showtitle))
 {
   $show_title = $menu_data->showtitle;
+}
+
+if (isset($menu_data->faicon))
+{
+  $fa_icon = $menu_data->faicon;
 }
 
 if (isset($menu_data->customclass))
@@ -245,16 +253,16 @@ if($count > 4 && $count != 6)
           <input type="checkbox" class="helix-ultimate-checkbox" id="helix-ultimate-megamenu-title-toggler" <?php echo ($show_title) ? 'checked' : ''; ?> />
         </div>
         <div>
-          <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_ENABLED'); ?></span>
-          <select id="helix-ultimate-megamenu-alignment">
-            <option value="left" <?php echo ($align == 'left') ? 'selected' : ''; ?>><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_LEFT'); ?></option>
-            <option value="center" <?php echo ($align == 'center') ? 'selected' : ''; ?>><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_CENTER'); ?></option>
-            <option value="right" <?php echo ($align == 'right') ? 'selected' : ''; ?>><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_RIGHT'); ?></option>
-            <option value="full" <?php echo ($align == 'full') ? 'selected' : ''; ?>><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_FULL'); ?></option>
+          <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_ICON'); ?></span>
+          <select id="helix-ultimate-megamenu-fa-icon">
+            <option value=""><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_SELECT'); ?></option>
+            <?php foreach ($fa_list as $key => $fa) { ?>
+              <option value="<?php echo $fa; ?>" <?php echo ($fa_icon == $fa) ? 'selected' : ''; ?>><?php echo $fa; ?></option>
+            <?php } ?>
           </select>
         </div>
         <div>
-          <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_ENABLED'); ?></span>
+          <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_CUSTOM_CLASS'); ?></span>
           <input type="text" id="helix-ultimate-megamenu-custom-class" placeholder="custom-class" value="<?php echo ($custom_class); ?>" />
         </div>
       </div>

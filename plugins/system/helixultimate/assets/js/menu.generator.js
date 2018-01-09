@@ -17,7 +17,7 @@ jQuery(function($) {
     $('#helix-ultimate-megamenu-layout').data('showtitle', $(this).is(":checked"));
   });
 
-  // Menu Width
+  // Custom Class
   $(document).on('change', '#helix-ultimate-megamenu-custom-class', function(){
     $('#helix-ultimate-megamenu-layout').data('customclass', $(this).val());
   });
@@ -30,6 +30,11 @@ jQuery(function($) {
   // Alignment
   $(document).on('change', '#helix-ultimate-megamenu-alignment', function(){
     $('#helix-ultimate-megamenu-layout').data('menualign', $(this).val());
+  });
+
+  // Alignment
+  $(document).on('change', '#helix-ultimate-megamenu-fa-icon', function(){
+    $('#helix-ultimate-megamenu-layout').data('faicon', $(this).val());
   });
 
   /**
@@ -99,6 +104,7 @@ jQuery(function($) {
       'menualign'     : initData.menualign,
       'megamenu'      : initData.megamenu,
       'showtitle'     : initData.showtitle,
+      'faicon'        : initData.faicon,
       'customclass'   : initData.customclass,
       'layout'        : layout
     };

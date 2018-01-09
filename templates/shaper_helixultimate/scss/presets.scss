@@ -7,6 +7,10 @@
 
 @import 'variables';
 
+#sp-header {
+	background: $major_color;
+}
+
 
 // Anchor
 a{
@@ -56,7 +60,7 @@ a{
 // .sppb-btn-primary {
 // 	border-color: darken($major_color, 6%);
 // 	background-color: $major_color;
-// 
+//
 // 	&:hover {
 // 		border-color: darken($major_color, 15%);
 // 		background-color: darken($major_color, 10%);

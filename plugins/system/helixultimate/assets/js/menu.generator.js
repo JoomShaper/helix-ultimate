@@ -10,7 +10,15 @@ jQuery(function($) {
   $('#attrib-spmegamenu').find('.control-group').first().find('>.controls').removeClass().addClass('megamenu').unwrap();
 
   $(document).on('click', '#helix-ultimate-megamenu-toggler', function(){
-    $('#helix-ultimate-megamenu-layout').data('megamenu', $(this).is(":checked"));
+    var currentVal = $(this).is(":checked");
+    $('#helix-ultimate-megamenu-layout').data('megamenu', currentVal);
+
+    if(currentVal){
+      $('.helix-ultimate-megamenu-field-control, .helix-ultimate-megamenu-sidebar').removeClass('hide-menu-builder');
+    } else {
+      $('.helix-ultimate-megamenu-field-control, .helix-ultimate-megamenu-sidebar').addClass('hide-menu-builder');
+    }
+
   });
 
   $(document).on('click', '#helix-ultimate-megamenu-title-toggler', function(){

@@ -33,7 +33,7 @@ class SPOptions{
         }
 
         $form = new JoomlaForm\Form('template');
-        $form->loadFile( JPATH_PLUGINS.'/system/helixultimate/templateSettings.xml');
+        $form->loadFile( JPATH_ROOT.'/templates/' . $tmplStyle->template . '/options.xml');
         $form->bind($formData);
 
         $fieldsets = $form->getFieldsets();

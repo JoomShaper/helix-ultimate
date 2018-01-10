@@ -120,17 +120,11 @@ if ($custom_js = $this->helixUltimate->getParam('custom_js')) {
 $doc->addScriptdeclaration("\nvar sp_preloader = '" . $this->params->get('preloader') . "';\n");
 $doc->addScriptdeclaration("\nvar sp_gotop = '" . $this->params->get('goto_top') . "';\n");
 $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('offcanvas_animation') . "';\n");
-
-
-$doc->addStyleSheet($this->helixUltimate->getTemplateUri().'/layout/inc/header_footer.css');
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" amp>
 <head>
-    <meta charset="utf-8">
-    <script async src="https://cdn.ampproject.org/v0.js"></script>
     <link rel="canonical" href="<?php echo JUri::current(); ?>">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

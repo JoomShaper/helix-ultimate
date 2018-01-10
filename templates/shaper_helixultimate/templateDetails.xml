@@ -79,7 +79,7 @@
     <config>
         <fields name="params">
             <fieldset name="basic" addfieldpath="/plugins/system/helixultimate/fields">
-                <field name="details" type="details" />
+                <field name="helixdetails" type="helixdetails" />
             </fieldset>
         </fields>
     </config>

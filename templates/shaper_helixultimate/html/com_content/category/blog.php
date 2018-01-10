@@ -73,7 +73,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<?php if (!empty($this->lead_items)) : ?>
 		<div class="items-leading clearfix">
 			<?php foreach ($this->lead_items as &$item) : ?>
-				<div class="leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
+				<div class="item leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 					$this->item = & $item;

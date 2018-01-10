@@ -32,7 +32,7 @@ web.config.txt
 
 !/plugins/ajax
 /plugins/ajax/*
-!/plugins/ajax/helix3
+!/plugins/ajax/helixultimate
 
 !/plugins/system
 /plugins/system/*

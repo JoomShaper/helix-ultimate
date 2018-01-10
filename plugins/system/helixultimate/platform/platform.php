@@ -88,7 +88,7 @@ class Platform
         $htmlView  = '</div>';
 
         $htmlView .= '<div class="helix-ultimate-footer clearfix">';
-        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate 2.0.1 Beta 1<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
+        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate 1.0 Alpha<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
         $htmlView .= '<div class="helix-ultimate-action"><button class="btn btn-primary action-save-template" data-id="'. $this->id .'" data-view="'. $this->view .'"><span class="fa fa-save"></span> Save</button></div>';
         $htmlView .= '</div>';
 
@@ -128,6 +128,7 @@ class Platform
         $doc->addScriptdeclaration('var layoutbuilder_base="' . \JURI::root() . '";');
         $doc->addScriptDeclaration("var basepath = '{$helix_plg_url}';");
         $doc->addScriptDeclaration("var templateID = '{$templateID}';");
+        $doc->addScriptDeclaration("var pluginVersion = 1;");
 
         \JHtml::_('jquery.ui', array('core', 'sortable'));
         \JHtml::_('bootstrap.framework');

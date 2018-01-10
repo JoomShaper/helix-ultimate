@@ -34,7 +34,13 @@ class SPOptions{
 
         $form = new JoomlaForm\Form('template');
         $form->loadFile( JPATH_ROOT.'/templates/' . $tmplStyle->template . '/options.xml');
-        $form->bind($formData);
+        if($formData){
+            $form->bind($formData);
+        } else {
+            $layout_file = JPATH_ROOT.'/templates/' . $tmplStyle->template . '/layout/default.json';
+            $formData = file_get_contents($layout_file);
+            $form->bind(json_decode($formData));
+        }
 
         $fieldsets = $form->getFieldsets();
 

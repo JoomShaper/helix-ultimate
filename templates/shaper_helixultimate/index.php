@@ -125,6 +125,7 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" amp>
 <head>
     <link rel="canonical" href="<?php echo JUri::current(); ?>">
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 

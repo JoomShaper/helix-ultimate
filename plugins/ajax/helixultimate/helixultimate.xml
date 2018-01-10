@@ -10,10 +10,6 @@
 	<version>1.0</version>
 	<description>Helix Ultimate Framework - Joomla Template Framework by JoomShaper</description>
 
-	<updateservers>
-		<server type="extension" priority="1" name="Helix Ultimate - Ajax">http://www.joomshaper.com/updates/plg-ajax-helix-ultimate.xml</server>
-	</updateservers>
-
 	<files>
 		<filename plugin="helixultimate">helixultimate.php</filename>
 		<folder>classes/</folder>

@@ -241,8 +241,6 @@ jQuery(function($) {
 			index : ''
     }, options);
 
-		console.log(options.data);
-
     //options.data.append($('.product-token').val(), 1);
 
     $.ajax({

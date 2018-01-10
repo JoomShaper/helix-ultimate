@@ -20,6 +20,7 @@
 		<field name="preloader_bg" helixgroup="preloader" class="child preloader preloader_1" type="color" default="#f5f5f5" label="HELIX_PRELOADER_BG_COLOR" description="HELIX_PRELOADER_BG_COLOR_DESC" />
 		<field name="preloader_tx" helixgroup="preloader" class="child preloader preloader_1" type="color" default="#333333" label="HELIX_PRELOADER_TX_COLOR" description="HELIX_PRELOADER_TX_COLOR_DESC" />
 
+		<field name="header_height" helixgroup="header" type="text" default="80px" label="Header Height" />
 		<field name="logo_type" helixgroup="header" class="parent logotype radio-group" type="radio" default="image" label="HELIX_LOGO_TYPE" description="HELIX_LOGO_TYPE_DESC">
 				<option value="text">HELIX_LOGO_TYPE_TEXT</option>
 				<option value="image">HELIX_LOGO_TYPE_IMAGE</option>
@@ -108,7 +109,7 @@
 				<option value="1">HELIX_SHOW</option>
 				<option value="0">HELIX_HIDE</option>
 		</field>
-		<field name="social_position" helixgroup="social_icons" type="moduleposition" default="top1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child social_icons social_icons_1" />
+		<field name="social_position" helixgroup="social_icons" type="modpos" default="top1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child social_icons social_icons_1" />
 		<field name="social_load_pos" helixgroup="social_icons" class="child social_icons social_icons_1" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC">
 				<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
 				<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
@@ -133,7 +134,7 @@
 				<option value="0">HELIX_NO</option>
 				<option value="1">HELIX_YES</option>
 		</field>
-		<field name="contact_position" helixgroup="contact_info" type="moduleposition" default="top2" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child contactinfo contactinfo_1" />
+		<field name="contact_position" helixgroup="contact_info" type="modpos" default="top2" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" class="child contactinfo contactinfo_1" />
 		<field name="contact_phone" helixgroup="contact_info" type="text" hint="+228 872 4444" label="HELIX_CONTACT_PHONE" description="HELIX_CONTACT_PHONE_DESC" class="child contactinfo contactinfo_1" />
 		<field name="contact_mobile" helixgroup="contact_info" type="text" hint="+775 872 4444" label="HELIX_CONTACT_MOBILE" description="HELIX_CONTACT_MOBILE_DESC" class="child contactinfo contactinfo_1" />
 		<field name="contact_email" helixgroup="contact_info" type="email" hint="contact@email.com" label="HELIX_CONTACT_EMAIL" description="HELIX_CONTACT_EMAIL_DESC" class="child contactinfo contactinfo_1" />
@@ -156,29 +157,47 @@
 
 	</fieldset>
 
-	<fieldset name="preset" label="Preset" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
+	<fieldset name="presets" label="Presets" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
 
 		<field name="preset" type="presets" default="preset1" label="Select an option" description="">
-			<preset name="preset1" label="Preset 1" default="#0075DF">
-				<color name="bg_color" value="#ffffff" />
-				<color name="major_color" value="#0075DF" />
-			</preset>
-
-			<preset name="preset2" label="Preset 2" default="#ffff11">
-				<color name="bg_color" value="#ffffff" />
-				<color name="major_color" value="#ffff11" />
-			</preset>
-
-			<preset name="preset3" label="Preset 3" default="#ff11ff">
-				<color name="bg_color" value="#ffffff" />
-				<color name="major_color" value="#ff11ff" />
+			<preset name="preset1" label="Preset 1" default="#25A9E0">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#25A9E0" />
+				<color name="link_hover_color" value="#2BBBF7" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="logo_text_color" value="#25A9E0" />
+				<color name="menu_text_color" default="#252525" />
+				<color name="menu_text_hover_color" value="#25A9E0" />
+				<color name="menu_text_active_color" value="#25A9E0" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#25A9E0" />
+				<color name="menu_dropdown_text_active_color" value="#25A9E0" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
 			</preset>
 		</field>
 
-		<!--Start Preset1-->
-		<field name="bg_color" class="preset-control" type="color" default="#ffffff" label="HELIX_BACKGROUND_COLOR" description="HELIX_BACKGROUND_COLOR_DESC" />
-		<field name="major_color" class="preset-control" type="color" default="#ff1111" label="HELIX_TEXT_COLOR" description="HELIX_TEXT_COLOR_DESC" />
-		<!--End Preset1-->
+		<field name="text_color" class="preset-control" helixgroup="preset_body" type="color" default="#252525" label="Color" />
+		<field name="bg_color" class="preset-control" helixgroup="preset_body" type="color" default="#FFFFFF" label="Background Color" />
+		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#25A9E0" label="Link Color" />
+		<field name="link_hover_color" class="preset-control" helixgroup="preset_body" type="color" default="#2BBBF7" label="Link Hover Color" />
+		<field name="header_bg_color" class="preset-control" helixgroup="preset_header" type="color" default="#25A9E0" label="Header Background Color" />
+		<field name="logo_text_color" class="preset-control" helixgroup="preset_header" type="color" default="#25A9E0" label="Logo Text Color" />
+		<field name="menu_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="Text Color" />
+		<field name="menu_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Hover Text Color" />
+		<field name="menu_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Active Text Color" />
+		<field name="menu_dropdown_bg_color" class="preset-control" helixgroup="preset_menu" type="color" default="#FFFFFF" label="Dropdown Background Color" />
+		<field name="menu_dropdown_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="Dropdown Text Color" />
+		<field name="menu_dropdown_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Dropdown Hover Text Color" />
+		<field name="menu_dropdown_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Dropdown Active Text Color" />
+		<field name="footer_bg_color" class="preset-control" helixgroup="preset_footer" type="color" default="#171717" label="Footer Backgroud Color" />
+		<field name="footer_text_color" class="preset-control" helixgroup="preset_footer" type="color" default="#FFFFFF" label="Footer Text Color" />
+		<field name="footer_link_color" class="preset-control" helixgroup="preset_footer" type="color" default="#A2A2A2" label="Footer Link Color" />
+		<field name="footer_link_hover_color" class="preset-control" helixgroup="preset_footer" type="color" default="#FFFFFF" label="Footer Link Hover Color" />
 	</fieldset>
 
 	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-list-alt">
@@ -304,13 +323,6 @@
 
 	<!--Start Blog Tab-->
 	<fieldset name="blog" label="Blog" icon="fa fa-font">
-
-			<field name="show_article_format" type="radio" helixgroup="article_format" class="radio-group" default="1" label="HELIX_SHOW_POST_FORMAT" description="HELIX_SHOW_POST_FORMAT_DESC">
-					<option value="1">HELIX_YES</option>
-					<option value="0">HELIX_NO</option>
-			</field>
-
-			<!--Blog Image-->
 			<field name="image_small" type="radio" helixgroup="blog_images" default="0" class="parent image_small" label="HELIX_IMAGE_SMALL" description="HELIX_IMAGE_SMALL_DESC">
 					<option value="1">HELIX_YES</option>
 					<option value="0">HELIX_NO</option>

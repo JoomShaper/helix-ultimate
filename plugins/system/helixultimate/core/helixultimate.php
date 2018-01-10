@@ -364,7 +364,6 @@ class HelixUltimate{
                     );
                     
                     //overrride missing ;)
-
                     $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
     
                     $getLayout = new JLayoutFile('frontend.generate', $layout_path );
@@ -681,6 +680,8 @@ class HelixUltimate{
         {
           $return = true;
         }
+      } else {
+        $return = true;
       }
 
       return $return;

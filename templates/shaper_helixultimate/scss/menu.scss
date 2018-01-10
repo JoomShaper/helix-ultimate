@@ -28,10 +28,9 @@
         >a, >span {
             display: inline-block;
             padding: 0 15px;
-            line-height: 90px;
-            font-size: 12px;
+            line-height: $header_height;
+            font-size: 14px;
             text-transform: uppercase;
-            letter-spacing: 1px;
             color: #fff;
             margin: 0;
         }
@@ -42,13 +41,7 @@
         }
 
         &.active > a {
-          color: #ffffff;
-        }
-
-        &.active:hover>a,
-        &:hover>a {
-          background-color: $major_color;
-          color: #fff;
+          font-weight: 500;
         }
     }
 
@@ -60,6 +53,14 @@
         list-style: none;
         padding: 0;
         margin: 0;
+
+        >li > a {
+          display: block;
+          text-transform: uppercase;
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 10px;
+        }
 
         .sp-mega-group-child {
             list-style: none;
@@ -75,7 +76,7 @@
         display: none;
 
         .sp-dropdown-inner {
-            background: $megabg_color;
+            background: $menu_dropdown_bg_color;
             box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
             padding: 20px;
         }
@@ -127,8 +128,7 @@
           position: relative;
           >a, span {
               display: block;
-              padding: 10px;
-              color: $megatx_color;
+              padding: 10px 0;
               cursor: pointer;
 
               &.sp-group-title {
@@ -192,7 +192,7 @@
 
 #offcanvas-toggler {
     float: right;
-    line-height: 87px;
+    line-height: $header_height;
     margin-left: 15px;
     font-size: 20px;
     >i {
@@ -444,7 +444,7 @@
             >.sp-dropdown {
                 opacity: 1;
                 visibility: visible;
-                top: 90px;
+                top: $header_height;
                 .sp-dropdown{
                     top: 0;
                 }
@@ -510,7 +510,7 @@
             transform: translate(0,100px);
             opacity: 0;
             padding: 0 20px !important;
-            background-color: $megabg_color;
+            background-color: $menu_dropdown_bg_color;
             &:first-child{
                 padding-top: 20px !important;
             }

@@ -1,0 +1,34 @@
+/**
+* @package Helix3 Framework
+* @author JoomShaper http://www.joomshaper.com
+* @copyright Copyright (c) 2010 - 2015 JoomShaper
+* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
+.helix-image-upload-wrapper:empty {
+	display: none;
+}
+
+.helix-image-upload-wrapper {
+	width: 200px;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.helix-image-upload-wrapper:not(.loading) {
+	height: 200px;
+	background: #f5f5f5;
+	padding: 5px;
+	border: 1px solid #e5e5e5;
+}
+
+.helix-image-upload-wrapper img {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.helix-image-item-loader {
+	line-height: 200px;
+	text-align: center;
+	font-size: 24px;
+}

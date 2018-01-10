@@ -210,7 +210,7 @@ class Helix3Menu {
         else if ( ( $item->parent_id == 1 ) && ($item->megamenu == 0 ))
         {
             $menulayout = json_decode($this->_items[$item->id]->params->get('menulayout'));
-
+            /*
             if ($menulayout) {
                 $layout = $menulayout->layout;
                 $attr 	= $layout[0]->attr;
@@ -219,6 +219,7 @@ class Helix3Menu {
                     $this->mega($item);
                 }
             }
+            */
 
         }
 
@@ -443,7 +444,7 @@ class Helix3Menu {
         }
         else if ( ( $item->parent_id == 1 ) && ( $item->megamenu == 0 ) )
         {
-            $menulayout = json_decode( $this->_items[$item->id]->params->get('menulayout') );
+            /* $menulayout = json_decode( $this->_items[$item->id]->params->get('menulayout') );
 
             if ( $menulayout ) {
                 $layout = $menulayout->layout;
@@ -452,7 +453,7 @@ class Helix3Menu {
                 if ( $attr[0]->moduleId !== '' ) {
                     $class .= ' sp-has-child';
                 }
-            }
+            }*/
         }
 
         if( $custom_class = $item->params->get( 'class' ) ) {

@@ -13,9 +13,6 @@ a {
 a:hover {
   color: #dd0;
 }
-.sp-megamenu-parent > li.active > a, .sp-megamenu-parent > li:hover > a {
-  color: #ff1;
-}
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a:hover {
   background: #ff1;
 }

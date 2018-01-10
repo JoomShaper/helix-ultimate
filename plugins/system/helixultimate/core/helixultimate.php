@@ -226,13 +226,12 @@ class HelixUltimate{
         $view        = $app->input->getCmd('view', '');
         $pagebuilder = false;
 
-        if ($option == 'com_sppagebuilder') {
-            $doc->addStylesheet( JURI::base(true) . '/plugins/system/helixultimate/assets/css/pagebuilder.css' );
+        if ( $option == 'com_sppagebuilder' ) {
             $pagebuilder = true;
         }
 
         //helper & model
-        $menu_class   = JPATH_ROOT . '/plugins/system/helixultimate/core/classes/helixultimate.php';
+        $menu_class   = JPATH_ROOT . '/plugins/system/helixultimate/core/classes/menu.php';
 
         if (file_exists($menu_class)) {
             require_once($menu_class);
@@ -363,65 +362,12 @@ class HelixUltimate{
                         'fluidrow' 			=> $fluidrow,
                         'rowColumns' 		=> $rowColumns,
                     );
-
-                    if (count($row->attr)){
-                        //Segment and any HTML5 mark will be available for first level item
-                        if ($row_level == 1) {
-                            $output .= '<' . $data['sematic'] . ' id="' . $data['id'] . '"' . $data['row_class'] . '>';
-                            if ($data['componentArea']) {
-                                if (!$data['pagebuilder']) {
-                                    $output .= '<div class="container">';
-                                    $output .= '<div class="container-inner">';
-                                }
-                            } else {
-                                if (!$data['fluidrow']) {
-                                    $output .= '<div class="container">';
-                                    $output .= '<div class="container-inner">';
-                                }
-                            }
-                            $output .= '<div class="row">';
-                        }elseif ($row_level > 1){
-                            $output .= '<div id="nested-' . $data['id']. '"' . $data['row_class'] . '>';
-                        }
-
-                        foreach ($row->attr as $col){
-                            //End Responsive Utilities
-                            if ($col->settings->column_type){ //Component
-                                $getLayout = new JLayoutFile('frontend.conponentarea', $layout_path_carea );
-                                $output .= $getLayout->render($col);
-                            }
-                            else { // Module
-                                $getLayout = new JLayoutFile('frontend.modules', $layout_path_module );
-                                $output .= $getLayout->render($col);
-                            }
-
-                            //Recursive
-                            if ( ! empty($col->attr) && count($col->attr)){
-                                $output .=self::get_recursive_layout($col->attr, $row_level + 1);
-                            }
-                        }
-
-                        //Segment and any HTML5 mark will be available for first level item
-                        if ($row_level == 1){
-                            $output .= '</div>';
-
-                            if ($data['componentArea']){
-                                if (!$data['pagebuilder']){
-                                    $output .= '</div>';
-                                    $output .= '</div>';
-                                }
-                            }
-                            else{
-                                if (!$data['fluidrow']){
-                                    $output .= '</div>';
-                                    $output .= '</div>';
-                                }
-                            }
-                            $output .= '</' . $data['sematic'] . '>';
-                        }elseif ($row_level > 1){
-                            $output .= '</div>';
-                        }
-                    }
+                    
+                    //overrride missing ;)
+                    $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+    
+                    $getLayout = new JLayoutFile('frontend.generate', $layout_path );
+                    $output .= $getLayout->render($data);
                 }
             }
         }
@@ -699,13 +645,13 @@ class HelixUltimate{
       $template  = \JFactory::getApplication()->getTemplate();
       $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 
+      $return = false;
+
       if(file_exists($cache_path))
       {
         $cache_file = json_decode(file_get_contents($cache_path));
         $imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
         $vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
-
-        $return = false;
 
         if(array_diff($vars, $existvars))
         {

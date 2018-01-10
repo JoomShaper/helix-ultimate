@@ -1616,11 +1616,7 @@ article.item {
   display: inline-block;
 }
 .helix-social-share .helix-social-share-icon ul li div a:hover, .helix-social-share .helix-social-share-icon ul li div a:focus {
-<<<<<<< HEAD
   background: #f1f;
-=======
-  background: #0075df;
->>>>>>> 5ce2304a1efa01b17aa9a0f6d152211309200afb
   color: #fff;
 }
 /* ******************   END:: Blog   ****************** */

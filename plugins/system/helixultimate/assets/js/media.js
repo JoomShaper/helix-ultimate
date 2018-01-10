@@ -245,7 +245,7 @@ jQuery(function($) {
 
     $.ajax({
 			type   : 'POST',
-			url: 'index.php?option=com_ajax&plugin=helix3&request=ajaxHelix&preview=theme&view=style&id=10&action=upload-media&format=json',
+			url: 'index.php?option=com_ajax&plugin=helix3&request=ajaxHelix&preview=theme&view=style&id='+ templateID +'&action=upload-media&format=json',
 			data: options.data,
       contentType: false,
       cache: false,

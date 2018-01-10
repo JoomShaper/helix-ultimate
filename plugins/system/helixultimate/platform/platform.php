@@ -118,13 +118,16 @@ class Platform
     {
         \JFactory::getLanguage()->load('tpl_shaper_helixultimate', JPATH_SITE, null, true);;
 
+        $app = \JFactory::getApplication();
+        $templateID = $app->input->get('id',NULL);
+
         $doc = \JFactory::getDocument();
         $doc->setTitle("Helix Template Framework by JoomShaper");
 
         $helix_plg_url = \JURI::root(true).'/plugins/system/helixultimate';
         $doc->addScriptdeclaration('var layoutbuilder_base="' . \JURI::root() . '";');
         $doc->addScriptDeclaration("var basepath = '{$helix_plg_url}';");
-        $doc->addScriptDeclaration("var pluginVersion = 34;");
+        $doc->addScriptDeclaration("var templateID = '{$templateID}';");
 
         \JHtml::_('jquery.ui', array('core', 'sortable'));
         \JHtml::_('bootstrap.framework');
@@ -138,23 +141,13 @@ class Platform
         $doc->addScript($helix_plg_url.'/assets/js/modal.js');
         $doc->addScript($helix_plg_url.'/assets/js/admin.general.js');
         $doc->addScript($helix_plg_url.'/assets/js/admin.layout.js');
-        // $doc->addScript($helix_plg_url.'/assets/js/custom_builder.js');
 
-        //CSS
-        //$doc->addStyleSheet($helix_plg_url.'/assets/css/bootstrap.min.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/helix-ultimate.css');
-        //$doc->addStyleSheet($helix_plg_url.'/assets/css/modal.css');
-        //$doc->addStyleSheet(JURI::root(true) . '/administrator/templates/isis/css/template.css');
-        // $doc->addStyleSheet($helix_plg_url.'/assets/css/custom_builder.css');
-        //$doc->addStyleSheet( JURI::root(true) . '/media/system/css/modal.css');
-
         $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/admin.general.css');
 
         $doc->addScript( $helix_plg_url. '/assets/js/media.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin.helix-ultimate.js' );
-
-
 
         echo $doc->render(false,[
             'file' => 'component.php',

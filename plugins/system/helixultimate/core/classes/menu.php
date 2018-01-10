@@ -202,25 +202,16 @@ class Helix3Menu {
         $this->menu .= $this->start_el(array('item' => $item));
         $this->menu .= $this->item($item); // get item url
 
-        if ( $item->megamenu ) {
+        $menulayout = $item->params->get('menulayout');
+
+        if( $menulayout !== '' ){
+            $menulayout = json_decode($menulayout);
+        }
+
+        if ( isset($menulayout->megamenu) && $menulayout->megamenu) {
             $this->mega($item);
         } else if ( $item->dropdown ) {
             $this->dropdown( $item );
-        }
-        else if ( ( $item->parent_id == 1 ) && ($item->megamenu == 0 ))
-        {
-            $menulayout = json_decode($this->_items[$item->id]->params->get('menulayout'));
-            /*
-            if ($menulayout) {
-                $layout = $menulayout->layout;
-                $attr 	= $layout[0]->attr;
-
-                if ( $attr[0]->moduleId !== '' ) {
-                    $this->mega($item);
-                }
-            }
-            */
-
         }
 
         $this->menu .= $this->end_el();
@@ -437,23 +428,15 @@ class Helix3Menu {
         $item 	= $args['item'];
         $class 	= 'sp-menu-item';
 
+        $menulayout = $item->params->get('menulayout');
+        if ( $menulayout != '') {
+            $menulayout = json_decode($menulayout);
+        }
+
         if( !empty( $this->children[$item->id] ) ) {
             $class .= ' sp-has-child';
-        } else if( isset( $item->megamenu ) && ( $item->megamenu ) ) {
+        } else if( isset( $menulayout->megamenu ) && ( $menulayout->megamenu ) ) {
             $class .= ' sp-has-child';
-        }
-        else if ( ( $item->parent_id == 1 ) && ( $item->megamenu == 0 ) )
-        {
-            /* $menulayout = json_decode( $this->_items[$item->id]->params->get('menulayout') );
-
-            if ( $menulayout ) {
-                $layout = $menulayout->layout;
-                $attr 	= $layout[0]->attr;
-
-                if ( $attr[0]->moduleId !== '' ) {
-                    $class .= ' sp-has-child';
-                }
-            }*/
         }
 
         if( $custom_class = $item->params->get( 'class' ) ) {

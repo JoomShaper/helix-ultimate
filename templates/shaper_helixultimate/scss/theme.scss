@@ -200,6 +200,7 @@ ul.social-icons {
     height: $header_height;
     display: inline-flex;
     margin: 0;
+    align-items: center;
     a {
       font-size: 24px;
       line-height: 1;
@@ -210,9 +211,11 @@ ul.social-icons {
       margin: 5px 0 0;
     }
   }
-  .sp-default-logo-svg {
-    width: 100%;
-    height: 100%;
+  .sp-default-logo {
+    &.sp-logo-svg {
+      width: 100%;
+      height: 100%;
+    }
   }
   .sp-retina-logo {
     display: none;
@@ -1084,7 +1087,7 @@ only screen and (-moz-min-device-pixel-ratio: 1.5),
 only screen and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min-device-pixel-ratio: 1.5) {
   #sp-header {
-    .sp-default-logo {
+    .sp-normal-logo {
       display: none;
     }
     .sp-retina-logo {
@@ -1097,7 +1100,7 @@ only screen and (min-device-pixel-ratio: 1.5) {
         display: table;
         margin: 0 auto;
       }
-      .sp-default-logo{
+      .sp-normal-logo{
         display: none;
       }
     }

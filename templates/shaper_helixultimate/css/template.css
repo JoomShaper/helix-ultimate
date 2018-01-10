@@ -1118,6 +1118,7 @@ ul.social-icons > li a {
   height: 60px;
   display: inline-flex;
   margin: 0;
+  align-items: center;
 }
 #sp-header .logo a {
   font-size: 24px;
@@ -1128,7 +1129,7 @@ ul.social-icons > li a {
 #sp-header .logo p {
   margin: 5px 0 0;
 }
-#sp-header .sp-default-logo-svg {
+#sp-header .sp-default-logo.sp-logo-svg {
   width: 100%;
   height: 100%;
 }
@@ -1843,7 +1844,7 @@ article.item {
 /* ***************   END:: Error Page   *************** */
 /* **************************************************** */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-  #sp-header .sp-default-logo {
+  #sp-header .sp-normal-logo {
     display: none;
   }
   #sp-header .sp-retina-logo {
@@ -1853,7 +1854,7 @@ article.item {
     display: table;
     margin: 0 auto;
   }
-  .sp-comingsoon .comingsoon-page-logo .sp-default-logo {
+  .sp-comingsoon .comingsoon-page-logo .sp-normal-logo {
     display: none;
   }
 }

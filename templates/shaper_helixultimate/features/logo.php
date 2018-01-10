@@ -60,12 +60,14 @@ class HelixUltimateFeatureLogo {
 				$html .= '<a href="' . \JURI::base(true) . '/">';
 
 					if($ext != 'svg') {
-						$html .= '<img class="sp-default-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
 						if( $this->helixUltimate->getParam('logo_image_2x') ) {
+							$html .= '<img class="sp-normal-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
 							$html .= '<img class="sp-retina-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image_2x') . '" alt="'. $sitename .'" width="' . $width . '" height="' . $height . '">';
+						} else {
+							$html .= '<img class="sp-default-logo'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
 						}
 					} else {
-						$html .= '<img class="sp-default-logo-svg'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
+						$html .= '<img class="sp-default-logo sp-logo-svg'. $custom_logo_class .'" src="' . $this->helixUltimate->getParam('logo_image') . '" alt="'. $sitename .'">';
 					}
 
 					if( $this->helixUltimate->getParam('mobile_logo') ) {
@@ -79,7 +81,7 @@ class HelixUltimateFeatureLogo {
 				$html .= '<div class="logo">';
 					$html .= '<a href="' . \JURI::base(true) . '/">';
 
-					$html .= '<img class="sp-default-logo-svg'. $custom_logo_class .'" src="' . $this->helixUltimate->getTemplateUri() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.svg" alt="'. $sitename .'">';
+						$html .= '<img class="sp-default-logo sp-logo-svg'. $custom_logo_class .'" src="' . $this->helixUltimate->getTemplateUri() . '/images/presets/' . $this->helixUltimate->Preset() . '/logo.svg" alt="'. $sitename .'">';
 
 						if( $this->helixUltimate->getParam('mobile_logo') ) {
 							$html .= '<img class="sp-default-logo visible-xs" src="' . $this->helixUltimate->getParam('mobile_logo') . '" alt="'. $sitename .'">';

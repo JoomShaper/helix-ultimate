@@ -371,10 +371,12 @@ class HelixUltimate{
                             if ($data['componentArea']) {
                                 if (!$data['pagebuilder']) {
                                     $output .= '<div class="container">';
+                                    $output .= '<div class="container-inner">';
                                 }
                             } else {
                                 if (!$data['fluidrow']) {
                                     $output .= '<div class="container">';
+                                    $output .= '<div class="container-inner">';
                                 }
                             }
                             $output .= '<div class="row">';
@@ -406,10 +408,12 @@ class HelixUltimate{
                             if ($data['componentArea']){
                                 if (!$data['pagebuilder']){
                                     $output .= '</div>';
+                                    $output .= '</div>';
                                 }
                             }
                             else{
                                 if (!$data['fluidrow']){
+                                    $output .= '</div>';
                                     $output .= '</div>';
                                 }
                             }
@@ -730,6 +734,8 @@ class HelixUltimate{
         {
           $return = true;
         }
+      } else {
+        $return = true;
       }
 
       return $return;

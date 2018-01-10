@@ -74,13 +74,11 @@ class  plgSystemHelixultimate extends JPlugin
 
         //Article Post format
         if ($form->getName()=='com_content.article'){
-            JHtml::_('jquery.framework');
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
-            $doc->addScript($plg_path.'/assets/js/post-formats.js');
 
             $tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName();
 
-            if (JFile::exists( $tpl_path . '/post-formats.xml' ))
+            if (JFile::exists( $tpl_path . '/article-formats.xml' ))
             {
                 JForm::addFormPath($tpl_path);
             }
@@ -88,7 +86,7 @@ class  plgSystemHelixultimate extends JPlugin
             {
                 JForm::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
             }
-            $form->loadFile('post-formats', false);
+            $form->loadFile('article-formats', false);
         }
     }
 

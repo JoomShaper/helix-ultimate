@@ -144,23 +144,32 @@ $doc->addStyleSheet($this->helixUltimate->getTemplateUri().'/layout/inc/header_f
     <!-- head -->
     <jdoc:include type="head" />
     <?php
-    $megabgcolor = ($this->helixUltimate->PresetParam('_megabg')) ? $this->helixUltimate->PresetParam('_megabg') : '#ffffff';
-    $megabgtx = ($this->helixUltimate->PresetParam('_megatx')) ? $this->helixUltimate->PresetParam('_megatx') : '#333333';
-
     $preloader_bg = ($this->helixUltimate->getParam('preloader_bg')) ? $this->helixUltimate->getParam('preloader_bg') : '#f5f5f5';
     $preloader_tx = ($this->helixUltimate->getParam('preloader_tx')) ? $this->helixUltimate->getParam('preloader_tx') : '#f5f5f5';
-    // echo $this->params->get('major_color'); die;
     // load css, less and js
     $this->helixUltimate->addCSS('bootstrap.min.css, font-awesome.min.css') // CSS Files
     ->addJS('popper.min.js, bootstrap.min.js, jquery.sticky.js, main.js'); // JS Files
 
     $scssVars = array(
       'preset' => $this->helixUltimate->Preset(),
+      'header_height' => $this->params->get('header_height', '60px'),
+      'text_color' => $this->params->get('text_color'),
       'bg_color' => $this->params->get('bg_color'),
-      'text_color' => $this->params->get('major_color'),
-      'major_color' => $this->params->get('major_color'),
-      'megabg_color' => $megabgcolor,
-      'megatx_color' => $megabgtx,
+      'link_color' => $this->params->get('link_color'),
+      'link_hover_color' => $this->params->get('link_hover_color'),
+      'header_bg_color' => $this->params->get('header_bg_color'),
+      'logo_text_color' => $this->params->get('logo_text_color'),
+      'menu_text_color' => $this->params->get('menu_text_color'),
+      'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
+      'menu_text_active_color' => $this->params->get('menu_text_active_color'),
+      'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
+      'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
+      'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
+      'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
+      'footer_bg_color' => $this->params->get('footer_bg_color'),
+      'footer_text_color' => $this->params->get('footer_text_color'),
+      'footer_link_color' => $this->params->get('footer_link_color'),
+      'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
       'preloader_bg' => $preloader_bg,
       'preloader_tx' => $preloader_tx
     );

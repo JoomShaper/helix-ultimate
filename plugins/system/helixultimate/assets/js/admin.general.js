@@ -118,8 +118,7 @@ jQuery(function($){
             delete datas.preset;
 
             $.each( datas, function( key, value ) {
-                var selector = "input[name*='" + key + "']",
-                    $selector = $( selector );
+                var $selector = $( '#' + key );
 
                 $selector.val(value);
                 $selector.closest('.minicolors-theme-bootstrap').find('.minicolors-swatch-color').css({

@@ -8,7 +8,7 @@
 defined('_JEXEC') or die('Restricted Access');
 
 //helper & model
-$menu_class   = JPATH_ROOT . '/plugins/system/helix3/core/classes/helix3.php';
+$menu_class   = JPATH_ROOT . '/plugins/system/helixultimate/core/classes/helixultimate.php';
 
 if (file_exists($menu_class)) {
     require_once($menu_class);

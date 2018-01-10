@@ -8,12 +8,6 @@
 defined('_JEXEC') or die('Restricted Access');
 
 //helper & model
-$helix3_class   = JPATH_ROOT . '/plugins/system/helix3/core/classes/helix3.php';
-
-if (file_exists($helix3_class)) {
-    require_once($helix3_class);
-}
-
 $layout_path_carea  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 $layout_path_module = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 

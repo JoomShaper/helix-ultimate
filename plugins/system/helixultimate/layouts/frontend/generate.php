@@ -10,12 +10,6 @@ defined('_JEXEC') or die('Restricted Access');
 //
 
 //helper & model
-$menu_class   = JPATH_ROOT . '/plugins/system/helix3/core/classes/helix3.php';
-
-if (file_exists($menu_class)) {
-    require_once($menu_class);
-}
-
 $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 
 $data = $displayData;
@@ -27,11 +21,13 @@ $output .= '<' . $data['sematic'] . ' id="' . $data['id'] . '"' . $data['row_cla
 if ($data['componentArea']){
     if (!$data['pagebuilder']){
         $output .= '<div class="container">';
+        $output .= '<div class="container-inner">';
     }
 }
 else{
     if (!$data['fluidrow']){
         $output .= '<div class="container">';
+        $output .= '<div class="container-inner">';
     }
 }
 
@@ -44,10 +40,12 @@ $output .= $getLayout->render($data);
 if ($data['componentArea']){
     if (!$data['pagebuilder']){
         $output .= '</div>';
+        $output .= '</div>';
     }
 }
 else{
     if (!$data['fluidrow']){
+        $output .= '</div>';
         $output .= '</div>';
     }
 }

@@ -695,13 +695,13 @@ class HelixUltimate{
       $template  = \JFactory::getApplication()->getTemplate();
       $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 
+      $return = false;
+
       if(file_exists($cache_path))
       {
         $cache_file = json_decode(file_get_contents($cache_path));
         $imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
         $vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
-
-        $return = false;
 
         if(array_diff($vars, $existvars))
         {

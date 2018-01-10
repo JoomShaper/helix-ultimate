@@ -41,6 +41,7 @@ web.config.txt
 !/templates/
 /templates/*
 !/templates/shaper_helixultimate
+!/templates/shaper_helixultimate/css/*
 /templates/shaper_helixultimate/css/presets/*
 /templates/shaper_helixultimate/css/template.css
 

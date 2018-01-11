@@ -20,7 +20,7 @@ a:hover, a:focus, a:active {
   color: #25a9e0;
 }
 .sp-megamenu-parent > li.active > a, .sp-megamenu-parent > li.active:hover > a {
-  color: #2643e3;
+  color: #25a9e0;
 }
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a {
   color: #252525;
@@ -29,7 +29,7 @@ a:hover, a:focus, a:active {
   color: #25a9e0;
 }
 .sp-megamenu-parent .sp-dropdown li.sp-menu-item.active > a {
-  color: #e326da;
+  color: #25a9e0;
 }
 .sp-megamenu-parent .sp-mega-group > li > a {
   color: #252525;
@@ -97,7 +97,7 @@ blockquote {
   background: #25a9e0;
 }
 #sp-footer, #sp-bottom {
-  background: #fa0303;
+  background: #171717;
   color: #fff;
 }
 #sp-footer a, #sp-bottom a {

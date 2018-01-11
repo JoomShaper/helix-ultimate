@@ -30,10 +30,6 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 
 	<?php echo JLayoutHelper::render('joomla.content.blog_style_default_item_title', $this->item); ?>
 
-	<?php if ($canEdit || $params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
-		<?php echo JLayoutHelper::render('joomla.content.icons', array('params' => $params, 'item' => $this->item, 'print' => false)); ?>
-	<?php endif; ?>
-
 	<?php // Todo Not that elegant would be nice to group the params ?>
 	<?php $useDefList = ($params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')
 		|| $params->get('show_hits') || $params->get('show_category') || $params->get('show_parent_category') || $params->get('show_author') || $assocParam); ?>

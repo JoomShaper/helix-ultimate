@@ -62,7 +62,7 @@
 .sp-megamenu-parent > li > a, .sp-megamenu-parent > li > span {
   display: inline-block;
   padding: 0 15px;
-  line-height: 80px;
+  line-height: 60px;
   font-size: 14px;
   text-transform: uppercase;
   color: #fff;
@@ -179,7 +179,7 @@
 /*=================  Off Canvas  ===============*/
 #offcanvas-toggler {
   float: right;
-  line-height: 80px;
+  line-height: 60px;
   margin-left: 15px;
   font-size: 20px;
 }
@@ -376,7 +376,7 @@
 .sp-megamenu-parent.menu-slide-down .sp-has-child:hover > .sp-dropdown {
   opacity: 1;
   visibility: visible;
-  top: 80px;
+  top: 60px;
 }
 .sp-megamenu-parent.menu-slide-down .sp-has-child:hover > .sp-dropdown .sp-dropdown {
   top: 0;
@@ -1106,7 +1106,7 @@ ul.social-icons > li a {
   z-index: 99;
 }
 #sp-header {
-  height: 80px;
+  height: 60px;
   left: 0;
   position: relative;
   top: 0;
@@ -1115,9 +1115,10 @@ ul.social-icons > li a {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.10);
 }
 #sp-header .logo {
-  height: 80px;
+  height: 60px;
   display: inline-flex;
   margin: 0;
+  align-items: center;
 }
 #sp-header .logo a {
   font-size: 24px;
@@ -1128,7 +1129,7 @@ ul.social-icons > li a {
 #sp-header .logo p {
   margin: 5px 0 0;
 }
-#sp-header .sp-default-logo-svg {
+#sp-header .sp-default-logo.sp-logo-svg {
   width: 100%;
   height: 100%;
 }
@@ -1246,6 +1247,81 @@ ul.social-icons > li a {
 /* **************************************************** */
 /* ****************   START Module   ****************** */
 /* **************************************************** */
+#sp-left .sp-module, #sp-right .sp-module {
+  margin-top: 50px;
+  border: 1px solid #f3f3f3;
+  padding: 30px;
+  border-radius: 3px;
+}
+#sp-left .sp-module:first-child, #sp-right .sp-module:first-child {
+  margin-top: 0;
+}
+#sp-left .sp-module .sp-module-title, #sp-right .sp-module .sp-module-title {
+  margin: 0 0 30px;
+  padding-bottom: 20px;
+  font-size: 22px;
+  font-weight: 700;
+  border-bottom: 1px solid #f3f3f3;
+}
+#sp-left .sp-module ul, #sp-right .sp-module ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#sp-left .sp-module ul > li, #sp-right .sp-module ul > li {
+  display: block;
+  border-bottom: 1px solid #f3f3f3;
+}
+#sp-left .sp-module ul > li > a, #sp-right .sp-module ul > li > a {
+  display: block;
+  padding: 5px 0;
+  line-height: 36px;
+  padding: 2px 0;
+}
+#sp-left .sp-module ul > li:last-child, #sp-right .sp-module ul > li:last-child {
+  border-bottom: none;
+}
+#sp-left .sp-module .categories-module ul, #sp-right .sp-module .categories-module ul {
+  margin: 0 10px;
+}
+#sp-left .sp-module .latestnews > div, #sp-right .sp-module .latestnews > div {
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #e8e8e8;
+}
+#sp-left .sp-module .latestnews > div:last-child, #sp-right .sp-module .latestnews > div:last-child {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 0;
+}
+#sp-left .sp-module .latestnews > div > a, #sp-right .sp-module .latestnews > div > a {
+  display: block;
+  font-weight: 400;
+}
+#sp-left .sp-module .tagscloud, #sp-right .sp-module .tagscloud {
+  margin: -2px 0;
+}
+#sp-left .sp-module .tagscloud .tag-name, #sp-right .sp-module .tagscloud .tag-name {
+  display: inline-block;
+  padding: 5px 10px;
+  background: #808080;
+  color: #fff;
+  border-radius: 4px;
+  margin: 2px 0;
+}
+#sp-left .sp-module .tagscloud .tag-name span, #sp-right .sp-module .tagscloud .tag-name span {
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
 /* *****************   END:: Module  ****************** */
 /* **************************************************** */
 /* **************   START Login Form   **************** */
@@ -1313,6 +1389,40 @@ ul.social-icons > li a {
 /* **************************************************** */
 /* ******************   START Blog   ****************** */
 /* **************************************************** */
+.blog .item {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #f5f5f5;
+  border-radius: 3px;
+}
+.blog .intro-image {
+  margin: -20px -20px 20px -20px;
+  border-radius: 3px 3px 0 0;
+}
+.blog .intro-image img {
+  border-radius: 3px 3px 0 0;
+}
+.blog .item-content h2 {
+  font-size: 22px;
+}
+.item-page .entry-header {
+  text-align: center;
+}
+.item-page .entry-header h1, .item-page .entry-header h2 {
+  font-size: 56px;
+  margin-bottom: 40px;
+}
+.item-page .article-info {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.item-page .full-image {
+  text-align: center;
+  margin-bottom: 70px;
+}
+.item-page .full-image img {
+  display: inline-block;
+}
 .article-info {
   margin: 0 -8px 5px;
 }
@@ -1734,7 +1844,7 @@ article.item {
 /* ***************   END:: Error Page   *************** */
 /* **************************************************** */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-  #sp-header .sp-default-logo {
+  #sp-header .sp-normal-logo {
     display: none;
   }
   #sp-header .sp-retina-logo {
@@ -1744,7 +1854,7 @@ article.item {
     display: table;
     margin: 0 auto;
   }
-  .sp-comingsoon .comingsoon-page-logo .sp-default-logo {
+  .sp-comingsoon .comingsoon-page-logo .sp-normal-logo {
     display: none;
   }
 }
@@ -2631,7 +2741,7 @@ input[type="text"]:not(.form-control):focus, input[type="email"]:not(.form-contr
 .sp-megamenu-parent > li > a, .sp-megamenu-parent > li > span {
   display: inline-block;
   padding: 0 15px;
-  line-height: 80px;
+  line-height: 60px;
   font-size: 14px;
   text-transform: uppercase;
   color: #fff;
@@ -2748,7 +2858,7 @@ input[type="text"]:not(.form-control):focus, input[type="email"]:not(.form-contr
 /*=================  Off Canvas  ===============*/
 #offcanvas-toggler {
   float: right;
-  line-height: 80px;
+  line-height: 60px;
   margin-left: 15px;
   font-size: 20px;
 }
@@ -2945,7 +3055,7 @@ input[type="text"]:not(.form-control):focus, input[type="email"]:not(.form-contr
 .sp-megamenu-parent.menu-slide-down .sp-has-child:hover > .sp-dropdown {
   opacity: 1;
   visibility: visible;
-  top: 80px;
+  top: 60px;
 }
 .sp-megamenu-parent.menu-slide-down .sp-has-child:hover > .sp-dropdown .sp-dropdown {
   top: 0;

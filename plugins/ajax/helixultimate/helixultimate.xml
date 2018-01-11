@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.8" type="plugin" group="ajax" method="upgrade">
+	<name>Helix Ultimate - Ajax</name>
+	<author>JoomShaper.com</author>
+	<creationDate>Jan 2015</creationDate>
+	<copyright>Copyright (C) 2010 - 2018 JoomShaper. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GPLv2 or later</license>
+	<authorEmail>support@joomshaper.com</authorEmail>
+	<authorUrl>www.joomshaper.com</authorUrl>
+	<version>1.0</version>
+	<description>Helix Ultimate Framework - Joomla Template Framework by JoomShaper</description>
+
+	<files>
+		<filename plugin="helixultimate">helixultimate.php</filename>
+		<folder>classes/</folder>
+	</files>
+</extension>

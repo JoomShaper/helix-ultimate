@@ -10,9 +10,9 @@ defined ('_JEXEC') or die ('Restricted access');
 
 jimport('joomla.form.formfield');
 
-class JFormFieldDetails extends JFormField
+class JFormFieldHelixdetails extends JFormField
 {
-    protected $type = 'Details';
+    protected $type = 'Helixdetails';
 
     protected function getInput()
     {
@@ -22,7 +22,11 @@ class JFormFieldDetails extends JFormField
         $url = 'index.php?option=com_ajax&preview=theme&view=style&id=' . $id;
         $html  = '';
         $html .= '<div class="">';
-        $html .= '<a target="_blank" href="'. $url .'">Go To Builder</a>';
+        $html .= '<a target="_blank" href="'. $url .'" class="helix-ultimate-options"><i class="icon-options"></i> Template Options</a>';
+        $html .= '<style type="text/css">';
+        $html .= '.helix-ultimate-options {background: #05D21F;border-radius: 3px;color:#fff;padding:20px 30px;font-size:16px; font-weight: 700; display: inline-block; margin-top: 10px;}';
+        $html .= '.helix-ultimate-options:hover {text-decoration: none; color: #fff; background: #05BB1B;}';
+        $html .= '</style>';
         $html .= '</div>';
 
         return $html;

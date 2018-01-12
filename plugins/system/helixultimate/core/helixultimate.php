@@ -6,71 +6,53 @@
  * @license   http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
-//no direct accees
 defined('_JEXEC') or die ('resticted aceess');
 
 jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filter.filteroutput');
 
-class HelixUltimate{
-
+class HelixUltimate
+{
     private static $_instance;
-    //private $document;
-    //private $importedFiles = array();
-
     private $load_pos;
 
-    //initialize
-    public function __construct(){
+    public $params;
 
+    private $doc;
+
+    public $app;
+
+    public $template;
+
+    public $template_folder_url;
+
+    private $in_positions = array();
+
+    public $loadFeature = array();
+
+    public function __construct()
+    {
+        $this->app      = JFactory::getApplication();
+        $this->doc      = JFactory::getDocument();
+        $this->template = $this->app->getTemplate(true);
+        $this->params   = $this->template->params->toObject();
+        $this->get_template_uri();
     }
 
-    /**
-     * making self object for singleton method
-     *
-     */
-    final public static function getInstance(){
-        if (!self::$_instance) {
-            self::$_instance = new self();
-            self::getInstance()->getDocument();
-        }
-        return self::$_instance;
-    }
+    public function bodyClass($class = '')
+    {
+        $language  = $this->doc->language;
+        $direction = $this->doc->direction;
+        $option    = str_replace('_', '-', $this->app->input->getCmd('option', ''));
+        $view      = $this->app->input->getCmd('view', '');
+        $layout    = $this->app->input->getCmd('layout', '');
+        $task      = $this->app->input->getCmd('task', '');
+        $itemid    = $this->app->input->getCmd('Itemid', '');
+        $sitename  = $this->app->get('sitename');
 
-    /**
-     * Get Document
-     *
-     * @param string $key
-     */
-    public static function getDocument($key = false){
-        self::getInstance()->document = JFactory::getDocument();
-        $doc = self::getInstance()->document;
-        if (is_string($key)) {
-            return $doc->$key;
-        }
-        return $doc;
-    }
-
-    public static function getParam($key){
-        $params = JFactory::getApplication()->getTemplate(true)->params;
-        return $params->get($key);
-    }
-
-    //Body Class
-    public static function bodyClass($class = ''){
-        $app       = JFactory::getApplication();
-        $doc       = JFactory::getDocument();
-        $language  = $doc->language;
-        $direction = $doc->direction;
-        $option    = str_replace('_', '-', $app->input->getCmd('option', ''));
-        $view      = $app->input->getCmd('view', '');
-        $layout    = $app->input->getCmd('layout', '');
-        $task      = $app->input->getCmd('task', '');
-        $itemid    = $app->input->getCmd('Itemid', '');
-        $sitename  = $app->get('sitename');
-
-        if ($view == 'modules') {
+        if ($view == 'modules')
+        {
             $layout = 'edit';
         }
 
@@ -84,465 +66,350 @@ class HelixUltimate{
             . ($class ? ' ' . $class : '');
     }
 
-    //Get view
-    public static function view($class = ''){
-        $app    = JFactory::getApplication();
-        $view   = $app->input->getCmd('view', '');
-        $layout = $app->input->getCmd('layout', '');
-
-        if (($view == 'modules'))
-        {
-            $layout = 'edit';
-        }
-
-        return $layout;
-    }
-
-    //Get Template name
-    public static function getTemplate()
+    public function add_css($css_files = '', $options = array(), $attribs = array())
     {
-        return JFactory::getApplication()->getTemplate();
+        $files = array(
+                'resource' => $css_files,
+                'options'  => $options,
+                'attribs'  => $attribs
+            );
+
+        $this->put_css_js_file($files,'css');
     }
 
-    //Get Template URI
-    public static function getTemplateUri(){
-        return JURI::base(true) . '/templates/' . self::getTemplate();
+    public function add_js($css_files = '', $options = array(), $attribs = array())
+    {
+        $files = array(
+                'resource' => $css_files,
+                'options'  => $options,
+                'attribs'  => $attribs
+            );
+
+        $this->put_css_js_file($files,'js');
     }
 
-    /**
-     * Get or set Template param. If value not setted params get and return,
-     * else set params
-     *
-     * @param string $name
-     * @param mixed  $value
-     */
-    public static function Param($name = true, $value = null){
-        // if $name = true, this will return all param data
-        if (is_bool($name) and $name == true)
-        {
-            return JFactory::getApplication()->getTemplate(true)->params;
-        }
-        // if $value = null, this will return specific param data
-        if (is_null($value))
-        {
-            return JFactory::getApplication()->getTemplate(true)->params->get($name);
-        }
-        // if $value not = null, this will set a value in specific name.
 
-        $data = JFactory::getApplication()->getTemplate(true)->params->get($name);
+    private function put_css_js_file($files = array(), $file_type = '')
+    {
+        $files_folder_path = JPATH_THEMES . '/' . $this->template->template . '/'. $file_type .'/';
+        $file_list = explode(',',$files['resource']);
 
-        if (is_null($data) or !isset($data))
+        foreach( $file_list as $file )
         {
-            JFactory::getApplication()->getTemplate(true)->params->set($name, $value);
+            if (empty($file)) continue;
+            $file_path = $files_folder_path . $file;
 
-            return $value;
-        }
-        else
-        {
-            return $data;
+            if (!JFile::exists($file_path))
+            {
+                $file_path = $file;
+            }
+
+            if($file_type == 'js')
+            {
+                $this->doc->addScript($file_path, $files['options'], $files['attribs']);
+            }
+            else
+            {
+                $this->doc->addStyleSheet($file_path, $files['options'], $files['attribs']);
+            }
         }
     }
 
-    /**
-     * Importing features
-     *
-     * @access private
-     */
-    private $inPositions = array();
-    public $loadFeature = array();
+    private function get_template_uri()
+    {
+        $this->template_folder_url = JURI::base(true) . '/templates/' . $this->template->template;
+    }
 
-    private static function importFeatures(){
-        $template = \JFactory::getApplication()->getTemplate();
-        $path     = \JPATH_THEMES . '/' . $template . '/features';
-
-        if (file_exists($path)) {
-            $files = \JFolder::files($path, '.php');
-
-            if (count($files)) {
-                foreach ($files as $key => $file) {
+    private function include_features()
+    {
+        $folder_path     = JPATH_THEMES . '/' . $this->template->template . '/features';
+        
+        if (JFile::exists($folder_path))
+        {
+            $files = JFolder::files($folder_path, '.php');
+            if (count($files))
+            {
+                foreach ($files as $key => $file)
+                {
                     include_once $path . '/' . $file;
-                    $name = \JFile::stripExt($file);
 
-                    $class = 'HelixUltimateFeature' . ucfirst($name);
-                    $class = new $class(self::getInstance());
+                    $file_name = JFile::stripExt($file);
+                    $class = 'HelixUltimateFeature' . ucfirst($file_name);
+                    $feature_obj = new $class($this->params);
 
-                    $position = $class->position;
-                    $load_pos = (isset($class->load_pos) && $class->load_pos) ? $class->load_pos : '';
+                    $position = $feature_obj->position;
+                    $load_pos = (isset($feature_obj->load_pos) && $feature_obj->load_pos) ? $feature_obj->load_pos : '';
 
-                    self::getInstance()->inPositions[] = $position;
-
-                    if (!empty($position)) {
-                        self::getInstance()->loadFeature[$position][$key]['feature'] = $class->renderFeature();
-                        self::getInstance()->loadFeature[$position][$key]['load_pos'] = $load_pos;
+                    $this->in_positions[] = $position;
+                    if (!empty($position))
+                    {
+                        $this->loadFeature[$position][$key]['feature'] = $feature_obj->renderFeature();
+                        $this->loadFeature[$position][$key]['load_pos'] = $load_pos;
                     }
                 }
             }
         }
-
-        return self::getInstance();
     }
 
-    public static function generatelayout(){
+    public function render_layout()
+    {
+        $this->add_css('custom.css');
+        $this->add_js('custom.js');
+        $this->include_features();
 
-        self::getInstance()->addCSS('custom.css');
-        self::getInstance()->addJS('custom.js');
+        $layout = (isset($this->params->layout))? $this->params->layout : [];
+        $rows   = json_decode($layout);
 
-        $doc         = JFactory::getDocument();
-        $app         = JFactory::getApplication();
-        $option      = $app->input->getCmd('option', '');
-        $view        = $app->input->getCmd('view', '');
-        $pagebuilder = false;
-
-        if ($option == 'com_sppagebuilder') {
-            $doc->addStylesheet( JURI::base(true) . '/plugins/system/helixultimate/assets/css/pagebuilder.css' );
-            $pagebuilder = true;
-        }
-
-        //Import Features
-        self::importFeatures();
-
-        $params = JFactory::getApplication()->getTemplate(true)->params;
-        $rows   = json_decode($params->get('layout'));
-
-        //die(print_row($rows));
-        //Load from file if not exists in database
-        if (empty($rows)) {
-            $layout_file = JPATH_SITE . '/templates/' . self::getTemplate() . '/layout/default.json';
-            if (!JFile::exists($layout_file)) {
+        if (empty($rows))
+        {
+            $layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/layout/default.json';
+            if (!JFile::exists($layout_file))
+            {
                 die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');
             }
-            $rows = json_decode(JFile::read($layout_file));
+            $layout_data = json_decode(JFile::read($layout_file));
+            $rows = $layout_data->layout;
         }
 
-        $output = '';
-        $output .= self::get_recursive_layout($rows, 1);
+        $output = $this->get_recursive_layout($rows);
         echo $output;
     }
 
-    public static function get_recursive_layout($rows = array(), $row_level){
-        $doc         = JFactory::getDocument();
-        $app         = JFactory::getApplication();
-        $option      = $app->input->getCmd('option', '');
-        $view        = $app->input->getCmd('view', '');
-        $pagebuilder = false;
+    private function get_recursive_layout($rows = array())
+    {
+        if(empty($rows) || !is_array($rows))
+        {
+            return;
+        }
 
-        if ( $option == 'com_sppagebuilder' ) {
+        $option      = $this->app->input->getCmd('option', '');
+        $view        = $this->app->input->getCmd('view', '');
+        $pagebuilder = false;
+        $output = '';
+
+        if ($option == 'com_sppagebuilder')
+        {
             $pagebuilder = true;
         }
 
-        //helper & model
-        $menu_class   = JPATH_ROOT . '/plugins/system/helixultimate/core/classes/menu.php';
-
-        if (file_exists($menu_class)) {
-            require_once($menu_class);
-        }
-        $template       = JFactory::getApplication()->getTemplate();
-        $themepath      = JPATH_THEMES . '/' . $template;
+        $themepath      = JPATH_THEMES . '/' . $this->template->template;
         $carea_file     = $themepath . '/html/layouts/helixultimate/frontend/conponentarea.php';
         $module_file    = $themepath . '/html/layouts/helixultimate/frontend/modules.php';
         $lyt_thm_path   = $themepath . '/html/layouts/helixultimate/';
 
         $layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helixultimate/layouts';
         $layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+        
+        foreach ($rows as $key => $row)
+        {
+            $modified_row = $this->get_current_row($row);
+            $columns = $modified_row->attr;
 
-        $output = '';
-        if (! empty($rows) && count($rows)){
-            foreach ($rows as $key => $row) {
-                //Skip header footer configuration
-                if ( ! empty($row->header)){
-                    break;
+            if ($columns)
+            {
+                $componentArea = false;
+                if (isset($row->attr->has_component) && $row->attr->has_component)
+                {
+                    $componentArea = true;
                 }
 
-                $rowColumns = self::rowColumns($row->attr);
-                if (!empty($rowColumns)) {
-                    $componentArea = false;
-
-                    if (self::hasComponent($rowColumns)) {
-                        $componentArea = true;
-                    }
-
-                    $fluidrow = false;
-                    if (!empty($row->settings->fluidrow)) {
-                        $fluidrow = $row->settings->fluidrow;
-                    }
-
-                    $id = (empty($row->settings->name)) ? 'sp-section-' . ($key + 1) : 'sp-' . JFilterOutput::stringURLSafe($row->settings->name);
-
-                    if ($row_level > 1){
-                        $id = $id.'-'.$row_level;
-                    }
-
-                    $row_class = '';
-
-                    if (!empty($row->settings->custom_class)) {
-                        $row_class .= $row->settings->custom_class;
-                    }
-                    if (!empty($row->settings->hidden_xs)) {
-                        $row_class .= ' hidden-xs';
-                    }
-                    if (!empty($row->settings->hidden_sm)) {
-                        $row_class .= ' hidden-sm';
-                    }
-                    if (!empty($row->settings->hidden_md)) {
-                        $row_class .= ' hidden-md';
-                    }
-                    if ($row_class) {
-                        $row_class = ' class="' . $row_class . '"';
-                    }
-                    else {
-                        $row_class = '';
-                    }
-
-                    //css
-                    $row_css = '';
-
-                    if (!empty($row->settings->background_image)) {
-                        $row_css .= 'background-image:url("' . JURI::base(true) . '/' . $row->settings->background_image . '");';
-                        if (!empty($row->settings->background_repeat)) {
-                            $row_css .= 'background-repeat:' . $row->settings->background_repeat . ';';
-                        }
-                        if (!empty($row->settings->background_size)) {
-                            $row_css .= 'background-size:' . $row->settings->background_size . ';';
-                        }
-                        if (!empty($row->settings->background_attachment)) {
-                            $row_css .= 'background-attachment:' . $row->settings->background_attachment . ';';
-                        }
-                        if (!empty($row->settings->background_position)) {
-                            $row_css .= 'background-position:' . $row->settings->background_position . ';';
-                        }
-                    }
-
-                    if (!empty($row->settings->background_color)) {
-                        $row_css .= 'background-color:' . $row->settings->background_color . ';';
-                    }
-                    if (!empty($row->settings->color)) {
-                        $row_css .= 'color:' . $row->settings->color . ';';
-                    }
-                    if (!empty($row->settings->padding)) {
-                        $row_css .= 'padding:' . $row->settings->padding . ';';
-                    }
-                    if (!empty($row->settings->margin)) {
-                        $row_css .= 'margin:' . $row->settings->margin . ';';
-                    }
-                    if ($row_css) {
-                        $doc->addStyledeclaration('#' . $id . '{ ' . $row_css . ' }');
-                    }
-                    //Link Color
-                    if (!empty($row->settings->link_color)) {
-                        $doc->addStyledeclaration('#' . $id . ' a{color:' . $row->settings->link_color . ';}');
-                    }
-                    //Link Hover Color
-                    if (!empty($row->settings->link_hover_color)) {
-                        $doc->addStyledeclaration('#' . $id . ' a:hover{color:' . $row->settings->link_hover_color . ';}');
-                    }
-
-                    // set html5 stracture
-                    $sematic = (!empty($row->settings->name)) ? strtolower($row->settings->name) : 'section';
-
-                    switch ($sematic) {
-                        case "header":
-                            $sematic = 'header';
-                            break;
-
-                        case "footer":
-                            $sematic = 'footer';
-                            break;
-
-                        default:
-                            $sematic = 'section';
-                            break;
-                    }
-
-                    $data = array(
-                        'sematic' 			=> $sematic,
-                        'id' 				=> $id,
-                        'row_class' 		=> $row_class,
-                        'componentArea' 	=> $componentArea,
-                        'pagebuilder' 		=> $pagebuilder,
-                        'fluidrow' 			=> $fluidrow,
-                        'rowColumns' 		=> $rowColumns,
-                    );
-                    
-                    //overrride missing ;)
-                    $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
-    
-                    $getLayout = new JLayoutFile('frontend.generate', $layout_path );
-                    $output .= $getLayout->render($data);
+                $fluidrow = false;
+                if (isset($row->settings->fluidrow) && $row->settings->fluidrow)
+                {
+                    $fluidrow = $row->settings->fluidrow;
                 }
+
+                $id = (isset($row->settings->name) && $row->settings->name) ? 'sp-section-' . ($key + 1) : 'sp-' . JFilterOutput::stringURLSafe($row->settings->name);
+                $row_class = $this->build_row_class($row->settings);
+                $this->add_row_styles($row->settings, $id);
+                $sematic = (isset($row->settings->name) && $row->settings->name) ? strtolower($row->settings->name) : 'section';
+
+                switch ($sematic) {
+                    case "header":
+                        $sematic = 'header';
+                        break;
+
+                    case "footer":
+                        $sematic = 'footer';
+                        break;
+
+                    default:
+                        $sematic = 'section';
+                        break;
+                }
+
+                $data = array(
+                    'sematic' 			=> $sematic,
+                    'id' 				=> $id,
+                    'row_class' 		=> $row_class,
+                    'componentArea' 	=> $componentArea,
+                    'pagebuilder' 		=> $pagebuilder,
+                    'fluidrow' 			=> $fluidrow,
+                    'rowColumns' 		=> $columns,
+                );
+
+                $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+                $getLayout = new JLayoutFile('frontend.generate', $layout_path );
+                $output .= $getLayout->render($data);
             }
         }
 
         return $output;
     }
 
-    /* Detect component row */
-    private static function hasComponent($rowColumns){
-        $hasComponent = false;
+    private function get_current_row($row)
+    {
+        $inactive_col   = 0; //absence span
+        $has_component  = false;
 
-        foreach ($rowColumns as $key => $column) {
-            if ($column->settings->column_type) { /* Component */
-                $hasComponent = true;
-            }
-        }
-
-        return $hasComponent;
-    }
-
-    //Get Active Columns
-    private static function rowColumns($columns){
-        $doc  = JFactory::getDocument();
-        $cols = array();
-
-        //Inactive
-        $absspan        = 0; //   absence span
-        $col_i          = 1;
-        $totalPublished = count($columns); // total publish children
-        $hasComponent   = false;
-
-        foreach ($columns as &$column) {
-
-            $column->settings->name         = (!empty($column->settings->name)) ? $column->settings->name : 'none_empty';
-            $column->settings->column_type  = (!empty($column->settings->column_type)) ? $column->settings->column_type : 0;
-            $column->settings->custom_class = (!empty($column->settings->custom_class)) ? $column->settings->custom_class : '';
-
-            if (!$column->settings->column_type) {
-                if (!self::countModules($column->settings->name)) {
-                    $col_xs_no = $column->settings->grid_size;
-                    $absspan += $col_xs_no;
-                    $totalPublished--;
+        foreach ($row->attr as $key => &$column)
+        {
+            if (!$column->settings->column_type)
+            {
+                if (!$this->count_modules($column->settings->name))
+                {
+                    $inactive_col += $column->settings->grid_size;
+                    unset($row->attr[$key]);
                 }
             }
             else
             {
-                $hasComponent = true;
+                $row->has_component = true;
+                $has_component = true;
             }
         }
 
-        //Active
-        foreach ($columns as &$column) {
-            //print_r($column->attr);
-            $col_xs_no = $column->settings->grid_size;
-
-            if ($column->settings->column_type) {
-                $column->className = 'col-md-' . ($col_xs_no + $absspan) . ' col-lg-' . ($col_xs_no + $absspan);
-                $cols[]            = $column;
-                $col_i++;
+        foreach ($row->attr as &$column)
+        {
+            $col_grid_size = $column->settings->grid_size;
+            if (!$has_component && end($row->attr) === $column)
+            {
+                $col_grid_size = $col_grid_size + $inactive_col;
             }
-            else {
 
-                if (self::countModules($column->settings->name)) {
-                    $last_col = ($totalPublished == $col_i) ? $absspan : 0;
-                    $col_grid = $column->settings->grid_size;
-                    if ($hasComponent) {
-                        $column->className = 'col-md-' . $col_grid . ' col-lg-' . $col_grid;
-                    }
-                    else {
-                        $column->className = 'col-md-' . ($col_grid + $last_col) . ' col-lg-' . ($col_grid + $last_col);
-                    }
-
-                    $cols[] = $column;
-                    $col_i++;
-                }
+            if ($column->settings->column_type)
+            {
+                $col_grid_size = $col_grid_size + $inactive_col;
+                $column->className = 'col-md-' . $col_grid_size . ' col-lg-' . $col_grid_size;
+            }
+            else
+            {
+                $column->className = 'col-md-' . $col_grid_size . ' col-lg-' . $col_grid_size;
             }
         }
 
-        return $cols;
+        return $row;
     }
 
-    //Count Modules
-    public static function countModules($position){
-        $doc = JFactory::getDocument();
-        return ($doc->countModules($position) or self::hasFeature($position));
+    private function add_row_styles($options, $id)
+    {
+        $row_css = '';
+        
+        if (isset($options->background_image) && $options->background_image)
+        {
+            $row_css .= 'background-image:url("' . JURI::base(true) . '/' . $options->background_image . '");';
+            if (isset($options->background_repeat) && $options->background_repeat)
+            {
+                $row_css .= 'background-repeat:' . $options->background_repeat . ';';
+            }
+
+            if (isset($options->background_size) && $options->background_size)
+            {
+                $row_css .= 'background-size:' . $options->background_size . ';';
+            }
+
+            if (isset($options->background_attachment) && $options->background_attachment)
+            {
+                $row_css .= 'background-attachment:' . $options->background_attachment . ';';
+            }
+
+            if (isset($options->background_position) && $options->background_position)
+            {
+                $row_css .= 'background-position:' . $options->background_position . ';';
+            }
+        }
+
+        if (isset($options->background_color) && $options->background_color)
+        {
+            $row_css .= 'background-color:' . $options->background_color . ';';
+        }
+
+        if (isset($options->color) && $options->color)
+        {
+            $row_css .= 'color:' . $options->color . ';';
+        }
+        
+        if (isset($options->padding) && $options->padding)
+        {
+            $row_css .= 'padding:' . $options->padding . ';';
+        }
+        if (isset($options->margin) && $options->margin)
+        {
+            $row_css .= 'margin:' . $options->margin . ';';
+        }
+
+        if ($row_css)
+        {
+            $doc->addStyledeclaration('#' . $id . '{ ' . $row_css . ' }');
+        }
+        
+
+        if (isset($options->link_color) && $options->link_color)
+        {
+            $doc->addStyledeclaration('#' . $id . ' a{color:' . $options->link_color . ';}');
+        }
+        
+        if (isset($options->link_hover_color) && $options->link_hover_color) {
+            $doc->addStyledeclaration('#' . $id . ' a:hover{color:' . $options->link_hover_color . ';}');
+        }
     }
 
-    /**
-     * Has feature
-     *
-     * @param string $position
-     */
+    private function build_row_class($options)
+    {
+        $row_class = '';
+        if (isset($options->custom_class) && $options->custom_class)
+        {
+            $row_class .= $options->custom_class;
+        }
 
-    public static function hasFeature($position){
-        if (in_array($position, self::getInstance()->inPositions)) {
+        if (isset($options->hidden_xs) && $options->hidden_xs)
+        {
+            $row_class .= ' hidden-xs';
+        }
+
+        if (isset($options->hidden_sm) && $options->hidden_sm)
+        {
+            $row_class .= ' hidden-sm';
+        }
+
+        if (isset($options->hidden_md) && $options->hidden_md)
+        {
+            $row_class .= ' hidden-md';
+        }
+
+
+        if($row_class)
+        {
+            $row_class = 'class="' . $row_class . '"';
+        }
+
+        return $row_class;
+    }
+
+    public function count_modules($position)
+    {
+        return ($this->doc->countModules($position) or $this->has_feature($position));
+    }
+
+    private function has_feature($position)
+    {
+        if (in_array($position, $this->in_positions))
+        {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
-    /**
-     * Add stylesheet
-     *
-     * @param mixed $sources . string or array
-     *
-     * @return self
-     */
-    public static function addCSS($sources, $attribs = array()){
-        $template = JFactory::getApplication()->getTemplate();
-        $path     = JPATH_THEMES . '/' . $template . '/css/';
-
-        $srcs = array();
-
-        if (is_string($sources)) {
-            $sources = explode(',', $sources);
-        }
-        if (!is_array($sources)) {
-            $sources = array($sources);
-        }
-
-        foreach ((array) $sources as $source)
-            $srcs[] = trim($source);
-
-        foreach ($srcs as $src) {
-            if (file_exists($path . $src)) {
-                self::getInstance()->document->addStyleSheet(JURI::base(true) . '/templates/' . $template . '/css/' . $src, 'text/css', null, $attribs);
-            }
-            else {
-                if ($src != 'custom.css') {
-                    self::getInstance()->document->addStyleSheet($src, 'text/css', null, $attribs);
-                }
-            }
-        }
-
-        return self::getInstance();
-    }
-
-    /**
-     * Add javascript
-     *
-     * @param mixed  $sources   . string or array
-     * @param string $seperator . default is , (comma)
-     *
-     * @return self
-     */
-    public static function addJS($sources, $seperator = ','){
-        $srcs = array();
-
-        $template = JFactory::getApplication()->getTemplate();
-        $path     = JPATH_THEMES . '/' . $template . '/js/';
-
-        if (is_string($sources)) {
-            $sources = explode($seperator, $sources);
-        }
-        if (!is_array($sources)) {
-            $sources = array($sources);
-        }
-
-        foreach ((array) $sources as $source)
-            $srcs[] = trim($source);
-
-        foreach ($srcs as $src) {
-            if (file_exists($path . $src)) {
-                self::getInstance()->document->addScript(JURI::base(true) . '/templates/' . $template . '/js/' . $src);
-            } else {
-                if ($src != 'custom.js')
-                {
-                    self::getInstance()->document->addScript($src);
-                }
-            }
-        }
-
-        return self::getInstance();
-    }
 
     /**
      * Add Inline Javascript

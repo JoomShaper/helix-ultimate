@@ -8,7 +8,6 @@
 
 defined('_JEXEC') or die('Restricted Access');
 
-
 $options = $displayData->settings;
 
 $output ='';

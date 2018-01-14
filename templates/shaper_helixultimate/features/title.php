@@ -10,10 +10,9 @@ defined ('_JEXEC') or die('resticted aceess');
 
 class HelixUltimateFeatureTitle {
 
-	private $helixUltimate;
+	private $params;
 
-	public function __construct($helixUltimate){
-		$this->helixUltimate = $helixUltimate;
+	public function __construct($params){
 		$this->position = 'title';
 	}
 

@@ -40,13 +40,12 @@ foreach ($data['rowColumns'] as $key => $column){
         $column->className = $column->className . ' hidden-xs';
     }
     //End Responsive Utilities
-
+    $column->hasFeature = $data['loadFeature'];
     if ($column->settings->column_type){ //Component
         $getLayout = new JLayoutFile('frontend.conponentarea', $layout_path_carea );
         $output .= $getLayout->render($column);
     }
     else { // Module
-
         $getLayout = new JLayoutFile('frontend.modules', $layout_path_module );
         $output .= $getLayout->render($column);
     }

@@ -10,32 +10,32 @@ defined ('_JEXEC') or die('resticted aceess');
 
 class HelixUltimateFeatureSocial {
 
-	private $helixUltimate;
+	private $params;
 	public $position;
 
-	public function __construct( $helixUltimate ){
-		$this->helixUltimate = $helixUltimate;
-		$this->position = $this->helixUltimate->getParam('social_position');
-		$this->load_pos = $this->helixUltimate->getParam('social_load_pos');
+	public function __construct( $params ){
+		$this->params = $params;
+		$this->position = $this->params->social_position;
+		$this->load_pos = $this->params->social_load_pos;
 	}
 
 	public function renderFeature() {
 
-		$facebook 	= $this->helixUltimate->getParam('facebook');
-		$twitter  	= $this->helixUltimate->getParam('twitter');
-		$googleplus = $this->helixUltimate->getParam('googleplus');
-		$pinterest 	= $this->helixUltimate->getParam('pinterest');
-		$youtube 		= $this->helixUltimate->getParam('youtube');
-		$linkedin 	= $this->helixUltimate->getParam('linkedin');
-		$dribbble 	= $this->helixUltimate->getParam('dribbble');
-		$behance 		= $this->helixUltimate->getParam('behance');
-		$skype 			= $this->helixUltimate->getParam('skype');
-		$whatsapp 	= $this->helixUltimate->getParam('whatsapp');
-		$flickr 		= $this->helixUltimate->getParam('flickr');
-		$vk 				= $this->helixUltimate->getParam('vk');
-		$custom 		= $this->helixUltimate->getParam('custom');
+		$facebook 	= $this->params->facebook;
+		$twitter  	= $this->params->twitter;
+		$googleplus = $this->params->googleplus;
+		$pinterest 	= $this->params->pinterest;
+		$youtube 	= $this->params->youtube;
+		$linkedin 	= $this->params->linkedin;
+		$dribbble 	= $this->params->dribbble;
+		$behance 	= $this->params->behance;
+		$skype 		= $this->params->skype;
+		$whatsapp 	= $this->params->whatsapp;
+		$flickr 	= $this->params->flickr;
+		$vk 		= $this->params->vk;
+		$custom 	= $this->params->custom;
 
-		if( $this->helixUltimate->getParam('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
+		if( $this->params->show_social_icons && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
 			$html  = '<ul class="social-icons">';
 
 			if( $facebook ) {

@@ -14,9 +14,6 @@ jimport('joomla.filter.filteroutput');
 
 class HelixUltimate
 {
-    private static $_instance;
-    private $load_pos;
-
     public $params;
 
     private $doc;
@@ -77,10 +74,10 @@ class HelixUltimate
         $this->put_css_js_file($files,'css');
     }
 
-    public function add_js($css_files = '', $options = array(), $attribs = array())
+    public function add_js($js_files = '', $options = array(), $attribs = array())
     {
         $files = array(
-                'resource' => $css_files,
+                'resource' => $js_files,
                 'options'  => $options,
                 'attribs'  => $attribs
             );
@@ -97,20 +94,25 @@ class HelixUltimate
         foreach( $file_list as $file )
         {
             if (empty($file)) continue;
+            $file = trim($file);
             $file_path = $files_folder_path . $file;
 
-            if (!JFile::exists($file_path))
+            if (JFile::exists($file_path))
             {
-                $file_path = $file;
+                $file_url = JURI::base(true) . '/templates/' . $this->template->template . '/'. $file_type .'/' . $file;
+            }
+            else
+            {
+                $file_url = $file;
             }
 
             if($file_type == 'js')
             {
-                $this->doc->addScript($file_path, $files['options'], $files['attribs']);
+                $this->doc->addScript($file_url, $files['options'], $files['attribs']);
             }
             else
             {
-                $this->doc->addStyleSheet($file_path, $files['options'], $files['attribs']);
+                $this->doc->addStyleSheet($file_url, $files['options'], $files['attribs']);
             }
         }
     }
@@ -123,20 +125,20 @@ class HelixUltimate
     private function include_features()
     {
         $folder_path     = JPATH_THEMES . '/' . $this->template->template . '/features';
-        
-        if (JFile::exists($folder_path))
+
+        if (JFolder::exists($folder_path))
         {
             $files = JFolder::files($folder_path, '.php');
+
             if (count($files))
             {
                 foreach ($files as $key => $file)
                 {
-                    include_once $path . '/' . $file;
+                    include_once $folder_path . '/' . $file;
 
                     $file_name = JFile::stripExt($file);
                     $class = 'HelixUltimateFeature' . ucfirst($file_name);
                     $feature_obj = new $class($this->params);
-
                     $position = $feature_obj->position;
                     $load_pos = (isset($feature_obj->load_pos) && $feature_obj->load_pos) ? $feature_obj->load_pos : '';
 
@@ -172,6 +174,7 @@ class HelixUltimate
         }
 
         $output = $this->get_recursive_layout($rows);
+
         echo $output;
     }
 
@@ -199,7 +202,7 @@ class HelixUltimate
 
         $layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helixultimate/layouts';
         $layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT .'/plugins/system/helixultimate/layouts';
-        
+
         foreach ($rows as $key => $row)
         {
             $modified_row = $this->get_current_row($row);
@@ -246,6 +249,7 @@ class HelixUltimate
                     'pagebuilder' 		=> $pagebuilder,
                     'fluidrow' 			=> $fluidrow,
                     'rowColumns' 		=> $columns,
+                    'loadFeature'       => $this->loadFeature
                 );
 
                 $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
@@ -304,7 +308,7 @@ class HelixUltimate
     private function add_row_styles($options, $id)
     {
         $row_css = '';
-        
+
         if (isset($options->background_image) && $options->background_image)
         {
             $row_css .= 'background-image:url("' . JURI::base(true) . '/' . $options->background_image . '");';
@@ -338,7 +342,7 @@ class HelixUltimate
         {
             $row_css .= 'color:' . $options->color . ';';
         }
-        
+
         if (isset($options->padding) && $options->padding)
         {
             $row_css .= 'padding:' . $options->padding . ';';
@@ -352,13 +356,13 @@ class HelixUltimate
         {
             $doc->addStyledeclaration('#' . $id . '{ ' . $row_css . ' }');
         }
-        
+
 
         if (isset($options->link_color) && $options->link_color)
         {
             $doc->addStyledeclaration('#' . $id . ' a{color:' . $options->link_color . ';}');
         }
-        
+
         if (isset($options->link_hover_color) && $options->link_hover_color) {
             $doc->addStyledeclaration('#' . $id . ' a:hover{color:' . $options->link_hover_color . ';}');
         }
@@ -463,7 +467,7 @@ class HelixUltimate
         return new Leafo\ScssPhp\Compiler();
     }
 
-    public static function addSCSS($scss, $vars = array(), $css = '')
+    public function addSCSS($scss, $vars = array(), $css = '')
     {
       jimport('joomla.filesystem.file');
       $scss = \JFile::stripExt($scss);
@@ -477,7 +481,7 @@ class HelixUltimate
         $css = $scss . '.css';
       }
 
-      $needsCompile = self::needScssCompile($scss, $vars);
+      $needsCompile = $this->needScssCompile($scss, $vars);
       if($needsCompile) {
         $scssInit = self::scssInit();
         $template  = \JFactory::getApplication()->getTemplate();
@@ -504,10 +508,10 @@ class HelixUltimate
         }
       }
 
-      self::addCSS($css);
+      $this->add_css($css);
     }
 
-    private static function needScssCompile($scss, $existvars = array())
+    private function needScssCompile($scss, $existvars = array())
     {
       $template  = \JFactory::getApplication()->getTemplate();
       $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
@@ -559,37 +563,6 @@ class HelixUltimate
         {
             setcookie($name, '', time() - 3600, '/');
         }
-    }
-
-    /**
-     * Preset
-     *
-     */
-    public static function Preset(){
-        $template = JFactory::getApplication()->getTemplate();
-        $name     = $template . '_preset';
-
-        if (isset($_COOKIE[$name])) {
-            $current = $_COOKIE[$name];
-        }
-        else {
-            $current = self::getParam('preset');
-        }
-        return $current;
-    }
-
-    public static function PresetParam($name){
-        return self::getParam(self::getInstance()->Preset() . $name);
-    }
-
-    /**
-     * Load Menu
-     *
-     * @since    1.0
-     */
-    public static function loadMegaMenu($class = "", $name = ''){
-        require_once __DIR__ . '/classes/menu.php';
-        return new Helix3Menu($class, $name);
     }
 
 
@@ -750,7 +723,7 @@ class HelixUltimate
         $cachetime = $app->get('cachetime', 15);
 
         $all_scripts  = $doc->_scripts;
-        $cache_path   = JPATH_CACHE . '/com_templates/templates/' . self::getTemplate();
+        $cache_path   = JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
         $scripts      = array();
         $root_url     = JURI::root(true);
         $minifiedCode = '';
@@ -793,7 +766,7 @@ class HelixUltimate
                         JFile::write($file, $minifiedCode);
                     }
                 }
-                $doc->addScript(JURI::base(true) . '/cache/com_templates/templates/' . self::getTemplate() . '/' . md5($md5sum) . '.js');
+                $doc->addScript(JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
             }
         }
 
@@ -810,7 +783,7 @@ class HelixUltimate
         $app             = JFactory::getApplication();
         $cachetime       = $app->get('cachetime', 15);
         $all_stylesheets = $doc->_styleSheets;
-        $cache_path      = JPATH_CACHE . '/com_templates/templates/' . self::getTemplate();
+        $cache_path      = JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
         $stylesheets     = array();
         $root_url        = JURI::root(true);
         $minifiedCode    = '';
@@ -871,7 +844,7 @@ class HelixUltimate
                         JFile::write($file, $minifiedCode);
                     }
                 }
-                $doc->addStylesheet(JURI::base(true) . '/cache/com_templates/templates/' . self::getTemplate() . '/' . md5($md5sum) . '.css');
+                $doc->addStylesheet(JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
             }
         }
 

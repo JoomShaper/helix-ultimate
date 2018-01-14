@@ -1,7 +1,7 @@
 /**
-* @package Helix3 Framework
+* @package Helix Ultimate Framework
 * @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2010 - 2015 JoomShaper
+* @copyright Copyright (c) 2010 - 2018 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -9,33 +9,10 @@ jQuery(function($){
     "use strict";
 
     // Swicther
-    $('.radio-group').each(function( index ) {
-      $(this).find('input').wrapAll( "<span class='helix-ultimate-switcher switcher' />");
-      $(this).find('.helix-ultimate-switcher').append('<span class="switch"></span>')
-      $(this).find('label').wrapAll( "<span class='switcher-labels' />");
-
-      var inputs = $('.helix-ultimate-switcher').find('input');
-
-      if(inputs.last().is(":checked")) {
-        $(this).find('.helix-ultimate-switcher').addClass('active');
-        $(this).find('.switcher-labels').find('label').removeClass().last().addClass('active');
-      } else {
-        $(this).find('.switcher-labels').find('label').removeClass().first().addClass('active');
-      }
-
-      $(this).on('click', function(event) {
-        $(this).find('.helix-ultimate-switcher').toggleClass('active');
-        if($(this).find('.helix-ultimate-switcher').hasClass('active')) {
-          inputs.last().prop('checked', true);
-          $(this).find('.switcher-labels').find('label').removeClass().last().addClass('active');
-        } else {
-          inputs.first().prop('checked', true);
-          $(this).find('.switcher-labels').find('label').removeClass().first().addClass('active');
-        }
-      });
-
+    $('#helix-ultimate-style-form').find('input[type="checkbox"]').each(function( index ) {
+      var $this = $(this);
+      $this.closest('.control-group').addClass('control-group-checkbox');
     });
-
 
     $('.helix-ultimate-fieldset-header-inner').on('click',function(e){
         e.preventDefault();

@@ -17,8 +17,7 @@ class HelixUltimateFeatureLogo {
 	public function __construct( $helixUltimate )
 	{
 		$this->helixUltimate = $helixUltimate;
-		$this->position = $this->helixUltimate->getParam('logo_position', 'logo');
-		$this->load_pos = $this->helixUltimate->getParam('logo_load_pos');
+		$this->position = 'logo';
 	}
 
 	public function renderFeature()
@@ -92,13 +91,13 @@ class HelixUltimateFeatureLogo {
 
 		} else {
 			if( $this->helixUltimate->getParam('logo_text') ) {
-				$html .= '<h1 class="logo"> <a href="' . \JURI::base(true) . '/">' . $this->helixUltimate->getParam('logo_text') . '</a></h1>';
+				$html .= '<span class="logo"><a href="' . \JURI::base(true) . '/">' . $this->helixUltimate->getParam('logo_text') . '</a></span>';
 			} else {
-				$html .= '<h1 class="logo"> <a href="' . \JURI::base(true) . '/">' . $sitename . '</a></h1>';
+				$html .= '<span class="logo"><a href="' . \JURI::base(true) . '/">' . $sitename . '</a></span>';
 			}
 
 			if( $this->helixUltimate->getParam('logo_slogan') ) {
-				$html .= '<p class="logo-slogan">' . $this->helixUltimate->getParam('logo_slogan') . '</p>';
+				$html .= '<span class="logo-slogan">' . $this->helixUltimate->getParam('logo_slogan') . '</span>';
 			}
 		}
 

@@ -14,6 +14,9 @@ jimport( 'joomla.filesystem.file' );
 jimport('joomla.filesystem.folder');
 require_once __DIR__.'/helix-ult-model.php';
 
+\JHtml::_('jquery.framework');
+\JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
+
 use Joomla\CMS\Form as JoomlaForm;
 use HelixULT\Model\HelixUltModel as HelixUltModel;
 
@@ -143,8 +146,15 @@ class SPOptions{
 
     private function renderInputField($field = '', $group = '')
     {
+
+        $showon = $field->getAttribute('showon');
+        $attribs = '';
+        if($showon) {
+          $attribs .= ' data-showon=\'' . json_encode(self::parseShowOnConditions($showon)) . '\'';
+        }
+
         $field_html = '';
-        $field_html .= '<div class="control-group ' . (( $group ) ? 'group-style-'.$group : '') . '">';
+        $field_html .= '<div class="control-group ' . (( $group ) ? 'group-style-'.$group : '') . '"'. $attribs .'>';
         if(!$field->getAttribute('hideLabel')) {
           $field_html .= '<div class="control-label">' . $field->label .'</div>';
         }
@@ -158,4 +168,63 @@ class SPOptions{
 
         return $field_html;
     }
+
+    public static function parseShowOnConditions($showOn, $formControl = null, $group = null)
+  	{
+  		// Process the showon data.
+  		if (!$showOn)
+  		{
+  			return array();
+  		}
+
+  		$formPath = $formControl ?: '';
+
+  		if ($group)
+  		{
+  			$groups = explode('.', $group);
+
+  			// An empty formControl leads to invalid shown property
+  			// Use the 1st part of the group instead to avoid.
+  			if (empty($formPath) && isset($groups[0]))
+  			{
+  				$formPath = $groups[0];
+  				array_shift($groups);
+  			}
+
+  			foreach ($groups as $group)
+  			{
+  				$formPath .= '[' . $group . ']';
+  			}
+  		}
+
+  		$showOnData  = array();
+  		$showOnParts = preg_split('#(\[AND\]|\[OR\])#', $showOn, -1, PREG_SPLIT_DELIM_CAPTURE);
+  		$op          = '';
+
+  		foreach ($showOnParts as $showOnPart)
+  		{
+  			if (($showOnPart === '[AND]') || $showOnPart === '[OR]')
+  			{
+  				$op = trim($showOnPart, '[]');
+  				continue;
+  			}
+
+  			$compareEqual     = strpos($showOnPart, '!:') === false;
+  			$showOnPartBlocks = explode(($compareEqual ? ':' : '!:'), $showOnPart, 2);
+
+  			$showOnData[] = array(
+  				'field'  => $formPath ? $formPath . '[' . $showOnPartBlocks[0] . ']' : $showOnPartBlocks[0],
+  				'values' => explode(',', $showOnPartBlocks[1]),
+  				'sign'   => $compareEqual === true ? '=' : '!=',
+  				'op'     => $op,
+  			);
+
+  			if ($op !== '')
+  			{
+  				$op = '';
+  			}
+  		}
+
+  		return $showOnData;
+  	}
 }

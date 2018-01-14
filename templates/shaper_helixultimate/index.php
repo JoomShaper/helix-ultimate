@@ -28,7 +28,9 @@ if (file_exists($helix_path)) {
 
 //Coming Soon
 if ($this->helixUltimate->getParam('comingsoon_mode'))
-    header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
+{
+  header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
+}
 
 //Class Classes
 $body_classes = '';
@@ -125,7 +127,6 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" amp>
 <head>
     <link rel="canonical" href="<?php echo JUri::current(); ?>">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -205,7 +206,6 @@ if ( ! empty($selected_footer)){
 }
 
 ?>
-
 
 <!-- Off Canvas Menu -->
 <div class="offcanvas-menu">

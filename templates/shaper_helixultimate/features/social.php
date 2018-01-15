@@ -11,31 +11,30 @@ defined ('_JEXEC') or die('resticted aceess');
 class HelixUltimateFeatureSocial {
 
 	private $params;
-	public $position;
 
 	public function __construct( $params ){
 		$this->params = $params;
-		$this->position = $this->params->social_position;
-		$this->load_pos = $this->params->social_load_pos;
+		$this->position = $this->params->get('social_position');
+		$this->load_pos = $this->params->get('social_load_pos');
 	}
 
 	public function renderFeature() {
 
-		$facebook 	= $this->params->facebook;
-		$twitter  	= $this->params->twitter;
-		$googleplus = $this->params->googleplus;
-		$pinterest 	= $this->params->pinterest;
-		$youtube 	= $this->params->youtube;
-		$linkedin 	= $this->params->linkedin;
-		$dribbble 	= $this->params->dribbble;
-		$behance 	= $this->params->behance;
-		$skype 		= $this->params->skype;
-		$whatsapp 	= $this->params->whatsapp;
-		$flickr 	= $this->params->flickr;
-		$vk 		= $this->params->vk;
-		$custom 	= $this->params->custom;
+		$facebook 	= $this->params->get('facebook');
+		$twitter  	= $this->params->get('twitter');
+		$googleplus = $this->params->get('googleplus');
+		$pinterest 	= $this->params->get('pinterest');
+		$youtube 	= $this->params->get('youtube');
+		$linkedin 	= $this->params->get('linkedin');
+		$dribbble 	= $this->params->get('dribbble');
+		$behance 	= $this->params->get('behance');
+		$skype 		= $this->params->get('skype');
+		$whatsapp 	= $this->params->get('whatsapp');
+		$flickr 	= $this->params->get('flickr');
+		$vk 		= $this->params->get('vk');
+		$custom 	= $this->params->get('custom');
 
-		if( $this->params->show_social_icons && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
+		if( $this->params->get('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
 			$html  = '<ul class="social-icons">';
 
 			if( $facebook ) {

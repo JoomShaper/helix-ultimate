@@ -14,17 +14,17 @@ class HelixUltimateFeatureFooter {
 
 	public function __construct($params){
 		$this->params = $params;
-		$this->position = $this->params->copyright_position;
-		$this->load_pos = $this->params->copyright_load_pos;
+		$this->position = $this->params->get('copyright_position');
+		$this->load_pos = $this->params->get('copyright_load_pos');
 	}
 
 	public function renderFeature() {
 
-		if($this->params->enabled_copyright) {
+		if($this->params->get('enabled_copyright')) {
 			$output = '';
 			//Copyright
-			if($this->params->copyright) {
-				$output .= '<span class="sp-copyright">' . str_ireplace('{year}',date('Y'), $this->params->copyright ). '</span>';
+			if( $this->params->get('copyright') ) {
+				$output .= '<span class="sp-copyright">' . str_ireplace('{year}',date('Y'), $this->params->get('copyright')) . '</span>';
 			}
 
 			return $output;

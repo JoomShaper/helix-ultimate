@@ -18,7 +18,7 @@ $col_class_name = 'col-md-' . $grid_size . ' col-lg-' . $grid_size;
 
 $output .= '<div id="sp-' . JFilterOutput::stringURLSafe($options->name) . '" class="'. $col_class_name .'">';
 $output .= '<div class="sp-column ' . ($options->custom_class) . '">';
-$features = ($data->hasFeature[$options->name])? $data->hasFeature[$options->name] : array();
+$features = (isset($data->hasFeature[$options->name]) && $data->hasFeature[$options->name])? $data->hasFeature[$options->name] : array();
 
     foreach ($features as $key => $feature)
     {

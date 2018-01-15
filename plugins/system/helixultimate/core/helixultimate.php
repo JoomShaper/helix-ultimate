@@ -33,7 +33,7 @@ class HelixUltimate
         $this->app      = JFactory::getApplication();
         $this->doc      = JFactory::getDocument();
         $this->template = $this->app->getTemplate(true);
-        $this->params   = $this->template->params->toObject();
+        $this->params   = $this->template->params;
         $this->get_template_uri();
     }
 
@@ -101,9 +101,13 @@ class HelixUltimate
             {
                 $file_url = JURI::base(true) . '/templates/' . $this->template->template . '/'. $file_type .'/' . $file;
             }
-            else
+            else if (JFile::exists($file))
             {
                 $file_url = $file;
+            }
+            else
+            {
+                continue;
             }
 
             if($file_type == 'js')
@@ -159,7 +163,7 @@ class HelixUltimate
         $this->add_js('custom.js');
         $this->include_features();
 
-        $layout = (isset($this->params->layout))? $this->params->layout : [];
+        $layout = ($this->params->get('layout'))? $this->params->get('layout') : [];
         $rows   = json_decode($layout);
 
         if (empty($rows))
@@ -211,21 +215,22 @@ class HelixUltimate
             if ($columns)
             {
                 $componentArea = false;
-                if (isset($row->attr->has_component) && $row->attr->has_component)
+                
+                if (isset($modified_row->has_component) && $modified_row->has_component)
                 {
                     $componentArea = true;
                 }
 
                 $fluidrow = false;
-                if (isset($row->settings->fluidrow) && $row->settings->fluidrow)
+                if (isset($modified_row->settings->fluidrow) && $modified_row->settings->fluidrow)
                 {
-                    $fluidrow = $row->settings->fluidrow;
+                    $fluidrow = $modified_row->settings->fluidrow;
                 }
 
-                $id = (isset($row->settings->name) && $row->settings->name) ? 'sp-section-' . ($key + 1) : 'sp-' . JFilterOutput::stringURLSafe($row->settings->name);
-                $row_class = $this->build_row_class($row->settings);
-                $this->add_row_styles($row->settings, $id);
-                $sematic = (isset($row->settings->name) && $row->settings->name) ? strtolower($row->settings->name) : 'section';
+                $id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-section-' . ($key + 1) : 'sp-' . JFilterOutput::stringURLSafe($modified_row->settings->name);
+                $row_class = $this->build_row_class($modified_row->settings);
+                $this->add_row_styles($modified_row->settings, $id);
+                $sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
 
                 switch ($sematic) {
                     case "header":
@@ -423,8 +428,7 @@ class HelixUltimate
      * @return self
      */
     public function addInlineJS($code){
-        self::getInstance()->document->addScriptDeclaration($code);
-        return self::getInstance();
+        $this->doc->addScriptDeclaration($code);
     }
 
     /**
@@ -435,11 +439,10 @@ class HelixUltimate
      * @return self
      */
     public function addInlineCSS($code){
-        self::getInstance()->document->addStyleDeclaration($code);
-        return self::getInstance();
+        $this->doc->addStyleDeclaration($code);
     }
 
-    public static function scssInit()
+    public function scssInit()
     {
         include_once __DIR__ . '/classes/scss/Base/Range.php';
         include_once __DIR__ . '/classes/scss/Block.php';
@@ -469,52 +472,51 @@ class HelixUltimate
 
     public function addSCSS($scss, $vars = array(), $css = '')
     {
-      jimport('joomla.filesystem.file');
-      $scss = \JFile::stripExt($scss);
+        $scss = JFile::stripExt($scss);
 
-      if(!empty($css))
-      {
-        $css = \JFile::stripExt($css) . '.css';
-      }
-      else
-      {
-        $css = $scss . '.css';
-      }
-
-      $needsCompile = $this->needScssCompile($scss, $vars);
-      if($needsCompile) {
-        $scssInit = self::scssInit();
-        $template  = \JFactory::getApplication()->getTemplate();
-        $scss_path = \JPATH_THEMES . '/' . $template . '/scss';
-        $css_path = \JPATH_THEMES . '/' . $template . '/css';
-
-        if(file_exists($scss_path . '/'. $scss . '.scss'))
+        if(!empty($css))
         {
-          $out = $css_path . '/' . $css;
-          $scssInit->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
-          $scssInit->setImportPaths($scss_path);
-          if(count($vars))
-          {
-            $scssInit->setVariables($vars);
-          }
-          $compiledCss = $scssInit->compile('@import "'. $scss .'.scss"');
-          \JFile::write($out, $compiledCss);
-
-          $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
-          $scssCache = array();
-          $scssCache['imports'] = $scssInit->getParsedFiles();
-          $scssCache['vars'] = $scssInit->getVariables();
-          \JFile::write($cache_path, json_encode($scssCache));
+            $css = JFile::stripExt($css) . '.css';
         }
-      }
+        else
+        {
+            $css = $scss . '.css';
+        }
 
-      $this->add_css($css);
+        $needsCompile = $this->needScssCompile($scss, $vars);
+        if ($needsCompile)
+        {
+            $scssInit = $this->scssInit();
+            $template  = JFactory::getApplication()->getTemplate();
+            $scss_path = JPATH_THEMES . '/' . $template . '/scss';
+            $css_path = JPATH_THEMES . '/' . $template . '/css';
+
+            if (file_exists($scss_path . '/'. $scss . '.scss'))
+            {
+                $out = $css_path . '/' . $css;
+                $scssInit->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
+                $scssInit->setImportPaths($scss_path);
+                if(count($vars))
+                {
+                    $scssInit->setVariables($vars);
+                }
+                $compiledCss = $scssInit->compile('@import "'. $scss .'.scss"');
+                JFile::write($out, $compiledCss);
+
+                $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
+                $scssCache = array();
+                $scssCache['imports'] = $scssInit->getParsedFiles();
+                $scssCache['vars'] = $scssInit->getVariables();
+                JFile::write($cache_path, json_encode($scssCache));
+            }
+        }
+
+        $this->add_css($css);
     }
 
     private function needScssCompile($scss, $existvars = array())
     {
-      $template  = \JFactory::getApplication()->getTemplate();
-      $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
+      $cache_path = JPATH_CACHE . '/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
 
       $return = false;
 
@@ -604,7 +606,7 @@ class HelixUltimate
      *                      Kaffeesatz
      * @param string $field . Applied selector. Ex: h1, h2, #id, .classname
      */
-    public static function addGoogleFont($fonts){
+    public function addGoogleFont($fonts){
         $doc = JFactory::getDocument();
         $webfonts = '';
         $tpl_path = JPATH_BASE . '/templates/' . JFactory::getApplication()->getTemplate() . '/webfonts/webfonts.json';
@@ -698,7 +700,7 @@ class HelixUltimate
     }
 
     //Exclude js and return others js
-    private static function excludeJS($key, $excludes){
+    private function excludeJS($key, $excludes){
         $match = false;
         if ($excludes) {
             $excludes = explode(',', $excludes);
@@ -713,7 +715,7 @@ class HelixUltimate
         return $match;
     }
 
-    public static function compressJS($excludes = ''){
+    public function compressJS($excludes = ''){
         //function to compress js files
 
         require_once(__DIR__ . '/classes/Minifier.php');
@@ -738,7 +740,7 @@ class HelixUltimate
             }
 
             if (JFile::exists($js_file)) {
-                if (!self::excludeJS($key, $excludes))
+                if (!$this->excludeJS($key, $excludes))
                 {
                     $scripts[] = $key;
                     $md5sum .= md5($key);
@@ -774,7 +776,7 @@ class HelixUltimate
     }
 
     //Compress CSS files
-    public static function compressCSS(){
+    public function compressCSS(){
         //function to compress css files
 
         require_once(__DIR__ . '/classes/cssmin.php');

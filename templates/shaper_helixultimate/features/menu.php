@@ -21,14 +21,14 @@ class HelixUltimateFeatureMenu {
 
 	public function renderFeature() {
 
-		$menu_type = $this->params->menu_type;
+		$menu_type = $this->params->get('menu_type');
 
 		ob_start();
 
 		if($menu_type == 'mega_offcanvas') {  ?>
 			<div class='sp-megamenu-wrapper'>
 				<a id="offcanvas-toggler" href="#"><i class="fa fa-bars"></i></a>
-				<?php  new Helix3Menu('hidden-sm hidden-xs',''); ?>
+				<?php new Helix3Menu('hidden-sm hidden-xs',''); ?>
 			</div>
 		<?php } else if ($menu_type == 'mega') { die('Mega Menu'); ?>
 			<div class='sp-megamenu-wrapper'>
@@ -42,3 +42,4 @@ class HelixUltimateFeatureMenu {
 		return ob_get_clean();
 	}
 }
+

@@ -27,16 +27,18 @@ if (file_exists($helix_path)) {
 }
 
 //Coming Soon
-if ($theme->params->comingsoon_mode)
-    header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
+if ($this->params->get('comingsoon_mode'))
+{
+  header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
+}
 
 //Class Classes
 $body_classes = '';
-if ($theme->params->sticky_header) {
+if ($this->params->get('sticky_header')) {
     $body_classes .= ' sticky-header';
 }
 
-$body_classes .= ($theme->params->boxed_layout) ? ' layout-boxed' : ' layout-fluid';
+$body_classes .= ($this->params->get('boxed_layout', 0)) ? ' layout-boxed' : ' layout-fluid';
 
 if (isset($menu) && $menu) {
     if ($menu->params->get('pageclass_sfx')) {
@@ -45,13 +47,13 @@ if (isset($menu) && $menu) {
 }
 
 //Body Background Image
-if ($bg_image = $theme->params->body_bg_image) {
+if ($bg_image = $this->params->get('body_bg_image')) {
 
     $body_style = 'background-image: url(' . JURI::base(true) . '/' . $bg_image . ');';
-    $body_style .= 'background-repeat: ' . $theme->params->body_bg_repeat . ';';
-    $body_style .= 'background-size: ' . $theme->params->body_bg_size . ';';
-    $body_style .= 'background-attachment: ' . $theme->params->body_bg_attachment . ';';
-    $body_style .= 'background-position: ' . $theme->params->body_bg_position . ';';
+    $body_style .= 'background-repeat: ' . $this->params->get('body_bg_repeat') . ';';
+    $body_style .= 'background-size: ' . $this->params->get('body_bg_size') . ';';
+    $body_style .= 'background-attachment: ' . $this->params->get('body_bg_attachment') . ';';
+    $body_style .= 'background-position: ' . $this->params->get('body_bg_position') . ';';
     $body_style = 'body.site {' . $body_style . '}';
 
     $doc->addStyledeclaration($body_style);
@@ -107,12 +109,12 @@ if ($this->params->get('enable_custom_font') && $this->params->get('custom_font_
 $theme->addGoogleFont($webfonts);
 
 //Custom CSS
-if ($custom_css = $theme->params->custom_css) {
+if ($custom_css = $this->params->get('custom_css')) {
     $doc->addStyledeclaration($custom_css);
 }
 
 //Custom JS
-if ($custom_js = $theme->params->custom_js) {
+if ($custom_js = $this->params->get('custom_js')) {
     $doc->addScriptdeclaration($custom_js);
 }
 
@@ -125,12 +127,11 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" amp>
 <head>
     <link rel="canonical" href="<?php echo JUri::current(); ?>">
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <?php
-    if ($favicon = $theme->params->favicon) {
+    if ($favicon = $this->params->get('favicon')) {
         $doc->addFavicon(JURI::base(true) . '/' . $favicon);
     } else {
         $doc->addFavicon($theme->template_folder_url . '/images/favicon.ico');
@@ -139,14 +140,14 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     <!-- head -->
     <jdoc:include type="head" />
     <?php
-    $preloader_bg = ($theme->params->preloader_bg) ? $theme->params->preloader_bg : '#f5f5f5';
-    $preloader_tx = ($theme->params->preloader_tx) ? $theme->params->preloader_tx : '#f5f5f5';
+    $preloader_bg = ($this->params->get('preloader_bg')) ? $this->params->get('preloader_bg') : '#f5f5f5';
+    $preloader_tx = ($this->params->get('preloader_tx')) ? $this->params->get('preloader_tx') : '#f5f5f5';
     // load css, less and js
     $theme->add_css('bootstrap.min.css, font-awesome.min.css'); // CSS Files
     $theme->add_js('popper.min.js, bootstrap.min.js, jquery.sticky.js, main.js'); // JS Files
 
     $scssVars = array(
-      'preset' => $this->params->get('preset'),
+      'preset' => $this->params->get('preset', 'preset1'),
       'header_height' => $this->params->get('header_height', '60px'),
       'text_color' => $this->params->get('text_color'),
       'bg_color' => $this->params->get('bg_color'),
@@ -170,26 +171,15 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     );
 
     $theme->addSCSS('master', $scssVars, 'template');
-    $theme->addSCSS('presets', $scssVars, 'presets/' . $this->params->get('preset'));
+    $theme->addSCSS('presets', $scssVars, 'presets/' . $this->params->get('preset', 'preset1'));
 
     //Before Head
-    if ($before_head = $theme->params->before_head) {
+    if ($before_head = $this->params->get('before_head')) {
         echo $before_head . "\n";
     }
     ?>
 </head>
 <body class="<?php echo $theme->bodyClass($body_classes); ?> off-canvas-menu-init">
-
-
-<?php
-
-$helperFile = '/plugins/system/helixultimate/layout/settings/helpers.php';
-require_once JPATH_BASE.$helperFile;
-$selected_header = helixfw_get_option('selected_header');
-if ( ! empty($selected_header)){
-    helixfw_render_header($selected_header);
-}
-?>
 
 <div class="body-wrapper">
     <div class="body-innerwrapper">
@@ -224,7 +214,7 @@ if ( $this->params->get('compress_js') && $tempOption != 'com_config' ) {
 }
 
 //before body
-if ($before_body = $theme->params->before_body) {
+if ($before_body = $this->params->get('before_body')) {
     echo $before_body . "\n";
 } ?>
 

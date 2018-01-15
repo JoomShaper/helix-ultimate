@@ -227,7 +227,7 @@ class HelixUltimate
                     $fluidrow = $modified_row->settings->fluidrow;
                 }
 
-                $id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-section-' . ($key + 1) : 'sp-' . JFilterOutput::stringURLSafe($modified_row->settings->name);
+                $id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-' . JFilterOutput::stringURLSafe($modified_row->settings->name) : 'sp-section-' . ($key + 1);
                 $row_class = $this->build_row_class($modified_row->settings);
                 $this->add_row_styles($modified_row->settings, $id);
                 $sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
@@ -359,17 +359,17 @@ class HelixUltimate
 
         if ($row_css)
         {
-            $doc->addStyledeclaration('#' . $id . '{ ' . $row_css . ' }');
+            $this->doc->addStyledeclaration('#' . $id . '{ ' . $row_css . ' }');
         }
 
 
         if (isset($options->link_color) && $options->link_color)
         {
-            $doc->addStyledeclaration('#' . $id . ' a{color:' . $options->link_color . ';}');
+            $this->doc->addStyledeclaration('#' . $id . ' a{color:' . $options->link_color . ';}');
         }
 
         if (isset($options->link_hover_color) && $options->link_hover_color) {
-            $doc->addStyledeclaration('#' . $id . ' a:hover{color:' . $options->link_hover_color . ';}');
+            $this->doc->addStyledeclaration('#' . $id . ' a:hover{color:' . $options->link_hover_color . ';}');
         }
     }
 
@@ -417,29 +417,6 @@ class HelixUltimate
             return true;
         }
         return false;
-    }
-
-
-    /**
-     * Add Inline Javascript
-     *
-     * @param mixed $code
-     *
-     * @return self
-     */
-    public function addInlineJS($code){
-        $this->doc->addScriptDeclaration($code);
-    }
-
-    /**
-     * Add Inline CSS
-     *
-     * @param mixed $code
-     *
-     * @return self
-     */
-    public function addInlineCSS($code){
-        $this->doc->addStyleDeclaration($code);
     }
 
     public function scssInit()
@@ -717,14 +694,12 @@ class HelixUltimate
 
     public function compressJS($excludes = ''){
         //function to compress js files
-
         require_once(__DIR__ . '/classes/Minifier.php');
 
-        $doc       = JFactory::getDocument();
         $app       = JFactory::getApplication();
         $cachetime = $app->get('cachetime', 15);
 
-        $all_scripts  = $doc->_scripts;
+        $all_scripts  = $this->doc->_scripts;
         $cache_path   = JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
         $scripts      = array();
         $root_url     = JURI::root(true);

@@ -265,11 +265,17 @@
 			<field name="image_large" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_LARGE" description="HELIX_IMAGE_LARGE_DESC" />
 			<field name="image_large_size" type="text" helixgroup="blog_images" default="600X600" hint="600X600" label="HELIX_IMAGE_LARGE_SIZE" description="HELIX_IMAGE_LARGE_SIZE_DESC" showon="image_large_size:1" />
 
-			<field name="blog_list_image" type="list" helixgroup="blog_images" default="default" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
+			<field name="blog_list_image" type="list" helixgroup="blog_images" default="thumbnail" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
 					<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
 					<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
 					<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
-					<option value="medium">HELIX_BLOG_LIST_IMAGE_MEDIUM</option>
+					<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
+			</field>
+
+			<field name="leading_blog_list_image" type="list" helixgroup="blog_images" default="large" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
+					<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
+					<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
+					<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
 					<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
 			</field>
 

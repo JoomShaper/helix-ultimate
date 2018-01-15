@@ -29,7 +29,11 @@ $results = $app->triggerEvent('onContentAfterDisplay', array($this->category->ex
 $afterDisplayContent = trim(implode("\n", $results));
 
 ?>
-<div class="blog<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Blog">
+<div itemscope="itemscope" itemtype="http://schema.org/Blog" style="display: none;">
+	<!--<meta content="joomshaper blog" itemprop="name">-->
+</div>
+
+<div class="blog<?php echo $this->pageclass_sfx; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
 			<h1> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1>
@@ -69,20 +73,18 @@ $afterDisplayContent = trim(implode("\n", $results));
 		<?php endif; ?>
 	<?php endif; ?>
 
-	<?php $leadingcount = 0; ?>
 	<?php if (!empty($this->lead_items)) : ?>
-		<div class="items-leading clearfix">
+		<div class="article-list articles-leading clearfix">
 			<?php foreach ($this->lead_items as &$item) : ?>
-				<div class="item leading-<?php echo $leadingcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
+				<div class="article<?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 					$this->item = & $item;
 					echo $this->loadTemplate('item');
 					?>
 				</div>
-				<?php $leadingcount++; ?>
 			<?php endforeach; ?>
-		</div><!-- end items-leading -->
+		</div>
 	<?php endif; ?>
 
 	<?php
@@ -91,31 +93,26 @@ $afterDisplayContent = trim(implode("\n", $results));
 	?>
 
 	<?php if (!empty($this->intro_items)) : ?>
-		<?php foreach ($this->intro_items as $key => &$item) : ?>
-			<?php $rowcount = ((int) $key % (int) $this->columns) + 1; ?>
-			<?php if ($rowcount === 1) : ?>
-				<?php $row = $counter / $this->columns; ?>
-				<div class="row">
-			<?php endif; ?>
-			<div class="col-md-<?php echo round(12 / $this->columns); ?>">
-				<div class="item column-<?php echo $rowcount; ?><?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
-					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-					<?php
-					$this->item = & $item;
-					echo $this->loadTemplate('item');
-					?>
+		<div class="article-list">
+			<div class="row">
+			<?php foreach ($this->intro_items as $key => &$item) : ?>
+				<div class="col-md-<?php echo round(12 / $this->columns); ?>">
+					<div class="article <?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
+						itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+						<?php
+						$this->item = & $item;
+						echo $this->loadTemplate('item');
+						?>
+					</div>
+					<?php $counter++; ?>
 				</div>
-				<!-- end item -->
-				<?php $counter++; ?>
-			</div><!-- end span -->
-			<?php if (($rowcount == $this->columns) or ($counter == $introcount)) : ?>
-				</div><!-- end row -->
-			<?php endif; ?>
-		<?php endforeach; ?>
+			<?php endforeach; ?>
+			</div>
+		</div>
 	<?php endif; ?>
 
 	<?php if (!empty($this->link_items)) : ?>
-		<div class="items-more">
+		<div class="articles-more">
 			<?php echo $this->loadTemplate('links'); ?>
 		</div>
 	<?php endif; ?>
@@ -127,14 +124,16 @@ $afterDisplayContent = trim(implode("\n", $results));
 			<?php endif; ?>
 			<?php echo $this->loadTemplate('children'); ?> </div>
 	<?php endif; ?>
+
 	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-		<div class="w-100">
+		<nav class="">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-				<p class="counter float-right pt-3 pr-2">
+				<div class="counter">
 					<?php echo $this->pagination->getPagesCounter(); ?>
-				</p>
+				</div>
 			<?php endif; ?>
 			<?php echo $this->pagination->getPagesLinks(); ?>
-		</div>
+		</nav>
 	<?php endif; ?>
+
 </div>

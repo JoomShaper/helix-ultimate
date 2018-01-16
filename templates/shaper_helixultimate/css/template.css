@@ -1,10 +1,4 @@
 /**
- * $package Helix Ultimate Framework
- * $author JoomShaper http://www.joomshaper.com
- * $copyright Copyright (c) 2010 - 2018 JoomShaper
- * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
- */
-/**
  * $package Helix Framework
  * $author JoomShaper http://www.joomshaper.com
  * $copyright Copyright (c) 2010 - 2016 JoomShaper
@@ -990,7 +984,6 @@ a {
 body {
   -webkit-transition: all 400ms ease;
   transition: all 400ms ease;
-  background-color: #fff;
 }
 a, a:hover, a:focus, a:active {
   text-decoration: none;

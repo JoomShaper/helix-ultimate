@@ -2,71 +2,81 @@
 /**
 * @package Helix3 Framework
 * @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2010 - 2015 JoomShaper
+* @copyright Copyright (c) 2010 - 2017 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/  
+*/
 
 //no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
 
-class Helix3Image extends JImage
-{
+class HelixUltimateImage {
 
-	public function createThumbs($thumbSizes, $creationMethod = self::SCALE_INSIDE, $thumbsFolder = null)
-	{
-		// Make sure the resource handle is valid.
-		if (!$this->isLoaded())
-		{
-			throw new LogicException('No valid image was loaded.');
+	public static function createThumbs($src, $sizes = array(), $folder, $base_name, $ext, $quality = 100) {
+
+		list($originalWidth, $originalHeight) = getimagesize($src);
+
+		switch($ext) {
+			case 'bmp': $img = imagecreatefromwbmp($src); break;
+			case 'gif': $img = imagecreatefromgif($src); break;
+			case 'jpg': $img = imagecreatefromjpeg($src); break;
+			case 'jpeg': $img = imagecreatefromjpeg($src); break;
+			case 'png': $img = imagecreatefrompng($src); break;
 		}
 
-		$thumbsFolder = dirname($this->getPath());
+		if(count($sizes)) {
+			$output = array();
 
-		// Check destination
-		if (!is_dir($thumbsFolder) && (!is_dir(dirname($thumbsFolder)) || !@mkdir($thumbsFolder)))
-		{
-			throw new InvalidArgumentException('Folder does not exist and cannot be created: ' . $thumbsFolder);
-		}
+			if($base_name) {
+				$output['original'] = $folder . '/' . $base_name . '.' . $ext;
+			}
 
-		// Process thumbs
-		$thumbsCreated = array();
+			foreach ($sizes as $key => $size) {
+				$targetWidth = $size[0];
+				$targetHeight = $size[1];
+				$ratio_thumb = $targetWidth/$targetHeight;
+				$ratio_original = $originalWidth/$originalHeight;
 
-		// Generate sizes
-		$newThumbSizes = array();
-		$thumbNames = array();
-		foreach ($thumbSizes as $key => $value) {
-			$newThumbSizes[] = $value;
-			$thumbNames[] 	= $key;
-		}
+				if ($ratio_original >= $ratio_thumb) {
+					$height = $originalHeight;
+					$width = ceil(($height*$targetWidth)/$targetHeight);
+					$x = ceil(($originalWidth-$width)/2);
+					$y = 0;
+				} else {
+					$width = $originalWidth;
+					$height = ceil(($width*$targetHeight)/$targetWidth);
+					$y = ceil(($originalHeight-$height)/2);
+					$x = 0;
+				}
 
-		if ($thumbs = $this->generateThumbs($newThumbSizes, $creationMethod))
-		{
-			// Parent image properties
-			$imgProperties = self::getImageFileProperties($this->getPath());
+				$new = imagecreatetruecolor($targetWidth, $targetHeight);
 
-			foreach ($thumbs as $key=>$thumb)
-			{
-				// Get thumb properties
-				$thumbWidth  = $thumb->getWidth();
-				$thumbHeight = $thumb->getHeight();
+				if($ext == "gif" or $ext == "png") {
+					imagecolortransparent($new, imagecolorallocatealpha($new, 0, 0, 0, 100));
+					imagealphablending($new, false);
+					imagesavealpha($new, true);
+				}
 
-				// Generate thumb name
-				$filename      = pathinfo($this->getPath(), PATHINFO_FILENAME);
-				$fileExtension = pathinfo($this->getPath(), PATHINFO_EXTENSION);
-				$thumbFileName = $filename . '_'. $thumbNames[$key] .'.' . $fileExtension;
+				imagecopyresampled($new, $img, 0, 0, $x, $y, $targetWidth, $targetHeight, $width, $height);
 
-				// Save thumb file to disk
-				$thumbFileName = $thumbsFolder . '/' . $thumbFileName;
+				if($base_name) {
+					$dest = dirname($src) . '/' . $base_name . '_' . $key . '.' . $ext;
+					$output[$key] = $folder . '/' . $base_name . '_' . $key . '.' . $ext;
+				} else {
+					$dest = $folder . '/' . $key . '.' . $ext;
+				}
 
-				if ($thumb->toFile($thumbFileName, $imgProperties->type))
-				{
-					// Return JImage object with thumb path to ease further manipulation
-					$thumb->path     = $thumbFileName;
-					$thumbsCreated[] = $thumb;
+				switch($ext) {
+					case 'bmp': imagewbmp($new, $dest); break;
+					case 'gif': imagegif($new, $dest); break;
+					case 'jpg': imagejpeg($new, $dest, $quality); break;
+					case 'jpeg': imagejpeg($new, $dest, $quality); break;
+					case 'png': imagepng($new, $dest); break;
 				}
 			}
+
+			return $output;
 		}
 
-		return $thumbsCreated;
+		return false;
 	}
 }

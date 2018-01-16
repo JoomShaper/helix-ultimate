@@ -95,7 +95,6 @@ class HelixUltimateFeatureLogo {
 			} else {
 				$html .= '<span class="logo"><a href="' . \JURI::base(true) . '/">' . $sitename . '</a></span>';
 			}
-
 			if( $this->params->get('logo_slogan') ) {
 				$html .= '<span class="logo-slogan">' . $this->params->get('logo_slogan') . '</span>';
 			}

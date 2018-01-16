@@ -154,27 +154,23 @@ class plgAjaxHelixultimate extends JPlugin
 
           if(\JFile::upload($path, $dest)) {
 
-            $sizes = array();
+            $image_quality = $tplParams->get('image_crop_quality', '100');
 
             if($tplParams->get('image_small', 0)) {
-              $sizes['small'] = strtolower($tplParams->get('image_small_size', '100X100'));
+              $sizes['small'] = explode('x', strtolower($tplParams->get('image_small_size', '100X100')));
             }
-
             if($tplParams->get('image_thumbnail', 1)) {
-              $sizes['thumbnail'] = strtolower($tplParams->get('image_thumbnail_size', '200X200'));
+              $sizes['thumbnail'] = explode('x', strtolower($tplParams->get('image_thumbnail_size', '200X200')));
             }
-
             if($tplParams->get('image_medium', 0)) {
-              $sizes['medium'] = strtolower($tplParams->get('image_medium_size', '300X300'));
+              $sizes['medium'] = explode('x', strtolower($tplParams->get('image_medium_size', '300X300')));
             }
-
             if($tplParams->get('image_large', 0)) {
-              $sizes['large']  = strtolower($tplParams->get('image_large_size', '600X600'));
+              $sizes['large']  = explode('x', strtolower($tplParams->get('image_large_size', '600X600')));
             }
 
             if(count($sizes)) {
-              $image = new Helix3Image($dest);
-              $image->createThumbs($sizes, 5);
+              $sources = HelixUltimateImage::createThumbs($dest, $sizes, $folder, $base_name, $ext, $image_quality);
             }
 
             if(file_exists(\JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext)) {

@@ -5,6 +5,10 @@
  * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
 */
 
+body {
+	background-color: $bg_color;
+}
+
 #sp-header {
 	background: $header_bg_color;
 }

@@ -25,7 +25,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 JHtml::_('behavior.caption');
 
 ?>
-<div class="item-page<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
+<div class="article-details<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 	<div class="page-header">
@@ -50,7 +50,7 @@ JHtml::_('behavior.caption');
 		<div class="clearfix"> </div>
 	<?php endif; ?>
 	<?php if ($params->get('show_title') || $params->get('show_author')) : ?>
-	<div class="entry-header">
+	<div class="article-header">
 		<?php if ($params->get('show_title')) : ?>
 			<<?php echo $page_header_tag; ?> itemprop="headline">
 				<?php echo $this->escape($this->item->title); ?>
@@ -104,6 +104,7 @@ JHtml::_('behavior.caption');
 	<?php if (isset ($this->item->toc)) :
 		echo $this->item->toc;
 	endif; ?>
+
 	<div itemprop="articleBody">
 		<?php echo $this->item->text; ?>
 	</div>

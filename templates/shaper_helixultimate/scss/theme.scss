@@ -24,8 +24,6 @@
 
 /* ************   START Start Base Style   ************* */
 /* **************************************************** */
-
-@import 'variables';
 @import 'menu';
 
 a {
@@ -335,16 +333,6 @@ ul.social-icons {
   }
 }
 
-@media (max-width: $screen-sm-min) {
-  .sppb-addon-image-content {
-    .sppb-image-holder {
-      position: inherit;
-      width: 100% !important;
-      height: 300px;
-    }
-  }
-}
-
 
 /* **********   END:: Page Builder Addons  ************ */
 /* **************************************************** */
@@ -552,77 +540,138 @@ ul.social-icons {
 /* ******************   START Blog   ****************** */
 /* **************************************************** */
 
-.blog {
-  .item {
+.article-list {
+  .article {
     margin-bottom: 30px;
     padding: 20px;
     border: 1px solid #f5f5f5;
     border-radius: 3px;
-  }
-  .intro-image {
-    margin: -20px -20px 20px -20px;
-    border-radius: 3px 3px 0 0;
-    img {
+
+    .article-intro-image {
+      margin: -20px -20px 20px -20px;
       border-radius: 3px 3px 0 0;
+      border-bottom: 1px solid #f5f5f5;
+      img {
+        border-radius: 3px 3px 0 0;
+      }
     }
-  }
 
-  .item-content {
-    h2 {
-      font-size: 22px;
+    .article-header {
+      h1,
+      h2 {
+        font-size: 1.375rem;
+        margin: 0 0 1.250rem 0;
+
+        a {
+          color: $text_color;
+          &:hover,
+          &:active,
+          &:focus {
+            color: $link_hover_color;
+          }
+        }
+      }
     }
-  }
-}
 
-// Article Details
-.item-page {
-  .entry-header {
-    text-align: center;
-    h1,
-    h2 {
-      font-size: 56px;
-      margin-bottom: 40px;
+    .readmore {
+      font-size: 0.875rem;
+      a {
+        color: $text_color;
+        font-weight: 500;
+        &:hover,
+        &:active,
+        &:focus {
+          color: $link_hover_color;
+        }
+      }
     }
-  }
-
-  .article-info {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-
-  .full-image {
-    text-align: center;
-    img {
-      display: inline-block;
-    }
-    margin-bottom: 70px;
   }
 }
 
 .article-info {
-  margin: 0 -8px 5px;
-  >dd,
-  >dt {
-    display: inline-block;
-    margin: 0 8px;
-    >i {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  >span {
+    font-size: 0.813rem;
+
+    + span::before {
       display: inline-block;
-      margin-right: 3px;
+      padding-right: .5rem;
+      padding-left: .5rem;
+      content: "/";
+    }
+
+    a {
+      color: $text_color;
+      &:hover {
+        color: $link_hover_color;
+      }
     }
   }
 }
 
-article {
-  &.item {
-    margin-bottom: 50px;
+.article-details {
+  .article-header {
+    text-align: center;
+    h1,
+    h2 {
+      font-size: 4rem;
+      line-height: 4.125rem;
+      font-weight: 100;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  .article-info {
+    justify-content: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .article-full-image {
+    text-align: center;
+    img {
+      display: inline-block;
+    }
+    margin-bottom: 2.5rem;
   }
 }
 
 .tags {
-  margin-top: 20px;
-  >span {
-    text-transform: uppercase;
-    letter-spacing: 2px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 40px;
+  display: block;
+  >li {
+    display: inline-block;
+    a {
+      font-size: 14px;
+      padding: 10px 14px;
+      background: #E5F1FB;
+      border-radius: 100px;
+      color: $link_color;
+    }
+  }
+}
+
+.pager {
+  list-style: none;
+  padding: 0;
+  margin: 40px 0 0;
+
+  >li {
+    display: inline-block;
+    a {
+      font-size: 14px;
+      padding: 10px 14px;
+      background: #E5F1FB;
+      border-radius: 100px;
+      color: $link_color;
+    }
   }
 }
 
@@ -663,20 +712,6 @@ article {
   .ajax-loader, .voting-result {
     display: none;
   }
-}
-
-.post-format {
-  position: absolute;
-  top: 0;
-  left: -68px;
-  display: block;
-  width: 48px;
-  height: 48px;
-  font-size: 24px;
-  line-height: 48px;
-  text-align: center;
-  color: #fff;
-  border-radius: 3px;
 }
 
 .entry-image, .entry-gallery, .entry-video, .entry-audio, .entry-link {
@@ -1155,15 +1190,6 @@ table.category {
   .hidden-print {
     display: none !important;
   }
-}
-
-// sp portfolio
-.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a {
-  background: #2D2D2D;
-  border-radius: 2px;
-  color: #fff;
-  -webkit-transition: 300ms;
-  transition: 300ms;
 }
 
 

@@ -1,24 +1,15 @@
 <?php
-/**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
 
 defined('JPATH_BASE') or die;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-
+$title = $this->escape($displayData['item']->category_title);
 ?>
-<dd class="category-name">
-	<?php $title = $this->escape($displayData['item']->category_title); ?>
+<span class="category-name" title="<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $title); ?>">
 	<?php if ($displayData['params']->get('link_category') && $displayData['item']->catslug) : ?>
-		<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($displayData['item']->catslug)) . '" itemprop="genre">' . $title . '</a>'; ?>
-		<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
+		<a href="<?php echo Route::_(ContentHelperRoute::getCategoryRoute($displayData['item']->catslug)); ?>"><?php echo $title; ?></a>
 	<?php else : ?>
-		<?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
+		<?php echo $title; ?>
 	<?php endif; ?>
-</dd>
+</span>

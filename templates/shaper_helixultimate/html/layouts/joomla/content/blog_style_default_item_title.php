@@ -1,11 +1,4 @@
 <?php
-/**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
 
 defined('JPATH_BASE') or die;
 
@@ -22,13 +15,11 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 ?>
 
 <?php if ($displayData->state == 0 || $params->get('show_title') || ($params->get('show_author') && !empty($displayData->author ))) : ?>
-	<div class="page-header">
+	<div class="article-header">
 		<?php if ($params->get('show_title')) : ?>
-			<h2 itemprop="name">
+			<h2>
 				<?php if ($params->get('link_titles') && ($params->get('access-view') || $params->get('show_noauth', '0') == '1')) : ?>
-					<a href="<?php echo Route::_(
-						ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)
-					); ?>" itemprop="url">
+					<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
 						<?php echo $this->escape($displayData->title); ?>
 					</a>
 				<?php else : ?>

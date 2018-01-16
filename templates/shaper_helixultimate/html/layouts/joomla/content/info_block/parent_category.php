@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 ?>
-<dd class="parent-category-name">
+<span class="parent-category-name">
 	<?php $title = $this->escape($displayData['item']->parent_title); ?>
 	<?php if ($displayData['params']->get('link_parent_category') && !empty($displayData['item']->parent_slug)) : ?>
 		<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($displayData['item']->parent_slug)) . '" itemprop="genre">' . $title . '</a>'; ?>
@@ -22,4 +22,4 @@ use Joomla\CMS\Router\Route;
 	<?php else : ?>
 		<?php echo Text::sprintf('COM_CONTENT_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
 	<?php endif; ?>
-</dd>
+</span>

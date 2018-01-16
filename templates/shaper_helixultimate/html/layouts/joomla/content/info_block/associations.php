@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 
 <?php if (!empty($displayData['item']->associations)) : ?>
 <?php $associations = $displayData['item']->associations; ?>
-<dd class="association">
+<span class="association">
 	<?php echo Text::_('JASSOCIATIONS'); ?>
 	<?php foreach ($associations as $association) : ?>
 		<?php if ($displayData['item']->params->get('flags', 1) && $association['language']->image) : ?>
@@ -28,5 +28,5 @@ use Joomla\CMS\Router\Route;
 			&nbsp;<a class="' . <?php echo $class; ?> . '" href="<?php echo Route::_($association['item']); ?>"><?php echo strtoupper($association['language']->sef); ?></a>&nbsp;
 		<?php endif; ?>
 	<?php endforeach; ?>
-</dd>
+</span>
 <?php endif; ?>

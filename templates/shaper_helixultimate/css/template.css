@@ -1,3 +1,4 @@
+@import 'variables';
 /**
  * $package Helix Framework
  * $author JoomShaper http://www.joomshaper.com
@@ -1229,13 +1230,6 @@ ul.social-icons > li a {
 .sppb-addon-image-content.aligment-right .sppb-content-holder {
   padding: 120px 50px 120px 0;
 }
-@media (max-width: 768px) {
-  .sppb-addon-image-content .sppb-image-holder {
-    position: inherit;
-    width: 100% !important;
-    height: 300px;
-  }
-}
 /* **********   END:: Page Builder Addons  ************ */
 /* **************************************************** */
 /* ****************   START Module   ****************** */
@@ -1382,60 +1376,114 @@ ul.social-icons > li a {
 /* **************************************************** */
 /* ******************   START Blog   ****************** */
 /* **************************************************** */
-.blog .item {
+.article-list .article {
   margin-bottom: 30px;
   padding: 20px;
   border: 1px solid #f5f5f5;
   border-radius: 3px;
 }
-.blog .intro-image {
+.article-list .article .article-intro-image {
   margin: -20px -20px 20px -20px;
   border-radius: 3px 3px 0 0;
+  border-bottom: 1px solid #f5f5f5;
 }
-.blog .intro-image img {
+.article-list .article .article-intro-image img {
   border-radius: 3px 3px 0 0;
 }
-.blog .item-content h2 {
-  font-size: 22px;
+.article-list .article .article-header h1, .article-list .article .article-header h2 {
+  font-size: 1.375rem;
+  margin: 0 0 1.25rem 0;
 }
-.item-page .entry-header {
-  text-align: center;
+.article-list .article .article-header h1 a, .article-list .article .article-header h2 a {
+  color: #252525;
 }
-.item-page .entry-header h1, .item-page .entry-header h2 {
-  font-size: 56px;
-  margin-bottom: 40px;
+.article-list .article .article-header h1 a:hover, .article-list .article .article-header h2 a:hover, .article-list .article .article-header h1 a:active, .article-list .article .article-header h2 a:active, .article-list .article .article-header h1 a:focus, .article-list .article .article-header h2 a:focus {
+  color: #2bbbf7;
 }
-.item-page .article-info {
-  text-align: center;
-  margin-bottom: 40px;
+.article-list .article .readmore {
+  font-size: 0.875rem;
 }
-.item-page .full-image {
-  text-align: center;
-  margin-bottom: 70px;
+.article-list .article .readmore a {
+  color: #252525;
+  font-weight: 500;
 }
-.item-page .full-image img {
-  display: inline-block;
+.article-list .article .readmore a:hover, .article-list .article .readmore a:active, .article-list .article .readmore a:focus {
+  color: #2bbbf7;
 }
 .article-info {
-  margin: 0 -8px 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
-.article-info > dd, .article-info > dt {
+.article-info > span {
+  font-size: 0.813rem;
+}
+.article-info > span + span::before {
   display: inline-block;
-  margin: 0 8px;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  content: "/";
 }
-.article-info > dd > i, .article-info > dt > i {
+.article-info > span a {
+  color: #252525;
+}
+.article-info > span a:hover {
+  color: #2bbbf7;
+}
+.article-details .article-header {
+  text-align: center;
+}
+.article-details .article-header h1, .article-details .article-header h2 {
+  font-size: 4rem;
+  line-height: 4.125rem;
+  font-weight: 100;
+  margin-bottom: 2.5rem;
+}
+.article-details .article-info {
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.article-details .article-full-image {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.article-details .article-full-image img {
   display: inline-block;
-  margin-right: 3px;
-}
-article.item {
-  margin-bottom: 50px;
 }
 .tags {
-  margin-top: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 40px;
+  display: block;
 }
-.tags > span {
-  text-transform: uppercase;
-  letter-spacing: 2px;
+.tags > li {
+  display: inline-block;
+}
+.tags > li a {
+  font-size: 14px;
+  padding: 10px 14px;
+  background: #e5f1fb;
+  border-radius: 100px;
+  color: #25a9e0;
+}
+.pager {
+  list-style: none;
+  padding: 0;
+  margin: 40px 0 0;
+}
+.pager > li {
+  display: inline-block;
+}
+.pager > li a {
+  font-size: 14px;
+  padding: 10px 14px;
+  background: #e5f1fb;
+  border-radius: 100px;
+  color: #25a9e0;
 }
 .content_rating, .content_rating + form {
   display: none;
@@ -1468,19 +1516,6 @@ article.item {
 }
 .post_rating .ajax-loader, .post_rating .voting-result {
   display: none;
-}
-.post-format {
-  position: absolute;
-  top: 0;
-  left: -68px;
-  display: block;
-  width: 48px;
-  height: 48px;
-  font-size: 24px;
-  line-height: 48px;
-  text-align: center;
-  color: #fff;
-  border-radius: 3px;
 }
 .entry-image, .entry-gallery, .entry-video, .entry-audio, .entry-link {
   margin-bottom: 30px;
@@ -1635,7 +1670,7 @@ article.item {
   display: inline-block;
 }
 .helix-social-share .helix-social-share-icon ul li div a:hover, .helix-social-share .helix-social-share-icon ul li div a:focus {
-  background: #337ab7;
+  background: #25a9e0;
   color: #fff;
 }
 /* ******************   END:: Blog   ****************** */
@@ -1890,13 +1925,6 @@ table.category thead > tr th, table.category tbody > tr th, table.category thead
   .hidden-print {
     display: none !important;
   }
-}
-.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a {
-  background: #2d2d2d;
-  border-radius: 2px;
-  color: #fff;
-  -webkit-transition: 300ms;
-  transition: 300ms;
 }
 /* ***************   END:: Mixed CSS   **************** */
 /* **************************************************** */

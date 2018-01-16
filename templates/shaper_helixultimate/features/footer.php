@@ -10,21 +10,21 @@ defined ('_JEXEC') or die('resticted aceess');
 
 class HelixUltimateFeatureFooter {
 
-	private $helixUltimate;
+	private $params;
 
-	public function __construct($helixUltimate){
-		$this->helixUltimate = $helixUltimate;
-		$this->position = $this->helixUltimate->getParam('copyright_position');
-		$this->load_pos = $this->helixUltimate->getParam('copyright_load_pos');
+	public function __construct($params){
+		$this->params = $params;
+		$this->position = $this->params->get('copyright_position');
+		$this->load_pos = $this->params->get('copyright_load_pos');
 	}
 
 	public function renderFeature() {
 
-		if($this->helixUltimate->getParam('enabled_copyright')) {
+		if($this->params->get('enabled_copyright')) {
 			$output = '';
 			//Copyright
-			if( $this->helixUltimate->getParam('copyright') ) {
-				$output .= '<span class="sp-copyright">' . str_ireplace('{year}',date('Y'), $this->helixUltimate->getParam('copyright')) . '</span>';
+			if( $this->params->get('copyright') ) {
+				$output .= '<span class="sp-copyright">' . str_ireplace('{year}',date('Y'), $this->params->get('copyright')) . '</span>';
 			}
 
 			return $output;

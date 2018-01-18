@@ -40,14 +40,12 @@ if ($data['componentArea'])
     {
         $output .= '</div>';
         $output .= '</div>';
-        $output .= '</div>';
     }
 }
 else
 {
     if (!$data['fluidrow'])
     {
-        $output .= '</div>';
         $output .= '</div>';
         $output .= '</div>';
     }

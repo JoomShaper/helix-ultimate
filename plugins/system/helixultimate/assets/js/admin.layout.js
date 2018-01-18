@@ -428,9 +428,13 @@ jQuery(function($) {
 			{
 				var dataAttr = '';
 				if (typeof colAttr[i] != 'object') {
-					colAttr[i] = { grid_size : newLayout[i].trim() }
+					colAttr[i] = {
+						grid_size : newLayout[i].trim(),
+						column_type : 0,
+						name : 'none'
+					}
 				} else {
-					colAttr[i].grid_size = newLayout[i].trim()
+					colAttr[i].grid_size = newLayout[i].trim();
 				}
 				$.each(colAttr[i],function(index,value){
 					dataAttr += ' data-'+index+'="'+value+'"';

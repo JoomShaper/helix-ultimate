@@ -6,11 +6,10 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die('resticted aceess');
+defined ('_JEXEC') or die('Restricted access');
 
 class HelixUltimateFeatureContact
 {
-
 	private $params;
 
 	public function __construct($params)
@@ -19,10 +18,10 @@ class HelixUltimateFeatureContact
 		$this->position = $this->params->get('contact_position', 'top1');
 	}
 
-	public function renderFeature() {
-
-		if($this->params->get('contactinfo')) {
-			
+	public function renderFeature()
+	{
+		if($this->params->get('enable_contactinfo'))
+		{
 			$output = '<ul class="sp-contact-info">';
 			
 			if($this->params->get('contact_phone'))

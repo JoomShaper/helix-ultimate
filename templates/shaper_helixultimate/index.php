@@ -166,6 +166,8 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
         'footer_text_color' => $this->params->get('footer_text_color'),
         'footer_link_color' => $this->params->get('footer_link_color'),
         'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
+        'topbar_bg_color' => $this->params->get('topbar_bg_color'),
+        'topbar_text_color' => $this->params->get('topbar_text_color'),
         'preloader_bg' => $preloader_bg,
         'preloader_tx' => $preloader_tx
     );

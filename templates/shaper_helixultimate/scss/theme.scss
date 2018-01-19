@@ -686,6 +686,14 @@ ul.social-icons {
   }
 }
 
+// Misc
+.pagination-wrapper {
+  align-items: center;
+  .pagination {
+    margin-bottom: 0;
+  }
+}
+
 //Social Share
 .article-social-share {
   float: right;

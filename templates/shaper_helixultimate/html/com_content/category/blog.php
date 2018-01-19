@@ -124,7 +124,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<?php endif; ?>
 
 	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-		<nav class="d-flex">
+		<nav class="d-flex pagination-wrapper">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 				<div class="mr-auto">
 					<?php echo $this->pagination->getPagesLinks(); ?>

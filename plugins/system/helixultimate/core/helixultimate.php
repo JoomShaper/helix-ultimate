@@ -290,21 +290,45 @@ class HelixUltimate
 
         foreach ($row->attr as &$column)
         {
-            $col_grid_size = $column->settings->grid_size;
+            $options = $column->settings;
+            $col_grid_size = $options->grid_size;
             if (!$has_component && end($row->attr) === $column)
             {
                 $col_grid_size = $col_grid_size + $inactive_col;
             }
 
-            if ($column->settings->column_type)
+            if ($options->column_type)
             {
                 $col_grid_size = $col_grid_size + $inactive_col;
-                $column->className = 'col-md-' . $col_grid_size . ' col-lg-' . $col_grid_size;
+                $className = 'col-lg-' . $col_grid_size;
             }
             else
             {
-                $column->className = 'col-md-' . $col_grid_size . ' col-lg-' . $col_grid_size;
+                $className = 'col-lg-' . $col_grid_size;
             }
+
+            if(isset($options->xl_col) && $options->xl_col)
+            {
+                $className = $className . ' col-xl-' . $options->xl_col;
+            }
+
+            if(isset($options->md_col) && $options->md_col)
+            {
+                $className = 'col-md-' . $options->md_col . ' ' . $className;
+            }
+
+            if(isset($options->sm_col) && $options->sm_col)
+            {
+                $className = 'col-sm-' . $options->sm_col . ' ' . $className;
+            }
+
+            if(isset($options->xs_col) && $options->xs_col)
+            {
+                $className = 'col-' . $options->xs_col . ' ' . $className;
+            }
+
+            $device_class = $this->get_device_class($options);
+            $column->settings->className = $className . ' ' . $device_class;
         }
 
         return $row;
@@ -352,6 +376,7 @@ class HelixUltimate
         {
             $row_css .= 'padding:' . $options->padding . ';';
         }
+
         if (isset($options->margin) && $options->margin)
         {
             $row_css .= 'margin:' . $options->margin . ';';
@@ -381,28 +406,63 @@ class HelixUltimate
             $row_class .= $options->custom_class;
         }
 
-        if (isset($options->hidden_xs) && $options->hidden_xs)
+        $device_class = $this->get_device_class($options);
+        if($device_class)
         {
-            $row_class .= ' hidden-xs';
+            $row_class .= ' '.$device_class;
         }
-
-        if (isset($options->hidden_sm) && $options->hidden_sm)
-        {
-            $row_class .= ' hidden-sm';
-        }
-
-        if (isset($options->hidden_md) && $options->hidden_md)
-        {
-            $row_class .= ' hidden-md';
-        }
-
 
         if($row_class)
         {
             $row_class = 'class="' . $row_class . '"';
         }
-
         return $row_class;
+    }
+
+
+    private function get_device_class($options)
+    {
+        $device_class = '';
+
+        if (isset($options->hide_mobile) && $options->hide_mobile)
+        {
+            $device_class = 'd-none d-sm-block';
+        }
+
+        if (isset($options->hide_large_mobile) && $options->hide_large_mobile)
+        {
+            $device_class = $this->reshape_device_class('sm',$device_class);
+            $device_class .= ' d-sm-none d-md-block';
+        }
+
+        if (isset($options->hide_tablet) && $options->hide_tablet)
+        {
+            $device_class = $this->reshape_device_class('md',$device_class);
+            $device_class .= ' d-md-none d-lg-block';
+        }
+
+        if (isset($options->hide_small_desktop) && $options->hide_small_desktop)
+        {
+            $device_class = $this->reshape_device_class('lg',$device_class);
+            $device_class .= ' d-lg-none d-xl-block';
+        }
+
+        if (isset($options->hide_desktop) && $options->hide_desktop)
+        {
+            $device_class = $this->reshape_device_class('xl',$device_class);
+            $device_class .= ' d-xl-none';
+        }
+
+        return $device_class;
+    }
+
+    private function reshape_device_class($device = '', $class)
+    {
+        $search = 'd-'.$device.'-block';
+        $class = str_replace($search,'',$class);
+        $class = trim($class,' ');
+
+        return $class;
     }
 
     public function count_modules($position)

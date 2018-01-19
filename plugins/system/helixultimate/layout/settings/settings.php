@@ -6,8 +6,25 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-//no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
+
+function column_grid_system($device = 'lg')
+{
+	$col = array(0 => 'Inherit');
+	for($i = 1; $i <= 12; $i++)
+	{
+		if($device == 'xs')
+		{
+			$col[$i] = 'col-'.$i;
+		}
+		else
+		{
+			$col[$i] = 'col-'.$device.'-'.$i;
+		}
+	}
+
+	return $col;
+}
 
 $rowSettings = array(
 	'type'=>'general',
@@ -98,19 +115,31 @@ $rowSettings = array(
 			'title'		=> JText::_('HELIX_LINK_HOVER_COLOR'),
 			'desc'		=> JText::_('HELIX_LINK_HOVER_COLOR_DESC')
 		),
-		'hidden_xs' 		=> array(
+		'hide_mobile' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_MOBILE'),
 			'desc'		=> JText::_('HELIX_HIDDEN_MOBILE_DESC'),
 			'std'		=> '',
 		),
-		'hidden_sm' 		=> array(
+		'hide_large_mobile' => array(
+			'type'		=> 'checkbox',
+			'title'		=> JText::_('HELIX_HIDDEN_LARGE_MOBILE'),
+			'desc'		=> JText::_('HELIX_HIDDEN_LARGE_MOBILE_DESC'),
+			'std'		=> '',
+		),
+		'hide_tablet' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_TABLET'),
 			'desc'		=> JText::_('HELIX_HIDDEN_TABLET_DESC'),
 			'std'		=> '',
 		),
-		'hidden_md' 		=> array(
+		'hide_small_desktop' => array(
+			'type'		=> 'checkbox',
+			'title'		=> JText::_('HELIX_HIDDEN_SMALL_DESKTOP'),
+			'desc'		=> JText::_('HELIX_HIDDEN_SMALL_DESKTOP_DESC'),
+			'std'		=> '',
+		),
+		'hide_desktop' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_DESKTOP'),
 			'desc'		=> JText::_('HELIX_HIDDEN_DESKTOP_DESC'),
@@ -161,65 +190,63 @@ $columnSettings = array(
 			'values'	=> array(),
 			'std'=>'none',
 		),
-		'hidden_xs' 		=> array(
+		'hide_mobile' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_MOBILE'),
 			'desc'		=> JText::_('HELIX_HIDDEN_MOBILE_DESC'),
 			'std'		=> '',
 		),
-		'hidden_sm' 		=> array(
+		'hide_large_mobile' => array(
+			'type'		=> 'checkbox',
+			'title'		=> JText::_('HELIX_HIDDEN_LARGE_MOBILE'),
+			'desc'		=> JText::_('HELIX_HIDDEN_LARGE_MOBILE_DESC'),
+			'std'		=> '',
+		),
+		'hide_tablet' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_TABLET'),
 			'desc'		=> JText::_('HELIX_HIDDEN_TABLET_DESC'),
 			'std'		=> '',
 		),
-		'hidden_md' 		=> array(
+		'hide_small_desktop' => array(
+			'type'		=> 'checkbox',
+			'title'		=> JText::_('HELIX_HIDDEN_SMALL_DESKTOP'),
+			'desc'		=> JText::_('HELIX_HIDDEN_SMALL_DESKTOP_DESC'),
+			'std'		=> '',
+		),
+		'hide_desktop' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_DESKTOP'),
 			'desc'		=> JText::_('HELIX_HIDDEN_DESKTOP_DESC'),
 			'std'		=> '',
 		),
-		'sm_col' 		=> array(
+		'xl_col' 		=> array(
+			'type'		=> 'select',
+			'title'		=> JText::_('HELIX_DESKTOP_LAYOUT'),
+			'desc'		=> JText::_('HELIX_DESKTOP_LAYOUT_DESC'),
+			'values'	=> column_grid_system('xl'),
+			'std'		=> 0,
+		),
+		'md_col' 		=> array(
 			'type'		=> 'select',
 			'title'		=> JText::_('HELIX_TABLET_LAYOUT'),
 			'desc'		=> JText::_('HELIX_TABLET_LAYOUT_DESC'),
-			'values'	=> array(
-				'' => "",
-				'col-sm-1' => 'col-sm-1',
-				'col-sm-2' => 'col-sm-2',
-				'col-sm-3' => 'col-sm-3',
-				'col-sm-4' => 'col-sm-4',
-				'col-sm-5' => 'col-sm-5',
-				'col-sm-6' => 'col-sm-6',
-				'col-sm-7' => 'col-sm-7',
-				'col-sm-8' => 'col-sm-8',
-				'col-sm-9' => 'col-sm-9',
-				'col-sm-10' => 'col-sm-10',
-				'col-sm-11' => 'col-sm-11',
-				'col-sm-12' => 'col-sm-12',
-			),
-			'std'		=> '',
+			'values'	=> column_grid_system('md'),
+			'std'		=> 0,
+		),
+		'sm_col' 		=> array(
+			'type'		=> 'select',
+			'title'		=> JText::_('HELIX_LARGE_MOBILE_LAYOUT'),
+			'desc'		=> JText::_('HELIX_LARGE_MOBILE_LAYOUT_DESC'),
+			'values'	=> column_grid_system('sm'),
+			'std'		=> 0,
 		),
 		'xs_col' 		=> array(
 			'type'		=> 'select',
 			'title'		=> JText::_('HELIX_MOBILE_LAYOUT'),
 			'desc'		=> JText::_('HELIX_MOBILE_LAYOUT_DESC'),
-			'values'	=> array(
-				'' => "",
-				'col-xs-1' => 'col-xs-1',
-				'col-xs-2' => 'col-xs-2',
-				'col-xs-3' => 'col-xs-3',
-				'col-xs-4' => 'col-xs-4',
-				'col-xs-5' => 'col-xs-5',
-				'col-xs-6' => 'col-xs-6',
-				'col-xs-7' => 'col-xs-7',
-				'col-xs-8' => 'col-xs-8',
-				'col-xs-9' => 'col-xs-9',
-				'col-xs-10' => 'col-xs-10',
-				'col-xs-11' => 'col-xs-11',
-				'col-xs-12' => 'col-xs-12',
-			),
-			'std'		=> '',
+			'values'	=> column_grid_system('xs'),
+			'std'		=> 0,
 		),
 		'custom_class' => array(
 			'type'		=> 'text',

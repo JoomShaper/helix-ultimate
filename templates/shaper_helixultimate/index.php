@@ -147,86 +147,87 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     $theme->add_js('popper.min.js, bootstrap.min.js, jquery.sticky.js, main.js'); // JS Files
 
     $scssVars = array(
-      'preset' => $this->params->get('preset', 'preset1'),
-      'header_height' => $this->params->get('header_height', '60px'),
-      'text_color' => $this->params->get('text_color'),
-      'bg_color' => $this->params->get('bg_color'),
-      'link_color' => $this->params->get('link_color'),
-      'link_hover_color' => $this->params->get('link_hover_color'),
-      'header_bg_color' => $this->params->get('header_bg_color'),
-      'topbar_bg_color' => $this->params->get('topbar_bg_color'),
-      'topbar_text_color' => $this->params->get('topbar_text_color'),
-      'logo_text_color' => $this->params->get('logo_text_color'),
-      'menu_text_color' => $this->params->get('menu_text_color'),
-      'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
-      'menu_text_active_color' => $this->params->get('menu_text_active_color'),
-      'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
-      'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
-      'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
-      'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
-      'footer_bg_color' => $this->params->get('footer_bg_color'),
-      'footer_text_color' => $this->params->get('footer_text_color'),
-      'footer_link_color' => $this->params->get('footer_link_color'),
-      'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
-      'preloader_bg' => $preloader_bg,
-      'preloader_tx' => $preloader_tx
+        'preset' => $this->params->get('preset', 'preset1'),
+        'header_height' => $this->params->get('header_height', '60px'),
+        'text_color' => $this->params->get('text_color'),
+        'bg_color' => $this->params->get('bg_color'),
+        'link_color' => $this->params->get('link_color'),
+        'link_hover_color' => $this->params->get('link_hover_color'),
+        'header_bg_color' => $this->params->get('header_bg_color'),
+        'logo_text_color' => $this->params->get('logo_text_color'),
+        'menu_text_color' => $this->params->get('menu_text_color'),
+        'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
+        'menu_text_active_color' => $this->params->get('menu_text_active_color'),
+        'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
+        'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
+        'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
+        'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
+        'footer_bg_color' => $this->params->get('footer_bg_color'),
+        'footer_text_color' => $this->params->get('footer_text_color'),
+        'footer_link_color' => $this->params->get('footer_link_color'),
+        'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
+        'preloader_bg' => $preloader_bg,
+        'preloader_tx' => $preloader_tx
     );
 
     $theme->addSCSS('master', $scssVars, 'template');
     $theme->addSCSS('presets', $scssVars, 'presets/' . $this->params->get('preset', 'preset1'));
 
     //Before Head
-    if ($before_head = $this->params->get('before_head')) {
+    if ($before_head = $this->params->get('before_head'))
+    {
         echo $before_head . "\n";
     }
     ?>
 </head>
 <body class="<?php echo $theme->bodyClass($body_classes); ?> off-canvas-menu-init">
 
-<div class="body-wrapper">
-    <div class="body-innerwrapper">
-        <?php $theme->render_layout(); ?>
-    </div> <!-- /.body-innerwrapper -->
-</div> <!-- /.body-innerwrapper -->
+    <div class="body-wrapper">
+        <div class="body-innerwrapper">
+            <?php $theme->render_layout(); ?>
+        </div>
+    </div>
 
-<!-- Off Canvas Menu -->
-<div class="offcanvas-menu">
-    <a href="#" class="close-offcanvas"><i class="fa fa-remove"></i></a>
-    <div class="offcanvas-inner">
-        <?php if ($theme->count_modules('offcanvas')) { ?>
-            <jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
-        <?php } else { ?>
-            <p class="alert alert-warning">
-                <?php echo JText::_('HELIX_NO_MODULE_OFFCANVAS'); ?>
-            </p>
-        <?php } ?>
-    </div> <!-- /.offcanvas-inner -->
-</div> <!-- /.offcanvas-menu -->
+    <!-- Off Canvas Menu -->
+    <div class="offcanvas-menu">
+        <a href="#" class="close-offcanvas"><i class="fa fa-remove"></i></a>
+        <div class="offcanvas-inner">
+            <?php if ($theme->count_modules('offcanvas')) { ?>
+                <jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
+            <?php } else { ?>
+                <p class="alert alert-warning">
+                    <?php echo JText::_('HELIX_NO_MODULE_OFFCANVAS'); ?>
+                </p>
+            <?php } ?>
+        </div>
+    </div>
 
-<?php
-if ($this->params->get('compress_css')) {
-    $theme->compressCSS();
-}
+    <?php
+    if ($this->params->get('compress_css'))
+    {
+        $theme->compressCSS();
+    }
 
-$tempOption    = $app->input->get('option');
-// $tempView       = $app->input->get('view');
+    $tempOption    = $app->input->get('option');
 
-if ( $this->params->get('compress_js') && $tempOption != 'com_config' ) {
-    $theme->compressJS($this->params->get('exclude_js'));
-}
+    if ( $this->params->get('compress_js') && $tempOption != 'com_config' )
+    {
+        $theme->compressJS($this->params->get('exclude_js'));
+    }
 
-//before body
-if ($before_body = $this->params->get('before_body')) {
-    echo $before_body . "\n";
-} ?>
+    //before body
+    if ($before_body = $this->params->get('before_body'))
+    {
+        echo $before_body . "\n";
+    } ?>
 
-<jdoc:include type="modules" name="debug" />
-<!-- Preloader -->
-<jdoc:include type="modules" name="helixpreloader" />
-<!-- Go to top -->
-<?php if ($this->params->get('goto_top')) { ?>
-    <a href="javascript:void(0)" class="scrollup">&nbsp;</a>
-<?php } ?>
+    <jdoc:include type="modules" name="debug" />
+    <!-- Preloader -->
+    <jdoc:include type="modules" name="helixpreloader" />
+    <!-- Go to top -->
+    <?php if ($this->params->get('goto_top')) { ?>
+        <a href="javascript:void(0)" class="scrollup">&nbsp;</a>
+    <?php } ?>
 
 </body>
 </html>

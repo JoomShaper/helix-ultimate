@@ -9,6 +9,15 @@ body {
 	background-color: $bg_color;
 }
 
+#sp-top-bar {
+	background: $topbar_bg_color;
+	color: $topbar_text_color;
+
+	a {
+		color: $topbar_text_color;
+	}
+}
+
 #sp-header {
 	background: $header_bg_color;
 }

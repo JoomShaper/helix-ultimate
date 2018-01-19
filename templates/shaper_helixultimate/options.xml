@@ -134,6 +134,8 @@
 				<color name="link_color" value="#25A9E0" />
 				<color name="link_hover_color" value="#2BBBF7" />
 				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
 				<color name="logo_text_color" value="#25A9E0" />
 				<color name="menu_text_color" value="#252525" />
 				<color name="menu_text_hover_color" value="#25A9E0" />
@@ -154,6 +156,8 @@
 		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#25A9E0" label="Link Color" />
 		<field name="link_hover_color" class="preset-control" helixgroup="preset_body" type="color" default="#2BBBF7" label="Link Hover Color" />
 		<field name="header_bg_color" class="preset-control" helixgroup="preset_header" type="color" default="#25A9E0" label="Header Background Color" />
+		<field name="topbar_bg_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#333333" label="Top Bar Background Color" />
+		<field name="topbar_text_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#AAAAAA" label="Top Bar Text Color" />
 		<field name="logo_text_color" class="preset-control" helixgroup="preset_header" type="color" default="#25A9E0" label="Logo Text Color" />
 		<field name="menu_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="Text Color" />
 		<field name="menu_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Hover Text Color" />

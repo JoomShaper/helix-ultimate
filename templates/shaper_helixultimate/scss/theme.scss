@@ -110,8 +110,9 @@ img {
   padding: 8px 0;
   .sp-module {
     display: inline-block;
-    margin: 0 0 0 20px;
+    margin: 0 0 0 1.25rem;
   }
+  font-size: 0.875rem;
 }
 
 ul.social-icons {
@@ -122,9 +123,6 @@ ul.social-icons {
   >li {
     display: inline-block;
     margin: 5px 7px;
-    a {
-      color: #999999;
-    }
   }
 }
 
@@ -685,6 +683,14 @@ ul.social-icons {
 
   .fa-spinner {
     margin-right: 5px;
+  }
+}
+
+// Misc
+.pagination-wrapper {
+  align-items: center;
+  .pagination {
+    margin-bottom: 0;
   }
 }
 

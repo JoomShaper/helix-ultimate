@@ -124,7 +124,7 @@ $doc->addScriptdeclaration("\nvar sp_gotop = '" . $this->params->get('goto_top')
 $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('offcanvas_animation') . "';\n");
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>" amp>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
     <link rel="canonical" href="<?php echo JUri::current(); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -154,6 +154,8 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
       'link_color' => $this->params->get('link_color'),
       'link_hover_color' => $this->params->get('link_hover_color'),
       'header_bg_color' => $this->params->get('header_bg_color'),
+      'topbar_bg_color' => $this->params->get('topbar_bg_color'),
+      'topbar_text_color' => $this->params->get('topbar_text_color'),
       'logo_text_color' => $this->params->get('logo_text_color'),
       'menu_text_color' => $this->params->get('menu_text_color'),
       'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),

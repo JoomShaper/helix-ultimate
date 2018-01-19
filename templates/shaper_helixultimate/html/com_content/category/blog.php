@@ -124,13 +124,15 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<?php endif; ?>
 
 	<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-		<nav class="">
+		<nav class="d-flex">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-				<div class="counter">
+				<div class="mr-auto">
+					<?php echo $this->pagination->getPagesLinks(); ?>
+				</div>
+				<div class="pagination-counter">
 					<?php echo $this->pagination->getPagesCounter(); ?>
 				</div>
 			<?php endif; ?>
-			<?php echo $this->pagination->getPagesLinks(); ?>
 		</nav>
 	<?php endif; ?>
 

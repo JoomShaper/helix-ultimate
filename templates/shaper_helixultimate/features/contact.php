@@ -20,28 +20,30 @@ class HelixUltimateFeatureContact
 
 	public function renderFeature()
 	{
-		if($this->params->get('enable_contactinfo'))
+		$conditions = $this->params->get('contactinfo') && ($this->params->get('contact_phone') || $this->params->get('contact_mobile') || $this->params->get('contact_email') || $this->params->get('contact_time'));
+
+		if($conditions)
 		{
 			$output = '<ul class="sp-contact-info">';
-			
+
 			if($this->params->get('contact_phone'))
 			{
-				$output .= '<li class="sp-contact-phone"><i class="fa fa-phone"></i> <a href="tel:' . str_replace(' ', '', $this->params->get('contact_phone')) . '">' . $this->params->get('contact_phone') . '</a></li>';
+				$output .= '<li class="sp-contact-phone"><span class="fa fa-phone"></span> <a href="tel:' . str_replace(' ', '', $this->params->get('contact_phone')) . '">' . $this->params->get('contact_phone') . '</a></li>';
 			}
 
 			if($this->params->get('contact_mobile'))
 			{
-				$output .= '<li class="sp-contact-mobile"><i class="fa fa-mobile"></i> <a href="tel:'. str_replace(' ', '', $this->params->get('contact_mobile')) .'">' . $this->params->get('contact_mobile') . '</a></li>';
+				$output .= '<li class="sp-contact-mobile"><span class="fa fa-mobile"></span> <a href="tel:'. str_replace(' ', '', $this->params->get('contact_mobile')) .'">' . $this->params->get('contact_mobile') . '</a></li>';
 			}
 
 			if($this->params->get('contact_email'))
 			{
-				$output .= '<li class="sp-contact-email"><i class="fa fa-envelope"></i> <a href="mailto:'. $this->params->get('contact_email') .'">' . $this->params->get('contact_email') . '</a></li>';
+				$output .= '<li class="sp-contact-email"><span class="fa fa-envelope"></span> <a href="mailto:'. $this->params->get('contact_email') .'">' . $this->params->get('contact_email') . '</a></li>';
 			}
 
-			if($this->params->get('contact_time')) 
+			if($this->params->get('contact_time'))
 			{
-				$output .= '<li class="sp-contact-time"><i class="fa fa-clock-o"></i>' . $this->params->get('contact_time') . '</li>';
+				$output .= '<li class="sp-contact-time"><span class="fa fa-clock-o"></span>' . $this->params->get('contact_time') . '</li>';
 			}
 
 			$output .= '</ul>';

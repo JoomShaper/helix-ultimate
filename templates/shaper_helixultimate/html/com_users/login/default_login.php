@@ -61,7 +61,7 @@ $usersConfig = JComponentHelper::getParams('com_users');
 				<?php endif; ?>
 
 				<?php if (JPluginHelper::isEnabled('system', 'remember')) : ?>
-					<div class="form-group">
+					<div class="form-check form-group">
 						<label class="form-check-label">
 							<input class="form-check-input" type="checkbox" name="remember" id="remember" class="inputbox" value="yes">
 							<?php echo JText::_('COM_USERS_LOGIN_REMEMBER_ME') ?>

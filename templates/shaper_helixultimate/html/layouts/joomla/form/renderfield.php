@@ -1,23 +1,8 @@
 <?php
-/**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
 
 defined('JPATH_BASE') or die;
 
 extract($displayData);
-
-/**
- * Layout variables
- * ---------------------
- * 	$options         : (array)  Optional parameters
- * 	$label           : (string) The html code for the label (not required if $options['hiddenLabel'] is true)
- * 	$input           : (string) The input field html code
- */
 
 if (!empty($options['showonEnabled']))
 {

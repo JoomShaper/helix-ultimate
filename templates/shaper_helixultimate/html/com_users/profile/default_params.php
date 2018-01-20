@@ -9,18 +9,14 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 <?php $fields = $this->form->getFieldset('params'); ?>
 <?php if (count($fields)) : ?>
 	<div id="users-profile-params">
-		<div class="sp-fieldset">
-			<div class="sp-fieldset-title">
-				<?php echo JText::_('COM_USERS_SETTINGS_FIELDSET_LABEL'); ?>
-			</div>
-			<div class="sp-fields">
-				<?php foreach ($fields as $field) : ?>
+		<div class="mb-3">
+			<strong><?php echo JText::_('COM_USERS_SETTINGS_FIELDSET_LABEL'); ?></strong>
+		</div>
+		<ul class="list-group">
+			<?php foreach ($fields as $field) : ?>
 					<?php if (!$field->hidden) : ?>
-					<div class="sp-field">
-						<span class="sp-field-label">
-							<?php echo $field->title; ?>
-						</span>
-						<span class="sp-field-content">
+						<li class="list-group-item">
+							<strong><?php echo $field->title; ?></strong>:
 							<?php if (JHtml::isRegistered('users.' . $field->id)) : ?>
 								<?php echo JHtml::_('users.' . $field->id, $field->value); ?>
 							<?php elseif (JHtml::isRegistered('users.' . $field->fieldname)) : ?>
@@ -30,11 +26,9 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 							<?php else : ?>
 								<?php echo JHtml::_('users.value', $field->value); ?>
 							<?php endif; ?>
-						</span>
-					</div>
+						</li>
 					<?php endif; ?>
-				<?php endforeach; ?>
-			</div>
-		</div>
+			<?php endforeach; ?>
+		</ul>
 	</div>
 <?php endif; ?>

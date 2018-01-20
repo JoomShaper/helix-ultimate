@@ -1024,33 +1024,9 @@ only screen and (min-device-pixel-ratio: 1.5) {
 }
 
 // profile
-.sp-fieldset {
-  .sp-fieldset-title {
+.profile {
+  >div:not(:last-child) {
     margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #ccc;
-  }
-
-  .sp-fields {
-    >.sp-field {
-      padding: 10px;
-      border: 1px solid #e5e5e5;
-      border-radius: 3px;
-      max-width: 600px;
-
-      .sp-field-label {
-        font-weight: 600;
-        display: inline-block;
-        width: 200px;
-        &::after {
-          contain: ":";
-        }
-      }
-
-      &:not(:last-child) {
-        margin-bottom: 20px;
-      }
-    }
   }
 }
 

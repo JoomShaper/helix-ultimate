@@ -17,17 +17,8 @@ defined('_JEXEC') or die;
 			</h1>
 		</div>
 	<?php endif; ?>
-	<div class="row">
-		<div class="col-md-6">
-			<?php echo $this->loadTemplate('core'); ?>
-		</div>
-		<div class="col-md-6">
-			<?php echo $this->loadTemplate('params'); ?>
-		</div>
-		<div class="col-md-12">
-			<div class="row">
-				<?php echo $this->loadTemplate('custom'); ?>
-			</div>
-		</div>
-	</div>
+	
+	<?php echo $this->loadTemplate('core'); ?>
+	<?php echo $this->loadTemplate('params'); ?>
+	<?php echo $this->loadTemplate('custom'); ?>
 </div>

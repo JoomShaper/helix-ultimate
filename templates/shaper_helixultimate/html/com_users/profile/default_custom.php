@@ -35,39 +35,44 @@ foreach ($tmp as $customField)
 <?php foreach ($fieldsets as $group => $fieldset) : ?>
 	<?php $fields = $this->form->getFieldset($group); ?>
 	<?php if (count($fields)) : ?>
-		<div class="col-md-6">
-			<div class="card users-profile-custom-<?php echo $group; ?>" id="users-profile-custom-<?php echo $group; ?>">
-				<div class="card-header">
+		<div class="users-profile-custom-<?php echo $group; ?>" id="users-profile-custom-<?php echo $group; ?>">
+			<div class="sp-fieldset">
+				<div class="sp-fieldset-title">
 					<?php if (isset($fieldset->label) && ($legend = trim(JText::_($fieldset->label))) !== '') : ?>
-						<strong><?php echo $legend; ?></strong>
+						<?php echo $legend; ?>
 					<?php endif; ?>
 					<?php if (isset($fieldset->description) && trim($fieldset->description)) : ?>
-						<div><?php echo $this->escape(JText::_($fieldset->description)); ?></div>
+						<div><?php echo $this->escape(JText::_($fieldset->description)); ?></span>
 					<?php endif; ?>
 				</div>
-				<div class="list-group list-group-flush">
-					<?php foreach ($fields as $field) : ?>
+
+				<div class="sp-fields">
+				<?php foreach ($fields as $field) : ?>
 						<?php if (!$field->hidden && $field->type !== 'Spacer') : ?>
-							<div class="list-group-item">
-								<div class="mb-1">
-									<strong><?php echo $field->title; ?></strong>
-								</div>
-								<?php if (key_exists($field->fieldname, $customFields)) : ?>
-									<?php echo $customFields[$field->fieldname]->value ?: JText::_('COM_USERS_PROFILE_VALUE_NOT_FOUND'); ?>
-								<?php elseif (JHtml::isRegistered('users.' . $field->id)) : ?>
-									<?php echo JHtml::_('users.' . $field->id, $field->value); ?>
-								<?php elseif (JHtml::isRegistered('users.' . $field->fieldname)) : ?>
-									<?php echo JHtml::_('users.' . $field->fieldname, $field->value); ?>
-								<?php elseif (JHtml::isRegistered('users.' . $field->type)) : ?>
-									<?php echo JHtml::_('users.' . $field->type, $field->value); ?>
-								<?php else : ?>
-									<?php echo JHtml::_('users.value', $field->value); ?>
-								<?php endif; ?>
-							</div>
-						<?php endif; ?>
+				<div class="sp-field">
+						<span class="sp-field-label">
+							<?php echo $field->title; ?>
+						</span>
+						<span class="sp-field-content">
+						<?php if (key_exists($field->fieldname, $customFields)) : ?>
+						<?php echo $customFields[$field->fieldname]->value ?: JText::_('COM_USERS_PROFILE_VALUE_NOT_FOUND'); ?>
+					<?php elseif (JHtml::isRegistered('users.' . $field->id)) : ?>
+						<?php echo JHtml::_('users.' . $field->id, $field->value); ?>
+					<?php elseif (JHtml::isRegistered('users.' . $field->fieldname)) : ?>
+						<?php echo JHtml::_('users.' . $field->fieldname, $field->value); ?>
+					<?php elseif (JHtml::isRegistered('users.' . $field->type)) : ?>
+						<?php echo JHtml::_('users.' . $field->type, $field->value); ?>
+					<?php else : ?>
+						<?php echo JHtml::_('users.value', $field->value); ?>
+					<?php endif; ?>
+						</span>
+					</div>
+					<?php endif; ?>
 					<?php endforeach; ?>
-				</div>
+					</div>
+
 			</div>
+			
 		</div>
 	<?php endif; ?>
 <?php endforeach; ?>

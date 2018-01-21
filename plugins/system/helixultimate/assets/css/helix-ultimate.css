@@ -2854,7 +2854,7 @@ select:focus::-ms-value {
   border-bottom: 1px solid #E8EEF3;
 }
 
-.helicx-ultimate-section-title {
+.helix-ultimate-section-title {
   font-size: 12px;
   font-weight: 500;
   color: #6F737A;
@@ -2872,6 +2872,7 @@ select:focus::-ms-value {
   border-radius: 2px;
   cursor: move;
   text-decoration: none;
+  margin-right: 8px;
 }
 
 .helix-ultimate-move-row:hover,

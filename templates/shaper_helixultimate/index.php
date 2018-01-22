@@ -47,7 +47,7 @@ if (isset($menu) && $menu) {
 }
 
 // Offcanvas
-$body_classes .= ' offcanvs-position-' . $this->params->get('offcanvas_position', 'right');
+$body_classes .= ' offcanvas-init offcanvs-position-' . $this->params->get('offcanvas_position', 'right');
 
 //Body Background Image
 if ($bg_image = $this->params->get('body_bg_image')) {
@@ -185,7 +185,7 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     }
     ?>
 </head>
-<body class="<?php echo $theme->bodyClass($body_classes); ?> off-canvas-menu-init">
+<body class="<?php echo $theme->bodyClass($body_classes); ?>">
 
     <div class="body-wrapper">
         <div class="body-innerwrapper">
@@ -194,8 +194,9 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     </div>
 
     <!-- Off Canvas Menu -->
+    <div class="offcanvas-overlay"></div>
     <div class="offcanvas-menu">
-        <a href="#" class="close-offcanvas"><i class="fa fa-remove"></i></a>
+        <a href="#" class="close-offcanvas"><span class="fa fa-remove"></span></a>
         <div class="offcanvas-inner">
             <?php if ($theme->count_modules('offcanvas')) { ?>
                 <jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />

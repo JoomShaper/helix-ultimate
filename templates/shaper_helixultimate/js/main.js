@@ -7,18 +7,15 @@
 
 jQuery(function ($) {
 
-    // ************    START Helix 1.4 JS    ************** //
-    // **************************************************** //
-
+    // Offcanvs
     $('#offcanvas-toggler').on('click', function (event) {
         event.preventDefault();
-        $('.off-canvas-menu-init').addClass('offcanvas');
+        $('.offcanvas-init').addClass('offcanvas-active');
     });
 
-    $('<div class="offcanvas-overlay"></div>').insertBefore('.offcanvas-menu');
     $('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
         event.preventDefault();
-        $('.off-canvas-menu-init').removeClass('offcanvas');
+        $('.offcanvas-init').removeClass('offcanvas-active');
     });
 
     // if sticky header

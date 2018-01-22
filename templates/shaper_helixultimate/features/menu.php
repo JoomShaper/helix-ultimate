@@ -36,7 +36,7 @@ class HelixUltimateFeatureMenu
 			{
 				$output .= '<a id="offcanvas-toggler" class="offcanvas-toggler-right" href="#"><span class="fa fa-bars"></span></a>';
 			}
-			$menu = new HelixUltimateMenu('d-md-none d-lg-block','');
+			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
 			$output .= '</div>';
 		}
@@ -47,7 +47,7 @@ class HelixUltimateFeatureMenu
 			{
 				$output .= '<a id="offcanvas-toggler" class="offcanvas-toggler-right d-block d-lg-none" href="#"><span class="fa fa-bars"></span></a>';
 			}
-			$menu = new HelixUltimateMenu('d-md-none d-lg-block','');
+			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
 			$output .= '</div>';
 		} else {

@@ -1109,8 +1109,31 @@ table.category {
   }
 }
 
+.sp-scroll-up {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+  background: #333;
+  border-radius: 3px;
+  z-index: 1000;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: #fff;
+    background: #444;
+  }
+}
+
 @media screen and (min-width: 768px) and (max-width: 1199px){
-  .scrollup {
+  .sp-scroll-up {
     bottom: 25px;
     right: 25px;
   }

@@ -44,28 +44,22 @@ jQuery(function ($) {
             stickyNav();
         });
     }
+
     // go to top
-    if (typeof sp_gotop === 'undefined') {
-        sp_gotop = '';
-    }
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('.sp-scroll-up').fadeIn();
+        } else {
+            $('.sp-scroll-up').fadeOut(400);
+        }
+    });
 
-    if (sp_gotop) {
-        // go to top
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 100) {
-                $('.scrollup').fadeIn();
-            } else {
-                $('.scrollup').fadeOut(400);
-            }
-        });
-
-        $('.scrollup').click(function () {
-            $("html, body").animate({
-                scrollTop: 0
-            }, 600);
-            return false;
-        });
-    } // has go to top
+    $('.sp-scroll-up').click(function () {
+        $("html, body").animate({
+            scrollTop: 0
+        }, 600);
+        return false;
+    });
 
     // Preloader
     $(window).on('load', function () {

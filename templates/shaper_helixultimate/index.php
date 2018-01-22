@@ -123,7 +123,6 @@ if ($custom_js = $this->params->get('custom_js')) {
 
 //preloader & goto top
 $doc->addScriptdeclaration("\nvar sp_gotop = '" . $this->params->get('goto_top') . "';\n");
-$doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('offcanvas_animation') . "';\n");
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -229,8 +228,8 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     <!-- Preloader -->
     <jdoc:include type="modules" name="helixpreloader" />
     <!-- Go to top -->
-    <?php if ($this->params->get('goto_top')) { ?>
-        <a href="javascript:void(0)" class="scrollup">&nbsp;</a>
+    <?php if ($this->params->get('goto_top', 0)) { ?>
+        <a href="#" class="sp-scroll-up"><span class="fa fa-chevron-up"></span></a>
     <?php } ?>
 
 </body>

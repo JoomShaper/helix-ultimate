@@ -172,6 +172,7 @@
 	</fieldset>
 
 	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-list-alt">
+		<field type="helixheaders" name="header_style" />
 		<field type="layout" name="layout" />
 	</fieldset>
 

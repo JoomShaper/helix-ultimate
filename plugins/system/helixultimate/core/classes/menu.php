@@ -8,7 +8,7 @@
 
 defined ('_JEXEC') or die ('resticted aceess');
 
-class Helix3Menu
+class HelixUltimateMenu
 {
     protected $_items = array();
 
@@ -154,7 +154,8 @@ class Helix3Menu
         {
             $this->navigation(null,$keys[0]);
         }
-        echo $this->menu;
+        
+        return $this->menu;
     }
 
     public function navigation($pitem, $start = 0, $end = 0, $class = '')

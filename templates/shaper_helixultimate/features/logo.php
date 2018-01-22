@@ -23,6 +23,10 @@ class HelixUltimateFeatureLogo {
 
 		$template_name = JFactory::getApplication()->getTemplate();
 
+		$menu_type = $this->params->get('menu_type');
+		$offcanvs_position = $this->params->get('offcanvas_position', 'right');
+
+
 		//Retina Image
 		if( $this->params->get('logo_type') == 'image' ) {
 			jimport('joomla.image.image');
@@ -46,6 +50,20 @@ class HelixUltimateFeatureLogo {
 		}
 
 		$html  = '';
+
+		if($offcanvs_position == 'left') 
+		{
+			if($menu_type == 'mega')
+			{
+				$html .= '<a id="offcanvas-toggler" class="offcanvas-toggler-left d-block d-lg-none" href="#"><span class="fa fa-bars"></span></a>';
+			}
+			else
+			{
+				$html .= '<a id="offcanvas-toggler" class="offcanvas-toggler-left" href="#"><span class="fa fa-bars"></span></a>';
+			}
+		}
+
+
 		$custom_logo_class = '';
 		$sitename = \JFactory::getApplication()->get('sitename');
 

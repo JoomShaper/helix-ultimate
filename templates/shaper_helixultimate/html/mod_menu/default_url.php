@@ -1,11 +1,4 @@
 <?php
-/**
- * @package     Joomla.Site
- * @subpackage  mod_menu
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
 
 defined('_JEXEC') or die;
 
@@ -44,6 +37,11 @@ if ($item->menu_image)
 	{
 		$linktype .= '<span class="image-title">' . $item->title . '</span>';
 	}
+}
+
+if ($item->parent)
+{
+	$linktype .= '<span class="menu-toggler"></span>';
 }
 
 if ($item->browserNav == 1)

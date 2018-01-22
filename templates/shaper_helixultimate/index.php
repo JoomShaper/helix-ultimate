@@ -46,6 +46,9 @@ if (isset($menu) && $menu) {
     }
 }
 
+// Offcanvas
+$body_classes .= ' offcanvs-position-' . $this->params->get('offcanvas_position', 'right');
+
 //Body Background Image
 if ($bg_image = $this->params->get('body_bg_image')) {
 

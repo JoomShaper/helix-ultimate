@@ -1,11 +1,4 @@
 <?php
-/**
- * @package     Joomla.Site
- * @subpackage  mod_menu
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
 
 defined('_JEXEC') or die;
 
@@ -28,9 +21,14 @@ if ($item->menu_image)
 
 	if ($item->params->get('menu_text', 1))
 	{
-		$linktype .= '<span class="image-title">' . $item->title . '</span>';
+		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
 	}
 }
 
+if ($item->parent)
+{
+	$linktype .= '<span class="menu-toggler"></span>';
+}
+
 ?>
-<span class="separator <?php echo $anchor_css; ?>"<?php echo $title; ?>><?php echo $linktype; ?></span>
+<span class="menu-separator <?php echo $anchor_css; ?>"<?php echo $title; ?>><?php echo $linktype; ?></span>

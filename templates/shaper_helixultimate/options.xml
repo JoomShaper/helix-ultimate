@@ -3,8 +3,8 @@
 	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-cog">
 
 		<field name="logo_type" helixgroup="logo" type="list" default="image" label="HELIX_ULTIMATE_LOGO_TYPE">
-				<option value="image">HELIX_LOGO_TYPE_IMAGE</option>
-				<option value="text">HELIX_LOGO_TYPE_TEXT</option>
+			<option value="image">HELIX_LOGO_TYPE_IMAGE</option>
+			<option value="text">HELIX_LOGO_TYPE_TEXT</option>
 		</field>
 
 		<!-- logo image -->
@@ -26,41 +26,41 @@
 		<!--Backgroud-->
 		<field name="body_bg_image" helixgroup="body" type="helixmedia" preview="true" label="HELIX_BODY_BACKGROUND_IMAGE" description="HELIX_BODY_BACKGROUND_IMAGE_DESC" showon="boxed_layout:1" />
 		<field name="body_bg_repeat" helixgroup="body" type="list" default="inherit" label="HELIX_BG_REPEAT" description="HELIX_BG_REPEAT_DESC" showon="boxed_layout:1">
-				<option value="no-repeat">HELIX_BG_REPEAT_NO</option>
-				<option value="repeat">HELIX_BG_REPEAT_ALL</option>
-				<option value="repeat-x">HELIX_BG_REPEAT_HORIZ</option>
-				<option value="repeat-y">HELIX_BG_REPEAT_VERTI</option>
-				<option value="inherit">HELIX_BG_REPEAT_INHERIT</option>
+			<option value="no-repeat">HELIX_BG_REPEAT_NO</option>
+			<option value="repeat">HELIX_BG_REPEAT_ALL</option>
+			<option value="repeat-x">HELIX_BG_REPEAT_HORIZ</option>
+			<option value="repeat-y">HELIX_BG_REPEAT_VERTI</option>
+			<option value="inherit">HELIX_BG_REPEAT_INHERIT</option>
 		</field>
 		<field name="body_bg_size" helixgroup="body" type="list" default="inherit" label="HELIX_BG_SIZE" description="HELIX_BG_SIZE_DESC" showon="boxed_layout:1">
-				<option value="cover">HELIX_BG_COVER</option>
-				<option value="contain">HELIX_BG_CONTAIN</option>
-				<option value="inherit">HELIX_BG_INHERIT</option>
+			<option value="cover">HELIX_BG_COVER</option>
+			<option value="contain">HELIX_BG_CONTAIN</option>
+			<option value="inherit">HELIX_BG_INHERIT</option>
 		</field>
 		<field name="body_bg_attachment" helixgroup="body" type="list" default="inherit" label="HELIX_BG_ATTACHMENT" description="HELIX_BG_ATTACHMENT_DESC" showon="boxed_layout:1">
-				<option value="fixed">HELIX_BG_ATTACHMENT_FIXED</option>
-				<option value="scroll">HELIX_BG_ATTACHMENT_SCROLL</option>
-				<option value="inherit">HELIX_BG_ATTACHMENT_INHERIT</option>
+			<option value="fixed">HELIX_BG_ATTACHMENT_FIXED</option>
+			<option value="scroll">HELIX_BG_ATTACHMENT_SCROLL</option>
+			<option value="inherit">HELIX_BG_ATTACHMENT_INHERIT</option>
 		</field>
 		<field name="body_bg_position" helixgroup="body" type="list" default="0 0" label="HELIX_BG_POSITION" description="HELIX_BG_POSITION_DESC" showon="boxed_layout:1">
-				<option value="0 0">HELIX_BG_POSITION_LEFT_TOP</option>
-				<option value="0 50%">HELIX_BG_POSITION_LEFT_CENTER</option>
-				<option value="0 100%">HELIX_BG_POSITION_LEFT_BOTTOM</option>
-				<option value="50% 0">HELIX_BG_POSITION_CENTER_TOP</option>
-				<option value="50% 50%">HELIX_BG_POSITION_CENTER_CENTER</option>
-				<option value="50% 100%">HELIX_BG_POSITION_CENTER_BOTTOM</option>
-				<option value="100% 0">HELIX_BG_POSITION_RIGHT_TOP</option>
-				<option value="100% 50%">HELIX_BG_POSITION_RIGHT_CENTER</option>
-				<option value="100% 100%">HELIX_BG_POSITION_RIGHT_BOTTOM</option>
+			<option value="0 0">HELIX_BG_POSITION_LEFT_TOP</option>
+			<option value="0 50%">HELIX_BG_POSITION_LEFT_CENTER</option>
+			<option value="0 100%">HELIX_BG_POSITION_LEFT_BOTTOM</option>
+			<option value="50% 0">HELIX_BG_POSITION_CENTER_TOP</option>
+			<option value="50% 50%">HELIX_BG_POSITION_CENTER_CENTER</option>
+			<option value="50% 100%">HELIX_BG_POSITION_CENTER_BOTTOM</option>
+			<option value="100% 0">HELIX_BG_POSITION_RIGHT_TOP</option>
+			<option value="100% 50%">HELIX_BG_POSITION_RIGHT_CENTER</option>
+			<option value="100% 100%">HELIX_BG_POSITION_RIGHT_BOTTOM</option>
 		</field>
 
 		<!-- Footer -->
 		<field name="enabled_copyright" helixgroup="footer" type="checkbox" default="1" label="HELIX_COPYRIGHT" description="HELIX_COPYRIGHT_DESC" />
 		<field name="copyright_position" helixgroup="footer" type="modpos" default="footer1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" showon="enabled_copyright:1" />
 		<field name="copyright_load_pos" helixgroup="footer" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC" showon="enabled_copyright:1">
-				<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
-				<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
-				<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
+			<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
+			<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
+			<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
 		</field>
 
 		<field name="copyright" helixgroup="footer" type="textarea" rows="6" cols="30" default="© 2018 Your Company. Designed By JoomShaper" label="HELIX_COMPYRIGHT_TEXT" description="HELIX_COMPYRIGHT_TEXT_DESC" filter="raw" showon="enabled_copyright:1" />
@@ -70,9 +70,9 @@
 		<field name="show_social_icons" helixgroup="social_icons" type="checkbox" default="1" label="HELIX_SOCIAL_ICONS" description="HELIX_SOCIAL_ICONS_DESC" />
 		<field name="social_position" helixgroup="social_icons" type="modpos" default="top1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" showon="show_social_icons:1" />
 		<field name="social_load_pos" helixgroup="social_icons" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC" showon="show_social_icons:1">
-				<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
-				<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
-				<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
+			<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
+			<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
+			<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
 		</field>
 		<field name="facebook" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_FACEBOOK" description="HELIX_SOCIAL_ICON_FACEBOOK_DESC" showon="show_social_icons:1" />
 		<field name="twitter" helixgroup="social_icons" type="text" label="HELIX_SOCIAL_ICON_TWITTER" description="HELIX_SOCIAL_ICON_TWITTER_DESC" showon="show_social_icons:1" />
@@ -99,13 +99,13 @@
 		<field name="preloader" helixgroup="preloader" type="checkbox" default="0" label="HELIX_PRELOADER" description="HELIX_PRELOADER_DESC" />
 
 		<field name="preloader_animation" helixgroup="preloader" type="list" default="circle" label="HELIX_PRELOADER_ANIMATION" description="HELIX_PRELOADER_ANIMATION_DESC" showon="preloader:1">
-				<option value="circle">HELIX_PRELOADER_ANIMATION_CIRCLE</option>
-				<option value="double-loop">HELIX_PRELOADER_ANIMATION_DOUBLE_LOOP</option>
-				<option value="wave-two">HELIX_PRELOADER_ANIMATION_WAVE_TWO</option>
-				<option value="audio-wave">HELIX_PRELOADER_ANIMATION_AUDIO_WAVE</option>
-				<option value="circle-two">HELIX_PRELOADER_ANIMATION_CIRCLE_TWO</option>
-				<option value="clock">HELIX_PRELOADER_ANIMATION_CLOCK</option>
-				<option value="logo">HELIX_PRELOADER_ANIMATION_LOGO</option>
+			<option value="circle">HELIX_PRELOADER_ANIMATION_CIRCLE</option>
+			<option value="double-loop">HELIX_PRELOADER_ANIMATION_DOUBLE_LOOP</option>
+			<option value="wave-two">HELIX_PRELOADER_ANIMATION_WAVE_TWO</option>
+			<option value="audio-wave">HELIX_PRELOADER_ANIMATION_AUDIO_WAVE</option>
+			<option value="circle-two">HELIX_PRELOADER_ANIMATION_CIRCLE_TWO</option>
+			<option value="clock">HELIX_PRELOADER_ANIMATION_CLOCK</option>
+			<option value="logo">HELIX_PRELOADER_ANIMATION_LOGO</option>
 		</field>
 
 		<field name="preloader_bg" helixgroup="preloader" type="color" default="#f5f5f5" label="HELIX_PRELOADER_BG_COLOR" description="HELIX_PRELOADER_BG_COLOR_DESC" showon="preloader:1" />
@@ -126,7 +126,6 @@
 	</fieldset>
 
 	<fieldset name="presets" label="Presets" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
-
 		<field name="preset" type="presets" default="preset1" label="Select an option" description="">
 			<preset name="preset1" label="Preset 1" default="#25A9E0">
 				<color name="text_color" value="#252525" />
@@ -177,127 +176,125 @@
 	</fieldset>
 
 	<fieldset name="menu" label="Navigation" icon="fa fa-list">
-			<field name="menu" type="menu" helixgroup="megamenu" default="mainmenu" label="HELIX_MEGAMENU_SELECT" description="HELIX_MEGAMENU_SELECT_DESC" />
-			<field name="menu_type" helixgroup="megamenu" type="list" default="mega_offcanvas" label="HELIX_MENU_TYPE" description="HELIX_MENU_TYPE_DESC">
-					<option value="mega_offcanvas">HELIX_MEGAMENU_OFFCANVAS</option>
-					<option value="mega">HELIX_MEGAMENU</option>
-					<option value="offcanvas">HELIX_OFFCANVAS</option>
-			</field>
-			<field name="dropdown_width" helixgroup="megamenu" type="number" label="HELIX_MEGAMENU_DROPDOWN_WIDTH" description="HELIX_MEGAMENU_DROPDOWN_WIDTH_DESC" hint="240" showon="menu_type!:offcanvas" />
+		<field name="menu" type="menu" helixgroup="megamenu" default="mainmenu" label="HELIX_MEGAMENU_SELECT" description="HELIX_MEGAMENU_SELECT_DESC" />
+		<field name="menu_type" helixgroup="megamenu" type="list" default="mega_offcanvas" label="HELIX_MENU_TYPE" description="HELIX_MENU_TYPE_DESC">
+			<option value="mega_offcanvas">HELIX_MEGAMENU_OFFCANVAS</option>
+			<option value="mega">HELIX_MEGAMENU</option>
+			<option value="offcanvas">HELIX_OFFCANVAS</option>
+		</field>
+		<field name="dropdown_width" helixgroup="megamenu" type="number" label="HELIX_MEGAMENU_DROPDOWN_WIDTH" description="HELIX_MEGAMENU_DROPDOWN_WIDTH_DESC" hint="240" showon="menu_type!:offcanvas" />
 
-			<field name="menu_animation" helixgroup="menu_animation" type="list" default="menu-fade" label="HELIX_MENU_DROPDOWN_ANIMATION" description="HELIX_MENU_DROPDOWN_ANIMATION_DESC" showon="menu_type!:offcanvas">
-					<option value="none">HELIX_NO_ANIMATION</option>
-					<option value="menu-fade">HELIX_FADE_ANIMATION</option>
-					<option value="menu-zoom">HELIX_ZOOM_ANIMATION</option>
-					<option value="menu-fade-up">HELIX_FADE_UP_ANIMATION</option>
-					<option value="menu-rotate">HELIX_ELASTIC_ANIMATION</option>
-					<option value="menu-slide-down">HELIX_SLIDEDOWN_ANIMATION</option>
-					<option value="menu-drop-in">HELIX_DROPIN_ANIMATION</option>
-					<option value="menu-twist">HELIX_TWIST_ANIMATION</option>
-			</field>
+		<field name="menu_animation" helixgroup="megamenu" type="list" default="menu-fade" label="HELIX_MENU_DROPDOWN_ANIMATION" description="HELIX_MENU_DROPDOWN_ANIMATION_DESC" showon="menu_type!:offcanvas">
+			<option value="none">HELIX_NO_ANIMATION</option>
+			<option value="menu-fade">HELIX_FADE_ANIMATION</option>
+			<option value="menu-zoom">HELIX_ZOOM_ANIMATION</option>
+			<option value="menu-fade-up">HELIX_FADE_UP_ANIMATION</option>
+			<option value="menu-rotate">HELIX_ELASTIC_ANIMATION</option>
+			<option value="menu-slide-down">HELIX_SLIDEDOWN_ANIMATION</option>
+			<option value="menu-drop-in">HELIX_DROPIN_ANIMATION</option>
+			<option value="menu-twist">HELIX_TWIST_ANIMATION</option>
+		</field>
 
-			<field name="offcanvas_animation" helixgroup="menu_animation" type="list" default="default" label="HELIX_MENU_OFFCANVAS_ANIMATION" description="HELIX_MENU_OFFCANVAS_ANIMATION_DESC">
-					<option value="default">HELIX_OFFANIMATION_DEFAULT</option>
-					<option value="fullscreen">HELIX_OFFANIMATION_FULLSCREEN</option>
-					<option value="fullScreen-top">HELIX_OFFANIMATION_FULLSCREEN_FROM_TOP</option>
-					<option value="slidetop">HELIX_OFFANIMATION_SLIDE_RIGHT</option>
-					<option value="drarkplus">HELIX_OFFANIMATION_DARK_PLUS</option>
-			</field>
+		<field name="offcanvas_position" helixgroup="offcanvas" type="list" default="right" label="HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION" description="HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION_DESC">
+			<option value="left">HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION_LEFT</option>
+			<option value="right">HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION_RIGHT</option>
+		</field>
+
 	</fieldset>
 
 	<fieldset name="typography" label="Typography" icon="fa fa-font" addfieldpath="/plugins/system/helixultimate/fields">
-			<field name="enable_body_font" type="checkbox" helixgroup="body_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="body_font" type="typography" helixgroup="body_font" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_body_font:1" />
+		<field name="enable_body_font" type="checkbox" helixgroup="body_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="body_font" type="typography" helixgroup="body_font" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_body_font:1" />
 
-			<field name="enable_h1_font" type="checkbox" helixgroup="h1_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="h1_font" type="typography" helixgroup="h1_font" default='{"fontFamily":"Open Sans","fontWeight":"800","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h1_font:1" />
+		<field name="enable_h1_font" type="checkbox" helixgroup="h1_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="h1_font" type="typography" helixgroup="h1_font" default='{"fontFamily":"Open Sans","fontWeight":"800","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h1_font:1" />
 
-			<field name="enable_h2_font" type="checkbox" helixgroup="h2_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="h2_font" type="typography" helixgroup="h2_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h2_font:1" />
+		<field name="enable_h2_font" type="checkbox" helixgroup="h2_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="h2_font" type="typography" helixgroup="h2_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h2_font:1" />
 
-			<field name="enable_h3_font" type="checkbox" helixgroup="h3_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="h3_font" type="typography" helixgroup="h3_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h3_font:1" />
+		<field name="enable_h3_font" type="checkbox" helixgroup="h3_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="h3_font" type="typography" helixgroup="h3_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h3_font:1" />
 
-			<field name="enable_h4_font" type="checkbox" helixgroup="h4_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="h4_font" type="typography" helixgroup="h4_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h4_font:1" />
+		<field name="enable_h4_font" type="checkbox" helixgroup="h4_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="h4_font" type="typography" helixgroup="h4_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h4_font:1" />
 
-			<field name="enable_h5_font" type="checkbox" helixgroup="h5_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="h5_font" type="typography" helixgroup="h5_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h5_font:1" />
+		<field name="enable_h5_font" type="checkbox" helixgroup="h5_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="h5_font" type="typography" helixgroup="h5_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h5_font:1" />
 
-			<field name="enable_h6_font" type="checkbox" helixgroup="h6_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="h6_font" type="typography" helixgroup="h6_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h6_font:1" />
+		<field name="enable_h6_font" type="checkbox" helixgroup="h6_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="h6_font" type="typography" helixgroup="h6_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h6_font:1" />
 
-			<field name="enable_navigation_font" helixgroup="nav_font" type="checkbox" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="navigation_font" type="typography" helixgroup="nav_font" hideLabel="true" showon="enable_navigation_font:1" />
+		<field name="enable_navigation_font" helixgroup="nav_font" type="checkbox" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="navigation_font" type="typography" helixgroup="nav_font" hideLabel="true" showon="enable_navigation_font:1" />
 
-			<field name="enable_custom_font" type="checkbox" helixgroup="custom_font" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
-			<field name="custom_font" type="typography" helixgroup="custom_font" hideLabel="true" showon="enable_custom_font:1" />
-			<field name="custom_font_selectors" type="textarea" helixgroup="custom_font" label="HELIX_FONT_CUSTOM_SELECTORS" description="HELIX_FONT_CUSTOM_SELECTORS_DESC" showon="enable_custom_font:1" />
+		<field name="enable_custom_font" type="checkbox" helixgroup="custom_font" default="0" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
+		<field name="custom_font" type="typography" helixgroup="custom_font" hideLabel="true" showon="enable_custom_font:1" />
+		<field name="custom_font_selectors" type="textarea" helixgroup="custom_font" label="HELIX_FONT_CUSTOM_SELECTORS" description="HELIX_FONT_CUSTOM_SELECTORS_DESC" showon="enable_custom_font:1" />
 
-			<field name="update_fonts" type="button" helixgroup="update_font" url="#" text="HELIX_UPDATE_FONTS_CLICK" hideLabel="true" description="HELIX_UPDATE_FONTS_LIST_DESC" class="btn-primary btn-update-fonts-list" />
-	</fieldset>
+		<field name="update_fonts" type="button" helixgroup="update_font" url="#" text="HELIX_UPDATE_FONTS_CLICK" hideLabel="true" description="HELIX_UPDATE_FONTS_LIST_DESC" class="btn-primary btn-update-fonts-list" />
+		</fieldset>
 
-	<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">
-			<field name="before_head" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_HEAD" description="HELIX_BEFORE_HEAD_DESC" filter="raw" />
-			<field name="before_body" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_BODY" description="HELIX_BEFORE_BODY_DESC" filter="raw" />
-			<field name="custom_css" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_CSS" description="HELIX_CUSTOM_CSS_DESC" filter="raw" />
-			<field name="custom_js" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_JS" description="HELIX_CUSTOM_JS_DESC" filter="raw" />
+		<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">
+		<field name="before_head" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_HEAD" description="HELIX_BEFORE_HEAD_DESC" filter="raw" />
+		<field name="before_body" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_BODY" description="HELIX_BEFORE_BODY_DESC" filter="raw" />
+		<field name="custom_css" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_CSS" description="HELIX_CUSTOM_CSS_DESC" filter="raw" />
+		<field name="custom_js" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_JS" description="HELIX_CUSTOM_JS_DESC" filter="raw" />
 	</fieldset>
 	<!--End Custom Code Tab-->
 
 	<!--Start Advanced Tab-->
 	<fieldset name="advance" label="Advanced" icon="fa fa-cog">
-			<field name="compress_css" helixgroup="compression" type="checkbox" default="0" label="HELIX_CSS_COMPRESS" description="HELIX_CSS_COMPRESS_DESC" />
-			<field name="compress_js" helixgroup="compression" type="checkbox" default="0" label="HELIX_JS_COMPRESS" description="HELIX_CSS_COMPRESS_DESC" />
-			<field name="exclude_js" helixgroup="compression" type="textarea" label="HELIX_EXCLUDE_JS" description="HELIX_EXCLUDE_JS_DESC" showon="compress_js:1" />
-			<field name="scssoption" helixgroup="scss" type="checkbox" default="0" label="HELIX_ENABLE_LESS" description="HELIX_ENABLE_LESS_DESC" />
-			<field name="export_options" helixgroup="importexport" type="optionio" label="HELIX_IMPORT_EXPORT_FIELD"/>
+		<field name="compress_css" helixgroup="compression" type="checkbox" default="0" label="HELIX_CSS_COMPRESS" description="HELIX_CSS_COMPRESS_DESC" />
+		<field name="compress_js" helixgroup="compression" type="checkbox" default="0" label="HELIX_JS_COMPRESS" description="HELIX_CSS_COMPRESS_DESC" />
+		<field name="exclude_js" helixgroup="compression" type="textarea" label="HELIX_EXCLUDE_JS" description="HELIX_EXCLUDE_JS_DESC" showon="compress_js:1" />
+		<field name="scssoption" helixgroup="scss" type="checkbox" default="0" label="HELIX_ENABLE_LESS" description="HELIX_ENABLE_LESS_DESC" />
+		<field name="export_options" helixgroup="importexport" type="optionio" label="HELIX_IMPORT_EXPORT_FIELD"/>
 	</fieldset>
 	<!--End Advanced Tab-->
 
 	<!--Start Blog Tab-->
 	<fieldset name="blog" label="Blog" icon="fa fa-font">
-			<field name="image_small" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_SMALL" description="HELIX_IMAGE_SMALL_DESC" />
-			<field name="image_small_size" type="text" helixgroup="blog_images" default="100X100" hint="100X100" label="HELIX_IMAGE_SMALL_SIZE" description="HELIX_IMAGE_SMALL_SIZE_DESC" showon="image_small:1" />
+		<field name="image_small" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_SMALL" description="HELIX_IMAGE_SMALL_DESC" />
+		<field name="image_small_size" type="text" helixgroup="blog_images" default="100X100" hint="100X100" label="HELIX_IMAGE_SMALL_SIZE" description="HELIX_IMAGE_SMALL_SIZE_DESC" showon="image_small:1" />
 
-			<field name="image_thumbnail" type="checkbox" helixgroup="blog_images" default="1" label="HELIX_IMAGE_THUMBNAIL" description="HELIX_IMAGE_THUMBNAIL_DESC" />
-			<field name="image_thumbnail_size" type="text" helixgroup="blog_images" default="200X200" hint="200X200" label="HELIX_IMAGE_THUMBNAIL_SIZE" description="HELIX_IMAGE_THUMBNAIL_SIZE_DESC" showon="image_thumbnail:1" />
+		<field name="image_thumbnail" type="checkbox" helixgroup="blog_images" default="1" label="HELIX_IMAGE_THUMBNAIL" description="HELIX_IMAGE_THUMBNAIL_DESC" />
+		<field name="image_thumbnail_size" type="text" helixgroup="blog_images" default="200X200" hint="200X200" label="HELIX_IMAGE_THUMBNAIL_SIZE" description="HELIX_IMAGE_THUMBNAIL_SIZE_DESC" showon="image_thumbnail:1" />
 
-			<field name="image_medium" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_MEDIUM" description="HELIX_IMAGE_MEDIUM_DESC" />
-			<field name="image_medium_size" type="text" helixgroup="blog_images" default="300X300" hint="300X300" label="HELIX_IMAGE_MEDIUM_SIZE" description="HELIX_IMAGE_MEDIUM_SIZE_DESC" showon="image_medium:1" />
+		<field name="image_medium" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_MEDIUM" description="HELIX_IMAGE_MEDIUM_DESC" />
+		<field name="image_medium_size" type="text" helixgroup="blog_images" default="300X300" hint="300X300" label="HELIX_IMAGE_MEDIUM_SIZE" description="HELIX_IMAGE_MEDIUM_SIZE_DESC" showon="image_medium:1" />
 
-			<field name="image_large" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_LARGE" description="HELIX_IMAGE_LARGE_DESC" />
-			<field name="image_large_size" type="text" helixgroup="blog_images" default="600X600" hint="600X600" label="HELIX_IMAGE_LARGE_SIZE" description="HELIX_IMAGE_LARGE_SIZE_DESC" showon="image_large_size:1" />
-			<field name="image_crop_quality" type="number" helixgroup="blog_images" label="HELIX_ULTIMATE_IMAGE_LARGE_CROP_QUALITY" description="HELIX_ULTIMATE_IMAGE_LARGE_CROP_QUALITY_DESC" max="100" min="40" default="100" />
+		<field name="image_large" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_LARGE" description="HELIX_IMAGE_LARGE_DESC" />
+		<field name="image_large_size" type="text" helixgroup="blog_images" default="600X600" hint="600X600" label="HELIX_IMAGE_LARGE_SIZE" description="HELIX_IMAGE_LARGE_SIZE_DESC" showon="image_large_size:1" />
+		<field name="image_crop_quality" type="number" helixgroup="blog_images" label="HELIX_ULTIMATE_IMAGE_LARGE_CROP_QUALITY" description="HELIX_ULTIMATE_IMAGE_LARGE_CROP_QUALITY_DESC" max="100" min="40" default="100" />
 
-			<field name="blog_list_image" type="list" helixgroup="blog_images" default="thumbnail" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
-					<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
-					<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
-					<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
-					<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
-			</field>
+		<field name="blog_list_image" type="list" helixgroup="blog_images" default="thumbnail" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
+			<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
+			<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
+			<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
+			<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
+		</field>
 
-			<field name="leading_blog_list_image" type="list" helixgroup="blog_images" default="large" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
-					<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
-					<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
-					<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
-					<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
-			</field>
+		<field name="leading_blog_list_image" type="list" helixgroup="blog_images" default="large" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
+			<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
+			<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
+			<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
+			<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
+		</field>
 
-			<field name="commenting_engine" type="list" helixgroup="comments" default="disabled" label="HELIX_COMMENTING_ENGINE" description="HELIX_COMMENTING_ENGINE_DESC">
-					<option value="disqus">HELIX_DISQUSS</option>
-					<option value="intensedebate">HELIX_INTENSEDEBATE</option>
-					<option value="facebook">HELIX_FB</option>
-					<option value="disabled">HELIX_DISABLED</option>
-			</field>
-			<field name="disqus_subdomain" type="text" helixgroup="comments" label="HELIX_DISQUS_SUBDOMAIN" description="HELIX_DISQUS_SUBDOMAIN_DESC" showon="commenting_engine:disqus" />
-			<field name="disqus_devmode" type="checkbox" helixgroup="comments" default="0" label="HELIX_DISQUS_DEV_MODE" description="HELIX_DISQUS_DEV_MODE_DESC" showon="commenting_engine:disqus" />
-			<field name="intensedebate_acc" type="text" helixgroup="comments" default="" label="HELIX_INTENSEDEBATE_ACC" description="HELIX_INTENSEDEBATE_ACC_DESC" showon="commenting_engine:intensedebate" />
-			<field name="fb_appID" type="text" helixgroup="comments" label="HELIX_FB_ID" description="HELIX_FB_ID_DESC" showon="commenting_engine:facebook" />
-			<field name="fb_width" type="number" helixgroup="comments" default="500" label="HELIX_FB_COMMENTS_WIDTH" description="HELIX_FB_COMMENTS_WIDTH_DESC" showon="commenting_engine:facebook" />
-			<field name="fb_cpp" type="number" helixgroup="comments" default="10" label="HELIX_FB_COMMENTS_PER_PAGE" description="HELIX_FB_COMMENTS_PER_PAGE_DESC" showon="commenting_engine:facebook" />
-			<field name="comments_count" helixgroup="comments" type="checkbox" default="0" label="HELIX_COMMENTS_COUNT" description="HELIX_COMMENTS_COUNT_DESC" showon="commenting_engine!:disabled" />
-			<field name="social_share" type="checkbox" helixgroup="social_share" default="1" label="HELIX_ENABLE_SOCIAL_SHARE" description="HELIX_ENABLE_SOCIAL_SHARE_DESC" />
+		<field name="commenting_engine" type="list" helixgroup="comments" default="disabled" label="HELIX_COMMENTING_ENGINE" description="HELIX_COMMENTING_ENGINE_DESC">
+			<option value="disqus">HELIX_DISQUSS</option>
+			<option value="intensedebate">HELIX_INTENSEDEBATE</option>
+			<option value="facebook">HELIX_FB</option>
+			<option value="disabled">HELIX_DISABLED</option>
+		</field>
+		<field name="disqus_subdomain" type="text" helixgroup="comments" label="HELIX_DISQUS_SUBDOMAIN" description="HELIX_DISQUS_SUBDOMAIN_DESC" showon="commenting_engine:disqus" />
+		<field name="disqus_devmode" type="checkbox" helixgroup="comments" default="0" label="HELIX_DISQUS_DEV_MODE" description="HELIX_DISQUS_DEV_MODE_DESC" showon="commenting_engine:disqus" />
+		<field name="intensedebate_acc" type="text" helixgroup="comments" default="" label="HELIX_INTENSEDEBATE_ACC" description="HELIX_INTENSEDEBATE_ACC_DESC" showon="commenting_engine:intensedebate" />
+		<field name="fb_appID" type="text" helixgroup="comments" label="HELIX_FB_ID" description="HELIX_FB_ID_DESC" showon="commenting_engine:facebook" />
+		<field name="fb_width" type="number" helixgroup="comments" default="500" label="HELIX_FB_COMMENTS_WIDTH" description="HELIX_FB_COMMENTS_WIDTH_DESC" showon="commenting_engine:facebook" />
+		<field name="fb_cpp" type="number" helixgroup="comments" default="10" label="HELIX_FB_COMMENTS_PER_PAGE" description="HELIX_FB_COMMENTS_PER_PAGE_DESC" showon="commenting_engine:facebook" />
+		<field name="comments_count" helixgroup="comments" type="checkbox" default="0" label="HELIX_COMMENTS_COUNT" description="HELIX_COMMENTS_COUNT_DESC" showon="commenting_engine!:disabled" />
+		<field name="social_share" type="checkbox" helixgroup="social_share" default="1" label="HELIX_ENABLE_SOCIAL_SHARE" description="HELIX_ENABLE_SOCIAL_SHARE_DESC" />
 
 	</fieldset>
 

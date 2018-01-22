@@ -10,83 +10,16 @@ jQuery(function ($) {
     // ************    START Helix 1.4 JS    ************** //
     // **************************************************** //
 
-    //Default
-    if (typeof sp_offanimation === 'undefined' || sp_offanimation === '') {
-        sp_offanimation = 'default';
-    }
+    $('#offcanvas-toggler').on('click', function (event) {
+        event.preventDefault();
+        $('.off-canvas-menu-init').addClass('offcanvas');
+    });
 
-    if (sp_offanimation == 'default') {
-        $('#offcanvas-toggler').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').addClass('offcanvas');
-        });
-
-        $('<div class="offcanvas-overlay"></div>').insertBefore('.offcanvas-menu');
-        $('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').removeClass('offcanvas');
-        });
-    }
-
-    // Slide Top Menu
-    if (sp_offanimation == 'slidetop') {
-        $('#offcanvas-toggler').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').addClass('slide-top-menu');
-        });
-
-        $('<div class="offcanvas-overlay"></div>').insertBefore('.offcanvas-menu');
-        $('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').removeClass('slide-top-menu');
-        });
-    }
-
-    //Full Screen
-    if (sp_offanimation == 'fullscreen') {
-        $('#offcanvas-toggler').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').addClass('full-screen-off-canvas');
-        });
-        $(document).ready(function () {
-            $('.off-canvas-menu-init').addClass('full-screen');
-        });
-        $('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').removeClass('full-screen-off-canvas');
-        });
-    }
-
-    //Full screen from top
-    if (sp_offanimation == 'fullScreen-top') {
-        $('#offcanvas-toggler').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').addClass('full-screen-off-canvas-ftop');
-        });
-        $(document).ready(function () {
-            $('.off-canvas-menu-init').addClass('full-screen-ftop');
-        });
-        $('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').removeClass('full-screen-off-canvas-ftop');
-        });
-    }
-
-    //Dark with plus
-    if (sp_offanimation == 'drarkplus') {
-        $('#offcanvas-toggler').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').addClass('new-look-off-canvas');
-        });
-        $('<div class="offcanvas-overlay"></div>').insertBefore('.offcanvas-menu');
-        $(document).ready(function () {
-            $('.off-canvas-menu-init').addClass('new-look');
-        });
-        $('.close-offcanvas,.offcanvas-overlay').on('click', function (event) {
-            event.preventDefault();
-            $('.off-canvas-menu-init').removeClass('new-look-off-canvas');
-        });
-    }
+    $('<div class="offcanvas-overlay"></div>').insertBefore('.offcanvas-menu');
+    $('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
+        event.preventDefault();
+        $('.off-canvas-menu-init').removeClass('offcanvas');
+    });
 
     // if sticky header
     if ($("body.sticky-header").length > 0) {
@@ -95,8 +28,6 @@ jQuery(function ($) {
         var headerHeight = fixedSection.outerHeight();
         var stickyNavTop = fixedSection.offset().top;
         fixedSection.addClass('animated');
-        fixedSection.before('<div class="nav-placeholder"></div>');
-        $('.nav-placeholder').height('inherit');
         //add class
         fixedSection.addClass('menu-fixed-out');
         var stickyNav = function () {
@@ -180,6 +111,12 @@ jQuery(function ($) {
         $(this).parent().addClass('menu-justify');
     });
 
+    // Offcanvas
+    $(document).on('click', '.offcanvas-inner .menu-toggler', function(event){
+        event.preventDefault();
+        $(this).closest('.menu-parent').toggleClass('menu-parent-open').find('>.menu-child').slideToggle(400);
+    });
+
     // boxlayout
     if ($("body.layout-boxed").length > 0) {
         var windowWidth = $('#sp-header').parent().outerWidth();
@@ -245,8 +182,5 @@ jQuery(function ($) {
             }
         });
     });
-
-    // **************  END:: Others SCRIPT  *************** //
-    // **************************************************** //
 
 });

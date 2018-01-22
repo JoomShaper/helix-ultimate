@@ -80,3 +80,9 @@
         transform: scale3d(1, 1, 1);
     }
 }
+
+@keyframes animSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}

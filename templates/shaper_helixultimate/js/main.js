@@ -68,34 +68,12 @@ jQuery(function ($) {
     } // has go to top
 
     // Preloader
-    if (typeof sp_preloader === 'undefined') {
-        sp_preloader = '';
-    }
-
-    if (sp_preloader) {
-        $(window).on('load', function () {
-            if ($('.sp-loader-with-logo').length > 0) {
-                move();
-            }
-            setTimeout(function () {
-                $('.sp-pre-loader').fadeOut();
-            }, 1000);
+    $(window).on('load', function () {
+        $('.sp-preloader').fadeOut(500, function() {
+            $(this).remove();
         });
-    } // has preloader
-    //preloader Function
-    function move() {
-        var elem = document.getElementById("line-load");
-        var width = 1;
-        var id = setInterval(frame, 10);
-        function frame() {
-            if (width >= 100) {
-                clearInterval(id);
-            } else {
-                width++;
-                elem.style.width = width + '%';
-            }
-        }
-    }
+    });
+
     // ************    END:: Helix 1.4 JS    ************** //
     // **************************************************** //
 

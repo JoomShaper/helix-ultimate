@@ -122,7 +122,6 @@ if ($custom_js = $this->params->get('custom_js')) {
 }
 
 //preloader & goto top
-$doc->addScriptdeclaration("\nvar sp_preloader = '" . $this->params->get('preloader') . "';\n");
 $doc->addScriptdeclaration("\nvar sp_gotop = '" . $this->params->get('goto_top') . "';\n");
 $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('offcanvas_animation') . "';\n");
 ?>
@@ -143,8 +142,6 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     <!-- head -->
     <jdoc:include type="head" />
     <?php
-    $preloader_bg = ($this->params->get('preloader_bg')) ? $this->params->get('preloader_bg') : '#f5f5f5';
-    $preloader_tx = ($this->params->get('preloader_tx')) ? $this->params->get('preloader_tx') : '#f5f5f5';
     // load css, less and js
     $theme->add_css('bootstrap.min.css, font-awesome.min.css'); // CSS Files
     $theme->add_js('popper.min.js, bootstrap.min.js, jquery.sticky.js, main.js'); // JS Files
@@ -170,9 +167,7 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
         'footer_link_color' => $this->params->get('footer_link_color'),
         'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
         'topbar_bg_color' => $this->params->get('topbar_bg_color'),
-        'topbar_text_color' => $this->params->get('topbar_text_color'),
-        'preloader_bg' => $preloader_bg,
-        'preloader_tx' => $preloader_tx
+        'topbar_text_color' => $this->params->get('topbar_text_color')
     );
 
     $theme->addSCSS('master', $scssVars, 'template');
@@ -186,6 +181,9 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
     ?>
 </head>
 <body class="<?php echo $theme->bodyClass($body_classes); ?>">
+    <?php if($this->params->get('preloader')) : ?>
+        <div class="sp-preloader"><div></div></div>
+    <?php endif; ?>
 
     <div class="body-wrapper">
         <div class="body-innerwrapper">

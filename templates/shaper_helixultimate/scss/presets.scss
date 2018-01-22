@@ -5,9 +5,19 @@
  * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
 */
 
-body {
+body,
+.sp-preloader {
 	background-color: $bg_color;
 }
+
+.sp-preloader {
+	>div {
+	  background: $link_color;
+	  &:after {
+		background: $bg_color;
+	  }
+	}
+  }
 
 #sp-top-bar {
 	background: $topbar_bg_color;

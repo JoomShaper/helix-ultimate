@@ -21,6 +21,7 @@
 		<field name="favicon" helixgroup="header" type="helixmedia" preview="true" label="HELIX_FAVICON" description="HELIX_FAVICON_DESC" />
 
 		<!--Layout Type-->
+		<field name="preloader" helixgroup="body" type="checkbox" default="0" label="HELIX_PRELOADER" description="HELIX_PRELOADER_DESC" />
 		<field name="boxed_layout" helixgroup="body" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT" description="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT_DESC" />
 
 		<!--Backgroud-->
@@ -95,21 +96,6 @@
 		<field name="contact_mobile" helixgroup="contact_info" type="text" hint="+775 872 4444" label="HELIX_CONTACT_MOBILE" description="HELIX_CONTACT_MOBILE_DESC" showon="contactinfo:1" />
 		<field name="contact_email" helixgroup="contact_info" type="email" hint="contact@email.com" label="HELIX_CONTACT_EMAIL" description="HELIX_CONTACT_EMAIL_DESC" showon="contactinfo:1" />
 		<field name="contact_time" helixgroup="contact_info" type="text" hint="Mon - Fri 8:00 - 17:30" label="HELIX_CONTACT_OPEN_HOURS" description="HELIX_CONTACT_OPEN_HOURS_DESC" showon="contactinfo:1" />
-
-		<field name="preloader" helixgroup="preloader" type="checkbox" default="0" label="HELIX_PRELOADER" description="HELIX_PRELOADER_DESC" />
-
-		<field name="preloader_animation" helixgroup="preloader" type="list" default="circle" label="HELIX_PRELOADER_ANIMATION" description="HELIX_PRELOADER_ANIMATION_DESC" showon="preloader:1">
-			<option value="circle">HELIX_PRELOADER_ANIMATION_CIRCLE</option>
-			<option value="double-loop">HELIX_PRELOADER_ANIMATION_DOUBLE_LOOP</option>
-			<option value="wave-two">HELIX_PRELOADER_ANIMATION_WAVE_TWO</option>
-			<option value="audio-wave">HELIX_PRELOADER_ANIMATION_AUDIO_WAVE</option>
-			<option value="circle-two">HELIX_PRELOADER_ANIMATION_CIRCLE_TWO</option>
-			<option value="clock">HELIX_PRELOADER_ANIMATION_CLOCK</option>
-			<option value="logo">HELIX_PRELOADER_ANIMATION_LOGO</option>
-		</field>
-
-		<field name="preloader_bg" helixgroup="preloader" type="color" default="#f5f5f5" label="HELIX_PRELOADER_BG_COLOR" description="HELIX_PRELOADER_BG_COLOR_DESC" showon="preloader:1" />
-		<field name="preloader_tx" helixgroup="preloader" type="color" default="#333333" label="HELIX_PRELOADER_TX_COLOR" description="HELIX_PRELOADER_TX_COLOR_DESC" showon="preloader:1" />
 
 		<!--Coming Soon-->
 		<field name="comingsoon" helixgroup="comingsoon" type="checkbox" default="0" label="HELIX_COMINGSOON_MODE" description="HELIX_COMINGSOON_MODE_DESC" />

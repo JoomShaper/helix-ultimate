@@ -1,14 +1,14 @@
 /**
- * $package Helix Ultimate Framework
- * $author JoomShaper http://www.joomshaper.com
- * $copyright Copyright (c) 2010 - 2018 JoomShaper
- * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
- */
+* $package Helix Ultimate Framework
+* $author JoomShaper http://www.joomshaper.com
+* $copyright Copyright (c) 2010 - 2018 JoomShaper
+* $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
+*/
 
 /*=========================================
- *======= 	 Megamenu	   ============
- *=======================================*/
- .sp-megamenu-parent {
+*======= 	 Megamenu	   ============
+*=======================================*/
+.sp-megamenu-parent {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -16,6 +16,7 @@
     display: block;
     float: right;
     position: relative;
+
     >li {
         display: inline-block;
         position: relative;
@@ -40,7 +41,7 @@
         }
 
         &.active > a {
-          font-weight: 500;
+            font-weight: 500;
         }
     }
 
@@ -54,33 +55,33 @@
         margin: 0;
 
         >li > a {
-          display: block;
-          text-transform: uppercase;
-          font-size: 14px;
-          font-weight: 600;
-          margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
         }
 
-        .sp-mega-group-child {
+        .sp-mega-group-child{
             list-style: none;
             padding: 0;
             margin: 0;
         }
     }
 
-    .sp-dropdown {
+    .sp-dropdown{
         margin: 0;
         position: absolute;
         z-index: 10;
         display: none;
 
-        .sp-dropdown-inner {
+        .sp-dropdown-inner{
             background: $menu_dropdown_bg_color;
             box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
             padding: 20px;
         }
 
-        .sp-dropdown-items {
+        .sp-dropdown-items{
             list-style: none;
             padding: 0;
             margin: 0;
@@ -92,17 +93,18 @@
             }
         }
 
-        &.sp-menu-center {
+        &.sp-menu-center{
             margin-left: 45px;
         }
 
         &.sp-dropdown-main {
             top: 100%;
-            &.sp-menu-right
-            {
+
+            &.sp-menu-right {
                 left: 0;
             }
-            &.sp-menu-full{
+
+            &.sp-menu-full {
                 left: auto;
                 right: 0;
             }
@@ -115,6 +117,7 @@
         &.sp-dropdown-sub {
             top: 0;
             left: 100%;
+
             .sp-dropdown-inner {
                 box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
             }
@@ -122,30 +125,31 @@
 
         //List Item
         li.sp-menu-item { //child sub
-          display: block;
-          padding: 0;
-          position: relative;
-          >a, span {
-              font-size: 14px;
-              display: block;
-              padding: 10px 0;
-              cursor: pointer;
+            display: block;
+            padding: 0;
+            position: relative;
 
-              &.sp-group-title {
-                  text-transform: uppercase;
-                  font-weight: bold;
-              }
-          }
+            >a, span {
+                font-size: 14px;
+                display: block;
+                padding: 10px 0;
+                cursor: pointer;
 
-          >a:hover{
-            color: #fff;
-          }
+                &.sp-group-title {
+                    text-transform: uppercase;
+                    font-weight: bold;
+                }
+            }
 
-          &.active>a {
-              &:hover {
-                  color: #fff;
-              }
-          }
+            >a:hover{
+                color: #fff;
+            }
+
+            &.active>a {
+                &:hover {
+                    color: #fff;
+                }
+            }
         }
     }
 
@@ -167,23 +171,70 @@
         }
     }
 
-    //Fade Animation
-    &.menu-fade {
-        .sp-has-child:hover {
-            >.sp-dropdown {
-                -webkit-animation: spMenuFadeIn 400ms;
-                animation: spMenuFadeIn 400ms;
+    //fadeIn
+    &.menu-animation-fade {
+        .sp-has-child {
+            &:hover {
+                >.sp-dropdown {
+                    animation: fadeIn 600ms;
+                }
             }
         }
     }
 
-    //Zoom Animation
-    &.menu-zoom {
-        .sp-has-child:hover {
-            >.sp-dropdown {
-                -webkit-animation: spMenuZoom 400ms;
-                animation: spMenuZoom 400ms;
+    // fadeInUp
+    &.menu-animation-fade-up {
+        .sp-has-child {
+            &:hover {
+                >.sp-dropdown {
+                    animation: fadeInUp 400ms ease-in;
+                }
             }
         }
     }
+
+    // fadeInDown
+    &.menu-animation-fade-down {
+        .sp-has-child {
+            &:hover {
+                >.sp-dropdown {
+                    animation: fadeInDown 400ms ease-in;
+                }
+            }
+        }
+    }
+
+    // zoomIn
+    &.menu-animation-zoom {
+        .sp-has-child {
+            &:hover {
+                >.sp-dropdown {
+                    animation: zoomIn 300ms;
+                }
+            }
+        }
+    }
+    
+    // rotateIn
+    &.menu-animation-rotate {
+        .sp-has-child {
+            &:hover {
+                >.sp-dropdown {
+                    animation: rotateIn 300ms;
+                }
+            }
+        }
+    }
+
+    // Elastic
+    &.menu-animation-pulse {
+        .sp-has-child {
+            &:hover {
+                >.sp-dropdown {
+                    animation: pulse 300ms;
+                }
+            }
+        }
+    }
+
 }

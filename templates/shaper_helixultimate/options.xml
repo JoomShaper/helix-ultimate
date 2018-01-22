@@ -186,14 +186,13 @@
 		<field name="dropdown_width" helixgroup="megamenu" type="number" label="HELIX_MEGAMENU_DROPDOWN_WIDTH" description="HELIX_MEGAMENU_DROPDOWN_WIDTH_DESC" hint="240" showon="menu_type!:offcanvas" />
 
 		<field name="menu_animation" helixgroup="megamenu" type="list" default="menu-fade" label="HELIX_MENU_DROPDOWN_ANIMATION" description="HELIX_MENU_DROPDOWN_ANIMATION_DESC" showon="menu_type!:offcanvas">
-			<option value="none">HELIX_NO_ANIMATION</option>
-			<option value="menu-fade">HELIX_FADE_ANIMATION</option>
-			<option value="menu-zoom">HELIX_ZOOM_ANIMATION</option>
-			<option value="menu-fade-up">HELIX_FADE_UP_ANIMATION</option>
-			<option value="menu-rotate">HELIX_ELASTIC_ANIMATION</option>
-			<option value="menu-slide-down">HELIX_SLIDEDOWN_ANIMATION</option>
-			<option value="menu-drop-in">HELIX_DROPIN_ANIMATION</option>
-			<option value="menu-twist">HELIX_TWIST_ANIMATION</option>
+			<option value="menu-animation-none">HELIX_ULTIMATE_NO_ANIMATION</option>
+			<option value="menu-animation-fade">HELIX_ULTIMATE_FADE_IN_ANIMATION</option>
+			<option value="menu-animation-fade-up">HELIX_ULTIMATE_FADE_IN_UP_ANIMATION</option>
+			<option value="menu-animation-fade-down">HELIX_ULTIMATE_FADE_IN_DOWN_ANIMATION</option>
+			<option value="menu-animation-zoom">HELIX_ULTIMATE_ZOOM_IN_ANIMATION</option>
+			<option value="menu-animation-rotate">HELIX_ULTIMATE_ROTATE_IN_ANIMATION</option>
+			<option value="menu-animation-pulse">HELIX_ULTIMATE_PULSE_ANIMATION</option>
 		</field>
 
 		<field name="offcanvas_position" helixgroup="offcanvas" type="list" default="right" label="HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION" description="HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION_DESC">

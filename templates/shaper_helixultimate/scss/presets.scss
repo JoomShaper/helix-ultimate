@@ -122,6 +122,46 @@ a{
 	}
 }
 
+.offcanvas-menu {
+    background-color: $menu_dropdown_bg_color;
+    color: $menu_dropdown_text_color;
+    .offcanvas-inner {
+        .sp-module {
+            ul {
+                > li {
+                    a,
+                    span {
+                        color: $menu_dropdown_text_color;
+
+                        &:hover,
+                        &:focus{
+                            color: $menu_dropdown_text_hover_color;
+                        }
+                    }
+
+                    &.menu-parent {
+                        >a,
+                        >.menu-separator {
+                            >.menu-toggler {
+                                color: fade-out($menu_dropdown_text_color, 0.5);
+                            }
+                        }
+
+                    }
+
+                    ul {
+                        li {
+                            a {
+                                color: fade-out($menu_dropdown_text_color, 0.2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 //Button
 .btn-primary,
 .sppb-btn-primary {
@@ -188,41 +228,12 @@ ul.social-icons {
 	}
 }
 
-// sp Simple Portfolio
-.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li.active > a,
-.sp-simpleportfolio .sp-simpleportfolio-filter > ul > li > a:hover {
-	background: $link_color;
-}
-
 // Search
 .search {
 	.btn-toolbar {
 		button {
 			background: $link_color;
 		}
-	}
-}
-
-
-// Blog
-.post-format {
-	background: $link_color;
-}
-
-.entry-link,
-.entry-quote {
-	background: $link_color;
-}
-
-blockquote {
-	border-color: $link_color;
-}
-
-.carousel-left,
-.carousel-right {
-
-	&:hover {
-		background: $link_color;
 	}
 }
 

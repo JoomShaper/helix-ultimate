@@ -907,62 +907,48 @@ html.coming-soon {
   }
 }
 
-/* ***************   END:: Comingsoon  **************** */
-/* **************************************************** */
-
-
-/* **************   START Error Page   **************** */
-/* **************************************************** */
-
-.error-page {
+// error
+html.error-page {
   width: 100%;
   height: 100%;
-  min-height: 100%;
+  
   body {
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-  }
-  .error-page-inner {
-    &.has-background{
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-    }
-    .error-logo-wrap{
+      width: 100%;
+      height: 100%;
+      display: -ms-flexbox;
+      display: -webkit-box;
+      display: flex;
+      -ms-flex-align: center;
+      -ms-flex-pack: center;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
       text-align: center;
-      margin-bottom: 30px;
-      img{
-        display: inline-block;
-      }
-    }
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
-    display: table;
-    text-align: center;
-    >div {
-      display: table-cell;
-      vertical-align: middle;
-    }
+      background-repeat: no-repeat;
+      background-position: 50% 40%;
   }
-  .fa-exclamation-triangle {
-    font-size: 64px;
-    line-height: 1;
-    margin-bottom: 10px;
+
+  .error-logo {
+    display: inline-block;
+    margin-bottom: 2rem;
   }
+
   .error-code {
-    font-weight: bold;
-    font-size: 96px;
-    line-height: 1;
-    margin: 0 0 10px 0;
-    padding: 0;
+    margin: 0 0 1rem;
+    font-size: 6rem;
+    line-break: 1;
+    color: #0991de;
   }
+
   .error-message {
-    font-size: 24px;
-    line-height: 1;
-    margin-bottom: 30px;
+    font-size: 1.5rem;
+    color: #000000;
+    margin-bottom: 3rem;
   }
+
 }
 
 /* ***************   END:: Error Page   *************** */
@@ -979,17 +965,6 @@ only screen and (min-device-pixel-ratio: 1.5) {
     }
     .sp-retina-logo {
       display: block;
-    }
-  }
-  .sp-comingsoon {
-    .comingsoon-page-logo{
-      .sp-retina-logo{
-        display: table;
-        margin: 0 auto;
-      }
-      .sp-normal-logo{
-        display: none;
-      }
     }
   }
 }
@@ -1059,18 +1034,7 @@ table.category {
   }
 }
 
-
-/* ***************   END:: Mixed CSS   **************** */
-/* **************************************************** */
-
-
-
-/* **********   START Helix 1.4 Loader Css  *********** */
-/* **************************************************** */
-
-/* ************   START Pre-Loader CSS   ************** */
-/* **************************************************** */
-
+// Preloader
 .sp-preloader {
   height: 100%;
   left: 0;
@@ -1124,79 +1088,6 @@ table.category {
     background: #444;
   }
 }
-
-@media screen and (min-width: 768px) and (max-width: 1199px){
-  .sp-scroll-up {
-    bottom: 25px;
-    right: 25px;
-  }
-}
-//Mobile Device
-@media screen and (min-width: 320px) and (max-width: 767px){
-  //Top social
-  ul.social-icons {
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    > li{
-      margin: 5px;
-    }
-  }
-  .sp-contact-info {
-    display: table;
-    float: none;
-    margin: 0;
-    text-align: center;
-    width: 100%;
-    li{
-      margin: 0 5px;
-      font-size: 89%;
-    }
-  }
-  //Call to action
-  .sppb-animated{
-    .sppb-addon-cta{
-      .sppb-cta-title{
-        font-size: 28px !important;
-        line-height: 40px !important;
-      }
-      .sppb-btn-lg{
-        font-size: 16px;
-      }
-    }
-  }
-  //Back to top
-  .scrollup {
-    bottom: 25px;
-    right: 25px;
-  }
-  //contact form
-  .form-horizontal{
-    .control-label{
-      width: 100%;
-      text-align: left;
-    }
-    .controls{
-      margin: 0;
-      width: 100%;
-      input, textarea{
-        width: 100%;
-      }
-      textarea{
-        height: 131px;
-      }
-    }
-  }
-}
-@media screen and (min-width: 550px) and (max-width: 767px){
-  //top social
-  .sp-contact-info li {
-    margin: 0 5px;
-    font-size: 90%;
-  }
-}
-/* *********   END:: Responsive Media Query   ********* */
-/* **************************************************** */
 
 
 // Forms

@@ -97,13 +97,14 @@
 		<field name="contact_email" helixgroup="contact_info" type="email" hint="contact@email.com" label="HELIX_CONTACT_EMAIL" description="HELIX_CONTACT_EMAIL_DESC" showon="contactinfo:1" />
 		<field name="contact_time" helixgroup="contact_info" type="text" hint="Mon - Fri 8:00 - 17:30" label="HELIX_CONTACT_OPEN_HOURS" description="HELIX_CONTACT_OPEN_HOURS_DESC" showon="contactinfo:1" />
 
-		<!--Coming Soon-->
+		<!--Coming soon-->
 		<field name="comingsoon" helixgroup="comingsoon" type="checkbox" default="0" label="HELIX_COMINGSOON_MODE" description="HELIX_COMINGSOON_MODE_DESC" />
-		<field name="comingsoon_bg" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_BG" description="HELIX_COMINGSOON_BG_DESC" showon="comingsoon:1" />
-		<field name="comingsoon_logo" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_LOGO" description="HELIX_COMINGSOON_LOGO_DESC" showon="comingsoon:1" />
 		<field name="comingsoon_title" helixgroup="comingsoon" type="text" default="Coming Soon Title" label="HELIX_COMINGSOON_TITLE" description="HELIX_COMINGSOON_TITLE_DESC" showon="comingsoon:1" />
-		<field name="comingsoon_date" helixgroup="comingsoon" type="calendar" default="5-10-2018" format="%d-%m-%Y" label="HELIX_COMINGSOON_DATE" description="HELIX_COMINGSOON_DATE_DESC" showon="comingsoon:1" />
 		<field name="comingsoon_content" helixgroup="comingsoon" type="textarea" default="Coming soon content" label="HELIX_COMINGSOON_CONTENT" description="HELIX_COMINGSOON_CONTENT_DESC" filter="raw" showon="comingsoon:1" />
+		<field name="comingsoon_date" helixgroup="comingsoon" type="calendar" default="5-10-2018" format="%d-%m-%Y" label="HELIX_COMINGSOON_DATE" description="HELIX_COMINGSOON_DATE_DESC" showon="comingsoon:1" />
+		<field name="comingsoon_logo" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_LOGO" description="HELIX_COMINGSOON_LOGO_DESC" showon="comingsoon:1" />
+		<field name="comingsoon_social_icons" helixgroup="comingsoon" type="checkbox" default="1" label="HELIX_COMINGSOON_BG" description="HELIX_COMINGSOON_BG_DESC" showon="comingsoon:1" />
+		<field name="comingsoon_bg_image" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_BG" description="HELIX_COMINGSOON_BG_DESC" showon="comingsoon:1" />
 
 		<!--Error Page-->
 		<field name="error_bg" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ERRORPAGE_BG" description="HELIX_ERRORPAGE_BG_DESC" />

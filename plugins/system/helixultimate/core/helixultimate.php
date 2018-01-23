@@ -126,7 +126,7 @@ class HelixUltimate
 
         echo '<jdoc:include type="head" />';
 
-        $this->add_css('bootstrap.min.css');
+        $this->add_css('bootstrap.min.css, custom.css');
         $this->add_js('popper.min.js, bootstrap.min.js');
     }
 
@@ -591,7 +591,7 @@ class HelixUltimate
         return new Leafo\ScssPhp\Compiler();
     }
 
-    public function addSCSS($scss, $vars = array(), $css = '')
+    public function add_scss($scss, $vars = array(), $css = '')
     {
         $scss = JFile::stripExt($scss);
 

@@ -11,14 +11,13 @@ defined('_JEXEC') or die('Restricted access');
 
 $doc = JFactory::getDocument();
 $app = JFactory::getApplication();
-//Load Helix
-$helix_path = JPATH_PLUGINS . '/system/helixultimate/core/helixultimate.php';
 
+$helix_path = JPATH_PLUGINS . '/system/helixultimate/core/helixultimate.php';
 if (file_exists($helix_path)) {
     require_once($helix_path);
     $theme = new helixUltimate;
 } else {
-    die('Please install and activate helix plugin');
+    die('Install and activate <a target="_blank" href="https://www.joomshaper.com/helix">Helix Ultimate Framework</a>.');
 }
 
 //Coming Soon
@@ -84,14 +83,14 @@ if ($custom_js = $this->params->get('custom_js'))
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="canonical" href="<?php echo JUri::current(); ?>">
         <?php
-        
+
         $theme->head();
         
         $theme->add_css('font-awesome.min.css');
         $theme->add_js('jquery.sticky.js, main.js');
 
-        $theme->addSCSS('master', $scssVars, 'template');
-        $theme->addSCSS('presets', $scssVars, 'presets/' . $this->params->get('preset', 'preset1'));
+        $theme->add_scss('master', $scssVars, 'template');
+        $theme->add_scss('presets', $scssVars, 'presets/' . $this->params->get('preset', 'preset1'));
 
         //Before Head
         if ($before_head = $this->params->get('before_head'))

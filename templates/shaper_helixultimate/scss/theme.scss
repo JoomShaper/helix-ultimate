@@ -21,17 +21,13 @@
 /* ************   END:: TABLE OF CONTENT  ************* */
 /* **************************************************** */
 a {
-  -webkit-transition: color 400ms, background-color 400ms;
   transition: color 400ms, background-color 400ms;
 }
 
-body {
-  -webkit-transition: all 400ms ease;
-  transition: all 400ms ease;
-
-}
-
-a, a:hover, a:focus, a:active {
+a,
+a:hover,
+a:focus,
+a:active {
   text-decoration: none;
 }
 
@@ -47,51 +43,6 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
-}
-
-/* ***************   END:: Base Style  **************** */
-/* **************************************************** */
-
-//Offline
-.offline-inner {
-  margin-top: 100px;
-}
-
-/* *****************   END:: Button  ****************** */
-/* **************************************************** */
-
-/* ****************   START Common   ****************** */
-/* **************************************************** */
-
-// go to top
-.scrollup {
-  width: 40px;
-  height: 40px;
-  position: fixed;
-  bottom: 62px;
-  right: 100px;
-  display: none;
-  z-index: 999;
-  border: 1px solid #ddd;
-  background-color: rgba(255,255,255,.4);
-  &:hover{
-    background-color: darken(#ddd, 10%);
-  }
-  &:before{
-    content: " \f106";
-    font-family: "FontAwesome";
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-radius: 3px;
-    width: 40px;
-    height: 38px;
-    line-height: 38px;
-    text-align: center;
-    font-size: 25px;
-    font-weight: 700;
-    color: #000;
-  }
 }
 
 /* *****************   END:: Common  ****************** */
@@ -752,6 +703,13 @@ ul.social-icons {
   width: 100%;
   .post_rating{
     float: left;
+  }
+}
+
+// contentpane
+.contentpane {
+  &:not(.com-sppagebuilder) {
+    padding: 20px;
   }
 }
 

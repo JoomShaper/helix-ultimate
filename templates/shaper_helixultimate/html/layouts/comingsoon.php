@@ -21,7 +21,7 @@ if (file_exists($helix_path)) {
 }
 
 $site_title = $app->get('sitename');
-$comingsoon_date = explode('-', $this->params->get("comingsoon_date"));
+$comingsoon_date = explode('-', $params->get("comingsoon_date"));
 ?>
 
 <!doctype html>

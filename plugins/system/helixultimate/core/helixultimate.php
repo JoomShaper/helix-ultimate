@@ -20,6 +20,8 @@ class HelixUltimate
 
     public $app;
 
+    public $input;
+
     public $template;
 
     public $template_folder_url;
@@ -31,6 +33,7 @@ class HelixUltimate
     public function __construct()
     {
         $this->app      = JFactory::getApplication();
+        $this->input    = $this->app->input;
         $this->doc      = JFactory::getDocument();
         $this->template = $this->app->getTemplate(true);
         $this->params   = $this->template->params;
@@ -39,37 +42,101 @@ class HelixUltimate
 
     public function bodyClass($class = '')
     {
-        $language  = $this->doc->language;
-        $direction = $this->doc->direction;
-        $option    = str_replace('_', '-', $this->app->input->getCmd('option', ''));
-        $view      = $this->app->input->getCmd('view', '');
-        $layout    = $this->app->input->getCmd('layout', '');
-        $task      = $this->app->input->getCmd('task', '');
-        $itemid    = $this->app->input->getCmd('Itemid', '');
-        $sitename  = $this->app->get('sitename');
-
-        if ($view == 'modules')
+        $menu            = $this->app->getMenu()->getActive();
+        $bodyClass       = 'site ' . htmlspecialchars(str_replace('_', '-', $this->input->get('option', '', 'STRING')));
+        $bodyClass      .= ' view-' . htmlspecialchars($this->input->get('view', '', 'STRING'));
+        $bodyClass      .= ' layout-' . htmlspecialchars($this->input->get('layout', 'default', 'STRING'));
+        $bodyClass      .= ' task-' . htmlspecialchars($this->input->get('task', 'none', 'STRING'));
+        $bodyClass      .= ' itemid-' . (int) $this->input->get('Itemid', '', 'INT');
+        $bodyClass      .= ($this->doc->language) ? ' ' . $this->doc->language : '';
+        $bodyClass      .= ($this->doc->direction) ? ' ' . $this->doc->direction : '';
+        $bodyClass      .= ($this->params->get('sticky_header')) ? ' sticky-header' : '';
+        $bodyClass      .= ($this->params->get('boxed_layout', 0)) ? ' layout-boxed' : ' layout-fluid';
+        $bodyClass      .= ' offcanvas-init offcanvs-position-' . $this->params->get('offcanvas_position', 'right');
+        
+        if (isset($menu) && $menu)
         {
-            $layout = 'edit';
+            if ($menu->params->get('pageclass_sfx'))
+            {
+                $bodyClass .= ' ' . $menu->params->get('pageclass_sfx');
+            }
         }
 
-        return 'site ' . $option
-            . ' view-' . $view
-            . ($layout ? ' layout-' . $layout : ' no-layout')
-            . ($task ? ' task-' . $task : ' no-task')
-            . ($itemid ? ' itemid-' . $itemid : '')
-            . ($language ? ' ' . $language : '')
-            . ($direction ? ' ' . $direction : '')
-            . ($class ? ' ' . $class : '');
+        $bodyClass      .= (!empty($class)) ? ' ' . $class : '';
+
+        return $bodyClass;
+    }
+
+    public function head() {
+        $doc = JFactory::getDocument();
+
+        JHtml::_('jquery.framework');
+        JHtml::_('bootstrap.framework');
+        unset($doc->_scripts[JURI::base(true) . '/media/jui/js/bootstrap.min.js']); // Remove bootstrap
+
+        $webfonts = array();
+
+        if ($this->params->get('enable_body_font')) {
+            $webfonts['body'] = $this->params->get('body_font');
+        }
+
+        if ($this->params->get('enable_h1_font')) {
+            $webfonts['h1'] = $this->params->get('h1_font');
+        }
+
+        if ($this->params->get('enable_h2_font')) {
+            $webfonts['h2'] = $this->params->get('h2_font');
+        }
+
+        if ($this->params->get('enable_h3_font')) {
+            $webfonts['h3'] = $this->params->get('h3_font');
+        }
+
+        if ($this->params->get('enable_h4_font')) {
+            $webfonts['h4'] = $this->params->get('h4_font');
+        }
+
+        if ($this->params->get('enable_h5_font')) {
+            $webfonts['h5'] = $this->params->get('h5_font');
+        }
+
+        if ($this->params->get('enable_h6_font')) {
+            $webfonts['h6'] = $this->params->get('h6_font');
+        }
+
+        if ($this->params->get('enable_navigation_font')) {
+            $webfonts['.sp-megamenu-parent'] = $this->params->get('navigation_font');
+        }
+
+        if ($this->params->get('enable_custom_font') && $this->params->get('custom_font_selectors')) {
+            $webfonts[$this->params->get('custom_font_selectors')] = $this->params->get('custom_font');
+        }
+
+        // Favicon
+        if ($favicon = $this->params->get('favicon'))
+        {
+            $doc->addFavicon(JURI::base(true) . '/' . $favicon);
+        }
+        else
+        {
+            $doc->addFavicon($this->template_folder_url . '/images/favicon.ico');
+        }
+
+        $this->addGoogleFont($webfonts);
+
+        echo '<jdoc:include type="head" />';
+
+        $this->add_css('bootstrap.min.css');
+        $this->add_js('popper.min.js, bootstrap.min.js');
     }
 
     public function add_css($css_files = '', $options = array(), $attribs = array())
     {
         $files = array(
-                'resource' => $css_files,
-                'options'  => $options,
-                'attribs'  => $attribs
-            );
+            'resource' => $css_files,
+            'options'  => $options,
+            'attribs'  => $attribs
+        );
 
         $this->put_css_js_file($files,'css');
     }
@@ -77,10 +144,10 @@ class HelixUltimate
     public function add_js($js_files = '', $options = array(), $attribs = array())
     {
         $files = array(
-                'resource' => $js_files,
-                'options'  => $options,
-                'attribs'  => $attribs
-            );
+            'resource' => $js_files,
+            'options'  => $options,
+            'attribs'  => $attribs
+        );
 
         $this->put_css_js_file($files,'js');
     }
@@ -479,6 +546,23 @@ class HelixUltimate
         return false;
     }
 
+    public function after_body() {
+        if ($this->params->get('compress_css'))
+        {
+            $theme->compress_css();
+        }
+
+        if ($this->params->get('compress_js'))
+        {
+            $theme->compress_js($this->params->get('exclude_js'));
+        }
+
+        if ($before_body = $this->params->get('before_body'))
+        {
+            echo $before_body . "\n";
+        }
+    }
+
     public function scssInit()
     {
         include_once __DIR__ . '/classes/scss/Base/Range.php';
@@ -597,141 +681,42 @@ class HelixUltimate
       return $return;
     }
 
-    private static function resetCookie($name){
+    private static function resetCookie($name)
+    {
         if (JRequest::getVar('reset', '', 'get') == 1)
         {
             setcookie($name, '', time() - 3600, '/');
         }
     }
 
-
-    /**
-     * Convert object to array
-     *
-     */
-    public static function object_to_array($obj) {
-        if(is_object($obj)) $obj = (array) $obj;
-        if(is_array($obj)) {
-            $new = array();
-            foreach($obj as $key => $val) {
-                $new[$key] = self::object_to_array($val);
-            }
-        }
-        else $new = $obj;
-        return $new;
-    }
-
-    /**
-     * Convert object to array
-     *
-     */
-    public static function font_key_search($font, $fonts) {
-
-        foreach ($fonts as $key => $value) {
-            if($value['family'] == $font) {
-                return $key;
-            }
-        }
-
-        return 0;
-    }
-
-    /**
-     * Add Google Fonts
-     *
-     * @param string $name  . Name of font. Ex: Yanone+Kaffeesatz:400,700,300,200 or Yanone+Kaffeesatz  or Yanone
-     *                      Kaffeesatz
-     * @param string $field . Applied selector. Ex: h1, h2, #id, .classname
-     */
-    public function addGoogleFont($fonts){
+    public function addGoogleFont($fonts)
+    {
         $doc = JFactory::getDocument();
-        $webfonts = '';
-        $tpl_path = JPATH_BASE . '/templates/' . JFactory::getApplication()->getTemplate() . '/webfonts/webfonts.json';
-        $plg_path = JPATH_BASE . '/plugins/system/helixultimate/assets/webfonts/webfonts.json';
 
-        if(file_exists($tpl_path)) {
-            $webfonts = JFile::read($tpl_path);
-        } else if (file_exists($plg_path)) {
-            $webfonts = JFile::read($plg_path);
-        }
-
-        //Families
-        $families = array();
-        foreach ($fonts as $key => $value) {
-            $value = json_decode($value);
-            if (isset($value->fontWeight) && $value->fontWeight) {
-                $families[$value->fontFamily]['weight'][] = $value->fontWeight;
-            }
-
-            if (isset($value->fontSubset) && $value->fontSubset) {
-                $families[$value->fontFamily]['subset'][] = $value->fontSubset;
-            }
-        }
-
-        //Selectors
-        $selectors = array();
-        foreach ($fonts as $key => $value) {
-            $value = json_decode($value);
-
-            if (isset($value->fontFamily) && $value->fontFamily) {
-                $selectors[$key]['family'] = $value->fontFamily;
-            }
-
-            if (isset($value->fontSize) && $value->fontSize) {
-                $selectors[$key]['size'] = $value->fontSize;
-            }
-
-            if (isset($value->fontWeight) && $value->fontWeight) {
-                $selectors[$key]['weight'] = $value->fontWeight;
-            }
-        }
-
-        //Add Google Font URL
-        foreach ($families as $key => $value) {
-            $output = str_replace(' ', '+', $key);
-
-            // Weight
-            if($webfonts) {
-                $fonts_array = self::object_to_array(json_decode($webfonts));
-                $font_key = self::font_key_search($key, $fonts_array['items']);
-                $weight_array = $fonts_array['items'][$font_key]['variants'];
-                $output .= ':' . implode(',', $weight_array);
-            } else {
-                $weight = array_unique($value['weight']);
-                if (isset($weight) && $weight)
+        if(is_array($fonts))
+        {
+            foreach($fonts as $key => $font)
+            {
+                $font = json_decode($font);
+                $fontUrl = '//fonts.googleapis.com/css?family='. $font->fontFamily .':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+                
+                if($font->fontSubset)
                 {
-                    $output .= ':' . implode(',', $weight);
-                }
-            }
-
-            // Subset
-            $subset = array_unique($value['subset']);
-            if (isset($subset) && $subset) {
-                $output .= '&amp;subset=' . implode(',', $subset);
-            }
-
-            $doc->addStylesheet('//fonts.googleapis.com/css?family=' . $output);
-        }
-
-        //Add font to Selector
-        foreach ($selectors as $key => $value) {
-            if (isset($value['family']) && $value['family']) {
-                $output = 'font-family:' . $value['family'] . ', sans-serif; ';
-
-                if (isset($value['size']) && $value['size']) {
-                    $output .= 'font-size:' . $value['size'] . 'px; ';
+                    $fontUrl .= '&amp;subset=' . $font->fontSubset;
                 }
 
-                if (isset($value['weight']) && $value['weight']) {
-                    $output .= 'font-weight:' . str_replace('regular', 'normal', $value['weight']) . '; ';
+                $fontCSS = $key . "{";
+                $fontCSS .= "font-family: '" . $font->fontFamily . "', sans-serif;";
+
+                if($font->fontWeight)
+                {
+                    $fontCSS .= 'font-weight: ' . $font->fontWeight . ';';
                 }
 
-                $selectors = explode(',', $key);
-
-                foreach ($selectors as $selector) {
-                    $style = $selector . '{' . $output . '}';
-                    $doc->addStyledeclaration($style);
-                }
+                $fontCSS .= "}\n";
+                
+                $doc->addStylesheet($fontUrl);
+                $doc->addStyledeclaration($fontCSS);
             }
         }
     }

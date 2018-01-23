@@ -1,26 +1,29 @@
 <?php
 /**
- * @package Helix3 Framework
- * Template Name - Shaper Helix - iii
+ * @package Helix Ultimate Framework
  * @author JoomShaper http://www.joomshaper.com
  * @copyright Copyright (c) 2010 - 2015 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
 */
 
-defined ('_JEXEC') or die ('Restricted access');
+defined ('_JEXEC') or die ();
 
-$doc = JFactory::getDocument();
-$app = JFactory::getApplication();
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\AuthenticationHelper;
 
-require_once JPATH_ADMINISTRATOR . '/components/com_users/helpers/users.php';
+$twofactormethods 	= AuthenticationHelper::getTwoFactorMethods();
+$doc 				= JFactory::getDocument();
+$app              	= Factory::getApplication();
 
-$twofactormethods = UsersHelper::getTwoFactorMethods();
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->language; ?>" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
+<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php
     if($favicon = $this->params->get('favicon')) {
         $doc->addFavicon( JURI::base(true) . '/' .  $favicon);
@@ -28,14 +31,13 @@ $twofactormethods = UsersHelper::getTwoFactorMethods();
         $doc->addFavicon( $this->baseurl . '/templates/'. $this->template .'/images/favicon.ico' );
     }
     ?>
-
     <jdoc:include type="head" />
    	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/bootstrap.min.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3">
+			<div class="col-sm-6">
 				<div class="offline-inner">
 					<jdoc:include type="message" />
 

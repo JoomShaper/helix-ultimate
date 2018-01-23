@@ -883,14 +883,12 @@ html.coming-soon {
       .coming-soon-number{
         width: 100%;
         font-size: 4.5rem;
-        color: $link_color;
         letter-spacing: -1px;
         line-height: 1;
       }
 
       .coming-soon-string{
         font-size: 1.5rem;
-        color: #000000;
         letter-spacing: -1px;
         display: block;
         text-transform: uppercase;
@@ -940,12 +938,10 @@ html.error-page {
     margin: 0 0 1rem;
     font-size: 6rem;
     line-break: 1;
-    color: #0991de;
   }
 
   .error-message {
     font-size: 1.5rem;
-    color: #000000;
     margin-bottom: 3rem;
   }
 

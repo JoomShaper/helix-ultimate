@@ -39,6 +39,7 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 
 		<link href="<?php echo $theme_url . '/css/font-awesome.min.css'; ?>" rel="stylesheet">
 		<link href="<?php echo $theme_url . '/css/template.css'; ?>" rel="stylesheet">
+		<link href="<?php echo $theme_url . '/css/presets/' . $params->get('preset', 'preset1') . '.css'; ?>" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container">

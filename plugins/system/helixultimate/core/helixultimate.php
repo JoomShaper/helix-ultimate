@@ -795,10 +795,28 @@ class HelixUltimate
         return;
     }
 
-    //Compress CSS files
-    public function compressCSS(){
-        //function to compress css files
+    public function getHeaderStyle()
+    {
+        $header = $this->params->get('header_style');
+        $header = json_decode($header);
+        if(!isset($header->header) || $header->header == 'disable')
+        {
+            return;
+        }
 
+        $options = new stdClass;
+        $options->template = $this->template;
+        $options->params = $this->params;
+
+        $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts/frontend/headerlist';
+        $getLayout = new JLayoutFile($header->style.'.header', $layout_path );
+        
+        return $getLayout->render($options);
+    }
+
+    //Compress CSS files
+    public function compressCSS()
+    {
         require_once(__DIR__ . '/classes/cssmin.php');
 
         $doc             = JFactory::getDocument();
@@ -872,6 +890,4 @@ class HelixUltimate
 
         return;
     }
-
-
 }

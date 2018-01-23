@@ -1,14 +1,16 @@
 <?php
 /**
- * $package Helix Ultimate Framework
- * $author JoomShaper https://www.joomshaper.com
- * $copyright Copyright (c) 2010 - 2018 JoomShaper
- * $license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
 */
 
 defined ('_JEXEC') or die ('Resticted access');
 
 jimport('joomla.form.formfield');
+jimport('joomla.filesystem.file');
+jimport('joomla.filesystem.folder');
 
 class JFormFieldHelixheaders extends JFormField
 {
@@ -19,6 +21,9 @@ class JFormFieldHelixheaders extends JFormField
         $html    = '';
         $classes = (!empty($this->element['class'])) ? $this->element['class'] : '';
         $headers = json_decode($this->value);
+
+        $header_style_image_path = JURI::root(true) . '/plugins/system/helixultimate/layouts/frontend/headerlist';
+        $header_style = JFolder::folders(JPATH_ROOT .'/plugins/system/helixultimate/layouts/frontend/headerlist');
 
         $html .= '<div class="clearfix '. $classes .'">';
 
@@ -32,19 +37,17 @@ class JFormFieldHelixheaders extends JFormField
         $html .= '</div>';
 
         $html .= '<div><span>Choose Header Style</span></div>';
+
         $html .= '<ul class="header-design-layout" data-name="'. $this->name .'">';
-        $html .= '<li class="header-design'.((isset($headers->style) && $headers->style == 'style-1')?' active':'').'"data-style="style-1">';
-        $html .= '<span></span>';
-        $html .= '</li>';
-        $html .= '<li class="header-design'.((isset($headers->style) && $headers->style == 'style-2')?' active':'').'" data-style="style-2">';
-        $html .= '<span></span>';
-        $html .= '</li>';
-        $html .= '<li class="header-design'.((isset($headers->style) && $headers->style == 'style-3')?' active':'').'" data-style="style-3">';
-        $html .= '<span></span>';
-        $html .= '</li>';
-        $html .= '<li class="header-design'.((isset($headers->style) && $headers->style == 'style-4')?' active':'').'" data-style="style-4">';
-        $html .= '<span></span>';
-        $html .= '</li>';
+
+        foreach($header_style as $style)
+        {
+            $header_image = $header_style_image_path . '/' . $style . '/image.jpg';
+            $html .= '<li class="header-design'.((isset($headers->style) && $headers->style == $style)?' active':'').'" data-style="'.$style.'">';
+            $html .= '<span><img style="max-width:100%;" src="'. $header_image .'" alt="'. $style .'"</span>';
+            $html .= '</li>';
+        }
+
         $html .= '</ul>';
 
         $html .= '</div>';

@@ -106,6 +106,7 @@ if ($custom_js = $this->params->get('custom_js'))
 
     <div class="body-wrapper">
         <div class="body-innerwrapper">
+            <?php echo $theme->getHeaderStyle(); ?>
             <?php $theme->render_layout(); ?>
         </div>
     </div>

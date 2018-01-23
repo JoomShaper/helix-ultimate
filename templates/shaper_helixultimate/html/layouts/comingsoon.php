@@ -21,11 +21,10 @@ if (file_exists($helix_path)) {
 }
 
 $site_title = $app->get('sitename');
-$comingsoon_date = explode('-', $params->get("comingsoon_date"));
 ?>
 
 <!doctype html>
-<html lang="en" class="coming-soon">
+<html class="coming-soon" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,14 +38,16 @@ $comingsoon_date = explode('-', $params->get("comingsoon_date"));
 	<body>
 		<div class="container">
 
+			<jdoc:include type="message" />
+
 			<?php if($params->get('comingsoon_logo')) : ?>
-				<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo $site_title; ?>">
+				<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo htmlspecialchars($site_title); ?>">
 			<?php endif; ?>
 
 			<?php if($params->get('comingsoon_title')) : ?>
-				<h1 class="coming-soon-title"><?php echo $params->get('comingsoon_title'); ?></h1>
+				<h1 class="coming-soon-title"><?php echo htmlspecialchars($params->get('comingsoon_title')); ?></h1>
 			<?php else: ?>
-				<h1 class="coming-soon-title"><?php echo $site_title; ?></h1>
+				<h1 class="coming-soon-title"><?php echo htmlspecialchars($site_title); ?></h1>
 			<?php endif; ?>
 
 			<?php if($params->get('comingsoon_content')) : ?>
@@ -150,6 +151,10 @@ $comingsoon_date = explode('-', $params->get("comingsoon_date"));
 					echo $social_output;
 				}
 			?>
+
+			<?php if(isset($login) && $login) : ?>
+				<?php echo $login_form; ?>
+			<?php endif; ?>
 
 			<?php $theme->after_body(); ?>
 		</div>

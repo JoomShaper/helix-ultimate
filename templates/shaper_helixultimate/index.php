@@ -186,6 +186,7 @@ $doc->addScriptdeclaration("\nvar sp_gotop = '" . $this->params->get('goto_top')
 
     <div class="body-wrapper">
         <div class="body-innerwrapper">
+            <?php echo $theme->getHeaderStyle(); ?>
             <?php $theme->render_layout(); ?>
         </div>
     </div>

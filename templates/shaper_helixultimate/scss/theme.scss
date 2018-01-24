@@ -513,18 +513,21 @@ ul.social-icons {
 
 .article-details {
   .article-header {
-    text-align: center;
+    position: relative;
     h1,
     h2 {
-      font-size: 4rem;
-      line-height: 4.125rem;
-      font-weight: 100;
-      margin-bottom: 2.5rem;
+      font-size: 2.25rem;
+      line-break: 1.1;
     }
   }
 
+  .link-edit-article {
+    position: absolute;
+    right: 0;
+    top: 10px;
+  }
+
   .article-info {
-    justify-content: center;
     margin-bottom: 2.5rem;
   }
 

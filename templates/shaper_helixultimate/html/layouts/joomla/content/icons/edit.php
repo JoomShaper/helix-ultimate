@@ -24,7 +24,7 @@ if (strtotime($article->publish_up) > strtotime(Factory::getDate()) || ((strtoti
 }
 
 ?>
-<div class="clearfix mb-2">
+<SPAN class="link-edit-article">
 	<span class="hasTooltip fa fa-<?php echo $icon; ?>" title="<?php echo HTMLHelper::tooltipText(Text::_('COM_CONTENT_EDIT_ITEM'), $overlib, 0, 0); ?>"></span>
 	<?php echo Text::_('JGLOBAL_EDIT'); ?>
-</div>
+</SPAN>

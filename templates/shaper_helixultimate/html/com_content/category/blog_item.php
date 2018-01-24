@@ -11,16 +11,25 @@ defined('_JEXEC') or die;
 
 // Create a shortcut for params.
 $params = $this->item->params;
+$attribs = json_decode($this->item->attribs);
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $canEdit = $this->item->params->get('access-edit');
 $info    = $params->get('info_block_position', 0);
+$article_format = (isset($attribs->helix_article_format) && $attribs->helix_article_format) ? $attribs->helix_article_format : 'standard';
 
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
 
 ?>
-
-<?php echo JLayoutHelper::render('joomla.content.intro_image', $this->item); ?>
+<?php if($article_format == 'gallery') : ?>
+	<?php echo JLayoutHelper::render('joomla.content.blog.gallery', array('attribs' => $attribs)); ?>
+<?php elseif($article_format == 'video') : ?>
+	<?php echo JLayoutHelper::render('joomla.content.blog.video', array('attribs' => $attribs)); ?>
+<?php elseif($article_format == 'audio') : ?>
+	<?php echo JLayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
+<?php else: ?>
+	<?php echo JLayoutHelper::render('joomla.content.intro_image', $this->item); ?>
+<?php endif; ?>
 
 <div class="article-body">
 	<?php if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate())

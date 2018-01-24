@@ -444,10 +444,13 @@ ul.social-icons {
     border: 1px solid #f5f5f5;
     border-radius: 3px;
 
-    .article-intro-image {
+    .article-intro-image,
+    .article-intro-video,
+    .article-intro-audio {
       margin: -20px -20px 20px -20px;
       border-radius: 3px 3px 0 0;
       border-bottom: 1px solid #f5f5f5;
+      overflow: hidden;
       img {
         border-radius: 3px 3px 0 0;
       }

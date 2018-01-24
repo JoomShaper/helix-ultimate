@@ -797,9 +797,9 @@ class HelixUltimate
 
     public function getHeaderStyle()
     {
-        $header = $this->params->get('header_style');
-        $header = json_decode($header);
-        if(!isset($header->header) || $header->header == 'disable')
+        $pre_header = $this->params->get('predefined_header');
+        $header_style = $this->params->get('header_style');
+        if (!$pre_header || !$header_style)
         {
             return;
         }
@@ -809,7 +809,7 @@ class HelixUltimate
         $options->params = $this->params;
 
         $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts/frontend/headerlist';
-        $getLayout = new JLayoutFile($header->style.'.header', $layout_path );
+        $getLayout = new JLayoutFile($header_style.'.header', $layout_path );
         
         return $getLayout->render($options);
     }

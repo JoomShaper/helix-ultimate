@@ -51,7 +51,7 @@ jQuery(function($){
     $('.header-design').on('click',function(e){
         e.preventDefault();
 
-        var $parent = $(this).closest('.header-design-layout');
+        var $parent = $(this).closest('.helix-ultimate-header-list');
 
         $parent.find('.header-design').removeClass('active')
         $(this).addClass('active');
@@ -60,36 +60,7 @@ jQuery(function($){
             filedName = $parent.data('name'),
             filedClass = '.header-design-' + filedName;
 
-        var currentValue = $(filedClass).val();
-        if(currentValue == ''){
-            var newValue = {
-                style : styleName
-            }
-            $(filedClass).val(JSON.stringify(newValue))
-        } else {
-            currentValue = JSON.parse(currentValue);
-            currentValue.style = styleName;
-            $(filedClass).val(JSON.stringify(currentValue))
-        }
-
-    });
-
-    $('.choose-desinged-header').on('change',function(e){
-        var changeValue = e.target.value,
-            filedName = $(this).data('name'),
-            filedClass = '.header-design-' + filedName;
-
-        var currentValue = $(filedClass).val();
-        if(currentValue == ''){
-            var newValue = {
-                header : changeValue
-            }
-            $(filedClass).val(JSON.stringify(newValue))
-        } else {
-            currentValue = JSON.parse(currentValue);
-            currentValue.header = changeValue;
-            $(filedClass).val(JSON.stringify(currentValue))
-        }
+        $(filedClass).val(styleName);
     });
 
     $('.action-save-template').on('click',function(e){

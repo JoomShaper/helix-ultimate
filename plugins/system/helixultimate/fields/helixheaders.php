@@ -20,7 +20,7 @@ class JFormFieldHelixheaders extends JFormField
     {
         $html    = '';
         $classes = (!empty($this->element['class'])) ? $this->element['class'] : '';
-        $headers = json_decode($this->value);
+        $value = $this->value;
 
         $header_style_image_path = JURI::root(true) . '/plugins/system/helixultimate/layouts/frontend/headerlist';
         $header_style = JFolder::folders(JPATH_ROOT .'/plugins/system/helixultimate/layouts/frontend/headerlist');
@@ -28,28 +28,18 @@ class JFormFieldHelixheaders extends JFormField
         $html .= '<div class="clearfix '. $classes .'">';
 
         $html .= '<div class="header-design-wrap">';
-        $html .= '<div><span>Enable Designed Header</span></div>';
-        $html .= '<div>';
-        $html .= '<select class="choose-desinged-header" data-name="'. $this->name .'">';
-        $html .= '<option '. ((isset($headers->header) && $headers->header == 'enable')?'selected':'') .' value="enable">Enable</option>';
-        $html .= '<option '. ((isset($headers->header) && $headers->header == 'disable')?'selected':'') .' value="disable">Disable</option>';
-        $html .= '</select>';
-        $html .= '</div>';
-
         $html .= '<div><span>Choose Header Style</span></div>';
-
         $html .= '<ul class="helix-ultimate-header-list clearfix" data-name="'. $this->name .'">';
 
         foreach($header_style as $style)
         {
             $header_image = $header_style_image_path . '/' . $style . '/thumb.svg';
-            $html .= '<li class="'.((isset($headers->style) && $headers->style == $style)?'active':'').'" data-style="'.$style.'">';
+            $html .= '<li class="header-design'.(($value == $style)?' active':'').'" data-style="'.$style.'">';
             $html .= '<span><img src="'. $header_image .'" alt="'. $style .'"</span>';
             $html .= '</li>';
         }
 
         $html .= '</ul>';
-
         $html .= '</div>';
 
         $html .= '<input type="hidden" name="' . $this->name .'" value=\''. $this->value .'\' class="header-design-'. $this->name .'" id="'. $this->id .'">';

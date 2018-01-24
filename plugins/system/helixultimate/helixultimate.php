@@ -51,31 +51,22 @@ class  plgSystemHelixultimate extends JPlugin
         if ($form->getName() == 'com_menus.item')
         {
             JHtml::_('jquery.framework');
+            JHtml::_('jquery.ui', array('core', 'more', 'sortable'));
 
-            if($data['id'] && $data['parent_id'] == 1)
-            {
-                JHtml::_('jquery.ui', array('core', 'more', 'sortable'));
-                //$doc->addScript($plg_path.'/assets/js/jquery-ui.draggable.min.js');
+            $doc->addStyleSheet($plg_path.'/assets/css/bootstrap.css');
+            $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
+            $doc->addStyleSheet($plg_path.'/assets/css/modal.css');
+            $doc->addStyleSheet($plg_path.'/assets/css/menu.generator.css');
+            $doc->addScript($plg_path.'/assets/js/modal.js');
+            $doc->addScript( $plg_path. '/assets/js/menu.generator.js' );
 
-                $doc->addStyleSheet($plg_path.'/assets/css/bootstrap.css');
-                $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
-                $doc->addStyleSheet($plg_path.'/assets/css/modal.css');
-                $doc->addStyleSheet($plg_path.'/assets/css/menu.generator.css');
-                $doc->addScript($plg_path.'/assets/js/modal.js');
-                $doc->addScript( $plg_path. '/assets/js/menu.generator.js' );
-                $form->loadFile('menu-parent', false);
-            }
-            else
-            {
-                $form->loadFile('menu-child', false);
-            }
-            $form->loadFile('page-title', false);
+            $form->loadFile('menu-parent', false);
         }
 
         //Article Post format
-        if ($form->getName()=='com_content.article'){
+        if ($form->getName()=='com_content.article')
+        {
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
-
             $tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName();
 
             if (JFile::exists( $tpl_path . '/article-formats.xml' ))
@@ -90,7 +81,6 @@ class  plgSystemHelixultimate extends JPlugin
         }
     }
 
-
     // Live Update system
     public function onExtensionAfterSave($option, $data)
     {
@@ -101,7 +91,7 @@ class  plgSystemHelixultimate extends JPlugin
 
             $email       = $params->get('joomshaper_email');
             $license_key = $params->get('joomshaper_license_key');
-            $template = trim($data->template);
+            $template    = trim($data->template);
 
             if(!empty($email) and !empty($license_key) )
             {

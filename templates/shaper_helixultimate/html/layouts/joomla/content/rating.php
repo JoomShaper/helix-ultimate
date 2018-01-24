@@ -21,7 +21,8 @@ if($rating_count == '') {
 	<div class="rating-symbol">
 		<?php
 		$j = 0;
-		for($i = $rating; $i < 5; $i++){
+		for($i = $rating; $i < 5; $i++)
+		{
 			echo '<span class="rating-star" data-number="'.(5-$j).'"></span>';
 			$j = $j+1;
 		}

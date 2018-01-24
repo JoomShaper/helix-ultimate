@@ -13,7 +13,6 @@ jimport('joomla.plugin.plugin');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 jimport('joomla.registry.registry');
-jimport('joomla.image.image');
 
 require_once __DIR__ . '/classes/image.php';
 
@@ -29,22 +28,97 @@ class plgAjaxHelixultimate extends JPlugin
     if($action == 'upload_image')
     {
       $this->upload_image();
-      return;
-    } else if ($action == 'remove_image')
+    }
+    elseif ($action == 'remove_image')
     {
       $this->remove_image();
-      return;
     }
+    elseif ($action == 'rating')
+    {
+      $output = array();
+      $output['status'] = false;
+      $output['message'] = 'Invalid Token';
+      \JSession::checkToken() or die(json_encode($output));
+      
+      $app = \JFactory::getApplication();
+      $input = $app->input;
+      $article_id = (int) $input->post->get('article_id', 0, 'INT');
+      $rating = (int) $input->post->get('rating', 0, 'INT');
 
-    return json_encode($report);
+      $userIP = $_SERVER['REMOTE_ADDR'];
+      $lastip = '';
+      $last_rating = $this->getRating($article_id);
+     
+      if(isset($last_rating->lastip) && $last_rating->lastip)
+      {
+        $lastip = $last_rating->lastip;
+      }
+      
+      if($userIP == $lastip)
+      {
+        $output['status'] = false;
+        $output['message'] = 'You already rated this Article today!';
+        $output['rating_count'] = (isset($last_rating->rating_count) && $last_rating->rating_count) ? $last_rating->rating_count : 0;
+      }
+      else
+      {
+        $newRatings = $this->addRating($article_id, $rating, $userIP);
+
+        $output['status'] = true;
+        $output['message'] = 'Thank You!';
+
+        $rating = round($newRatings->rating_sum/$newRatings->rating_count);
+        $output['rating_count'] = $newRatings->rating_count;
+
+        $output['ratings'] = '';
+        $j = 0;
+        for($i = $rating; $i < 5; $i++)
+        {
+          $output['ratings'] .= '<span class="rating-star" data-number="'.(5-$j).'"></span>';
+          $j = $j+1;
+        }
+        for ($i = 0; $i < $rating; $i++)
+        {
+          $output['ratings'] .= '<span class="rating-star active" data-number="'.($rating - $i).'"></span>';
+        }
+      }
+
+      die(json_encode($output));
+    }
   }
 
-  static public function getItemRating($pk = 0){
-    $db    = JFactory::getDbo();
+  private function addRating($id, $rating, $ip)
+  {
+    $db = \JFactory::getDbo();
+    $lastRating = $this->getRating($id);
+
+    $userRating = new stdClass();
+    $userRating->content_id = $id;
+    $userRating->lastip = $ip;
+
+    if(isset($lastRating->rating_count) && $lastRating->rating_count)
+    {
+      $userRating->rating_sum = ($lastRating->rrating_sum + $rating);
+      $userRating->rating_count = ($lastRating->rating_count + 1);
+      $db->updateObject('#__content_rating', $userRating, 'content_id');
+    }
+    else
+    {
+      $userRating->rating_sum = $rating;
+      $userRating->rating_count = 1;
+      $db->insertObject('#__content_rating', $userRating);
+    }
+
+    return $this->getRating($id);
+  }
+
+  private function getRating($id)
+  {
+    $db = \JFactory::getDbo();
     $query = $db->getQuery(true);
-    $query->select('ROUND(rating_sum / rating_count, 0) AS rating, rating_count')
+    $query->select('*')
     ->from($db->quoteName('#__content_rating'))
-    ->where($db->quoteName('content_id') . ' = ' . (int) $pk);
+    ->where($db->quoteName('content_id') . ' = ' . (int) $id);
 
     $db->setQuery($query);
     $data = $db->loadObject();
@@ -55,7 +129,7 @@ class plgAjaxHelixultimate extends JPlugin
   //Get template name
   private static function getTemplate() {
 
-    $db = JFactory::getDbo();
+    $db = \JFactory::getDbo();
     $query = $db->getQuery(true);
     $query->select($db->quoteName(array('template', 'params')));
     $query->from($db->quoteName('#__template_styles'));
@@ -198,7 +272,8 @@ class plgAjaxHelixultimate extends JPlugin
   }
 
   // Delete File
-  private function remove_image() {
+  private function remove_image()
+  {
     $report = array();
 
     if (!JFactory::getUser()->authorise('core.delete', 'com_media'))
@@ -214,9 +289,11 @@ class plgAjaxHelixultimate extends JPlugin
 
     $path = JPATH_ROOT . '/' . $src;
 
-    if(file_exists($path)) {
+    if(file_exists($path))
+    {
 
-      if(JFile::delete($path)) {
+      if(JFile::delete($path))
+      {
 
         $basename = basename($src);
         $small = JPATH_ROOT . '/' . dirname($src) . '/' . JFile::stripExt($basename) . '_small.' . JFile::getExt($basename);
@@ -224,19 +301,23 @@ class plgAjaxHelixultimate extends JPlugin
         $medium = JPATH_ROOT . '/' . dirname($src) . '/' . JFile::stripExt($basename) . '_medium.' . JFile::getExt($basename);
         $large = JPATH_ROOT . '/' . dirname($src) . '/' . JFile::stripExt($basename) . '_large.' . JFile::getExt($basename);
 
-        if(file_exists($small)) {
+        if(file_exists($small))
+        {
           JFile::delete($small);
         }
 
-        if(file_exists($thumbnail)) {
+        if(file_exists($thumbnail))
+        {
           JFile::delete($thumbnail);
         }
 
-        if(file_exists($medium)) {
+        if(file_exists($medium))
+        {
           JFile::delete($medium);
         }
 
-        if(file_exists($large)) {
+        if(file_exists($large))
+        {
           JFile::delete($large);
         }
 
@@ -245,7 +326,9 @@ class plgAjaxHelixultimate extends JPlugin
         $report['status'] = false;
         $report['output'] = JText::_('Delete failed');
       }
-    } else {
+    }
+    else 
+    {
       $report['status'] = true;
     }
 

@@ -99,6 +99,7 @@ JHtml::_('behavior.caption');
 	<?php if($params->get('show_vote') && !$this->print) : ?>
 		<div class="article-ratings-social-share d-flex justify-content-end">
 			<div class="mr-auto align-self-center">
+				<?php JHtml::_('jquery.token'); ?>
 				<?php echo JLayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>
 			</div>
 			<div>

@@ -517,7 +517,6 @@ ul.social-icons {
     h1,
     h2 {
       font-size: 2.25rem;
-      line-break: 1.1;
     }
   }
 
@@ -528,23 +527,36 @@ ul.social-icons {
   }
 
   .article-info {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
   }
 
   .article-full-image {
     text-align: center;
     img {
       display: inline-block;
+      border-radius: 4px;
     }
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .article-ratings-social-share {
+    padding: 1rem 0;
+    border-top: 1px solid #f5f5f5;
+    border-bottom: 1px solid #f5f5f5;
+    margin-bottom: 1rem;
+  }
+
+  .article-author-information {
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid #f5f5f5;
   }
 }
 
 .tags {
   list-style: none;
   padding: 0;
-  margin: 0;
-  margin-top: 2.5rem;
+  margin: 2rem 0 0 0;
   display: block;
   >li {
     display: inline-block;
@@ -562,8 +574,9 @@ ul.social-icons {
 
 .pager {
   list-style: none;
-  padding: 0;
-  margin: 4.375rem 0;
+  padding: 2rem 0 0 0;
+  margin: 2rem 0 0 0;
+  border-top: 1px solid #f5f5f5;
 
   &::after {
     display: block;
@@ -588,10 +601,13 @@ ul.social-icons {
   }
 }
 
-//Article Voting
-.article-ratings-social-share {
-  margin-bottom: 4.375rem;
+#article-comments {
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid #f5f5f5;
 }
+
+//Article Voting
 .article-ratings {
   display: flex;
   align-items: center;

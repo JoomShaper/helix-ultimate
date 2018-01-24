@@ -22,7 +22,7 @@ class JFormFieldHelixgallery extends JFormField
 		JHtml::_('jquery.ui', array('core', 'sortable'));
 
 		$plg_path = JURI::root(true) . '/plugins/system/helixultimate';
-		$doc->addStyleSheet($plg_path . '/assets/css/gallery.css');
+		$doc->addStyleSheet($plg_path . '/assets/css/admin/gallery.css');
 
 		$values = json_decode($this->value);
 

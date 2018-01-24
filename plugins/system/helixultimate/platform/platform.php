@@ -137,18 +137,18 @@ class Platform
         \JHtml::_('formbehavior.chosen', 'select');
         \JHtml::_('behavior.colorpicker');
 
-        $doc->addScript($helix_plg_url.'/assets/js/helper.js');
-        $doc->addScript($helix_plg_url.'/assets/js/webfont.js');
-        $doc->addScript($helix_plg_url.'/assets/js/modal.js');
-        $doc->addScript($helix_plg_url.'/assets/js/admin.general.js');
-        $doc->addScript($helix_plg_url.'/assets/js/admin.layout.js');
+        $doc->addScript($helix_plg_url.'/assets/js/admin/helper.js');
+        $doc->addScript($helix_plg_url.'/assets/js/admin/webfont.js');
+        $doc->addScript($helix_plg_url.'/assets/js/admin/modal.js');
+        $doc->addScript($helix_plg_url.'/assets/js/admin/general.js');
+        $doc->addScript($helix_plg_url.'/assets/js/admin/layout.js');
 
-        $doc->addStyleSheet($helix_plg_url.'/assets/css/helix-ultimate.css');
+        $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/helix-ultimate.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
-        $doc->addStyleSheet($helix_plg_url.'/assets/css/admin.general.css');
+        $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/general.css');
 
-        $doc->addScript( $helix_plg_url. '/assets/js/media.js' );
-        $doc->addScript( $helix_plg_url. '/assets/js/admin.helix-ultimate.js' );
+        $doc->addScript( $helix_plg_url. '/assets/js/admin/media.js' );
+        $doc->addScript( $helix_plg_url. '/assets/js/admin/helix-ultimate.js' );
 
         echo $doc->render(false,[
             'file' => 'component.php',

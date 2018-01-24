@@ -20,8 +20,8 @@ class JFormFieldHeliximage extends JFormField
 		JHtml::_('jquery.framework');
 
 		$plg_path = JURI::root(true) . '/plugins/system/helixultimate';
-		$doc->addScript($plg_path . '/assets/js/image.js');
-		$doc->addStyleSheet($plg_path . '/assets/css/image.css');
+		$doc->addScript($plg_path . '/assets/js/admin/image.js');
+		$doc->addStyleSheet($plg_path . '/assets/css/admin/image.css');
 
 		if($this->value) {
 			$class1 = ' hide';

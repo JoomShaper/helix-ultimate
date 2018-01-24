@@ -53,12 +53,11 @@ class  plgSystemHelixultimate extends JPlugin
             JHtml::_('jquery.framework');
             JHtml::_('jquery.ui', array('core', 'more', 'sortable'));
 
-            $doc->addStyleSheet($plg_path.'/assets/css/bootstrap.css');
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
-            $doc->addStyleSheet($plg_path.'/assets/css/modal.css');
-            $doc->addStyleSheet($plg_path.'/assets/css/menu.generator.css');
-            $doc->addScript($plg_path.'/assets/js/modal.js');
-            $doc->addScript( $plg_path. '/assets/js/menu.generator.js' );
+            $doc->addStyleSheet($plg_path.'/assets/css/admin/modal.css');
+            $doc->addStyleSheet($plg_path.'/assets/css/admin/menu.generator.css');
+            $doc->addScript($plg_path.'/assets/js/admin/modal.js');
+            $doc->addScript( $plg_path. '/assets/js/admin/menu.generator.js' );
 
             $form->loadFile('menu-parent', false);
         }

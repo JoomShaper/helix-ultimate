@@ -159,7 +159,8 @@
 	</fieldset>
 
 	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-list-alt">
-		<field type="helixheaders" name="header_style" />
+		<field name="predefined_header" type="checkbox" helixgroup="headers" default="0" hideLabel="true" />
+		<field type="helixheaders" name="header_style" helixgroup="headers" showon="predefined_header:1" />
 		<field type="layout" name="layout" />
 	</fieldset>
 

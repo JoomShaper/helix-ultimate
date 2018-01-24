@@ -3063,3 +3063,32 @@ select:focus::-ms-value {
 .helix-ultimate-row-option-list > li:hover > ul {
   display: block;
 }
+
+/*Custom Headers*/
+.helix-ultimate-group-headers {
+  position: relative;
+}
+
+.control-group.group-style-headers {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.helix-ultimate-group-headers .helix-ultimate-field-list > .control-group-checkbox .controls {
+  position: absolute;
+  top: 7px;
+  right: 15px;
+}
+
+.helix-ultimate-header-list {
+  list-style: none;
+  padding: 0;
+  margin: -10px;
+}
+
+.helix-ultimate-header-list > li {
+  margin: 10px;
+  display: block;
+  float: left;
+}

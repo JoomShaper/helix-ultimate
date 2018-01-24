@@ -38,13 +38,13 @@ class JFormFieldHelixheaders extends JFormField
 
         $html .= '<div><span>Choose Header Style</span></div>';
 
-        $html .= '<ul class="header-design-layout" data-name="'. $this->name .'">';
+        $html .= '<ul class="helix-ultimate-header-list clearfix" data-name="'. $this->name .'">';
 
         foreach($header_style as $style)
         {
-            $header_image = $header_style_image_path . '/' . $style . '/image.jpg';
-            $html .= '<li class="header-design'.((isset($headers->style) && $headers->style == $style)?' active':'').'" data-style="'.$style.'">';
-            $html .= '<span><img style="max-width:100%;" src="'. $header_image .'" alt="'. $style .'"</span>';
+            $header_image = $header_style_image_path . '/' . $style . '/thumb.svg';
+            $html .= '<li class="'.((isset($headers->style) && $headers->style == $style)?'active':'').'" data-style="'.$style.'">';
+            $html .= '<span><img src="'. $header_image .'" alt="'. $style .'"</span>';
             $html .= '</li>';
         }
 

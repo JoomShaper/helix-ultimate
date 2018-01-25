@@ -1,8 +1,8 @@
 <?php
 /**
- * @package Helix3 Framework
- * @author JoomShaper http://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2015 JoomShaper
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -24,10 +24,10 @@ class HelixUltimateFeatureFooter
 		if($this->params->get('enabled_copyright'))
 		{
 			$output = '';
-			//Copyright
+			
 			if($this->params->get('copyright'))
 			{
-				$output .= '<span class="sp-copyright">' . str_ireplace('{year}',date('Y'), $this->params->get('copyright')) . '</span>';
+				$output .= '<span class="sp-copyright">' . str_ireplace('{year}',date('Y'), str_ireplace('joomshaper', '<a target="_blank" href="https://www.joomshaper.com">JoomShaper</a>', $this->params->get('copyright'))) . '</span>';
 			}
 
 			return $output;

@@ -113,12 +113,6 @@ ul.social-icons {
 /* ****************   START Header   ****************** */
 /* **************************************************** */
 
-//sticky header
-.sticky-wrapper{
-  position: relative;
-  z-index: 99;
-}
-
 #sp-header {
   height: $header_height;
   left: 0;
@@ -151,15 +145,10 @@ ul.social-icons {
   .sp-retina-logo {
     display: none;
   }
-  &.menu-fixed{
+  &.header-sticky {
     position: fixed;
     z-index: 9999;
   }
-}
-
-.sticky-wrapper.is-sticky {
-  position: relative;
-  z-index: 999;
 }
 
 /* *****************   END:: Header  ****************** */

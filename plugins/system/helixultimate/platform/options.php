@@ -81,7 +81,7 @@ class SPOptions{
         $html .= '<div class="helix-ultimate-fieldset-toggle-icon"><i class="fa fa-long-arrow-left"></i></div>';
         $html .= '<div class="helix-ultimate-fieldset-header-inner" data-fieldset="'. $fieldset->name .'">';
         $html .= '<span class="helix-ultimate-fieldset-icon"><i class="'. ( ( isset( $fieldset->icon ) && $fieldset->icon )? $fieldset->icon : 'fa fa-address-book-o' ) .'"></i></span>';
-        $html .= '<span class="helix-ultimate-fieldset-title">'. $fieldset->label .'</span>';
+        $html .= '<span class="helix-ultimate-fieldset-title">'. \JText::_($fieldset->label) .'</span>';
         $html .= '</div>';
         $html .= '</div>';
         $html .= '<div class="helix-ultimate-group-list">';

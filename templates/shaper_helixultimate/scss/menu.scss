@@ -34,6 +34,27 @@
         &.active > a {
             font-weight: 500;
         }
+
+        .sp-menu-badge {
+            height: 20px;
+            line-height: 22px;
+            padding: 0 6px;
+            font-size: 80%;
+            letter-spacing: 1px;
+            display: inline-block;
+            text-transform: uppercase;
+            background: #d60000;
+            color: #fff;
+            border-radius: 3px;
+
+            &.sp-menu-badge-right {
+                margin-left: 5px;
+            }
+
+            &.sp-menu-badge-left {
+                margin-right: 5px;
+            }
+        }
     }
 
     .sp-module {
@@ -120,7 +141,7 @@
             padding: 0;
             position: relative;
 
-            >a, span {
+            >a, span:not(.sp-menu-badge) {
                 font-size: 14px;
                 display: block;
                 padding: 10px 0;

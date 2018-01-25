@@ -15,8 +15,10 @@ jQuery(function($) {
 
         if(currentVal) {
             $('.helix-ultimate-megamenu-field-control, .helix-ultimate-megamenu-sidebar').removeClass('hide-menu-builder');
+            $('.helix-ultimate-dropdown-field-control').addClass('hide-menu-builder');
         } else {
             $('.helix-ultimate-megamenu-field-control, .helix-ultimate-megamenu-sidebar').addClass('hide-menu-builder');
+            $('.helix-ultimate-dropdown-field-control').removeClass('hide-menu-builder');
         }
     });
 

@@ -14,6 +14,23 @@ jQuery(function($) {
 			});
 	
 		});//end ready
+
+		// Sortable
+		$.fn.rowSortable = function(){
+			$(this).sortable({
+				placeholder: "ui-state-highlight",
+				forcePlaceholderSize: true,
+				axis: 'x',
+				opacity: 0.8,
+				tolerance: 'pointer',
+	
+				start: function(event, ui) {
+					$( ".helix-ultimate-layout-section .row" ).find('.ui-state-highlight').addClass( $(ui.item).attr('class') );
+					$( ".helix-ultimate-layout-section .row" ).find('.ui-state-highlight').css( 'height', $(ui.item).outerHeight() );
+				}
+	
+			}).disableSelection();
+		};
 	
 		/* ----------   Load existing template   ------------- */
 		$('#hexli-ult-options').on('click', '.layout-del-action', function(event) {

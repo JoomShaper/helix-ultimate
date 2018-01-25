@@ -147,15 +147,12 @@ class Platform
         \JHtml::_('behavior.colorpicker');
         \JHtml::_('jquery.token');
 
-        $doc->addScript($helix_plg_url.'/assets/js/admin/helper.js');
         $doc->addScript($helix_plg_url.'/assets/js/admin/webfont.js');
         $doc->addScript($helix_plg_url.'/assets/js/admin/modal.js');
-        $doc->addScript($helix_plg_url.'/assets/js/admin/general.js');
         $doc->addScript($helix_plg_url.'/assets/js/admin/layout.js');
 
         $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/helix-ultimate.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
-        $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/general.css');
 
         $doc->addScript( $helix_plg_url. '/assets/js/admin/media.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin/helix-ultimate.js' );

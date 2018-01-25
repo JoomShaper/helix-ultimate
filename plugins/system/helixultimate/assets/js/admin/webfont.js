@@ -19,8 +19,7 @@ jQuery(function($) {
 		var request = {
 			'action' : 'fontVariants',
 			'option' : 'com_ajax',
-			'plugin' : 'helix3',
-			'request': 'ajaxHelix',
+			'request': 'helixultimate',
 			'data'   : data,
 			'format' : 'json'
 		};
@@ -30,15 +29,15 @@ jQuery(function($) {
 			data   : request,
 			success: function (response) {
 				var font = $.parseJSON(response);
-				$that.closest('.webfont').find('.list-font-weight').html(font.variants);
-				$that.closest('.webfont').find('.list-font-subset').html(font.subsets);
+				$that.closest('.helix-ultimate-field-webfont').find('.list-font-weight').html(font.variants);
+				$that.closest('.helix-ultimate-field-webfont').find('.list-font-subset').html(font.subsets);
 			}
 		});
 
         //Change Preview
         var font = $that.val().replace(" ", "+");
         $('head').append("<link href='//fonts.googleapis.com/css?family="+ font +"' rel='stylesheet' type='text/css'>");
-        $(this).closest('.webfont').find('.webfont-preview').fadeIn().css('font-family', $(this).val());
+        $(this).closest('.helix-ultimate-field-webfont').find('.webfont-preview').fadeIn().css('font-family', $(this).val());
 
         return false;
     });
@@ -51,7 +50,7 @@ jQuery(function($) {
 		var variant = $(this).val(),
 			weight 	= '', 
 			style 	= '', 
-        	family 	= $(this).closest('.webfont').find('.list-font-families').val().replace(" ", "+") + ':' + variant
+        	family 	= $(this).closest('.helix-ultimate-field-webfont').find('.list-font-families').val().replace(" ", "+") + ':' + variant
 
         if(variant=='regular') {
         	weight 	= 'regular';
@@ -65,8 +64,8 @@ jQuery(function($) {
         }
 
         $('head').append("<link href='//fonts.googleapis.com/css?family="+ family +"' rel='stylesheet' type='text/css'>");
-        $(this).closest('.webfont').find('.webfont-preview').fadeIn().css({
-        	'font-family': $(this).closest('.webfont').find('.list-font-families').val(),
+        $(this).closest('.helix-ultimate-field-webfont').find('.webfont-preview').fadeIn().css({
+        	'font-family': $(this).closest('.helix-ultimate-field-webfont').find('.list-font-families').val(),
         	'font-weight': weight,
         	'font-style': style
         });
@@ -78,10 +77,10 @@ jQuery(function($) {
 		event.preventDefault();
 
 		var subsets = $(this).val(),
-			variant = $(this).closest('.webfont').find('.list-font-weight').val(),
+			variant = $(this).closest('.helix-ultimate-field-webfont').find('.list-font-weight').val(),
 			weight 	= '', 
 			style 	= '', 
-        	family 	= $(this).closest('.webfont').find('.list-font-families').val().replace(" ", "+") + ':' + variant + '&subset=' + subsets
+        	family 	= $(this).closest('.helix-ultimate-field-webfont').find('.list-font-families').val().replace(" ", "+") + ':' + variant + '&subset=' + subsets
 
         if(variant=='regular') {
         	weight 	= 'regular';
@@ -104,11 +103,11 @@ jQuery(function($) {
 		event.preventDefault();
 
 		var font_size = $(this).val(),
-		 	subsets = $(this).closest('.webfont').find('.list-font-subset').val(),
-			variant = $(this).closest('.webfont').find('.list-font-weight').val(),
+		 	subsets = $(this).closest('.helix-ultimate-field-webfont').find('.list-font-subset').val(),
+			variant = $(this).closest('.helix-ultimate-field-webfont').find('.list-font-weight').val(),
 			weight 	= '', 
 			style 	= '', 
-        	family 	= $(this).closest('.webfont').find('.list-font-families').val().replace(" ", "+") + ':' + variant + '&subset=' + subsets
+        	family 	= $(this).closest('.helix-ultimate-field-webfont').find('.list-font-families').val().replace(" ", "+") + ':' + variant + '&subset=' + subsets
 
         if(variant=='regular') {
         	weight 	= 'regular';
@@ -122,8 +121,8 @@ jQuery(function($) {
         }
 
         $('head').append("<link href='//fonts.googleapis.com/css?family="+ family +"' rel='stylesheet' type='text/css'>");
-        $(this).closest('.webfont').find('.webfont-preview').fadeIn().css({
-        	'font-family': $(this).closest('.webfont').find('.list-font-families').val(),
+        $(this).closest('.helix-ultimate-field-webfont').find('.webfont-preview').fadeIn().css({
+        	'font-family': $(this).closest('.helix-ultimate-field-webfont').find('.list-font-families').val(),
         	'font-weight': weight,
         	'font-style': style,
         	'font-size': $(this).val() + 'px',
@@ -140,10 +139,9 @@ jQuery(function($) {
         var request = {
 			'action' : 'update-font-list',
             'option' : 'com_ajax',
-			'plugin' : 'helix3',
-			'request': 'ajaxHelix',			
+			'request': 'helixultimate',			
             'data'   : {},
-            'format' : 'raw'
+            'format' : 'json'
         };
 
         $.ajax({

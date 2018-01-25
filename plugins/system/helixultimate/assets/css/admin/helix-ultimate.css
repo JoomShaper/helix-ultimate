@@ -3185,8 +3185,8 @@ select:focus::-ms-value {
 
 /*Webfonts*/
 .webfont-preview {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 0;
 }
 
 .font-update-success,

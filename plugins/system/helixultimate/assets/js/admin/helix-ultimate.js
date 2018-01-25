@@ -81,8 +81,7 @@ jQuery(function($){
         var request = {
             'action': 'save-tmpl-style',
             'option' : 'com_ajax',
-            'plugin' : 'helix3',
-            'request': 'ajaxHelix',
+            'request': 'helixultimate',
             'data'   : formData,
             'format' : 'json'
         };

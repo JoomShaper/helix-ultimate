@@ -48,19 +48,18 @@ jQuery(function($){
 
     });
 
-    $('.header-design').on('click',function(e){
+    $('.helix-ultimate-header-item').on('click',function(e){
         e.preventDefault();
 
         var $parent = $(this).closest('.helix-ultimate-header-list');
 
-        $parent.find('.header-design').removeClass('active')
+        $parent.find('.helix-ultimate-header-item').removeClass('active')
         $(this).addClass('active');
 
         var styleName = $(this).data('style'),
-            filedName = $parent.data('name'),
-            filedClass = '.header-design-' + filedName;
+            filedName = $parent.data('name');
 
-        $(filedClass).val(styleName);
+        $('#' + filedName).val(styleName);
     });
 
     $('.action-save-template').on('click',function(e){

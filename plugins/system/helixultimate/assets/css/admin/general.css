@@ -883,36 +883,3 @@ body .minicolors-theme-bootstrap .minicolors-swatch {
 .control-group.active-child{
     display: block;
 }
-
-.header-design-wrap ul{
-    display: block;
-    height: auto;
-    list-style: none;
-}
-
-.header-design-wrap ul li{
-    width: -webkit-calc(50% - 5px);
-    width: -moz-calc(50% - 5px);
-    width: calc(50% - 5px);
-    height: 80px;
-    background: #36c77b;
-    float: left;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    cursor: pointer;
-}
-
-.header-design-wrap ul li span{
-    display: block;
-    width: -webkit-calc(100% - 10px);
-    width: -moz-calc(100% - 10px);
-    width: calc(100% - 10px);
-    height: -webkit-calc(100% - 10px);
-    height: -moz-calc(100% - 10px);
-    height: calc(100% - 10px);
-    margin: 5px;
-}
-
-.header-design-wrap ul li.active span{
-    background: rgba(27, 94, 54, 0.269);
-}

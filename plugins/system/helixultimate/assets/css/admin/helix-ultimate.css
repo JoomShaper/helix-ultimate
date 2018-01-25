@@ -2212,10 +2212,6 @@ select:focus::-ms-value {
   border: 0;
 }
 
-
-.helix-ultimate-fieldset {
-}
-
 .helix-ultimate-fieldset-header {
   padding: 0;
   height: 60px;
@@ -3091,4 +3087,60 @@ select:focus::-ms-value {
   margin: 10px;
   display: block;
   float: left;
+}
+
+.helix-ultimate-header-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.helix-ultimate-header-list > li {
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #DEE2E8;
+  border-radius: 1px;
+  display: block;
+  cursor: pointer;
+  position: relative;
+}
+
+.helix-ultimate-header-list > li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.helix-ultimate-header-list > li img {
+  max-width: 100%;
+}
+
+.helix-ultimate-header-list > li::after {
+  content: "\f00c";
+  font-family: FontAwesome;
+  font-size: 12px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 18px;
+  width: 18px;
+  line-height: 18px;
+  text-align: center;
+  background: #007bff;
+  color: #fff;
+  border-radius: 2px;
+  display: none;
+}
+
+.helix-ultimate-header-list > li.active::after {
+  display: block;
+}
+
+.helix-ultimate-header-list > li:hover::before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #007bffba;
+  border-radius: 1px;
 }

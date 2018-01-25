@@ -6,14 +6,16 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-namespace HelixULT;
+namespace HelixUltimate;
 
 defined ('_JEXEC') or die ('resticted access');
 
 require_once __DIR__.'/options.php';
 require_once __DIR__.'/request.php';
+require_once __DIR__.'/helper.php';
 
-use HelixULT\SPOptions as SPOptions;
+use HelixUltimate\Helper\Helper as Helper;
+use HelixUltimate\Options as Options;
 
 class Platform
 {
@@ -30,6 +32,8 @@ class Platform
 
     protected $request;
 
+    protected $version;
+
     protected $user = array();
 
     protected $permission = false;
@@ -39,6 +43,7 @@ class Platform
         $this->user = \JFactory::getUser();
         $this->app  = \JFactory::getApplication();
         $input = $this->app->input;
+        $this->version    = Helper::getVersion();
 
         $this->option     = $input->get('option','');
         $this->preview    = $input->get('preview','');
@@ -55,7 +60,7 @@ class Platform
       {
           if (!$this->permission)
           {
-              throw new \Exception("Permission Denied",403);
+              throw new \Exception("Permission Denied", 403);
           }
           $request = new Request;
           $request->initialize();
@@ -63,7 +68,7 @@ class Platform
       else if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->id && $this->permission)
       {
           $frmkHTML    = $this->frameworkFormHTMLStart();
-          $frmkOptions = new SPOptions();
+          $frmkOptions = new Options();
           $frmkHTML    .= $frmkOptions->renderBuilderSidebar();
           $frmkHTML    .= $this->frameworkFormHTMLEnd();
 
@@ -86,20 +91,20 @@ class Platform
     private function frameworkFormHTMLEnd()
     {
         $app = \JFactory::getApplication();
-        $template = htmlspecialchars($app->input->get('template', 'shaper_helixultimate', 'STRING'));
-        // Validation requires for template existance
+        $id = (int) $app->input->get('id', 0, 'INT');
+        $style = Helper::getTemplateStyle($id);
 
         $htmlView  = '</div>';
 
         $htmlView .= '<div class="helix-ultimate-footer clearfix">';
-        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate 1.0 RC<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
+        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate Framewrok '. $this->version .'<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
         $htmlView .= '<div class="helix-ultimate-action"><button class="btn btn-primary action-save-template" data-id="'. $this->id .'" data-view="'. $this->view .'"><span class="fa fa-save"></span> Save</button></div>';
         $htmlView .= '</div>';
 
         $htmlView .= '</div>';
 
         $htmlView .= '<div class="helix-ultimate-preview">';
-        $htmlView .= '<iframe id="helix-ultimate-template-preview" src="'.\JURI::root(true).'/index.php?template='. $template .'" style="width: 100%; height: 100%;"></iframe>';
+        $htmlView .= '<iframe id="helix-ultimate-template-preview" src="'.\JURI::root(true).'/index.php?template='. $style->template .'" style="width: 100%; height: 100%;"></iframe>';
         $htmlView .= '</div>';
         $htmlView .= '</div>';
 

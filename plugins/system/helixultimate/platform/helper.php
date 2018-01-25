@@ -7,9 +7,9 @@
 */
 
 //no direct accees
-namespace HelixULT\Model;
+namespace HelixUltimate\Helper;
 
-class HelixUltModel
+class Helper
 {
     public static function getTemplateStyle($id = 0)
     {
@@ -43,5 +43,27 @@ class HelixUltModel
         $query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
         $db->setQuery($query);
         return $db->execute();
+    }
+
+    public static function getVersion()
+    {
+        $db = \JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query
+            ->select(array('*'))
+            ->from($db->quoteName('#__extensions'))
+            ->where($db->quoteName('type').' = '.$db->quote('plugin'))
+            ->where($db->quoteName('element').' = '.$db->quote('helixultimate'))
+            ->where($db->quoteName('folder').' = '.$db->quote('system'));
+        $db->setQuery($query);
+        $result = $db->loadObject();
+        $manifest_cache = json_decode($result->manifest_cache);
+        
+        if (isset($manifest_cache->version))
+        {
+            return $manifest_cache->version;
+        }
+
+        return;
     }
 }

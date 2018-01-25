@@ -6,21 +6,22 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-namespace HelixULT;
+namespace HelixUltimate;
 
 defined ('_JEXEC') or die ('resticted access');
 
+
 jimport( 'joomla.filesystem.file' );
 jimport('joomla.filesystem.folder');
-require_once __DIR__.'/helix-ult-model.php';
+require_once __DIR__.'/helper.php';
 
 \JHtml::_('jquery.framework');
 \JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 
 use Joomla\CMS\Form as JoomlaForm;
-use HelixULT\Model\HelixUltModel as HelixUltModel;
+use HelixUltimate\Helper\Helper as Helper;
 
-class SPOptions{
+class Options{
 
     public function renderBuilderSidebar()
     {
@@ -28,19 +29,19 @@ class SPOptions{
         $input  = \JFactory::getApplication()->input;
         $id = $input->get('id',NULL);
 
-        $tmplStyle = HelixUltModel::getTemplateStyle($id);
+        $templateStyle = Helper::getTemplateStyle($id);
         $formData = array();
 
-        if(isset($tmplStyle->params)){
-            $formData = json_decode($tmplStyle->params);
+        if(isset($templateStyle->params)){
+            $formData = json_decode($templateStyle->params);
         }
 
         $form = new JoomlaForm\Form('template');
-        $form->loadFile( JPATH_ROOT.'/templates/' . $tmplStyle->template . '/options.xml');
+        $form->loadFile( \JPATH_ROOT.'/templates/' . $templateStyle->template . '/options.xml');
         if($formData){
             $form->bind($formData);
         } else {
-            $layout_file = JPATH_ROOT.'/templates/' . $tmplStyle->template . '/layout/default.json';
+            $layout_file = \JPATH_ROOT.'/templates/' . $templateStyle->template . '/layout/default.json';
             $formData = file_get_contents($layout_file);
             $form->bind(json_decode($formData));
         }

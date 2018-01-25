@@ -9,32 +9,21 @@
 //no direct accees
 defined ('_JEXEC') or die ('resticted aceess');
 
-require_once dirname(__DIR__) . '/platform/helix-ult-model.php';
-use HelixULT\Model\HelixUltModel as HelixUltModel;
+require_once dirname(__DIR__) . '/platform/helper.php';
+
+use HelixUltimate\Helper\Helper as Helper;
 
 class JFormFieldModPos extends JFormField
 {
-  /**
-  * The form field type.
-  *
-  * @var		string
-  * @since	1.6
-  */
   protected $type = 'ModPos';
 
-  /**
-  * Method to get the field input markup.
-  *
-  * @return	string	The field input markup.
-  * @since	1.6
-  */
   protected function getInput()
   {
     $html = array();
     $attr = '';
     $input  = \JFactory::getApplication()->input;
     $style_id = (int) $input->get('id', 0, 'INT');
-    $style = HelixUltModel::getTemplateStyle($style_id);
+    $style = Helper::getTemplateStyle($style_id);
 
     $db = \JFactory::getDbo();
     $query = $db->getQuery(true);

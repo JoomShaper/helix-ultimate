@@ -16,18 +16,17 @@ class JFormFieldHelixdetails extends JFormField
 
     protected function getInput()
     {
-        $app = JFactory::getApplication();
-        $id  = $app->input->get('id',null,'INT');
+        \JHtml::_('jquery.framework');
+        $doc = \JFactory::getDocument();
+		$plg_path = \JURI::root(true) . '/plugins/system/helixultimate';
+		$doc->addScript($plg_path . '/assets/js/admin/details.js');
+		$doc->addStyleSheet($plg_path . '/assets/css/admin/details.css');
+
+        $app = \JFactory::getApplication();
+        $id  = (int) $app->input->get('id', 0,'INT');
 
         $url = 'index.php?option=com_ajax&preview=theme&view=style&id=' . $id;
-        $html  = '';
-        $html .= '<div class="">';
-        $html .= '<a target="_blank" href="'. $url .'" class="helix-ultimate-options"><i class="icon-options"></i> Template Options</a>';
-        $html .= '<style type="text/css">';
-        $html .= '.helix-ultimate-options {background: #05D21F;border-radius: 3px;color:#fff;padding:20px 30px;font-size:16px; font-weight: 700; display: inline-block; margin-top: 10px;}';
-        $html .= '.helix-ultimate-options:hover {text-decoration: none; color: #fff; background: #05BB1B;}';
-        $html .= '</style>';
-        $html .= '</div>';
+        $html = '<a target="_blank" href="'. $url .'" class="helix-ultimate-options"><i class="icon-options"></i> Template Options</a>';
 
         return $html;
     }

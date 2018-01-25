@@ -14,7 +14,7 @@ jimport('joomla.registry.registry');
 
 require_once __DIR__.'/platform/platform.php';
 
-use HelixULT\Platform as Platform;
+use HelixUltimate\Platform as Platform;
 
 class  plgSystemHelixultimate extends JPlugin
 {

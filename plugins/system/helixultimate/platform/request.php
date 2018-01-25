@@ -6,16 +6,16 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-namespace HelixULT;
+namespace HelixUltimate;
 
 defined ('_JEXEC') or die ('resticted access');
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
-require_once __DIR__.'/helix-ult-model.php';
+require_once __DIR__.'/helper.php';
 require_once __DIR__.'/media.php';
 
-use HelixULT\Model\HelixUltModel as HelixUltModel;
+use HelixUltimate\Helper\Helper as Helper;
 
 class Request{
 
@@ -97,7 +97,7 @@ class Request{
     {
         if (!$this->id || !is_int($this->id)) return;
 
-        $update = HelixUltModel::updateTemplateStyle($this->id, $this->data);
+        $update = Helper::updateTemplateStyle($this->id, $this->data);
         if ($update)
         {
             $this->report['status'] = true;
@@ -169,7 +169,7 @@ class Request{
 
         if (json_last_error() === JSON_ERROR_NONE)
         {
-            $update = HelixUltModel::updateTemplateStyle($this->id, $data);
+            $update = Helper::updateTemplateStyle($this->id, $data);
 
             if ($update)
             {
@@ -181,7 +181,7 @@ class Request{
 
     private function updateGoogleFontList()
     {
-        $tmpl_style = HelixUltModel::getTemplateStyle($this->id);
+        $tmpl_style = Helper::getTemplateStyle($this->id);
         $template   = $tmpl_style->template;
 
         $template_path = JPATH_SITE . '/templates/' . $template . '/webfonts';
@@ -204,7 +204,7 @@ class Request{
 
     private function changeFontVariants()
     {
-        $tmpl_style = HelixUltModel::getTemplateStyle($this->id);
+        $tmpl_style = Helper::getTemplateStyle($this->id);
         $template   = $tmpl_style->template;
         $font_name  =  $this->data['fontName'];
 
@@ -250,7 +250,7 @@ class Request{
 
     private function setLayoutParams()
     {
-        $tmpl_style = HelixUltModel::getTemplateStyle($this->id);
+        $tmpl_style = Helper::getTemplateStyle($this->id);
         $this->template   = $tmpl_style->template;
 
         if (isset($this->data['layoutName']))

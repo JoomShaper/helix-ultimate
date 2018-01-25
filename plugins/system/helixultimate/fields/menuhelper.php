@@ -286,15 +286,13 @@ if($count > 4 && $count != 6)
                     <input type="checkbox" class="helix-ultimate-checkbox" id="helix-ultimate-megamenu-title-toggler" <?php echo ($show_title) ? 'checked' : ''; ?> />
                 </div>
 
-                <?php if($menu_item->parent_id && $menu_item->parent_id != 1) { ?>
-                <div>
+                <div class="helix-ultimate-dropdown-field-control<?php echo ($enable_megamenu != 1)?'':'hide-menu-builder'?>">
                     <span class="helix-ultimate-megamenu-label">Dropdown Position</span>
                     <select id="helix-ultimate-dropdown">
                         <option value="left" <?php echo ($dropdown == 'left') ? 'selected' : ''; ?>><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_LEFT'); ?></option>
                         <option value="right" <?php echo ($dropdown == 'right') ? 'selected' : ''; ?>><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_RIGHT'); ?></option>
                     </select>
                 </div>
-                <?php } ?>
 
                 <div>
                     <span class="helix-ultimate-megamenu-label"><?php echo JText::_('HELIX_ULTIMATE_MENU_ICON'); ?></span>

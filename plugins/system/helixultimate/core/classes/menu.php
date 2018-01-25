@@ -18,9 +18,9 @@ class HelixUltimateMenu
 
     protected $menu = '';
 
-    public $_params 	= null;
+    public $_params = null;
 
-    public $menuname	= 'mainmenu';
+    public $menuname = 'mainmenu';
 
     function __construct($class = '', $name = '')
     {
@@ -154,7 +154,7 @@ class HelixUltimateMenu
         {
             $this->navigation(null,$keys[0]);
         }
-        
+
         return $this->menu;
     }
 
@@ -229,12 +229,7 @@ class HelixUltimateMenu
         $this->menu .= $this->start_el(array('item' => $item));
         $this->menu .= $this->item($item);
 
-        $menulayout = $item->params->get('menulayout');
-
-        if( $menulayout !== '' )
-        {
-            $menulayout = json_decode($menulayout);
-        }
+        $menulayout = json_decode($item->params->get('menulayout'));
 
         if (isset($menulayout->megamenu) && $menulayout->megamenu)
         {
@@ -251,38 +246,23 @@ class HelixUltimateMenu
     {
         $items     = isset($this->children[$item->id]) ? $this->children[$item->id] : array();
         $firstitem = count($items) ? $items[0]->id : 0;
-        
         $class = ($item->level==1) ? 'sp-dropdown sp-dropdown-main' : 'sp-dropdown sp-dropdown-sub';
-        $dropdown_width = $this->_params->get('dropdown_width');
 
-        if (!$dropdown_width)
-        {
-            $dropdown_width = 240;
-        }
-
+        $dropdown_width = 240;
+        $dropdown_alignment = 'right';
         $dropdown_style = 'width: '. $dropdown_width .'px;';
         $layout = json_decode($this->_items[$item->id]->params->get('menulayout'));
-        $sub_alignment = $this->_items[$item->id]->params->get('dropdown_position', 'right');
 
-        if(isset($layout->menualign) && $layout->menualign)
+        if (isset($layout->dropdown) && $layout->dropdown == 'left')
         {
-            $alignment = $layout->menualign;
-        }
-        else
-        {
-            $alignment = 'right';
-        }
-
-        if($alignment=='center')
-        {
-            $dropdown_style .= 'left: -'. ($dropdown_width/2) .'px;';
-        }
-        else if ( $sub_alignment == 'left' )
-        {
-            $dropdown_style .= 'left: -'. $dropdown_width .'px;';
+            if ($item->parent_id !== '1')
+            {
+                $dropdown_style .= 'left: -' . $dropdown_width . 'px;';
+            }
+            $dropdown_alignment = 'left';
         }
 
-        $this->menu .= '<div class="' . $class . ' sp-menu-'. $alignment .'" style="' . $dropdown_style . '">';
+        $this->menu .= '<div class="' . $class . ' sp-menu-'. $dropdown_alignment .'" style="' . $dropdown_style . '">';
         $this->menu .= '<div class="sp-dropdown-inner">';
         $this->navigation($item, $firstitem, 0,  'sp-dropdown-items');
 
@@ -295,8 +275,7 @@ class HelixUltimateMenu
         $items     = isset($this->children[$item->id]) ? $this->children[$item->id] : array();
         $firstitem = count($items) ? $items[0]->id : 0;
 
-        $mega_json = $item->params->get('menulayout');
-        $mega = json_decode($mega_json);
+        $mega = json_decode($item->params->get('menulayout'));
         $layout = $mega->layout;
 
         $mega_style = 'width: '. $mega->width .'px;';
@@ -394,24 +373,20 @@ class HelixUltimateMenu
         $item 	= $args['item'];
         $class 	= 'sp-menu-item';
 
-        $menulayout = $item->params->get('menulayout');
-        if ($menulayout != '')
-        {
-            $menulayout = json_decode($menulayout);
-        }
+        $layout = json_decode($item->params->get('menulayout'));
 
         if (!empty($this->children[$item->id]))
         {
             $class .= ' sp-has-child';
         }
-        else if (isset($menulayout->megamenu) && ($menulayout->megamenu))
+        else if (isset($layout->megamenu) && ($layout->megamenu))
         {
             $class .= ' sp-has-child';
         }
 
-        if ($custom_class = $item->params->get( 'class' ))
+        if (isset($layout->customclass) && ($layout->customclass))
         {
-            $class .= ' ' . $custom_class;
+            $class .= ' ' . $layout->customclass;
         }
 
         $class .= $item->class;
@@ -463,8 +438,41 @@ class HelixUltimateMenu
         $flink = $item->flink;
         $flink = str_replace('&amp;', '&', JFilterOutput::ampReplace(htmlspecialchars($flink)));
 
+        $layout = json_decode($item->params->get('menulayout'));
+
+        $badge_html = '';
+
+        if (isset($layout->badge) && $layout->badge)
+        {
+            $badge_style = '';
+            if ($layout->badge_bg_color)
+            {
+                $badge_style .= 'background-color: '. $layout->badge_bg_color . ';';
+            }
+
+            if ($layout->badge_text_color)
+            {
+                $badge_style .= 'color: '. $layout->badge_text_color . ';';
+            }
+
+            $badge_html = '<span class="sp-menu-badge sp-menu-badge-'.$layout->badge_position.'" style="'.$badge_style.'">'.$layout->badge.'</span>';
+        }
+
         $output = '';
         $options ='';
+        
+        if($badge_html)
+        {
+            if($layout->badge_position == 'right')
+            {
+                $linktitle = $linktitle.$badge_html;
+            }
+            else
+            {
+                $linktitle = $badge_html.$linktitle;
+            }
+        }
+        
         if ($item->params->get('menu_show', 1) != 0)
         {
             switch ($item->browserNav)

@@ -10,8 +10,8 @@ jQuery(function($){
 
     // Swicther
     $('#helix-ultimate-style-form').find('input[type="checkbox"]').each(function( index ) {
-      var $this = $(this);
-      $this.closest('.control-group').addClass('control-group-checkbox');
+        var $this = $(this);
+        $this.closest('.control-group').addClass('control-group-checkbox');
     });
 
     $('.helix-ultimate-fieldset-header-inner').on('click',function(e){

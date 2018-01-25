@@ -1,23 +1,12 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
 
 defined('JPATH_BASE') or die;
-
-/**
- * Generic toolbar button layout to open a modal
- * -----------------------------------------------
- * @param   array   $displayData    Button parameters. Default supported parameters:
- *                                  - selector  string  Unique DOM identifier for the modal. CSS id without #
- *                                  - class     string  Button class
- *                                  - icon      string  Button icon
- *                                  - text      string  Button text
- */
 
 $selector = $displayData['selector'];
 $id       = isset($displayData['id']) ? $displayData['id'] : '';

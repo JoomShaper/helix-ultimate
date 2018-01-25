@@ -1,13 +1,12 @@
 <?php
 /**
  * @package Helix Ultimate Framework
- * Template Name - Shaper Helix Ultimate
- * @author JoomShaper http://www.joomshaper.com
+ * @author JoomShaper https://www.joomshaper.com
  * @copyright Copyright (c) 2010 - 2018 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later
- */
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
 
-defined('_JEXEC') or die('Restricted access');
+defined ('_JEXEC') or die();
 
 $doc = JFactory::getDocument();
 $app = JFactory::getApplication();

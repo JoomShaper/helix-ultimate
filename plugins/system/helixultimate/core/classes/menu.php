@@ -445,17 +445,24 @@ class HelixUltimateMenu
         if (isset($layout->badge) && $layout->badge)
         {
             $badge_style = '';
-            if ($layout->badge_bg_color)
+            $badge_class = 'sp-menu-badge sp-menu-badge-right';
+
+            if (isset($layout->badge_bg_color) && $layout->badge_bg_color)
             {
                 $badge_style .= 'background-color: '. $layout->badge_bg_color . ';';
             }
 
-            if ($layout->badge_text_color)
+            if (isset($layout->badge_text_color) && $layout->badge_text_color)
             {
                 $badge_style .= 'color: '. $layout->badge_text_color . ';';
             }
 
-            $badge_html = '<span class="sp-menu-badge sp-menu-badge-'.$layout->badge_position.'" style="'.$badge_style.'">'.$layout->badge.'</span>';
+            if(isset($layout->badge_position) && $layout->badge_position == 'left')
+            {
+                $badge_class = 'sp-menu-badge sp-menu-badge-left';
+            }
+
+            $badge_html = '<span class="'.$badge_class.'" style="'.$badge_style.'">'.$layout->badge.'</span>';
         }
 
         $output = '';
@@ -463,13 +470,13 @@ class HelixUltimateMenu
         
         if($badge_html)
         {
-            if($layout->badge_position == 'right')
+            if(isset($layout->badge_position) && $layout->badge_position == 'left')
             {
-                $linktitle = $linktitle.$badge_html;
+                $linktitle = $badge_html.$linktitle;
             }
             else
             {
-                $linktitle = $badge_html.$linktitle;
+                $linktitle = $linktitle.$badge_html;
             }
         }
         

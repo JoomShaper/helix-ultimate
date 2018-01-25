@@ -171,6 +171,13 @@ if (isset($menu_data->customclass))
     $custom_class = $menu_data->customclass;
 }
 
+$faicon = '';
+
+if(isset($menu_data->faicon) && $menu_data->faicon)
+{
+    $faicon = $menu_data->faicon;
+}
+
 $dropdown = 'right';
 if (isset($menu_data->dropdown))
 {
@@ -189,6 +196,7 @@ if (isset($menu_data->badge_position))
     $badge_position = $menu_data->badge_position;
 }
 
+
 $badge_bg_color = '';
 if (isset($menu_data->badge_bg_color))
 {
@@ -200,7 +208,6 @@ if (isset($menu_data->badge_text_color))
 {
     $badge_text_color = $menu_data->badge_text_color;
 }
-
 
 ?>
 
@@ -332,7 +339,7 @@ if($count > 4 && $count != 6)
                 </div>
             </div>
 
-<div id="helix-ultimate-megamenu-layout" class="helix-ultimate-megamenu-layout helix-ultimate-megamenu-field-control<?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>" data-megamenu="<?php echo $enable_megamenu; ?>" data-width="<?php echo $menu_width; ?>" data-menuitem="<?php echo $count; ?>" data-menualign="<?php echo $align; ?>" data-dropdown="<?php echo $dropdown; ?>" data-showtitle="<?php echo $show_title; ?>" data-customclass="<?php echo $custom_class; ?>">
+<div id="helix-ultimate-megamenu-layout" class="helix-ultimate-megamenu-layout helix-ultimate-megamenu-field-control<?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>" data-megamenu="<?php echo $enable_megamenu; ?>" data-width="<?php echo $menu_width; ?>" data-menuitem="<?php echo $count; ?>" data-menualign="<?php echo $align; ?>" data-dropdown="<?php echo $dropdown; ?>" data-showtitle="<?php echo $show_title; ?>" data-customclass="<?php echo $custom_class; ?>" data-faicon="<?php echo $faicon; ?>" data-dropdown="<?php echo $dropdown; ?>" data-badge="<?php echo $badge; ?>" data-badge_position="<?php echo $badge_position; ?>" data-badge_bg_color="<?php echo $badge_bg_color; ?>" data-badge_text_color="<?php echo $badge_text_color; ?>">
 <?php
 
 if (! empty($layout) && count($layout)) {

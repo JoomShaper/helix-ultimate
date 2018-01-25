@@ -126,6 +126,7 @@ jQuery(function($) {
         });
 
         var initData = $('#helix-ultimate-megamenu-layout').data();
+        
         var menumData = {
             'width'         : initData.width,
             'menuitem'      : initData.menuitem,

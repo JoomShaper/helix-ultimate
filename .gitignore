@@ -27,6 +27,7 @@ index.php
 robots.txt
 web.config.txt
 package-lock.json
+helix-ultimate.zip
 
 !/plugins
 /plugins/*

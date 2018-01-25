@@ -26,6 +26,7 @@ index.php
 !/templates/shaper_helixultimate/index.php
 robots.txt
 web.config.txt
+package-lock.json
 
 !/plugins
 /plugins/*

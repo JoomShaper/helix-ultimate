@@ -67,6 +67,8 @@ class  plgSystemHelixultimate extends JPlugin
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
             $tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName();
 
+            JHtml::_('jquery.token');
+
             if (JFile::exists( $tpl_path . '/article-formats.xml' ))
             {
                 JForm::addFormPath($tpl_path);

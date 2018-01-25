@@ -112,7 +112,7 @@ jQuery(function($) {
 				'option' : 'com_ajax',
 				'plugin' : 'helixultimate',
 				'action' : 'remove_image',
-				'src'	   : $parent.find('.sp-image-upload-wrapper').find('>img').data('src'),
+				'src'	 : $parent.find('.sp-image-upload-wrapper').find('>img').data('src'),
 				'format' : 'json'
 			};
 

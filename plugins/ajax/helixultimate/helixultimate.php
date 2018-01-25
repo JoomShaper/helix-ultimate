@@ -152,7 +152,7 @@ class plgAjaxHelixultimate extends JPlugin
 
         $report = array();
         $report['status'] = false;
-        $report['message'] = 'Invalid Token';
+        $report['output'] = 'Invalid Token';
         \JSession::checkToken() or die(json_encode($report));
 
         $input = \JFactory::getApplication()->input;
@@ -291,7 +291,7 @@ class plgAjaxHelixultimate extends JPlugin
     {
         $report = array();
         $report['status'] = false;
-        $report['message'] = 'Invalid Token';
+        $report['output'] = 'Invalid Token';
         \JSession::checkToken() or die(json_encode($report));
 
         if (!\JFactory::getUser()->authorise('core.delete', 'com_media'))

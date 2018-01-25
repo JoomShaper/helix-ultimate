@@ -253,7 +253,7 @@ class HelixUltimateMenu
         $dropdown_style = 'width: '. $dropdown_width .'px;';
         $layout = json_decode($this->_items[$item->id]->params->get('menulayout'));
 
-        if ( isset($layout->dropdown) && $layout->dropdown == 'left' )
+        if (isset($layout->dropdown) && $layout->dropdown == 'left')
         {
             if ($item->parent_id !== '1')
             {
@@ -373,20 +373,20 @@ class HelixUltimateMenu
         $item 	= $args['item'];
         $class 	= 'sp-menu-item';
 
-        $menulayout = json_decode($item->params->get('menulayout'));
+        $layout = json_decode($item->params->get('menulayout'));
 
         if (!empty($this->children[$item->id]))
         {
             $class .= ' sp-has-child';
         }
-        else if (isset($menulayout->megamenu) && ($menulayout->megamenu))
+        else if (isset($layout->megamenu) && ($layout->megamenu))
         {
             $class .= ' sp-has-child';
         }
 
-        if ($custom_class = $item->params->get( 'class' ))
+        if (isset($layout->customclass) && ($layout->customclass))
         {
-            $class .= ' ' . $custom_class;
+            $class .= ' ' . $layout->customclass;
         }
 
         $class .= $item->class;

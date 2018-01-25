@@ -85,6 +85,10 @@ class Platform
 
     private function frameworkFormHTMLEnd()
     {
+        $app = \JFactory::getApplication();
+        $template = htmlspecialchars($app->input->get('template', 'shaper_helixultimate', 'STRING'));
+        // Validation requires for template existance
+
         $htmlView  = '</div>';
 
         $htmlView .= '<div class="helix-ultimate-footer clearfix">';
@@ -95,7 +99,7 @@ class Platform
         $htmlView .= '</div>';
 
         $htmlView .= '<div class="helix-ultimate-preview">';
-        $htmlView .= '<iframe id="helix-ultimate-template-preview" src="'.\JURI::root(true).'" style="width: 100%; height: 100%;"></iframe>';
+        $htmlView .= '<iframe id="helix-ultimate-template-preview" src="'.\JURI::root(true).'/index.php?template='. $template .'" style="width: 100%; height: 100%;"></iframe>';
         $htmlView .= '</div>';
         $htmlView .= '</div>';
 

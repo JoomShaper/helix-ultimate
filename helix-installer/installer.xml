@@ -10,4 +10,5 @@
         <plugin plugin="helixultimate" group="ajax" />
         <plugin plugin="helixultimate" group="system" />
     </plugins>
+    <template name="shaper_helixultimate"/>
 </extension>

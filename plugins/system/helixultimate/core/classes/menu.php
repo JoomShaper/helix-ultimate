@@ -438,8 +438,41 @@ class HelixUltimateMenu
         $flink = $item->flink;
         $flink = str_replace('&amp;', '&', JFilterOutput::ampReplace(htmlspecialchars($flink)));
 
+        $layout = json_decode($item->params->get('menulayout'));
+
+        $badge_html = '';
+
+        if (isset($layout->badge) && $layout->badge)
+        {
+            $badge_style = '';
+            if ($layout->badge_bg_color)
+            {
+                $badge_style .= 'background-color: '. $layout->badge_bg_color . ';';
+            }
+
+            if ($layout->badge_text_color)
+            {
+                $badge_style .= 'color: '. $layout->badge_text_color . ';';
+            }
+
+            $badge_html = '<span class="sp-menu-badge sp-menu-badge-'.$layout->badge_position.'" style="'.$badge_style.'">'.$layout->badge.'</span>';
+        }
+
         $output = '';
         $options ='';
+        
+        if($badge_html)
+        {
+            if($layout->badge_position == 'right')
+            {
+                $linktitle = $linktitle.$badge_html;
+            }
+            else
+            {
+                $linktitle = $badge_html.$linktitle;
+            }
+        }
+        
         if ($item->params->get('menu_show', 1) != 0)
         {
             switch ($item->browserNav)

@@ -30,7 +30,7 @@ ob_start();
 						<div class="input-group-prepend">
 							<div class="input-group-text"><span class="fa fa-user"></span></div>
 						</div>
-						<input type="text" class="form-control" id="username" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>">
+						<input name="username" type="text" class="form-control" id="username" placeholder="<?php echo JText::_('JGLOBAL_USERNAME'); ?>">
 					</div>
 				</div>
 
@@ -40,7 +40,7 @@ ob_start();
 						<div class="input-group-prepend">
 							<div class="input-group-text"><span class="fa fa-key"></span></div>
 						</div>
-						<input type="password" class="form-control" id="password" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>">
+						<input name="password" type="password" class="form-control" id="password" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>">
 					</div>
 				</div>
 				
@@ -51,7 +51,7 @@ ob_start();
 							<div class="input-group-prepend">
 								<div class="input-group-text"><span class="fa fa-user-secret"></span></div>
 							</div>
-							<input type="text" class="form-control" id="secretkey" placeholder="<?php echo JText::_('JGLOBAL_SECRETKEY'); ?>">
+							<input name="secretkey" type="text" class="form-control" id="secretkey" placeholder="<?php echo JText::_('JGLOBAL_SECRETKEY'); ?>">
 						</div>
 					</div>
 				<?php endif; ?>

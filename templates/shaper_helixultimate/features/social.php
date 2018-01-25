@@ -30,6 +30,7 @@ class HelixUltimateFeatureSocial
 		$youtube = $this->params->get('youtube');
 		$linkedin = $this->params->get('linkedin');
 		$dribbble = $this->params->get('dribbble');
+		$instagram = $this->params->get('instagram');
 		$behance = $this->params->get('behance');
 		$skype = $this->params->get('skype');
 		$whatsapp = $this->params->get('whatsapp');
@@ -37,48 +38,78 @@ class HelixUltimateFeatureSocial
 		$vk = $this->params->get('vk');
 		$custom = $this->params->get('custom');
 
-		if( $this->params->get('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
+		if( $this->params->get('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $instagram || $behance || $skype || $flickr || $vk ) )
+		{
 			$html  = '<ul class="social-icons">';
 
-			if( $facebook ) {
-				$html .= '<li><a target="_blank" href="'. $facebook .'"><span class="fa fa-facebook"></span></a></li>';
+			if( $facebook )
+			{
+				$html .= '<li class="social-icon-facebook"><a target="_blank" href="'. $facebook .'"><span class="fa fa-facebook"></span></a></li>';
 			}
-			if( $twitter ) {
-				$html .= '<li><a target="_blank" href="'. $twitter .'"><span class="fa fa-twitter"></span></a></li>';
+
+			if( $twitter )
+			{
+				$html .= '<li class="social-icon-twitter"><a target="_blank" href="'. $twitter .'"><span class="fa fa-twitter"></span></a></li>';
 			}
-			if( $googleplus ) {
-				$html .= '<li><a target="_blank" href="'. $googleplus .'"><span class="fa fa-google-plus"></span></a></li>';
+
+			if( $googleplus )
+			{
+				$html .= '<li class="social-icon-google-plus"><a target="_blank" href="'. $googleplus .'"><span class="fa fa-google-plus"></span></a></li>';
 			}
-			if( $pinterest ) {
-				$html .= '<li><a target="_blank" href="'. $pinterest .'"><span class="fa fa-pinterest"></span></a></li>';
+
+			if( $pinterest )
+			{
+				$html .= '<li class="social-icon-pinterest"><a target="_blank" href="'. $pinterest .'"><span class="fa fa-pinterest"></span></a></li>';
 			}
-			if( $youtube ) {
+
+			if( $youtube )
+			{
 				$html .= '<li><a target="_blank" href="'. $youtube .'"><span class="fa fa-youtube"></span></a></li>';
 			}
-			if( $linkedin ) {
-				$html .= '<li><a target="_blank" href="'. $linkedin .'"><span class="fa fa-linkedin"></span></a></li>';
+
+			if( $linkedin )
+			{
+				$html .= '<li class="social-icon-linkedin"><a target="_blank" href="'. $linkedin .'"><span class="fa fa-linkedin"></span></a></li>';
 			}
-			if( $dribbble ) {
-				$html .= '<li><a target="_blank" href="'. $dribbble .'"><span class="fa fa-dribbble"></span></a></li>';
+
+			if( $dribbble )
+			{
+				$html .= '<li class="social-icon-dribbble"><a target="_blank" href="'. $dribbble .'"><span class="fa fa-dribbble"></span></a></li>';
 			}
-			if( $behance ) {
-				$html .= '<li><a target="_blank" href="'. $behance .'"><span class="fa fa-behance"></span></a></li>';
+
+			if( $instagram )
+			{
+				$html .= '<li class="social-icon-instagram"><a target="_blank" href="'. $dribbble .'"><span class="fa fa-instagram"></span></a></li>';
 			}
-			if( $flickr ) {
-				$html .= '<li><a target="_blank" href="'. $flickr .'"><span class="fa fa-flickr"></span></a></li>';
+
+			if( $behance )
+			{
+				$html .= '<li class="social-icon-behance"><a target="_blank" href="'. $behance .'"><span class="fa fa-behance"></span></a></li>';
 			}
-			if( $vk ) {
-				$html .= '<li><a target="_blank" href="'. $vk .'"><span class="fa fa-vk"></span></a></li>';
+
+			if( $flickr )
+			{
+				$html .= '<li class="social-icon-flickr"><a target="_blank" href="'. $flickr .'"><span class="fa fa-flickr"></span></a></li>';
 			}
-			if( $skype ) {
-				$html .= '<li><a href="skype:'. $skype .'?chat"><span class="fa fa-skype"></span></a></li>';
+
+			if( $vk )
+			{
+				$html .= '<li class="social-icon-vk"><a target="_blank" href="'. $vk .'"><span class="fa fa-vk"></span></a></li>';
 			}
-			if( $whatsapp ) {
-				$html .= '<li><a href="whatsapp://send?abid='. $whatsapp .'&text=Hi"><span class="fa fa-whatsapp"></span></a></li>';
+
+			if( $skype )
+			{
+				$html .= '<li class="social-icon-skype"><a href="skype:'. $skype .'?chat"><span class="fa fa-skype"></span></a></li>';
 			}
+
+			if( $whatsapp )
+			{
+				$html .= '<li class="social-icon-whatsapp"><a href="whatsapp://send?abid='. $whatsapp .'&text=Hi"><span class="fa fa-whatsapp"></span></a></li>';
+			}
+
 			if( $custom ) {
 				$explt_custom = explode(' ', $custom);
-				$html .= '<li><a target="_blank" href="'. $explt_custom[1] .'"><span class="fa '. $explt_custom[0] .'"></span></a></li>';
+				$html .= '<li class="social-icon-custom"><a target="_blank" href="'. $explt_custom[1] .'"><span class="fa '. $explt_custom[0] .'"></span></a></li>';
 			}
 
 			$html .= '</ul>';

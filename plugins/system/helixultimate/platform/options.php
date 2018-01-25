@@ -8,8 +8,7 @@
 
 namespace HelixUltimate;
 
-defined ('_JEXEC') or die ('resticted access');
-
+defined ('_JEXEC') or die();
 
 jimport( 'joomla.filesystem.file' );
 jimport('joomla.filesystem.folder');

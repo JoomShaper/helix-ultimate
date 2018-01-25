@@ -1,5 +1,5 @@
 /**
-* @package Helix3 Framework
+* @package Helixultimate Framework
 * @author JoomShaper http://www.joomshaper.com
 * @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
@@ -8,102 +8,111 @@ jQuery(function($) {
 
 	// Media
 	$('.helix-ultimate-media-picker').on('click',function(e){
-			e.preventDefault();
-			var self = this;
+		e.preventDefault();
+		var self = this;
 
-			$(this).helixUltimateModal({
-				target: $(this).data('id')
-			});
+		$(this).helixUltimateModal({
+			target: $(this).data('id')
+		});
 
-			var request = {
-					'action': 'view-media',
-					'option' : 'com_ajax',
-					'plugin' : 'helix3',
-					'request': 'ajaxHelix',
-					'format' : 'json'
-			};
+		var request = {
+			'action': 'view-media',
+			'option' : 'com_ajax',
+			'request': 'helixultimate',
+			'format' : 'json'
+		};
 
-			$.ajax({
-					type   : 'POST',
-					data   : request,
-					beforeSend: function() {
-						$(self).find('.fa').removeClass('fa-picture-o').addClass('fa-spinner fa-spin');
-					},
-					success: function (response) {
-							var data = $.parseJSON(response);
-							$(self).find('.fa').removeClass('fa-spinner fa-spin').addClass('fa-picture-o');
-							$('.helix-ultimate-modal-breadcrumbs').html(data.breadcrumbs);
-							$('.helix-ultimate-modal-inner').html(data.output);
-					},
-					error: function(){
-							alert('Somethings wrong, Try again');
-					}
-			});
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			beforeSend: function() {
+				$(self).find('.fa').removeClass('fa-picture-o').addClass('fa-spinner fa-spin');
+			},
+			success: function (response) {
+				var data = $.parseJSON(response);
+				$(self).find('.fa').removeClass('fa-spinner fa-spin').addClass('fa-picture-o');
+				if(data.status) {
+					$('.helix-ultimate-modal-breadcrumbs').html(data.breadcrumbs);
+					$('.helix-ultimate-modal-inner').html(data.output);
+				} else {
+					$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+					$('body').addClass('helix-ultimate-modal-open');
+					alert(data.output);
+				}
+			},
+			error: function(){
+				alert('Somethings wrong, Try again');
+			}
+		});
 	});
 
 	$(document).on('dblclick', '.helix-ultimate-media-folder', function(e){
-			e.preventDefault();
-			var self = this;
+		e.preventDefault();
+		var self = this;
 
-			var request = {
-					'action': 'view-media',
-					'option' : 'com_ajax',
-					'plugin' : 'helix3',
-					'request': 'ajaxHelix',
-					'path': $(self).data('path'),
-					'format' : 'json'
-			};
+		var request = {
+			'action': 'view-media',
+			'option' : 'com_ajax',
+			'request': 'helixultimate',
+			'path': $(self).data('path'),
+			'format' : 'json'
+		};
 
-			$.ajax({
-					type   : 'POST',
-					data   : request,
-					beforeSend: function() {
-						$('.helix-ultimate-media-selected').removeClass('helix-ultimate-media-selected');
-						$('.helix-ultimate-modal-actions-left').hide();
-						$('.helix-ultimate-modal-actions-right').show();
-						$('.helix-ultimate-modal-inner').html('<div class="helix-ultimate-modal-preloader"><span class="fa fa-spinner fa-pulse fa-spin fa-3x fa-fw"></span></div>');
-					},
-					success: function (response) {
-							var data = $.parseJSON(response);
-							$('.helix-ultimate-modal-breadcrumbs').html(data.breadcrumbs);
-							$('.helix-ultimate-modal-inner').html(data.output);
-					},
-					error: function(){
-							alert('Somethings wrong, Try again');
-					}
-
-			});
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			beforeSend: function() {
+				$('.helix-ultimate-media-selected').removeClass('helix-ultimate-media-selected');
+				$('.helix-ultimate-modal-actions-left').hide();
+				$('.helix-ultimate-modal-actions-right').show();
+				$('.helix-ultimate-modal-inner').html('<div class="helix-ultimate-modal-preloader"><span class="fa fa-spinner fa-pulse fa-spin fa-3x fa-fw"></span></div>');
+			},
+			success: function (response) {
+				var data = $.parseJSON(response);
+				if(data.status) {
+					$('.helix-ultimate-modal-breadcrumbs').html(data.breadcrumbs);
+					$('.helix-ultimate-modal-inner').html(data.output);
+				} else {
+					alert(data.output);
+				}
+			},
+			error: function(){
+				alert('Somethings wrong, Try again');
+			}
+		});
 	});
 
 	$(document).on('click', '.helix-ultimate-media-breadcrumb-item > a', function(e){
-			e.preventDefault();
-			var self = this;
+		e.preventDefault();
+		var self = this;
 
-			var request = {
-					'action': 'view-media',
-					'option' : 'com_ajax',
-					'plugin' : 'helix3',
-					'request': 'ajaxHelix',
-					'path': $(self).data('path'),
-					'format' : 'json'
-			};
+		var request = {
+			'action': 'view-media',
+			'option' : 'com_ajax',
+			'request': 'helixultimate',
+			'path': $(self).data('path'),
+			'format' : 'json'
+		};
 
-			$.ajax({
-					type   : 'POST',
-					data   : request,
-					beforeSend: function() {
-						$('.helix-ultimate-modal-inner').html('<div class="helix-ultimate-modal-preloader"><span class="fa fa-spinner fa-pulse fa-spin fa-3x fa-fw"></span></div>');
-					},
-					success: function (response) {
-							var data = $.parseJSON(response);
-							$('.helix-ultimate-modal-breadcrumbs').html(data.breadcrumbs);
-							$('.helix-ultimate-modal-inner').html(data.output);
-					},
-					error: function(){
-							alert('Somethings wrong, Try again');
-					}
-
-			});
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			beforeSend: function() {
+				$('.helix-ultimate-modal-inner').html('<div class="helix-ultimate-modal-preloader"><span class="fa fa-spinner fa-pulse fa-spin fa-3x fa-fw"></span></div>');
+			},
+			success: function (response) {
+				var data = $.parseJSON(response);
+				if(data.status) {
+					$('.helix-ultimate-modal-breadcrumbs').html(data.breadcrumbs);
+					$('.helix-ultimate-modal-inner').html(data.output);
+				} else {
+					alert(data.output);
+				}
+			},
+			error: function(){
+				alert('Somethings wrong, Try again');
+			}
+		});
 	});
 
 	$(document).on('click', '.helix-ultimate-media-select', function(event) {
@@ -151,106 +160,102 @@ jQuery(function($) {
 	})
 
 	//Delete Media
-	$(document).on('click', '.helix-ultimate-modal-action-delete', function(e){
-			e.preventDefault();
-			var self = this;
-			var deleteType = 'file';
+	$(document).on('click', '.helix-ultimate-modal-action-delete', function(e) {
+		e.preventDefault();
+		var self = this;
+		var deleteType = 'file';
 
-			if($('.helix-ultimate-media-selected').length) {
-				if($('.helix-ultimate-media-selected').hasClass('helix-ultimate-media-folder')) {
-					deleteType = 'folder';
-				} else {
-					deleteType = 'file';
-				}
+		if($('.helix-ultimate-media-selected').length) {
+			if($('.helix-ultimate-media-selected').hasClass('helix-ultimate-media-folder')) {
+				deleteType = 'folder';
 			} else {
-				alert('Please select a file or directory first to delete.');
-				return;
+				deleteType = 'file';
 			}
+		} else {
+			alert('Please select a file or directory first to delete.');
+			return;
+		}
 
-			if(confirm('Are you sure you want to delete this ' + deleteType + '?')) {
-				var request = {
-						'action': 'delete-media',
-						'option' : 'com_ajax',
-						'plugin' : 'helix3',
-						'request': 'ajaxHelix',
-						'type': deleteType,
-						'path': $('.helix-ultimate-media-selected').data('path'),
-						'format' : 'json'
-				};
+		if(confirm('Are you sure you want to delete this ' + deleteType + '?')) {
+			var request = {
+				'action': 'delete-media',
+				'option' : 'com_ajax',
+				'request': 'helixultimate',
+				'type': deleteType,
+				'path': $('.helix-ultimate-media-selected').data('path'),
+				'format' : 'json'
+			};
 
-				$.ajax({
-						type   : 'POST',
-						data   : request,
-						success: function (response) {
-							var data = $.parseJSON(response);
-							if(data.status) {
-								$('.helix-ultimate-media-selected').remove();
-								$('.helix-ultimate-modal-actions-left').hide();
-								$('.helix-ultimate-modal-actions-right').show();
-							} else {
-								alert(data.message);
-							}
-						},
-						error: function(){
-								alert('Somethings wrong, Try again');
-						}
-				});
-			}
+			$.ajax({
+				type   : 'POST',
+				data   : request,
+				success: function (response) {
+					var data = $.parseJSON(response);
+					if(data.status) {
+						$('.helix-ultimate-media-selected').remove();
+						$('.helix-ultimate-modal-actions-left').hide();
+						$('.helix-ultimate-modal-actions-right').show();
+					} else {
+						alert(data.message);
+					}
+				},
+				error: function(){
+					alert('Somethings wrong, Try again');
+				}
+			});
+		}
 	});
 
 	// Create folder
 	$(document).on('click', '.helix-ultimate-modal-action-new-folder', function(e){
-			e.preventDefault();
-			var self = this;
-			var folder_name = prompt("Please enter the name of the directory which should be created.");
+		e.preventDefault();
+		var self = this;
+		var folder_name = prompt("Please enter the name of the directory which should be created.");
 
-			if (folder_name == null || folder_name == "") {
+		if (folder_name == null || folder_name == "") {
 
-			} else {
-				var request = {
-						'action': 'create-folder',
-						'option' : 'com_ajax',
-						'plugin' : 'helix3',
-						'request': 'ajaxHelix',
-						'folder_name': folder_name,
-						'path': $('.helix-ultimate-media-breadcrumb-item.active').data('path'),
-						'format' : 'json'
-				};
+		} else {
+			var request = {
+				'action': 'create-folder',
+				'option' : 'com_ajax',
+				'request': 'helixultimate',
+				'folder_name': folder_name,
+				'path': $('.helix-ultimate-media-breadcrumb-item.active').data('path'),
+				'format' : 'json'
+			};
 
-				$.ajax({
-						type   : 'POST',
-						data   : request,
-						success: function (response) {
-							var data = $.parseJSON(response);
-							if(data.status) {
-								$('.helix-ultimate-modal-inner').html(data.output.output);
-							} else {
-								alert(data.message);
-							}
-						},
-						error: function(){
-								alert('Somethings wrong, Try again');
-						}
-				});
-			}
+			$.ajax({
+				type   : 'POST',
+				data   : request,
+				success: function (response) {
+					var data = $.parseJSON(response);
+					if(data.status) {
+						$('.helix-ultimate-modal-inner').html(data.output);
+					} else {
+						alert(data.message);
+					}
+				},
+				error: function(){
+					alert('Somethings wrong, Try again');
+				}
+			});
+		}
 	});
 
 	$.fn.uploadMedia = function(options) {
-    var options = $.extend({
-      data : '',
+		var options = $.extend({
+			data : '',
 			index : ''
-    }, options);
+		}, options);
 
-    //options.data.append($('.product-token').val(), 1);
-
-    $.ajax({
-			type   : 'POST',
-			url: 'index.php?option=com_ajax&plugin=helix3&request=ajaxHelix&preview=theme&view=style&id='+ templateID +'&action=upload-media&format=json',
+		$.ajax({
+			type : 'POST',
+			url: 'index.php?option=com_ajax&request=helixultimate&preview=theme&view=style&id='+ helixUltimateStyleId +'&action=upload-media&format=json',
 			data: options.data,
-      contentType: false,
-      cache: false,
-      processData:false,
-      beforeSend: function() {
+			contentType: false,
+			cache: false,
+			processData:false,
+			beforeSend: function() {
 				var progress = '<li class="helix-ultimate-media-progress '+ options.index +'">';
 				progress += '<div class="helix-ultimate-media-thumb">';
 				progress += '<div class="helix-ultimate-progress"><div class="helix-ultimate-progress-bar"></div></div>';
@@ -259,10 +264,9 @@ jQuery(function($) {
 				progress += '</li>';
 
 				$("#helix-ultimate-media-manager").animate({ scrollTop: $('#helix-ultimate-media-manager').prop("scrollHeight")}, 1000);
-
 				$('.helix-ultimate-media').append(progress);
-      },
-      success: function (response) {
+			},
+			success: function (response) {
 				var data = $.parseJSON(response);
 				if(data.status) {
 					$('.' + options.index).removeClass().addClass('helix-ultimate-media-image').attr('data-path', data.path).attr('data-preview', data.src).html(data.output);
@@ -270,26 +274,26 @@ jQuery(function($) {
 					$('.' + options.index).remove();
 					alert(data.message);
 				}
-      },
-      xhr: function() {
-        myXhr = $.ajaxSettings.xhr();
-        if(myXhr.upload){
-          myXhr.upload.addEventListener('progress', function(evt) {
-            $('.' + options.index).find('.helix-ultimate-progress-bar').css('width', Math.floor(evt.loaded / evt.total *100) + '%');
-            $('.' + options.index).find('.helix-ultimate-media-upload-percentage').text(Math.floor(evt.loaded / evt.total *100) + '% ');
-          }, false);
-        } else {
-          alert('Uploadress is not supported.');
-        }
-        return myXhr;
-      }
-    });
-  }
+			},
+			xhr: function() {
+				myXhr = $.ajaxSettings.xhr();
+				if(myXhr.upload) {
+					myXhr.upload.addEventListener('progress', function(evt) {
+						$('.' + options.index).find('.helix-ultimate-progress-bar').css('width', Math.floor(evt.loaded / evt.total *100) + '%');
+						$('.' + options.index).find('.helix-ultimate-media-upload-percentage').text(Math.floor(evt.loaded / evt.total *100) + '% ');
+					}, false);
+				} else {
+					alert('Uploadress is not supported.');
+				}
+				return myXhr;
+			}
+		});
+	}
 
 	// Upload Image
 	$(document).on('click', '.helix-ultimate-modal-action-upload', function(e){
-			e.preventDefault();
-			$('#helix-ultimate-file-input').click();
+		e.preventDefault();
+		$('#helix-ultimate-file-input').click();
 	});
 
 	$(document).on('change', '#helix-ultimate-file-input', function(event) {
@@ -297,7 +301,7 @@ jQuery(function($) {
 		var $this = $(this);
 		var files = $(this).prop('files')
 
-    for (i=0;i<files.length;i++){
+		for (i=0;i<files.length;i++){
 			var file_ext = files[i].name.split('.').pop();
 			var allowed = ((file_ext == 'png') || (file_ext == 'jpg') || (file_ext == 'jpeg') || (file_ext == 'gif') || (file_ext == 'svg'));
 			if(allowed) {
@@ -310,9 +314,9 @@ jQuery(function($) {
 					index: 'media-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1)
 				})
 			}
-    }
+    	}
 
-    $this.val('')
+    	$this.val('')
 	});
 
 });

@@ -151,9 +151,9 @@ class  plgSystemHelixultimate extends JPlugin
         $query = $db->getQuery(true);
         $fields = array($db->quoteName('params') . '=' . $db->quote($data));
         $conditions = array(
-                    $db->quoteName('id') .'='. $db->quote($id),
-                    $db->quoteName('client_id') .'= 0'
-                );
+            $db->quoteName('id') .'='. $db->quote($id),
+            $db->quoteName('client_id') .'= 0'
+        );
 
         $query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
         $db->setQuery($query);

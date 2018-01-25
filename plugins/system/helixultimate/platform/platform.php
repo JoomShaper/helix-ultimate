@@ -8,7 +8,7 @@
 
 namespace HelixUltimate;
 
-defined ('_JEXEC') or die ('resticted access');
+defined ('_JEXEC') or die();
 
 require_once __DIR__.'/options.php';
 require_once __DIR__.'/request.php';
@@ -56,36 +56,37 @@ class Platform
 
     public function initialize()
     {
-      if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'ajaxHelix' && $this->id )
-      {
-          if (!$this->permission)
-          {
-              throw new \Exception("Permission Denied", 403);
-          }
-          $request = new Request;
-          $request->initialize();
-      }
-      else if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->id && $this->permission)
-      {
-          $frmkHTML    = $this->frameworkFormHTMLStart();
-          $frmkOptions = new Options();
-          $frmkHTML    .= $frmkOptions->renderBuilderSidebar();
-          $frmkHTML    .= $this->frameworkFormHTMLEnd();
+        if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'helixultimate' && $this->id )
+        {
+            if (!$this->permission)
+            {
+                throw new \Exception("Permission Denied", 403);
+            }
 
-          echo $frmkHTML;
-      }
+            $request = new Request;
+            $request->initialize();
+        }
+        elseif( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->id && $this->permission)
+        {
+            $frmkHTML     = $this->frameworkFormHTMLStart();
+            $frmkOptions  = new Options();
+            $frmkHTML    .= $frmkOptions->renderBuilderSidebar();
+            $frmkHTML    .= $this->frameworkFormHTMLEnd();
+
+            echo $frmkHTML;
+        }
     }
 
     private function frameworkFormHTMLStart()
     {
-            $htmlView  = '<div id="helix-ultimate">';
-            $htmlView .= '<div class="helix-ultimate-sidebar">';
-            $htmlView .= '<div class="helix-ultimate-logo">';
-            $htmlView .= '<img src="'.\JURI::root(true).'/plugins/system/helixultimate/assets/images/helix-logo.svg" alt="Helix Ultimate by JoomShaper"/>';
-            $htmlView .= '</div>';
-            $htmlView .= '<div class="helix-ultimate-options-wrap">';
+        $htmlView  = '<div id="helix-ultimate">';
+        $htmlView .= '<div class="helix-ultimate-sidebar">';
+        $htmlView .= '<div class="helix-ultimate-logo">';
+        $htmlView .= '<img src="'.\JURI::root(true).'/plugins/system/helixultimate/assets/images/helix-logo.svg" alt="Helix Ultimate by JoomShaper"/>';
+        $htmlView .= '</div>';
+        $htmlView .= '<div class="helix-ultimate-options-wrap">';
 
-            return $htmlView;
+        return $htmlView;
     }
 
     private function frameworkFormHTMLEnd()
@@ -125,19 +126,18 @@ class Platform
 
     public static function loadFrameworkSystem()
     {
-        \JFactory::getLanguage()->load('tpl_shaper_helixultimate', JPATH_SITE, null, true);;
-
         $app = \JFactory::getApplication();
-        $templateID = $app->input->get('id',NULL);
-
         $doc = \JFactory::getDocument();
-        $doc->setTitle("Helix Template Framework by JoomShaper");
+        $style_id = (int) $app->input->get('id', 0, 'INT');
+        $style = Helper::getTemplateStyle($style_id);
+        $template = $style->template;
+
+        \JFactory::getLanguage()->load('tpl_' . $template, \JPATH_SITE, null, true);;
+
+        $doc->setTitle("Helix Ultimate Framework");
 
         $helix_plg_url = \JURI::root(true).'/plugins/system/helixultimate';
-        $doc->addScriptdeclaration('var layoutbuilder_base="' . \JURI::root() . '";');
-        $doc->addScriptDeclaration("var basepath = '{$helix_plg_url}';");
-        $doc->addScriptDeclaration("var templateID = '{$templateID}';");
-        $doc->addScriptDeclaration("var pluginVersion = 1;");
+        $doc->addScriptDeclaration('var helixUltimateStyleId = ' . $style_id . ';');
 
         \JHtml::_('jquery.ui', array('core', 'sortable'));
         \JHtml::_('bootstrap.framework');
@@ -145,6 +145,7 @@ class Platform
         \JHtml::_('behavior.keepalive');
         \JHtml::_('formbehavior.chosen', 'select');
         \JHtml::_('behavior.colorpicker');
+        \JHtml::_('jquery.token');
 
         $doc->addScript($helix_plg_url.'/assets/js/admin/helper.js');
         $doc->addScript($helix_plg_url.'/assets/js/admin/webfont.js');

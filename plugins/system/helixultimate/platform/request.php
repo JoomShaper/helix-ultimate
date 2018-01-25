@@ -8,7 +8,7 @@
 
 namespace HelixUltimate;
 
-defined ('_JEXEC') or die ('resticted access');
+defined ('_JEXEC') or die();
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
@@ -16,6 +16,7 @@ require_once __DIR__.'/helper.php';
 require_once __DIR__.'/media.php';
 
 use HelixUltimate\Helper\Helper as Helper;
+use HelixUltimate\Media\Media as Media;
 
 class Request{
 
@@ -63,19 +64,19 @@ class Request{
                 break;
 
             case 'view-media':
-                HelixUltimateMedia::getFolders();
+                Media::getFolders();
                 break;
 
             case 'delete-media':
-                HelixUltimateMedia::deleteMedia();
+                Media::deleteMedia();
                 break;
 
             case 'create-folder':
-                HelixUltimateMedia::createFolder();
+                Media::createFolder();
                 break;
 
             case 'upload-media':
-                HelixUltimateMedia::uploadMedia();
+                Media::uploadMedia();
 
             case 'import-tmpl-style':
                 $this->importTemplateStyle();
@@ -95,6 +96,11 @@ class Request{
 
     private function saveTemplateStyle()
     {
+
+        $this->report['status'] = false;
+        $this->report['message'] = \JText::_('JINVALID_TOKEN');
+        \JSession::checkToken() or die(json_encode($this->report));
+        
         if (!$this->id || !is_int($this->id)) return;
 
         $update = Helper::updateTemplateStyle($this->id, $this->data);

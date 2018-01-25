@@ -6,8 +6,9 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-//no direct accees
 namespace HelixUltimate\Helper;
+
+defined ('_JEXEC') or die();
 
 class Helper
 {

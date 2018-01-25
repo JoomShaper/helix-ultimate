@@ -6,22 +6,26 @@
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-namespace HelixULT;
+namespace HelixUltimate\Media;
 
-defined ('_JEXEC') or die ('resticted access');
+defined ('_JEXEC') or die();
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
-class HelixUltimateMedia
+class Media
 {
 
   public static function getFolders()
   {
+    $media = array();
+    $media['status'] = false;
+    $media['output'] = \JText::_('JINVALID_TOKEN');
+    \JSession::checkToken() or die(json_encode($media));
+
     $input 	= \JFactory::getApplication()->input;
     $path 	= $input->post->get('path', '/images', 'PATH');
 
-    $media = array();
     $images = \JFolder::files(JPATH_ROOT . $path, '.png|.jpg|.gif|.svg', false, true);
     $folders = \JFolder::folders(JPATH_ROOT . $path, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs'));
 
@@ -105,16 +109,21 @@ class HelixUltimateMedia
     $output .= '</ul>';
     $output .= '</div>';
 
+    $media['status'] = true;
     $media['output'] = $output;
 
     die(json_encode($media));
   }
 
   public static function deleteMedia() {
+    $output = array();
+    $output['status'] = false;
+    $output['message'] = \JText::_('JINVALID_TOKEN');
+    \JSession::checkToken() or die(json_encode($output));
+
     $input 	= \JFactory::getApplication()->input;
     $path 	= $input->post->get('path', '/images', 'PATH');
     $type	= $input->post->get('type', 'file', 'STRING');
-    $output = array();
 
     if($type == 'file') {
       if(\JFile::delete( JPATH_ROOT . '/' . $path)) {
@@ -136,10 +145,14 @@ class HelixUltimateMedia
   }
 
   public static function createFolder() {
+    $output = array();
+    $output['status'] = false;
+    $output['message'] = \JText::_('JINVALID_TOKEN');
+    \JSession::checkToken() or die(json_encode($output));
+
     $input 	= \JFactory::getApplication()->input;
     $path 	= $input->post->get('path', '/images', 'PATH');
     $folder_name 	= $input->post->get('folder_name', '', 'STRING');
-    $output = array();
 
     $absolute_path = JPATH_ROOT . $path . '/' . preg_replace('/\s+/', '-', $folder_name);
 
@@ -160,19 +173,24 @@ class HelixUltimateMedia
   }
 
   public static function uploadMedia() {
+
     $user   = \JFactory::getUser();
     $input 	= \JFactory::getApplication()->input;
     $dir 	= $input->post->get('path', '/images', 'PATH');
     $index 	= $input->post->get('index', '', 'STRING');
     $file 	= $input->files->get('file');
     $authorised = $user->authorise('core.edit', 'com_templates');
-    $report = array();
 
+    $report = array();
+    $report['status'] = false;
+    $report['message'] = \JText::_('JINVALID_TOKEN');
     $report['index'] = $index;
+
+    \JSession::checkToken() or die(json_encode($report));
 
     if ($authorised !== true) {
       $report['status'] = false;
-      $report['output'] = \JText::_('JERROR_ALERTNOAUTHOR');
+      $report['message'] = \JText::_('JERROR_ALERTNOAUTHOR');
       echo json_encode($report);
       die();
     }
@@ -261,14 +279,6 @@ class HelixUltimateMedia
     }
 
     die(json_encode($report));
-
-    //
-    // $folder_name 	= $input->post->get('folder_name', '', 'STRING');
-    // $output = array();
-
-    print_r($file);
-
-    die();
   }
 
 }

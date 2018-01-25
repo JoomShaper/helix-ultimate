@@ -30,7 +30,6 @@ jQuery(function($) {
 			data   : request,
 			success: function (response) {
 				var font = $.parseJSON(response);
-				console.log(font)
 				$that.closest('.webfont').find('.list-font-weight').html(font.variants);
 				$that.closest('.webfont').find('.list-font-subset').html(font.subsets);
 			}

@@ -35,7 +35,13 @@ class plgAjaxHelixultimate extends JPlugin
     }
     elseif ($action == 'rating')
     {
-      $output = array();
+      $this->articlerating();
+    }
+  }
+
+  private function articlerating()
+  {
+    $output = array();
       $output['status'] = false;
       $output['message'] = 'Invalid Token';
       \JSession::checkToken() or die(json_encode($output));
@@ -84,7 +90,6 @@ class plgAjaxHelixultimate extends JPlugin
       }
 
       die(json_encode($output));
-    }
   }
 
   private function addRating($id, $rating, $ip)
@@ -98,7 +103,7 @@ class plgAjaxHelixultimate extends JPlugin
 
     if(isset($lastRating->rating_count) && $lastRating->rating_count)
     {
-      $userRating->rating_sum = ($lastRating->rrating_sum + $rating);
+      $userRating->rating_sum = ($lastRating->rating_sum + $rating);
       $userRating->rating_count = ($lastRating->rating_count + 1);
       $db->updateObject('#__content_rating', $userRating, 'content_id');
     }

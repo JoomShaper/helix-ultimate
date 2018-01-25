@@ -114,22 +114,22 @@
 
 	<fieldset name="presets" label="Presets" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
 		<field name="preset" type="presets" default="preset1" label="Select an option" description="">
-			<preset name="preset1" label="Preset 1" default="#25A9E0">
+			<preset name="preset1" label="Preset 1" default="#0345BF">
 				<color name="text_color" value="#252525" />
 				<color name="bg_color" value="#FFFFFF" />
-				<color name="link_color" value="#25A9E0" />
-				<color name="link_hover_color" value="#2BBBF7" />
+				<color name="link_color" value="#0345BF" />
+				<color name="link_hover_color" value="#044CD0" />
 				<color name="header_bg_color" value="#FFFFFF" />
 				<color name="topbar_bg_color" value="#333333" />
 				<color name="topbar_text_color" value="#AAAAAA" />
-				<color name="logo_text_color" value="#25A9E0" />
+				<color name="logo_text_color" value="#0345BF" />
 				<color name="menu_text_color" value="#252525" />
-				<color name="menu_text_hover_color" value="#25A9E0" />
-				<color name="menu_text_active_color" value="#25A9E0" />
+				<color name="menu_text_hover_color" value="#0345BF" />
+				<color name="menu_text_active_color" value="#0345BF" />
 				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
 				<color name="menu_dropdown_text_color" value="#252525" />
-				<color name="menu_dropdown_text_hover_color" value="#25A9E0" />
-				<color name="menu_dropdown_text_active_color" value="#25A9E0" />
+				<color name="menu_dropdown_text_hover_color" value="#0345BF" />
+				<color name="menu_dropdown_text_active_color" value="#0345BF" />
 				<color name="footer_bg_color" value="#171717" />
 				<color name="footer_text_color" value="#FFFFFF" />
 				<color name="footer_link_color" value="#A2A2A2" />
@@ -139,19 +139,19 @@
 
 		<field name="text_color" class="preset-control" helixgroup="preset_body" type="color" default="#252525" label="Color" />
 		<field name="bg_color" class="preset-control" helixgroup="preset_body" type="color" default="#FFFFFF" label="Background Color" />
-		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#25A9E0" label="Link Color" />
-		<field name="link_hover_color" class="preset-control" helixgroup="preset_body" type="color" default="#2BBBF7" label="Link Hover Color" />
-		<field name="header_bg_color" class="preset-control" helixgroup="preset_header" type="color" default="#25A9E0" label="Header Background Color" />
+		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#0345BF" label="Link Color" />
+		<field name="link_hover_color" class="preset-control" helixgroup="preset_body" type="color" default="#044CD0" label="Link Hover Color" />
+		<field name="header_bg_color" class="preset-control" helixgroup="preset_header" type="color" default="#0345BF" label="Header Background Color" />
 		<field name="topbar_bg_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#333333" label="Top Bar Background Color" />
 		<field name="topbar_text_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#AAAAAA" label="Top Bar Text Color" />
-		<field name="logo_text_color" class="preset-control" helixgroup="preset_header" type="color" default="#25A9E0" label="Logo Text Color" />
+		<field name="logo_text_color" class="preset-control" helixgroup="preset_header" type="color" default="#0345BF" label="Logo Text Color" />
 		<field name="menu_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="Text Color" />
-		<field name="menu_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Hover Text Color" />
-		<field name="menu_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Active Text Color" />
+		<field name="menu_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Hover Text Color" />
+		<field name="menu_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Active Text Color" />
 		<field name="menu_dropdown_bg_color" class="preset-control" helixgroup="preset_menu" type="color" default="#FFFFFF" label="Dropdown Background Color" />
 		<field name="menu_dropdown_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="Dropdown Text Color" />
-		<field name="menu_dropdown_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Dropdown Hover Text Color" />
-		<field name="menu_dropdown_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#25A9E0" label="Dropdown Active Text Color" />
+		<field name="menu_dropdown_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Dropdown Hover Text Color" />
+		<field name="menu_dropdown_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Dropdown Active Text Color" />
 		<field name="footer_bg_color" class="preset-control" helixgroup="preset_footer" type="color" default="#171717" label="Footer Backgroud Color" />
 		<field name="footer_text_color" class="preset-control" helixgroup="preset_footer" type="color" default="#FFFFFF" label="Footer Text Color" />
 		<field name="footer_link_color" class="preset-control" helixgroup="preset_footer" type="color" default="#A2A2A2" label="Footer Link Color" />

@@ -17,6 +17,15 @@ $output .= '<div class="row">';
 
 foreach ($data['rowColumns'] as $key => $column)
 {
+    if(isset($data['componentArea']) && $data['componentArea'])
+    {
+        $column->sematic = 'aside';
+    }
+    else
+    {
+        $column->sematic = 'div';
+    }
+
     $column->hasFeature = $data['loadFeature'];
     if ($column->settings->column_type)
     {

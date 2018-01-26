@@ -31,25 +31,25 @@ class HelixUltimateFeatureMenu
 
 		if($menu_type == 'mega_offcanvas')
 		{
-			$output .= '<div class="sp-megamenu-wrapper">';
+			$output .= '<nav class="sp-megamenu-wrapper">';
 			if($offcanvs_position == 'right') 
 			{
 				$output .= '<a id="offcanvas-toggler" class="offcanvas-toggler-right" href="#"><span class="fa fa-bars"></span></a>';
 			}
 			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
-			$output .= '</div>';
+			$output .= '</nav>';
 		}
 		elseif ($menu_type == 'mega')
 		{
-			$output .= '<div class="sp-megamenu-wrapper">';
+			$output .= '<nav class="sp-megamenu-wrapper">';
 			if($offcanvs_position == 'right') 
 			{
 				$output .= '<a id="offcanvas-toggler" class="offcanvas-toggler-right d-block d-lg-none" href="#"><span class="fa fa-bars"></span></a>';
 			}
 			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
-			$output .= '</div>';
+			$output .= '</nav>';
 		} else {
 			if($offcanvs_position == 'right') 
 			{

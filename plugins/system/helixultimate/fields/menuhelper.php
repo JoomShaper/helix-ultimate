@@ -10,209 +10,39 @@ defined ('_JEXEC') or die ('resticted aceess');
 require_once dirname(__DIR__) . '/core/lib/fa.php';
 
 $current_menu_id = $this->form->getValue('id');
-$menu_items = menuItems();
 $JMenuSite = new JMenuSite;
 
-function create_col_menu($current_menu_id)
-{
-    $items = menuItems();
-    $menus = new JMenuSite;
-
-    if (isset($items[$current_menu_id]))
-    {
-        $items = $items[$current_menu_id];
-        foreach ($items as $key => $item_id)
-        {
-            $html  ='<div class="widget" data-mod_id="'.$item_id.'">';
-            $html .= '<div class="widget-top">';
-            $html .= '<div class="widget-title"> <h3>'.$menus->getItem($item_id)->title.'</h3> </div>';
-            $html .= '</div>';
-            $html .= '</div>';
-
-            echo $html;
-        }
-    }
-}
-
-function unique_menu_items($current_menu_id, $layout)
-{
-    $saved_menu_items = array();
-    if (! empty($layout) && count($layout))
-    {
-        foreach ($layout as $key => $row)
-        {
-            if (! empty($row->attr) && count($row->attr))
-            {
-                foreach ($row->attr as $col_key => $col)
-                {
-                    if ( ! empty($col->items) && count($col->items))
-                    {
-                        foreach ($col->items as $item)
-                        {
-                            if ($item->type === 'menu_item')
-                            {
-                                $saved_menu_items[] = $item->item_id;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    $items = menuItems();
-    $menus = new JMenuSite;
-
-    $unique_item_id = array();
-    if (isset($items[$current_menu_id]))
-    {
-        $items = $items[$current_menu_id];
-        foreach ($items as $key => $item_id)
-        {
-            if ( ! in_array($item_id,$saved_menu_items))
-            {
-                $unique_item_id[] = $item_id;
-            }
-        }
-    }
-
-    return $unique_item_id;
-}
-
-function create_menu($current_menu_id)
-{
-    $items = menuItems();
-    $menus = new JMenuSite;
-
-    if (isset($items[$current_menu_id]))
-    {
-        $item = $items[$current_menu_id];
-        foreach ($item as $key => $item_id)
-        {
-            echo '<li>';
-            echo $menus->getItem($item_id)->title;
-            echo '</li>';
-        }
-    }
-}
-
-function menuItems()
-{
-    $menus = new JMenuSite;
-    $menus = $menus->getMenu();
-    $new = array();
-    foreach ($menus as $item)
-    {
-        $new[$item->parent_id][] = $item->id;
-    }
-    return $new;
-}
-
-function getModuleNameId($id = 'all')
-{
-    $db = JFactory::getDBO();
-    if ($id == 'all')
-    {
-        $query = 'SELECT id, title FROM `#__modules` WHERE ( `published` !=-2 AND `published` !=0 ) AND client_id = 0';
-    }
-    else
-    {
-        $query = 'SELECT id, title FROM `#__modules` WHERE ( `published` !=-2 AND `published` !=0 ) AND id = ' . $id;
-    }
-
-    $db->setQuery($query);
-    return $db->loadObjectList();
-}
-
-$modules = getModuleNameId();
-?>
-
-<?php
 $menu_width = 600;
 $align = 'right';
 $layout = '';
 $enable_megamenu = 0;
 $show_title = 1;
 $custom_class = '';
-$fa_icon = '';
-
-if (isset($menu_data->megamenu))
-{
-    $enable_megamenu = $menu_data->megamenu;
-}
-
-if (isset($menu_data->width))
-{
-    $menu_width = $menu_data->width;
-}
-
-if (isset($menu_data->menualign))
-{
-    $align = $menu_data->menualign;
-}
-
-if (isset($menu_data->layout))
-{
-    $layout = $menu_data->layout;
-}
-
-if (isset($menu_data->showtitle))
-{
-    $show_title = $menu_data->showtitle;
-}
-
-if (isset($menu_data->faicon))
-{
-    $fa_icon = $menu_data->faicon;
-}
-
-if (isset($menu_data->customclass))
-{
-    $custom_class = $menu_data->customclass;
-}
-
 $faicon = '';
-
-if(isset($menu_data->faicon) && $menu_data->faicon)
-{
-    $faicon = $menu_data->faicon;
-}
-
 $dropdown = 'right';
-if (isset($menu_data->dropdown))
-{
-    $dropdown = $menu_data->dropdown;
-}
-
 $badge = '';
-if (isset($menu_data->badge))
-{
-    $badge = $menu_data->badge;
-}
-
 $badge_position = '';
-if (isset($menu_data->badge_position))
-{
-    $badge_position = $menu_data->badge_position;
-}
-
-
 $badge_bg_color = '';
-if (isset($menu_data->badge_bg_color))
-{
-    $badge_bg_color = $menu_data->badge_bg_color;
-}
-
 $badge_text_color = '';
-if (isset($menu_data->badge_text_color))
-{
-    $badge_text_color = $menu_data->badge_text_color;
-}
+
+if (isset($menu_data->megamenu)) $enable_megamenu = $menu_data->megamenu;
+if (isset($menu_data->width)) $menu_width = $menu_data->width;
+if (isset($menu_data->menualign)) $align = $menu_data->menualign;
+if (isset($menu_data->layout)) $layout = $menu_data->layout;
+if (isset($menu_data->showtitle)) $show_title = $menu_data->showtitle;
+if (isset($menu_data->customclass)) $custom_class = $menu_data->customclass;
+if (isset($menu_data->faicon) && $menu_data->faicon) $faicon = $menu_data->faicon;
+if (isset($menu_data->dropdown)) $dropdown = $menu_data->dropdown;
+if (isset($menu_data->badge)) $badge = $menu_data->badge;
+if (isset($menu_data->badge_position)) $badge_position = $menu_data->badge_position;
+if (isset($menu_data->badge_bg_color)) $badge_bg_color = $menu_data->badge_bg_color;
+if (isset($menu_data->badge_text_color)) $badge_text_color = $menu_data->badge_text_color;
 
 ?>
 
 <?php
-$items = menuItems();
+$items = $this->menuItems();
+
 $item = array();
 
 if (isset($items[$current_menu_id]) && !empty($items[$current_menu_id]))
@@ -306,7 +136,7 @@ if($count > 4 && $count != 6)
                     <select id="helix-ultimate-megamenu-fa-icon">
                         <option value=""><?php echo JText::_('HELIX_ULTIMATE_GLOBAL_SELECT'); ?></option>
                         <?php foreach ($fa_list as $key => $fa) { ?>
-                        <option value="<?php echo $fa; ?>" <?php echo ($fa_icon == $fa) ? 'selected' : ''; ?>><?php echo $fa; ?></option>
+                        <option value="<?php echo $fa; ?>" <?php echo ($faicon == $fa) ? 'selected' : ''; ?>><?php echo $fa; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -378,8 +208,8 @@ foreach ($col->items as $item)
 {
 if ($item->type === 'module')
 {
-$modules = getModuleNameId($item->item_id);
-$title = $modules[0]->title . '<a href="javascript:;" class="helix-ultimate-megamenu-remove-module"><span class="fa fa-remove"></span></a>';
+$modules = $this->getModuleNameById($item->item_id);
+$title = $modules->title . '<a href="javascript:;" class="helix-ultimate-megamenu-remove-module"><span class="fa fa-remove"></span></a>';
 }
 elseif ($item->type === 'menu_item')
 {
@@ -397,19 +227,20 @@ $title = $JMenuSite->getItem($item->item_id)->title;
 
 if ($col_increment == 1)
 {
-$unique_menu_items = unique_menu_items($current_menu_id, $layout);
-if ( count($unique_menu_items))
-{
-foreach ($unique_menu_items as $key => $item_id)
-{
-$html  ='<div class="helix-ultimate-megamenu-item" data-mod_id="'.$item_id.'" data-type="menu_item">';
-$html .= '<div class="helix-ultimate-megamenu-item-module">';
-$html .= '<div class="helix-ultimate-megamenu-item-module-title">'.$JMenuSite->getItem($item_id)->title.'</div>';
-$html .= '</div>';
-$html .= '</div>';
-echo $html;
-}
-}
+    $unique_menu_items = $this->uniqueMenuItems($current_menu_id, $layout);
+
+    if ( count($unique_menu_items))
+    {
+        foreach ($unique_menu_items as $key => $item_id)
+        {
+            $html  ='<div class="helix-ultimate-megamenu-item" data-mod_id="'.$item_id.'" data-type="menu_item">';
+            $html .= '<div class="helix-ultimate-megamenu-item-module">';
+            $html .= '<div class="helix-ultimate-megamenu-item-module-title">'.$JMenuSite->getItem($item_id)->title.'</div>';
+            $html .= '</div>';
+            $html .= '</div>';
+            echo $html;
+        }
+    }
 }
 ?></div>
 </div>
@@ -433,92 +264,29 @@ echo $html;
 <div class="helix-ultimate-megamenu-modal" id="helix-ultimate-megamenu-layout-modal" style="display: none;" >
 <div class="helix-ultimate-row">
 
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="12">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-12"><div>12</div></div>
-</div>
-</div>
-</div>
+<?php
 
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="6+6">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-6"><div>6</div></div>
-<div class="helix-ultimate-col-sm-6"><div>6</div></div>
-</div>
-</div>
-</div>
+$row_layouts = array('12', '6+6', '4+4+4', '3+3+3+3', '2+2+2+2+2+2', '5+7', '4+8','3+9','2+10');
 
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="4+4+4">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-4"><div>4</div></div>
-<div class="helix-ultimate-col-sm-4"><div>4</div></div>
-<div class="helix-ultimate-col-sm-4"><div>4</div></div>
-</div>
-</div>
-</div>
+foreach ($row_layouts as $row_layout)
+{
+    $col_grids = explode('+',$row_layout);
+?>
+    <div class="helix-ultimate-col-sm-4">
+    <div class="helix-ultimate-megamenu-grids" data-layout="<?php echo $row_layout; ?>">
+    <div class="helix-ultimate-row">
+    <?php foreach ($col_grids as $col_grid) { ?>
+    
+    <div class="helix-ultimate-col-sm-<?php echo $col_grid; ?>"><div><?php echo $col_grid; ?></div></div>
+    
+    <?php } ?>
+    </div>
+    </div>
+    </div>
+<?php
+}
 
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="3+3+3+3">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-3"><div>3</div></div>
-<div class="helix-ultimate-col-sm-3"><div>3</div></div>
-<div class="helix-ultimate-col-sm-3"><div>3</div></div>
-<div class="helix-ultimate-col-sm-3"><div>3</div></div>
-</div>
-</div>
-</div>
-
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="2+2+2+2+2+2">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-2"><div>2</div></div>
-<div class="helix-ultimate-col-sm-2"><div>2</div></div>
-<div class="helix-ultimate-col-sm-2"><div>2</div></div>
-<div class="helix-ultimate-col-sm-2"><div>2</div></div>
-<div class="helix-ultimate-col-sm-2"><div>2</div></div>
-<div class="helix-ultimate-col-sm-2"><div>2</div></div>
-</div>
-</div>
-</div>
-
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="5+7">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-5"><div>5</div></div>
-<div class="helix-ultimate-col-sm-7"><div>7</div></div>
-</div>
-</div>
-</div>
-
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="4+8">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-4"><div>4</div></div>
-<div class="helix-ultimate-col-sm-8"><div>8</div></div>
-</div>
-</div>
-</div>
-
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="3+9">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-3"><div>3</div></div>
-<div class="helix-ultimate-col-sm-9"><div>9</div></div>
-</div>
-</div>
-</div>
-
-<div class="helix-ultimate-col-sm-4">
-<div class="helix-ultimate-megamenu-grids" data-layout="2+10">
-<div class="helix-ultimate-row">
-<div class="helix-ultimate-col-sm-2"><div>2</div></div>
-<div class="helix-ultimate-col-sm-10"><div>10</div></div>
-</div>
-</div>
-</div>
+?>
 
 </div>
 </ul>
@@ -532,7 +300,7 @@ echo $html;
             <h3><span class="fa fa-bars"></span> <?php echo JText::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h3>
             <div class="helix-ultimate-megamenu-module-list">
             <?php
-            $modules = getModuleNameId();
+            $modules = $this->getModuleNameById();
             if($modules)
             {
                 foreach($modules as $module)

@@ -31,10 +31,10 @@ class HelixUltimateFeatureMenu
 
 		if($menu_type == 'mega_offcanvas')
 		{
-			$output .= '<nav class="sp-megamenu-wrapper">';
+			$output .= '<nav class="sp-megamenu-wrapper" role="navigation">';
 			if($offcanvs_position == 'right') 
 			{
-				$output .= '<a id="offcanvas-toggler" class="offcanvas-toggler-right" href="#"><span class="fa fa-bars"></span></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="Navigation" class="offcanvas-toggler-right" href="#"><i class="fa fa-bars" aria-hidden="true" title="Navigation"></i></a>';
 			}
 			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
@@ -42,10 +42,10 @@ class HelixUltimateFeatureMenu
 		}
 		elseif ($menu_type == 'mega')
 		{
-			$output .= '<nav class="sp-megamenu-wrapper">';
+			$output .= '<nav class="sp-megamenu-wrapper" role="navigation">';
 			if($offcanvs_position == 'right') 
 			{
-				$output .= '<a id="offcanvas-toggler" class="offcanvas-toggler-right d-block d-lg-none" href="#"><span class="fa fa-bars"></span></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="Navigation" class="offcanvas-toggler-right d-block d-lg-none" href="#"><i class="fa fa-bars" aria-hidden="true" title="Navigation"></i></a>';
 			}
 			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
@@ -53,7 +53,7 @@ class HelixUltimateFeatureMenu
 		} else {
 			if($offcanvs_position == 'right') 
 			{
-				$output .= '<a id="offcanvas-toggler" class="offcanvas-toggler-right" href="#"><span class="fa fa-bars"></span></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="Navigation" class="offcanvas-toggler-right" href="#"><i class="fa fa-bars" aria-hidden="true" title="Navigation"></i></a>';
 			}
 		}
 

@@ -38,4 +38,84 @@ class JFormFieldMegamenu extends JFormField
 
         return $html;
     }
+
+    private function getModuleNameById($id = 'all')
+    {
+        $db = JFactory::getDBO();
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array('id','title')));
+        $query->from($db->quoteName('#__modules'));
+        $query->where($db->quoteName('published').'= 1');
+        $query->where($db->quoteName('client_id').'= 0');
+
+        if($id != 'all')
+        {
+            $query->where($db->quoteName('id').'=' . $db->quote($id));
+        }
+        $db->setQuery($query);
+
+        if($id != 'all')
+        {
+            return $db->loadObject();
+        }
+
+        return $db->loadObjectList();
+    }
+
+    private function uniqueMenuItems($current_menu_id, $layout)
+    {
+        $saved_menu_items = array();
+        if (! empty($layout) && count($layout))
+        {
+            foreach ($layout as $key => $row)
+            {
+                if (! empty($row->attr) && count($row->attr))
+                {
+                    foreach ($row->attr as $col_key => $col)
+                    {
+                        if ( ! empty($col->items) && count($col->items))
+                        {
+                            foreach ($col->items as $item)
+                            {
+                                if ($item->type === 'menu_item')
+                                {
+                                    $saved_menu_items[] = $item->item_id;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $items = $this->menuItems();
+        $menus = new JMenuSite;
+
+        $unique_item_id = array();
+        if (isset($items[$current_menu_id]))
+        {
+            $items = $items[$current_menu_id];
+            foreach ($items as $key => $item_id)
+            {
+                if ( ! in_array($item_id,$saved_menu_items))
+                {
+                    $unique_item_id[] = $item_id;
+                }
+            }
+        }
+
+        return $unique_item_id;
+    }
+
+    private function menuItems()
+    {
+        $menus = new JMenuSite;
+        $menus = $menus->getMenu();
+        $new = array();
+        foreach ($menus as $item)
+        {
+            $new[$item->parent_id][] = $item->id;
+        }
+        return $new;
+    }
 }

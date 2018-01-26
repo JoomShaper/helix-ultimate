@@ -1,9 +1,52 @@
 /**
-* @package Helix Ultimate Framework
+* @package Helix3 Framework
 * @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2010 - 2018 JoomShaper
+* @copyright Copyright (c) 2010 - 2015 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
+.helix-ultimate-image-upload-wrapper:empty {
+	display: none;
+}
+
+.helix-ultimate-image-upload-wrapper {
+	width: 200px;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.helix-ultimate-image-upload-wrapper:not(.loading) {
+	height: 200px;
+	background: #f5f5f5;
+	padding: 5px;
+	border: 1px solid #e5e5e5;
+}
+
+.helix-ultimate-image-upload-wrapper img {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.helix-ultimate-image-item-loader {
+	line-height: 200px;
+	text-align: center;
+	font-size: 24px;
+}
+
+.btn.btn-helix-ultimate-image-remove,
+.btn.btn-helix-ultimate-image-upload {
+	display: none;
+}
+
+.helix-ultimate-image-field-empty .btn-helix-ultimate-image-upload {
+	display: inline-block;
+}
+
+.helix-ultimate-image-field-has-image .btn-helix-ultimate-image-remove {
+	display: inline-block;
+}
+
+
 .sp-gallery-items {
 	list-style: none;
 	padding: 0;

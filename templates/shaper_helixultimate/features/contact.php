@@ -28,12 +28,12 @@ class HelixUltimateFeatureContact
 
 			if($this->params->get('contact_phone'))
 			{
-				$output .= '<li class="sp-contact-phone"><span class="fa fa-phone"></span> <a href="tel:' . str_replace(' ', '', $this->params->get('contact_phone')) . '">' . $this->params->get('contact_phone') . '</a></li>';
+				$output .= '<li class="sp-contact-phone"><span class="fa fa-phone"></span> <a href="tel:' . str_replace(array(')','(',' ','-'),array('','','',''), $this->params->get('contact_phone')) . '">' . $this->params->get('contact_phone') . '</a></li>';
 			}
 
 			if($this->params->get('contact_mobile'))
 			{
-				$output .= '<li class="sp-contact-mobile"><span class="fa fa-mobile"></span> <a href="tel:'. str_replace(' ', '', $this->params->get('contact_mobile')) .'">' . $this->params->get('contact_mobile') . '</a></li>';
+				$output .= '<li class="sp-contact-mobile"><span class="fa fa-mobile"></span> <a href="tel:' . str_replace(array(')','(',' ','-'),array('','','',''), $this->params->get('contact_mobile')) . '">' . $this->params->get('contact_mobile') . '</a></li>';
 			}
 
 			if($this->params->get('contact_email'))

@@ -19,11 +19,11 @@ class HelixUltimateFeatureTitle {
 	public function renderFeature() {
 
 		$app 		= JFactory::getApplication();
-		$menuitem   = $app->getMenu()->getActive(); // get the active item
+		$menuitem   = $app->getMenu()->getActive();
 
 		if($menuitem) {
 
-			$params 	= $menuitem->params; // get the menu params
+			$params 	= $menuitem->params;
 
 			if($params->get('enable_page_title', 0)) {
 

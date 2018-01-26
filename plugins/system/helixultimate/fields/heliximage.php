@@ -20,19 +20,15 @@ class JFormFieldHeliximage extends JFormField
 		JHtml::_('jquery.framework');
 
 		$plg_path = JURI::root(true) . '/plugins/system/helixultimate';
-		$doc->addScript($plg_path . '/assets/js/admin/image.js');
-		$doc->addStyleSheet($plg_path . '/assets/css/admin/image.css');
+
+		$class = ' helix-ultimate-image-field-empty';
 
 		if($this->value) {
-			$class1 = ' hide';
-			$class2 = '';
-		} else {
-			$class1 = '';
-			$class2 = ' hide';
+			$class = ' helix-ultimate-image-field-has-image';
 		}
 
-		$output  = '<div class="helix-image-field clearfix">';
-		$output .= '<div class="helix-image-upload-wrapper">';
+		$output  = '<div class="helix-ultimate-image-field' . $class . ' clearfix">';
+		$output .= '<div class="helix-ultimate-image-upload-wrapper">';
 
 		if($this->value) {
 			$data_src = $this->value;
@@ -50,12 +46,12 @@ class JFormFieldHeliximage extends JFormField
 
 		$output .= '</div>';
 
-		$output .= '<input type="file" class="helix-image-upload" accept="image/*" style="display:none;">';
-		$output .= '<a class="btn btn-primary btn-helix-image-upload'. $class1 .'" href="#"><i class="fa fa-plus"></i> Upload Image</a>';
-		$output .= '<a class="btn btn-danger btn-helix-image-remove'. $class2 .'" href="#"><i class="fa fa-minus-circle"></i> Remove Image</a>';
+		$output .= '<input type="file" class="helix-ultimate-image-upload" accept="image/*" style="display:none;">';
+		$output .= '<a class="btn btn-primary btn-helix-ultimate-image-upload" href="#"><i class="fa fa-plus"></i> '. \JText::_('HELIX_ULTIMATE_UPLOAD_IMAGE') .'</a>';
+		$output .= '<a class="btn btn-danger btn-helix-ultimate-image-remove" href="#"><i class="fa fa-minus-circle"></i> '. JText::_('HELIX_ULTIMATE_REMOVE_IMAGE') .'</a>';
 
 		$output .= '<input type="hidden" name="'. $this->name .'" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8')
-				. '"  class="form-field-helix-image">';
+				. '"  class="form-field-helix-ultimate-image">';
 		$output .= '</div>';
 
 		return $output;

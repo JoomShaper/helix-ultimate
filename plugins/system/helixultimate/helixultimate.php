@@ -67,9 +67,12 @@ class  plgSystemHelixultimate extends JPlugin
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
             $tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName();
 
+            JHtml::_('jquery.framework');
             JHtml::_('jquery.token');
+            $doc->addStyleSheet( $plg_path. '/assets/css/admin/blog-options.css' );
+            $doc->addScript( $plg_path. '/assets/js/admin/blog-options.js' );
 
-            if (JFile::exists( $tpl_path . '/article-formats.xml' ))
+            if (JFile::exists( $tpl_path . '/blog-options.xml' ))
             {
                 JForm::addFormPath($tpl_path);
             }
@@ -77,7 +80,7 @@ class  plgSystemHelixultimate extends JPlugin
             {
                 JForm::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
             }
-            $form->loadFile('article-formats', false);
+            $form->loadFile('blog-options', false);
         }
     }
 
@@ -119,7 +122,7 @@ class  plgSystemHelixultimate extends JPlugin
         $option     = $this->app->input->get('option','');
         $preview    = $this->app->input->get('preview','');
         $view       = $this->app->input->get('view','');
-        $action     = $this->app->input->get('action', '');;
+        $action     = $this->app->input->get('action', '');
 
         $doc = JFactory::getDocument();
         if($this->app->isAdmin())

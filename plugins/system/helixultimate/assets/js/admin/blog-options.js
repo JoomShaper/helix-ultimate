@@ -31,7 +31,6 @@ jQuery(function($) {
 			data.append('option', 'com_ajax');
 			data.append('plugin', 'helixultimate');
 			data.append('action', 'upload_image');
-			data.append('imageonly', false);
 			data.append('format', 'json');
 
 			if (file.type.match(/image.*/)) {
@@ -39,7 +38,7 @@ jQuery(function($) {
 
 				$.ajax({
 					type: "POST",
-					data:  data,
+					data: data,
 					contentType: false,
 					cache: false,
 					processData:false,
@@ -128,6 +127,136 @@ jQuery(function($) {
 						$parent.find('.helix-ultimate-image-upload-wrapper').empty();
 						$('.helix-ultimate-image-field').removeClass('helix-ultimate-image-field-has-image').addClass('helix-ultimate-image-field-empty');
 						$parent.find('#jform_attribs_helix_featured_image').val('');
+
+					} else {
+						alert(data.output);
+					}
+				}
+			});
+		}
+	});
+
+	// Gallery
+	$('.btn-helix-ultimate-gallery-item-upload').on('click', function(event) {
+		event.preventDefault();
+		$('#helix-ultimate-gallery-item-upload').click();
+	});
+
+	$('#helix-ultimate-gallery-item-upload').on('change', function(event) {
+		event.preventDefault();
+
+		var $this = $(this);
+		var files = $(this).prop('files');
+		var paths = Joomla.getOptions('system.paths');
+
+		for (i=0;i<files.length;i++){
+			var ext = files[i].name.split('.').pop();
+			var allowed = ((ext == 'png') || (ext == 'jpg') || (ext == 'jpeg') || (ext == 'gif') || (ext == 'svg'));
+			if(allowed) {
+				
+				let gallery_id = 'gallery-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1);
+				
+				var data = new FormData();
+				data.append('option', 'com_ajax');
+				data.append('plugin', 'helixultimate');
+				data.append('action', 'upload_image');
+				data.append('image', files[i]);
+				data.append('index', gallery_id);
+				data.append('gallery', true);
+				data.append('format', 'json');
+
+				$.ajax({
+					type: "POST",
+					data: data,
+					contentType: false,
+					cache: false,
+					processData:false,
+					beforeSend: function() {
+						var loader = $('<li class="helix-ultimate-gallery-item loading" id="'+ gallery_id +'"><div class="progress"><div class="bar"></div></div></li>');
+						$('.helix-ultimate-gallery-items').append(loader);
+					},
+					success: function(response)
+					{
+
+						var data = $.parseJSON(response);
+
+						if(data.status) {
+							$('#' + gallery_id).attr('data-src', data.data_src).removeClass('loading').empty().html(data.output);
+						} else {
+							$('#' + gallery_id).remove();
+							alert(data.output);
+						}
+
+						let images = [];
+		 				$('.helix-ultimate-gallery-items').find('>.helix-ultimate-gallery-item').each(function( index, value ) {
+		 					images.push( '"' + $(value).data('src') + '"' );
+		 				});
+		 				let output = '{"helix_ultimate_gallery_images":['+ images +']}';
+		 				$('#jform_attribs_helix_ultimate_gallery').val(output);
+						
+					},
+					xhr: function() {
+						myXhr = $.ajaxSettings.xhr();
+						if(myXhr.upload) {
+							myXhr.upload.addEventListener('progress', function(evt) {
+								$('#' + gallery_id).find('.bar').css('width', Math.floor(evt.loaded / evt.total *100) + '%');
+							}, false);
+						} else {
+							console.log('Uploadress is not supported.');
+						}
+						return myXhr;
+					}
+				});
+			}
+		}
+		
+		$this.val('');
+
+	});
+
+	// Sortable
+	$('.helix-ultimate-gallery-items').sortable({
+		stop : function(event,ui){
+			let images = [];
+
+			$('.helix-ultimate-gallery-item').each(function( index, value ) {
+				images.push( '"' + $(value).data('src') + '"' );
+			});
+
+			let output = '{"helix_ultimate_gallery_images":['+ images +']}';
+			$('#jform_attribs_helix_ultimate_gallery').val(output);
+		}
+	});
+
+	$(document).on('click', '.btn-helix-ultimate-remove-gallery-image', function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		if (confirm("You are about to delete this item permanently. 'Cancel' to stop, 'OK' to delete.") == true) {
+		    var request = {
+				'option' : 'com_ajax',
+				'plugin' : 'helixultimate',
+				'action' : 'remove_image',
+				'src'	 : $this.parent().data('src'),
+				'format' : 'json'
+			};
+
+			$.ajax({
+				type: "POST",
+				data   : request,
+				success: function(response)
+				{
+					var data = $.parseJSON(response);
+					if(data.status) {
+						$this.parent().remove();
+
+						let images = [];
+
+						$('.helix-ultimate-gallery-item').each(function( index, value ) {
+							images.push( '"' + $(value).data('src') + '"' );
+						});
+
+						let output = '{"helix_ultimate_gallery_images":['+ images +']}';
+						$('#jform_attribs_helix_ultimate_gallery').val(output);
 
 					} else {
 						alert(data.output);

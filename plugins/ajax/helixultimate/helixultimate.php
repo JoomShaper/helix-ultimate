@@ -1,13 +1,12 @@
 <?php
 /**
-* @package Helix3 Framework
-* @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2010 - 2015 JoomShaper
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-//no direct accees
-defined ('_JEXEC') or die ('resticted aceess');
+defined ('_JEXEC') or die ();
 
 jimport('joomla.plugin.plugin');
 jimport('joomla.filesystem.folder');
@@ -21,7 +20,7 @@ class plgAjaxHelixultimate extends JPlugin
 
     function onAjaxHelixultimate()
     {
-        $input = JFactory::getApplication()->input;
+        $input = \JFactory::getApplication()->input;
         $action = $input->post->get('action', '', 'STRING');
 
         if($action == 'upload_image')
@@ -157,7 +156,8 @@ class plgAjaxHelixultimate extends JPlugin
 
         $input = \JFactory::getApplication()->input;
         $image = $input->files->get('image');
-        $imageonly = $input->post->get('imageonly', false, 'BOOLEAN');
+        $index = htmlspecialchars($input->post->get('index', '', 'STRING'));
+        $gallery = $input->post->get('gallery', false, 'BOOLEAN');
 
         $tplRegistry = new \JRegistry();
         $tplParams = $tplRegistry->loadString(self::getTemplate()->params);
@@ -258,20 +258,22 @@ class plgAjaxHelixultimate extends JPlugin
                             $sources = HelixUltimateImage::createThumbs($dest, $sizes, $folder, $base_name, $ext, $image_quality);
                         }
 
-                        if(file_exists(\JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))
+                        if(\JFile::exists(\JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))
                         {
                             $src = 'images/' . $folder . '/'  . $base_name . '_thumbnail.' . $ext;
                         }
 
                         $report['status'] = true;
+                        $report['index'] = $index;
 
-                        if($imageonly)
+                        if($gallery)
                         {
-                            $report['output'] = '<img src="'. \JURI::root(true) . '/' . $src . '" data-src="'. $data_src .'" alt="">';
+                            $report['output'] = '<a href="#" class="btn btn-mini btn-danger btn-helix-ultimate-remove-gallery-image"><span class="fa fa-times"></span></a><img src="'. \JURI::root(true) . '/' . $src . '" alt="">';
+                            $report['data_src'] = $data_src;
                         }
                         else
                         {
-                            $report['output'] = '<li data-src="'. $data_src .'"><a href="#" class="btn btn-mini btn-danger btn-remove-image">Delete</a><img src="'. \JURI::root(true) . '/' . $src . '" alt=""></li>';
+                            $report['output'] = '<img src="'. \JURI::root(true) . '/' . $src . '" data-src="'. $data_src .'" alt="">';
                         }
                     }
                 }

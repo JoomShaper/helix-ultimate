@@ -2098,18 +2098,21 @@ select:focus::-ms-value {
   margin-top: 10px;
 }
 
-.controls > .minicolors {
+.controls > .minicolors,
+.helix-ultimate-modal .minicolors {
   display: block;
   width: 100%;
 }
 
-.controls .minicolors-theme-bootstrap .minicolors-input {
+.controls .minicolors-theme-bootstrap .minicolors-input,
+.helix-ultimate-modal .minicolors-theme-bootstrap .minicolors-input {
   width: 100%;
   height: 32px;
   padding-left: 30px;
   font-size: 12px;
 }
 
+.helix-ultimate-modal .minicolors-theme-bootstrap .minicolors-swatch,
 .controls .minicolors-theme-bootstrap .minicolors-swatch {
   left: 10px;
   top: 8px;

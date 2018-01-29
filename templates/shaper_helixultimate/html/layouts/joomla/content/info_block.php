@@ -40,6 +40,10 @@ $blockPosition = $displayData['params']->get('info_block_position', 0);
 		<?php if ($displayData['params']->get('show_publish_date')) : ?>
 			<?php echo $this->sublayout('publish_date', $displayData); ?>
 		<?php endif; ?>
+		
+		<?php if ($intro) : ?>
+			<?php echo JLayoutHelper::render('joomla.content.blog.comments.count', $displayData); ?>
+		<?php endif; ?>
 
 	<?php endif; ?>
 

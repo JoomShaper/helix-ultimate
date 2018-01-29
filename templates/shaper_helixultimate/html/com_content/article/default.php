@@ -221,6 +221,6 @@ JHtml::_('behavior.caption');
 	<?php endif; ?>
 
 	<?php if (!$this->print) : ?>
-		<?php echo JLayoutHelper::render('joomla.content.comments.comments', $this->item); ?>
+		<?php echo \JLayoutHelper::render('joomla.content.blog.comments.comments', $this->item); ?>
 	<?php endif; ?>
 </div>

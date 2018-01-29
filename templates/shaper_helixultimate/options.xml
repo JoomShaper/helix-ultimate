@@ -280,7 +280,7 @@
 		<field name="disqus_devmode" type="checkbox" helixgroup="comments" default="0" label="HELIX_DISQUS_DEV_MODE" description="HELIX_DISQUS_DEV_MODE_DESC" showon="commenting_engine:disqus" />
 		<field name="intensedebate_acc" type="text" helixgroup="comments" default="" label="HELIX_INTENSEDEBATE_ACC" description="HELIX_INTENSEDEBATE_ACC_DESC" showon="commenting_engine:intensedebate" />
 		<field name="fb_appID" type="text" helixgroup="comments" label="HELIX_FB_ID" description="HELIX_FB_ID_DESC" showon="commenting_engine:facebook" />
-		<field name="fb_width" type="number" helixgroup="comments" default="500" label="HELIX_FB_COMMENTS_WIDTH" description="HELIX_FB_COMMENTS_WIDTH_DESC" showon="commenting_engine:facebook" />
+		<field name="fb_width" type="number" helixgroup="comments" default="100" label="HELIX_FB_COMMENTS_WIDTH" description="HELIX_FB_COMMENTS_WIDTH_DESC" showon="commenting_engine:facebook" />
 		<field name="fb_cpp" type="number" helixgroup="comments" default="10" label="HELIX_FB_COMMENTS_PER_PAGE" description="HELIX_FB_COMMENTS_PER_PAGE_DESC" showon="commenting_engine:facebook" />
 		<field name="comments_count" helixgroup="comments" type="checkbox" default="0" label="HELIX_COMMENTS_COUNT" description="HELIX_COMMENTS_COUNT_DESC" showon="commenting_engine!:disabled" />
 		<field name="social_share" type="checkbox" helixgroup="social_share" default="1" label="HELIX_ENABLE_SOCIAL_SHARE" description="HELIX_ENABLE_SOCIAL_SHARE_DESC" />

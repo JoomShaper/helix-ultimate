@@ -39,6 +39,8 @@
         <position>position6</position>
         <position>position7</position>
         <position>position8</position>
+        <position>content-top</position>
+        <position>content-bottom</position>
         <position>bottom1</position>
         <position>bottom2</position>
         <position>bottom3</position>

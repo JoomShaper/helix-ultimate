@@ -137,7 +137,7 @@ jQuery(function($) {
 		$(target).prev('.helix-ultimate-image-holder').empty().append('<img src="'+ preview +'" alt="">')
 
 		$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
-		$('body').addClass('helix-ultimate-modal-open');
+		$('body').removeClass('helix-ultimate-modal-open');
 	});
 
 	$(document).on('click', '.helix-ultimate-modal-action-cancel', function(event) {
@@ -150,7 +150,7 @@ jQuery(function($) {
 	$(document).on('click', '.action-helix-ultimate-modal-close', function(event) {
 		event.preventDefault();
 		$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
-		$('body').addClass('helix-ultimate-modal-open');
+		$('body').removeClass('helix-ultimate-modal-open');
 	});
 
 	$(document).on('click', '.helix-ultimate-media-clear', function(event) {

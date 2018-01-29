@@ -6,6 +6,7 @@
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
 * ======================================================================== */
 jQuery(function($) {
+
   $.fn.helixUltimateModal = function(options) {
     var options = $.extend({
       target : ''
@@ -49,28 +50,28 @@ jQuery(function($) {
       class: ''
     }, options);
 
-    $('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
+    $('.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal').remove();
 
-    var mediaModal = '<div class="helix-ultimate-modal-overlay"></div>';
-    mediaModal += '<div class="helix-ultimate-modal '+ options.class +'" data-target="#'+ options.target +'">';
+    var optionsModal = '<div class="helix-ultimate-options-modal-overlay"></div>';
+    optionsModal += '<div class="helix-ultimate-options-modal '+ options.class +'" data-target="#'+ options.target +'">';
 
-    mediaModal += '<div class="helix-ultimate-modal-header">';
-    mediaModal += '<span class="helix-ultimate-modal-header-title">' + options.title + '</span>';
-    mediaModal += '<a href="#" class="action-helix-ultimate-modal-close"><span class="fa fa-times"></span></a>'
-    mediaModal += '</div>';
+    optionsModal += '<div class="helix-ultimate-options-modal-header">';
+    optionsModal += '<span class="helix-ultimate-options-modal-header-title">' + options.title + '</span>';
+    optionsModal += '<a href="#" class="action-helix-ultimate-options-modal-close"><span class="fa fa-times"></span></a>'
+    optionsModal += '</div>';
 
-    mediaModal += '<div class="helix-ultimate-modal-inner">';
-    mediaModal += '<div class="helix-ultimate-modal-content">';
-    mediaModal += '</div>';
-    mediaModal += '</div>';
+    optionsModal += '<div class="helix-ultimate-options-modal-inner">';
+    optionsModal += '<div class="helix-ultimate-options-modal-content">';
+    optionsModal += '</div>';
+    optionsModal += '</div>';
 
-    mediaModal += '<div class="helix-ultimate-modal-footer">';
-    mediaModal += '<a href="#" class="btn btn-success btn-xs helix-ultimate-settings-apply" data-flag="'+ options.flag +'"><span class="fa fa-check"></span> Apply</a>'
-    mediaModal += '<a href="#" class="btn btn-secondary btn-xs helix-ultimate-settings-cancel"><span class="fa fa-times"></span> Cancel</a>'
-    mediaModal += '</div>';
+    optionsModal += '<div class="helix-ultimate-options-modal-footer">';
+    optionsModal += '<a href="#" class="btn btn-success btn-xs helix-ultimate-settings-apply" data-flag="'+ options.flag +'"><span class="fa fa-check"></span> Apply</a>'
+    optionsModal += '<a href="#" class="btn btn-secondary btn-xs helix-ultimate-settings-cancel"><span class="fa fa-times"></span> Cancel</a>'
+    optionsModal += '</div>';
 
-    mediaModal += '</div>';
+    optionsModal += '</div>';
 
-    $('body').addClass('helix-ultimate-modal-open').append(mediaModal);
+    $('body').addClass('helix-ultimate-options-modal-open').append(optionsModal);
   }
 });

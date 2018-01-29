@@ -2099,20 +2099,20 @@ select:focus::-ms-value {
 }
 
 .controls > .minicolors,
-.helix-ultimate-modal .minicolors {
+.helix-ultimate-options-modal .minicolors {
   display: block;
   width: 100%;
 }
 
 .controls .minicolors-theme-bootstrap .minicolors-input,
-.helix-ultimate-modal .minicolors-theme-bootstrap .minicolors-input {
+.helix-ultimate-options-modal .minicolors-theme-bootstrap .minicolors-input {
   width: 100%;
   height: 32px;
   padding-left: 30px;
   font-size: 12px;
 }
 
-.helix-ultimate-modal .minicolors-theme-bootstrap .minicolors-swatch,
+.helix-ultimate-options-modal .minicolors-theme-bootstrap .minicolors-swatch,
 .controls .minicolors-theme-bootstrap .minicolors-swatch {
   left: 10px;
   top: 8px;
@@ -2140,7 +2140,6 @@ select:focus::-ms-value {
 .helix-ultimate-preview {
   position:relative;
 }
-
 
 .helix-ultimate-sidebar {
   width: 319px;
@@ -2410,11 +2409,18 @@ select:focus::-ms-value {
 
 
 /*Media Modal*/
-.helix-ultimate-modal-open {
+.helix-ultimate-modal-open,
+.helix-ultimate-options-modal-open {
   overflow: hidden;
 }
 
-.helix-ultimate-modal-overlay {
+.helix-ultimate-modal-open .helix-ultimate-options-modal-overlay,
+.helix-ultimate-modal-open .helix-ultimate-options-modal {
+  display: none;
+}
+
+.helix-ultimate-modal-overlay,
+.helix-ultimate-options-modal-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -2424,7 +2430,8 @@ select:focus::-ms-value {
   background: rgba(0, 0, 0, 0.6);
 }
 
-.helix-ultimate-modal {
+.helix-ultimate-modal,
+.helix-ultimate-options-modal {
   position: fixed;
   top: 100px;
   left: 50%;
@@ -2444,7 +2451,8 @@ select:focus::-ms-value {
   height: 90%;
 }
 
-.helix-ultimate-modal-header {
+.helix-ultimate-modal-header,
+.helix-ultimate-options-modal-header {
   position: absolute;
   top: 0;
   left: 0;
@@ -2458,13 +2466,15 @@ select:focus::-ms-value {
   align-items: center;
 }
 
-.helix-ultimate-modal-header-title {
+.helix-ultimate-modal-header-title,
+.helix-ultimate-options-modal-header-title {
   font-size: 14px;
   font-weight: 500;
   color: #6F737A;
 }
 
-.helix-ultimate-modal-footer {
+.helix-ultimate-modal-footer,
+.helix-ultimate-options-modal-footer {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -2478,7 +2488,8 @@ select:focus::-ms-value {
   align-items: center;
 }
 
-.helix-ultimate-modal-footer .btn {
+.helix-ultimate-modal-footer .btn,
+.helix-ultimate-options-modal-footer .btn {
   margin-right: 10px;
   font-size: 12px;
 }
@@ -2504,7 +2515,8 @@ select:focus::-ms-value {
   text-align: right;
 }
 
-.action-helix-ultimate-modal-close {
+.action-helix-ultimate-modal-close,
+.action-helix-ultimate-options-modal-close {
   background-color: #dc3545;
   border-radius: 25px;
   color: #fff;
@@ -2518,7 +2530,8 @@ select:focus::-ms-value {
   z-index: 3;
 }
 
-.action-helix-ultimate-modal-close:hover {
+.action-helix-ultimate-modal-close:hover,
+.action-helix-ultimate-options-modal-close:hover {
   background-color: #c82333;
   color: #fff;
 }
@@ -2573,7 +2586,8 @@ select:focus::-ms-value {
   color: #868e96;
 }
 
-.helix-ultimate-modal-inner {
+.helix-ultimate-modal-inner,
+.helix-ultimate-options-modal-inner {
   position: relative;
   width: 100%;
   height: 100%;
@@ -2594,7 +2608,8 @@ select:focus::-ms-value {
 }
 
 #helix-ultimate-media-manager,
-.helix-ultimate-modal-content {
+.helix-ultimate-modal-content,
+.helix-ultimate-options-modal-content {
   position: absolute;
   top: 80px;
   left: 20px;
@@ -2603,7 +2618,8 @@ select:focus::-ms-value {
   overflow-y: auto;
 }
 
-.helix-ultimate-modal-content {
+.helix-ultimate-modal-content,
+.helix-ultimate-options-modal-content {
   bottom: 80px;
 }
 

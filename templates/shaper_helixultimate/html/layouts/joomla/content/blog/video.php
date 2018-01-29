@@ -34,7 +34,7 @@ if(isset($attribs->helix_video) && $attribs->helix_video)
 
 	if($video_src) {
 		?>
-		<div class="article-intro-video">
+		<div class="article-featured-video">
 			<div class="embed-responsive embed-responsive-16by9">
 				<iframe class="embed-responsive-item" src="<?php echo $video_src; ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 			</div>

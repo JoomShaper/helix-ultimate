@@ -9,7 +9,6 @@
 defined ('JPATH_BASE') or die();
 
 $params = $displayData->params;
-$params = $displayData->params;
 $attribs = json_decode($displayData->attribs);
 
 $template = JFactory::getApplication('site')->getTemplate(true);
@@ -19,6 +18,7 @@ if(isset($attribs->helix_featured_image) && $attribs->helix_featured_image != ''
 {
 	$full_image = $attribs->helix_featured_image;
 }
+
 ?>
 <?php if($full_image) : ?>
 	<div class="article-full-image">
@@ -33,5 +33,5 @@ if(isset($attribs->helix_featured_image) && $attribs->helix_featured_image != ''
 				echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_fulltext_caption) . '"';
 			endif; ?>
 			src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo htmlspecialchars($images->image_fulltext_alt); ?>" itemprop="image"> </div>
-		<?php endif; ?>
 	<?php endif; ?>
+<?php endif; ?>

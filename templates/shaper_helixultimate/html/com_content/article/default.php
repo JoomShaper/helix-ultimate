@@ -19,6 +19,8 @@ $canEdit = $params->get('access-edit');
 $user    = JFactory::getUser();
 $info    = $params->get('info_block_position', 0);
 $page_header_tag = 'h1';
+$attribs = json_decode($this->item->attribs);
+$article_format = (isset($attribs->helix_article_format) && $attribs->helix_article_format) ? $attribs->helix_article_format : 'standard';
 
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
@@ -39,7 +41,15 @@ JHtml::_('behavior.caption');
 	}
 	?>
 
-	<?php echo JLayoutHelper::render('joomla.content.full_image', $this->item); ?>
+	<?php if($article_format == 'gallery') : ?>
+		<?php echo JLayoutHelper::render('joomla.content.blog.gallery', array('attribs' => $attribs)); ?>
+	<?php elseif($article_format == 'video') : ?>
+		<?php echo JLayoutHelper::render('joomla.content.blog.video', array('attribs' => $attribs)); ?>
+	<?php elseif($article_format == 'audio') : ?>
+		<?php echo JLayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
+	<?php else: ?>
+		<?php echo JLayoutHelper::render('joomla.content.full_image', $this->item); ?>
+	<?php endif; ?>
 
 	<?php // Todo Not that elegant would be nice to group the params ?>
 	<?php $useDefList = ($params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')
@@ -112,8 +122,7 @@ JHtml::_('behavior.caption');
 
 	<?php if ($info == 1 || $info == 2) : ?>
 		<?php if ($useDefList) : ?>
-				<?php // Todo: for Joomla4 joomla.content.info_block.block can be changed to joomla.content.info_block ?>
-			<?php echo JLayoutHelper::render('joomla.content.info_block.block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
+			<?php echo JLayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
 		<?php endif; ?>
 	<?php endif; ?>
 

@@ -14,7 +14,16 @@ $attribs = json_decode($displayData->attribs);
 $template = JFactory::getApplication('site')->getTemplate(true);
 $tplParams = $template->params;
 
-$blog_list_image = $tplParams->get('blog_list_image', 'thumbnail');
+$leading = (isset($displayData->leading) && $displayData->leading) ? 1 : 0;
+
+if($leading)
+{
+	$blog_list_image = $tplParams->get('leading_blog_list_image', 'large');
+}
+else
+{
+	$blog_list_image = $tplParams->get('blog_list_image', 'thumbnail');
+}
 
 $intro_image = '';
 if(isset($attribs->helix_featured_image) && $attribs->helix_featured_image != '')
@@ -28,7 +37,7 @@ if(isset($attribs->helix_featured_image) && $attribs->helix_featured_image != ''
 		$intro_image = $attribs->helix_featured_image;
 		$basename = basename($intro_image);
 		$list_image = JPATH_ROOT . '/' . dirname($intro_image) . '/' . JFile::stripExt($basename) . '_'. $blog_list_image .'.' . JFile::getExt($basename);
-		if(Jfile::exists($list_image)) {
+		if(JFile::exists($list_image)) {
 			$intro_image = JURI::root(true) . '/' . dirname($intro_image) . '/' . JFile::stripExt($basename) . '_'. $blog_list_image .'.' . JFile::getExt($basename);
 		}
 	}

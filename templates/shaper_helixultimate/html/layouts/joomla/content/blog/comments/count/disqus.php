@@ -8,7 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
-if( $displayData['params']->get('disqus_subdomain') != '' )
+if( $displayData['params']->get('comment_disqus_subdomain') != '' )
 {
 	$doc = JFactory::getDocument();
 
@@ -16,7 +16,7 @@ if( $displayData['params']->get('disqus_subdomain') != '' )
 	{
 		ob_start();
 
-		$devmode = $displayData['params']->get('disqus_devmode');
+		$devmode = $displayData['params']->get('comment_disqus_devmode');
 		
 		if ($devmode)
 		{
@@ -24,7 +24,7 @@ if( $displayData['params']->get('disqus_subdomain') != '' )
 		}
 
 		?>
-		var disqus_shortname = '<?php echo $displayData['params']->get("disqus_subdomain"); ?>';
+		var disqus_shortname = '<?php echo $displayData['params']->get("comment_disqus_subdomain"); ?>';
 
 		(function() { 
 			var d = document, s = d.createElement('script');

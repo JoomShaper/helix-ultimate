@@ -8,14 +8,14 @@
 
 defined ('JPATH_BASE') or die();
 
-if( $displayData['params']->get('fb_appID') != '' )
+if( $displayData['params']->get('comment_facebook_app_id') != '' )
 {
 
 	$doc = \JFactory::getDocument();
 
 	if(!defined('HELIX_ULTIMATE_COMMENTS_FACEBOOK_COUNT'))
 	{
-		$doc->addScript( 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=' . $displayData['params']->get('fb_appID') . '&autoLogAppEvents=1' );
+		$doc->addScript( 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=' . $displayData['params']->get('comment_facebook_app_id') . '&autoLogAppEvents=1' );
 		define('HELIX_ULTIMATE_COMMENTS_FACEBOOK_COUNT', 1);
 	}
 	?>

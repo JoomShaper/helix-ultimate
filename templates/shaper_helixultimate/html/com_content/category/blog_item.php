@@ -20,6 +20,7 @@ $article_format = (isset($attribs->helix_article_format) && $attribs->helix_arti
 $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
 
 ?>
+
 <?php if($article_format == 'gallery') : ?>
 	<?php echo JLayoutHelper::render('joomla.content.blog.gallery', array('attribs' => $attribs)); ?>
 <?php elseif($article_format == 'video') : ?>

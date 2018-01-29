@@ -10,7 +10,7 @@ defined ('JPATH_BASE') or die();
 
 $params = \JFactory::getApplication()->getTemplate(true)->params;
 
-if( ( $params->get('commenting_engine') != 'disabled' ) && ( $params->get('comments_count') ) )
+if( ( $params->get('comment') != 'disabled' ) && ( $params->get('comments_count') ) )
 {
 	$url = \JRoute::_(ContentHelperRoute::getArticleRoute($displayData['item']->id . ':' . $displayData['item']->alias, $displayData['item']->catid, $displayData['item']->language));
 	$root = \JURI::base();
@@ -18,7 +18,7 @@ if( ( $params->get('commenting_engine') != 'disabled' ) && ( $params->get('comme
 	$url = $root->getScheme() . '://' . $root->getHost() . $url;
 	?>
 	<span class="comments-count">
-		<?php echo \JLayoutHelper::render( 'joomla.content.blog.comments.count.' . $params->get('commenting_engine'), array( 'item'=>$displayData, 'params'=>$params, 'url'=>$url ) ); ?>
+		<?php echo \JLayoutHelper::render( 'joomla.content.blog.comments.count.' . $params->get('comment'), array( 'item'=>$displayData, 'params'=>$params, 'url'=>$url ) ); ?>
 	</span>
 	<?php
 }

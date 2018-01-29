@@ -8,7 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
-if( $displayData['params']->get('disqus_subdomain') != '' )
+if( $displayData['params']->get('comment_disqus_subdomain') != '' )
 {
 
 	?>
@@ -17,14 +17,14 @@ if( $displayData['params']->get('disqus_subdomain') != '' )
 	<script>
 
 	<?php
-	$devmode = $displayData['params']->get('disqus_devmode');
+	$devmode = $displayData['params']->get('comment_disqus_devmode');
 	if ($devmode)
 	{
 		echo 'var disqus_developer = 1;';
 	}
 	?>
 
-	var disqus_shortname = '<?php echo htmlspecialchars($displayData["params"]->get("disqus_subdomain")); ?>';
+	var disqus_shortname = '<?php echo htmlspecialchars($displayData["params"]->get("comment_disqus_subdomain")); ?>';
 	var disqus_config = function () {
         this.page.url = "<?php echo $displayData['url']; ?>";
     };

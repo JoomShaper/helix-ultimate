@@ -13,10 +13,24 @@ $attribs = json_decode($displayData->attribs);
 
 $template = JFactory::getApplication('site')->getTemplate(true);
 $tplParams = $template->params;
+$blog_image = $tplParams->get('blog_details_image', 'large');
 $full_image = '';
+
 if(isset($attribs->helix_featured_image) && $attribs->helix_featured_image != '')
 {
-	$full_image = $attribs->helix_featured_image;
+	if($blog_image == 'default')
+	{
+		$full_image = $attribs->helix_featured_image;
+	}
+	else
+	{
+		$full_image = $attribs->helix_featured_image;
+		$basename = basename($full_image);
+		$details_image = JPATH_ROOT . '/' . dirname($full_image) . '/' . JFile::stripExt($basename) . '_'. $blog_image .'.' . JFile::getExt($basename);
+		if(JFile::exists($details_image)) {
+			$full_image = JURI::root(true) . '/' . dirname($full_image) . '/' . JFile::stripExt($basename) . '_'. $blog_image .'.' . JFile::getExt($basename);
+		}
+	}
 }
 
 ?>

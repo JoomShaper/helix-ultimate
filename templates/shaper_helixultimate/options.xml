@@ -113,6 +113,7 @@
 
 	</fieldset>
 
+	<!--Presets-->
 	<fieldset name="presets" label="Presets" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
 		<field name="preset" type="presets" default="preset1" label="Select an option" description="">
 			<preset name="preset1" label="Preset 1" default="#0345BF">
@@ -191,6 +192,7 @@
 
 	</fieldset>
 
+	<!--Typography-->
 	<fieldset name="typography" label="Typography" icon="fa fa-font" addfieldpath="/plugins/system/helixultimate/fields">
 		<field name="enable_body_font" type="checkbox" helixgroup="body_font" default="1" label="HELIX_ENABLE_FONT" description="HELIX_ENABLE_FONT_DESC" />
 		<field name="body_font" type="typography" helixgroup="body_font" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_body_font:1" />
@@ -221,70 +223,77 @@
 		<field name="custom_font_selectors" type="textarea" helixgroup="custom_font" label="HELIX_FONT_CUSTOM_SELECTORS" description="HELIX_FONT_CUSTOM_SELECTORS_DESC" showon="enable_custom_font:1" />
 
 		<field name="update_fonts" type="button" helixgroup="update_font" url="#" text="HELIX_UPDATE_FONTS_CLICK" hideLabel="true" description="HELIX_UPDATE_FONTS_LIST_DESC" class="btn-primary btn-update-fonts-list" />
-		</fieldset>
+	</fieldset>
 
-		<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">
+	<!--Blog-->
+	<fieldset name="blog" label="Blog" icon="fa fa-comments">
+		<field name="image_small" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_ULTIMATE_IMAGE_SMALL" />
+		<field name="image_small_size" type="text" helixgroup="blog_images" default="100X100" hint="100X100" label="HELIX_ULTIMATE_IMAGE_SMALL_SIZE" showon="image_small:1" />
+
+		<field name="image_thumbnail" type="checkbox" helixgroup="blog_images" default="1" label="HELIX_ULTIMATE_IMAGE_THUMBNAIL" />
+		<field name="image_thumbnail_size" type="text" helixgroup="blog_images" default="200X200" hint="200X200" label="HELIX_ULTIMATE_IMAGE_THUMBNAIL_SIZE" showon="image_thumbnail:1" />
+
+		<field name="image_medium" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_ULTIMATE_IMAGE_MEDIUM" />
+		<field name="image_medium_size" type="text" helixgroup="blog_images" default="300X300" hint="300X300" label="HELIX_ULTIMATE_IMAGE_MEDIUM_SIZE" showon="image_medium:1" />
+
+		<field name="image_large" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_ULTIMATE_IMAGE_LARGE" />
+		<field name="image_large_size" type="text" helixgroup="blog_images" default="600X600" hint="600X600" label="HELIX_ULTIMATE_IMAGE_LARGE_SIZE" showon="image_large:1" />
+		<field name="image_crop_quality" type="number" helixgroup="blog_images" label="HELIX_ULTIMATE_IMAGE_CROP_QUALITY" description="HELIX_ULTIMATE_IMAGE_CROP_QUALITY_DESC" max="100" min="40" default="100" />
+
+		<field name="blog_list_image" type="list" helixgroup="blog_list" default="thumbnail" label="HELIX_ULTIMATE_BLOG_LIST_IMAGE" description="HELIX_ULTIMATE_BLOG_LIST_IMAGE_DESC">
+			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
+			<option value="small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
+			<option value="thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
+			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
+		</field>
+
+		<field name="leading_blog_list_image" type="list" helixgroup="blog_list" default="large" label="HELIX_ULTIMATE_LEADING_BLOG_LIST_IMAGE" description="HELIX_ULTIMATE_LEADING_BLOG_LIST_IMAGE_DESC">
+			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
+			<option value="small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
+			<option value="thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
+			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
+		</field>
+
+		<field name="blog_details_image" type="list" helixgroup="blog_details" default="large" label="HELIX_ULTIMATE_BLOG_DETAILS_IMAGE" description="HELIX_ULTIMATE_BLOG_DETAILS_IMAGE_DESC">
+			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
+			<option value="small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
+			<option value="thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
+			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
+		</field>
+		<field name="social_share" type="checkbox" helixgroup="blog_details" default="1" label="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE" description="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_DESC" />
+		<field name="author_info" type="checkbox" helixgroup="blog_details" default="0" label="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO" description="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO_DESC" />
+
+		<field name="comment" type="list" helixgroup="comments" default="disabled" label="HELIX_ULTIMATE_BLOG_COMMENT">
+			<option value="disabled">HELIX_ULTIMATE_COMMENT_DISABLED</option>
+			<option value="disqus">HELIX_ULTIMATE_COMMENT_DISQUSS</option>
+			<option value="intensedebate">HELIX_ULTIMATE_COMMENT_INTENSEDEBATE</option>
+			<option value="facebook">HELIX_ULTIMATE_COMMENT_FACEBOOK</option>
+		</field>
+		<field name="comment_disqus_subdomain" type="text" helixgroup="comments" label="HELIX_ULTIMATE_COMMENT_DISQUS_SUBDOMAIN" description="HELIX_ULTIMATE_COMMENT_DISQUS_SUBDOMAIN_DESC" showon="comment:disqus" />
+		<field name="comment_disqus_devmode" type="checkbox" helixgroup="comments" default="0" label="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE" description="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE_DESC" showon="comment:disqus" />
+		<field name="comment_intensedebate_acc" type="text" helixgroup="comments" default="" label="HELIX_ULTIMATE_COMMENT_INTENSEDEBATE_ACC" description="HELIX_ULTIMATE_COMMENT_INTENSEDEBATE_ACC_DESC" showon="comment:intensedebate" />
+		<field name="comment_facebook_app_id" type="text" helixgroup="comments" label="HELIX_ULTIMATE_COMMENT_FACEBOOK_ID" description="HELIX_ULTIMATE_COMMENT_FACEBOOK_ID_DESC" showon="comment:facebook" />
+		<field name="comment_facebook_width" type="number" helixgroup="comments" default="100" label="HELIX_ULTIMATE_COMMENT_FACEBOOK_COMMENTS_WIDTH" description="HELIX_ULTIMATE_COMMENT_FACEBOOK_COMMENTS_WIDTH_DESC" showon="comment:facebook" />
+		<field name="comment_facebook_number" type="number" helixgroup="comments" default="10" label="HELIX_ULTIMATE_COMMENT_FACEBOOK_COMMENTS_PER_PAGE" description="HELIX_ULTIMATE_COMMENT_FACEBOOK_COMMENTS_PER_PAGE_DESC" showon="comment:facebook" />
+		<field name="comments_count" helixgroup="comments" type="checkbox" default="0" label="HELIX_ULTIMATE_COMMENTS_COUNT" description="HELIX_ULTIMATE_COMMENTS_COUNT_DESC" showon="comment!:disabled" />
+
+	</fieldset>
+
+	<!--Custom Code-->
+	<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">
 		<field name="before_head" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_HEAD" description="HELIX_BEFORE_HEAD_DESC" filter="raw" />
 		<field name="before_body" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_BODY" description="HELIX_BEFORE_BODY_DESC" filter="raw" />
 		<field name="custom_css" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_CSS" description="HELIX_CUSTOM_CSS_DESC" filter="raw" />
 		<field name="custom_js" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_JS" description="HELIX_CUSTOM_JS_DESC" filter="raw" />
 	</fieldset>
-	<!--End Custom Code Tab-->
 
-	<!--Start Advanced Tab-->
+	<!--Advanced-->
 	<fieldset name="advance" label="HELIX_ULTIMATE_FIELDSET_ADVANCED" icon="fa fa-cog">
 		<field name="compress_css" helixgroup="compression" type="checkbox" default="0" label="HELIX_ULTIMATE_CSS_COMPRESS" description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
 		<field name="compress_js" helixgroup="compression" type="checkbox" default="0" label="HELIX_ULTIMATE_JS_COMPRESS" description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
 		<field name="exclude_js" helixgroup="compression" type="textarea" label="HELIX_ULTIMATE_EXCLUDE_JS" description="HELIX_ULTIMATE_EXCLUDE_JS_DESC" showon="compress_js:1" />
 		<field name="scssoption" helixgroup="scss" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_SCSS" description="HELIX_ULTIMATE_ENABLE_SCSS_DESC" />
 		<field name="export_options" helixgroup="importexport" type="optionio" hideLabel="true"/>
-	</fieldset>
-	<!--End Advanced Tab-->
-
-	<!--Start Blog Tab-->
-	<fieldset name="blog" label="Blog" icon="fa fa-font">
-		<field name="image_small" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_SMALL" description="HELIX_IMAGE_SMALL_DESC" />
-		<field name="image_small_size" type="text" helixgroup="blog_images" default="100X100" hint="100X100" label="HELIX_IMAGE_SMALL_SIZE" description="HELIX_IMAGE_SMALL_SIZE_DESC" showon="image_small:1" />
-
-		<field name="image_thumbnail" type="checkbox" helixgroup="blog_images" default="1" label="HELIX_IMAGE_THUMBNAIL" description="HELIX_IMAGE_THUMBNAIL_DESC" />
-		<field name="image_thumbnail_size" type="text" helixgroup="blog_images" default="200X200" hint="200X200" label="HELIX_IMAGE_THUMBNAIL_SIZE" description="HELIX_IMAGE_THUMBNAIL_SIZE_DESC" showon="image_thumbnail:1" />
-
-		<field name="image_medium" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_MEDIUM" description="HELIX_IMAGE_MEDIUM_DESC" />
-		<field name="image_medium_size" type="text" helixgroup="blog_images" default="300X300" hint="300X300" label="HELIX_IMAGE_MEDIUM_SIZE" description="HELIX_IMAGE_MEDIUM_SIZE_DESC" showon="image_medium:1" />
-
-		<field name="image_large" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_IMAGE_LARGE" description="HELIX_IMAGE_LARGE_DESC" />
-		<field name="image_large_size" type="text" helixgroup="blog_images" default="600X600" hint="600X600" label="HELIX_IMAGE_LARGE_SIZE" description="HELIX_IMAGE_LARGE_SIZE_DESC" showon="image_large_size:1" />
-		<field name="image_crop_quality" type="number" helixgroup="blog_images" label="HELIX_ULTIMATE_IMAGE_LARGE_CROP_QUALITY" description="HELIX_ULTIMATE_IMAGE_LARGE_CROP_QUALITY_DESC" max="100" min="40" default="100" />
-
-		<field name="blog_list_image" type="list" helixgroup="blog_images" default="thumbnail" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
-			<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
-			<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
-			<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
-			<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
-		</field>
-
-		<field name="leading_blog_list_image" type="list" helixgroup="blog_images" default="large" label="HELIX_BLOG_LIST_IMAGE" description="HELIX_BLOG_LIST_IMAGE_DESC">
-			<option value="default">HELIX_BLOG_LIST_IMAGE_DEFAULT</option>
-			<option value="small">HELIX_BLOG_LIST_IMAGE_SMALL</option>
-			<option value="thumbnail">HELIX_BLOG_LIST_IMAGE_THUMBNAIL</option>
-			<option value="large">HELIX_BLOG_LIST_IMAGE_LARGE</option>
-		</field>
-
-		<field name="commenting_engine" type="list" helixgroup="comments" default="disabled" label="HELIX_COMMENTING_ENGINE" description="HELIX_COMMENTING_ENGINE_DESC">
-			<option value="disqus">HELIX_DISQUSS</option>
-			<option value="intensedebate">HELIX_INTENSEDEBATE</option>
-			<option value="facebook">HELIX_FB</option>
-			<option value="disabled">HELIX_DISABLED</option>
-		</field>
-		<field name="disqus_subdomain" type="text" helixgroup="comments" label="HELIX_DISQUS_SUBDOMAIN" description="HELIX_DISQUS_SUBDOMAIN_DESC" showon="commenting_engine:disqus" />
-		<field name="disqus_devmode" type="checkbox" helixgroup="comments" default="0" label="HELIX_DISQUS_DEV_MODE" description="HELIX_DISQUS_DEV_MODE_DESC" showon="commenting_engine:disqus" />
-		<field name="intensedebate_acc" type="text" helixgroup="comments" default="" label="HELIX_INTENSEDEBATE_ACC" description="HELIX_INTENSEDEBATE_ACC_DESC" showon="commenting_engine:intensedebate" />
-		<field name="fb_appID" type="text" helixgroup="comments" label="HELIX_FB_ID" description="HELIX_FB_ID_DESC" showon="commenting_engine:facebook" />
-		<field name="fb_width" type="number" helixgroup="comments" default="100" label="HELIX_FB_COMMENTS_WIDTH" description="HELIX_FB_COMMENTS_WIDTH_DESC" showon="commenting_engine:facebook" />
-		<field name="fb_cpp" type="number" helixgroup="comments" default="10" label="HELIX_FB_COMMENTS_PER_PAGE" description="HELIX_FB_COMMENTS_PER_PAGE_DESC" showon="commenting_engine:facebook" />
-		<field name="comments_count" helixgroup="comments" type="checkbox" default="0" label="HELIX_COMMENTS_COUNT" description="HELIX_COMMENTS_COUNT_DESC" showon="commenting_engine!:disabled" />
-		<field name="social_share" type="checkbox" helixgroup="social_share" default="1" label="HELIX_ENABLE_SOCIAL_SHARE" description="HELIX_ENABLE_SOCIAL_SHARE_DESC" />
-
 	</fieldset>
 
 </form>

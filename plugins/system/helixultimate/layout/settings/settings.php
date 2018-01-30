@@ -211,36 +211,6 @@ $columnSettings = array(
 			'std'=>''
 		),
 
-		'hide_on_phone'=>array(
-			'type'=>'checkbox',
-			'group'=>'responsive',
-			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_PHONE')
-		),
-
-		'hide_on_large_phone'=>array(
-			'type'=>'checkbox',
-			'group'=>'responsive',
-			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_LARGER_PHONE')
-		),
-
-		'hide_on_tablet'=>array(
-			'type'=>'checkbox',
-			'group'=>'responsive',
-			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_TABLET')
-		),
-
-		'hide_on_small_desktop'=>array(
-			'type'=>'checkbox',
-			'group'=>'responsive',
-			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_SMALL_DESKTOP')
-		),
-
-		'hide_on_desktop'=>array(
-			'type'=>'checkbox',
-			'group'=>'responsive',
-			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_DESKTOP')
-		),
-
 		'xl_col'=>array(
 			'type'=>'select',
 			'group'=>'grid',
@@ -271,6 +241,36 @@ $columnSettings = array(
 			'title'=>\JText::_('HELIX_ULTIMATE_PHONE_GRID'),
 			'values'=>column_grid_system('xs'),
 			'std'=>0,
+		),
+
+		'hide_on_phone'=>array(
+			'type'=>'checkbox',
+			'group'=>'responsive',
+			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_PHONE')
+		),
+
+		'hide_on_large_phone'=>array(
+			'type'=>'checkbox',
+			'group'=>'responsive',
+			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_LARGER_PHONE')
+		),
+
+		'hide_on_tablet'=>array(
+			'type'=>'checkbox',
+			'group'=>'responsive',
+			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_TABLET')
+		),
+
+		'hide_on_small_desktop'=>array(
+			'type'=>'checkbox',
+			'group'=>'responsive',
+			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_SMALL_DESKTOP')
+		),
+
+		'hide_on_desktop'=>array(
+			'type'=>'checkbox',
+			'group'=>'responsive',
+			'title'=>\JText::_('HELIX_ULTIMATE_HIDDEN_DESKTOP')
 		),
 	)
 );

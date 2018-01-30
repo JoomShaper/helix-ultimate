@@ -73,10 +73,8 @@
         <folder>scss/</folder>
     </files>
     <config>
-        <fields name="params">
-            <fieldset name="basic" addfieldpath="/plugins/system/helixultimate/fields">
-                <field name="helixdetails" type="helixdetails" />
-            </fieldset>
-        </fields>
+        <fieldset name="basic" addfieldpath="/plugins/system/helixultimate/fields">
+            <field name="helixdetails" type="helixdetails" />
+        </fieldset>
     </config>
 </extension>

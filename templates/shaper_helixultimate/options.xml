@@ -101,8 +101,8 @@
 		<field name="comingsoon_social_icons" helixgroup="comingsoon" type="checkbox" default="1" label="HELIX_ULTIMATE_COMINGSOON_SOCIAL_ICONS" showon="comingsoon:1" />
 
 		<!--Error Page-->
-		<field name="error_bg" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ERRORPAGE_BG" description="HELIX_ERRORPAGE_BG_DESC" />
-		<field name="error_logo" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ERRORPAGE_LOGO" description="HELIX_ERRORPAGE_LOGO_DESC" />
+		<field name="error_bg" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE" />
+		<field name="error_logo" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ULTIMATE_ERROR_LOGO" />
 
 	</fieldset>
 

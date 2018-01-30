@@ -216,7 +216,7 @@ jQuery(function($) {
 			event.preventDefault();
 			$(this).helixUltimateOptionsModal({
 				flag: 'row-setting',
-				title: "Row Options",
+				title: "<span class='fa fa-cogs'></span> Row Options",
 				class: 'helix-ultimate-modal-small'
 			});
 	
@@ -233,8 +233,13 @@ jQuery(function($) {
 	
 			$clone.find('.helix-ultimate-input').each(function(){
 				var $that = $(this),
-				attrValue = $parent.data( $that.data('attrname'));
+				attrValue = $parent.data( $that.data('attrname') );
 				$that.setInputValue({filed: attrValue});
+				if($that.hasClass('helix-ultimate-input-media')) {
+					if(attrValue) {
+						$that.prev('.helix-ultimate-image-holder').html( '<img src="'+ $that.data('baseurl') +  attrValue +'" alt="">' );
+					}
+				}
 			});
 	
 			$clone.initColorPicker();
@@ -246,7 +251,7 @@ jQuery(function($) {
 			event.preventDefault();
 			$(this).helixUltimateOptionsModal({
 				flag: 'column-setting',
-				title: "Column Options",
+				title: "<span class='fa fa-cog'></span> Column Options",
 				class: 'helix-ultimate-modal-small'
 			});
 	

@@ -9,13 +9,14 @@ jQuery(function($) {
 
   $.fn.helixUltimateModal = function(options) {
     var options = $.extend({
+      target_type: '',
       target : ''
     }, options);
 
     $('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
 
     var mediaModal = '<div class="helix-ultimate-modal-overlay"></div>';
-    mediaModal += '<div class="helix-ultimate-modal" data-target="#'+ options.target +'">';
+    mediaModal += '<div class="helix-ultimate-modal" data-target_type="'+ options.target_type +'" data-target="'+ options.target +'">';
 
     mediaModal += '<div class="helix-ultimate-modal-header">';
     mediaModal += '<a href="#" class="action-helix-ultimate-modal-close"><span class="fa fa-times"></span></a>'

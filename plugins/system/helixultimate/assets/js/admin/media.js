@@ -10,9 +10,20 @@ jQuery(function($) {
 	$('.helix-ultimate-media-picker').on('click',function(e){
 		e.preventDefault();
 		var self = this;
+		var target_type = 'id';
+		var target = '';
+
+		if(typeof $(this).data('id') != 'undefined') {
+			target_type = 'id';
+			target = $(this).data('id');
+		} else if (typeof $(this).data('target') != 'undefined') {
+			target_type = 'data';
+			target = $(this).data('target');
+		}
 
 		$(this).helixUltimateModal({
-			target: $(this).data('id')
+			target_type: target_type,
+			target: target
 		});
 
 		var request = {
@@ -133,8 +144,15 @@ jQuery(function($) {
 		var value = $('.helix-ultimate-media-selected').data('path');
 		var preview = $('.helix-ultimate-media-selected').data('preview');
 		var target = $('.helix-ultimate-modal').attr('data-target');
-		$(target).val(value);
-		$(target).prev('.helix-ultimate-image-holder').empty().append('<img src="'+ preview +'" alt="">')
+		var target_type = $('.helix-ultimate-modal').attr('data-target_type');
+		
+		if(target_type == 'data') {
+			$('.helix-ultimate-options-modal').find('[data-attrname="'+ target +'"]').val(value);
+			$('.helix-ultimate-options-modal').find('[data-attrname="'+ target +'"]').prev('.helix-ultimate-image-holder').html('<img src="'+ preview +'" alt="">')
+		} else {
+			$('#' + target).val(value);
+			$('#' + target).prev('.helix-ultimate-image-holder').html('<img src="'+ preview +'" alt="">');
+		}
 
 		$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
 		$('body').removeClass('helix-ultimate-modal-open');

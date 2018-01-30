@@ -138,7 +138,7 @@ class Platform
 
         $helix_plg_url = \JURI::root(true).'/plugins/system/helixultimate';
         $doc->addScriptDeclaration('var helixUltimateStyleId = ' . $style_id . ';');
-
+        
         \JHtml::_('jquery.ui', array('core', 'sortable'));
         \JHtml::_('bootstrap.framework');
         \JHtml::_('behavior.formvalidator');
@@ -146,14 +146,13 @@ class Platform
         \JHtml::_('formbehavior.chosen', 'select');
         \JHtml::_('behavior.colorpicker');
         \JHtml::_('jquery.token');
-
-        $doc->addScript($helix_plg_url.'/assets/js/admin/webfont.js');
-        $doc->addScript($helix_plg_url.'/assets/js/admin/modal.js');
-        $doc->addScript($helix_plg_url.'/assets/js/admin/layout.js');
-
+        
         $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/helix-ultimate.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
-
+        
+        $doc->addScript( $helix_plg_url.'/assets/js/admin/webfont.js' );
+        $doc->addScript( $helix_plg_url.'/assets/js/admin/modal.js' );
+        $doc->addScript( $helix_plg_url.'/assets/js/admin/layout.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin/media.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin/helix-ultimate.js' );
 

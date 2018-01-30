@@ -14,21 +14,20 @@ class HelixUltimateFieldMedia
 	static function getInput($key, $attr)
 	{
 
-		if(!isset($attr['std'])){
+		if(!isset($attr['std']))
+		{
 			$attr['std'] = '';
 		}
+
+
 
 		$output  = '<div class="form-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
-		$output .= '<div class="helix-ultimate-image-holder">';
-		if($attr['std'] != '') {
-			$output .= '<img src="'. \JURI::root() . $attr['std'] .'" alt="">';
-		}
-		$output .= '</div>';
+		$output .= '<div class="helix-ultimate-image-holder"></div>';
 
-		$output .= '<input type="hidden" data-attrname="' . $key . '" value="' . $attr['std'] . '">';
-		$output .= '<a href="#" class="helix-ultimate-media-picker btn btn-primary btn-sm" data-id=""><span class="fa fa-picture-o"></span> Select Media</a>';
+		$output .= '<input type="hidden" class="helix-ultimate-input helix-ultimate-input-media" data-attrname="' . $key . '" data-baseurl="'. \JURI::root() .'" value="' . $attr['std'] . '">';
+		$output .= '<a href="#" class="helix-ultimate-media-picker btn btn-primary btn-sm" data-target="' . $key . '"><span class="fa fa-picture-o"></span> Select Media</a>';
 		$output .= '<a href="#" class="helix-ultimate-media-clear btn btn-secondary btn-sm"><span class="fa fa-times"></span> Clear</a>';
 
 		if( ( isset($attr['desc']) ) && ( isset($attr['desc']) != '' ) )

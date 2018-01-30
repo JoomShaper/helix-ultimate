@@ -22,39 +22,35 @@ jQuery(function($) {
         }
     });
 
-    $(document).on('click', '#helix-ultimate-megamenu-title-toggler', function(event){
-        $('#helix-ultimate-megamenu-layout').data('showtitle', $(this).is(":checked"));
-    });
-
-    // Custom Class
-    $(document).on('change', '#helix-ultimate-megamenu-custom-class', function(event){
-        $('#helix-ultimate-megamenu-layout').data('customclass', $(this).val());
-    });
-
-    // Menu Width
     $(document).on('change', '#helix-ultimate-megamenu-width', function(event){
         $('#helix-ultimate-megamenu-layout').data('width', $(this).val());
     });
 
-    // Alignment
     $(document).on('change', '#helix-ultimate-megamenu-alignment', function(event){
         $('#helix-ultimate-megamenu-layout').data('menualign', $(this).val());
     });
 
-    // Alignment
+    $(document).on('click', '#helix-ultimate-megamenu-title-toggler', function(event){
+        $('#helix-ultimate-megamenu-layout').data('showtitle', $(this).is(":checked"));
+    });
+
+    $(document).on('change', '#helix-ultimate-megamenu-dropdown', function(event){
+        $('#helix-ultimate-megamenu-layout').data('dropdown', $(this).val());
+    });
+
     $(document).on('change', '#helix-ultimate-megamenu-fa-icon', function(event){
         $('#helix-ultimate-megamenu-layout').data('faicon', $(this).val());
     });
 
-    $(document).on('change', '#helix-ultimate-dropdown', function(event){
-        $('#helix-ultimate-megamenu-layout').data('dropdown', $(this).val());
+    $(document).on('change', '#helix-ultimate-megamenu-custom-class', function(event){
+        $('#helix-ultimate-megamenu-layout').data('customclass', $(this).val());
     });
 
-    $(document).on('change', '#helix-ultimate-menu-badge', function(event){
+    $(document).on('change', '#helix-ultimate-megamenu-menu-badge', function(event){
         $('#helix-ultimate-megamenu-layout').data('badge', $(this).val());
     });
 
-    $(document).on('change', '#helix-ultimate-badge-position', function(event){
+    $(document).on('change', '#helix-ultimate-megamenu-badge-position', function(event){
         $('#helix-ultimate-megamenu-layout').data('badge_position', $(this).val());
     });
 

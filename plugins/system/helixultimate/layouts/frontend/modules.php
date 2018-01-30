@@ -11,7 +11,7 @@ $data = $displayData;
 $options = $data->settings;
 
 $output ='';
-$output .= '<div id="sp-' . JFilterOutput::stringURLSafe($options->name) . '" class="'. $options->className .'">';
+$output .= '<'.$data->sematic.' id="sp-' . JFilterOutput::stringURLSafe($options->name) . '" class="'. $options->className .'">';
 $output .= '<div class="sp-column ' . ($options->custom_class) . '">';
 $features = (isset($data->hasFeature[$options->name]) && $data->hasFeature[$options->name])? $data->hasFeature[$options->name] : array();
 
@@ -34,6 +34,6 @@ foreach ($features as $key => $feature)
 }
 
 $output .= '</div>';
-$output .= '</div>';
+$output .= '</'.$data->sematic.'>';
 
 echo $output;

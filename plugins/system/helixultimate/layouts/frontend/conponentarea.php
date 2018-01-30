@@ -12,7 +12,7 @@ $doc = \JFactory::getDocument();
 $data = $displayData;
 
 $output ='';
-$output .= '<div id="sp-component" class="' . $data->settings->className . '">';
+$output .= '<main id="sp-component" class="' . $data->settings->className . '" role="main">';
 $output .= '<div class="sp-column ' . ($data->settings->custom_class) . '">';
 $output .= '<jdoc:include type="message" />';
 
@@ -33,6 +33,6 @@ if($doc->countModules('content-bottom'))
 }
 
 $output .= '</div>';
-$output .= '</div>';
+$output .= '</main>';
 
 echo $output;

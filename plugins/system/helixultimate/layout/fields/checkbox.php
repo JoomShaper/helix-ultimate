@@ -14,11 +14,10 @@ class HelixUltimateFieldCheckbox{
 	{
 
 		$output   = '<div class="control-group">';
-		$output  .= '<div class="checkbox">';
-		$output  .= '<label class="control-label">' . $attr['title'] . '</label>';
-		$output  .= '<div>';
+		$output  .= '<div class="checkbox clearfix">';
+		$output  .= '<label class="control-label">' . $attr['title'];
 		$output  .= '<input class="helix-ultimate-input helix-ultimate-input-'.$key.'" data-attrname="'.$key.'" type="checkbox">';
-		$output  .= '</div>';
+		$output  .= '</label>';
 		$output  .= '</div>';
 
 		if( ( isset($attr['desc']) ) && ( isset($attr['desc']) != '' ) )

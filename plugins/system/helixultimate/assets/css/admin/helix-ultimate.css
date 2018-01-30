@@ -2347,7 +2347,6 @@ select:focus::-ms-value {
 /*Helper*/
 .hidden {
   display: none;
-  visibility: hidden;
 }
 
 .control-group-checkbox input[type="checkbox"] {
@@ -2608,13 +2607,21 @@ select:focus::-ms-value {
 }
 
 #helix-ultimate-media-manager,
-.helix-ultimate-modal-content,
-.helix-ultimate-options-modal-content {
+.helix-ultimate-modal-content {
   position: absolute;
   top: 80px;
   left: 20px;
   right: 20px;
   bottom: 20px;
+  overflow-y: auto;
+}
+
+.helix-ultimate-options-modal-content {
+  position: absolute;
+  top: 60px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
   overflow-y: auto;
 }
 
@@ -3083,6 +3090,74 @@ select:focus::-ms-value {
 
 .helix-ultimate-row-option-list > li:hover > ul {
   display: block;
+}
+
+/*Options*/
+.helix-ultimate-option-group .helix-ultimate-option-group-list {
+  border-bottom: 1px solid #E8EEF3;
+}
+
+.helix-ultimate-option-group:not(.active) .helix-ultimate-option-group-list {
+  display: none;
+}
+
+.helix-ultimate-option-group-list {
+  padding: 20px;
+}
+
+.helix-ultimate-option-group-list > .control-group:first-child {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.helix-ultimate-option-group-title {
+  padding: 0 20px;
+  height: 60px;
+  line-height: 60px;
+  color: #6F737A;
+  font-size: 14px;
+  display: block;
+  cursor: pointer;
+  border-bottom: 1px solid #E8EEF3;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: relative
+}
+
+.helix-ultimate-option-group.active .helix-ultimate-option-group-title {
+  color: #007bff;
+}
+
+.helix-ultimate-option-group-title .fa-chevron-up {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+
+.helix-ultimate-option-group.active .helix-ultimate-option-group-title .fa-chevron-up {
+  transform: translateY(-50%) rotate(-180deg);
+  -webkit-transform: translateY(-50%) rotate(-180deg);
+}
+
+.helix-ultimate-options-modal .control-group-checkbox .control-label {
+  display: block;
+  margin: 0;
+  line-height: 32px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.helix-ultimate-options-modal .control-group-checkbox input[type="checkbox"] {
+  float: right;
 }
 
 /*Custom Headers*/

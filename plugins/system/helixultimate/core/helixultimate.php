@@ -491,32 +491,32 @@ class HelixUltimate
     {
         $device_class = '';
 
-        if (isset($options->hide_mobile) && $options->hide_mobile)
+        if (isset($options->hide_on_phone) && $options->hide_on_phone)
         {
             $device_class = 'd-none d-sm-block';
         }
 
-        if (isset($options->hide_large_mobile) && $options->hide_large_mobile)
+        if (isset($options->hide_on_large_phone) && $options->hide_on_large_phone)
         {
-            $device_class = $this->reshape_device_class('sm',$device_class);
+            $device_class = $this->reshape_device_class('sm', $device_class);
             $device_class .= ' d-sm-none d-md-block';
         }
 
-        if (isset($options->hide_tablet) && $options->hide_tablet)
+        if (isset($options->hide_on_tablet) && $options->hide_on_tablet)
         {
-            $device_class = $this->reshape_device_class('md',$device_class);
+            $device_class = $this->reshape_device_class('md', $device_class);
             $device_class .= ' d-md-none d-lg-block';
         }
 
-        if (isset($options->hide_small_desktop) && $options->hide_small_desktop)
+        if (isset($options->hide_on_small_desktop) && $options->hide_on_small_desktop)
         {
-            $device_class = $this->reshape_device_class('lg',$device_class);
+            $device_class = $this->reshape_device_class('lg', $device_class);
             $device_class .= ' d-lg-none d-xl-block';
         }
 
-        if (isset($options->hide_desktop) && $options->hide_desktop)
+        if (isset($options->hide_on_desktop) && $options->hide_on_desktop)
         {
-            $device_class = $this->reshape_device_class('xl',$device_class);
+            $device_class = $this->reshape_device_class('xl', $device_class);
             $device_class .= ' d-xl-none';
         }
 

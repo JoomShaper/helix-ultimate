@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined ('_JEXEC') or die ();
 
 class JFormFieldHeliximage extends JFormField
 {

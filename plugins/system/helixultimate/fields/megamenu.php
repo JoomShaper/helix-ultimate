@@ -15,6 +15,8 @@ class JFormFieldMegamenu extends JFormField
 {
     protected $type = "Megamenu";
 
+    private $row_layouts = array('12', '6+6', '4+4+4', '3+3+3+3', '2+2+2+2+2+2', '5+7', '4+8','3+9','2+10');
+
     public function getInput()
     {
         $html  = '<div>';
@@ -62,49 +64,35 @@ class JFormFieldMegamenu extends JFormField
         return $db->loadObjectList();
     }
 
-    private function uniqueMenuItems($current_menu_id, $layout)
+    private function uniqueMenuItems($current_menu_id, $layout = array())
     {
         $saved_menu_items = array();
-        if (! empty($layout) && count($layout))
+
+        $items = $this->menuItems();
+        $children = isset($items[$current_menu_id])?$items[$current_menu_id]:array();
+
+        if(!$layout) {
+            return $children;
+        }
+
+        foreach ($layout as $key => $row)
         {
-            foreach ($layout as $key => $row)
+            foreach ($row->attr as $col_key => $col)
             {
-                if (! empty($row->attr) && count($row->attr))
+                if ($col->items)
                 {
-                    foreach ($row->attr as $col_key => $col)
+                    foreach ($col->items as $item)
                     {
-                        if ( ! empty($col->items) && count($col->items))
+                        if ($item->type === 'menu_item')
                         {
-                            foreach ($col->items as $item)
-                            {
-                                if ($item->type === 'menu_item')
-                                {
-                                    $saved_menu_items[] = $item->item_id;
-                                }
-                            }
+                            unset($children[$item->item_id]);
                         }
                     }
                 }
             }
         }
 
-        $items = $this->menuItems();
-        $menus = new JMenuSite;
-
-        $unique_item_id = array();
-        if (isset($items[$current_menu_id]))
-        {
-            $items = $items[$current_menu_id];
-            foreach ($items as $key => $item_id)
-            {
-                if ( ! in_array($item_id,$saved_menu_items))
-                {
-                    $unique_item_id[] = $item_id;
-                }
-            }
-        }
-
-        return $unique_item_id;
+        return $children;
     }
 
     private function menuItems()
@@ -114,8 +102,90 @@ class JFormFieldMegamenu extends JFormField
         $new = array();
         foreach ($menus as $item)
         {
-            $new[$item->parent_id][] = $item->id;
+            $new[$item->parent_id][$item->id] = $item->id;
         }
         return $new;
     }
+
+
+    private function selectFieldHTML($name, $label, $list, $default, $display_class = '')
+    {
+        $view_class = '';
+        if($name == 'alignment')
+        {
+            $view_class = 'helix-ultimate-megamenu-field-control' . $display_class;
+        }
+        elseif($name == 'dropdown')
+        {
+            $view_class = 'helix-ultimate-dropdown-field-control' . $display_class;
+        }
+
+        $html  = '';
+        $html .= '<div class="'. $view_class .'">';
+        $html .= '<span class="helix-ultimate-megamenu-label">' . $label .'</span>';
+        $html .= '<select id="helix-ultimate-megamenu-'. $name .'">';
+
+        if($name == 'fa-icon')
+        {
+            $html .= '<option value="">' . JText::_('HELIX_ULTIMATE_GLOBAL_SELECT') . '</option>';
+            foreach($list as $each)
+            {
+                $html .= '<option value="'.$each.'"'. (($default == $each) ? 'selected' : '').'>'. $each .'</option>';
+            }
+        }
+        else
+        {
+            foreach($list as $key => $each)
+            {
+                $html .= '<option value="'.$key.'"'. (($default == $key) ? 'selected' : '').'>'. $each .'</option>';
+            }
+        }
+
+        
+        
+        $html .= '</select>';
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    private function colorFieldHTML($name, $label, $placeholder, $value)
+    {
+        $html  = '';
+        $html .= '<div>';
+        $html .= '<span class="helix-ultimate-megamenu-label">'. $label .'</span>';
+        $html .= '<input type="text" class="minicolors" id="helix-ultimate-menu-badge-'.$name.'" placeholder="'. $placeholder .'" value="' . $value .'" />';
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    private function textFieldHTML($name, $label, $placeholder, $value, $type = 'text', $display_class = '')
+    {
+        if($type == 'number')
+        {
+            $display_class = 'helix-ultimate-megamenu-field-control' . $display_class;
+        }
+
+        $html  = '';
+        $html .= '<div class="'. $display_class .'">';
+        $html .= '<span class="helix-ultimate-megamenu-label">'. $label .'</span>';
+        $html .= '<input type="'.$type.'" id="helix-ultimate-megamenu-'. $name .'" placeholder="' .$placeholder. '" value="'. $value .'" />';
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    private function switchFieldHTML($name, $label, $value)
+    {
+        $html  = '';
+        $html .= '<div>';
+        $html .= '<span class="helix-ultimate-megamenu-label">'. $label .'</span>';
+        $html .= '<input type="checkbox" class="helix-ultimate-checkbox" id="helix-ultimate-megamenu-'. $name .'" '. (($value) ? 'checked' : ''). '/>';
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    
 }

@@ -2623,6 +2623,12 @@ select:focus::-ms-value {
   bottom: 80px;
 }
 
+.helix-ultimate-options-modal-content > .control-group:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+} 
+
 .helix-ultimate-media {
   list-style: none;
   padding: 0;

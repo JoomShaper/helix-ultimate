@@ -13,7 +13,7 @@ class HelixUltimateFieldMedia
 	static function getInput($key, $attr)
 	{
 
-		$output  = '<div class="form-group">';
+		$output  = '<div class="control-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		$output .= '<div class="helix-ultimate-image-holder"></div>';

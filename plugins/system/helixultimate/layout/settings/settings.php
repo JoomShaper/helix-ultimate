@@ -34,8 +34,7 @@ $rowSettings = array(
 		'name' => array(
 			'type'		=> 'text',
 			'title'		=> JText::_('HELIX_SECTION_TITLE'),
-			'desc'		=> JText::_('HELIX_SECTION_TITLE_DESC'),
-			'std'		=> ''
+			'desc'		=> JText::_('HELIX_SECTION_TITLE_DESC')
 		),
 		'background_color' => array(
 			'type'		=> 'color',
@@ -50,8 +49,7 @@ $rowSettings = array(
 		'background_image' => array(
 			'type'		=> 'media',
 			'title'		=> JText::_('HELIX_SECTION_BACKGROUND_IMAGE'),
-			'desc'		=> JText::_('HELIX_SECTION_BACKGROUND_IMAGE_DESC'),
-			'std'		=> '',
+			'desc'		=> JText::_('HELIX_SECTION_BACKGROUND_IMAGE_DESC')
 		),
 		'background_repeat'=>array(
 			'type'=>'select',
@@ -63,8 +61,7 @@ $rowSettings = array(
 				'repeat-x'=>JText::_('HELIX_BG_REPEAT_HORIZ'),
 				'repeat-y'=>JText::_('HELIX_BG_REPEAT_VERTI'),
 				'inherit'=>JText::_('HELIX_BG_REPEAT_INHERIT'),
-			),
-			'std'=>'no-repeat',
+			)
 		),
 		'background_size' => array(
 			'type'		=> 'select',
@@ -74,8 +71,7 @@ $rowSettings = array(
 				'cover'=>JText::_('HELIX_BG_COVER'),
 				'contain'=>JText::_('HELIX_BG_CONTAIN'),
 				'inherit'=>JText::_('HELIX_BG_INHERIT'),
-			),
-			'std'=>'cover',
+			)
 		),
 		'background_attachment'=>array(
 			'type'=>'select',
@@ -85,8 +81,7 @@ $rowSettings = array(
 				'fixed'=>JText::_('HELIX_BG_ATTACHMENT_FIXED'),
 				'scroll'=>JText::_('HELIX_BG_ATTACHMENT_SCROLL'),
 				'inherit'=>JText::_('HELIX_BG_ATTACHMENT_INHERIT'),
-			),
-			'std'=>'fixed',
+			)
 		),
 		'background_position' => array(
 			'type'		=> 'select',
@@ -102,8 +97,7 @@ $rowSettings = array(
 				'100% 0'=>JText::_('HELIX_BG_POSITION_RIGHT_TOP'),
 				'100% 50%'=>JText::_('HELIX_BG_POSITION_RIGHT_CENTER'),
 				'100% 100%'=>JText::_('HELIX_BG_POSITION_RIGHT_BOTTOM'),
-			),
-			'std'=>'0 0',
+			)
 		),
 		'link_color' => array(
 			'type'		=> 'color',
@@ -118,50 +112,42 @@ $rowSettings = array(
 		'hide_mobile' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_MOBILE'),
-			'desc'		=> JText::_('HELIX_HIDDEN_MOBILE_DESC'),
-			'std'		=> '',
+			'desc'		=> JText::_('HELIX_HIDDEN_MOBILE_DESC')
 		),
 		'hide_large_mobile' => array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_LARGE_MOBILE'),
-			'desc'		=> JText::_('HELIX_HIDDEN_LARGE_MOBILE_DESC'),
-			'std'		=> '',
+			'desc'		=> JText::_('HELIX_HIDDEN_LARGE_MOBILE_DESC')
 		),
 		'hide_tablet' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_TABLET'),
-			'desc'		=> JText::_('HELIX_HIDDEN_TABLET_DESC'),
-			'std'		=> '',
+			'desc'		=> JText::_('HELIX_HIDDEN_TABLET_DESC')
 		),
 		'hide_small_desktop' => array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_SMALL_DESKTOP'),
-			'desc'		=> JText::_('HELIX_HIDDEN_SMALL_DESKTOP_DESC'),
-			'std'		=> '',
+			'desc'		=> JText::_('HELIX_HIDDEN_SMALL_DESKTOP_DESC')
 		),
 		'hide_desktop' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_HIDDEN_DESKTOP'),
-			'desc'		=> JText::_('HELIX_HIDDEN_DESKTOP_DESC'),
-			'std'		=> '',
+			'desc'		=> JText::_('HELIX_HIDDEN_DESKTOP_DESC')
 		),
 		'padding' => array(
 			'type'		=> 'text',
 			'title'		=> JText::_('HELIX_PADDING'),
-			'desc'		=> JText::_('HELIX_PADDING_DESC'),
-			'std'		=> ''
+			'desc'		=> JText::_('HELIX_PADDING_DESC')
 		),
 		'margin' => array(
 			'type'		=> 'text',
 			'title'		=> JText::_('HELIX_MARGIN'),
-			'desc'		=> JText::_('HELIX_MARGIN_DESC'),
-			'std'		=> ''
+			'desc'		=> JText::_('HELIX_MARGIN_DESC')
 		),
 		'fluidrow' 		=> array(
 			'type'		=> 'checkbox',
 			'title'		=> JText::_('HELIX_ROW_FULL_WIDTH'),
-			'desc'		=> JText::_('HELIX_ROW_FULL_WIDTH_DESC'),
-			'std'		=> '',
+			'desc'		=> JText::_('HELIX_ROW_FULL_WIDTH_DESC')
 		),
 		'custom_class' => array(
 			'type'		=> 'text',

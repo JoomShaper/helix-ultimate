@@ -3284,9 +3284,14 @@ select:focus::-ms-value {
 }
 
 /*Webfonts*/
-.webfont-preview {
-  margin-top: 15px;
-  margin-bottom: 0;
+.helix-ultimate-webfont-family,
+.helix-ultimate-webfont-size,
+.helix-ultimate-webfont-weight,
+.helix-ultimate-webfont-style {
+  margin-bottom: 10px;
+}
+.helix-ultimate-webfont-preview {
+  margin: 15px 0 0;
 }
 
 .font-update-success,

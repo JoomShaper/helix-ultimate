@@ -691,20 +691,36 @@ class HelixUltimate
 
     public function addGoogleFont($fonts)
     {
-        $doc = JFactory::getDocument();
+        $doc = \JFactory::getDocument();
+
+        $systemFonts = array(
+            'Arial',
+            'Tahoma',
+            'Verdana',
+            'Helvetica',
+            'Times New Roman',
+            'Trebuchet MS',
+            'Georgia'
+        );
 
         if(is_array($fonts))
         {
             foreach($fonts as $key => $font)
             {
                 $font = json_decode($font);
-                $fontUrl = '//fonts.googleapis.com/css?family='. $font->fontFamily .':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
-                
-                if($font->fontSubset)
-                {
-                    $fontUrl .= '&amp;subset=' . $font->fontSubset;
-                }
 
+                if(!in_array($font->fontFamily, $systemFonts))
+                {
+                    $fontUrl = '//fonts.googleapis.com/css?family='. $font->fontFamily .':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+                
+                    if($font->fontSubset)
+                    {
+                        $fontUrl .= '&amp;subset=' . $font->fontSubset;
+                    }
+
+                    $doc->addStylesheet($fontUrl);
+                }
+                
                 $fontCSS = $key . "{";
                 $fontCSS .= "font-family: '" . $font->fontFamily . "', sans-serif;";
 
@@ -713,9 +729,13 @@ class HelixUltimate
                     $fontCSS .= 'font-weight: ' . $font->fontWeight . ';';
                 }
 
+                if($font->fontStyle)
+                {
+                    $fontCSS .= 'font-style: ' . $font->fontStyle . ';';
+                }
+
                 $fontCSS .= "}\n";
-                
-                $doc->addStylesheet($fontUrl);
+
                 $doc->addStyledeclaration($fontCSS);
             }
         }

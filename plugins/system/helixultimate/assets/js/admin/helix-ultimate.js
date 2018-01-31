@@ -100,14 +100,16 @@ jQuery(function($){
     function webfontData(){
         $('.helix-ultimate-field-webfont').each(function(){
 			var $that = $(this),
-			webfont = {
-				'fontFamily' : $that.find('.list-font-families').val(),
-				'fontWeight' : $that.find('.list-font-weight').val(),
-				'fontSubset' : $that.find('.list-font-subset').val(),
-				'fontSize'	: $that.find('.webfont-size').val()
+            
+            webfont = {
+				'fontFamily' : $that.find('.helix-ultimate-webfont-list').val(),
+				'fontSize'	: $that.find('.helix-ultimate-webfont-size-input').val(),
+				'fontWeight' : $that.find('.helix-ultimate-webfont-weight-list').val(),
+				'fontStyle' : $that.find('.helix-ultimate-webfont-style-list').val(),
+				'fontSubset' : $that.find('.helix-ultimate-webfont-subset-list').val(),
 			}
 
-			$that.find('.input-webfont').val( JSON.stringify(webfont) )
+			$that.find('.helix-ultimate-webfont-input').val( JSON.stringify(webfont) )
 
 		});
     }

@@ -59,60 +59,114 @@ class JFormFieldHelixfont extends JFormField
             'Georgia'
         );
 
+        $fontWeights = array(
+            '100'=>'Thin',
+            '200'=>'Extra Light',
+            '300'=>'Light',
+            '400'=>'Normal',
+            '500'=>'Medium',
+            '600'=>'Semi Bold',
+            '700'=>'Bold',
+            '800'=>'Extra Bold',
+            '900'=>'Black'
+        );
+
+        $fontStyles = array(
+            'normal'=>'Normal',
+            'italic'=>'Italic',
+            'oblique'=>'Oblique'
+        );
+
         //Font Family
         $html .= '<div class="helix-ultimate-field-webfont '. $classes .'">';
         $html .= '<div class="row">';
 
-        $html .= '<div class="col-6 font-families">';
+        $html .= '<div class="col-12 helix-ultimate-webfont-family">';
         $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_FAMILY') .'</small></label>';
-        $html .= '<select class="list-font-families">';
-        $html .= '<option value="">'. \JText::_('HELIX_ULTIMATE_SELECT') .'</option>';
+        $html .= '<select class="helix-ultimate-webfont-list">';
+
+        $html .= '<optgroup label="'. \JText::_('HELIX_ULTIMATE_SYSTEM_FONT') .'">';
+
+        foreach ($systemFonts as $systemFont)
+        {
+            $html .= '<option '. ((isset($value->fontFamily) && $systemFont == $value->fontFamily)?'selected="selected"':'') .' value="'. $systemFont .'">'. $systemFont .'</option>';
+        }
+
+        $html .= '</optgroup>';
+
+        $html .= '<optgroup label="'. \JText::_('HELIX_ULTIMATE_GOOGLE_FONT') .'">';
 
         foreach ($items as $item)
         {
             $html .= '<option '. ((isset($value->fontFamily) && $item->family == $value->fontFamily)?'selected="selected"':'') .' value="'. $item->family .'">'. $item->family .'</option>';
         }
 
-        $html .= '</select>';
-        $html .= '</div>';
-
-        //Font Weight
-        $html .= '<div class="col-6 font-weight">';
-        $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_WEIGHT') .'</small></label>';
-        $html .= '<select class="list-font-weight">';
-
-        if (isset($value->fontFamily) && $value->fontFamily)
-        {
-            $html .= $this->generateSelectOptions($font->variants, $value->fontWeight);
-        }
-        else
-        {
-            $html .= $this->generateSelectOptions($items[0]->variants, 'no-selection');
-        }
+        $html .= '</optgroup>';
 
         $html .= '</select>';
         $html .= '</div>';
 
         //Font Size
         $fontSize = (isset($value->fontSize))?$value->fontSize:'';
-        $html .= '<div class="col-6 font-size">';
-        $html .= '<p></p><label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SIZE') .'</small></label>';
-        $html .= '<input type="number" value="'. $fontSize .'" class="webfont-size" min="1" placeholder="14">';
+        $html .= '<div class="col-6 helix-ultimate-webfont-size">';
+        $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SIZE') .'</small></label>';
+        $html .= '<input type="number" value="'. $fontSize .'" class="helix-ultimate-webfont-size-input" min="6" placeholder="14">';
+        $html .= '</div>';
+
+        //Font Weight
+        $html .= '<div class="col-6 helix-ultimate-webfont-weight">';
+        $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_WEIGHT') .'</small></label>';
+        $html .= '<select class="helix-ultimate-webfont-weight-list">';
+        $html .= '<option value="">'. \JText::_('HELIX_ULTIMATE_SELECT') .'</option>';
+
+        foreach($fontWeights as $key=>$fontWeight)
+        {
+            if(isset($value->fontWeight) && $value->fontWeight == $key)
+            {
+                $html .= '<option value="'. $key .'" selected>'. $fontWeight .'</option>';
+            }
+            else
+            {
+                $html .= '<option value="'. $key .'">'. $fontWeight .'</option>';
+            }
+        }
+
+        $html .= '</select>';
+        $html .= '</div>';
+
+        //Font Style
+        $html .= '<div class="col-6 helix-ultimate-webfont-style">';
+        $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_STYLE') .'</small></label>';
+        $html .= '<select class="helix-ultimate-webfont-style-list">';
+        $html .= '<option value="">'. \JText::_('HELIX_ULTIMATE_SELECT') .'</option>';
+
+        foreach($fontStyles as $key=>$fontStyle)
+        {
+            if(isset($value->fontStyle) && $value->fontStyle == $key)
+            {
+                $html .= '<option value="'. $key .'" selected>'. $fontStyle .'</option>';
+            }
+            else
+            {
+                $html .= '<option value="'. $key .'">'. $fontStyle .'</option>';
+            }
+        }
+
+        $html .= '</select>';
         $html .= '</div>';
 
         //Font Subsets
-        $html .= '<div class="col-6 font-subsets">';
-        $html .= '<p></p><label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SUBSET') .'</small></label>';
-        $html .= '<select class="list-font-subset">';
+        $html .= '<div class="col-6 helix-ultimate-webfont-subset">';
+        $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SUBSET') .'</small></label>';
+        $html .= '<select class="helix-ultimate-webfont-subset-list">';
         $html .= '<option value="">'. \JText::_('HELIX_ULTIMATE_SELECT') .'</option>';
-
+        
         if(isset($value->fontFamily) && $value->fontFamily)
         {
-            $html .= $this->generateSelectOptions($font->subsets, $value->fontSubset);
-        }
-        else
-        {
-            $html .= $this->generateSelectOptions($items[0]->subsets, 'no-selection');
+            if(!in_array($value->fontFamily, $systemFonts))
+            {
+                $html .= $this->generateSelectOptions($font->subsets, $value->fontSubset);
+            }
         }
 
         $html .= '</select>';
@@ -121,8 +175,8 @@ class JFormFieldHelixfont extends JFormField
         $html .= '</div>';
 
         //Preview
-        $html .= '<p style="display:none" class="webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</p>';
-        $html .= '<input type="hidden" name="' . $this->name .'" value="'. $this->value .'" class="input-webfont" id="'. $this->id .'">';
+        $html .= '<p style="display:none" class="helix-ultimate-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</p>';
+        $html .= '<input type="hidden" name="' . $this->name .'" value="'. $this->value .'" class="helix-ultimate-webfont-input" id="'. $this->id .'">';
         $html .= '</div>';
 
         return $html;

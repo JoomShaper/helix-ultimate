@@ -71,28 +71,17 @@ jQuery(function($){
 
         var tmplID = $(this).data('id'),
             tmplView = $(this).data('view'),
-            formData = {},
-            data = $('#helix-ultimate-style-form').serializeArray();
-
-        $.each(data,function(key,row){
-            formData[row.name] = row.value
-        });
-
-        var request = {
-            'action': 'save-tmpl-style',
-            'option' : 'com_ajax',
-            'request': 'helixultimate',
-            'data'   : formData,
-            'format' : 'json'
-        };
-
+            data = $('#helix-ultimate-style-form').serialize();
+        
         $.ajax({
             type   : 'POST',
-            data   : request,
+            url    : 'index.php?option=com_ajax&request=helixultimate&preview=theme&view=style&id='+ helixUltimateStyleId +'&action=save-tmpl-style&format=json',
+            data   : data,
             beforeSend: function(){
               $(self).find('.fa').removeClass('fa-save').addClass('fa-spinner fa-spin');
             },
             success: function (response) {
+                
                 var data = $.parseJSON(response)
 
                 if(data.status){
@@ -163,11 +152,5 @@ jQuery(function($){
 		});
 
 		return item;
-    }
-    
-    /*Option Group*/
-    $(document).on('click', '.helix-ultimate-option-group-title', function(event) {
-        event.preventDefault();
-        $(this).closest('.helix-ultimate-option-group').toggleClass('active').siblings().removeClass('active');
-    })
+	}
 });

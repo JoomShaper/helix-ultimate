@@ -96,19 +96,34 @@ class Request{
 
     private function saveTemplateStyle()
     {
-
         $this->report['status'] = false;
         $this->report['message'] = \JText::_('JINVALID_TOKEN');
         \JSession::checkToken() or die(json_encode($this->report));
+
+        $data = $_POST;
+        $inputs = $this->filterInputs($data);
         
         if (!$this->id || !is_int($this->id)) return;
 
-        $update = Helper::updateTemplateStyle($this->id, $this->data);
+        $update = Helper::updateTemplateStyle($this->id, $inputs);
         if ($update)
         {
             $this->report['status'] = true;
             $this->report['message'] = 'Style changed successfully';
         }
+    }
+
+    private function filterInputs( $inputs )
+    {
+        foreach($inputs as &$input)
+        {
+            if(is_string($input))
+            {
+                $input = trim($input);
+            }
+        }
+
+        return $inputs;
     }
 
     private function copyTemplateLayout()

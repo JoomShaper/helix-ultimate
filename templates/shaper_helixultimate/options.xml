@@ -3,62 +3,69 @@
 	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-cog">
 
 		<field name="logo_type" helixgroup="logo" type="list" default="image" label="HELIX_ULTIMATE_LOGO_TYPE">
-			<option value="image">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
-			<option value="text">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
+			<option value="image">HELIX_LOGO_TYPE_IMAGE</option>
+			<option value="text">HELIX_LOGO_TYPE_TEXT</option>
 		</field>
 
+		<!-- logo image -->
 		<field name="logo_image" helixgroup="logo" type="helixmedia" preview="true" label="HELIX_ULTIMATE_LOGO" showon="logo_type:image" />
 		<field name="logo_image_2x" helixgroup="logo" type="helixmedia" preview="true" label="HELIX_ULTIMATE_LOGO_RETINA" description="HELIX_ULTIMATE_LOGO_RETINA_DESC" showon="logo_type:image" />
-		<field name="mobile_logo" helixgroup="logo" type="helixmedia" preview="true" label="HELIX_ULTIMATE_MOBILE_LOGO" description="HELIX_ULTIMATE_MOBILE_LOGO_DESC" showon="logo_type:image" />
+		<field name="mobile_logo" helixgroup="logo" type="helixmedia" preview="true" label="HELIX_MOBILE_LOGO" description="HELIX_MOBILE_LOGO_DESC" showon="logo_type:image" />
 
-		<field name="logo_text" helixgroup="logo" type="text" label="HELIX_ULTIMATE_LOGO_TYPE_TEXT" showon="logo_type:text" />
-		<field name="logo_slogan" helixgroup="logo" type="text" label="HELIX_ULTIMATE_LOGO_SLOGAN" showon="logo_type:text" />
-		<field name="header_height" helixgroup="header" type="text" default="80px" label="HELIX_ULTIMATE_HEADER_HEIGHT" />
-		<field name="sticky_header" helixgroup="header" type="checkbox" default="1" label="HELIX_ULTIMATE_STICKY_HEADER" />
-		<field name="favicon" helixgroup="header" type="helixmedia" preview="true" label="HELIX_ULTIMATE_FAVICON" description="HELIX_ULTIMATE_FAVICON_DESC" />
-		<field name="preloader" helixgroup="body" type="checkbox" default="0" label="HELIX_ULTIMATE_PRELOADER" />
-		<field name="boxed_layout" helixgroup="body" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT" />
+		<!-- logo text -->
+		<field name="logo_text" helixgroup="logo" type="text" label="HELIX_LOGO_TYPE_TEXT" description="HELIX_LOGO_TYPE_TEXT_DESC" showon="logo_type:text" />
+		<field name="logo_slogan" helixgroup="logo" type="text" label="HELIX_LOGO_SLOGAN" description="HELIX_LOGO_SLOGAN_DESC" showon="logo_type:text" />
 
-		<field name="body_bg_image" helixgroup="body" type="helixmedia" preview="true" label="HELIX_ULTIMATE_BODY_BACKGROUND_IMAGE" showon="boxed_layout:1" />
-		<field name="body_bg_repeat" helixgroup="body" type="list" default="inherit" label="HELIX_ULTIMATE_BACKGROUND_REPEAT" showon="boxed_layout:1">
-			<option value="no-repeat">HELIX_ULTIMATE_BACKGROUND_REPEAT_NO</option>
-			<option value="repeat">HELIX_ULTIMATE_BACKGROUND_REPEAT_ALL</option>
-			<option value="repeat-x">HELIX_ULTIMATE_BACKGROUND_REPEAT_HORIZ</option>
-			<option value="repeat-y">HELIX_ULTIMATE_BACKGROUND_REPEAT_VERTI</option>
-			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_REPEAT_INHERIT</option>
-		</field>
-		<field name="body_bg_size" helixgroup="body" type="list" default="inherit" label="HELIX_ULTIMATE_BACKGROUND_SIZE" showon="boxed_layout:1">
-			<option value="cover">HELIX_ULTIMATE_BACKGROUND_COVER</option>
-			<option value="contain">HELIX_ULTIMATE_BACKGROUND_CONTAIN</option>
-			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_INHERIT</option>
-		</field>
-		<field name="body_bg_attachment" helixgroup="body" type="list" default="inherit" label="HELIX_ULTIMATE_BACKGROUND_ATTACHMENT" showon="boxed_layout:1">
-			<option value="fixed">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_FIXED</option>
-			<option value="scroll">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_SCROLL</option>
-			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_INHERIT</option>
-		</field>
-		<field name="body_bg_position" helixgroup="body" type="list" default="0 0" label="HELIX_ULTIMATE_BACKGROUND_POSITION" showon="boxed_layout:1">
-			<option value="0 0">HELIX_ULTIMATE_BACKGROUND_POSITION_LEFT_TOP</option>
-			<option value="0 50%">HELIX_ULTIMATE_BACKGROUND_POSITION_LEFT_CENTER</option>
-			<option value="0 100%">HELIX_ULTIMATE_BACKGROUND_POSITION_LEFT_BOTTOM</option>
-			<option value="50% 0">HELIX_ULTIMATE_BACKGROUND_POSITION_CENTER_TOP</option>
-			<option value="50% 50%">HELIX_ULTIMATE_BACKGROUND_POSITION_CENTER_CENTER</option>
-			<option value="50% 100%">HELIX_ULTIMATE_BACKGROUND_POSITION_CENTER_BOTTOM</option>
-			<option value="100% 0">HELIX_ULTIMATE_BACKGROUND_POSITION_RIGHT_TOP</option>
-			<option value="100% 50%">HELIX_ULTIMATE_BACKGROUND_POSITION_RIGHT_CENTER</option>
-			<option value="100% 100%">HELIX_ULTIMATE_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
-		</field>
+		<field name="header_height" helixgroup="header" type="text" default="80px" label="Header Height" />
+		<field name="sticky_header" helixgroup="header" type="checkbox" default="1" label="HELIX_STICKY_HEADER" description="HELIX_STICKY_HEADER_DESC" />
+		<field name="favicon" helixgroup="header" type="helixmedia" preview="true" label="HELIX_FAVICON" description="HELIX_FAVICON_DESC" />
 
-		<field name="enabled_copyright" helixgroup="footer" type="checkbox" default="1" label="HELIX_ULTIMATE_COPYRIGHT" />
-		<field name="copyright_position" helixgroup="footer" type="modpos" default="footer1" label="HELIX_ULTIMATE_MODULE_POSITIONS" description="HELIX_ULTIMATE_MODULE_POSITIONS_DESC" showon="enabled_copyright:1" />
-		<field name="copyright_load_pos" helixgroup="footer" type="list" default="default" label="HELIX_ULTIMATE_FEATURE_POSITION" description="HELIX_ULTIMATE_FEATURE_POSITION_DESC" showon="enabled_copyright:1">
-			<option value="default">HELIX_ULTIMATE_FEATURE_POSITION_DEFAULT</option>
-			<option value="before">HELIX_ULTIMATE_FEATURE_POSITION_BEFORE</option>
-			<option value="after">HELIX_ULTIMATE_FEATURE_POSITION_AFTER</option>
+		<!--Layout Type-->
+		<field name="preloader" helixgroup="body" type="checkbox" default="0" label="HELIX_PRELOADER" description="HELIX_PRELOADER_DESC" />
+		<field name="boxed_layout" helixgroup="body" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT" description="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT_DESC" />
+
+		<!--Backgroud-->
+		<field name="body_bg_image" helixgroup="body" type="helixmedia" preview="true" label="HELIX_BODY_BACKGROUND_IMAGE" description="HELIX_BODY_BACKGROUND_IMAGE_DESC" showon="boxed_layout:1" />
+		<field name="body_bg_repeat" helixgroup="body" type="list" default="inherit" label="HELIX_BG_REPEAT" description="HELIX_BG_REPEAT_DESC" showon="boxed_layout:1">
+			<option value="no-repeat">HELIX_BG_REPEAT_NO</option>
+			<option value="repeat">HELIX_BG_REPEAT_ALL</option>
+			<option value="repeat-x">HELIX_BG_REPEAT_HORIZ</option>
+			<option value="repeat-y">HELIX_BG_REPEAT_VERTI</option>
+			<option value="inherit">HELIX_BG_REPEAT_INHERIT</option>
+		</field>
+		<field name="body_bg_size" helixgroup="body" type="list" default="inherit" label="HELIX_BG_SIZE" description="HELIX_BG_SIZE_DESC" showon="boxed_layout:1">
+			<option value="cover">HELIX_BG_COVER</option>
+			<option value="contain">HELIX_BG_CONTAIN</option>
+			<option value="inherit">HELIX_BG_INHERIT</option>
+		</field>
+		<field name="body_bg_attachment" helixgroup="body" type="list" default="inherit" label="HELIX_BG_ATTACHMENT" description="HELIX_BG_ATTACHMENT_DESC" showon="boxed_layout:1">
+			<option value="fixed">HELIX_BG_ATTACHMENT_FIXED</option>
+			<option value="scroll">HELIX_BG_ATTACHMENT_SCROLL</option>
+			<option value="inherit">HELIX_BG_ATTACHMENT_INHERIT</option>
+		</field>
+		<field name="body_bg_position" helixgroup="body" type="list" default="0 0" label="HELIX_BG_POSITION" description="HELIX_BG_POSITION_DESC" showon="boxed_layout:1">
+			<option value="0 0">HELIX_BG_POSITION_LEFT_TOP</option>
+			<option value="0 50%">HELIX_BG_POSITION_LEFT_CENTER</option>
+			<option value="0 100%">HELIX_BG_POSITION_LEFT_BOTTOM</option>
+			<option value="50% 0">HELIX_BG_POSITION_CENTER_TOP</option>
+			<option value="50% 50%">HELIX_BG_POSITION_CENTER_CENTER</option>
+			<option value="50% 100%">HELIX_BG_POSITION_CENTER_BOTTOM</option>
+			<option value="100% 0">HELIX_BG_POSITION_RIGHT_TOP</option>
+			<option value="100% 50%">HELIX_BG_POSITION_RIGHT_CENTER</option>
+			<option value="100% 100%">HELIX_BG_POSITION_RIGHT_BOTTOM</option>
 		</field>
 
-		<field name="copyright" helixgroup="footer" type="textarea" rows="6" cols="30" default="© 2018 Your Company. Designed By JoomShaper" label="HELIX_ULTIMATE_COPYRIGHT" filter="safehtml" showon="enabled_copyright:1" />
-		<field name="goto_top" helixgroup="footer" type="checkbox" default="0" label="HELIX_ULTIMATE_GO_TO_TOP" />
+		<!-- Footer -->
+		<field name="enabled_copyright" helixgroup="footer" type="checkbox" default="1" label="HELIX_COPYRIGHT" description="HELIX_COPYRIGHT_DESC" />
+		<field name="copyright_position" helixgroup="footer" type="modpos" default="footer1" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" showon="enabled_copyright:1" />
+		<field name="copyright_load_pos" helixgroup="footer" type="list" default="default" label="HELIX_FEATURE_LOAD_POS" description="HELIX_FEATURE_LOAD_POS_DESC" showon="enabled_copyright:1">
+			<option value="default">HELIX_FEATURE_LOAD_POS_DEFAULT</option>
+			<option value="before">HELIX_FEATURE_LOAD_POS_BEFORE</option>
+			<option value="after">HELIX_FEATURE_LOAD_POS_AFTER</option>
+		</field>
+
+		<field name="copyright" helixgroup="footer" type="textarea" rows="6" cols="30" default="© 2018 Your Company. Designed By JoomShaper" label="HELIX_COMPYRIGHT_TEXT" description="HELIX_COMPYRIGHT_TEXT_DESC" filter="raw" showon="enabled_copyright:1" />
+		<field name="goto_top" helixgroup="footer" type="checkbox" default="0" label="HELIX_GOTO_TOP" description="HELIX_GO_TOP_DESC" />
 
 		<!--Social Icons-->
 		<field name="show_social_icons" helixgroup="social_icons" type="checkbox" default="1" label="HELIX_ULTIMATE_SOCIAL_ICONS" />
@@ -84,25 +91,25 @@
 		<field name="custom" helixgroup="social_icons" type="text" label="HELIX_ULTIMATE_SOCIAL_ICON_CUSTOM" description="HELIX_ULTIMATE_SOCIAL_ICON_CUSTOM_DESC" showon="show_social_icons:1" />
 
 		<!--Contact Info-->
-		<field name="contactinfo" helixgroup="contact_info" type="checkbox" default="1" label="HELIX_ULTIMATE_ENABLE_CONTACT_INFO" />
-		<field name="contact_position" helixgroup="contact_info" type="modpos" default="top2" label="HELIX_ULTIMATE_MODULE_POSITIONS" description="HELIX_ULTIMATE_MODULE_POSITIONS_DESC" showon="contactinfo:1" />
-		<field name="contact_phone" helixgroup="contact_info" type="text" hint="+228 872 4444" label="HELIX_ULTIMATE_CONTACT_PHONE" showon="contactinfo:1" />
-		<field name="contact_mobile" helixgroup="contact_info" type="text" hint="+775 872 4444" label="HELIX_ULTIMATE_CONTACT_MOBILE" showon="contactinfo:1" />
-		<field name="contact_email" helixgroup="contact_info" type="email" hint="contact@email.com" label="HELIX_ULTIMATE_CONTACT_EMAIL" showon="contactinfo:1" />
-		<field name="contact_time" helixgroup="contact_info" type="text" hint="Mon - Fri 8:00 - 17:30" label="HELIX_ULTIMATE_CONTACT_OPENING_HOURS" showon="contactinfo:1" />
+		<field name="contactinfo" helixgroup="contact_info" type="checkbox" default="1" label="HELIX_ENABLE_CONTACT_INFO" description="HELIX_ENABLE_CONTACT_INFO_DESC" />
+		<field name="contact_position" helixgroup="contact_info" type="modpos" default="top2" label="HELIX_MODULE_POSITIONS" description="HELIX_MODULE_POSITIONS_DESC" showon="contactinfo:1" />
+		<field name="contact_phone" helixgroup="contact_info" type="text" hint="+228 872 4444" label="HELIX_CONTACT_PHONE" description="HELIX_CONTACT_PHONE_DESC" showon="contactinfo:1" />
+		<field name="contact_mobile" helixgroup="contact_info" type="text" hint="+775 872 4444" label="HELIX_CONTACT_MOBILE" description="HELIX_CONTACT_MOBILE_DESC" showon="contactinfo:1" />
+		<field name="contact_email" helixgroup="contact_info" type="email" hint="contact@email.com" label="HELIX_CONTACT_EMAIL" description="HELIX_CONTACT_EMAIL_DESC" showon="contactinfo:1" />
+		<field name="contact_time" helixgroup="contact_info" type="text" hint="Mon - Fri 8:00 - 17:30" label="HELIX_CONTACT_OPEN_HOURS" description="HELIX_CONTACT_OPEN_HOURS_DESC" showon="contactinfo:1" />
 
 		<!--Coming soon-->
-		<field name="comingsoon" helixgroup="comingsoon" type="checkbox" default="0" label="HELIX_ULTIMATE_COMINGSOON_MODE" />
-		<field name="comingsoon_title" helixgroup="comingsoon" type="text" default="Coming Soon Title" label="HELIX_ULTIMATE_COMINGSOON_TITLE" showon="comingsoon:1" />
-		<field name="comingsoon_content" helixgroup="comingsoon" type="textarea" rows="6" cols="30" default="Coming soon content" label="HELIX_ULTIMATE_COMINGSOON_CONTENT" filter="safehtml" showon="comingsoon:1" />
-		<field name="comingsoon_date" helixgroup="comingsoon" type="calendar" default="5-10-2018" format="%d-%m-%Y" label="HELIX_ULTIMATE_COMINGSOON_DATE" showon="comingsoon:1" />
-		<field name="comingsoon_logo" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_ULTIMATE_COMINGSOON_LOGO" showon="comingsoon:1" />
-		<field name="comingsoon_bg_image" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_ULTIMATE_COMINGSOON_BACKGROUND_IMAGE" showon="comingsoon:1" />
-		<field name="comingsoon_social_icons" helixgroup="comingsoon" type="checkbox" default="1" label="HELIX_ULTIMATE_COMINGSOON_SOCIAL_ICONS" showon="comingsoon:1" />
+		<field name="comingsoon" helixgroup="comingsoon" type="checkbox" default="0" label="HELIX_COMINGSOON_MODE" description="HELIX_COMINGSOON_MODE_DESC" />
+		<field name="comingsoon_title" helixgroup="comingsoon" type="text" default="Coming Soon Title" label="HELIX_COMINGSOON_TITLE" description="HELIX_COMINGSOON_TITLE_DESC" showon="comingsoon:1" />
+		<field name="comingsoon_content" helixgroup="comingsoon" type="textarea" default="Coming soon content" label="HELIX_COMINGSOON_CONTENT" description="HELIX_COMINGSOON_CONTENT_DESC" filter="raw" showon="comingsoon:1" />
+		<field name="comingsoon_date" helixgroup="comingsoon" type="calendar" default="5-10-2018" format="%d-%m-%Y" label="HELIX_COMINGSOON_DATE" description="HELIX_COMINGSOON_DATE_DESC" showon="comingsoon:1" />
+		<field name="comingsoon_logo" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_LOGO" description="HELIX_COMINGSOON_LOGO_DESC" showon="comingsoon:1" />
+		<field name="comingsoon_social_icons" helixgroup="comingsoon" type="checkbox" default="1" label="HELIX_COMINGSOON_BG" description="HELIX_COMINGSOON_BG_DESC" showon="comingsoon:1" />
+		<field name="comingsoon_bg_image" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_COMINGSOON_BG" description="HELIX_COMINGSOON_BG_DESC" showon="comingsoon:1" />
 
 		<!--Error Page-->
-		<field name="error_bg" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE" />
-		<field name="error_logo" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ULTIMATE_ERROR_LOGO" />
+		<field name="error_bg" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ERRORPAGE_BG" description="HELIX_ERRORPAGE_BG_DESC" />
+		<field name="error_logo" helixgroup="errorpage" type="helixmedia" preview="true" label="HELIX_ERRORPAGE_LOGO" description="HELIX_ERRORPAGE_LOGO_DESC" />
 
 	</fieldset>
 

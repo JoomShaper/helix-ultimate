@@ -10,9 +10,9 @@ defined ('_JEXEC') or die ();
 
 jimport('joomla.form.formfield');
 
-class JFormFieldOptionio extends JFormField
+class JFormFieldHelixexportimport extends JFormField
 {
-	protected $type = 'optionio';
+	protected $type = 'Helixexportimport';
 
 	protected function getInput()
 	{

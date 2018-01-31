@@ -10,9 +10,9 @@ defined ('_JEXEC') or die ();
 
 jimport('joomla.form.formfield');
 
-class JFormFieldMegamenu extends JFormField
+class JFormFieldHelixmegamenu extends JFormField
 {
-    protected $type = "Megamenu";
+    protected $type = "Helixmegamenu";
 
     private $row_layouts = array('12', '6+6', '4+4+4', '3+3+3+3', '2+2+2+2+2+2', '5+7', '4+8','3+9','2+10');
 
@@ -33,7 +33,7 @@ class JFormFieldMegamenu extends JFormField
         $menu_item = $this->form->getData()->toObject();
 
         ob_start();
-        include_once $mega_menu_path.'menuhelper.php';
+        include_once dirname(__DIR__) . '/core/lib/helixmenuhelper.php';
         $html = ob_get_contents();
         ob_clean();
 

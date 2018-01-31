@@ -12,10 +12,10 @@ jimport('joomla.form.formfield');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 
-class JFormFieldPresets extends JFormField
+class JFormFieldHelixpresets extends JFormField
 {
 
-    protected $type = 'Presets';
+    protected $type = 'Helixpresets';
 
     protected $presetfiled = '';
     protected $presetList ='';

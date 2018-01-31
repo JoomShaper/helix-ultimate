@@ -2,7 +2,7 @@
 <form>
 	<fields name="params" addfieldpath="/plugins/system/helixultimate/fields">
 		<fieldset name="spmegamenu" label="HELIX_ULTIMATE_MENU">
-			<field name="menulayout" type="megamenu" />
+			<field name="menulayout" type="helixmegamenu" />
 		</fieldset>
 		<fieldset name="pagetitle" label="HELIX_ULTIMATE_PAGE_TITLE">
 			<field name="enable_page_title" type="radio" class="btn-group" default="0" label="ENABLE_PAGE_TITLE" description="ENABLE_PAGE_TITLE_DESC">

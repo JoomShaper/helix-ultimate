@@ -90,6 +90,7 @@ if ($custom_js = $this->params->get('custom_js'))
 
         $theme->add_scss('master', $scssVars, 'template');
         $theme->add_scss('presets', $scssVars, 'presets/' . $this->params->get('preset', 'preset1'));
+        $theme->add_css('custom');
 
         //Before Head
         if ($before_head = $this->params->get('before_head'))

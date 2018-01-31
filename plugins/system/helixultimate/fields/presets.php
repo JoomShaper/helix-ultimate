@@ -23,7 +23,7 @@ class JFormFieldPresets extends JFormField
     protected function getInput()
     {
         $children = $this->element->children();
-        $html = '<div class="presets">';
+        $html = '<div class="presets clearfix">';
     
         foreach ($children as $child)
         {

@@ -147,6 +147,7 @@ class Platform
         \JHtml::_('behavior.colorpicker');
         \JHtml::_('jquery.token');
         
+        
         $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/helix-ultimate.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
         

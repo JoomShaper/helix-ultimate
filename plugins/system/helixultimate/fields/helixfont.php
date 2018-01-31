@@ -30,11 +30,11 @@ class JFormFieldHelixfont extends JFormField
 
         if(file_exists( $template_path ))
         {
-            $json = JFile::read( $template_path );
+            $json = \JFile::read( $template_path );
         }
         else
         {
-            $json = JFile::read( $plugin_path );
+            $json = \JFile::read( $plugin_path );
         }
 
         $webfonts   = json_decode($json);
@@ -49,6 +49,16 @@ class JFormFieldHelixfont extends JFormField
         $html  = '';
         $classes = (!empty($this->element['class'])) ? $this->element['class'] : '';
 
+        $systemFonts = array(
+            'Arial',
+            'Tahoma',
+            'Verdana',
+            'Helvetica',
+            'Times New Roman',
+            'Trebuchet MS',
+            'Georgia'
+        );
+
         //Font Family
         $html .= '<div class="helix-ultimate-field-webfont '. $classes .'">';
         $html .= '<div class="row">';
@@ -56,6 +66,7 @@ class JFormFieldHelixfont extends JFormField
         $html .= '<div class="col-6 font-families">';
         $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_FAMILY') .'</small></label>';
         $html .= '<select class="list-font-families">';
+        $html .= '<option value="">'. \JText::_('HELIX_ULTIMATE_SELECT') .'</option>';
 
         foreach ($items as $item)
         {
@@ -70,7 +81,7 @@ class JFormFieldHelixfont extends JFormField
         $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_WEIGHT') .'</small></label>';
         $html .= '<select class="list-font-weight">';
 
-        if (isset($value->fontFamily))
+        if (isset($value->fontFamily) && $value->fontFamily)
         {
             $html .= $this->generateSelectOptions($font->variants, $value->fontWeight);
         }
@@ -93,8 +104,9 @@ class JFormFieldHelixfont extends JFormField
         $html .= '<div class="col-6 font-subsets">';
         $html .= '<p></p><label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SUBSET') .'</small></label>';
         $html .= '<select class="list-font-subset">';
+        $html .= '<option value="">'. \JText::_('HELIX_ULTIMATE_SELECT') .'</option>';
 
-        if(isset($value->fontFamily))
+        if(isset($value->fontFamily) && $value->fontFamily)
         {
             $html .= $this->generateSelectOptions($font->subsets, $value->fontSubset);
         }

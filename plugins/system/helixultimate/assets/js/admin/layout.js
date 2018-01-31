@@ -7,13 +7,13 @@
 
 jQuery(function($) {
 	
-		$(document).ready(function(){
+		// $(document).ready(function(){
 	
-			$(this).find('select').each(function(){
-				$(this).chosen('destroy');
-			});
+		// 	$(this).find('select').each(function(){
+		// 		$(this).chosen('destroy');
+		// 	});
 	
-		});//end ready
+		// });//end ready
 
 		// Sortable
 		$.fn.rowSortable = function(){

@@ -263,7 +263,7 @@
 			<option value="facebook">HELIX_ULTIMATE_COMMENT_FACEBOOK</option>
 		</field>
 		<field name="comment_categories" helixgroup="comments" type="category" extension="com_content" label="HELIX_ULTIMATE_COMMENTS_CATEGORY" description="HELIX_ULTIMATE_COMMENTS_CATEGORY_DESC" multiple="multiple" showon="comment!:disabled">
-			<option value="*">HELIX_ULTIMATE_ALL</option>
+			
 		</field>
 		<field name="comment_disqus_subdomain" type="text" helixgroup="comments" label="HELIX_ULTIMATE_COMMENT_DISQUS_SUBDOMAIN" description="HELIX_ULTIMATE_COMMENT_DISQUS_SUBDOMAIN_DESC" showon="comment:disqus" />
 		<field name="comment_disqus_devmode" type="checkbox" helixgroup="comments" default="0" label="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE" description="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE_DESC" showon="comment:disqus" />

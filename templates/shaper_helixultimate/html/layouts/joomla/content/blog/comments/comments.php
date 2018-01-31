@@ -12,12 +12,20 @@ $params = JFactory::getApplication()->getTemplate(true)->params;
 
 if( $params->get('comment') != 'disabled' )
 {
-	$url = \JRoute::_(\ContentHelperRoute::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language));
-	$root = \JURI::base();
-	$root = new \JURI($root);
-	$url = $root->getScheme() . '://' . $root->getHost() . $url;
+	$comment_categories = $params->get('comment_categories');
 
-	echo '<div id="article-comments">';
-	echo \JLayoutHelper::render( 'joomla.content.blog.comments.comments.' . $params->get('comment'), array( 'item'=>$displayData, 'params'=>$params, 'url'=>$url ) );
-	echo '</div>';
+	if(is_array($comment_categories) && count($comment_categories))
+	{
+		if(in_array($displayData->catid, $comment_categories))
+		{
+			$url = \JRoute::_(\ContentHelperRoute::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language));
+			$root = \JURI::base();
+			$root = new \JURI($root);
+			$url = $root->getScheme() . '://' . $root->getHost() . $url;
+
+			echo '<div id="article-comments">';
+			echo \JLayoutHelper::render( 'joomla.content.blog.comments.comments.' . $params->get('comment'), array( 'item'=>$displayData, 'params'=>$params, 'url'=>$url ) );
+			echo '</div>';
+		}
+	}
 }

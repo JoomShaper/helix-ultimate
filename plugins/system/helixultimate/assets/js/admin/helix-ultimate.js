@@ -154,5 +154,11 @@ jQuery(function($){
 		});
 
 		return item;
-	}
+    }
+    
+    /*Option Group*/
+    $(document).on('click', '.helix-ultimate-option-group-title', function(event) {
+        event.preventDefault();
+        $(this).closest('.helix-ultimate-option-group').toggleClass('active').siblings().removeClass('active');
+    })
 });

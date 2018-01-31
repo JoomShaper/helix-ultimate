@@ -18,12 +18,9 @@ class JFormFieldHelixexportimport extends JFormField
 	{
 		$input = JFactory::getApplication()->input;
 		$template_id = $input->get('id',0,'INT');
+		$export_url = 'index.php?option=com_ajax&preview=export&id=' . $template_id;
 
-		$url_cureent =  "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
-		$export_url = $url_cureent . '&helix3task=export';
-
-		$output = '';
+		$output  = '';
 		$output .= '<div class="import-export clearfix" style="margin-bottom:30px;">';
 		$output .= '<a class="btn btn-success" target="_blank" href="'. $export_url .'">'. JText::_("HELIX_SETTINGS_EXPORT") .'</a>';
 		$output .= '</div>';

@@ -10,20 +10,32 @@ defined ('_JEXEC') or die ();
 
 jimport('joomla.form.formfield');
 
-class JFormFieldLayout extends JFormField {
+require_once dirname(__DIR__) . '/platform/helper.php';
 
-    protected $type = 'Layout';
+use HelixUltimate\Helper\Helper as Helper;
+
+class JFormFieldHelixlayout extends JFormField
+{
+
+    protected $type = 'Helixlayout';
 
     public function getInput()
     {
-        $helix_layout_path = JPATH_SITE.'/plugins/system/helixultimate/layout/';
+        $input  = \JFactory::getApplication()->input;
+        $style_id = (int) $input->get('id', 0, 'INT');
+        $style = Helper::getTemplateStyle($style_id);
+
+        $helix_layout_path = \JPATH_SITE.'/plugins/system/helixultimate/layout/';
 
         $json = json_decode($this->value);
 
-        if(!empty($json)) {
+        if(!empty($json))
+        {
             $value = $json;
-        } else {
-            $layout_file = JFile::read( JPATH_SITE . '/templates/' . $this->getTemplate() . '/layout/default.json' );
+        }
+        else
+        {
+            $layout_file = \JFile::read( \JPATH_SITE . '/templates/' . $style->template . '/layout/default.json' );
             $value = json_decode($layout_file);
         }
 
@@ -33,7 +45,8 @@ class JFormFieldLayout extends JFormField {
     }
 
 
-    private function generateLayout($path,$layout_data = null){
+    private function generateLayout($path,$layout_data = null)
+    {
         $GLOBALS['tpl_layout_data'] = $layout_data;
 
         ob_start();
@@ -45,32 +58,26 @@ class JFormFieldLayout extends JFormField {
 
     }
 
-
     public function getLabel()
     {
         return false;
     }
 
-    //Get template name
-    private static function getTemplate() {
-
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('template')));
-        $query->from($db->quoteName('#__template_styles'));
-        $query->where($db->quoteName('id') . ' = '. $db->quote( JRequest::getVar('id') ));
-        $db->setQuery($query);
-
-        return $db->loadResult();
-    }
-
     public function getRawLayoutData(){
+
+        $input  = \JFactory::getApplication()->input;
+        $style_id = (int) $input->get('id', 0, 'INT');
+        $style = Helper::getTemplateStyle($style_id);
+
         $json = json_decode($this->value);
 
-        if(!empty($json)) {
+        if(!empty($json))
+        {
             $value = $json;
-        } else {
-            $layout_file = JFile::read( JPATH_SITE . '/templates/' . $this->getTemplate() . '/layout/default.json' );
+        }
+        else
+        {
+            $layout_file = \JFile::read( \JPATH_SITE . '/templates/' . $style->template . '/layout/default.json' );
             $value = json_decode($layout_file);
         }
 

@@ -126,7 +126,7 @@ class HelixUltimate
 
         echo '<jdoc:include type="head" />';
 
-        $this->add_css('bootstrap.min.css, custom.css');
+        $this->add_css('bootstrap.min.css');
         $this->add_js('popper.min.js, bootstrap.min.js');
     }
 

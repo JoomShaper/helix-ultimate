@@ -12,9 +12,9 @@ require_once dirname(__DIR__) . '/platform/helper.php';
 
 use HelixUltimate\Helper\Helper as Helper;
 
-class JFormFieldModPos extends JFormField
+class JFormFieldHelixpositions extends JFormField
 {
-  protected $type = 'ModPos';
+  protected $type = 'Helixpositions';
 
   protected function getInput()
   {
@@ -35,7 +35,7 @@ class JFormFieldModPos extends JFormField
     $db->setQuery($query);
     $dbpositions = $db->loadObjectList();
 
-    $templateXML = JPATH_SITE.'/templates/'.$style->template.'/templateDetails.xml';
+    $templateXML = \JPATH_SITE.'/templates/'.$style->template.'/templateDetails.xml';
     $template = simplexml_load_file( $templateXML );
     $options = array();
 
@@ -59,7 +59,7 @@ class JFormFieldModPos extends JFormField
       $options[$opt] = $opt;
     }
 
-    $html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+    $html[] = \JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
 
     return implode($html);
   }

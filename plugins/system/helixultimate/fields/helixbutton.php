@@ -10,10 +10,12 @@ defined ('_JEXEC') or die ();
 
 jimport('joomla.form.formfield');
 
-class JFormFieldButton extends JFormField
+class JFormFieldHelixbutton extends JFormField
 {
-	protected $type = 'Button';	
-	protected function getInput() {
+	protected $type = 'Helixbutton';	
+	
+	protected function getInput()
+	{
 
 		$url = !empty($this->element['url']) ? $this->element['url'] : '#';
 		$class = !empty($this->element['class']) ? ' ' . $this->element['class'] : '';

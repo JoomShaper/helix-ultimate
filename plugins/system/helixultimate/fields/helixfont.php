@@ -10,13 +10,22 @@ defined ('_JEXEC') or die ();
 
 jimport('joomla.form.formfield');
 
-class JFormFieldTypography extends JFormField
+require_once dirname(__DIR__) . '/platform/helper.php';
+
+use HelixUltimate\Helper\Helper as Helper;
+
+class JFormFieldHelixfont extends JFormField
 {
-    protected $type = 'Typography';
+    protected $type = 'Helixfont';
 
     protected function getInput()
     {
-        $template_path = \JPATH_SITE . '/templates/' . self::getTemplate() . '/webfonts/webfonts.json';
+
+        $input  = \JFactory::getApplication()->input;
+        $style_id = (int) $input->get('id', 0, 'INT');
+        $style = Helper::getTemplateStyle($style_id);
+
+        $template_path = \JPATH_SITE . '/templates/' . $style->template . '/webfonts/webfonts.json';
         $plugin_path   = \JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
 
         if(file_exists( $template_path ))
@@ -125,18 +134,6 @@ class JFormFieldTypography extends JFormField
             if ($item->family == $key) return $item;
         }
         return false;
-    }
-
-    private static function getTemplate()
-    {
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('template')));
-        $query->from($db->quoteName('#__template_styles'));
-        $query->where($db->quoteName('id') . ' = '. $db->quote( JRequest::getVar('id') ));
-        $db->setQuery($query);
-
-        return $db->loadResult();
     }
 
 }

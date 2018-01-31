@@ -8,6 +8,8 @@
 jQuery(function($){
     "use strict";
 
+    /*
+
     $(document).ready(function(){
 
         $('.preset').parent().removeClass('controls').addClass('presets clearfix');
@@ -42,9 +44,13 @@ jQuery(function($){
         });
     });
 
+    */
+
     //Import Template Settings
-    $( '#hexli-ult-options' ).on( 'click', '#import-settings', function( event ) {
+    $( '#import-settings' ).on( 'click', function( event ) {
         event.preventDefault();
+
+        console.log('hello world');
 
         var $that = $( this ),
             temp_settings = $.trim( $that.prev().val() );
@@ -65,7 +71,7 @@ jQuery(function($){
                 'action' : 'import-tmpl-style',
                 'option' : 'com_ajax',
                 'plugin' : 'helixultimate',
-                'request': 'ajaxHelix',
+                'request': 'helixultimate',
                 'data'   : data,
                 'format' : 'json'
             };

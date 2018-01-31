@@ -13,6 +13,7 @@ require_once __DIR__ . '/fa.php';
 $current_menu_id = $this->form->getValue('id');
 $JMenuSite = new JMenuSite;
 $module_list = $this->getModuleNameById();
+
 $mega_align = array(
     'left' => JText::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
     'center' => JText::_('HELIX_ULTIMATE_GLOBAL_CENTER'),

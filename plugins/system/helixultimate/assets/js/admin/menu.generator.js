@@ -6,8 +6,8 @@
 */
 
 jQuery(function($) {
-    $('#attrib-spmegamenu').find('.control-group').first().find('.control-label').remove();
-    $('#attrib-spmegamenu').find('.control-group').first().find('>.controls').removeClass().addClass('megamenu').unwrap();
+    $('#attrib-helixultimatemegamenu').find('.control-group').first().find('.control-label').remove();
+    $('#attrib-helixultimatemegamenu').find('.control-group').first().find('>.controls').removeClass().addClass('megamenu').unwrap();
 
     $(document).on('click', '#helix-ultimate-megamenu-toggler', function(event){
         var currentVal = $(this).is(":checked");
@@ -139,8 +139,7 @@ jQuery(function($) {
             'layout'        : layout
         };
 
-        $('#jform_params_megamenu').val(1);
-        $('#jform_params_menulayout').val(JSON.stringify(menumData));
+        $('#jform_params_helixultimatemenulayout').val(JSON.stringify(menumData));
     }; //End of onSubmit Event Call
 
     $(document).on('click', '#helix-ultimate-choose-megamenu-layout', function(e){

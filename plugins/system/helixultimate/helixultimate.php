@@ -58,7 +58,7 @@ class  plgSystemHelixultimate extends JPlugin
             $doc->addScript($plg_path.'/assets/js/admin/modal.js');
             $doc->addScript( $plg_path. '/assets/js/admin/menu.generator.js' );
 
-            $form->loadFile('menu-parent', false);
+            $form->loadFile('megamenu', false);
         }
 
         //Article Post format

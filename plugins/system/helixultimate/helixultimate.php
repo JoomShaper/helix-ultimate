@@ -65,7 +65,7 @@ class  plgSystemHelixultimate extends JPlugin
         if ($form->getName()=='com_content.article')
         {
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
-            $tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName();
+            $tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName()->template;
 
             JHtml::_('jquery.framework');
             JHtml::_('jquery.token');
@@ -123,15 +123,31 @@ class  plgSystemHelixultimate extends JPlugin
         $preview    = $this->app->input->get('preview','');
         $view       = $this->app->input->get('view','');
         $action     = $this->app->input->get('action', '');
+        $id         = $this->app->input->get('id',NULL,'INT');
 
         $doc = JFactory::getDocument();
-        if($this->app->isAdmin())
+        if ($this->app->isAdmin())
         {
-            if($option == 'com_ajax' && $preview == 'theme' && $view == 'style')
+            if ($option == 'com_ajax' && $preview == 'theme' && $view == 'style')
             {
                 Platform::loadFrameworkSystem();
                 JEventDispatcher::getInstance()->trigger('onAfterRespond');
                 die;
+            }
+
+            if ($option == 'com_ajax' && $preview == 'export' && $id) {
+                
+                $template = $this->getTemplateName($id);
+
+                header( 'Content-Description: File Transfer' );
+                header( 'Content-type: application/txt' );
+                header( 'Content-Disposition: attachment; filename="' . $template->template . '_settings_' . date( 'd-m-Y' ) . '.json"' );
+                header( 'Content-Transfer-Encoding: binary' );
+                header( 'Expires: 0' );
+                header( 'Cache-Control: must-revalidate' );
+                header( 'Pragma: public' );
+                echo $template->params;
+                exit;
             }
         }
     }
@@ -144,35 +160,22 @@ class  plgSystemHelixultimate extends JPlugin
         }
     }
 
-    private function updateTemplateStyle($data = '', $id = 0)
-    {
-        $db = JFactory::getDbo();
-        if(empty($data)) return false;
-
-        $data = json_encode($data);
-
-        $query = $db->getQuery(true);
-        $fields = array($db->quoteName('params') . '=' . $db->quote($data));
-        $conditions = array(
-            $db->quoteName('id') .'='. $db->quote($id),
-            $db->quoteName('client_id') .'= 0'
-        );
-
-        $query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
-        $db->setQuery($query);
-        $result = $db->execute();
-    }
-
-    private function getTemplateName()
+    private function getTemplateName($id = '')
     {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $query->select($db->quoteName(array('template')));
+        $query->select('*');
         $query->from($db->quoteName('#__template_styles'));
         $query->where($db->quoteName('client_id') . ' = 0');
-        $query->where($db->quoteName('home') . ' = 1');
+        
+        if (!$id) {
+            $query->where($db->quoteName('home') . ' = 1');
+        } else {
+            $query->where($db->quoteName('id') . ' = ' . $db->quote( $id ));
+        }
+
         $db->setQuery($query);
 
-        return $db->loadObject()->template;
+        return $db->loadObject();
     }
 }

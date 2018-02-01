@@ -61,13 +61,13 @@ class HelixUltimate
                 $bodyClass .= ' ' . $menu->params->get('pageclass_sfx');
             }
         }
-
         $bodyClass      .= (!empty($class)) ? ' ' . $class : '';
 
         return $bodyClass;
     }
 
-    public function head() {
+    public function head()
+    {
         $doc = JFactory::getDocument();
 
         JHtml::_('jquery.framework');
@@ -76,39 +76,48 @@ class HelixUltimate
 
         $webfonts = array();
 
-        if ($this->params->get('enable_body_font')) {
+        if ($this->params->get('enable_body_font'))
+        {
             $webfonts['body'] = $this->params->get('body_font');
         }
 
-        if ($this->params->get('enable_h1_font')) {
+        if ($this->params->get('enable_h1_font'))
+        {
             $webfonts['h1'] = $this->params->get('h1_font');
         }
 
-        if ($this->params->get('enable_h2_font')) {
+        if ($this->params->get('enable_h2_font'))
+        {
             $webfonts['h2'] = $this->params->get('h2_font');
         }
 
-        if ($this->params->get('enable_h3_font')) {
+        if ($this->params->get('enable_h3_font'))
+        {
             $webfonts['h3'] = $this->params->get('h3_font');
         }
 
-        if ($this->params->get('enable_h4_font')) {
+        if ($this->params->get('enable_h4_font'))
+        {
             $webfonts['h4'] = $this->params->get('h4_font');
         }
 
-        if ($this->params->get('enable_h5_font')) {
+        if ($this->params->get('enable_h5_font'))
+        {
             $webfonts['h5'] = $this->params->get('h5_font');
         }
 
-        if ($this->params->get('enable_h6_font')) {
+        if ($this->params->get('enable_h6_font'))
+        {
             $webfonts['h6'] = $this->params->get('h6_font');
         }
 
-        if ($this->params->get('enable_navigation_font')) {
+        if ($this->params->get('enable_navigation_font'))
+        {
             $webfonts['.sp-megamenu-parent'] = $this->params->get('navigation_font');
         }
 
-        if ($this->params->get('enable_custom_font') && $this->params->get('custom_font_selectors')) {
+        if ($this->params->get('enable_custom_font') && $this->params->get('custom_font_selectors'))
+        {
             $webfonts[$this->params->get('custom_font_selectors')] = $this->params->get('custom_font');
         }
 
@@ -546,7 +555,8 @@ class HelixUltimate
         return false;
     }
 
-    public function after_body() {
+    public function after_body()
+    {
         if ($this->params->get('compress_css'))
         {
             $theme->compress_css();
@@ -637,48 +647,49 @@ class HelixUltimate
 
     private function needScssCompile($scss, $existvars = array())
     {
-      $cache_path = JPATH_CACHE . '/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
+        $cache_path = JPATH_CACHE . '/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
+        $return = false;
 
-      $return = false;
-
-      if(file_exists($cache_path))
-      {
-        $cache_file = json_decode(file_get_contents($cache_path));
-        $imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
-        $vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
-
-        if(array_diff($vars, $existvars))
+        if (file_exists($cache_path))
         {
-          $return = true;
-        }
+            $cache_file = json_decode(file_get_contents($cache_path));
+            $imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
+            $vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
 
-        if(count($imports))
-        {
-          foreach ($imports as $import => $mtime)
-          {
-            if(file_exists($import))
+            if (array_diff($vars, $existvars))
             {
-              $existmtime = filemtime($import);
-              if($existmtime != $mtime)
-              {
                 $return = true;
-              }
+            }
+
+            if (count($imports))
+            {
+                foreach ($imports as $import => $mtime)
+                {
+                    if (file_exists($import))
+                    {
+                        $existmtime = filemtime($import);
+                        if ($existmtime != $mtime)
+                        {
+                            $return = true;
+                        }
+                    }
+                    else
+                    {
+                        $return = true;
+                    }
+                }
             }
             else
             {
-              $return = true;
+                $return = true;
             }
-          }
         }
         else
         {
-          $return = true;
+            $return = true;
         }
-      } else {
-        $return = true;
-      }
 
-      return $return;
+        return $return;
     }
 
     private static function resetCookie($name)
@@ -703,17 +714,17 @@ class HelixUltimate
             'Georgia'
         );
 
-        if(is_array($fonts))
+        if (is_array($fonts))
         {
-            foreach($fonts as $key => $font)
+            foreach ($fonts as $key => $font)
             {
                 $font = json_decode($font);
 
-                if(!in_array($font->fontFamily, $systemFonts))
+                if (!in_array($font->fontFamily, $systemFonts))
                 {
                     $fontUrl = '//fonts.googleapis.com/css?family='. $font->fontFamily .':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
                 
-                    if($font->fontSubset)
+                    if (isset($font->fontSubset) && $font->fontSubset)
                     {
                         $fontUrl .= '&amp;subset=' . $font->fontSubset;
                     }
@@ -724,12 +735,12 @@ class HelixUltimate
                 $fontCSS = $key . "{";
                 $fontCSS .= "font-family: '" . $font->fontFamily . "', sans-serif;";
 
-                if($font->fontWeight)
+                if (isset($font->fontWeight) && $font->fontWeight)
                 {
                     $fontCSS .= 'font-weight: ' . $font->fontWeight . ';';
                 }
 
-                if($font->fontStyle)
+                if (isset($font->fontStyle) && $font->fontStyle)
                 {
                     $fontCSS .= 'font-style: ' . $font->fontStyle . ';';
                 }
@@ -742,11 +753,14 @@ class HelixUltimate
     }
 
     //Exclude js and return others js
-    private function excludeJS($key, $excludes){
+    private function excludeJS($key, $excludes)
+    {
         $match = false;
-        if ($excludes) {
+        if ($excludes)
+        {
             $excludes = explode(',', $excludes);
-            foreach ($excludes as $exclude) {
+            foreach ($excludes as $exclude)
+            {
                 if (JFile::getName($key) == trim($exclude))
                 {
                     $match = true;
@@ -757,8 +771,9 @@ class HelixUltimate
         return $match;
     }
 
-    public function compressJS($excludes = ''){
-        //function to compress js files
+    //function to compress js files
+    public function compressJS($excludes = '')
+    {
         require_once(__DIR__ . '/classes/Minifier.php');
 
         $app       = JFactory::getApplication();
@@ -772,20 +787,23 @@ class HelixUltimate
         $md5sum       = '';
 
         //Check all local scripts
-        foreach ($all_scripts as $key => $value) {
+        foreach ($all_scripts as $key => $value)
+        {
             $js_file = str_replace($root_url, JPATH_ROOT, $key);
 
-            if (strpos($js_file, JPATH_ROOT) === false) {
+            if (strpos($js_file, JPATH_ROOT) === false)
+            {
                 $js_file = JPATH_ROOT . $key;
             }
 
-            if (JFile::exists($js_file)) {
+            if (JFile::exists($js_file))
+            {
                 if (!$this->excludeJS($key, $excludes))
                 {
                     $scripts[] = $key;
                     $md5sum .= md5($key);
                     $compressed = \JShrink\Minifier::minify(JFile::read($js_file), array('flaggedComments' => false));
-                    $minifiedCode .= "/*------ " . JFile::getName($js_file) . " ------*/\n" . $compressed . "\n\n";//add file name to compressed JS
+                    $minifiedCode .= "/*------ " . JFile::getName($js_file) . " ------*/\n" . $compressed . "\n\n"; //add file name to compressed JS
 
                     unset($doc->_scripts[$key]); //Remove sripts
                 }
@@ -793,18 +811,24 @@ class HelixUltimate
         }
 
         //Compress All scripts
-        if ($minifiedCode) {
-            if (!JFolder::exists($cache_path)) {
+        if ($minifiedCode)
+        {
+            if (!JFolder::exists($cache_path))
+            {
                 JFolder::create($cache_path, 0755);
             }
-            else {
+            else
+            {
                 $file = $cache_path . '/' . md5($md5sum) . '.js';
 
-                if (!JFile::exists($file)) {
+                if (!JFile::exists($file))
+                {
                     JFile::write($file, $minifiedCode);
                 }
-                else {
-                    if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time())) {
+                else
+                {
+                    if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
+                    {
                         JFile::write($file, $minifiedCode);
                     }
                 }
@@ -850,24 +874,26 @@ class HelixUltimate
         $md5sum          = '';
 
         //Check all local stylesheets
-        foreach ($all_stylesheets as $key => $value) {
+        foreach ($all_stylesheets as $key => $value)
+        {
             $css_file = str_replace($root_url, JPATH_ROOT, $key);
 
-            if (strpos($css_file, JPATH_ROOT) === false) {
+            if (strpos($css_file, JPATH_ROOT) === false)
+            {
                 $css_file = JPATH_ROOT . $key;
             }
 
             global $absolute_url;
             $absolute_url = $key;//absoulte path of each css file
 
-            if (JFile::exists($css_file)) {
+            if (JFile::exists($css_file))
+            {
                 $stylesheets[] = $key;
                 $md5sum .= md5($key);
                 $compressed = CSSMinify::process(JFile::read($css_file));
 
-                $fixUrl = preg_replace_callback('/url\(([^\)]*)\)/',
-                    function ($matches)
-                    {
+                $fixUrl = preg_replace_callback('/url\(([^\)]*)\)/', function ($matches){
+
                         $url = str_replace(array('"', '\''), '', $matches[1]);
 
                         global $absolute_url;
@@ -882,25 +908,31 @@ class HelixUltimate
                         return "url('$url')";
                     }, $compressed);
 
-                $minifiedCode .= "/*------ " . JFile::getName($css_file) . " ------*/\n" . $fixUrl . "\n\n";//add file name to compressed css
+                $minifiedCode .= "/*------ " . JFile::getName($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
 
                 unset($doc->_styleSheets[$key]); //Remove scripts
             }
         }
 
         //Compress All stylesheets
-        if ($minifiedCode) {
-            if (!JFolder::exists($cache_path)) {
+        if ($minifiedCode)
+        {
+            if (!JFolder::exists($cache_path))
+            {
                 JFolder::create($cache_path, 0755);
             }
-            else {
+            else
+            {
                 $file = $cache_path . '/' . md5($md5sum) . '.css';
 
-                if (!JFile::exists($file)) {
+                if (!JFile::exists($file))
+                {
                     JFile::write($file, $minifiedCode);
                 }
-                else {
-                    if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time())) {
+                else
+                {
+                    if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
+                    {
                         JFile::write($file, $minifiedCode);
                     }
                 }

@@ -420,8 +420,8 @@ class HelixUltimateMenu
 
         $layout = json_decode($item->params->get('helixultimatemenulayout'));
 
-        $showmenutitle = (isset($layout->showtitle))? $layout->showtitle : 0;
-        $icon  =  (isset($layout->faicon))? $layout->faicon : '';
+        $showmenutitle = (isset($layout->showtitle))? $layout->showtitle : 1;
+        $icon = (isset($layout->faicon))? $layout->faicon : '';
 
         if (!$showmenutitle)
         {

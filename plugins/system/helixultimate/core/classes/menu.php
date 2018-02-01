@@ -229,7 +229,7 @@ class HelixUltimateMenu
         $this->menu .= $this->start_el(array('item' => $item));
         $this->menu .= $this->item($item);
 
-        $menulayout = json_decode($item->params->get('menulayout'));
+        $menulayout = json_decode($item->params->get('helixultimatemenulayout'));
 
         if (isset($menulayout->megamenu) && $menulayout->megamenu)
         {
@@ -275,7 +275,7 @@ class HelixUltimateMenu
         $items     = isset($this->children[$item->id]) ? $this->children[$item->id] : array();
         $firstitem = count($items) ? $items[0]->id : 0;
 
-        $mega = json_decode($item->params->get('menulayout'));
+        $mega = json_decode($item->params->get('helixultimatemenulayout'));
         $layout = $mega->layout;
 
         $mega_style = 'width: '. $mega->width .'px;';
@@ -373,7 +373,7 @@ class HelixUltimateMenu
         $item 	= $args['item'];
         $class 	= 'sp-menu-item';
 
-        $layout = json_decode($item->params->get('menulayout'));
+        $layout = json_decode($item->params->get('helixultimatemenulayout'));
 
         if (!empty($this->children[$item->id]))
         {
@@ -438,7 +438,7 @@ class HelixUltimateMenu
         $flink = $item->flink;
         $flink = str_replace('&amp;', '&', JFilterOutput::ampReplace(htmlspecialchars($flink)));
 
-        $layout = json_decode($item->params->get('menulayout'));
+        $layout = json_decode($item->params->get('helixultimatemenulayout'));
 
         $badge_html = '';
 

@@ -93,12 +93,12 @@ class HelixUltimateMenu
 
             $item->class   = $class;
             $item->dropdown =0;
+            $item->flink = $item->link;
+
             if (isset($this->children[$item->id]))
             {
                 $item->dropdown = 1;
             }
-            $item->megamenu = ($item->params->get('megamenu')) ? $item->params->get('megamenu') : 0;
-            $item->flink 		= $item->link;
 
             switch ($item->type) {
                 case 'separator':
@@ -210,6 +210,7 @@ class HelixUltimateMenu
             }
             $class = 'sp-megamenu-parent' . $animation;
             if($this->extraclass) $class = $class . ' ' . $this->extraclass;
+
             $this->menu .= $this->start_lvl($class);
         }
         else
@@ -417,16 +418,20 @@ class HelixUltimateMenu
             $linktitle = $item->title;
         }
 
-        //Hide Link Title
-        if(!$showmenutitle = $item->params->get('showmenutitle', 1))
+        $layout = json_decode($item->params->get('helixultimatemenulayout'));
+
+        $showmenutitle = (isset($layout->showtitle))? $layout->showtitle : 0;
+        $icon  =  (isset($layout->faicon))? $layout->faicon : '';
+
+        if (!$showmenutitle)
         {
             $linktitle = '';
         }
 
         //Add Menu Icon
-        if($icon = $item->params->get('icon'))
+        if ($icon)
         {
-            if($showmenutitle)
+            if ($showmenutitle)
             {
                 $linktitle = '<i class="fa ' . $icon . '"></i> ' . $linktitle;
             }
@@ -437,8 +442,6 @@ class HelixUltimateMenu
         }
         $flink = $item->flink;
         $flink = str_replace('&amp;', '&', JFilterOutput::ampReplace(htmlspecialchars($flink)));
-
-        $layout = json_decode($item->params->get('helixultimatemenulayout'));
 
         $badge_html = '';
 

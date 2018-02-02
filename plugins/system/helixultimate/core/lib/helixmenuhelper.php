@@ -136,44 +136,47 @@ if($unique_menu_items)
                                                     <span class="helix-ultimate-action-move-column"><span class="fa fa-arrows"></span> Column</span>
                                                 </div>
 
-                                                <div class="helix-ultimate-megamenu-item-list">
+                                                <?php
+                                                    $col_list = '<div class="helix-ultimate-megamenu-item-list">';
+                                                    if ( isset($col->items) && count($col->items))
+                                                    {
+                                                        foreach ($col->items as $item)
+                                                        {
+                                                            if ($item->type === 'module')
+                                                            {
+                                                                $modules = $this->getModuleNameById($item->item_id);
+                                                                $title = $modules->title . '<a href="javascript:;" class="helix-ultimate-megamenu-remove-module"><span class="fa fa-remove"></span></a>';
+                                                            }
+                                                            elseif ($item->type === 'menu_item')
+                                                            {
+                                                                $title = $JMenuSite->getItem($item->item_id)->title;
+                                                            }
 
-                                                    <?php if ( ! empty($col->items) && count($col->items)) { ?>
-                                                        <?php foreach ($col->items as $item) { ?>
-                                                            <?php
-                                                                if ($item->type === 'module')
-                                                                {
-                                                                    $modules = $this->getModuleNameById($item->item_id);
-                                                                    $title = $modules->title . '<a href="javascript:;" class="helix-ultimate-megamenu-remove-module"><span class="fa fa-remove"></span></a>';
-                                                                }
-                                                                elseif ($item->type === 'menu_item')
-                                                                {
-                                                                    $title = $JMenuSite->getItem($item->item_id)->title;
-                                                                }
-                                                            ?>
+                                                            $col_list .= '<div class="helix-ultimate-megamenu-item" data-mod_id="'. $item->item_id .'" data-type="'. $item->type .'">';
+                                                            $col_list .= '<div class="helix-ultimate-megamenu-item-module">';
+                                                            $col_list .= '<div class="helix-ultimate-megamenu-item-module-title">' . $title . '</div>';
+                                                            $col_list .= '</div>';
+                                                            $col_list .= '</div>';
+                                                        }
+                                                    }
 
-                                                            <div class="helix-ultimate-megamenu-item" data-mod_id="<?php echo $item->item_id; ?>" data-type="<?php echo $item->type; ?>">
-                                                                <div class="helix-ultimate-megamenu-item-module">
-                                                                    <div class="helix-ultimate-megamenu-item-module-title"><?php echo $title; ?></div>
-                                                                </div>
-                                                            </div>
+                                                    if ($unique_menu_item_count && $col_number == 0)
+                                                    {
+                                                        $col_number++;
+                                                    
+                                                        foreach ($unique_menu_items as $key => $item_id)
+                                                        {
+                                                            $col_list .= '<div class="helix-ultimate-megamenu-item" data-mod_id="' . $item_id .'" data-type="menu_item">';
+                                                            $col_list .= '<div class="helix-ultimate-megamenu-item-module">';
+                                                            $col_list .= '<div class="helix-ultimate-megamenu-item-module-title">' . $JMenuSite->getItem($item_id)->title .'</div>';
+                                                            $col_list .= '</div>';
+                                                            $col_list .= '</div>';
+                                                        }
+                                                    }
+                                                    $col_list .= '</div>';
 
-                                                        <?php } ?>
-                                                    <?php } ?>
-
-                                                    <?php if ($unique_menu_item_count && $col_number == 0) { $col_number++; ?>
-                                                        <?php foreach ($unique_menu_items as $key => $item_id) { ?>
-
-                                                            <div class="helix-ultimate-megamenu-item" data-mod_id="<?php echo $item_id; ?>" data-type="menu_item">
-                                                                <div class="helix-ultimate-megamenu-item-module">
-                                                                    <div class="helix-ultimate-megamenu-item-module-title"><?php echo $JMenuSite->getItem($item_id)->title; ?></div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        <?php } ?>
-                                                    <?php } ?>
-
-                                                </div>
+                                                    echo $col_list;
+                                                ?>
 
                                             </div>
                                         </div>

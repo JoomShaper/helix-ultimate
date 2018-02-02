@@ -56,7 +56,7 @@ class Platform
 
     public function initialize()
     {
-        if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'helixultimate' && $this->id )
+        if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'helixultimate')
         {
             if (!$this->permission)
             {

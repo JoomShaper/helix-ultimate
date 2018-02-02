@@ -219,9 +219,10 @@ jQuery(function($) {
             },
             update: function (e, ui) {
                 var module_title = ui.item.text();
-                var module_inner = '<div class="helix-ultimate-megamenu-item-module"><div class="helix-ultimate-megamenu-item-module-title">' + module_title + '</div></div>';
+                var mod_delete_button = '<a href="javascript:;" class="helix-ultimate-megamenu-remove-module"><span class="fa fa-remove"></span></a>';
+                var module_inner = '<div class="helix-ultimate-megamenu-item-module"><div class="helix-ultimate-megamenu-item-module-title">' + mod_delete_button + '<span>' + module_title + '</span></div></div>';
+                
                 ui.item.removeAttr('style class').addClass('helix-ultimate-megamenu-item').html(module_inner);
-
                 ui.item.clone().insertAfter(ui.item.html('<span class="fa fa-arrows"></span> ' + module_title).removeAttr('class').addClass('helix-ultimate-megamenu-draggable-module'));
                 $(this).sortable('cancel');
 

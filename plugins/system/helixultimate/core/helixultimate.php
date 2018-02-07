@@ -737,6 +737,11 @@ class HelixUltimate
                 $fontCSS = $key . "{";
                 $fontCSS .= "font-family: '" . $font->fontFamily . "', sans-serif;";
 
+                if (isset($font->fontSize) && $font->fontSize)
+                {
+                    $fontCSS .= 'font-size: ' . $font->fontSize . 'px;';
+                }
+                
                 if (isset($font->fontWeight) && $font->fontWeight)
                 {
                     $fontCSS .= 'font-weight: ' . $font->fontWeight . ';';

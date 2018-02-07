@@ -66,10 +66,8 @@ else
 }
 
 $custom_class_label = JText::_('HELIX_ULTIMATE_MENU_CUSTOM_CLASS');
-$custom_class_palceholder = JText::_('HELIX_ULTIMATE_MENU_CUSTOM_CLASS_PHOLDER');
 
 $badge_label = JText::_('HELIX_ULTIMATE_MENU_BADGE_TEXT');
-$badge_label_placeholder = JText::_('HELIX_ULTIMATE_MENU_BADGE_TEXT_PHOLDER');
 
 $unique_menu_items = $this->uniqueMenuItems($current_menu_id, $layout);
 
@@ -101,9 +99,9 @@ if($unique_menu_items)
 
                     echo $this->selectFieldHTML('fa-icon', JText::_('HELIX_ULTIMATE_MENU_ICON'), $fa_list, $faicon);
 
-                    echo $this->textFieldHTML('custom-class', $custom_class_label, $custom_class_palceholder, $custom_class);
+                    echo $this->textFieldHTML('custom-class', $custom_class_label, '', $custom_class);
 
-                    echo $this->textFieldHTML('menu-badge', $badge_label, $badge_label_placeholder, $badge);
+                    echo $this->textFieldHTML('menu-badge', $badge_label, '', $badge);
 
                     echo $this->selectFieldHTML('badge-position', 'Badge Position', $dropdown_list, $badge_position);
 

@@ -132,28 +132,28 @@ class  plgSystemHelixultimate extends JPlugin
         {
             if ($option == 'com_ajax' && $helix == 'ultimate')
             {
-                if($request == '')
+
+                if ($task == 'export' && $id) {
+
+                    $template = $this->getTemplateName($id);
+    
+                    header( 'Content-Description: File Transfer' );
+                    header( 'Content-type: application/txt' );
+                    header( 'Content-Disposition: attachment; filename="' . $template->template . '_settings_' . date( 'd-m-Y' ) . '.json"' );
+                    header( 'Content-Transfer-Encoding: binary' );
+                    header( 'Expires: 0' );
+                    header( 'Cache-Control: must-revalidate' );
+                    header( 'Pragma: public' );
+                    echo $template->params;
+                    exit;
+                }
+                else if($request == '')
                 {
                     Platform::loadFrameworkSystem();
                 }
                 
                 JEventDispatcher::getInstance()->trigger('onAfterRespond');
                 die;
-            }
-
-            if ($option == 'com_ajax' && $helix == 'ultimate' && $task = 'export' && $id) {
-                
-                $template = $this->getTemplateName($id);
-
-                header( 'Content-Description: File Transfer' );
-                header( 'Content-type: application/txt' );
-                header( 'Content-Disposition: attachment; filename="' . $template->template . '_settings_' . date( 'd-m-Y' ) . '.json"' );
-                header( 'Content-Transfer-Encoding: binary' );
-                header( 'Expires: 0' );
-                header( 'Cache-Control: must-revalidate' );
-                header( 'Pragma: public' );
-                echo $template->params;
-                exit;
             }
         }
     }

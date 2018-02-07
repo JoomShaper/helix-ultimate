@@ -103,10 +103,18 @@ jQuery(function($) {
 			$('.helix-ultimate-layout-section').removeClass('row-active');
 			$parent = $(this).closest('.helix-ultimate-layout-section');
 			$parent.addClass('row-active');
+
+			$('#helix-ultimate-row-settings').find('select.helix-ultimate-input').each(function(){
+				$(this).chosen('destroy');
+			});
 	
 			var $clone = $('#helix-ultimate-row-settings').clone(true);
 			$clone.find('.helix-ultimate-input-color').each(function(){
 				$(this).addClass('minicolors');
+			});
+
+			$clone.find('select.helix-ultimate-input').each(function(){
+				$(this).chosen({width: '100%'});
 			});
 	
 			$clone = $('.helix-ultimate-options-modal-inner').html($clone.removeAttr('id').addClass('helix-ultimate-options-modal-content'));
@@ -138,6 +146,10 @@ jQuery(function($) {
 			$('.helix-ultimate-layout-column').removeClass('column-active');
 			$parent = $(this).closest('.helix-ultimate-layout-column');
 			$parent.addClass('column-active');
+
+			$('#helix-ultimate-column-settings').find('select.helix-ultimate-input').each(function(){
+				$(this).chosen('destroy');
+			});
 	
 			var $clone = $('#helix-ultimate-column-settings').clone(true);
 			$clone.find('.helix-ultimate-input-color').each(function(){
@@ -150,6 +162,10 @@ jQuery(function($) {
 				var $that = $(this),
 				attrValue = $parent.data( $that.data('attrname'));
 				$that.setInputValue({filed: attrValue});
+			});
+
+			$clone.find('select.helix-ultimate-input').each(function(){
+				$(this).chosen({width: '100%'});
 			});
 	
 			$clone.initColorPicker();

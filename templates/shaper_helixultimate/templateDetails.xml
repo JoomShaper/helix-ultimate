@@ -62,6 +62,7 @@
         <file>options.xml</file>
         <file>templateDetails.xml</file>
         <file>offline.php</file>
+        <file>helper.php</file>
         <file>component.php</file>
         <folder>css/</folder>
         <folder>features/</folder>

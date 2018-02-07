@@ -12,11 +12,12 @@ defined ('_JEXEC') or die();
 
 jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
-require_once __DIR__.'/helper.php';
-require_once __DIR__.'/media.php';
+require_once __DIR__. '/helper.php';
+require_once __DIR__. '/media.php';
 
 use HelixUltimate\Helper\Helper as Helper;
 use HelixUltimate\Media\Media as Media;
+
 
 class Request{
 
@@ -89,6 +90,7 @@ class Request{
             case 'fontVariants':
                 $this->changeFontVariants();
                 break;
+                
         }
 
         echo json_encode($this->report);

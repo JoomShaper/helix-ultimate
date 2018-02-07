@@ -29,8 +29,8 @@ jQuery(function($) {
 		var request = {
 			'action': 'view-media',
 			'option' : 'com_ajax',
-			'request': 'task',
 			'helix'  : 'ultimate',
+			'request': 'task',
 			'format' : 'json'
 		};
 
@@ -65,7 +65,8 @@ jQuery(function($) {
 		var request = {
 			'action': 'view-media',
 			'option' : 'com_ajax',
-			'request': 'helixultimate',
+			'helix'  : 'ultimate',
+			'request': 'task',
 			'path': $(self).data('path'),
 			'format' : 'json'
 		};
@@ -101,7 +102,8 @@ jQuery(function($) {
 		var request = {
 			'action': 'view-media',
 			'option' : 'com_ajax',
-			'request': 'helixultimate',
+			'helix'  : 'ultimate',
+			'request': 'task',
 			'path': $(self).data('path'),
 			'format' : 'json'
 		};
@@ -199,7 +201,8 @@ jQuery(function($) {
 			var request = {
 				'action': 'delete-media',
 				'option' : 'com_ajax',
-				'request': 'helixultimate',
+				'helix'  : 'ultimate',
+				'request': 'task',
 				'type': deleteType,
 				'path': $('.helix-ultimate-media-selected').data('path'),
 				'format' : 'json'
@@ -237,7 +240,8 @@ jQuery(function($) {
 			var request = {
 				'action': 'create-folder',
 				'option' : 'com_ajax',
-				'request': 'helixultimate',
+				'helix'  : 'ultimate',
+				'request': 'task',
 				'folder_name': folder_name,
 				'path': $('.helix-ultimate-media-breadcrumb-item.active').data('path'),
 				'format' : 'json'
@@ -269,7 +273,7 @@ jQuery(function($) {
 
 		$.ajax({
 			type : 'POST',
-			url: 'index.php?option=com_ajax&request=task&helix=ultimate&action=upload-media&format=json',
+			url: 'index.php?option=com_ajax&helix=ultimate&request=task&action=upload-media&format=json',
 			data: options.data,
 			contentType: false,
 			cache: false,

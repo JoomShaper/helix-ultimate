@@ -8,44 +8,6 @@
 jQuery(function($){
     "use strict";
 
-    /*
-
-    $(document).ready(function(){
-
-        $('.preset').parent().removeClass('controls').addClass('presets clearfix');
-
-        //Change Preset
-        $('.preset').on('click', function(event){
-            event.preventDefault();
-
-            var $that = $(this);
-
-            if($that.hasClass('active')){
-                return;
-            }
-
-            $('.preset').removeClass('active');
-            $that.addClass('active');
-
-            var activePreset = $that.data('preset'),
-                datas = $that.data();
-            delete datas.preset;
-
-            $.each( datas, function( key, value ) {
-                var $selector = $( '#' + key );
-
-                $selector.val(value);
-                $selector.closest('.minicolors-theme-bootstrap').find('.minicolors-swatch-color').css({
-                    backgroundColor: value
-                });
-            });
-
-            $('#template-preset').val( activePreset );
-        });
-    });
-
-    */
-
     //Import Template Settings
     $( '#import-settings' ).on( 'click', function( event ) {
         event.preventDefault();

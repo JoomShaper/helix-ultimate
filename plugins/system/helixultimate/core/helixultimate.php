@@ -133,6 +133,8 @@ class HelixUltimate
 
         $this->addGoogleFont($webfonts);
 
+        $doc->addScriptdeclaration('template="'. $this->template->template .'";');
+
         echo '<jdoc:include type="head" />';
 
         $this->add_css('bootstrap.min.css');

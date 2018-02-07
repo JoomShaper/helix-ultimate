@@ -91,7 +91,7 @@ jQuery(function ($) {
 
         var request = {
             'option': 'com_ajax',
-            'plugin': 'helixultimate',
+            'template': template,
             'action': 'rating',
             'rating': $(this).data('number'),
             'article_id': $parent.data('id'),
@@ -117,7 +117,6 @@ jQuery(function ($) {
                 setTimeout(function(){
                     $parent.find('.ratings-count').text('(' + data.rating_count + ')')
                 }, 3000);
-
             }
         });
     });

@@ -34,7 +34,8 @@ jQuery(function($) {
 			var request = {
 				'action' : 'fontVariants',
 				'option' : 'com_ajax',
-				'request': 'helixultimate',
+				'helix'  : 'ultimate',
+				'request': 'task',
 				'data'   : data,
 				'format' : 'json'
 			};
@@ -106,7 +107,8 @@ jQuery(function($) {
         var request = {
 			'action' : 'update-font-list',
             'option' : 'com_ajax',
-			'request': 'helixultimate',			
+			'helix'  : 'ultimate',
+			'request': 'task',
             'data'   : {},
             'format' : 'json'
         };

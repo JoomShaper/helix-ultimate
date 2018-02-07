@@ -1,19 +1,11 @@
 /**
-* @package Helix3 Framework
+* @package Helix Ultimate Framework
 * @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2010 - 2015 JoomShaper
+* @copyright Copyright (c) 2010 - 2018 JoomShaper
 * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
 jQuery(function($) {
-	
-		// $(document).ready(function(){
-	
-		// 	$(this).find('select').each(function(){
-		// 		$(this).chosen('destroy');
-		// 	});
-	
-		// });//end ready
 
 		// Sortable
 		$.fn.rowSortable = function(){
@@ -31,118 +23,6 @@ jQuery(function($) {
 	
 			}).disableSelection();
 		};
-	
-		/* ----------   Load existing template   ------------- */
-		$('#hexli-ult-options').on('click', '.layout-del-action', function(event) {
-			event.preventDefault();
-	
-			var $that = $(this),
-			layoutName = $(".layoutlist select").val(),
-			data = {
-				layoutName : layoutName
-			};
-	
-			if ( confirm("Click Ok button to delete "+layoutName+", Cancel to leave.") != true ){
-				return false;
-			}
-	
-			var request = {
-				'action' : 'remove-layout-file',
-				'option' : 'com_ajax',
-				'plugin' : 'helix3',
-				'request': 'ajaxHelix',
-				'data'   : data,
-				'format' : 'json'
-			};
-	
-			$.ajax({
-				type   : 'POST',
-				data   : request,
-				beforeSend: function(){
-					$('.layout-del-action .fa-spin').show();
-				},
-				success: function (response) {
-					var data = $.parseJSON(response),
-					layouts = data.layout,
-					tplHtml = '';
-	
-					if ( data.status == false){
-						alert(data.message)
-						return;
-					}
-	
-					$('#layoutlist').find('option').remove();
-					if (layouts.length) {
-						for (var i = 0; i < layouts.length; i++) {
-							tplHtml += '<option value="'+ layouts[i] +'">'+ layouts[i].replace('.json','')+'</option>';
-						}
-	
-						$('#layoutlist').html(tplHtml);
-					}
-	
-					$('.layout-del-action .fa-spin').fadeOut('fast');
-				},
-				error: function(){
-					alert('Somethings wrong, Try again');
-					$('.layout-del-action .fa-spin').fadeOut('fast');
-				}
-			});
-			return false;
-		});
-	
-		// Save new copy of layout
-		$('.form-horizontal').on('click', '.layout-save-action', function(event) {
-			$('#layout-modal').find('.sp-modal-body').empty();
-			$('#layout-modal .sp-modal-title').text('Save New Layout');
-			$('#layout-modal #save-settings').data('flag', 'save-layout');
-	
-			var $clone = $('.save-box').clone(true);
-			$('#layout-modal').find('.sp-modal-body').append( $clone );
-	
-			$('#layout-modal').spmodal();
-		});
-	
-		// load layout from file
-	
-		$(".layoutlist select").change(function(){
-			var $that = $(this),
-			layoutName = $that.val(),
-			data = {
-				layoutName : layoutName
-			};
-	
-			if ( layoutName == '' || layoutName == ' ' ){
-				alert('You are doing somethings wrong.');
-			}
-	
-			var request = {
-				'action' : 'render-layout',
-				'option' : 'com_ajax',
-				'plugin' : 'helix3',
-				'request': 'ajaxHelix',
-				'data'   : data,
-				'format' : 'raw'
-			};
-	
-			$.ajax({
-				type   : 'POST',
-				data   : request,
-				dataType: "html",
-				beforeSend: function(){
-				},
-				success: function (response) {
-					var data = $.parseJSON(response);
-					if(data.status) {
-						$('#helix-layout-builder').empty();
-						$('#helix-layout-builder').append(data.layoutHtml).fadeIn('normal');
-						jqueryUiLayout();
-					}
-				}
-			});
-			return false;
-		});
-	
-		/*********   Lyout Builder JavaScript   **********/
 	
 		jqueryUiLayout();
 	

@@ -33,7 +33,7 @@ gulp.task('copy_installer', function(){
         .pipe(gulp.dest('build/'))
 });
 
-gulp.task('copy', ['copy_tmpl', 'copy_tmpl_lang', 'copy_system_plugin', 'copy_system_plugin_lang', 'copy_ajax_plugin', 'copy_installer']);
+gulp.task('copy', ['copy_tmpl', 'copy_tmpl_lang', 'copy_system_plugin', 'copy_system_plugin_lang', 'copy_installer']);
 
 gulp.task('build', ['copy'], function(){
     return gulp.src('./build/**/*.*')

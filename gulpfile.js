@@ -17,7 +17,7 @@ gulp.task('copy_tmpl_lang', function(){
 
 // Copy system plugin
 gulp.task('copy_system_plugin', function(){
-    return gulp.src(['./plugins/system/helixultimate/**/*.*', '!./plugins/system/language/en-GB.plg_system_helixultimate.ini'])
+    return gulp.src(['./plugins/system/helixultimate/**/*.*', '!./plugins/system/helixultimate/language/en-GB.plg_system_helixultimate.ini'])
         .pipe(gulp.dest('build/plugins/system'))
 });
 

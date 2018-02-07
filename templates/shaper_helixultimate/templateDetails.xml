@@ -64,6 +64,8 @@
         <file>offline.php</file>
         <file>helper.php</file>
         <file>component.php</file>
+        <file>comingsoon.php</file>
+        <file>error.php</file>
         <folder>css/</folder>
         <folder>features/</folder>
         <folder>fonts/</folder>

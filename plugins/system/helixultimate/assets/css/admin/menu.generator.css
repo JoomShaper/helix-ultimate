@@ -773,3 +773,7 @@ input[type="checkbox"].helix-ultimate-checkbox:disabled{
 .hide-menu-builder{
   display: none!important;
 }
+
+.helix-ultimate-megamenu-grids{
+  cursor: pointer;
+}

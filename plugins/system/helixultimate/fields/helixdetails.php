@@ -25,7 +25,7 @@ class JFormFieldHelixdetails extends JFormField
         $app = \JFactory::getApplication();
         $id  = (int) $app->input->get('id', 0,'INT');
 
-        $url = 'index.php?option=com_ajax&preview=theme&view=style&id=' . $id;
+        $url = 'index.php?option=com_ajax&helix=ultimate&view=style&id=' . $id;
         $html = '<a target="_blank" href="'. $url .'" class="helix-ultimate-options"><i class="icon-options"></i> Template Options</a>';
 
         return $html;

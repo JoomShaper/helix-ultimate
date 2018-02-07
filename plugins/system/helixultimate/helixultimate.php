@@ -120,22 +120,23 @@ class  plgSystemHelixultimate extends JPlugin
     public function onAfterRoute()
     {
         $option     = $this->app->input->get('option','');
-        $preview    = $this->app->input->get('preview','');
+        $helix      = $this->app->input->get('helix','');
         $view       = $this->app->input->get('view','');
+        $task       = $this->app->input->get('task','');
         $action     = $this->app->input->get('action', '');
         $id         = $this->app->input->get('id',NULL,'INT');
 
         $doc = JFactory::getDocument();
         if ($this->app->isAdmin())
         {
-            if ($option == 'com_ajax' && $preview == 'theme' && $view == 'style')
+            if ($option == 'com_ajax' && $helix == 'ultimate' && $view == 'style')
             {
                 Platform::loadFrameworkSystem();
                 JEventDispatcher::getInstance()->trigger('onAfterRespond');
                 die;
             }
 
-            if ($option == 'com_ajax' && $preview == 'export' && $id) {
+            if ($option == 'com_ajax' && $helix == 'ultimate' && $task = 'export' && $id) {
                 
                 $template = $this->getTemplateName($id);
 

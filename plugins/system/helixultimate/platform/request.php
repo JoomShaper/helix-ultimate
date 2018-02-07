@@ -14,9 +14,11 @@ jimport('joomla.filesystem.folder');
 jimport('joomla.filesystem.file');
 require_once __DIR__. '/helper.php';
 require_once __DIR__. '/media.php';
+require_once __DIR__. '/blog.php';
 
 use HelixUltimate\Helper\Helper as Helper;
 use HelixUltimate\Media\Media as Media;
+use HelixUltimate\Blog\Blog as Blog;
 
 
 class Request{
@@ -89,6 +91,14 @@ class Request{
 
             case 'fontVariants':
                 $this->changeFontVariants();
+                break;
+
+            case 'upload-blog-image':
+                Blog::upload_image();
+                break;
+            
+            case 'remove-blog-image':
+                Blog::remove_image();
                 break;
                 
         }

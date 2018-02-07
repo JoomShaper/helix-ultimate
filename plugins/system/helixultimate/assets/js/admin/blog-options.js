@@ -29,8 +29,9 @@ jQuery(function($) {
 
 			var data = new FormData();
 			data.append('option', 'com_ajax');
-			data.append('plugin', 'helixultimate');
-			data.append('action', 'upload_image');
+			data.append('helix', 'ultimate');
+			data.append('request', 'task');
+			data.append('action', 'upload-blog-image');
 			data.append('format', 'json');
 
 			if (file.type.match(/image.*/)) {
@@ -111,8 +112,9 @@ jQuery(function($) {
 		if (confirm("You are about to delete this item permanently. 'Cancel' to stop, 'OK' to delete.") == true) {
 		    var request = {
 				'option' : 'com_ajax',
-				'plugin' : 'helixultimate',
-				'action' : 'remove_image',
+				'helix' : 'ultimate',
+				'request' : 'task',
+				'action' : 'remove-blog-image',
 				'src'	 : $parent.find('.sp-image-upload-wrapper').find('>img').data('src'),
 				'format' : 'json'
 			};
@@ -158,8 +160,9 @@ jQuery(function($) {
 				
 				var data = new FormData();
 				data.append('option', 'com_ajax');
-				data.append('plugin', 'helixultimate');
-				data.append('action', 'upload_image');
+				data.append('helix', 'ultimate');
+				data.append('request', 'task');
+				data.append('action', 'upload-blog-image');
 				data.append('image', files[i]);
 				data.append('index', gallery_id);
 				data.append('gallery', true);
@@ -234,8 +237,9 @@ jQuery(function($) {
 		if (confirm("You are about to delete this item permanently. 'Cancel' to stop, 'OK' to delete.") == true) {
 		    var request = {
 				'option' : 'com_ajax',
-				'plugin' : 'helixultimate',
-				'action' : 'remove_image',
+				'helix' : 'ultimate',
+				'request' : 'task',
+				'action' : 'remove-blog-image',
 				'src'	 : $this.parent().data('src'),
 				'format' : 'json'
 			};

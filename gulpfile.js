@@ -27,12 +27,6 @@ gulp.task('copy_system_plugin_lang', function(){
         .pipe(gulp.dest('build/plugins/system/language'))
 });
 
-// Copy ajax plugin
-gulp.task('copy_ajax_plugin', function(){
-    return gulp.src(['./plugins/ajax/helixultimate/**/*.*'])
-        .pipe(gulp.dest('build/plugins/ajax'))
-});
-
 // Copy Installer
 gulp.task('copy_installer', function(){
     return gulp.src(['./helix-installer/**/*.*'])

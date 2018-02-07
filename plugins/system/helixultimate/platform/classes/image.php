@@ -6,9 +6,11 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+namespace HelixUltimate\Image;
+
 defined ('_JEXEC') or die ();
 
-class HelixUltimateImage {
+class Image {
 
 	public static function createThumbs($src, $sizes = array(), $folder, $base_name, $ext, $quality = 100) {
 

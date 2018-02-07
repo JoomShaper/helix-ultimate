@@ -29,7 +29,8 @@ jQuery(function($) {
 		var request = {
 			'action': 'view-media',
 			'option' : 'com_ajax',
-			'request': 'helixultimate',
+			'request': 'task',
+			'helix'  : 'ultimate',
 			'format' : 'json'
 		};
 
@@ -268,7 +269,7 @@ jQuery(function($) {
 
 		$.ajax({
 			type : 'POST',
-			url: 'index.php?option=com_ajax&request=helixultimate&preview=theme&view=style&id='+ helixUltimateStyleId +'&action=upload-media&format=json',
+			url: 'index.php?option=com_ajax&request=task&helix=ultimate&action=upload-media&format=json',
 			data: options.data,
 			contentType: false,
 			cache: false,

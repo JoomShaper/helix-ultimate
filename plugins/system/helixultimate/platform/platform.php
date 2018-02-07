@@ -58,15 +58,10 @@ class Platform
     {
         if( $this->option == 'com_ajax' && $this->helix == 'ultimate' && $this->request == 'task')
         {
-            if (!$this->permission)
-            {
-                throw new \Exception("Permission Denied", 403);
-            }
-
             $request = new Request;
             $request->initialize();
         }
-        elseif( $this->option == 'com_ajax' && $this->helix == 'ultimate' && $this->view == 'style' && $this->id && $this->permission)
+        elseif( $this->option == 'com_ajax' && $this->helix == 'ultimate' && $this->id && $this->permission)
         {
             $frmkHTML     = $this->frameworkFormHTMLStart();
             $frmkOptions  = new Options();

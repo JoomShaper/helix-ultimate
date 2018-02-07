@@ -123,15 +123,20 @@ class  plgSystemHelixultimate extends JPlugin
         $helix      = $this->app->input->get('helix','');
         $view       = $this->app->input->get('view','');
         $task       = $this->app->input->get('task','');
+        $request    = $this->app->input->get('request','');
         $action     = $this->app->input->get('action', '');
         $id         = $this->app->input->get('id',NULL,'INT');
 
         $doc = JFactory::getDocument();
         if ($this->app->isAdmin())
         {
-            if ($option == 'com_ajax' && $helix == 'ultimate' && $view == 'style')
+            if ($option == 'com_ajax' && $helix == 'ultimate')
             {
-                Platform::loadFrameworkSystem();
+                if($request == '')
+                {
+                    Platform::loadFrameworkSystem();
+                }
+                
                 JEventDispatcher::getInstance()->trigger('onAfterRespond');
                 die;
             }

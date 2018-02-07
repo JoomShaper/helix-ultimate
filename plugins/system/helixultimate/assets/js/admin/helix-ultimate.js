@@ -75,7 +75,7 @@ jQuery(function($){
         
         $.ajax({
             type   : 'POST',
-            url    : 'index.php?option=com_ajax&request=helixultimate&preview=theme&view=style&id='+ helixUltimateStyleId +'&action=save-tmpl-style&format=json',
+            url    : 'index.php?option=com_ajax&request=helixultimate&helix=ultimate&view=style&id='+ helixUltimateStyleId +'&action=save-tmpl-style&format=json',
             data   : data,
             beforeSend: function(){
               $(self).find('.fa').removeClass('fa-save').addClass('fa-spinner fa-spin');

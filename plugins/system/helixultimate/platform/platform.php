@@ -24,7 +24,7 @@ class Platform
 
     protected $option;
 
-    protected $preview;
+    protected $helix;
 
     protected $view;
 
@@ -46,7 +46,7 @@ class Platform
         $this->version    = Helper::getVersion();
 
         $this->option     = $input->get('option','');
-        $this->preview    = $input->get('preview','');
+        $this->helix      = $input->get('helix','');
         $this->view       = $input->get('view','');
         $this->id         = $input->get('id',NULL);
         $this->request    = $input->get('request','');
@@ -56,7 +56,7 @@ class Platform
 
     public function initialize()
     {
-        if( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->request == 'helixultimate')
+        if( $this->option == 'com_ajax' && $this->helix == 'ultimate' && $this->request == 'task')
         {
             if (!$this->permission)
             {
@@ -66,7 +66,7 @@ class Platform
             $request = new Request;
             $request->initialize();
         }
-        elseif( $this->option == 'com_ajax' && $this->preview == 'theme' && $this->view == 'style' && $this->id && $this->permission)
+        elseif( $this->option == 'com_ajax' && $this->helix == 'ultimate' && $this->view == 'style' && $this->id && $this->permission)
         {
             $frmkHTML     = $this->frameworkFormHTMLStart();
             $frmkOptions  = new Options();

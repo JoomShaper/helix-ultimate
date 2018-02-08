@@ -561,12 +561,12 @@ class HelixUltimate
     {
         if ($this->params->get('compress_css'))
         {
-            $theme->compress_css();
+            $this->compress_css();
         }
 
         if ($this->params->get('compress_js'))
         {
-            $theme->compress_js($this->params->get('exclude_js'));
+            $this->compress_js($this->params->get('exclude_js'));
         }
 
         if ($before_body = $this->params->get('before_body'))
@@ -760,7 +760,7 @@ class HelixUltimate
     }
 
     //Exclude js and return others js
-    private function excludeJS($key, $excludes)
+    private function exclude_js($key, $excludes)
     {
         $match = false;
         if ($excludes)
@@ -779,7 +779,7 @@ class HelixUltimate
     }
 
     //function to compress js files
-    public function compressJS($excludes = '')
+    public function compress_js($excludes = '')
     {
         require_once(__DIR__ . '/classes/Minifier.php');
 
@@ -805,14 +805,14 @@ class HelixUltimate
 
             if (JFile::exists($js_file))
             {
-                if (!$this->excludeJS($key, $excludes))
+                if (!$this->exclude_js($key, $excludes))
                 {
                     $scripts[] = $key;
                     $md5sum .= md5($key);
                     $compressed = \JShrink\Minifier::minify(JFile::read($js_file), array('flaggedComments' => false));
                     $minifiedCode .= "/*------ " . JFile::getName($js_file) . " ------*/\n" . $compressed . "\n\n"; //add file name to compressed JS
 
-                    unset($doc->_scripts[$key]); //Remove sripts
+                    unset($this->doc->_scripts[$key]); //Remove sripts
                 }
             }
         }
@@ -839,7 +839,7 @@ class HelixUltimate
                         JFile::write($file, $minifiedCode);
                     }
                 }
-                $doc->addScript(JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
+                $this->doc->addScript(JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
             }
         }
 
@@ -865,45 +865,62 @@ class HelixUltimate
         return $getLayout->render($options);
     }
 
-    //Compress CSS files
-    public function compressCSS()
-    {
-        require_once(__DIR__ . '/classes/cssmin.php');
+    public function minifyCss($css_code){
+        // Remove comments
+        $css_code = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $css_code);
+        
+        // Remove space after colons
+        $css_code = str_replace(': ', ':', $css_code);
+    
+        // Remove whitespace
+        $css_code = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $css_code);
+    
+        // Remove Empty Selectors without any properties
+        $css_code = preg_replace('/(?:(?:[^\r\n{}]+)\s?{[\s]*})/', '', $css_code);
+    
+        // Remove Empty Media Selectors without any properties or selector
+        $css_code = preg_replace('/@media\s?\((?:[^\r\n,{}]+)\s?{[\s]*}/', '', $css_code);
+    
+        return $css_code;
+    }
 
-        $doc             = JFactory::getDocument();
-        $app             = JFactory::getApplication();
+    //Compress CSS files
+    public function compress_css()
+    {
+        $app             = \JFactory::getApplication();
         $cachetime       = $app->get('cachetime', 15);
-        $all_stylesheets = $doc->_styleSheets;
-        $cache_path      = JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
+        $all_stylesheets = $this->doc->_styleSheets;
+        $cache_path      = \JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
         $stylesheets     = array();
-        $root_url        = JURI::root(true);
+        $root_url        = \JURI::root(true);
         $minifiedCode    = '';
         $md5sum          = '';
 
         //Check all local stylesheets
         foreach ($all_stylesheets as $key => $value)
         {
-            $css_file = str_replace($root_url, JPATH_ROOT, $key);
+            $css_file = str_replace($root_url, \JPATH_ROOT, $key);
 
-            if (strpos($css_file, JPATH_ROOT) === false)
+            if (strpos($css_file, \JPATH_ROOT) === false)
             {
-                $css_file = JPATH_ROOT . $key;
+                $css_file = \JPATH_ROOT . $key;
             }
 
             global $absolute_url;
-            $absolute_url = $key;//absoulte path of each css file
+            $absolute_url = $key;            
 
-            if (JFile::exists($css_file))
+            if (\JFile::exists($css_file))
             {
                 $stylesheets[] = $key;
                 $md5sum .= md5($key);
-                $compressed = CSSMinify::process(JFile::read($css_file));
+                $compressed = $this->minifyCss(file_get_contents($css_file));
 
-                $fixUrl = preg_replace_callback('/url\(([^\)]*)\)/', function ($matches){
+                $fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches){
+
+                        global $absolute_url;
 
                         $url = str_replace(array('"', '\''), '', $matches[1]);
 
-                        global $absolute_url;
                         $base = dirname($absolute_url);
                         while (preg_match('/^\.\.\//', $url))
                         {
@@ -915,35 +932,35 @@ class HelixUltimate
                         return "url('$url')";
                     }, $compressed);
 
-                $minifiedCode .= "/*------ " . JFile::getName($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
+                $minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
 
-                unset($doc->_styleSheets[$key]); //Remove scripts
+                unset($this->doc->_styleSheets[$key]); //Remove stylesheets
             }
         }
 
         //Compress All stylesheets
         if ($minifiedCode)
         {
-            if (!JFolder::exists($cache_path))
+            if (!\JFolder::exists($cache_path))
             {
-                JFolder::create($cache_path, 0755);
+                \JFolder::create($cache_path, 0755);
             }
             else
             {
                 $file = $cache_path . '/' . md5($md5sum) . '.css';
 
-                if (!JFile::exists($file))
+                if (!\JFile::exists($file))
                 {
-                    JFile::write($file, $minifiedCode);
+                    \JFile::write($file, $minifiedCode);
                 }
                 else
                 {
                     if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
                     {
-                        JFile::write($file, $minifiedCode);
+                        \JFile::write($file, $minifiedCode);
                     }
                 }
-                $doc->addStylesheet(JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
+                $this->doc->addStylesheet(\JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
             }
         }
 

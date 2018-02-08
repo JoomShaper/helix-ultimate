@@ -17,7 +17,7 @@ if(isset($row->settings))
     $rowSettings = RowColumnSettings::getSettings($row->settings);
 }
 
-$name = JText::_('HELIX_SECTION_TITLE');
+$name = JText::_('HELIX_ULTIMATE_SECTION_TITLE');
 if (isset($row->settings->name))
 {
     $name = $row->settings->name;

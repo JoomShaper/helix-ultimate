@@ -132,7 +132,7 @@ if ($custom_js = $this->params->get('custom_js'))
     
     <!-- Go to top -->
     <?php if ($this->params->get('goto_top', 0)) : ?>
-        <a href="#" class="sp-scroll-up"><span class="fa fa-chevron-up"></span></a>
+        <a href="#" class="sp-scroll-up" aria-label="Scroll Up"><span class="fa fa-chevron-up" aria-hidden="true"></span></a>
     <?php endif; ?>
 
     </body>

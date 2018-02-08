@@ -98,6 +98,11 @@ a{
 	}
 
 	.sp-dropdown {
+
+		.sp-dropdown-inner{
+			background: $menu_dropdown_bg_color;
+		}
+
 		li.sp-menu-item {
 			>a {
 				color: $menu_dropdown_text_color;

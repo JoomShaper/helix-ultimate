@@ -43,7 +43,7 @@ class HelixUltimate
     public function bodyClass($class = '')
     {
         $menu            = $this->app->getMenu()->getActive();
-        $bodyClass       = 'site ' . htmlspecialchars(str_replace('_', '-', $this->input->get('option', '', 'STRING')));
+        $bodyClass       = 'site helix-ultimate ' . htmlspecialchars(str_replace('_', '-', $this->input->get('option', '', 'STRING')));
         $bodyClass      .= ' view-' . htmlspecialchars($this->input->get('view', '', 'STRING'));
         $bodyClass      .= ' layout-' . htmlspecialchars($this->input->get('layout', 'default', 'STRING'));
         $bodyClass      .= ' task-' . htmlspecialchars($this->input->get('task', 'none', 'STRING'));

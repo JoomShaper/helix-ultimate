@@ -2055,7 +2055,7 @@ input[type="color"],
 }
 
 select:not([multiple]) {
-  height: calc(30px + 2px);
+  height: 34px;
 }
 
 select:focus::-ms-value {

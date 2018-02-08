@@ -126,12 +126,13 @@ class Platform
         $style_id = (int) $app->input->get('id', 0, 'INT');
         $style = Helper::getTemplateStyle($style_id);
         $template = $style->template;
+        $helix_plg_url = \JURI::root(true) . '/plugins/system/helixultimate';
 
         \JFactory::getLanguage()->load('tpl_' . $template, \JPATH_SITE, null, true);;
 
         $doc->setTitle("Helix Ultimate Framework");
-
-        $helix_plg_url = \JURI::root(true).'/plugins/system/helixultimate';
+        $doc->addFavicon( $helix_plg_url . '/assets/images/favicon.ico');
+        
         $doc->addScriptDeclaration('var helixUltimateStyleId = ' . $style_id . ';');
         
         \JHtml::_('jquery.ui', array('core', 'sortable'));

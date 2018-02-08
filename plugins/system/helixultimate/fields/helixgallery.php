@@ -44,16 +44,18 @@ class JFormFieldHelixgallery extends JFormField
 				$basename = basename($src);
 
 				$thumbnail = \JPATH_ROOT . '/' . dirname($value) . '/' . \JFile::stripExt($basename) . '_thumbnail.' . \JFile::getExt($basename);
-				if(file_exists($thumbnail)) {
+				$small_size = \JPATH_ROOT . '/' . dirname($value) . '/' . \JFile::stripExt($basename) . '_small.' . \JFile::getExt($basename);
+				
+				if(file_exists($thumbnail))
+				{
 					$src = \JURI::root(true) . '/' . dirname($value) . '/' . \JFile::stripExt($basename) . '_thumbnail.' . \JFile::getExt($basename);
 				}
-
-				$small_size = \JPATH_ROOT . '/' . dirname($value) . '/' . \JFile::stripExt($basename) . '_small.' . \JFile::getExt($basename);
-				if(file_exists($small_size)) {
+				else if(file_exists($small_size))
+				{
 					$src = \JURI::root(true) . '/' . dirname($value) . '/' . \JFile::stripExt($basename) . '_small.' . \JFile::getExt($basename);
 				}
 
-				$output .= '<li class="helix-ultimate-gallery-item" data-src="' . $data_src . '"><a href="#" class="btn btn-danger btn-helix-ultimate-remove-gallery-image"><span class="fa fa-times"></span></a><img src="'. $src .'" alt=""></li>';
+				$output .= '<li class="helix-ultimate-gallery-item" data-src="' . $data_src . '"><a href="#" class="btn btn-mini btn-danger btn-helix-ultimate-remove-gallery-image"><span class="fa fa-times"></span></a><img src="'. $src .'" alt=""></li>';
 			}
 		}
 

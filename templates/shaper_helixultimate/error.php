@@ -72,6 +72,14 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 				</div>
 			<?php endif; ?>
 		</div>
+
+		<?php if($params->get('error_bg')) : ?>
+			<style>
+				body {
+					background-image: url(<?php echo JURI::base(true) . '/' . $params->get('error_bg'); ?>)
+				}
+			</style>
+		<?php endif; ?>
 	</body>
 
 </html>

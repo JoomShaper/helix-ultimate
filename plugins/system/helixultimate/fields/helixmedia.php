@@ -10,14 +10,17 @@ defined ('_JEXEC') or die ();
 
 jimport('joomla.form.formfield');
 
-class JFormFieldHelixmedia extends JFormField {
+class JFormFieldHelixmedia extends JFormField
+{
 
 	protected $type = 'Helixmedia';
 
-	public function getInput() {
-
+	public function getInput()
+	{
+		
 		$output = '<div class="helix-ultimate-image-holder">';
-		if($this->value != '') {
+		if($this->value != '')
+		{
 			$output .= '<img src="'. \JURI::root() . $this->value .'" alt="">';
 		}
 		$output .= '</div>';

@@ -44,72 +44,72 @@ class HelixUltimateFeatureSocial
 
 			if( $facebook )
 			{
-				$html .= '<li class="social-icon-facebook"><a target="_blank" href="'. $facebook .'"><span class="fa fa-facebook"></span></a></li>';
+				$html .= '<li class="social-icon-facebook"><a target="_blank" href="'. $facebook .'" aria-label="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $twitter )
 			{
-				$html .= '<li class="social-icon-twitter"><a target="_blank" href="'. $twitter .'"><span class="fa fa-twitter"></span></a></li>';
+				$html .= '<li class="social-icon-twitter"><a target="_blank" href="'. $twitter .'" aria-label="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $googleplus )
 			{
-				$html .= '<li class="social-icon-google-plus"><a target="_blank" href="'. $googleplus .'"><span class="fa fa-google-plus"></span></a></li>';
+				$html .= '<li class="social-icon-google-plus"><a target="_blank" href="'. $googleplus .'" aria-label="Google Plus"><span class="fa fa-google-plus" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $pinterest )
 			{
-				$html .= '<li class="social-icon-pinterest"><a target="_blank" href="'. $pinterest .'"><span class="fa fa-pinterest"></span></a></li>';
+				$html .= '<li class="social-icon-pinterest"><a target="_blank" href="'. $pinterest .'" aria-label="Pinterest"><span class="fa fa-pinterest" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $youtube )
 			{
-				$html .= '<li><a target="_blank" href="'. $youtube .'"><span class="fa fa-youtube"></span></a></li>';
+				$html .= '<li><a target="_blank" href="'. $youtube .'" aria-label="Youtube"><span class="fa fa-youtube" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $linkedin )
 			{
-				$html .= '<li class="social-icon-linkedin"><a target="_blank" href="'. $linkedin .'"><span class="fa fa-linkedin"></span></a></li>';
+				$html .= '<li class="social-icon-linkedin"><a target="_blank" href="'. $linkedin .'" aria-label="LinkedIn"><span class="fa fa-linkedin" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $dribbble )
 			{
-				$html .= '<li class="social-icon-dribbble"><a target="_blank" href="'. $dribbble .'"><span class="fa fa-dribbble"></span></a></li>';
+				$html .= '<li class="social-icon-dribbble"><a target="_blank" href="'. $dribbble .'" aria-label="Dribbble"><span class="fa fa-dribbble" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $instagram )
 			{
-				$html .= '<li class="social-icon-instagram"><a target="_blank" href="'. $dribbble .'"><span class="fa fa-instagram"></span></a></li>';
+				$html .= '<li class="social-icon-instagram"><a target="_blank" href="'. $instagram .'" aria-label="Instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $behance )
 			{
-				$html .= '<li class="social-icon-behance"><a target="_blank" href="'. $behance .'"><span class="fa fa-behance"></span></a></li>';
+				$html .= '<li class="social-icon-behance"><a target="_blank" href="'. $behance .'" aria-label="Behance"><span class="fa fa-behance" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $flickr )
 			{
-				$html .= '<li class="social-icon-flickr"><a target="_blank" href="'. $flickr .'"><span class="fa fa-flickr"></span></a></li>';
+				$html .= '<li class="social-icon-flickr"><a target="_blank" href="'. $flickr .'" aria-label="Flickr"><span class="fa fa-flickr" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $vk )
 			{
-				$html .= '<li class="social-icon-vk"><a target="_blank" href="'. $vk .'"><span class="fa fa-vk"></span></a></li>';
+				$html .= '<li class="social-icon-vk"><a target="_blank" href="'. $vk .'" aria-label="VK"><span class="fa fa-vk" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $skype )
 			{
-				$html .= '<li class="social-icon-skype"><a href="skype:'. $skype .'?chat"><span class="fa fa-skype"></span></a></li>';
+				$html .= '<li class="social-icon-skype"><a href="skype:'. $skype .'?chat" aria-label="Skype"><span class="fa fa-skype" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $whatsapp )
 			{
-				$html .= '<li class="social-icon-whatsapp"><a href="whatsapp://send?abid='. $whatsapp .'&text=Hi"><span class="fa fa-whatsapp"></span></a></li>';
+				$html .= '<li class="social-icon-whatsapp"><a href="whatsapp://send?abid='. $whatsapp .'&text=Hi" aria-label="WhatsApp"><span class="fa fa-whatsapp" aria-hidden="true"></span></a></li>';
 			}
 
 			if( $custom ) {
 				$explt_custom = explode(' ', $custom);
-				$html .= '<li class="social-icon-custom"><a target="_blank" href="'. $explt_custom[1] .'"><span class="fa '. $explt_custom[0] .'"></span></a></li>';
+				$html .= '<li class="social-icon-custom"><a target="_blank" href="'. $explt_custom[1] .'"><span class="fa '. $explt_custom[0] .'" aria-hidden="true"></span></a></li>';
 			}
 
 			$html .= '</ul>';

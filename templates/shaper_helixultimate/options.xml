@@ -160,15 +160,15 @@
 	</fieldset>
 
 	<fieldset name="menu" label="Navigation" icon="fa fa-list">
-		<field name="menu" type="menu" helixgroup="megamenu" default="mainmenu" label="HELIX_MEGAMENU_SELECT" description="HELIX_MEGAMENU_SELECT_DESC" />
-		<field name="menu_type" helixgroup="megamenu" type="list" default="mega_offcanvas" label="HELIX_MENU_TYPE" description="HELIX_MENU_TYPE_DESC">
-			<option value="mega_offcanvas">HELIX_MEGAMENU_OFFCANVAS</option>
-			<option value="mega">HELIX_MEGAMENU</option>
-			<option value="offcanvas">HELIX_OFFCANVAS</option>
+		<field name="menu" type="menu" helixgroup="megamenu" default="mainmenu" label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
+		<field name="menu_type" helixgroup="megamenu" type="list" default="mega_offcanvas" label="HELIX_ULTIMATE_MENU_TYPE" description="HELIX_ULTIMATE_MENU_TYPE_DESC">
+			<option value="mega_offcanvas">HELIX_ULTIMATE_MEGAMENU_OFFCANVAS</option>
+			<option value="mega">HELIX_ULTIMATE_MEGAMENU</option>
+			<option value="offcanvas">HELIX_ULTIMATE_OFFCANVAS</option>
 		</field>
-		<field name="dropdown_width" helixgroup="megamenu" type="number" label="HELIX_MEGAMENU_DROPDOWN_WIDTH" description="HELIX_MEGAMENU_DROPDOWN_WIDTH_DESC" hint="240" showon="menu_type!:offcanvas" />
+		<field name="dropdown_width" helixgroup="megamenu" type="number" label="HELIX_ULTIMATE_MEGAMENU_DROPDOWN_WIDTH" hint="240" showon="menu_type!:offcanvas" />
 
-		<field name="menu_animation" helixgroup="megamenu" type="list" default="menu-fade" label="HELIX_MENU_DROPDOWN_ANIMATION" description="HELIX_MENU_DROPDOWN_ANIMATION_DESC" showon="menu_type!:offcanvas">
+		<field name="menu_animation" helixgroup="megamenu" type="list" default="menu-fade" label="HELIX_ULTIMATE_MENU_DROPDOWN_ANIMATION" showon="menu_type!:offcanvas">
 			<option value="menu-animation-none">HELIX_ULTIMATE_NO_ANIMATION</option>
 			<option value="menu-animation-fade">HELIX_ULTIMATE_FADE_IN_ANIMATION</option>
 			<option value="menu-animation-fade-up">HELIX_ULTIMATE_FADE_IN_UP_ANIMATION</option>
@@ -277,10 +277,10 @@
 
 	<!--Custom Code-->
 	<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">
-		<field name="before_head" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_HEAD" description="HELIX_BEFORE_HEAD_DESC" filter="raw" />
-		<field name="before_body" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_BEFORE_BODY" description="HELIX_BEFORE_BODY_DESC" filter="raw" />
-		<field name="custom_css" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_CSS" description="HELIX_CUSTOM_CSS_DESC" filter="raw" />
-		<field name="custom_js" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_CUSTOM_JS" description="HELIX_CUSTOM_JS_DESC" filter="raw" />
+		<field name="before_head" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_ULTIMATE_BEFORE_HEAD" description="HELIX_ULTIMATE_BEFORE_HEAD_DESC" filter="raw" />
+		<field name="before_body" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_ULTIMATE_BEFORE_BODY" description="HELIX_ULTIMATE_BEFORE_BODY_DESC" filter="raw" />
+		<field name="custom_css" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_ULTIMATE_CUSTOM_CSS" description="HELIX_ULTIMATE_CUSTOM_CSS_DESC" filter="raw" />
+		<field name="custom_js" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_ULTIMATE_CUSTOM_JS" description="HELIX_ULTIMATE_CUSTOM_JS_DESC" filter="raw" />
 	</fieldset>
 
 	<!--Advanced-->

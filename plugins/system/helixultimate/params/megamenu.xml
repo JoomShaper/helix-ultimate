@@ -6,8 +6,8 @@
 		</fieldset>
 		<fieldset name="helixultimatepagetitle" label="HELIX_ULTIMATE_PAGE_TITLE">
 			<field name="enable_page_title" type="radio" class="btn-group" default="0" label="ENABLE_PAGE_TITLE" description="ENABLE_PAGE_TITLE_DESC">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
+				<option value="1">HELIX_ULTIMATE_YES</option>
+				<option value="0">HELIX_ULTIMATE_NO</option>
 			</field>
 
 			<field name="page_title_alt" type="text" default="" label="PAGE_TITLE_ALT" description="PAGE_TITLE_ALT_DESC" />

@@ -72,7 +72,8 @@ class HelixUltimate
 
         JHtml::_('jquery.framework');
         JHtml::_('bootstrap.framework');
-        unset($doc->_scripts[JURI::base(true) . '/media/jui/js/bootstrap.min.js']); // Remove bootstrap
+        unset($doc->_scripts[JURI::base(true) . '/media/jui/js/bootstrap.min.js']);
+        unset($doc->_scripts[JURI::base(true) . '/media/jui/js/bootstrap-tooltip-extended.min.js']);
 
         $webfonts = array();
 

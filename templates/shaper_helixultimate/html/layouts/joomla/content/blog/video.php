@@ -10,9 +10,9 @@ defined ('JPATH_BASE') or die();
 
 extract($displayData);
 
-if(isset($attribs->helix_video) && $attribs->helix_video)
+if(isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video)
 {
-	$video = parse_url($attribs->helix_video);
+	$video = parse_url($attribs->helix_ultimate_video);
 	
 	switch($video['host'])
 	{

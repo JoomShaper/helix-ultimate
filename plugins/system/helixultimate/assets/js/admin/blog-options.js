@@ -65,10 +65,10 @@ jQuery(function($) {
 
 						if($image.length) {
 							$('.helix-ultimate-image-field').removeClass('helix-ultimate-image-field-empty').addClass('helix-ultimate-image-field-has-image');
-							$field.find('#jform_attribs_helix_featured_image').val($image.data('src'));
+							$field.find('#jform_attribs_helix_ultimate_image').val($image.data('src'));
 						} else {
 							$('.helix-ultimate-image-field').removeClass('helix-ultimate-image-field-has-image').addClass('helix-ultimate-image-field-empty');
-							$field.find('#jform_attribs_helix_featured_image').val('');
+							$field.find('#jform_attribs_helix_ultimate_image').val('');
 						}
 
 		 				$this.val('');
@@ -128,7 +128,7 @@ jQuery(function($) {
 					if(data.status) {
 						$parent.find('.helix-ultimate-image-upload-wrapper').empty();
 						$('.helix-ultimate-image-field').removeClass('helix-ultimate-image-field-has-image').addClass('helix-ultimate-image-field-empty');
-						$parent.find('#jform_attribs_helix_featured_image').val('');
+						$parent.find('#jform_attribs_helix_ultimate_image').val('');
 
 					} else {
 						alert(data.output);

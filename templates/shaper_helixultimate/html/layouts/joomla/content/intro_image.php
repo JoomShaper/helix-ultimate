@@ -26,15 +26,15 @@ else
 }
 
 $intro_image = '';
-if(isset($attribs->helix_featured_image) && $attribs->helix_featured_image != '')
+if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '')
 {
 	if($blog_list_image == 'default')
 	{
-		$intro_image = $attribs->helix_featured_image;
+		$intro_image = $attribs->helix_ultimate_image;
 	}
 	else
 	{
-		$intro_image = $attribs->helix_featured_image;
+		$intro_image = $attribs->helix_ultimate_image;
 		$basename = basename($intro_image);
 		$list_image = JPATH_ROOT . '/' . dirname($intro_image) . '/' . JFile::stripExt($basename) . '_'. $blog_list_image .'.' . JFile::getExt($basename);
 		if(JFile::exists($list_image)) {

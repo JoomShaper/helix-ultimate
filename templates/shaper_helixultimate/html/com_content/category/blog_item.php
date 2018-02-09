@@ -14,7 +14,7 @@ $attribs = json_decode($this->item->attribs);
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $canEdit = $this->item->params->get('access-edit');
 $info    = $params->get('info_block_position', 0);
-$article_format = (isset($attribs->helix_article_format) && $attribs->helix_article_format) ? $attribs->helix_article_format : 'standard';
+$article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';
 
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
@@ -22,7 +22,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 ?>
 
 <?php if($article_format == 'gallery') : ?>
-	<?php echo JLayoutHelper::render('joomla.content.blog.gallery', array('attribs' => $attribs)); ?>
+	<?php echo JLayoutHelper::render('joomla.content.blog.gallery', array('attribs' => $attribs, 'id'=>$this->item->id)); ?>
 <?php elseif($article_format == 'video') : ?>
 	<?php echo JLayoutHelper::render('joomla.content.blog.video', array('attribs' => $attribs)); ?>
 <?php elseif($article_format == 'audio') : ?>

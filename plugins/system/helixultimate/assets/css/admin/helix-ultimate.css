@@ -2355,7 +2355,7 @@ select:focus::-ms-value {
   display: none;
 }
 
-.control-group-checkbox {
+.control-group-checkbox .control-group-inner {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2364,7 +2364,7 @@ select:focus::-ms-value {
   align-items: center;
 }
 
-.control-group-checkbox > div {
+.control-group-checkbox .control-group-inner > div {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
@@ -2372,7 +2372,7 @@ select:focus::-ms-value {
   max-width: none;
 }
 
-.control-group-checkbox > div.control-label {
+.control-group-checkbox .control-group-inner > div.control-label {
   margin-right: auto!important;
 }
 

@@ -286,7 +286,7 @@
 			</preset>
 		</field>
 
-		<field name="custom_style" type="checkbox" default="1" label="HELIX_ULTIMATE_CUSTOM_STYLE" />
+		<field name="custom_style" type="checkbox" default="1" label="HELIX_ULTIMATE_CUSTOM_STYLE" description="HELIX_ULTIMATE_CUSTOM_STYLE_DESC" />
 		<field name="text_color" class="preset-control" helixgroup="preset_body" type="color" default="#252525" label="HELIX_ULTIMATE_COLOR" />
 		<field name="bg_color" class="preset-control" helixgroup="preset_body" type="color" default="#FFFFFF" label="HELIX_ULTIMATE_BACKGROUND_COLOR" />
 		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_LINK_COLOR" />

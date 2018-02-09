@@ -155,15 +155,20 @@ class Options{
 
         $field_html = '';
         $field_html .= '<div class="control-group ' . (( $group ) ? 'group-style-'.$group : '') . '"'. $attribs .'>';
+        
+        $field_html .= '<div class="control-group-inner">';
         if(!$field->getAttribute('hideLabel')) {
           $field_html .= '<div class="control-label">' . $field->label .'</div>';
         }
         $field_html .= '<div class="controls">';
         $field_html .= $field->input;
+        $field_html .= '</div>';
+        $field_html .= '</div>';
+
         if($field->getAttribute('description') != '') {
             $field_html .= '<div class="control-help">' . \JText::_($field->getAttribute('description')) . '</div>';
         }
-        $field_html .= '</div>';
+        
         $field_html .= '</div>';
 
         return $field_html;

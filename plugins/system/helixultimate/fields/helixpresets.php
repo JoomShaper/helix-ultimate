@@ -27,7 +27,15 @@ class JFormFieldHelixpresets extends JFormField
     
         foreach ($children as $child)
         {
-            $class = ($this->value == $child['name']) ? ' active' : '';
+            $preset = json_decode($this->value);
+
+            $class = '';
+
+            if(isset($preset->preset) && $preset->preset == $child['name'])
+            {
+                $class = ' active';
+            }
+
             $childName = $child->getName();
 
             if ($childName == 'preset')

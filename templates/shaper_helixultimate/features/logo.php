@@ -26,6 +26,9 @@ class HelixUltimateFeatureLogo
         
         $menu_type         = $this->params->get('menu_type');
         $offcanvs_position = $this->params->get('offcanvas_position', 'right');
+
+        $presetVars = (array) json_decode($this->params->get('preset'));
+        $preset = (isset($presetVars->preset) && $presetVars->preset) ? $presetVars->preset : 'default';
         
         
         //Retina Image
@@ -38,7 +41,7 @@ class HelixUltimateFeatureLogo
 			}
 			else
 			{
-                $path = \JPATH_ROOT . '/templates/' . $template_name . '/images/presets/' . $this->params->get('preset') . '/logo.png';
+                $path = \JPATH_ROOT . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.png';
             }
             
             $ext = \JFile::getExt($path);
@@ -116,7 +119,7 @@ class HelixUltimateFeatureLogo
                 $html .= '<div class="logo">';
                 $html .= '<a href="' . \JURI::base(true) . '/">';
                 
-                $html .= '<img class="sp-default-logo sp-logo-svg' . $custom_logo_class . '" src="' . JURI::base(true) . '/templates/' . $template_name . '/images/presets/' . $this->params->get('preset') . '/logo.svg" alt="' . $sitename . '">';
+                $html .= '<img class="sp-default-logo sp-logo-svg' . $custom_logo_class . '" src="' . JURI::base(true) . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.svg" alt="' . $sitename . '">';
                 
 				if ($this->params->get('mobile_logo'))
 				{

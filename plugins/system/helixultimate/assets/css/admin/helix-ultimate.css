@@ -3282,21 +3282,22 @@ select:focus::-ms-value {
 }
 
 .helix-ultimate-presets {
-  margin: -10px;
+  margin: -5px;
 }
 
 .helix-ultimate-presets>div {
-  margin: 10px;
+  margin: 5px;
 }
 
 .helix-ultimate-presets>div {
   display: block;
   padding: 5px;
-  width: 72px;
+  width: 67px;
   height: 64px;
   float: left;
   position: relative;
   cursor: pointer;
+  border-radius: 3px;
 }
 
 .helix-ultimate-presets .helix-ultimate-preset-title {
@@ -3309,7 +3310,6 @@ select:focus::-ms-value {
   padding: 5px;
   color: #fff;
   text-transform: capitalize;
-  letter-spacing: 1px;
 }
 
 .helix-ultimate-presets>div.active {
@@ -3323,6 +3323,7 @@ select:focus::-ms-value {
   padding: 5px 5px 0 0;
   left: 5px;
   bottom: 5px;
+  border-radius: 0 3px 0 0;
 }
 
 /*Webfonts*/

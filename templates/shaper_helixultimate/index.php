@@ -25,33 +25,39 @@ if ($this->params->get('comingsoon'))
   header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
 }
 
-// print_r($this->params);
+$custom_style = $this->params->get('custom_style', 0);
+if($custom_style)
+{
+    $scssVars = array(
+        'preset' => 'default',
+        'text_color' => $this->params->get('text_color'),
+        'bg_color' => $this->params->get('bg_color'),
+        'link_color' => $this->params->get('link_color'),
+        'link_hover_color' => $this->params->get('link_hover_color'),
+        'header_bg_color' => $this->params->get('header_bg_color'),
+        'logo_text_color' => $this->params->get('logo_text_color'),
+        'menu_text_color' => $this->params->get('menu_text_color'),
+        'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
+        'menu_text_active_color' => $this->params->get('menu_text_active_color'),
+        'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
+        'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
+        'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
+        'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
+        'footer_bg_color' => $this->params->get('footer_bg_color'),
+        'footer_text_color' => $this->params->get('footer_text_color'),
+        'footer_link_color' => $this->params->get('footer_link_color'),
+        'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
+        'topbar_bg_color' => $this->params->get('topbar_bg_color'),
+        'topbar_text_color' => $this->params->get('topbar_text_color')
+    );
+}
+else
+{
+    $scssVars = (array) json_decode($this->params->get('preset'));
+}
 
-// die();
+$scssVars['header_height'] = $this->params->get('header_height', '60px');
 
-$scssVars = array(
-    'preset' => $this->params->get('preset', 'preset1'),
-    'header_height' => $this->params->get('header_height', '60px'),
-    'text_color' => $this->params->get('text_color'),
-    'bg_color' => $this->params->get('bg_color'),
-    'link_color' => $this->params->get('link_color'),
-    'link_hover_color' => $this->params->get('link_hover_color'),
-    'header_bg_color' => $this->params->get('header_bg_color'),
-    'logo_text_color' => $this->params->get('logo_text_color'),
-    'menu_text_color' => $this->params->get('menu_text_color'),
-    'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
-    'menu_text_active_color' => $this->params->get('menu_text_active_color'),
-    'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
-    'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
-    'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
-    'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
-    'footer_bg_color' => $this->params->get('footer_bg_color'),
-    'footer_text_color' => $this->params->get('footer_text_color'),
-    'footer_link_color' => $this->params->get('footer_link_color'),
-    'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
-    'topbar_bg_color' => $this->params->get('topbar_bg_color'),
-    'topbar_text_color' => $this->params->get('topbar_text_color')
-);
 
 //Body Background Image
 if ($bg_image = $this->params->get('body_bg_image'))
@@ -93,7 +99,7 @@ if ($custom_js = $this->params->get('custom_js'))
         $theme->add_js('jquery.sticky.js, main.js');
 
         $theme->add_scss('master', $scssVars, 'template');
-        $theme->add_scss('presets', $scssVars, 'presets/' . $this->params->get('preset', 'preset1'));
+        $theme->add_scss('presets', $scssVars, 'presets/' . $scssVars['preset']);
         $theme->add_css('custom');
 
         //Before Head

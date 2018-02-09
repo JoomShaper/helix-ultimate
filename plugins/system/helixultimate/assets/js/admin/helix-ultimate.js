@@ -95,6 +95,8 @@ jQuery(function($){
         $('#layout').val( JSON.stringify(getGeneratedLayout()) );
         webfontData();
 
+        $('.helix-ultimate-input-preset').val(JSON.stringify($('.helix-ultimate-preset.active').data()));
+
         var tmplID = $(this).data('id'),
             tmplView = $(this).data('view'),
             data = $('#helix-ultimate-style-form').serialize();

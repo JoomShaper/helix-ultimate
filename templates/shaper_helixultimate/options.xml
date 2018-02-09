@@ -108,7 +108,7 @@
 
 	<!--Presets-->
 	<fieldset name="presets" label="Presets" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
-		<field name="preset" type="helixpresets" default="preset1" label="Select an option" description="">
+		<field name="preset" type="helixpresets" default="preset1">
 			<preset name="preset1" label="Preset 1" default="#0345BF">
 				<color name="text_color" value="#252525" />
 				<color name="bg_color" value="#FFFFFF" />
@@ -131,22 +131,154 @@
 				<color name="footer_link_hover_color" value="#FFFFFF" />
 			</preset>
 
-			<preset name="preset2" label="Preset 2" default="#0345BF">
+			<preset name="preset2" label="Preset 2" default="#ec430f">
 				<color name="text_color" value="#252525" />
 				<color name="bg_color" value="#FFFFFF" />
-				<color name="link_color" value="#0345BF" />
+				<color name="link_color" value="#ec430f" />
 				<color name="link_hover_color" value="#044CD0" />
 				<color name="header_bg_color" value="#FFFFFF" />
 				<color name="topbar_bg_color" value="#333333" />
 				<color name="topbar_text_color" value="#AAAAAA" />
-				<color name="logo_text_color" value="#0345BF" />
+				<color name="logo_text_color" value="#ec430f" />
 				<color name="menu_text_color" value="#252525" />
-				<color name="menu_text_hover_color" value="#0345BF" />
-				<color name="menu_text_active_color" value="#0345BF" />
+				<color name="menu_text_hover_color" value="#ec430f" />
+				<color name="menu_text_active_color" value="#ec430f" />
 				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
 				<color name="menu_dropdown_text_color" value="#252525" />
-				<color name="menu_dropdown_text_hover_color" value="#0345BF" />
-				<color name="menu_dropdown_text_active_color" value="#0345BF" />
+				<color name="menu_dropdown_text_hover_color" value="#ec430f" />
+				<color name="menu_dropdown_text_active_color" value="#ec430f" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
+			</preset>
+
+			<preset name="preset3" label="Preset 3" default="#0fa89d">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#0fa89d" />
+				<color name="link_hover_color" value="#044CD0" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
+				<color name="logo_text_color" value="#0fa89d" />
+				<color name="menu_text_color" value="#252525" />
+				<color name="menu_text_hover_color" value="#0fa89d" />
+				<color name="menu_text_active_color" value="#0fa89d" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#0fa89d" />
+				<color name="menu_dropdown_text_active_color" value="#0fa89d" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
+			</preset>
+
+			<preset name="preset4" label="Preset 4" default="#4943ac">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#4943ac" />
+				<color name="link_hover_color" value="#044CD0" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
+				<color name="logo_text_color" value="#4943ac" />
+				<color name="menu_text_color" value="#252525" />
+				<color name="menu_text_hover_color" value="#4943ac" />
+				<color name="menu_text_active_color" value="#4943ac" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#4943ac" />
+				<color name="menu_dropdown_text_active_color" value="#4943ac" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
+			</preset>
+
+			<preset name="preset5" label="Preset 5" default="#00aeef">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#00aeef" />
+				<color name="link_hover_color" value="#044CD0" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
+				<color name="logo_text_color" value="#00aeef" />
+				<color name="menu_text_color" value="#252525" />
+				<color name="menu_text_hover_color" value="#00aeef" />
+				<color name="menu_text_active_color" value="#00aeef" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#00aeef" />
+				<color name="menu_dropdown_text_active_color" value="#00aeef" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
+			</preset>
+
+			<preset name="preset6" label="Preset 6" default="#f68e13">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#f68e13" />
+				<color name="link_hover_color" value="#044CD0" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
+				<color name="logo_text_color" value="#f68e13" />
+				<color name="menu_text_color" value="#252525" />
+				<color name="menu_text_hover_color" value="#f68e13" />
+				<color name="menu_text_active_color" value="#f68e13" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#f68e13" />
+				<color name="menu_dropdown_text_active_color" value="#f68e13" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
+			</preset>
+
+			<preset name="preset7" label="Preset 7" default="#2ba84a">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#2ba84a" />
+				<color name="link_hover_color" value="#044CD0" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
+				<color name="logo_text_color" value="#2ba84a" />
+				<color name="menu_text_color" value="#252525" />
+				<color name="menu_text_hover_color" value="#2ba84a" />
+				<color name="menu_text_active_color" value="#2ba84a" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#2ba84a" />
+				<color name="menu_dropdown_text_active_color" value="#2ba84a" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
+			</preset>
+
+			<preset name="preset8" label="Preset 8" default="#ed145b">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#ed145b" />
+				<color name="link_hover_color" value="#044CD0" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
+				<color name="logo_text_color" value="#ed145b" />
+				<color name="menu_text_color" value="#252525" />
+				<color name="menu_text_hover_color" value="#ed145b" />
+				<color name="menu_text_active_color" value="#ed145b" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#ed145b" />
+				<color name="menu_dropdown_text_active_color" value="#ed145b" />
 				<color name="footer_bg_color" value="#171717" />
 				<color name="footer_text_color" value="#FFFFFF" />
 				<color name="footer_link_color" value="#A2A2A2" />

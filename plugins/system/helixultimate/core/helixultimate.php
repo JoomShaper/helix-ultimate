@@ -695,14 +695,6 @@ class HelixUltimate
         return $return;
     }
 
-    private static function resetCookie($name)
-    {
-        if (JRequest::getVar('reset', '', 'get') == 1)
-        {
-            setcookie($name, '', time() - 3600, '/');
-        }
-    }
-
     public function addGoogleFont($fonts)
     {
         $doc = \JFactory::getDocument();

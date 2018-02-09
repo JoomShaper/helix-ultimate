@@ -441,9 +441,9 @@ class RowColumnSettings{
 		return $options;
 	}
 
-	static public function getSettings($config = null){
+	static public function getSettings($config = ''){
 		$data = '';
-		if (count($config)) {
+		if ($config) {
 			foreach ($config as $key=>$value) {
 				$data .= ' data-'.$key.'="'.$value.'"';
 			}

@@ -13,8 +13,9 @@ use Joomla\CMS\Uri\Uri;
 
 $theme_url = URI::base(true) . '/templates/'. $this->template;
 $app = Factory::getApplication();
+$option = $app->input->get('option', '', 'STRING');
 
-$body_class = htmlspecialchars(str_replace('_', '-', $app->input->get('option', '', 'STRING')));
+$body_class = htmlspecialchars(str_replace('_', '-', $option));
 $body_class .= ' view-' . htmlspecialchars($app->input->get('view', '', 'STRING'));
 $body_class .= ' layout-' . htmlspecialchars($app->input->get('layout', 'default', 'STRING'));
 $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STRING'));
@@ -31,12 +32,16 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
     <?php endif; ?>
 
     <jdoc:include type="head" />
-    <?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
-    <link href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" rel="stylesheet">
-    <?php else: ?>
-    <link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
+
+    <?php if($option != 'com_sppagebuilder') : ?>
+        <?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
+        <link href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" rel="stylesheet">
+        <?php else: ?>
+        <link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
+        <?php endif; ?>
+        <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
     <?php endif; ?>
-    <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
+    
   </head>
 
   <body class="contentpane <?php echo $body_class; ?>">

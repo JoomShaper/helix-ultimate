@@ -84,7 +84,7 @@ jQuery(function($){
         e.preventDefault();
         $('.helix-ultimate-preset').removeClass('active');
         $(this).addClass('active');
-        $('.helix-ultimate-input-preset').val($(this).data('preset'));
+        //$('.helix-ultimate-input-preset').val($(this).data('preset'));
     });
 
     // Save settings

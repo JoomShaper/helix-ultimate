@@ -2154,6 +2154,31 @@ select:focus::-ms-value {
   border-right: 1px solid #E8EEF3;
 }
 
+.action-helix-ultimate-exit {
+  display: block;
+  position: absolute;
+  color: #fff;
+  font-size: 18px;
+  top: 25px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  text-align: center;
+  background: transparent;
+  border: 1px solid #fff;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.action-helix-ultimate-exit:hover,
+.action-helix-ultimate-exit:focus,
+.action-helix-ultimate-exit:active {
+  color: #fff;
+  background: rgba(0, 0, 0, .3);
+  border-color: transparent;
+}
+
 .helix-ultimate-logo {
   background: #1D92E9;
   padding: 0 20px;

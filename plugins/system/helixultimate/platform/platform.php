@@ -79,6 +79,7 @@ class Platform
         $htmlView .= '<div class="helix-ultimate-logo">';
         $htmlView .= '<img src="'.\JURI::root(true).'/plugins/system/helixultimate/assets/images/helix-logo.svg" alt="Helix Ultimate by JoomShaper"/>';
         $htmlView .= '</div>';
+        $htmlView .= '<a class="action-helix-ultimate-exit" href="'. \JRoute::_('index.php?option=com_templates') .'"><span class="fa fa-times"></span></a>';
         $htmlView .= '<div class="helix-ultimate-options-wrap">';
 
         return $htmlView;

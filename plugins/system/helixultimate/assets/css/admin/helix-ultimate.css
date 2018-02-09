@@ -3526,3 +3526,9 @@ select:focus::-ms-value {
 .chzn-container.chzn-container-multi.chzn-with-drop .chzn-drop .chzn-results li.no-results {
   background: none;
 }
+
+/*Export Import*/
+#btn-helix-ultimate-export-settings,
+#input-helix-ultimate-settings {
+  margin-bottom: 20px;
+}

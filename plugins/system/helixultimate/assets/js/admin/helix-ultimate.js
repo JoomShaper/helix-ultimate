@@ -125,6 +125,50 @@ jQuery(function($){
         });
     });
 
+    // Import
+    $('#btn-helix-ultimate-import-settings').on( 'click', function( event ) {
+        event.preventDefault();
+
+        var $that = $( this ),
+            temp_settings = $.trim( $('#input-helix-ultimate-settings').val() );
+
+        if ( temp_settings == '' ) {
+          return false;
+        }
+
+        if ( confirm( "Warning: It will change all current settings of this Template." ) != true ){
+            return false;
+        }
+
+        var data = {
+            settings : temp_settings
+          };
+
+        var request = {
+                'action' : 'import-tmpl-style',
+                'option' : 'com_ajax',
+                'helix' : 'ultimate',
+                'request': 'task',
+                'data'   : data,
+                'format' : 'json'
+            };
+
+        $.ajax({
+            type   : 'POST',
+            data   : request,
+            success: function (response) {
+                var data = $.parseJSON(response);
+                if ( data.status ){
+                    window.location.reload();
+                }
+            },
+            error: function(){
+                alert('Somethings wrong, Try again');
+            }
+        });
+        return false;
+  });
+
     function webfontData(){
         $('.helix-ultimate-field-webfont').each(function(){
 			var $that = $(this),

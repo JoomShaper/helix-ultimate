@@ -150,7 +150,6 @@ class Platform
         $doc->addScript( $helix_plg_url.'/assets/js/admin/webfont.js' );
         $doc->addScript( $helix_plg_url.'/assets/js/admin/modal.js' );
         $doc->addScript( $helix_plg_url.'/assets/js/admin/layout.js' );
-        $doc->addScript( $helix_plg_url.'/assets/js/admin/general.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin/media.js' );
         $doc->addScript( $helix_plg_url. '/assets/js/admin/helix-ultimate.js' );
 

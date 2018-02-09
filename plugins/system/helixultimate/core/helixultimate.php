@@ -114,7 +114,7 @@ class HelixUltimate
 
         if ($this->params->get('enable_navigation_font'))
         {
-            $webfonts['.sp-megamenu-parent'] = $this->params->get('navigation_font');
+            $webfonts['.sp-megamenu-parent > li > a, .sp-megamenu-parent > li > span, .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a'] = $this->params->get('navigation_font');
         }
 
         if ($this->params->get('enable_custom_font') && $this->params->get('custom_font_selectors'))

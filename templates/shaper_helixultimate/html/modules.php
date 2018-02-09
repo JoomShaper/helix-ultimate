@@ -14,7 +14,7 @@ function modChrome_sp_xhtml($module, $params, $attribs) {
 	$bootstrapSize = (int) $params->get('bootstrap_size', 0);
 	$moduleClass   = $bootstrapSize !== 0 ? ' span' . $bootstrapSize : '';
 	$headerTag     = htmlspecialchars($params->get('header_tag', 'h3'), ENT_QUOTES, 'UTF-8');
-	$headerClass   = htmlspecialchars($params->get('header_class', 'page-header'), ENT_COMPAT, 'UTF-8');
+	$headerClass   = htmlspecialchars($params->get('header_class', 'sp-module-title'), ENT_COMPAT, 'UTF-8');
 
 	if ($module->content)
 	{

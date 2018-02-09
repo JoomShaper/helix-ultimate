@@ -130,8 +130,31 @@
 				<color name="footer_link_color" value="#A2A2A2" />
 				<color name="footer_link_hover_color" value="#FFFFFF" />
 			</preset>
+
+			<preset name="preset2" label="Preset 2" default="#0345BF">
+				<color name="text_color" value="#252525" />
+				<color name="bg_color" value="#FFFFFF" />
+				<color name="link_color" value="#0345BF" />
+				<color name="link_hover_color" value="#044CD0" />
+				<color name="header_bg_color" value="#FFFFFF" />
+				<color name="topbar_bg_color" value="#333333" />
+				<color name="topbar_text_color" value="#AAAAAA" />
+				<color name="logo_text_color" value="#0345BF" />
+				<color name="menu_text_color" value="#252525" />
+				<color name="menu_text_hover_color" value="#0345BF" />
+				<color name="menu_text_active_color" value="#0345BF" />
+				<color name="menu_dropdown_bg_color" value="#FFFFFF" />
+				<color name="menu_dropdown_text_color" value="#252525" />
+				<color name="menu_dropdown_text_hover_color" value="#0345BF" />
+				<color name="menu_dropdown_text_active_color" value="#0345BF" />
+				<color name="footer_bg_color" value="#171717" />
+				<color name="footer_text_color" value="#FFFFFF" />
+				<color name="footer_link_color" value="#A2A2A2" />
+				<color name="footer_link_hover_color" value="#FFFFFF" />
+			</preset>
 		</field>
 
+		<field name="custom_style" type="checkbox" default="1" label="HELIX_ULTIMATE_CUSTOM_STYLE" />
 		<field name="text_color" class="preset-control" helixgroup="preset_body" type="color" default="#252525" label="Color" />
 		<field name="bg_color" class="preset-control" helixgroup="preset_body" type="color" default="#FFFFFF" label="Background Color" />
 		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#0345BF" label="Link Color" />

@@ -2355,6 +2355,31 @@ select:focus::-ms-value {
   display: none;
 }
 
+.control-group-checkbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.control-group-checkbox > div {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none;
+}
+
+.control-group-checkbox > div.control-label {
+  margin-right: auto!important;
+}
+
+.control-group-checkbox > div.control-label label {
+  margin-bottom: 0;
+}
+
 .control-group-checkbox input[type="checkbox"] {
   appearance: none;
 	-webkit-appearance: none;
@@ -3252,10 +3277,21 @@ select:focus::-ms-value {
 }
 
 /*Presets*/
-.presets>div {
+.helix-ultimate-group-preset_body {
+  margin-top: 20px;
+}
+
+.helix-ultimate-presets {
+  margin: -10px;
+}
+
+.helix-ultimate-presets>div {
+  margin: 10px;
+}
+
+.helix-ultimate-presets>div {
   display: block;
   padding: 5px;
-  margin: 0 20px 20px 0;
   width: 72px;
   height: 64px;
   float: left;
@@ -3263,7 +3299,7 @@ select:focus::-ms-value {
   cursor: pointer;
 }
 
-.presets .preset-title {
+.helix-ultimate-presets .helix-ultimate-preset-title {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -3276,12 +3312,12 @@ select:focus::-ms-value {
   letter-spacing: 1px;
 }
 
-.presets>div.active {
+.helix-ultimate-presets>div.active {
   -webkit-box-shadow: inset 0 0 0 5px rgba(0, 0, 0, .4);
   box-shadow: inset 0 0 0 5px rgba(0, 0, 0, .4);
 }
 
-.presets>div.active .preset-title {
+.helix-ultimate-presets>div.active .helix-ultimate-preset-title {
   background: rgba(0, 0, 0, .4);
   color: #fff;
   padding: 5px 5px 0 0;

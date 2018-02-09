@@ -62,6 +62,32 @@ jQuery(function($){
         $('#' + filedName).val(styleName);
     });
 
+    // Preset
+    $(document).ready(function() {
+        if($('#custom_style').attr('checked') == 'checked'){
+            $('.helix-ultimate-fieldset-presets').find('.helix-ultimate-group-wrap').show();
+        } else {
+            $('.helix-ultimate-fieldset-presets').find('.helix-ultimate-group-wrap').hide();
+        }
+    });
+
+    $(document).on('change', '#custom_style', function(e) {
+        e.preventDefault();
+        if($(this).attr('checked') == 'checked'){
+            $('.helix-ultimate-fieldset-presets').find('.helix-ultimate-group-wrap').slideDown();
+        } else {
+            $('.helix-ultimate-fieldset-presets').find('.helix-ultimate-group-wrap').slideUp();
+        }
+    });
+
+    $(document).on('click', '.helix-ultimate-preset', function(e){
+        e.preventDefault();
+        $('.helix-ultimate-preset').removeClass('active');
+        $(this).addClass('active');
+        $('.helix-ultimate-input-preset').val($(this).data('preset'));
+    });
+
+    // Save settings
     $('.action-save-template').on('click',function(e){
         e.preventDefault();
         var self = this;

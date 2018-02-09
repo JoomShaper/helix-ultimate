@@ -20,10 +20,14 @@ if (file_exists($helix_path)) {
 }
 
 //Coming Soon
-if ($this->params->get('comingsoon_mode'))
+if ($this->params->get('comingsoon'))
 {
   header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
 }
+
+// print_r($this->params);
+
+// die();
 
 $scssVars = array(
     'preset' => $this->params->get('preset', 'preset1'),

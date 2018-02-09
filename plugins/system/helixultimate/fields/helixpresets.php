@@ -23,23 +23,25 @@ class JFormFieldHelixpresets extends JFormField
     protected function getInput()
     {
         $children = $this->element->children();
-        $html = '<div class="presets clearfix">';
+        $html = '<div class="helix-ultimate-presets clearfix">';
     
         foreach ($children as $child)
         {
+            $class = ($this->value == $child['name']) ? ' active' : '';
             $childName = $child->getName();
 
             if ($childName == 'preset')
             {
                 $html_data_attr = 'data-preset="'. $child['name'] .'"';
+                
                 foreach ( $child->children() as $preset )
                 {
                     $html_data_attr .= ' data-'. $preset['name'] .'="'. $preset['value'] .'"';
                 }
 
-                $html .='<div style="background-color: '. $child['default'] .'" '. $html_data_attr .'  class="preset">';
-                $html .='<div class="preset-title">'. $child['label'] .'</div>';
-                $html .='<div class="preset-contents">';
+                $html .='<div class="helix-ultimate-preset'. $class .'" style="background-color: '. $child['default'] .'" '. $html_data_attr .'  class="helix-ultimate-preset">';
+                $html .='<div class="helix-ultimate-preset-title">'. $child['label'] .'</div>';
+                $html .='<div class="helix-ultimate-preset-contents">';
                 $html .='</div>';
                 $html .='</div>';
             }
@@ -49,7 +51,7 @@ class JFormFieldHelixpresets extends JFormField
             }
         }
 
-        $html .= '<input id="template-preset" type="hidden" name="'. $this->name .'" class="preset-input" value="'. $this->value .'" />';
+        $html .= '<input id="'. $this->id .'" type="hidden" name="'. $this->name .'" class="helix-ultimate-input-preset" value="'. $this->value .'" />';
         $html .= '</div>';
             
         return $html; 

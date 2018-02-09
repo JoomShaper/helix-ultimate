@@ -24,7 +24,7 @@ class JFormFieldHelixgallery extends JFormField
 
 		$values = json_decode($this->value);
 
-		if(count($values)) {
+		if($values) {
 			$images = $this->element['name'] . '_images';
 			$values = $values->$images;
 		} else {
@@ -34,7 +34,7 @@ class JFormFieldHelixgallery extends JFormField
 		$output  = '<div class="helix-ultimate-gallery-field">';
 		$output .= '<ul class="helix-ultimate-gallery-items clearfix">';
 
-		if(count($values)) {
+		if(is_array($values) && $values) {
 			foreach ($values as $key => $value) {
 
 				$data_src = $value;

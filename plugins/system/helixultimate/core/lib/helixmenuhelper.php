@@ -219,7 +219,7 @@ if($unique_menu_items)
 
     </div>
 
-    <? if ($menu_item->parent_id == 1 && $module_list) { ?>
+    <?php if ($menu_item->parent_id == 1 && $module_list) { ?>
         <div class="helix-ultimate-col-sm-3">
             <div class="helix-ultimate-megamenu-sidebar <?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>">
                 <h3><span class="fa fa-bars"></span> <?php echo JText::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h3>

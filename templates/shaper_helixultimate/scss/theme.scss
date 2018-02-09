@@ -20,6 +20,13 @@
 
 /* ************   END:: TABLE OF CONTENT  ************* */
 /* **************************************************** */
+
+body {
+  text-rendering:auto;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
 a {
   transition: color 400ms, background-color 400ms;
 }

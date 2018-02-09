@@ -130,7 +130,7 @@ if ($custom_js = $this->params->get('custom_js'))
                 <jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
             <?php else: ?>
                 <p class="alert alert-warning">
-                    <?php echo JText::_('HELIX_NO_MODULE_OFFCANVAS'); ?>
+                    <?php echo JText::_('HELIX_ULTIMATE_NO_MODULE_OFFCANVAS'); ?>
                 </p>
             <?php endif; ?>
         </div>

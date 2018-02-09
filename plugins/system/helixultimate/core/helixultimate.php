@@ -728,21 +728,21 @@ class HelixUltimate
                 }
                 
                 $fontCSS = $key . "{";
-                $fontCSS .= "font-family: '" . $font->fontFamily . "', sans-serif;";
+                $fontCSS .= "font-family: '" . $font->fontFamily . "', sans-serif !important;";
 
                 if (isset($font->fontSize) && $font->fontSize)
                 {
-                    $fontCSS .= 'font-size: ' . $font->fontSize . 'px;';
+                    $fontCSS .= 'font-size: ' . $font->fontSize . 'px !important;';
                 }
                 
                 if (isset($font->fontWeight) && $font->fontWeight)
                 {
-                    $fontCSS .= 'font-weight: ' . $font->fontWeight . ';';
+                    $fontCSS .= 'font-weight: ' . $font->fontWeight . ' !important;';
                 }
 
                 if (isset($font->fontStyle) && $font->fontStyle)
                 {
-                    $fontCSS .= 'font-style: ' . $font->fontStyle . ';';
+                    $fontCSS .= 'font-style: ' . $font->fontStyle . ' !important;';
                 }
 
                 $fontCSS .= "}\n";

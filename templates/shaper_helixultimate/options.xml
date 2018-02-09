@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
-	<fieldset name="basic" label="Basic" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-cog">
+	<fieldset name="basic" label="HELIX_ULTIMATE_BASIC" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-cog">
 
 		<field name="logo_type" helixgroup="logo" type="list" default="image" label="HELIX_ULTIMATE_LOGO_TYPE">
 			<option value="image">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
@@ -107,7 +107,7 @@
 	</fieldset>
 
 	<!--Presets-->
-	<fieldset name="presets" label="Presets" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
+	<fieldset name="presets" label="HELIX_ULTIMATE_PRESETS" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-paint-brush">
 		<field name="preset" type="helixpresets" default="preset1">
 			<preset name="preset1" label="Preset 1" default="#0345BF">
 				<color name="text_color" value="#252525" />
@@ -287,34 +287,34 @@
 		</field>
 
 		<field name="custom_style" type="checkbox" default="1" label="HELIX_ULTIMATE_CUSTOM_STYLE" />
-		<field name="text_color" class="preset-control" helixgroup="preset_body" type="color" default="#252525" label="Color" />
-		<field name="bg_color" class="preset-control" helixgroup="preset_body" type="color" default="#FFFFFF" label="Background Color" />
-		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#0345BF" label="Link Color" />
-		<field name="link_hover_color" class="preset-control" helixgroup="preset_body" type="color" default="#044CD0" label="Link Hover Color" />
-		<field name="header_bg_color" class="preset-control" helixgroup="preset_header" type="color" default="#0345BF" label="Header Background Color" />
-		<field name="topbar_bg_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#333333" label="Top Bar Background Color" />
-		<field name="topbar_text_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#AAAAAA" label="Top Bar Text Color" />
-		<field name="logo_text_color" class="preset-control" helixgroup="preset_header" type="color" default="#0345BF" label="Logo Text Color" />
-		<field name="menu_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="Text Color" />
-		<field name="menu_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Hover Text Color" />
-		<field name="menu_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Active Text Color" />
-		<field name="menu_dropdown_bg_color" class="preset-control" helixgroup="preset_menu" type="color" default="#FFFFFF" label="Dropdown Background Color" />
-		<field name="menu_dropdown_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="Dropdown Text Color" />
-		<field name="menu_dropdown_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Dropdown Hover Text Color" />
-		<field name="menu_dropdown_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="Dropdown Active Text Color" />
-		<field name="footer_bg_color" class="preset-control" helixgroup="preset_footer" type="color" default="#171717" label="Footer Backgroud Color" />
-		<field name="footer_text_color" class="preset-control" helixgroup="preset_footer" type="color" default="#FFFFFF" label="Footer Text Color" />
-		<field name="footer_link_color" class="preset-control" helixgroup="preset_footer" type="color" default="#A2A2A2" label="Footer Link Color" />
-		<field name="footer_link_hover_color" class="preset-control" helixgroup="preset_footer" type="color" default="#FFFFFF" label="Footer Link Hover Color" />
+		<field name="text_color" class="preset-control" helixgroup="preset_body" type="color" default="#252525" label="HELIX_ULTIMATE_COLOR" />
+		<field name="bg_color" class="preset-control" helixgroup="preset_body" type="color" default="#FFFFFF" label="HELIX_ULTIMATE_BACKGROUND_COLOR" />
+		<field name="link_color" class="preset-control" helixgroup="preset_body" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_LINK_COLOR" />
+		<field name="link_hover_color" class="preset-control" helixgroup="preset_body" type="color" default="#044CD0" label="HELIX_ULTIMATE_PRESET_LINK_HOVER_COLOR" />
+		<field name="header_bg_color" class="preset-control" helixgroup="preset_header" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_HEADER_BACKGROUND_COLOR" />
+		<field name="topbar_bg_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#333333" label="HELIX_ULTIMATE_PRESET_TOPBAR_BACKGROUND_COLOR" />
+		<field name="topbar_text_color" class="preset-control" helixgroup="preset_topbar" type="color" default="#AAAAAA" label="HELIX_ULTIMATE_PRESET_TOPBAR_TEXT_COLOR" />
+		<field name="logo_text_color" class="preset-control" helixgroup="preset_header" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_LOGO_TEXT_COLOR" />
+		<field name="menu_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="HELIX_ULTIMATE_PRESET_MENU_TEXT_COLOR" />
+		<field name="menu_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_MENU_HOVER_TEXT_COLOR" />
+		<field name="menu_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_MENU_ACTIVE_TEXT_COLOR" />
+		<field name="menu_dropdown_bg_color" class="preset-control" helixgroup="preset_menu" type="color" default="#FFFFFF" label="HELIX_ULTIMATE_PRESET_DROPDOWN_BACKGROUND_COLOR" />
+		<field name="menu_dropdown_text_color" class="preset-control" helixgroup="preset_menu" type="color" default="#252525" label="HELIX_ULTIMATE_PRESET_DROPDOWN_TEXT_COLOR" />
+		<field name="menu_dropdown_text_hover_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_DROPDOWN_HOVER_TEXT_COLOR" />
+		<field name="menu_dropdown_text_active_color" class="preset-control" helixgroup="preset_menu" type="color" default="#0345BF" label="HELIX_ULTIMATE_PRESET_DROPDOWN_ACTIVE_TEXT_COLOR" />
+		<field name="footer_bg_color" class="preset-control" helixgroup="preset_footer" type="color" default="#171717" label="HELIX_ULTIMATE_PRESET_FOOTER_BACKGROUND_COLOR" />
+		<field name="footer_text_color" class="preset-control" helixgroup="preset_footer" type="color" default="#FFFFFF" label="HELIX_ULTIMATE_PRESET_FOOTER_TEXT_COLOR" />
+		<field name="footer_link_color" class="preset-control" helixgroup="preset_footer" type="color" default="#A2A2A2" label="HELIX_ULTIMATE_PRESET_FOOTER_LINK_COLOR" />
+		<field name="footer_link_hover_color" class="preset-control" helixgroup="preset_footer" type="color" default="#FFFFFF" label="HELIX_ULTIMATE_PRESET_FOOTER_LINK_HOVER_COLOR" />
 	</fieldset>
 
-	<fieldset name="layout" label="Layout Builder" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-list-alt">
+	<fieldset name="layout" label="HELIX_ULTIMATE_LAYOUT_BUILDER" addfieldpath="/plugins/system/helixultimate/fields" icon="fa fa-list-alt">
 		<field name="predefined_header" type="checkbox" helixgroup="headers" default="0" hideLabel="true" />
 		<field type="helixheaders" name="header_style" helixgroup="headers" label="HELIX_ULTIMATE_SELECT_HEADER" showon="predefined_header:1" />
 		<field type="helixlayout" name="layout" />
 	</fieldset>
 
-	<fieldset name="menu" label="Navigation" icon="fa fa-list">
+	<fieldset name="menu" label="HELIX_ULTIMATE_NAVIGATION" icon="fa fa-list">
 		<field name="menu" type="menu" helixgroup="megamenu" default="mainmenu" label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
 		<field name="menu_type" helixgroup="megamenu" type="list" default="mega_offcanvas" label="HELIX_ULTIMATE_MENU_TYPE" description="HELIX_ULTIMATE_MENU_TYPE_DESC">
 			<option value="mega_offcanvas">HELIX_ULTIMATE_MEGAMENU_OFFCANVAS</option>
@@ -341,7 +341,7 @@
 	</fieldset>
 
 	<!--Typography-->
-	<fieldset name="typography" label="Typography" icon="fa fa-font" addfieldpath="/plugins/system/helixultimate/fields">
+	<fieldset name="typography" label="HELIX_ULTIMATE_TYPOGRAPHY" icon="fa fa-font" addfieldpath="/plugins/system/helixultimate/fields">
 		<field name="enable_body_font" type="checkbox" helixgroup="body_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
 		<field name="body_font" type="helixfont" helixgroup="body_font" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_body_font:1" />
 
@@ -374,7 +374,7 @@
 	</fieldset>
 
 	<!--Blog-->
-	<fieldset name="blog" label="Blog" icon="fa fa-comments">
+	<fieldset name="blog" label="HELIX_ULTIMATE_BLOG" icon="fa fa-comments">
 		<field name="image_small" type="checkbox" helixgroup="blog_images" default="0" label="HELIX_ULTIMATE_IMAGE_SMALL" />
 		<field name="image_small_size" type="text" helixgroup="blog_images" default="100X100" hint="100X100" label="HELIX_ULTIMATE_IMAGE_SMALL_SIZE" showon="image_small:1" />
 
@@ -431,7 +431,7 @@
 	</fieldset>
 
 	<!--Custom Code-->
-	<fieldset name="custom_code" label="Custom Code" icon="fa fa-code">
+	<fieldset name="custom_code" label="HELIX_ULTIMATE_CUSTOM_CODE" icon="fa fa-code">
 		<field name="before_head" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_ULTIMATE_BEFORE_HEAD" description="HELIX_ULTIMATE_BEFORE_HEAD_DESC" filter="raw" />
 		<field name="before_body" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_ULTIMATE_BEFORE_BODY" description="HELIX_ULTIMATE_BEFORE_BODY_DESC" filter="raw" />
 		<field name="custom_css" type="textarea" helixgroup="custom_code" rows="5" label="HELIX_ULTIMATE_CUSTOM_CSS" description="HELIX_ULTIMATE_CUSTOM_CSS_DESC" filter="raw" />

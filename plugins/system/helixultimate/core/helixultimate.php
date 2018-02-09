@@ -664,7 +664,7 @@ class HelixUltimate
                 $return = true;
             }
 
-            if (count($imports))
+            if ($imports)
             {
                 foreach ($imports as $import => $mtime)
                 {

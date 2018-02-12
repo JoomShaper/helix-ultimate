@@ -107,6 +107,8 @@ jQuery(function($){
             data   : data,
             beforeSend: function(){
               $(self).find('.fa').removeClass('fa-save').addClass('fa-spinner fa-spin');
+              var iframe = $('#helix-ultimate-template-preview').contents();
+              iframe.find('body').addClass('helix-ultimate-preloader');
             },
             success: function (response) {
                 

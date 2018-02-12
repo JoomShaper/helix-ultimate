@@ -345,23 +345,23 @@
 		<field name="enable_body_font" type="checkbox" helixgroup="body_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
 		<field name="body_font" type="helixfont" helixgroup="body_font" default='{"fontFamily":"Open Sans","fontWeight":"300","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_body_font:1" />
 
-		<field name="enable_h1_font" type="checkbox" helixgroup="h1_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
-		<field name="h1_font" type="helixfont" helixgroup="h1_font" default='{"fontFamily":"Open Sans","fontWeight":"800","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h1_font:1" />
+		<field name="enable_h1_font" type="checkbox" helixgroup="heading_font" default="1" label="HELIX_ULTIMATE_ENABLE_H1_FONT" />
+		<field name="h1_font" type="helixfont" helixgroup="heading_font" default='{"fontFamily":"Open Sans","fontWeight":"800","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h1_font:1" />
 
-		<field name="enable_h2_font" type="checkbox" helixgroup="h2_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
-		<field name="h2_font" type="helixfont" helixgroup="h2_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h2_font:1" />
+		<field name="enable_h2_font" type="checkbox" helixgroup="heading_font" default="1" label="HELIX_ULTIMATE_ENABLE_H2_FONT" />
+		<field name="h2_font" type="helixfont" helixgroup="heading_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h2_font:1" />
 
-		<field name="enable_h3_font" type="checkbox" helixgroup="h3_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
-		<field name="h3_font" type="helixfont" helixgroup="h3_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h3_font:1" />
+		<field name="enable_h3_font" type="checkbox" helixgroup="heading_font" default="1" label="HELIX_ULTIMATE_ENABLE_H3_FONT" />
+		<field name="h3_font" type="helixfont" helixgroup="heading_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h3_font:1" />
 
-		<field name="enable_h4_font" type="checkbox" helixgroup="h4_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
-		<field name="h4_font" type="helixfont" helixgroup="h4_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h4_font:1" />
+		<field name="enable_h4_font" type="checkbox" helixgroup="heading_font" default="1" label="HELIX_ULTIMATE_ENABLE_H4_FONT" />
+		<field name="h4_font" type="helixfont" helixgroup="heading_font" default='{"fontFamily":"Open Sans","fontWeight":"regular","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h4_font:1" />
 
-		<field name="enable_h5_font" type="checkbox" helixgroup="h5_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
-		<field name="h5_font" type="helixfont" helixgroup="h5_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h5_font:1" />
+		<field name="enable_h5_font" type="checkbox" helixgroup="heading_font" default="1" label="HELIX_ULTIMATE_ENABLE_H5_FONT" />
+		<field name="h5_font" type="helixfont" helixgroup="heading_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h5_font:1" />
 
-		<field name="enable_h6_font" type="checkbox" helixgroup="h6_font" default="1" label="HELIX_ULTIMATE_ENABLE_FONT" />
-		<field name="h6_font" type="helixfont" helixgroup="h6_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h6_font:1" />
+		<field name="enable_h6_font" type="checkbox" helixgroup="heading_font" default="1" label="HELIX_ULTIMATE_ENABLE_H6_FONT" />
+		<field name="h6_font" type="helixfont" helixgroup="heading_font" default='{"fontFamily":"Open Sans","fontWeight":"600","fontSubset":"latin","fontSize":""}' hideLabel="true" showon="enable_h6_font:1" />
 
 		<field name="enable_navigation_font" helixgroup="nav_font" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_FONT" />
 		<field name="navigation_font" type="helixfont" helixgroup="nav_font" hideLabel="true" showon="enable_navigation_font:1" />

@@ -10,11 +10,10 @@ defined ('_JEXEC') or die();
 
 class plgSystemTmplHelixUltimateInstallerScript {
 
-    function postflight($type, $parent) {
+
+    public function preflight($type, $parent) {
         
         $db = JFactory::getDBO();
-        $status = new stdClass;
-        $status->plugins = array();
 
         $src = $parent->getParent()->getPath('source');
         $manifest = $parent->getParent()->manifest;
@@ -52,6 +51,23 @@ class plgSystemTmplHelixUltimateInstallerScript {
 
         }
 
+        $template_path = $src.'/template';
+        if (JFolder::exists( $template_path ))
+        {
+            $installer = new JInstaller;
+            $result = $installer->install($template_path);
+        }
+
+        $conf = JFactory::getConfig();
+        $conf->set('debug', false);
+        $parent->getParent()->abort();
+
+    }
+
+    public function install($parent) {
+
+        $manifest = $parent->getParent()->manifest;
+        $src = $parent->getParent()->getPath('source');
         $templates = $manifest->xpath('template');
 
         foreach($templates as $key => $template)
@@ -60,32 +76,21 @@ class plgSystemTmplHelixUltimateInstallerScript {
             $template_path = $src.'/template';
             $options_default = file_get_contents($template_path .'/layout/default.json');
 
-            if (JFolder::exists( $template_path )) {
-                $installer = new JInstaller;
-                $result = $installer->install($template_path);
+            $db = JFactory::getDBO();
+            $query = $db->getQuery(true);
+            $fields = array(
+                $db->quoteName('params') . ' = ' . $db->quote($options_default)
+            );
 
-                if ($result && $type !== 'update')
-                {
-                    $query = $db->getQuery(true);
-                    $fields = array(
-                        $db->quoteName('params') . ' = ' . $db->quote($options_default)
-                    );
+            $conditions = array(
+                $db->quoteName('client_id') . ' = 0', 
+                $db->quoteName('template') . ' = ' . $db->quote($tmpl_name)
+            );
 
-                    $conditions = array(
-                        $db->quoteName('client_id') . ' = 0', 
-                        $db->quoteName('template') . ' = ' . $db->quote($tmpl_name)
-                    );
-
-                    $query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
-                    $db->setQuery($query);
-                    $db->execute();
-                }
-            }
+            $query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
+            $db->setQuery($query);
+            $db->execute();
         }
-
-        $conf = JFactory::getConfig();
-        $conf->set('debug', false);
-        $parent->getParent()->abort();
     }
 
     public function abort($msg = null, $type = null){

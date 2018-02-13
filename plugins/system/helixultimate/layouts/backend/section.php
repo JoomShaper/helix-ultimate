@@ -46,7 +46,7 @@ if(!isset($row->layout)){
 foreach ($colGrid as $grid)
 {
     $cols = explode('+', $grid);
-    $output .= '<li><a href="#" class="helix-ultimate-column-layout hasTooltip '.(($grid == $row->layout)? 'active' : '' ).'" data-layout="'.$grid.'">';
+    $output .= '<li><a href="#" class="helix-ultimate-column-layout '.(($grid == $row->layout)? 'active' : '' ).'" data-layout="'.$grid.'">';
 
     foreach ($cols as $col)
     {
@@ -55,7 +55,7 @@ foreach ($colGrid as $grid)
     $output .= '</a></li>';
 }
 
-$output .= '<li><a href="#" class="hasTooltip helix-ultimate-column-layout-custom helix-ultimate-column-layout helix-ultimate-custom ' . ((isset($row->layout) && !in_array($row->layout, $colGrid)) ? 'active' : '' ) .'" data-layout="'. $row->layout .'" data-type="custom"></a></li>';
+$output .= '<li><a href="#" class="helix-ultimate-column-layout-custom helix-ultimate-column-layout helix-ultimate-custom ' . ((isset($row->layout) && !in_array($row->layout, $colGrid)) ? 'active' : '' ) .'" data-layout="'. $row->layout .'" data-type="custom" title="Custom Layout"><span class="helix-ultimate-column-layout-col-3"><span>[</span></span><span class="helix-ultimate-column-layout-col-6"><span>+</span></span><span class="helix-ultimate-column-layout-col-3"><span>]</span></span></a></li>';
 $output .= '</ul>';
 $output .= '</li>';
 $output .= '<li><a class="helix-ultimate-row-options" href="#"><i class="fa fa-gears"></i></a></li>';

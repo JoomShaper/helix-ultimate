@@ -15,7 +15,7 @@ class HelixUltimateFeatureLogo
     
     public function __construct($params)
     {
-        $this->params   = $params;
+        $this->params = $params;
         $this->position = 'logo';
     }
     
@@ -23,39 +23,21 @@ class HelixUltimateFeatureLogo
     {
         
         $template_name = JFactory::getApplication()->getTemplate();
-        
-        $menu_type         = $this->params->get('menu_type');
+        $menu_type = $this->params->get('menu_type');
         $offcanvs_position = $this->params->get('offcanvas_position', 'right');
+        $doc = \JFactory::getDocument();
 
         $presetVars = (array) json_decode($this->params->get('preset'));
-        $preset = (isset($presetVars->preset) && $presetVars->preset) ? $presetVars->preset : 'default';
+        $preset = (isset($presetVars['preset']) && $presetVars['preset']) ? $presetVars['preset'] : 'default';
         
-        
-        //Retina Image
         if ($this->params->get('logo_type') == 'image') {
-            jimport('joomla.image.image');
-            
-			if ($this->params->get('logo_image'))
+            if ($this->params->get('logo_image'))
 			{
                 $path = \JPATH_ROOT . '/' . $this->params->get('logo_image');
 			}
 			else
 			{
-                $path = \JPATH_ROOT . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.png';
-            }
-            
-            $ext = \JFile::getExt($path);
-            
-			if (file_exists($path) && $ext != 'svg')
-			{
-                $image  = new \JImage($path);
-                $width  = $image->getWidth();
-                $height = $image->getHeight();
-			}
-			else
-			{
-                $width  = '';
-                $height = '';
+                $path = \JPATH_ROOT . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.svg';
             }
         }
         
@@ -88,26 +70,11 @@ class HelixUltimateFeatureLogo
                 $html .= '<div class="logo">';
                 $html .= '<a href="' . \JURI::base(true) . '/">';
                 
-				if ($ext != 'svg')
-				{
-					if ($this->params->get('logo_image_2x'))
-					{
-                        $html .= '<img class="sp-normal-logo' . $custom_logo_class . '" src="' . $this->params->get('logo_image') . '" alt="' . $sitename . '">';
-                        $html .= '<img class="sp-retina-logo' . $custom_logo_class . '" src="' . $this->params->get('logo_image_2x') . '" alt="' . $sitename . '" width="' . $width . '" height="' . $height . '">';
-					}
-					else
-					{
-                        $html .= '<img class="sp-default-logo' . $custom_logo_class . '" src="' . $this->params->get('logo_image') . '" alt="' . $sitename . '">';
-                    }
-				}
-				else
-				{
-                    $html .= '<img class="sp-default-logo sp-logo-svg' . $custom_logo_class . '" src="' . $this->params->get('logo_image') . '" alt="' . $sitename . '">';
-                }
+                $html .= '<img class="logo-image' . $custom_logo_class . '" src="' . $this->params->get('logo_image') . '" alt="' . $sitename . '">';
                 
 				if ($this->params->get('mobile_logo'))
 				{
-                    $html .= '<img class="sp-default-logo d-inline-block d-lg-none" src="' . $this->params->get('mobile_logo') . '" alt="' . $sitename . '">';
+                    $html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' . $this->params->get('mobile_logo') . '" alt="' . $sitename . '">';
                 }
                 
                 $html .= '</a>';
@@ -119,15 +86,20 @@ class HelixUltimateFeatureLogo
                 $html .= '<div class="logo">';
                 $html .= '<a href="' . \JURI::base(true) . '/">';
                 
-                $html .= '<img class="sp-default-logo sp-logo-svg' . $custom_logo_class . '" src="' . JURI::base(true) . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.svg" alt="' . $sitename . '">';
+                $html .= '<img class="logo-image' . $custom_logo_class . '" src="' . JURI::base(true) . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.svg" alt="' . $sitename . '">';
                 
 				if ($this->params->get('mobile_logo'))
 				{
-                    $html .= '<img class="sp-default-logo d-inline-block d-lg-none" src="' . $this->params->get('mobile_logo') . '" alt="' . $sitename . '">';
+                    $html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' . $this->params->get('mobile_logo') . '" alt="' . $sitename . '">';
 				}
 				
                 $html .= '</a>';
                 $html .= '</div>';
+            }
+
+            if($logo_height = $this->params->get('logo_height'))
+            {
+                $doc->addStyledeclaration('.logo-image {height:' . $logo_height. 'px;');
             }
             
 		}

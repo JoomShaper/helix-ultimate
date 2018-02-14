@@ -74,35 +74,57 @@ JFactory::getDocument()->addScriptDeclaration("
 
 			<?php if ($params->get('show_urls_images_frontend')) : ?>
 			<?php echo JHtml::_('bootstrap.addTab', $this->tab_name, 'images', JText::_('COM_CONTENT_IMAGES_AND_URLS')); ?>
-				<?php echo $this->form->renderField('image_intro', 'images'); ?>
-				<?php echo $this->form->renderField('image_intro_alt', 'images'); ?>
-				<?php echo $this->form->renderField('image_intro_caption', 'images'); ?>
-				<?php echo $this->form->renderField('float_intro', 'images'); ?>
-				<?php echo $this->form->renderField('image_fulltext', 'images'); ?>
-				<?php echo $this->form->renderField('image_fulltext_alt', 'images'); ?>
-				<?php echo $this->form->renderField('image_fulltext_caption', 'images'); ?>
-				<?php echo $this->form->renderField('float_fulltext', 'images'); ?>
-				<?php echo $this->form->renderField('urla', 'urls'); ?>
-				<?php echo $this->form->renderField('urlatext', 'urls'); ?>
-				<div class="control-group">
-					<div class="controls">
-						<?php echo $this->form->getInput('targeta', 'urls'); ?>
+				
+				<div class="row">
+					<div class="col-sm-6 mb-3">
+						<?php echo $this->form->renderField('image_intro', 'images'); ?>
+						<?php echo $this->form->renderField('image_intro_alt', 'images'); ?>
+						<?php echo $this->form->renderField('image_intro_caption', 'images'); ?>
+						<?php echo $this->form->renderField('float_intro', 'images'); ?>
+					</div>
+
+					<div class="col-sm-6">
+						<?php echo $this->form->renderField('image_fulltext', 'images'); ?>
+						<?php echo $this->form->renderField('image_fulltext_alt', 'images'); ?>
+						<?php echo $this->form->renderField('image_fulltext_caption', 'images'); ?>
+						<?php echo $this->form->renderField('float_fulltext', 'images'); ?>
 					</div>
 				</div>
-				<?php echo $this->form->renderField('urlb', 'urls'); ?>
-				<?php echo $this->form->renderField('urlbtext', 'urls'); ?>
-				<div class="control-group">
-					<div class="controls">
-						<?php echo $this->form->getInput('targetb', 'urls'); ?>
+
+				<hr>
+
+				<div class="row">
+					<div class="col-sm-4 mb-3">
+						<?php echo $this->form->renderField('urla', 'urls'); ?>
+						<?php echo $this->form->renderField('urlatext', 'urls'); ?>
+						<div class="control-group">
+							<div class="controls">
+								<?php echo $this->form->getInput('targeta', 'urls'); ?>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-4 mb-3">
+						<?php echo $this->form->renderField('urlb', 'urls'); ?>
+						<?php echo $this->form->renderField('urlbtext', 'urls'); ?>
+						<div class="control-group">
+							<div class="controls">
+								<?php echo $this->form->getInput('targetb', 'urls'); ?>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-4 mb-3">
+						<?php echo $this->form->renderField('urlc', 'urls'); ?>
+						<?php echo $this->form->renderField('urlctext', 'urls'); ?>
+						<div class="control-group">
+							<div class="controls">
+								<?php echo $this->form->getInput('targetc', 'urls'); ?>
+							</div>
+						</div>
 					</div>
 				</div>
-				<?php echo $this->form->renderField('urlc', 'urls'); ?>
-				<?php echo $this->form->renderField('urlctext', 'urls'); ?>
-				<div class="control-group">
-					<div class="controls">
-						<?php echo $this->form->getInput('targetc', 'urls'); ?>
-					</div>
-				</div>
+				
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 			<?php endif; ?>
 

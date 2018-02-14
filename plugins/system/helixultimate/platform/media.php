@@ -16,12 +16,40 @@ jimport('joomla.filesystem.file');
 class Media
 {
 
+  private static function permission() {
+    $user = \JFactory::getUser();
+    $permission = false;
+    if ($user->id)
+    {
+        if ($user->authorise('core.edit','com_templates'))
+        {
+          $permission = true;
+        }
+        else if ($user->authorise('core.edit','com_content'))
+        {
+          $permission = true;
+        }
+    }
+
+    $permission = false;
+
+    if($permission)
+    {
+      $output = array();
+      $output['status'] = false;
+      $output['output'] = \JText::_('JERROR_ALERTNOAUTHOR');
+      die(json_encode($output));
+    }
+
+  }
+
   public static function getFolders()
   {
     $media = array();
     $media['status'] = false;
     $media['output'] = \JText::_('JINVALID_TOKEN');
     \JSession::checkToken() or die(json_encode($media));
+    self::permission();
 
     $input 	= \JFactory::getApplication()->input;
     $path 	= $input->post->get('path', '/images', 'PATH');
@@ -120,6 +148,7 @@ class Media
     $output['status'] = false;
     $output['message'] = \JText::_('JINVALID_TOKEN');
     \JSession::checkToken() or die(json_encode($output));
+    self::permission();
 
     $input 	= \JFactory::getApplication()->input;
     $path 	= $input->post->get('path', '/images', 'PATH');
@@ -149,6 +178,7 @@ class Media
     $output['status'] = false;
     $output['message'] = \JText::_('JINVALID_TOKEN');
     \JSession::checkToken() or die(json_encode($output));
+    self::permission();
 
     $input 	= \JFactory::getApplication()->input;
     $path 	= $input->post->get('path', '/images', 'PATH');
@@ -187,6 +217,7 @@ class Media
     $report['index'] = $index;
 
     \JSession::checkToken() or die(json_encode($report));
+    self::permission();
 
     if ($authorised !== true) {
       $report['status'] = false;

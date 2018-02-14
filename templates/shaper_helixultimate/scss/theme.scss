@@ -1083,7 +1083,8 @@ table.category {
 }
 
 select.form-control:not([multiple]),
-select.inputbox:not([multiple]) {
+select.inputbox:not([multiple]),
+select:not([multiple]) {
   height: calc(2.25rem + 2px);
 }
 

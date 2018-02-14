@@ -146,6 +146,7 @@ class Platform
         
         
         $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/helix-ultimate.css');
+        $doc->addStyleSheet($helix_plg_url.'/assets/css/admin/modal.css');
         $doc->addStyleSheet($helix_plg_url.'/assets/css/font-awesome.min.css');
         
         $doc->addScript( $helix_plg_url.'/assets/js/admin/webfont.js' );

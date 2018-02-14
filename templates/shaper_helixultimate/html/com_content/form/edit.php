@@ -18,6 +18,14 @@ $this->ignore_fieldsets = array('image-intro', 'image-full', 'jmetadata', 'item_
 // Create shortcut to parameters.
 $params = $this->state->get('params');
 
+//Blog Options
+$attribs = json_decode($this->item->attribs);
+$this->form->setValue('helix_ultimate_image', 'attribs' , (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image) ? $attribs->helix_ultimate_image : '');
+$this->form->setValue('helix_ultimate_article_format', 'attribs' , (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard');
+$this->form->setValue('helix_ultimate_audio', 'attribs' , (isset($attribs->helix_ultimate_audio) && $attribs->helix_ultimate_audio) ? $attribs->helix_ultimate_audio : '');
+$this->form->setValue('helix_ultimate_gallery', 'attribs' , (isset($attribs->helix_ultimate_gallery) && $attribs->helix_ultimate_gallery) ? $attribs->helix_ultimate_gallery : '');
+$this->form->setValue('helix_ultimate_video', 'attribs' , (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) ? $attribs->helix_ultimate_video : '');
+
 // This checks if the editor config options have ever been saved. If they haven't they will fall back to the original settings.
 $editoroptions = isset($params->show_publishing_options);
 

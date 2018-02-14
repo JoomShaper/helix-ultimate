@@ -45,14 +45,14 @@ class  plgSystemHelixultimate extends JPlugin
 
     public function onContentPrepareForm($form, $data)
     {
-        $doc = JFactory::getDocument();
-        $plg_path = JURI::root(true).'/plugins/system/helixultimate';
-        JForm::addFormPath(JPATH_PLUGINS.'/system/helixultimate/params');
+        $doc = \JFactory::getDocument();
+        $plg_path = \JURI::root(true).'/plugins/system/helixultimate';
+        \JForm::addFormPath(\JPATH_PLUGINS.'/system/helixultimate/params');
 
         if ($form->getName() == 'com_menus.item')
         {
-            JHtml::_('jquery.framework');
-            JHtml::_('jquery.ui', array('core', 'more', 'sortable'));
+            \JHtml::_('jquery.framework');
+            \JHtml::_('jquery.ui', array('core', 'more', 'sortable'));
 
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
             $doc->addStyleSheet($plg_path.'/assets/css/admin/modal.css');
@@ -67,20 +67,20 @@ class  plgSystemHelixultimate extends JPlugin
         if ($form->getName()=='com_content.article')
         {
             $doc->addStyleSheet($plg_path.'/assets/css/font-awesome.min.css');
-            $tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName()->template;
+            $tpl_path = \JPATH_ROOT . '/templates/' . $this->getTemplateName()->template;
 
-            JHtml::_('jquery.framework');
-            JHtml::_('jquery.token');
+            \JHtml::_('jquery.framework');
+            \JHtml::_('jquery.token');
             $doc->addStyleSheet( $plg_path. '/assets/css/admin/blog-options.css' );
             $doc->addScript( $plg_path. '/assets/js/admin/blog-options.js' );
 
-            if (JFile::exists( $tpl_path . '/blog-options.xml' ))
+            if (\JFile::exists( $tpl_path . '/blog-options.xml' ))
             {
-                JForm::addFormPath($tpl_path);
+                \JForm::addFormPath($tpl_path);
             }
             else
             {
-                JForm::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
+                \JForm::addFormPath(\JPATH_PLUGINS . '/system/helixultimate/params');
             }
             $form->loadFile('blog-options', false);
         }

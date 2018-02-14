@@ -58,7 +58,6 @@ jQuery(function($) {
 							$field.find('.helix-ultimate-image-upload-wrapper').removeClass('loading').empty().html(data.output);
 						} else {
 							$field.find('.helix-ultimate-image-upload-wrapper').removeClass('loading').empty();
-							alert(data.output);
 						}
 
 						var $image = $field.find('.helix-ultimate-image-upload-wrapper').find('>img');

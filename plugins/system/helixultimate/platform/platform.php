@@ -94,7 +94,7 @@ class Platform
         $htmlView  = '</div>';
 
         $htmlView .= '<div class="helix-ultimate-footer clearfix">';
-        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate Framework '. $this->version .' RC3<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
+        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate Framework '. $this->version .'<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
         $htmlView .= '<div class="helix-ultimate-action"><button class="btn btn-primary action-save-template" data-id="'. $this->id .'" data-view="'. $this->view .'"><span class="fa fa-save"></span> Save</button></div>';
         $htmlView .= '</div>';
 

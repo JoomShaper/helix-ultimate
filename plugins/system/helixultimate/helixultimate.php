@@ -13,8 +13,10 @@ jimport( 'joomla.event.plugin' );
 jimport('joomla.registry.registry');
 
 require_once __DIR__.'/platform/platform.php';
+require_once __DIR__.'/platform/blog.php';
 
 use HelixUltimate\Platform as Platform;
+use HelixUltimate\Blog\Blog as Blog;
 
 class  plgSystemHelixultimate extends JPlugin
 {
@@ -154,6 +156,24 @@ class  plgSystemHelixultimate extends JPlugin
                 
                 JEventDispatcher::getInstance()->trigger('onAfterRespond');
                 die;
+            }
+        }
+
+        if($this->app->isSite())
+        {
+            $option     = $this->app->input->get('option','');
+            $helix      = $this->app->input->get('helix','');
+            $request    = $this->app->input->get('request','');
+            $action     = $this->app->input->get('action','');
+
+            if ($option == 'com_ajax' && $helix == 'ultimate' && $request == 'task' && $action == 'upload-blog-image')
+            {
+                Blog::upload_image();
+            }
+
+            if ($option == 'com_ajax' && $helix == 'ultimate' && $request == 'task' && $action == 'remove-blog-image')
+            {
+                Blog::remove_image();
             }
         }
     }

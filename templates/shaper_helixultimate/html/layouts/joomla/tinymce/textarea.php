@@ -10,6 +10,9 @@ defined('JPATH_BASE') or die;
 
 $data = $displayData;
 
+$doc = \JFactory::getDocument();
+$doc->addStylesheet(JURI::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
+
 ?>
 <textarea
 	name="<?php echo $data->name; ?>"

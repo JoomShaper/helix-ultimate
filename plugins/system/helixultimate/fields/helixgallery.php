@@ -62,7 +62,7 @@ class JFormFieldHelixgallery extends JFormField
 		$output .= '</ul>';
 
 		$output .= '<input type="file" id="helix-ultimate-gallery-item-upload" accept="image/*" multiple="multiple" style="display:none;">';
-		$output .= '<a class="btn btn-default btn-helix-ultimate-gallery-item-upload" href="#"><i class="fa fa-plus"></i> '. \JText::_('HELIX_ULTIMATE_UPLOAD_IMAGES') .'</a>';
+		$output .= '<a class="btn btn-default btn-secondary btn-helix-ultimate-gallery-item-upload" href="#"><i class="fa fa-plus"></i> '. \JText::_('HELIX_ULTIMATE_UPLOAD_IMAGES') .'</a>';
 
 
 		$output .= '<input type="hidden" name="'. $this->name .'" data-name="'. $this->element['name'] .'_images" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8')

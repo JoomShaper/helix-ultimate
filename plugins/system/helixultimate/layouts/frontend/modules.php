@@ -1,11 +1,12 @@
 <?php
 /**
- * @package     Helix
- * @copyright   Copyright (C) 2010 - 2016 JoomShaper. All rights reserved.
- * @license     GNU General Public License version 2 or later.
- */
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
 
-defined('_JEXEC') or die('Restricted Access');
+defined('_JEXEC') or die();
 
 $data = $displayData;
 $options = $data->settings;

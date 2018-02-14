@@ -1,12 +1,12 @@
 <?php
 /**
-* @package Helix Ultimate Framework
-* @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2010 - 2018 JoomShaper
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined('_JEXEC') or die('Restricted Access');
+defined('_JEXEC') or die();
 
 $colGrid = array('12', '6+6', '4+4+4', '3+3+3+3', '4+8', '3+9', '3+6+3', '2+6+4', '2+10', '5+7', '2+3+7', '2+5+5', '2+8+2', '2+4+4+2');
 $row = $displayData;

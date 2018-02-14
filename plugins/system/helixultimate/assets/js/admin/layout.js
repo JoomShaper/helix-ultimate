@@ -210,25 +210,26 @@ jQuery(function($) {
 				case 'row-setting':
 					$('.helix-ultimate-options-modal-content').find('.helix-ultimate-input').each(function(){
 						var $this = $(this),
-						$parent = $('.row-active'),
-						$attrname = $this.data('attrname');
+							$parent = $('.row-active'),
+							$attrname = $this.data('attrname');
 						$parent.removeData( $attrname );
 		
-						if ($attrname == 'name') {
+						if ($attrname == 'name')
+						{
 							var nameVal = $this.val();
 		
-							if (nameVal  !='' || $this.val() != null) {
-								$('.row-active .helix-ultimate-section-title').text($this.val());
-							}else{
+							if (nameVal  =='' || nameVal == null) {
 								$('.row-active .helix-ultimate-section-title').text('Section Header');
+							}else{
+								$('.row-active .helix-ultimate-section-title').text($this.val());
 							}
 						}
 		
-						$parent.attr('data-' + $attrname, $this.getInputValue());
+						$parent.data($attrname, $this.getInputValue());
 					});
 		
 					$('.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal').remove();
-					$('body').addClass('helix-ultimate-options-modal-open');
+					$('body').removeClass('helix-ultimate-options-modal-open');
 					break;
 	
 				case 'column-setting':
@@ -237,25 +238,27 @@ jQuery(function($) {
 					$('.helix-ultimate-options-modal-content').find('.helix-ultimate-input').each(function(){
 		
 						var $this = $(this),
-						$parent = $('.column-active'),
-						$attrname = $this.data('attrname');
-						$parent.removeData( $attrname ),
-						dataVal = $this.val();
+							$parent = $('.column-active'),
+							$attrname = $this.data('attrname'),
+							dataVal = $this.val();
+
+						$parent.removeData( $attrname );
+						
 		
 						if ( $attrname == 'column_type' && $(this).attr("checked") ) {
 							component = true;
 							$('.column-active .helix-ultimate-column-title').text('Component');
-						}else if( $attrname == 'name' && component != true ) {
+						} else if( $attrname == 'name' && component != true ) {
 							if (dataVal == '' || dataVal == undefined) {
 								dataVal = 'none';
 							}
 							$('.column-active .helix-ultimate-column-title').text(dataVal);
 						}
 		
-						$parent.attr('data-' + $attrname, $this.getInputValue());
+						$parent.data($attrname, $this.getInputValue());
 					});
 					$('.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal').remove();
-					$('body').addClass('helix-ultimate-options-modal-open');
+					$('body').removeClass('helix-ultimate-options-modal-open');
 					break;
 	
 				default:

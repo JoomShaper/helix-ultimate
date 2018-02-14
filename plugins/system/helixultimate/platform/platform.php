@@ -1,9 +1,9 @@
 <?php
 /**
-* @package HelixUltimate Framework
-* @author JoomShaper http://www.joomshaper.com
-* @copyright Copyright (c) 2017 JoomShaper
-* @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
 namespace HelixUltimate;
@@ -94,7 +94,7 @@ class Platform
         $htmlView  = '</div>';
 
         $htmlView .= '<div class="helix-ultimate-footer clearfix">';
-        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate Framework '. $this->version .' RC3<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
+        $htmlView .= '<div class="helix-ultimate-copyright">Helix Ultimate Framework '. $this->version .'<br />By <a target="_blank" href="https://www.joomshaper.com">JoomShaper</a></div>';
         $htmlView .= '<div class="helix-ultimate-action"><button class="btn btn-primary action-save-template" data-id="'. $this->id .'" data-view="'. $this->view .'"><span class="fa fa-save"></span> Save</button></div>';
         $htmlView .= '</div>';
 

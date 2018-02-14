@@ -1,10 +1,10 @@
-/* ========================================================================
-* Bootstrap: modal.js v3.1.1
-* http://getbootstrap.com/javascript/#modals
-* ========================================================================
-* Copyright 2011-2014 Twitter, Inc.
-* Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-* ======================================================================== */
+/**
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
+
 jQuery(function($) {
 
   $.fn.helixUltimateModal = function(options) {

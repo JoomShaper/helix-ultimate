@@ -59,6 +59,6 @@ $moduleHtml = preg_replace(
 
 if ($count)
 {
-	JHtml::_('stylesheet', 'system/frontediting.css', array('version' => 'auto', 'relative' => true));
+	JHtml::_('stylesheet', 'frontend-edit.css', array('version' => 'auto', 'relative' => true));
 	JHtml::_('script', 'system/frontediting.js', array('version' => 'auto', 'relative' => true));
 }

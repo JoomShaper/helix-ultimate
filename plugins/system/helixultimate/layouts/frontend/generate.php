@@ -22,8 +22,6 @@ if ($data['componentArea'])
         {
             $output .= '<div class="container">';
             $output .= '<div class="container-inner">';
-        } else {
-            $output .= '<div class="container-fluid">';
         }
     }
 }
@@ -33,8 +31,6 @@ else
     {
         $output .= '<div class="container">';
         $output .= '<div class="container-inner">';
-    } else {
-        $output .= '<div class="container-fluid">';
     }
 }
 

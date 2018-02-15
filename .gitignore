@@ -62,3 +62,4 @@ helix-ultimate.zip
 !/administrator/language/en-GB
 /administrator/language/en-GB/*
 !/administrator/language/en-GB/en-GB.plg_system_helixultimate.ini
+*.zip

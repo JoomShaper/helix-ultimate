@@ -33,7 +33,7 @@ else
     }
 }
 
-$output .= '<a class="helix-ultimate-column-options" href="#" ><i class="fa fa-gear"></i></a>';
+$output .= '<a class="helix-ultimate-column-options" href="#" ><i class="fa fa-gear fa-fw"></i></a>';
 $output .= '</div>';
 $output .= '</div>';
 

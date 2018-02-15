@@ -102,6 +102,15 @@ svg {
   width: 350px;
   height: 100px;
 }
+.com-content-adminForm .input-prepend.input-append .media-preview.add-on {
+  height: 34px;
+  line-height: 26px;
+}
+.com-content-adminForm .input-prepend.input-append .modal.btn {
+  display: inline-block;
+  position: relative;
+  background: #ccc;
+}
 .com-config .form-horizontal .accordion-body {
   overflow: hidden;
 }
@@ -118,10 +127,12 @@ svg {
   color: #333;
   border: 1px solid #bbb;
 }
-.edit.item-page .modal {
-  position: initial;
-}
-.edit.item-page .media-preview.add-on {
+
+.input-prepend.input-append .media-preview.add-on {
   height: 34px;
-  line-height: 28px;
+  line-height: 26px;
+}
+.input-prepend.input-append .modal.btn {
+  position: relative;
+  background: #ccc;
 }

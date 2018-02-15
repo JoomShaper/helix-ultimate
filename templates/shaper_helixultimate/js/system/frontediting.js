@@ -138,4 +138,17 @@
 			}
 		});
 	});
+
+	if (MooTools !== undefined) {
+        var mHide = Element.prototype.hide;
+        Element.implement({
+            hide: function() {
+                if ($('.hasPopover') && $('.hasPopover').attr('data-original-title')) {
+                    return this;
+                }
+                mHide.apply(this, arguments);
+            }
+        });
+	}
+	
 })(jQuery);

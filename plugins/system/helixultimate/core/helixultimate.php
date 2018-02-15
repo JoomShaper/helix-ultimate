@@ -68,7 +68,11 @@ class HelixUltimate
 
     public function head()
     {
+
         $doc = JFactory::getDocument();
+
+        $view = $this->input->get('view', '', 'STRING');
+        $layout = $this->input->get('layout', 'default', 'STRING');
 
         JHtml::_('jquery.framework');
         JHtml::_('bootstrap.framework');
@@ -139,6 +143,12 @@ class HelixUltimate
         echo '<jdoc:include type="head" />';
 
         $this->add_css('bootstrap.min.css');
+
+        if($view == 'form' && $layout == 'edit')
+        {
+            $doc->addStylesheet( \JURI::root(true) . '\plugins/system/helixultimate/assets/css/frontend-edit.css');
+        }
+        
         $this->add_js('popper.min.js, bootstrap.min.js');
     }
 
@@ -167,7 +177,7 @@ class HelixUltimate
 
     private function put_css_js_file($files = array(), $file_type = '')
     {
-        $files_folder_path = JPATH_THEMES . '/' . $this->template->template . '/'. $file_type .'/';
+        $files_folder_path = \JPATH_THEMES . '/' . $this->template->template . '/'. $file_type .'/';
         $file_list = explode(',',$files['resource']);
 
         foreach( $file_list as $file )
@@ -176,11 +186,11 @@ class HelixUltimate
             $file = trim($file);
             $file_path = $files_folder_path . $file;
 
-            if (JFile::exists($file_path))
+            if (\JFile::exists($file_path))
             {
-                $file_url = JURI::base(true) . '/templates/' . $this->template->template . '/'. $file_type .'/' . $file;
+                $file_url = \JURI::base(true) . '/templates/' . $this->template->template . '/'. $file_type .'/' . $file;
             }
-            else if (JFile::exists($file))
+            else if (\JFile::exists($file))
             {
                 $file_url = $file;
             }
@@ -202,7 +212,7 @@ class HelixUltimate
 
     private function get_template_uri()
     {
-        $this->template_folder_url = JURI::base(true) . '/templates/' . $this->template->template;
+        $this->template_folder_url = \JURI::base(true) . '/templates/' . $this->template->template;
     }
 
     private function include_features()

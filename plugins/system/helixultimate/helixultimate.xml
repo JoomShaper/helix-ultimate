@@ -24,5 +24,6 @@
     <folder plugin="helixultimate">layouts</folder>
     <folder plugin="helixultimate">params</folder>
     <folder plugin="helixultimate">platform</folder>
+    <folder plugin="helixultimate">html</folder>
   </files>
 </extension>

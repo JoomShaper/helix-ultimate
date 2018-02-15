@@ -18,8 +18,13 @@ if ($data['componentArea'])
 {
     if (!$data['pagebuilder'])
     {
-        $output .= '<div class="container">';
-        $output .= '<div class="container-inner">';
+        if (!$data['fluidrow'])
+        {
+            $output .= '<div class="container">';
+            $output .= '<div class="container-inner">';
+        } else {
+            $output .= '<div class="container-fluid">';
+        }
     }
 }
 else
@@ -28,6 +33,8 @@ else
     {
         $output .= '<div class="container">';
         $output .= '<div class="container-inner">';
+    } else {
+        $output .= '<div class="container-fluid">';
     }
 }
 

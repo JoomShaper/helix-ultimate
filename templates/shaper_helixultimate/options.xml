@@ -8,7 +8,7 @@
 		</field>
 
 		<field name="logo_image" helixgroup="logo" type="helixmedia" preview="true" label="HELIX_ULTIMATE_LOGO" showon="logo_type:image" />
-		<field name="logo_height" helixgroup="logo" type="number" label="HELIX_ULTIMATE_LOGO_HEIGHT" showon="logo_type:image" />
+		<field name="logo_height" helixgroup="logo" type="number" default="36" label="HELIX_ULTIMATE_LOGO_HEIGHT" showon="logo_type:image" />
 		<field name="mobile_logo" helixgroup="logo" type="helixmedia" preview="true" label="HELIX_ULTIMATE_MOBILE_LOGO" description="HELIX_ULTIMATE_MOBILE_LOGO_DESC" showon="logo_type:image" />
 
 		<field name="logo_text" helixgroup="logo" type="text" label="HELIX_ULTIMATE_LOGO_TYPE_TEXT" showon="logo_type:text" />

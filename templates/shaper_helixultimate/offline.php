@@ -70,4 +70,4 @@ ob_start();
 
 $login_form = ob_get_clean();
 
-echo JLayoutHelper::render('comingsoon', array('params' => $this->params, 'login' => true, 'login_form' => $login_form));
+echo JLayoutHelper::render('comingsoon', array('language' => $this->language, 'direction' => $this->direction, 'params' => $this->params, 'login' => true, 'login_form' => $login_form));

@@ -8,4 +8,4 @@
 
 defined ('_JEXEC') or die();
 
-echo JLayoutHelper::render('comingsoon', array('params' => $this->params));
+echo JLayoutHelper::render('comingsoon', array('language' => $this->language, 'direction' => $this->direction, 'params' => $this->params));

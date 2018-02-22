@@ -268,6 +268,20 @@ ul.social-icons {
 	}
 }
 
+#sp-bottom {
+	.sp-module-content {
+		.latestnews {
+			> li {
+				> a {
+					>span {
+						color: $footer_text_color;
+					}
+				}
+			}
+		}
+	}
+}
+
 // Comingsoon
 .sp-comingsoon body {
 	background-color: $link_color;

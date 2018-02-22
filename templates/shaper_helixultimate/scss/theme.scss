@@ -109,6 +109,19 @@ ul.social-icons {
       }
     }
   }
+
+  // Latest Articles
+  .latestnews {
+    > li {
+      > a {
+        >span {
+          display: block;
+          margin-top: 5px;
+          font-size: 85%;
+        }
+      }
+    }
+  }
 }
 
 .sp-contact-info {

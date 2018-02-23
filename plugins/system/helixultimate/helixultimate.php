@@ -156,7 +156,7 @@ class  plgSystemHelixultimate extends JPlugin
                     Platform::loadFrameworkSystem();
                 }
                 
-                JEventDispatcher::getInstance()->trigger('onAfterRespond');
+                \JFactory::getApplication()->triggerEvent('onAfterRespond');
                 die;
             }
         }

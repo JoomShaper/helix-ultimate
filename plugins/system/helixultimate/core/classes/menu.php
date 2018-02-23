@@ -102,12 +102,16 @@ class HelixUltimateMenu
 
             switch ($item->type) {
                 case 'separator':
+                break;
+
                 case 'heading':
-                    continue;
+                    // No further action needed.
+                    break;
 
                 case 'url':
                     if ((strpos($item->link, 'index.php?') === 0) && (strpos($item->link, 'Itemid=') === false))
                     {
+                        // If this is an internal Joomla link, ensure the Itemid is set.
                         $item->flink = $item->link . '&Itemid=' . $item->id;
                     }
                     break;
@@ -117,25 +121,17 @@ class HelixUltimateMenu
                     break;
 
                 default:
-                    $router = JSite::getRouter();
-                    if ($router->getMode() == JROUTER_MODE_SEF)
-                    {
-                        $item->flink = 'index.php?Itemid=' . $item->id;
-                    }
-                    else
-                    {
-                        $item->flink .= '&Itemid=' . $item->id;
-                    }
+                    $item->flink = 'index.php?Itemid=' . $item->id;
                     break;
             }
 
-            if (strcasecmp(substr($item->flink, 0, 4), 'http') && (strpos($item->flink, 'index.php?') !== false))
+            if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http'))
             {
-                $item->flink = JRoute::_($item->flink, true, $item->params->get('secure'));
+                $item->flink = \JRoute::_($item->flink, true, $item->params->get('secure'));
             }
             else
             {
-                $item->flink = JRoute::_($item->flink);
+                $item->flink = \JRoute::_($item->flink);
             }
 
             $item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);

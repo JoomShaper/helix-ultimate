@@ -34,8 +34,7 @@ class JFormFieldHelixmegamenu extends JFormField
 
         ob_start();
         include_once dirname(__DIR__) . '/core/lib/helixmenuhelper.php';
-        $html = ob_get_contents();
-        ob_clean();
+        $html = ob_get_clean();
 
         return $html;
     }

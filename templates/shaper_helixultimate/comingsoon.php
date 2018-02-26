@@ -8,4 +8,9 @@
 
 defined ('_JEXEC') or die();
 
+if (!$this->params->get('comingsoon'))
+{
+  header("Location: " . \JURI::root());
+}
+
 echo JLayoutHelper::render('comingsoon', array('language' => $this->language, 'direction' => $this->direction, 'params' => $this->params));

@@ -443,7 +443,7 @@
 	<!--Advanced-->
 	<fieldset name="advance" label="HELIX_ULTIMATE_FIELDSET_ADVANCED" icon="fa fa-cog">
 		<field name="compress_css" helixgroup="compression" type="checkbox" default="0" label="HELIX_ULTIMATE_CSS_COMPRESS" description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
-		<field name="compress_js" helixgroup="compression" type="checkbox" default="0" label="HELIX_ULTIMATE_JS_COMPRESS" description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
+		<field name="compress_js" helixgroup="compression" type="checkbox" default="0" label="HELIX_ULTIMATE_JS_COMPRESS" description="HELIX_ULTIMATE_JS_COMPRESS_DESC" />
 		<field name="exclude_js" helixgroup="compression" type="textarea" label="HELIX_ULTIMATE_EXCLUDE_JS" description="HELIX_ULTIMATE_EXCLUDE_JS_DESC" showon="compress_js:1" />
 		<field name="scssoption" helixgroup="scss" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_SCSS" description="HELIX_ULTIMATE_ENABLE_SCSS_DESC" />
 		<field name="export_options" helixgroup="importexport" type="helixexportimport" hideLabel="true" />

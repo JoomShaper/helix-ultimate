@@ -8,7 +8,8 @@
 
 defined ('_JEXEC') or die();
 
-function modChrome_sp_xhtml($module, $params, $attribs) {
+function modChrome_sp_xhtml($module, $params, $attribs)
+{
 
 	$moduleTag     = htmlspecialchars($params->get('module_tag', 'div'), ENT_QUOTES, 'UTF-8');
 	$bootstrapSize = (int) $params->get('bootstrap_size', 0);

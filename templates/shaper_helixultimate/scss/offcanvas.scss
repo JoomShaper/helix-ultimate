@@ -107,6 +107,10 @@ $offcanvas-width: 300px !default;
     font-size: 14px;
     background: #333;
     color: #fff;
+    &:hover {
+        background: #666;
+        color: #fff;
+    }
 }
 
 .offcanvas-menu {

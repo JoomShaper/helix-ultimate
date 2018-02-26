@@ -1,4 +1,4 @@
-@keyframes fadeIn {
+@keyframes spFadeIn {
     from {
         opacity: 0;
     }
@@ -8,7 +8,7 @@
     }
 }
 
-@keyframes fadeInUp {
+@keyframes spFadeInUp {
     0% {
         opacity: 0;
         transform: translateY(20px);
@@ -20,7 +20,7 @@
     }
 }
 
-@keyframes fadeInDown {
+@keyframes spFadeInDown {
     0% {
         opacity: 0;
         transform: translateY(-20px);
@@ -32,7 +32,7 @@
     }
 }
 
-@keyframes zoomIn {
+@keyframes spZoomIn {
     0% {
         opacity: 0;
         transform: scale3d(.3, .3, .3);
@@ -43,7 +43,7 @@
     }
 }
 
-@keyframes rotateIn {
+@keyframes spRotateIn {
     from {
         transform-origin: center;
         transform: rotate3d(0, 0, 1, -45deg);
@@ -57,7 +57,7 @@
     }
 }
 
-@keyframes pulse {
+@keyframes spPulse {
     from {
         opacity: 0;
         transform: scale3d(1, 1, 1);
@@ -74,7 +74,7 @@
     }
 }
 
-@keyframes animSpin {
+@keyframes spSpin {
     to {
         transform: rotate(360deg);
     }

@@ -209,7 +209,7 @@ $menu_font_size : 14px;
         .sp-has-child {
             &:hover {
                 >.sp-dropdown {
-                    animation: fadeIn 600ms;
+                    animation: spFadeIn 600ms;
                 }
             }
         }
@@ -220,7 +220,7 @@ $menu_font_size : 14px;
         .sp-has-child {
             &:hover {
                 >.sp-dropdown {
-                    animation: fadeInUp 400ms ease-in;
+                    animation: spFadeInUp 400ms ease-in;
                 }
             }
         }
@@ -231,7 +231,7 @@ $menu_font_size : 14px;
         .sp-has-child {
             &:hover {
                 >.sp-dropdown {
-                    animation: fadeInDown 400ms ease-in;
+                    animation: spFadeInDown 400ms ease-in;
                 }
             }
         }
@@ -242,7 +242,7 @@ $menu_font_size : 14px;
         .sp-has-child {
             &:hover {
                 >.sp-dropdown {
-                    animation: zoomIn 300ms;
+                    animation: spZoomIn 300ms;
                 }
             }
         }
@@ -253,7 +253,7 @@ $menu_font_size : 14px;
         .sp-has-child {
             &:hover {
                 >.sp-dropdown {
-                    animation: rotateIn 300ms;
+                    animation: spRotateIn 300ms;
                 }
             }
         }
@@ -264,7 +264,7 @@ $menu_font_size : 14px;
         .sp-has-child {
             &:hover {
                 >.sp-dropdown {
-                    animation: pulse 300ms;
+                    animation: spPulse 300ms;
                 }
             }
         }

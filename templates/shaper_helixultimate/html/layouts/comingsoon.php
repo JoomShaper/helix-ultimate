@@ -109,44 +109,56 @@ $site_title = $app->get('sitename');
 				$flickr 	= $params->get('flickr');
 				$vk 		= $params->get('vk');
 
-				if( $params->get('comingsoon_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) ) {
+				if( $params->get('comingsoon_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) )
+				{
 					$social_output  = '<ul class="social-icons">';
 
-					if( $facebook ) {
+					if( $facebook )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $facebook .'"><i class="fa fa-facebook"></i></a></li>';
 					}
-					if( $twitter ) {
+					if( $twitter )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $twitter .'"><i class="fa fa-twitter"></i></a></li>';
 					}
-					if( $googleplus ) {
+					if( $googleplus )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $googleplus .'"><i class="fa fa-google-plus"></i></a></li>';
 					}
-					if( $pinterest ) {
+					if( $pinterest )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $pinterest .'"><i class="fa fa-pinterest"></i></a></li>';
 					}
-					if( $youtube ) {
+					if( $youtube )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $youtube .'"><i class="fa fa-youtube"></i></a></li>';
 					}
-					if( $linkedin ) {
+					if( $linkedin )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $linkedin .'"><i class="fa fa-linkedin"></i></a></li>';
 					}
-					if( $dribbble ) {
+					if( $dribbble )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $dribbble .'"><i class="fa fa-dribbble"></i></a></li>';
 					}
-					if( $behance ) {
+					if( $behance )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $behance .'"><i class="fa fa-behance"></i></a></li>';
 					}
-					if( $flickr ) {
+					if( $flickr )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $flickr .'"><i class="fa fa-flickr"></i></a></li>';
 					}
-					if( $vk ) {
+					if( $vk )
+					{
 						$social_output .= '<li><a target="_blank" href="'. $vk .'"><i class="fa fa-vk"></i></a></li>';
 					}
-					if( $skype ) {
+					if( $skype )
+					{
 						$social_output .= '<li><a href="skype:'. $skype .'?chat"><i class="fa fa-skype"></i></a></li>';
 					}
 
-					$social_output .= '<ul>';
+					$social_output .= '</ul>';
 
 					echo $social_output;
 				}

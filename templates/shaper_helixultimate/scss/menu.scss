@@ -1,4 +1,5 @@
-// Offcanvas
+$menu_font_size : 14px;
+
 .sp-megamenu-parent {
     list-style: none;
     padding: 0;
@@ -21,7 +22,7 @@
             display: inline-block;
             padding: 0 15px;
             line-height: $header_height;
-            font-size: 14px;
+            font-size: $menu_font_size;
             margin: 0;
         }
 
@@ -69,7 +70,7 @@
         >li > a {
             display: block;
             text-transform: uppercase;
-            font-size: 14px;
+            font-size: $menu_font_size;
             font-weight: 600;
             margin-bottom: 10px;
         }
@@ -89,7 +90,7 @@
 
         .sp-dropdown-inner{
             box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
-            padding: 12px 20px;
+            padding: 20px;
 
             >.row:not(:first-child) {
                 margin-top: 20px;
@@ -145,7 +146,7 @@
             position: relative;
 
             >a, span:not(.sp-menu-badge) {
-                font-size: 14px;
+                font-size: $menu_font_size;
                 line-height: 1;
                 display: block;
                 padding: 8px 0;
@@ -162,10 +163,25 @@
         .sp-module {
             padding: 0;
             .sp-module-title {
-                font-size: 14px;
+                font-size: $menu_font_size;
                 margin: 0 0 15px;
                 text-transform: uppercase;
                 font-weight: bold;
+            }
+
+            .latestnews {
+                margin: 0;
+                >li {
+                    &:not(:last-child) {
+                        margin: 0 0 15px;
+                    }
+                    a {
+                        font-size: 14px;
+                        span {
+                            opacity: .8;
+                        }
+                    }
+                }
             }
         }
     }

@@ -52,6 +52,7 @@
       margin: 0;
       >li.thumbnail {
         width: 110px;
+        float: left;
         >a {
           >div {
             &:first-child {

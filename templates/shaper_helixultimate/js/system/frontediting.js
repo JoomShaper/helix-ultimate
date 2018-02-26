@@ -139,7 +139,7 @@
 		});
 	});
 
-	if (MooTools !== undefined) {
+	if (typeof MooTools != "undefined") {
         var mHide = Element.prototype.hide;
         Element.implement({
             hide: function() {

@@ -128,7 +128,7 @@ class JFormFieldHelixmegamenu extends JFormField
             $html .= '<option value="">' . JText::_('HELIX_ULTIMATE_GLOBAL_SELECT') . '</option>';
             foreach($list as $each)
             {
-                $html .= '<option value="'.$each.'"'. (($default == $each) ? 'selected' : '').'>'. $each .'</option>';
+                $html .= '<option value="'.$each.'"'. (($default == $each) ? 'selected' : '').'>'. str_replace('fa-', '', $each) .'</option>';
             }
         }
         else

@@ -110,7 +110,7 @@ class JFormFieldHelixfont extends JFormField
         $fontSize = (isset($value->fontSize))?$value->fontSize:'';
         $html .= '<div class="col-6 helix-ultimate-webfont-size">';
         $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SIZE') .'</small></label>';
-        $html .= '<input type="number" value="'. $fontSize .'" class="helix-ultimate-webfont-size-input" min="6" placeholder="14">';
+        $html .= '<input type="number" value="'. $fontSize .'" class="helix-ultimate-webfont-size-input" min="6">';
         $html .= '</div>';
 
         //Font Weight

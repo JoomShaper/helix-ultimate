@@ -25,7 +25,7 @@ if ($this->params->get('comingsoon'))
   header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
 }
 
-$custom_style = $this->params->get('custom_style', 0);
+$custom_style = $this->params->get('custom_style', 1);
 if($custom_style)
 {
     $scssVars = array(

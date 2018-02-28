@@ -31,15 +31,16 @@ class JFormFieldHelixlayout extends JFormField
 
         if(!empty($json))
         {
-            $value = $json;
+            $rows = $json;
         }
         else
         {
             $layout_file = \JFile::read( \JPATH_SITE . '/templates/' . $style->template . '/layout/default.json' );
             $value = json_decode($layout_file);
+            $rows = json_decode($value->layout);
         }
 
-        $htmls = $this->generateLayout($helix_layout_path, $value);
+        $htmls = $this->generateLayout($helix_layout_path, $rows);
         $htmls .= '<input type="hidden" id="'.$this->id.'" name="'.$this->name.'">';
         return $htmls;
     }

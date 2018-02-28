@@ -46,8 +46,9 @@ a{
   >li {
     display: inline-block;
     a {
-      background: fadeOut($link_color, 0.9);
-      color: $link_color;
+    	@if $link_color { background: fadeOut($link_color, 0.9); }
+
+      	color: $link_color;
 			&:hover {
 				background: $link_hover_color;
 			}
@@ -158,7 +159,7 @@ a{
                         >a,
                         >.menu-separator {
                             >.menu-toggler {
-                                color: fade-out($menu_dropdown_text_color, 0.5);
+                            	@if $menu_dropdown_text_color { color: fade-out($menu_dropdown_text_color, 0.5); }
                             }
                         }
 
@@ -167,7 +168,7 @@ a{
                     ul {
                         li {
                             a {
-                                color: fade-out($menu_dropdown_text_color, 0.2);
+                            	@if $menu_dropdown_text_color { color: fade-out($menu_dropdown_text_color, 0.2); }
                             }
                         }
                     }

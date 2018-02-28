@@ -253,9 +253,12 @@ class HelixUltimate
         $this->include_features();
 
         $layout = ($this->params->get('layout'))? $this->params->get('layout') : [];
-        $rows   = json_decode($layout);
-
-        if (empty($rows))
+        
+        if(!empty($layout))
+        {
+            $rows   = json_decode($layout);
+        }
+        else
         {
             $layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/layout/default.json';
             if (!JFile::exists($layout_file))
@@ -263,7 +266,7 @@ class HelixUltimate
                 die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');
             }
             $layout_data = json_decode(JFile::read($layout_file));
-            $rows = $layout_data->layout;
+            $rows = json_decode($layout_data->layout);
         }
 
         $output = $this->get_recursive_layout($rows);

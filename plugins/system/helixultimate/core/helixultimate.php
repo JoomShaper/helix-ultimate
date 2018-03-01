@@ -260,7 +260,7 @@ class HelixUltimate
         }
         else
         {
-            $layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/layout/default.json';
+            $layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/options.json';
             if (!JFile::exists($layout_file))
             {
                 die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');

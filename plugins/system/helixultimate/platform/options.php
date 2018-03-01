@@ -40,7 +40,7 @@ class Options{
         if($formData){
             $form->bind($formData);
         } else {
-            $layout_file = \JPATH_ROOT.'/templates/' . $templateStyle->template . '/layout/default.json';
+            $layout_file = \JPATH_ROOT.'/templates/' . $templateStyle->template . '/options.json';
             $formData = file_get_contents($layout_file);
             $form->bind(json_decode($formData));
         }

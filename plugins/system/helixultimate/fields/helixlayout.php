@@ -35,7 +35,7 @@ class JFormFieldHelixlayout extends JFormField
         }
         else
         {
-            $layout_file = \JFile::read( \JPATH_SITE . '/templates/' . $style->template . '/layout/default.json' );
+            $layout_file = \JFile::read( \JPATH_SITE . '/templates/' . $style->template . '/options.json' );
             $value = json_decode($layout_file);
             $rows = json_decode($value->layout);
         }
@@ -63,26 +63,4 @@ class JFormFieldHelixlayout extends JFormField
     {
         return false;
     }
-
-    public function getRawLayoutData(){
-
-        $input  = \JFactory::getApplication()->input;
-        $style_id = (int) $input->get('id', 0, 'INT');
-        $style = Helper::getTemplateStyle($style_id);
-
-        $json = json_decode($this->value);
-
-        if(!empty($json))
-        {
-            $value = $json;
-        }
-        else
-        {
-            $layout_file = \JFile::read( \JPATH_SITE . '/templates/' . $style->template . '/layout/default.json' );
-            $value = json_decode($layout_file);
-        }
-
-        return $json;
-    }
-
 }

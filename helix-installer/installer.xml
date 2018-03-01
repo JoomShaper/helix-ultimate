@@ -4,7 +4,7 @@
     <description>Shaper Helix Ultimate - Blank template of Helix Ultimate framework</description>
     <scriptfile>installer.script.php</scriptfile>
     <files>
-		<filename plugin="TmplHelixUltimate">installer.script.php</filename>
+		<filename plugin="tmp_helixult">installer.script.php</filename>
     </files>
     <plugins>
         <plugin plugin="helixultimate" group="system" />

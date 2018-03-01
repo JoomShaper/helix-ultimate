@@ -392,6 +392,7 @@
 			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
 			<option value="small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
 			<option value="thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
+			<option value="medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
 			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
 		</field>
 

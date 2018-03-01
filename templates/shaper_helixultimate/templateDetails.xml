@@ -64,6 +64,7 @@
         <file>template_preview.png</file>
         <file>template_thumbnail.png</file>
         <file>options.xml</file>
+        <file>options.json</file>
         <file>templateDetails.xml</file>
         <file>offline.php</file>
         <file>helper.php</file>
@@ -76,7 +77,6 @@
         <folder>html/</folder>
         <folder>images/</folder>
         <folder>js/</folder>
-        <folder>layout/</folder>
         <folder>scss/</folder>
     </files>
     <config>

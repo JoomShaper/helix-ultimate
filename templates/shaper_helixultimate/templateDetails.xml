@@ -11,7 +11,7 @@
     <description>Helix Ultimate - Starter Template of Helix Ultimate Framework</description>
 
     <updateservers>
-        <server type="extension" priority="1" name="shaper_helixultimate">https://www.joomshaper.com/updates/shaper-helix-ultimate.xml</server>
+        <server type="extension" priority="1" name="shaper_helixultimate">https://www.joomshaper.com/updates/shaper-helixultimate.xml</server>
     </updateservers>
 
     <languages>

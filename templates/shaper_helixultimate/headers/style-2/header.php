@@ -25,14 +25,32 @@ $output .= '<div class="row">';
 $output .= '<div id="sp-logo" class="col-8 col-lg-4">';
 $output .= '<div class="sp-column">';
 $logo    = new HelixUltimateFeatureLogo($data->params);
-$output .= $logo->renderFeature();
+if(isset($logo->load_pos) && $logo->load_pos == 'before')
+{
+    $output .= $logo->renderFeature();
+    $output .= '<jdoc:include type="modules" name="logo" style="sp_xhtml" />';
+}
+else
+{
+    $output .= '<jdoc:include type="modules" name="logo" style="sp_xhtml" />';
+    $output .= $logo->renderFeature();
+}
 $output .= '</div>';
 $output .= '</div>';
 
 $output .= '<div id="sp-menu" class="col-4 col-lg-8">';
 $output .= '<div class="sp-column">';
 $menu    = new HelixUltimateFeatureMenu($data->params);
-$output .= $menu->renderFeature();
+if(isset($menu->load_pos) && $menu->load_pos == 'before')
+{
+    $output .= $menu->renderFeature();
+    $output .= '<jdoc:include type="modules" name="menu" style="sp_xhtml" />';
+}
+else
+{
+    $output .= '<jdoc:include type="modules" name="menu" style="sp_xhtml" />';
+    $output .= $menu->renderFeature();
+}
 $output .= '</div>';
 $output .= '</div>';
 

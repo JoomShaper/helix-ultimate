@@ -19,46 +19,33 @@ class JFormFieldHelixheaders extends JFormField
     protected function getInput()
     {
         $input  = JFactory::getApplication()->input;
-        $id     = $input->get('id',NULL,'INT');
-
-        $header_image_path = JURI::root() . 'plugins/system/helixultimate/layouts/frontend/headerlist/';
-        $header_style = JFolder::folders(JPATH_ROOT .'/plugins/system/helixultimate/layouts/frontend/headerlist');
-
-        // Template header list
+        $id = $input->get('id',NULL,'INT');
         $template = $this->getTemplateName($id);
-        $tmpl_header_image_path = JURI::root() .'templates/'. $template .'/headerlist/';
-        if($template)
+
+        $headers_src = JPATH_ROOT .'/templates/'. $template .'/headers';
+        $thumb_url = JURI::root() .'templates/'. $template .'/headers';
+
+        $html = '';
+
+        if(JFolder::exists($headers_src))
         {
-            $tmpl_header_path = JPATH_ROOT .'/templates/'. $template .'/headerlist';
-            if(JFolder::exists($tmpl_header_path))
+            $headers = JFolder::folders($headers_src);
+
+            if(count($headers))
             {
-                $tmpl_header_style = JFolder::folders($tmpl_header_path);
-                $header_style = array_merge($header_style,$tmpl_header_style);
+                $html = '<div class="helix-ultimate-predefined-headers">';
+                $html .= '<ul class="helix-ultimate-header-list clearfix" data-name="'. $this->name .'">';
+                foreach($headers as $header)
+                {
+                    $html .= '<li class="helix-ultimate-header-item'.(($this->value == $header)?' active':'').'" data-style="'.$header.'">';
+                    $html .= '<span><img src="'. $thumb_url . '/' . $header .'/thumb.jpg" alt="'. $header .'"</span>';
+                    $html .= '</li>';
+                }
+                $html .= '<input type="hidden" name="' . $this->name .'" value=\''. $this->value .'\' id="'. $this->id .'">';
+                $html .= '</div>';
             }
+
         }
-
-        $html = '<div class="helix-ultimate-predefined-headers">';
-        $html .= '<ul class="helix-ultimate-header-list clearfix" data-name="'. $this->name .'">';
-
-        foreach($header_style as $key => $style)
-        {
-            if(JFile::exists($tmpl_header_path .'/'. $style . '/thumb.jpg'))
-            {
-                $header_image = $tmpl_header_image_path . $style . '/thumb.jpg';
-            }
-            else
-            {
-                $header_image = $header_image_path . $style . '/thumb.jpg';
-            }
-            $html .= '<li class="helix-ultimate-header-item'.(($this->value == $style)?' active':'').'" data-style="'.$style.'">';
-            $html .= '<span><img src="'. $header_image .'" alt="'. $style .'"</span>';
-            $html .= '</li>';
-        }
-
-        $html .= '</ul>';
-
-        $html .= '<input type="hidden" name="' . $this->name .'" value=\''. $this->value .'\' id="'. $this->id .'">';
-        $html .= '</div>';
         
         return $html;
     }

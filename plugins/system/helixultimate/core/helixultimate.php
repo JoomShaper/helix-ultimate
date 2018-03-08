@@ -866,16 +866,12 @@ class HelixUltimate
         $options->params = $this->params;
         $template = $options->template->template;
 
-        $tmpl_file_location = JPATH_ROOT .'/templates/'. $template .'/headerlist';
+        $tmpl_file_location = JPATH_ROOT .'/templates/'. $template .'/headers';
 
         if(JFile::exists($tmpl_file_location . '/'. $header_style . '/header.php')){
             $getLayout = new JLayoutFile($header_style.'.header', $tmpl_file_location );
-        } else {
-            $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts/frontend/headerlist';
-            $getLayout    = new JLayoutFile($header_style.'.header', $layout_path );
+            return $getLayout->render($options);
         }
-        
-        return $getLayout->render($options);
     }
 
     public function minifyCss($css_code){

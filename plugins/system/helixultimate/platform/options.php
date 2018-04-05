@@ -17,13 +17,19 @@ require_once __DIR__.'/helper.php';
 use Joomla\CMS\Form as JoomlaForm;
 use HelixUltimate\Helper\Helper as Helper;
 
+$app = \JFactory::getApplication();
+$input = $app->input;
+
+if(($input->get('option', '', 'STRING') == 'com_ajax') && ($input->get('helix', '', 'STRING') == 'ultimate') && ($input->get('id', 0, 'INT') != 0))
+{
+    \JHtml::_('jquery.framework');
+    \JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
+}
+
 class Options{
 
     public function renderBuilderSidebar()
     {
-
-        \JHtml::_('jquery.framework');
-        \JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 
         $input  = \JFactory::getApplication()->input;
         $id = $input->get('id',NULL);

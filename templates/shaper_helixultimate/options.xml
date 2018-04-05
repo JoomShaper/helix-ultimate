@@ -413,6 +413,9 @@
 		</field>
 		<field name="social_share" type="checkbox" helixgroup="blog_details" default="1" label="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE" description="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_DESC" />
 		<field name="author_info" type="checkbox" helixgroup="blog_details" default="0" label="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO" description="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO_DESC" />
+		<field name="og" type="checkbox" helixgroup="blog_details" default="1" label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH" description="HELIX_ULTIMATE_BLOG_OPEN_GRAPH_DESC" />
+		<field name="og_fb_id" type="text" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH_FB_ID" showon="og:1" />
+		<field name="og_twitter_site" type="text" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH_TWITTER_SITE" showon="og:1" />
 
 		<field name="comment" type="list" helixgroup="comments" default="disabled" label="HELIX_ULTIMATE_BLOG_COMMENT">
 			<option value="disabled">HELIX_ULTIMATE_COMMENT_DISABLED</option>
@@ -420,9 +423,7 @@
 			<option value="intensedebate">HELIX_ULTIMATE_COMMENT_INTENSEDEBATE</option>
 			<option value="facebook">HELIX_ULTIMATE_COMMENT_FACEBOOK</option>
 		</field>
-		<field name="comment_categories" helixgroup="comments" type="category" extension="com_content" label="HELIX_ULTIMATE_COMMENTS_CATEGORY" description="HELIX_ULTIMATE_COMMENTS_CATEGORY_DESC" multiple="multiple" showon="comment!:disabled">
-			
-		</field>
+		<field name="comment_categories" helixgroup="comments" type="category" extension="com_content" label="HELIX_ULTIMATE_COMMENTS_CATEGORY" description="HELIX_ULTIMATE_COMMENTS_CATEGORY_DESC" multiple="multiple" showon="comment!:disabled" />
 		<field name="comment_disqus_subdomain" type="text" helixgroup="comments" label="HELIX_ULTIMATE_COMMENT_DISQUS_SUBDOMAIN" description="HELIX_ULTIMATE_COMMENT_DISQUS_SUBDOMAIN_DESC" showon="comment:disqus" />
 		<field name="comment_disqus_devmode" type="checkbox" helixgroup="comments" default="0" label="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE" description="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE_DESC" showon="comment:disqus" />
 		<field name="comment_intensedebate_acc" type="text" helixgroup="comments" default="" label="HELIX_ULTIMATE_COMMENT_INTENSEDEBATE_ACC" description="HELIX_ULTIMATE_COMMENT_INTENSEDEBATE_ACC_DESC" showon="comment:intensedebate" />

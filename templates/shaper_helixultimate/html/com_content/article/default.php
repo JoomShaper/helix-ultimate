@@ -27,7 +27,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 JHtml::_('behavior.caption');
 
 ?>
-<div class="article-details<?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
+<div class="article-details <?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 	<div class="page-header">

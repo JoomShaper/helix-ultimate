@@ -14,9 +14,6 @@ jimport( 'joomla.filesystem.file' );
 jimport('joomla.filesystem.folder');
 require_once __DIR__.'/helper.php';
 
-\JHtml::_('jquery.framework');
-\JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
-
 use Joomla\CMS\Form as JoomlaForm;
 use HelixUltimate\Helper\Helper as Helper;
 
@@ -24,6 +21,9 @@ class Options{
 
     public function renderBuilderSidebar()
     {
+
+        \JHtml::_('jquery.framework');
+        \JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 
         $input  = \JFactory::getApplication()->input;
         $id = $input->get('id',NULL);

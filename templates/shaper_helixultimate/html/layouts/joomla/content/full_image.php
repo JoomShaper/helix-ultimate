@@ -42,7 +42,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 	<?php $images = json_decode($displayData->images); ?>
 	<?php if (isset($images->image_fulltext) && !empty($images->image_fulltext)) : ?>
 		<?php $imgfloat = empty($images->float_fulltext) ? $params->get('float_fulltext') : $images->float_fulltext; ?>
-		<div class="article-full-image fltoa-<?php echo htmlspecialchars($imgfloat); ?>"> <img
+		<div class="article-full-image float-<?php echo htmlspecialchars($imgfloat); ?>"> <img
 			<?php if ($images->image_fulltext_caption) :
 				echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_fulltext_caption) . '"';
 			endif; ?>

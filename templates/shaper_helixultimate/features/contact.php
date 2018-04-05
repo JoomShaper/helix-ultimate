@@ -43,7 +43,7 @@ class HelixUltimateFeatureContact
 
 			if($this->params->get('contact_time'))
 			{
-				$output .= '<li class="sp-contact-time"><span class="fa fa-clock-o"></span>' . $this->params->get('contact_time') . '</li>';
+				$output .= '<li class="sp-contact-time"><span class="fa fa-clock-o"></span> ' . $this->params->get('contact_time') . '</li>';
 			}
 
 			$output .= '</ul>';

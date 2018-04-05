@@ -130,11 +130,11 @@ jQuery(function($) {
 		});
 	});
 
-	$(document).on('click', '.helix-ultimate-media-select', function(event) {
+	$(document).on('click', '.helix-ultimate-media-folder, .helix-ultimate-media-image', function(event) {
 		event.preventDefault();
 		$('.helix-ultimate-media-selected').removeClass('helix-ultimate-media-selected');
-		$(this).closest('li').addClass('helix-ultimate-media-selected');
-		if($(this).closest('li').hasClass('helix-ultimate-media-folder')) {
+		$(this).addClass('helix-ultimate-media-selected');
+		if($(this).hasClass('helix-ultimate-media-folder')) {
 			$('.helix-ultimate-modal-action-select').hide();
 		} else {
 			$('.helix-ultimate-modal-action-select').removeAttr('style');

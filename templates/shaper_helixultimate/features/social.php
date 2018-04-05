@@ -38,7 +38,7 @@ class HelixUltimateFeatureSocial
 		$vk = $this->params->get('vk');
 		$custom = $this->params->get('custom');
 
-		if( $this->params->get('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $instagram || $behance || $skype || $flickr || $vk ) )
+		if( $this->params->get('show_social_icons') && ( $facebook || $twitter || $googleplus || $pinterest || $youtube || $linkedin || $dribbble || $instagram || $behance || $skype || $flickr || $vk || $custom ) )
 		{
 			$html  = '<ul class="social-icons">';
 

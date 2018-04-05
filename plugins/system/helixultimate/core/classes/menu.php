@@ -245,10 +245,10 @@ class HelixUltimateMenu
         $firstitem = count($items) ? $items[0]->id : 0;
         $class = ($item->level==1) ? 'sp-dropdown sp-dropdown-main' : 'sp-dropdown sp-dropdown-sub';
 
-        $dropdown_width = 240;
+        $dropdown_width = $this->_params->get('dropdown_width', 240);
         $dropdown_alignment = 'right';
         $dropdown_style = 'width: '. $dropdown_width .'px;';
-        $layout = json_decode($this->_items[$item->id]->params->get('menulayout'));
+        $layout = json_decode($this->_items[$item->id]->params->get('helixultimatemenulayout'));
 
         if (isset($layout->dropdown) && $layout->dropdown == 'left')
         {

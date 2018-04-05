@@ -9,6 +9,7 @@
 defined ('_JEXEC') or die();
 
 $data = $displayData;
+$offcanvs_position = $displayData->params->get('offcanvas_position', 'right');
 
 $feature_folder_path     = JPATH_THEMES . '/' . $data->template->template . '/features/';
 
@@ -22,7 +23,15 @@ $output .= '<div class="container">';
 $output .= '<div class="container-inner">';
 $output .= '<div class="row">';
 
-$output .= '<div id="sp-logo" class="col-8 col-lg-4">';
+$class1 = 'col-8 col-lg-4';
+$class2 = 'col-4 col-lg-8';
+if($offcanvs_position == 'left')
+{
+    $class1 = 'col-12 col-lg-4';
+    $class2 = 'd-none d-lg-block col-lg-8';
+}
+
+$output .= '<div id="sp-logo" class="'. $class1 .'">';
 $output .= '<div class="sp-column">';
 $logo    = new HelixUltimateFeatureLogo($data->params);
 if(isset($logo->load_pos) && $logo->load_pos == 'before')
@@ -38,7 +47,7 @@ else
 $output .= '</div>';
 $output .= '</div>';
 
-$output .= '<div id="sp-menu" class="col-4 col-lg-8">';
+$output .= '<div id="sp-menu" class="'. $class2 .'">';
 $output .= '<div class="sp-column">';
 $menu    = new HelixUltimateFeatureMenu($data->params);
 if(isset($menu->load_pos) && $menu->load_pos == 'before')

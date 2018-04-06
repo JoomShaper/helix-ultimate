@@ -43,21 +43,25 @@ jQuery(function($) {
 		// setInputValue Callback Function
 		$.fn.setInputValue = function(options){
 			if (this.attr('type') == 'checkbox') {
-				if (options.filed == '1') {
+				if (options.field == '1') {
 					this.attr('checked','checked');
 				}else{
 					this.removeAttr('checked');
 				}
+			}else if(this.hasClass('input-select')){
+				this.val( options.field );
+				this.trigger('liszt:updated');
+				this.trigger('chosen:updated');
 			}else if(this.hasClass('input-media')){
-				if(options.filed){
+				if(options.field){
 					$imgParent = this.parent('.media');
 					$imgParent.find('img.media-preview').each(function() {
-						$(this).attr('src',layoutbuilder_base+options.filed);
+						$(this).attr('src',layoutbuilder_base+options.field);
 					});
 				}
-				this.val( options.filed );
+				this.val( options.field );
 			}else{
-				this.val( options.filed );
+				this.val( options.field );
 			}
 	
 			if (this.data('attrname') == 'column_type'){
@@ -122,7 +126,7 @@ jQuery(function($) {
 			$clone.find('.helix-ultimate-input').each(function(){
 				var $that = $(this),
 				attrValue = $parent.data( $that.data('attrname') );
-				$that.setInputValue({filed: attrValue});
+				$that.setInputValue({field: attrValue});
 				if($that.hasClass('helix-ultimate-input-media')) {
 					if(attrValue) {
 						$that.prev('.helix-ultimate-image-holder').html( '<img src="'+ $that.data('baseurl') +  attrValue +'" alt="">' );
@@ -161,7 +165,7 @@ jQuery(function($) {
 			$clone.find('.helix-ultimate-input').each(function(){
 				var $that = $(this),
 				attrValue = $parent.data( $that.data('attrname'));
-				$that.setInputValue({filed: attrValue});
+				$that.setInputValue({field: attrValue});
 			});
 
 			$clone.find('select.helix-ultimate-input').each(function(){

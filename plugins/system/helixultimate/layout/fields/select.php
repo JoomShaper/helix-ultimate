@@ -16,7 +16,7 @@ class HelixUltimateFieldSelect{
 		$output  = '<div class="control-group '.$key.'">';
 		$output .= '<label>'.$attr['title'].'</label>';
 
-		$output .= '<select class="helix-ultimate-input" data-attrname="'.$key.'">';
+		$output .= '<select class="helix-ultimate-input input-select" data-attrname="'.$key.'">';
 		foreach( $attr['values'] as $key => $value )
 		{
 			$output .= '<option value="'.$key.'">'.$value.'</option>';

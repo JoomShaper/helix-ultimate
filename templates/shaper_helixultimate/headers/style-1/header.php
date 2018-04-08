@@ -47,14 +47,13 @@ $contact = new HelixUltimateFeatureContact($data->params);
 if(isset($contact->load_pos) && $contact->load_pos == 'before')
 {
     $output .= $contact->renderFeature();
-    $output .= '<jdoc:include type="modules" name="top1" style="sp_xhtml" />';
+    $output .= '<jdoc:include type="modules" name="top2" style="sp_xhtml" />';
 }
 else
 {
-    $output .= '<jdoc:include type="modules" name="top1" style="sp_xhtml" />';
+    $output .= '<jdoc:include type="modules" name="top2" style="sp_xhtml" />';
     $output .= $contact->renderFeature();
 }
-$output .= '<jdoc:include type="modules" name="top2" style="sp_xhtml" />';
 $output .= '</div>';
 $output .= '</div>';
 

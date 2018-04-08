@@ -20,14 +20,19 @@ class HelixUltimateMenu
 
     public $_params = null;
 
+    public $direction = 'ltr';
+
     public $menuname = 'mainmenu';
 
     function __construct($class = '', $name = '')
     {
-        $this->app = JFactory::getApplication();
+        $lang = \JFactory::getLanguage();
+        $this->app = \JFactory::getApplication();
         $this->template = $this->app->getTemplate(true);
         $this->_params = $this->template->params;
         $this->extraclass = $class;
+        $this->direction = $lang->get('rtl') ? 'rtl' : 'ltr';
+
         if($name)
         {
             $this->menuname = $name;
@@ -372,13 +377,16 @@ class HelixUltimateMenu
 
         $layout = json_decode($item->params->get('helixultimatemenulayout'));
 
+        $item->hasChild = 0;
         if (!empty($this->children[$item->id]))
         {
             $class .= ' sp-has-child';
+            $item->hasChild = 1;
         }
         else if (isset($layout->megamenu) && ($layout->megamenu))
         {
             $class .= ' sp-has-child';
+            $item->hasChild = 1;
         }
 
         if (isset($layout->customclass) && ($layout->customclass))
@@ -429,11 +437,11 @@ class HelixUltimateMenu
         {
             if ($showmenutitle)
             {
-                $linktitle = '<i class="fa ' . $icon . '"></i> ' . $linktitle;
+                $linktitle = '<span class="fa ' . $icon . '"></span> ' . $linktitle;
             }
             else
             {
-                $linktitle = '<i class="fa ' . $icon . '"></i>';
+                $linktitle = '<span class="fa ' . $icon . '"></span>';
             }
         }
         $flink = $item->flink;
@@ -477,6 +485,11 @@ class HelixUltimateMenu
             {
                 $linktitle = $linktitle.$badge_html;
             }
+        }
+
+        if(isset($item->hasChild) && $item->hasChild)
+        {
+            //$linktitle = $linktitle . ' <span class="fa fa-angle-down"></span>';
         }
         
         if ($item->params->get('menu_show', 1) != 0)

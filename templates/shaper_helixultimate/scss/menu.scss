@@ -26,12 +26,6 @@ $menu_font_size : 14px;
 			margin: 0;
 		}
 
-		&.sp-has-child>a:after,
-		&.sp-has-child>span:after{
-			font-family: "FontAwesome";
-			content: " \f107";
-		}
-
 		&.active > a {
 			font-weight: 500;
 		}
@@ -47,14 +41,6 @@ $menu_font_size : 14px;
 			background: #d60000;
 			color: #fff;
 			border-radius: 3px;
-
-			&.sp-menu-badge-right {
-				margin-left: 5px;
-			}
-
-			&.sp-menu-badge-left {
-				margin-right: 5px;
-			}
 		}
 	}
 
@@ -101,38 +87,14 @@ $menu_font_size : 14px;
 			list-style: none;
 			padding: 0;
 			margin: 0;
-
-			.sp-has-child>a:after{
-				font-family: "FontAwesome";
-				content: " \f105";
-				float: right;
-			}
-		}
-
-		&.sp-menu-center{
-			margin-left: 45px;
 		}
 
 		&.sp-dropdown-main {
 			top: 100%;
-
-			&.sp-menu-right {
-				left: 0;
-			}
-
-			&.sp-menu-full {
-				left: auto;
-				right: 0;
-			}
-
-			&.sp-menu-left {
-				right: 0;
-			}
 		}
 
 		&.sp-dropdown-sub {
 			top: 0;
-			left: 100%;
 
 			.sp-dropdown-inner {
 				box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
@@ -269,7 +231,67 @@ $menu_font_size : 14px;
 			}
 		}
 	}
+}
 
+// ltr
+body {
+	&.ltr {
+		.sp-megamenu-parent {
+			>li {
+				&.sp-has-child>a:after,
+				&.sp-has-child>span:after{
+					font-family: "FontAwesome";
+					content: "\f107";
+					float: right;
+					margin-left: 7px;
+				}
+		
+				.sp-menu-badge {		
+					&.sp-menu-badge-right {
+						margin-left: 5px;
+					}
+		
+					&.sp-menu-badge-left {
+						margin-right: 5px;
+					}
+				}
+			}
+		
+			.sp-dropdown {
+				.sp-dropdown-items{		
+					.sp-has-child>a:after{
+						font-family: "FontAwesome";
+						content: "\f105";
+						float: right;
+						margin-left: 7px;
+					}
+				}
+		
+				&.sp-menu-center{
+					margin-left: 45px;
+				}
+		
+				&.sp-dropdown-main {
+					&.sp-menu-right {
+						left: 0;
+					}
+		
+					&.sp-menu-full {
+						left: auto;
+						right: 0;
+					}
+		
+					&.sp-menu-left {
+						right: 0;
+					}
+				}
+		
+				&.sp-dropdown-sub {
+					left: 100%;
+				}
+			}
+		}
+	}
 }
 
 @media (min-width: 576px) {

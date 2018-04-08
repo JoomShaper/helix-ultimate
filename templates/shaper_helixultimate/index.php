@@ -59,6 +59,7 @@ else
 }
 
 $scssVars['header_height'] = $this->params->get('header_height', '60px');
+$scssVars['offcanvas_width'] = $this->params->get('offcanvas_width', '300') . 'px';
 
 
 //Body Background Image
@@ -88,7 +89,7 @@ if ($custom_js = $this->params->get('custom_js'))
 ?>
 
 <!doctype html>
-<html lang="<?php echo $this->language; ?>">
+<html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -101,6 +102,12 @@ if ($custom_js = $this->params->get('custom_js'))
         $theme->add_js('jquery.sticky.js, main.js');
 
         $theme->add_scss('master', $scssVars, 'template');
+
+        if($this->direction == 'rtl')
+        {
+            $theme->add_scss('rtl', $scssVars, 'rtl');
+        }
+
         $theme->add_scss('presets', $scssVars, 'presets/' . $scssVars['preset']);
         $theme->add_css('custom');
 

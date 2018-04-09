@@ -33,10 +33,20 @@ class HelixUltimateFeatureTitle
 			{
 
 				$page_title 		 = $menuitem->title;
+				$page_heading 	 	 = $params->get('helixultimate_page_title_heading', 'h2');
 				$page_title_alt 	 = $params->get('helixultimate_page_title_alt');
 				$page_subtitle 		 = $params->get('helixultimate_page_subtitle');
 				$page_title_bg_color = $params->get('helixultimate_page_title_bg_color');
 				$page_title_bg_image = $params->get('helixultimate_page_title_bg_image');
+
+				if($page_heading == 'h1')
+				{
+					$page_sub_heading = 'h2';
+				}
+				else
+				{
+					$page_sub_heading = 'h3';
+				}
 
 				$style = '';
 
@@ -65,11 +75,11 @@ class HelixUltimateFeatureTitle
 				$output .= '<div class="sp-page-title"'. $style .'>';
 				$output .= '<div class="container">';
 
-				$output .= '<h2>'. $page_title .'</h2>';
+				$output .= '<'. $page_heading .' class="sp-page-title-heading">'. $page_title .'</'. $page_heading .'>';
 
 				if($page_subtitle)
 				{
-					$output .= '<h3>'. $page_subtitle .'</h3>';
+					$output .= '<'. $page_sub_heading .' class="sp-page-title-sub-heading">'. $page_subtitle .'</'. $page_sub_heading .'>';
 				}
 
 				$output .= '<jdoc:include type="modules" name="breadcrumb" style="none" />';

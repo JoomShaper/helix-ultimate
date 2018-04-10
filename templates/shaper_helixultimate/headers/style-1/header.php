@@ -68,12 +68,12 @@ $output .= '<div class="container">';
 $output .= '<div class="container-inner">';
 $output .= '<div class="row">';
 
-$class1 = 'col-8 col-lg-4';
-$class2 = 'col-4 col-lg-8';
+$class1 = 'col-8 col-lg-3';
+$class2 = 'col-4 col-lg-9';
 if($offcanvs_position == 'left')
 {
-    $class1 = 'col-12 col-lg-4';
-    $class2 = 'd-none d-lg-block col-lg-8';
+    $class1 = 'col-12 col-lg-3';
+    $class2 = 'd-none d-lg-block col-lg-9';
 }
 
 $output .= '<div id="sp-logo" class="'. $class1 .'">';

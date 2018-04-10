@@ -630,31 +630,34 @@ class HelixUltimate
             $css = $scss . '.css';
         }
 
-        $needsCompile = $this->needScssCompile($scss, $vars);
-        if ($needsCompile)
+        if($this->params->get('scssoption'))
         {
-            $scssInit = $this->scssInit();
-            $template  = JFactory::getApplication()->getTemplate();
-            $scss_path = JPATH_THEMES . '/' . $template . '/scss';
-            $css_path = JPATH_THEMES . '/' . $template . '/css';
-
-            if (file_exists($scss_path . '/'. $scss . '.scss'))
+            $needsCompile = $this->needScssCompile($scss, $vars);
+            if ($needsCompile)
             {
-                $out = $css_path . '/' . $css;
-                $scssInit->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
-                $scssInit->setImportPaths($scss_path);
-                if(count($vars))
-                {
-                    $scssInit->setVariables($vars);
-                }
-                $compiledCss = $scssInit->compile('@import "'. $scss .'.scss"');
-                JFile::write($out, $compiledCss);
+                $scssInit = $this->scssInit();
+                $template  = JFactory::getApplication()->getTemplate();
+                $scss_path = JPATH_THEMES . '/' . $template . '/scss';
+                $css_path = JPATH_THEMES . '/' . $template . '/css';
 
-                $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
-                $scssCache = array();
-                $scssCache['imports'] = $scssInit->getParsedFiles();
-                $scssCache['vars'] = $scssInit->getVariables();
-                JFile::write($cache_path, json_encode($scssCache));
+                if (file_exists($scss_path . '/'. $scss . '.scss'))
+                {
+                    $out = $css_path . '/' . $css;
+                    $scssInit->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
+                    $scssInit->setImportPaths($scss_path);
+                    if(count($vars))
+                    {
+                        $scssInit->setVariables($vars);
+                    }
+                    $compiledCss = $scssInit->compile('@import "'. $scss .'.scss"');
+                    JFile::write($out, $compiledCss);
+
+                    $cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
+                    $scssCache = array();
+                    $scssCache['imports'] = $scssInit->getParsedFiles();
+                    $scssCache['vars'] = $scssInit->getVariables();
+                    JFile::write($cache_path, json_encode($scssCache));
+                }
             }
         }
 

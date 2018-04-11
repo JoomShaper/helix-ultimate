@@ -1290,3 +1290,19 @@ select {
 		border-color: #f5c6cb;
 	}
 }
+
+// Cookie
+#sp-cookie-consent {
+	position: fixed;
+	font-size: 16px;
+	font-weight: 500;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	z-index: 10001;
+
+	>div {
+		padding: 20px;
+		position: relative;
+	}
+}

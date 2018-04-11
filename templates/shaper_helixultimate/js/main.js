@@ -121,4 +121,16 @@ jQuery(function ($) {
         });
     });
 
+    //  Cookie consent
+    $('.sp-cookie-allow').on('click', function(event) {
+        event.preventDefault();
+        
+        var date = new Date();
+        date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();               
+        document.cookie = "spcookie_status=ok" + expires + "; path=/";
+
+        $(this).closest('.sp-cookie-consent').fadeOut();
+    });
+
 });

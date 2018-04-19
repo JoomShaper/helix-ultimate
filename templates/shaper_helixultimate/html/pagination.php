@@ -34,8 +34,8 @@ function pagination_item_active(&$item) {
     if ($item->text == JText::_('Next')) { $item->text = '&raquo;'; $cls = "next";}
     if ($item->text == JText::_('Prev')) { $item->text = '&laquo;'; $cls = "previous";}
 
-	if ($item->text == JText::_('First')) { $cls = "first";}
-    if ($item->text == JText::_('Last'))   { $cls = "last";}
+	if ($item->text == JText::_('Start')) { $cls = "first";}
+    if ($item->text == JText::_('End'))   { $cls = "last";}
 
     return '<li class="page-item"><a class="page-link ' . $cls . '" href="' . $item->link . '" title="' . $item->text . '">' . $item->text . '</a></li>';
 }

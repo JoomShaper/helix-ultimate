@@ -38,7 +38,14 @@ class JFormFieldHelixheaders extends JFormField
                 foreach($headers as $header)
                 {
                     $html .= '<li class="helix-ultimate-header-item'.(($this->value == $header)?' active':'').'" data-style="'.$header.'">';
-                    $html .= '<span><img src="'. $thumb_url . '/' . $header .'/thumb.jpg" alt="'. $header .'"</span>';
+                    if(file_exists($headers_src . '/' . $header . '/thumb.svg'))
+                    {
+                        $html .= '<span><img src="'. $thumb_url . '/' . $header .'/thumb.svg" alt="'. $header .'"</span>';
+                    }
+                    else
+                    {
+                        $html .= '<span><img src="'. $thumb_url . '/' . $header .'/thumb.jpg" alt="'. $header .'"</span>';
+                    }
                     $html .= '</li>';
                 }
                 $html .= '<input type="hidden" name="' . $this->name .'" value=\''. $this->value .'\' id="'. $this->id .'">';

@@ -21,6 +21,7 @@ if (file_exists($helix_path)) {
 }
 
 $site_title = $app->get('sitename');
+$preset = json_decode($params->get('preset'))->preset;
 ?>
 
 <!doctype html>
@@ -32,7 +33,7 @@ $site_title = $app->get('sitename');
 			$theme->head();
 			$theme->add_js('jquery.countdown.min.js');
 			$theme->add_css('font-awesome.min.css, template.css');
-			$theme->add_css('presets/' . $params->get('preset', 'preset1') . '.css');
+			$theme->add_css('presets/' . $preset . '.css');
         ?>
     </head>
 	<body>

@@ -28,7 +28,7 @@ $output .= '<jdoc:include type="component" />';
 
 if($doc->countModules('content-bottom'))
 {
-    $output .= '<div class="sp-module-content-top clearfix">';
+    $output .= '<div class="sp-module-content-bottom clearfix">';
     $output .= '<jdoc:include type="modules" name="content-bottom" style="sp_xhtml" />';
     $output .= '</div>';
 }

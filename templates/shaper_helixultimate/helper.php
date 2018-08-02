@@ -39,7 +39,7 @@ class TplShaperHelixultimateHelper
         if($userIP == $lastip)
         {
             $output['status'] = false;
-            $output['message'] = 'You already rated this Article today!';
+            $output['message'] = JText::_('HELIX_ALREADY_RATED');
             $output['rating_count'] = (isset($last_rating->rating_count) && $last_rating->rating_count) ? $last_rating->rating_count : 0;
         }
         else
@@ -47,7 +47,7 @@ class TplShaperHelixultimateHelper
             $newRatings = self::addRating($article_id, $rating, $userIP);
 
             $output['status'] = true;
-            $output['message'] = 'Thank You!';
+            $output['message'] = JText::_('HELIX_THANK_YOU');
 
             $rating = round($newRatings->rating_sum/$newRatings->rating_count);
             $output['rating_count'] = $newRatings->rating_count;

@@ -110,7 +110,7 @@ $menu_font_size : 14px;
 			>a, span:not(.sp-menu-badge) {
 				font-size: $menu_font_size;
 				line-height: 1;
-				display: block;
+				display: inline-block;
 				padding: 8px 0;
 				cursor: pointer;
 

@@ -26,7 +26,7 @@ class Media
     $input 	= \JFactory::getApplication()->input;
     $path 	= $input->post->get('path', '/images', 'PATH');
 
-    $images = \JFolder::files(JPATH_ROOT . $path, '.png|.jpg|.gif|.svg', false, true);
+    $images = \JFolder::files(JPATH_ROOT . $path, '.png|.jpg|.gif|.svg|.ico', false, true);
     $folders = \JFolder::folders(JPATH_ROOT . $path, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs'));
 
     $crumbs = explode('/', ltrim($path, '/'));
@@ -220,8 +220,8 @@ class Media
         }
 
         // File formats
-        $accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'svg');
-
+        $accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'svg', 'ico');
+        
         // Upload if no error found
         if(!$error) {
 

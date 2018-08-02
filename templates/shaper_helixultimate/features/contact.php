@@ -28,22 +28,22 @@ class HelixUltimateFeatureContact
 
 			if($this->params->get('contact_phone'))
 			{
-				$output .= '<li class="sp-contact-phone"><span class="fa fa-phone"></span> <a href="tel:' . str_replace(array(')','(',' ','-'),array('','','',''), $this->params->get('contact_phone')) . '">' . $this->params->get('contact_phone') . '</a></li>';
+				$output .= '<li class="sp-contact-phone"><span class="fa fa-phone" aria-hidden="true"></span> <a href="tel:' . str_replace(array(')','(',' ','-'),array('','','',''), $this->params->get('contact_phone')) . '">' . $this->params->get('contact_phone') . '</a></li>';
 			}
 
 			if($this->params->get('contact_mobile'))
 			{
-				$output .= '<li class="sp-contact-mobile"><span class="fa fa-mobile"></span> <a href="tel:' . str_replace(array(')','(',' ','-'),array('','','',''), $this->params->get('contact_mobile')) . '">' . $this->params->get('contact_mobile') . '</a></li>';
+				$output .= '<li class="sp-contact-mobile"><span class="fa fa-mobile" aria-hidden="true"></span> <a href="tel:' . str_replace(array(')','(',' ','-'),array('','','',''), $this->params->get('contact_mobile')) . '">' . $this->params->get('contact_mobile') . '</a></li>';
 			}
 
 			if($this->params->get('contact_email'))
 			{
-				$output .= '<li class="sp-contact-email"><span class="fa fa-envelope"></span> <a href="mailto:'. $this->params->get('contact_email') .'">' . $this->params->get('contact_email') . '</a></li>';
+				$output .= '<li class="sp-contact-email"><span class="fa fa-envelope" aria-hidden="true"></span> <a href="mailto:'. $this->params->get('contact_email') .'">' . $this->params->get('contact_email') . '</a></li>';
 			}
 
 			if($this->params->get('contact_time'))
 			{
-				$output .= '<li class="sp-contact-time"><span class="fa fa-clock-o"></span> ' . $this->params->get('contact_time') . '</li>';
+				$output .= '<li class="sp-contact-time"><span class="fa fa-clock-o" aria-hidden="true"></span> ' . $this->params->get('contact_time') . '</li>';
 			}
 
 			$output .= '</ul>';

@@ -20,10 +20,10 @@ $doc 				= JFactory::getDocument();
 $app              	= Factory::getApplication();
 
 ob_start();
-?>
+?>	
+<div class="coming-soon-login">
 	<form action="<?php echo JRoute::_('index.php', true); ?>" method="post" id="form-login" class="mt-5">
 		<div class="form-row align-items-center">
-		
 			<div class="col-auto">
 				<label class="sr-only" for="username"><?php echo JText::_('JGLOBAL_USERNAME'); ?></label>
 				<div class="input-group mb-2">
@@ -57,7 +57,7 @@ ob_start();
 			<?php endif; ?>
 
 			<div class="col-auto">
-				<input type="submit" name="Submit" class="btn btn-success login" value="<?php echo JText::_('JLOGIN'); ?>" />
+				<input type="submit" name="Submit" class="btn btn-success mb-2 login" value="<?php echo JText::_('JLOGIN'); ?>" />
 				<input type="hidden" name="option" value="com_users" />
 				<input type="hidden" name="task" value="user.login" />
 				<input type="hidden" name="return" value="<?php echo base64_encode(JUri::base()); ?>" />
@@ -66,6 +66,7 @@ ob_start();
 
 		</div>
 	</form>
+</div>	
 <?php
 $login_form = ob_get_clean();
 echo JLayoutHelper::render('comingsoon', array('language' => $this->language, 'direction' => $this->direction, 'params' => $this->params, 'login' => true, 'login_form' => $login_form));

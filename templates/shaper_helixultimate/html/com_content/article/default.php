@@ -110,11 +110,11 @@ JHtml::_('behavior.caption');
 				<?php JHtml::_('jquery.token'); ?>
 				<?php echo JLayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>
 			</div>
-			<div>
-				<?php echo JLayoutHelper::render('joomla.content.social_share', $this->item); ?>
-			</div>
 		</div>
 	<?php endif; ?>
+	<div>
+		<?php echo JLayoutHelper::render('joomla.content.social_share', $this->item); ?>
+	</div>
 
 	<div itemprop="articleBody">
 		<?php echo $this->item->text; ?>

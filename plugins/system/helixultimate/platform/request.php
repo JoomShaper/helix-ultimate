@@ -223,15 +223,27 @@ class Request{
             \JFolder::create( $template_path, 0755 );
         }
 
-        $url  = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBVybAjpiMHzNyEm3ncA_RZ4WETKsLElDg';
+        $tmpl_decode = json_decode($tmpl_style->params);
+        $gfont_api = (isset($tmpl_decode) && $tmpl_decode) ? $tmpl_decode->gfont_api : 'AIzaSyBVybAjpiMHzNyEm3ncA_RZ4WETKsLElDg';
+
+        $url  = 'https://www.googleapis.com/webfonts/v1/webfonts?key='. $gfont_api;
         $http = new \JHttp();
         $str  = $http->get($url);
 
-        if ( \JFile::write( $template_path . '/webfonts.json', $str->body )) {
+        if($str->code == 200) {
+            if ( \JFile::write( $template_path . '/webfonts.json', $str->body )) {
+                $this->report['status']  = true;
+                $this->report['message'] = '<p class="font-update-success">Google Webfonts list successfully updated! Please refresh your browser.</p>';
+            } else {
+                $this->report['message'] = '<p class="font-update-failed">Google Webfonts update failed. Please make sure that your template folder is writable.</p>';
+            }
+        } elseif($str->code == 403) {
             $this->report['status']  = true;
-            $this->report['message'] = '<p class="font-update-success">Google Webfonts list successfully updated! Please refresh your browser.</p>';
-        } else {
-            $this->report['message'] = '<p class="font-update-failed">Google Webfonts update failed. Please make sure that your template folder is writable.</p>';
+            $decode_msg = json_decode($str->body);
+            if(isset(json_decode($str->body)->error->message) && $get_msg = json_decode($str->body)->error->message) {
+                $this->report['message'] = "<p class='font-update-failed'>". $get_msg ."</p>";
+
+            }
         }
     }
 

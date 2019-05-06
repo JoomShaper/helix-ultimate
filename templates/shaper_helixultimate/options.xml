@@ -370,6 +370,7 @@
 		<field name="custom_font" type="helixfont" helixgroup="custom_font" hideLabel="true" showon="enable_custom_font:1" />
 		<field name="custom_font_selectors" type="textarea" helixgroup="custom_font" label="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS" description="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS_DESC" showon="enable_custom_font:1" />
 
+		<field name="gfont_api" type="text" class="parent" helixgroup="update_font" label="HELIX_ULTIMATE_GFONT_API" description="HELIX_ULTIMATE_GFONT_API_DESC" />
 		<field name="update_fonts" type="helixbutton" helixgroup="update_font" url="#" text="HELIX_ULTIMATE_UPDATE_FONTS_CLICK" hideLabel="true" description="HELIX_ULTIMATE_UPDATE_FONT_LIST_DESC" class="btn-primary btn-update-helix-ultimate-fonts" />
 	</fieldset>
 

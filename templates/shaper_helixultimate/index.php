@@ -10,7 +10,6 @@ defined ('_JEXEC') or die();
 
 $doc = JFactory::getDocument();
 $app = JFactory::getApplication();
-$cookie = $app->input->cookie;
 
 $helix_path = JPATH_PLUGINS . '/system/helixultimate/core/helixultimate.php';
 if (file_exists($helix_path)) {
@@ -94,7 +93,7 @@ if ($custom_js = $this->params->get('custom_js'))
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="canonical" href="<?php echo JUri::current(); ?>">
+        <link rel="canonical" href="<?php echo JUri::getInstance()->toString(); ?>">
         <?php
 
         $theme->head();
@@ -147,19 +146,6 @@ if ($custom_js = $this->params->get('custom_js'))
     </div>
 
     <?php $theme->after_body(); ?>
-
-    <?php if( $this->params->get('coockie_consent') && ($cookie->get('spcookie_status') != 'ok')) : ?>
-        <div id="sp-cookie-consent" class="sp-cookie-consent" style="background-color: <?php echo $this->params->get('coockie_bg_color', '#222222'); ?>; color: <?php echo $this->params->get('coockie_text_color', '#FFFFFF'); ?>;">
-            <div class="row align-items-center">
-                <div class="col-lg-9">
-                    <?php echo $this->params->get('coockie_content'); ?>
-                </div>
-                <div class="col-lg-3 text-lg-right">
-                <a class="sp-cookie-close sp-cookie-allow btn btn-light mt-3 mt-lg-0" href="#"><?php echo JText::_('HELIX_ULTIMATE_ENABLE_COOKIE_ALLOW'); ?></a>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
 
     <jdoc:include type="modules" name="debug" style="none" />
     

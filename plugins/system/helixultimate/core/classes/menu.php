@@ -249,7 +249,8 @@ class HelixUltimateMenu
         $items     = isset($this->children[$item->id]) ? $this->children[$item->id] : array();
         $firstitem = count($items) ? $items[0]->id : 0;
         $class = ($item->level==1) ? 'sp-dropdown sp-dropdown-main' : 'sp-dropdown sp-dropdown-sub';
-
+        //menu_show
+        $menu_show = $this->getMenuShow($item->id);
         $dropdown_width = $this->_params->get('dropdown_width', 240);
         $dropdown_alignment = 'right';
         $dropdown_style = 'width: '. $dropdown_width .'px;';
@@ -264,12 +265,26 @@ class HelixUltimateMenu
             $dropdown_alignment = 'left';
         }
 
-        $this->menu .= '<div class="' . $class . ' sp-menu-'. $dropdown_alignment .'" style="' . $dropdown_style . '">';
-        $this->menu .= '<div class="sp-dropdown-inner">';
-        $this->navigation($item, $firstitem, 0,  'sp-dropdown-items');
+        if ($menu_show != 0) {
+            $this->menu .= '<div class="' . $class . ' sp-menu-'. $dropdown_alignment .'" style="' . $dropdown_style . '">';
+                $this->menu .= '<div class="sp-dropdown-inner">';
+                    $this->navigation($item, $firstitem, 0,  'sp-dropdown-items');
+                $this->menu .= '</div>';
+            $this->menu .= '</div>';
+        }
+    }
 
-        $this->menu .= '</div>';
-        $this->menu .= '</div>';
+    // check show menu
+    private function getMenuShow($parent_id) {
+        $items     = isset($this->children[$parent_id]) ? $this->children[$parent_id] : array();
+        $show_menu = 0;
+        foreach ($items as $menu_item) {
+            if ($menu_item->params->get('menu_show', 1) == 1) {
+                $show_menu ++;
+            }
+        }
+
+        return $show_menu;
     }
 
     private function mega($item)
@@ -374,11 +389,14 @@ class HelixUltimateMenu
     {
         $item 	= $args['item'];
         $class 	= 'sp-menu-item';
-
+        
+        // menu show
+        $menu_show = $this->getMenuShow($args['item']->id);
+        
         $layout = json_decode($item->params->get('helixultimatemenulayout'));
-
+        
         $item->hasChild = 0;
-        if (!empty($this->children[$item->id]))
+        if (!empty($this->children[$item->id]) && $menu_show != 0)
         {
             $class .= ' sp-has-child';
             $item->hasChild = 1;

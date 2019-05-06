@@ -91,12 +91,6 @@
 		<field name="contact_email" helixgroup="contact_info" type="email" hint="contact@email.com" label="HELIX_ULTIMATE_CONTACT_EMAIL" showon="contactinfo:1" />
 		<field name="contact_time" helixgroup="contact_info" type="text" hint="Mon - Fri 8:00 - 17:30" label="HELIX_ULTIMATE_CONTACT_OPENING_HOURS" showon="contactinfo:1" />
 
-		<!--Cookie Consent-->
-		<field name="coockie_consent" helixgroup="cookie_consent" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_COOKIE_CONSENT" />
-		<field name="coockie_content" helixgroup="cookie_consent" type="textarea" default="This website uses cookies to ensure you get the best experience on our website." label="HELIX_ULTIMATE_ENABLE_COOKIE_CONTENT" filter="safehtml" showon="coockie_consent:1" />
-		<field name="coockie_bg_color" helixgroup="cookie_consent" type="color" default="#222222" label="HELIX_ULTIMATE_ENABLE_COOKIE_BG_COLOR" showon="coockie_consent:1" />
-		<field name="coockie_text_color" helixgroup="cookie_consent" type="color" default="#FFFFFF" label="HELIX_ULTIMATE_ENABLE_COOKIE_TEXT_COLOR" showon="coockie_consent:1" />
-
 		<!--Coming soon-->
 		<field name="comingsoon" helixgroup="comingsoon" type="checkbox" default="0" label="HELIX_ULTIMATE_COMINGSOON_MODE" />
 		<field name="comingsoon_title" helixgroup="comingsoon" type="text" default="Coming Soon Title" label="HELIX_ULTIMATE_COMINGSOON_TITLE" showon="comingsoon:1" />
@@ -376,6 +370,7 @@
 		<field name="custom_font" type="helixfont" helixgroup="custom_font" hideLabel="true" showon="enable_custom_font:1" />
 		<field name="custom_font_selectors" type="textarea" helixgroup="custom_font" label="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS" description="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS_DESC" showon="enable_custom_font:1" />
 
+		<field name="gfont_api" type="text" class="parent" helixgroup="update_font" label="HELIX_ULTIMATE_GFONT_API" description="HELIX_ULTIMATE_GFONT_API_DESC" />
 		<field name="update_fonts" type="helixbutton" helixgroup="update_font" url="#" text="HELIX_ULTIMATE_UPDATE_FONTS_CLICK" hideLabel="true" description="HELIX_ULTIMATE_UPDATE_FONT_LIST_DESC" class="btn-primary btn-update-helix-ultimate-fonts" />
 	</fieldset>
 

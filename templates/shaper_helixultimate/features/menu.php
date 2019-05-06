@@ -34,7 +34,7 @@ class HelixUltimateFeatureMenu
 			$output .= '<nav class="sp-megamenu-wrapper" role="navigation">';
 			if($offcanvs_position == 'right') 
 			{
-				$output .= '<a id="offcanvas-toggler" aria-label="Navigation" class="offcanvas-toggler-right" href="#"><i class="fa fa-bars" aria-hidden="true" title="Navigation"></i></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'" class="offcanvas-toggler-right" href="#"><i class="fa fa-bars" aria-hidden="true" title="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'"></i></a>';
 			}
 			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
@@ -45,7 +45,7 @@ class HelixUltimateFeatureMenu
 			$output .= '<nav class="sp-megamenu-wrapper" role="navigation">';
 			if($offcanvs_position == 'right') 
 			{
-				$output .= '<a id="offcanvas-toggler" aria-label="Navigation" class="offcanvas-toggler-right d-block d-lg-none" href="#"><i class="fa fa-bars" aria-hidden="true" title="Navigation"></i></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'" class="offcanvas-toggler-right d-block d-lg-none" href="#"><i class="fa fa-bars" aria-hidden="true" title="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'"></i></a>';
 			}
 			$menu = new HelixUltimateMenu('d-none d-lg-block','');
 			$output .= $menu->render();
@@ -53,7 +53,7 @@ class HelixUltimateFeatureMenu
 		} else {
 			if($offcanvs_position == 'right') 
 			{
-				$output .= '<a id="offcanvas-toggler" aria-label="Navigation" class="offcanvas-toggler-right" href="#"><i class="fa fa-bars" aria-hidden="true" title="Navigation"></i></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'" class="offcanvas-toggler-right" href="#"><i class="fa fa-bars" aria-hidden="true" title="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'"></i></a>';
 			}
 		}
 

@@ -41,8 +41,11 @@ if ($data['componentArea'])
 {
     if (!$data['pagebuilder'])
     {
-        $output .= '</div>';
-        $output .= '</div>';
+        if (!$data['fluidrow'])
+        {
+            $output .= '</div>';
+            $output .= '</div>';
+        }
     }
 }
 else

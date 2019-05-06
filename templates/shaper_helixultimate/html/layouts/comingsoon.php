@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 extract($displayData);
 
 $app = \JFactory::getApplication();
+$doc = JFactory::getDocument();
 
 $helix_path = JPATH_PLUGINS . '/system/helixultimate/core/helixultimate.php';
 if (file_exists($helix_path)) {
@@ -31,8 +32,18 @@ $site_title = $app->get('sitename');
         <?php
 			$theme->head();
 			$theme->add_js('jquery.countdown.min.js');
+			$theme->add_js('custom.js');
 			$theme->add_css('font-awesome.min.css, template.css');
 			$theme->add_css('presets/' . $params->get('preset', 'preset1') . '.css');
+			$theme->add_css('custom.css');
+			//Custom CSS
+			if ($custom_css = $params->get('custom_css')) {
+				$doc->addStyledeclaration($custom_css);
+			}
+			//Custom JS
+			if ($custom_js = $params->get('custom_js')) {
+				$doc->addScriptdeclaration($custom_js);
+			}
         ?>
     </head>
 	<body>

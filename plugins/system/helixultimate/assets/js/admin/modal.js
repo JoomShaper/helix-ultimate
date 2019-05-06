@@ -5,22 +5,22 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-jQuery(function($) {
+jQuery(function ($) {
 
-  $.fn.helixUltimateModal = function(options) {
+  $.fn.helixUltimateModal = function (options) {
     var options = $.extend({
       target_type: '',
-      target : ''
+      target: ''
     }, options);
 
     $('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
 
     var mediaModal = '<div class="helix-ultimate-modal-overlay"></div>';
-    mediaModal += '<div class="helix-ultimate-modal" data-target_type="'+ options.target_type +'" data-target="'+ options.target +'">';
+    mediaModal += '<div class="helix-ultimate-modal" data-target_type="' + options.target_type + '" data-target="' + options.target + '">';
 
     mediaModal += '<div class="helix-ultimate-modal-header">';
     mediaModal += '<a href="#" class="action-helix-ultimate-modal-close"><span class="fa fa-times"></span></a>'
-    mediaModal += '<input type="file" id="helix-ultimate-file-input" accept="image/png, image/jpg, image/jpeg, image/gif, image/svg+xml" style="display:none;" multiple>';
+    mediaModal += '<input type="file" id="helix-ultimate-file-input" accept="image/png, image/jpg, image/jpeg, image/gif, image/svg+xml, image/x-icon" style="display:none;" multiple>';
     mediaModal += '<div class="helix-ultimate-modal-breadcrumbs"></div>';
 
     mediaModal += '<div class="helix-ultimate-modal-actions-left">'
@@ -43,9 +43,9 @@ jQuery(function($) {
     $('body').addClass('helix-ultimate-modal-open').append(mediaModal);
   }
 
-  $.fn.helixUltimateOptionsModal = function(options) {
+  $.fn.helixUltimateOptionsModal = function (options) {
     var options = $.extend({
-      target : '',
+      target: '',
       title: 'Options',
       flag: '',
       class: ''
@@ -54,7 +54,7 @@ jQuery(function($) {
     $('.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal').remove();
 
     var optionsModal = '<div class="helix-ultimate-options-modal-overlay"></div>';
-    optionsModal += '<div class="helix-ultimate-options-modal '+ options.class +'" data-target="#'+ options.target +'">';
+    optionsModal += '<div class="helix-ultimate-options-modal ' + options.class + '" data-target="#' + options.target + '">';
 
     optionsModal += '<div class="helix-ultimate-options-modal-header">';
     optionsModal += '<span class="helix-ultimate-options-modal-header-title">' + options.title + '</span>';
@@ -67,7 +67,7 @@ jQuery(function($) {
     optionsModal += '</div>';
 
     optionsModal += '<div class="helix-ultimate-options-modal-footer">';
-    optionsModal += '<a href="#" class="btn btn-success btn-xs helix-ultimate-settings-apply" data-flag="'+ options.flag +'"><span class="fa fa-check"></span> Apply</a>'
+    optionsModal += '<a href="#" class="btn btn-success btn-xs helix-ultimate-settings-apply" data-flag="' + options.flag + '"><span class="fa fa-check"></span> Apply</a>'
     optionsModal += '<a href="#" class="btn btn-secondary btn-xs helix-ultimate-settings-cancel"><span class="fa fa-times"></span> Cancel</a>'
     optionsModal += '</div>';
 

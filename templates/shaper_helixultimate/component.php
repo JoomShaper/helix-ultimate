@@ -26,22 +26,21 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php if ($favicon = $this->params->get('favicon')) : ?>
-    <link rel="icon" href="<?php echo URI::base(true) . '/' . $favicon; ?>" />
+      <link rel="icon" href="<?php echo URI::base(true) . '/' . $favicon; ?>" />
     <?php else: ?>
-    <link rel="icon" href="<?php echo $theme_url .'/images/favicon.ico'; ?>" />
+      <link rel="icon" href="<?php echo $theme_url .'/images/favicon.ico'; ?>" />
     <?php endif; ?>
 
     <jdoc:include type="head" />
 
     <?php if($option != 'com_sppagebuilder') : ?>
-        <?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
-        <link href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" rel="stylesheet">
-        <?php else: ?>
-        <link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
-        <?php endif; ?>
-        <link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
+      <?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
+        <link rel="preload" href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" as="style">
+      <?php else: ?>
+        <link rel="preload" href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" as="style">
+      <?php endif; ?>
+      <link rel="preload" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" as="style">
     <?php endif; ?>
-    
   </head>
 
   <body class="contentpane <?php echo $body_class; ?>">

@@ -47,7 +47,7 @@ class HelixUltimateFeatureLogo
 		{
 			if ($menu_type == 'mega')
 			{
-                $html .= '<a id="offcanvas-toggler" aria-label="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'" class="offcanvas-toggler-left d-block d-lg-none" href="#"><span class="fa fa-bars" <span class="fa fa-bars" aria-hidden="true" title="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'"></span></a>';
+                $html .= '<a id="offcanvas-toggler" aria-label="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'" class="offcanvas-toggler-left d-block d-lg-none" href="#"><span class="fa fa-bars" aria-hidden="true" title="'. JText::_('HELIX_ULTIMATE_NAVIGATION') .'"></span></a>';
 			} 
 			else
 			{

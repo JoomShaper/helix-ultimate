@@ -37,9 +37,16 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 			<link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
 		<?php endif; ?>
 
+		<?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/custom.css' )) : ?>
+			<link href="<?php echo $theme_url . '/css/custom.css'; ?>" rel="stylesheet">
+		<?php endif; ?>
+
 		<link href="<?php echo $theme_url . '/css/font-awesome.min.css'; ?>" rel="stylesheet">
 		<link href="<?php echo $theme_url . '/css/template.css'; ?>" rel="stylesheet">
 		<link href="<?php echo $theme_url . '/css/presets/' . $params->get('preset', 'preset1') . '.css'; ?>" rel="stylesheet">
+		<?php $preset = (isset(json_decode($params->get('preset', (object) ['preset' => 'preset1']))->preset) && json_decode($params->get('preset'))->preset) ? json_decode($params->get('preset'))->preset : 'preset1'; ?>
+		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
+		
 	</head>
 	<body>
 		<div class="container">

@@ -127,6 +127,9 @@ jQuery(function($) {
 					$that.next().delay(1000).fadeOut(300, function(){
 						$(this).remove();
 					});
+				} else {
+					$that.after("<p class='font-update-failed'>Unexpected error occurs. Please make sure that, you have inserted Google Font API key.</p>");
+					$that.find('.fa-spinner').remove();
 				}
             }
         });

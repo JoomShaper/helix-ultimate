@@ -404,6 +404,7 @@
 			<option value="medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
 			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
 		</field>
+		<field name="show_list_tags" type="checkbox" helixgroup="blog_list" default="0" label="HELIX_ULTIMATE_LIST_TAGS_OPTION" description="HELIX_ULTIMATE_LIST_TAGS_OPTION_DESC" />
 
 		<field name="blog_details_image" type="list" helixgroup="blog_details" default="large" label="HELIX_ULTIMATE_BLOG_DETAILS_IMAGE" description="HELIX_ULTIMATE_BLOG_DETAILS_IMAGE_DESC">
 			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
@@ -413,11 +414,31 @@
 			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
 		</field>
 		<field name="social_share" type="checkbox" helixgroup="blog_details" default="1" label="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE" description="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_DESC" />
+		<field name="social_share_lists" type="list" multiple="true" helixgroup="blog_details" default="thumbnail,large" label="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_LIST" description="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_LIST_DESC" showon="social_share:1">
+			<option value="facebook">HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_FACEBOOK</option>
+			<option value="twitter">HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_TWITTER</option>
+			<option value="linkedin">HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_LINKEDIN</option>
+		</field>
+		
+		<field name="disable_module" type="checkbox" helixgroup="blog_details" default="0" label="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE" description="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE_DESC" />
 		<field name="author_info" type="checkbox" helixgroup="blog_details" default="0" label="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO" description="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO_DESC" />
 		<field name="og" type="checkbox" helixgroup="blog_details" default="1" label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH" description="HELIX_ULTIMATE_BLOG_OPEN_GRAPH_DESC" />
 		<field name="og_fb_id" type="text" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH_FB_ID" showon="og:1" />
 		<field name="og_twitter_site" type="text" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH_TWITTER_SITE" showon="og:1" />
-
+		<field name="reading_time_progress" type="checkbox" helixgroup="blog_details" default="0" label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS" description="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_DESC" />
+		<field name="reading_timeline_bg" helixgroup="blog_details" type="color" default="#0345bf" label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_BG_COLOR" showon="reading_time_progress:1" />
+		<field name="reading_timeline_height" type="text" default="5px" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_HEIGHT" description="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_HEIGHT_DESC" showon="reading_time_progress:1" />
+		<field name="reading_timeline_position" type="list" helixgroup="blog_details" default="top" label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_POSITION" description="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_POSITION_DESC" showon="reading_time_progress:1" >
+			<option value="top">HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_TOP</option>
+			<option value="bottom">HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_BOTTOM</option>
+		</field>
+		<field name="related_article" type="checkbox" helixgroup="blog_details" default="0" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE" description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_DESC" />
+		<field name="related_article_title" type="text" helixgroup="blog_details" default="Related Articles" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE" showon="related_article:1" />
+		<field name="related_article_limit" type="number" default="5" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_LIMIT" description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_LIMIT_DESC" showon="related_article:1" />
+		<field name="related_article_view_type" type="list" helixgroup="blog_details" default="thumb" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE" description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_DESC" showon="related_article:1" >
+			<option value="thumb">HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_THUMB</option>
+			<option value="list">HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_LIST</option>
+		</field>
 		<field name="comment" type="list" helixgroup="comments" default="disabled" label="HELIX_ULTIMATE_BLOG_COMMENT">
 			<option value="disabled">HELIX_ULTIMATE_COMMENT_DISABLED</option>
 			<option value="disqus">HELIX_ULTIMATE_COMMENT_DISQUSS</option>
@@ -446,6 +467,7 @@
 	<!--Advanced-->
 	<fieldset name="advance" label="HELIX_ULTIMATE_FIELDSET_ADVANCED" icon="fa fa-cog">
 		<field name="compress_css" helixgroup="compression" type="checkbox" default="0" label="HELIX_ULTIMATE_CSS_COMPRESS" description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
+		<field name="purge_css" type="helixbutton" helixgroup="compression" url="#" text="HELIX_ULTIMATE_PURGE_CSS_TEXT" hideLabel="true" description="HELIX_ULTIMATE_PURGE_CSS_DESC" class="btn-primary btn-purge-helix-ultimate-css" showon="compress_css:1" />
 		<field name="compress_js" helixgroup="compression" type="checkbox" default="0" label="HELIX_ULTIMATE_JS_COMPRESS" description="HELIX_ULTIMATE_JS_COMPRESS_DESC" />
 		<field name="exclude_js" helixgroup="compression" type="textarea" label="HELIX_ULTIMATE_EXCLUDE_JS" description="HELIX_ULTIMATE_EXCLUDE_JS_DESC" showon="compress_js:1" />
 		<field name="scssoption" helixgroup="scss" type="checkbox" default="0" label="HELIX_ULTIMATE_ENABLE_SCSS" description="HELIX_ULTIMATE_ENABLE_SCSS_DESC" />

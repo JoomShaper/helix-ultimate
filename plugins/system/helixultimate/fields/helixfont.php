@@ -108,9 +108,16 @@ class JFormFieldHelixfont extends JFormField
 
         //Font Size
         $fontSize = (isset($value->fontSize))?$value->fontSize:'';
+        $fontSize_sm = (isset($value->fontSize_sm))?$value->fontSize_sm:'';
+        $fontSize_xs = (isset($value->fontSize_xs))?$value->fontSize_xs:'';
         $html .= '<div class="col-6 helix-ultimate-webfont-size">';
         $html .= '<label><small>'. \JText::_('HELIX_ULTIMATE_FONT_SIZE') .'</small></label>';
-        $html .= '<input type="number" value="'. $fontSize .'" class="helix-ultimate-webfont-size-input" min="6">';
+        $html .= '<div class="helix-responsive-devices">';
+        $html .= '<span data-device="md" data-active_class=".helix-ultimate-webfont-size-input" class="fa fa-laptop active"></span><span data-device="sm" data-active_class=".helix-ultimate-webfont-size-input-sm" class="fa fa-tablet"></span><span data-device="xs" data-active_class=".helix-ultimate-webfont-size-input-xs" class="fa fa-mobile"></span>';
+        $html .= '</div>';
+        $html .= '<input type="number" value="'. $fontSize .'" class="helix-ultimate-webfont-size-input active" min="6">';
+        $html .= '<input type="number" value="'. $fontSize_sm .'" class="helix-ultimate-webfont-size-input-sm" min="6">';
+        $html .= '<input type="number" value="'. $fontSize_xs .'" class="helix-ultimate-webfont-size-input-xs" min="6">';
         $html .= '</div>';
 
         //Font Weight

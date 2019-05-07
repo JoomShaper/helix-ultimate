@@ -40,7 +40,10 @@ class Options{
         if(isset($templateStyle->params)){
             $formData = json_decode($templateStyle->params);
         }
-
+        // Set custom field data for social share button
+        if( !isset( $formData->social_share_lists )){
+            $formData->social_share_lists = array('facebook','twitter','linkedin');
+        }
         $form = new JoomlaForm\Form('template');
         $form->loadFile( \JPATH_ROOT.'/templates/' . $templateStyle->template . '/options.xml');
         if($formData){

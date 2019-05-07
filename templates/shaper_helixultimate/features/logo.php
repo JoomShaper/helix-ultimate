@@ -99,7 +99,9 @@ class HelixUltimateFeatureLogo
 
             if($logo_height = $this->params->get('logo_height'))
             {
-                $doc->addStyledeclaration('.logo-image {height:' . $logo_height. 'px;}');
+                $logoStyle = '.logo-image {height:' . $logo_height. 'px;}';
+                $logoStyle .= '.logo-image-phone {height:' . $logo_height. 'px;}';
+                $doc->addStyledeclaration($logoStyle);
             }
             
 		}

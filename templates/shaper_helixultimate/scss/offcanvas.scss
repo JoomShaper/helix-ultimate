@@ -137,6 +137,27 @@
                                     }
                                 }
                             }
+                            >.nav-header {
+                                >.menu-toggler {
+                                    &:after {
+                                        content: "\f056";
+                                    }
+                                }
+                            }
+                        }
+                        >.nav-header {
+                            >.menu-toggler {
+                                display: block;
+                                position: absolute;
+                                top: 50%;
+                                cursor: pointer;
+                                transform: translateY(-50%);
+                                -webkit-transform: translateY(-50%);
+                                font-family: FontAwesome;
+                                &:after {
+                                    content: "\f055";
+                                }
+                            }
                         }
 
                     }
@@ -221,6 +242,11 @@ body {
                             &.menu-parent {
                                 >a,
                                 >.menu-separator {
+                                    >.menu-toggler {
+                                        right: 0;
+                                    }
+                                }
+                                >.nav-header {
                                     >.menu-toggler {
                                         right: 0;
                                     }

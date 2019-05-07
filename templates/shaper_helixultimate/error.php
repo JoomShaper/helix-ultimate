@@ -14,6 +14,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $app = Factory::getApplication();
+$doc = JFactory::getDocument();
 $params = $app->getTemplate(true)->params;
 $theme_url = URI::base(true) . '/templates/'. $this->template;
 ?>
@@ -43,7 +44,7 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 
 		<link href="<?php echo $theme_url . '/css/font-awesome.min.css'; ?>" rel="stylesheet">
 		<link href="<?php echo $theme_url . '/css/template.css'; ?>" rel="stylesheet">
-		<link href="<?php echo $theme_url . '/css/presets/' . $params->get('preset', 'preset1') . '.css'; ?>" rel="stylesheet">
+
 		<?php $preset = (isset(json_decode($params->get('preset', (object) ['preset' => 'preset1']))->preset) && json_decode($params->get('preset'))->preset) ? json_decode($params->get('preset'))->preset : 'preset1'; ?>
 		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
 		

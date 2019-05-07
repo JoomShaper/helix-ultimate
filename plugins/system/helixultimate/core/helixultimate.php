@@ -12,6 +12,8 @@ jimport('joomla.filesystem.file');
 jimport('joomla.filesystem.folder');
 jimport('joomla.filter.filteroutput');
 
+use Joomla\Utilities\ArrayHelper;
+
 class HelixUltimate
 {
     public $params;
@@ -365,10 +367,16 @@ class HelixUltimate
 
         foreach ($row->attr as $key => &$column)
         {
+            $column->settings->disable_modules = isset($column->settings->name) ? $this->disable_details_page_modules( $column->settings->name ) : false;
+
             if (!$column->settings->column_type)
             {
                 if (!$this->count_modules($column->settings->name))
                 {
+                    $inactive_col += $column->settings->grid_size;
+                    unset($row->attr[$key]);
+                }
+                if( $column->settings->disable_modules && $this->count_modules($column->settings->name) ){
                     $inactive_col += $column->settings->grid_size;
                     unset($row->attr[$key]);
                 }
@@ -560,6 +568,17 @@ class HelixUltimate
     public function count_modules($position)
     {
         return ($this->doc->countModules($position) or $this->has_feature($position));
+    }
+
+    /**
+     * Disable module only from article page
+     * Type: @feature
+     */
+    private function disable_details_page_modules( $position ){
+        $article_and_disable = ($this->app->input->get('view') == 'article' && $this->params->get('disable_module'));
+        $match_positions = $position == 'left' || $position == 'right';
+
+        return ($article_and_disable && $match_positions);
     }
 
     private function has_feature($position)
@@ -763,6 +782,20 @@ class HelixUltimate
 
                 $fontCSS .= "}\n";
 
+                if (isset($font->fontSize_sm) && $font->fontSize_sm){
+                    $fontCSS .= '@media (min-width:768px) and (max-width:991px){';
+                    $fontCSS .= $key . "{";
+                    $fontCSS .= 'font-size: ' . $font->fontSize_sm . 'px;';
+                    $fontCSS .= "}\n}\n";
+                }
+
+
+                if (isset($font->fontSize_xs) && $font->fontSize_xs){
+                    $fontCSS .= '@media (max-width:767px){';
+                    $fontCSS .= $key . "{";
+                    $fontCSS .= 'font-size: ' . $font->fontSize_xs . 'px;';
+                    $fontCSS .= "}\n}\n";
+                }
                 $doc->addStyledeclaration($fontCSS);
             }
         }
@@ -932,7 +965,9 @@ class HelixUltimate
                         global $absolute_url;
 
                         $url = str_replace(array('"', '\''), '', $matches[1]);
-
+                        if(preg_match('/\.(jpg|png|jpeg|mp4|gif|JPEG|JPG|PNG|GIF)$/', $url)) {
+                            return "url('$url')";
+                        }
                         $base = dirname($absolute_url);
                         while (preg_match('/^\.\.\//', $url))
                         {
@@ -977,5 +1012,89 @@ class HelixUltimate
         }
 
         return;
+    }
+
+    public static function getRelatedArticles($params){
+        $authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
+        $db = JFactory::getDbo();
+        $app = JFactory::getApplication();
+        $nullDate = $db->quote($db->getNullDate());
+        $nowDate  = $db->quote(JFactory::getDate()->toSql());
+        $item_id = $params['item_id'];
+        $maximum = isset($params['maximum']) ? (int) $params['maximum'] : 5;
+        $maximum = $maximum < 1 ? 5 : $maximum;
+        $catId = isset($params['catId']) ? (int) $params['catId'] : null;
+        $tagids = [];
+        if( isset($params['itemTags']) && count($params['itemTags']) ){
+            $itemTags = $params['itemTags'];
+            foreach( $itemTags as $tag ){
+                array_push($tagids, $tag->id );
+            }
+        }
+        
+        // Category filter
+        $catItemIds = $tagItemIds = $itemIds = [];
+		if ( $catId !== null ) {
+            $catQuery = $db->getQuery(true)
+                ->clear()
+                ->select('id')
+                ->from($db->quoteName('#__content'))
+                ->where($db->quoteName('catid'). " = " .$catId)
+                ->setLimit($maximum);
+                $db->setQuery($catQuery);
+                $catItemIds = $db->loadColumn();
+		}
+
+		// tags filter
+		if (is_array($tagids) && count($tagids)) {
+			$tagId = implode(',', ArrayHelper::toInteger($tagids));
+			if ($tagId) {
+                $subQuery = $db->getQuery(true)
+                    ->clear()
+					->select('DISTINCT content_item_id as id')
+					->from($db->quoteName('#__contentitem_tag_map'))
+					->where('tag_id IN (' . $tagId . ')')
+					->where('type_alias = ' . $db->quote('com_content.article'));
+                $db->setQuery($subQuery);
+                $tagItemIds = $db->loadColumn();
+			}
+        }
+        
+        $itemIds = array_unique(array_merge($catItemIds, $tagItemIds));
+        
+        if( count($itemIds) < 1 ){
+            return [];
+        }
+        $itemIds = implode(',', ArrayHelper::toInteger($itemIds));
+        $query = $db->getQuery(true);
+
+        $query->clear()
+            ->select('a.*')
+            ->select('a.alias as slug')
+            ->from($db->quoteName('#__content', 'a'))
+            ->select($db->quoteName('b.alias', 'category_alias'))
+            ->select($db->quoteName('b.title', 'category'))
+            ->select($db->quoteName('u.name', 'author'))
+            ->join('LEFT', $db->quoteName('#__categories', 'b') . ' ON (' . $db->quoteName('a.catid') . ' = ' . $db->quoteName('b.id') . ')')
+            ->join('LEFT', $db->quoteName('#__users', 'u') . ' ON (' . $db->quoteName('a.created_by') . ' = ' . $db->quoteName('u.id') . ')')
+            ->where($db->quoteName('a.access')." IN (" . implode( ',', $authorised ) . ")")
+            ->where('a.id IN (' . $itemIds . ')')
+            ->where('a.id != ' . (int) $item_id);
+        // Language filter
+        if ($app->getLanguageFilter()) {
+            $query->where('a.language IN (' . $db->Quote(JFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
+        }
+        $query->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
+        $query->where($db->quoteName('a.state') . ' = ' . $db->quote(1));
+        $query->order($db->quoteName('a.created') . ' DESC')
+		->setLimit($maximum);
+        $db->setQuery($query);
+        $items = $db->loadObjectList();
+        foreach( $items as &$item ){
+            $item->slug    	= $item->id . ':' . $item->slug;
+            $item->catslug 	= $item->catid . ':' . $item->category_alias;
+            $item->params = JComponentHelper::getParams('com_content');
+        }
+        return $items;
     }
 }

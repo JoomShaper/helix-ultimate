@@ -500,12 +500,6 @@ ul.social-icons {
 		}
 	}
 
-	.link-edit-article {
-		position: absolute;
-		right: 0;
-		top: 10px;
-	}
-
 	.article-info {
 		margin-bottom: 1rem;
 	}
@@ -536,6 +530,48 @@ ul.social-icons {
 		padding-top: 2rem;
 		margin-top: 2rem;
 		border-top: 1px solid #f5f5f5;
+	}
+
+	.article-can-edit {
+		position: relative;
+		margin-bottom: 10px;
+		a {
+			display: inline-block;
+			background: #2a61c9;
+			color: #fff;
+			padding: 5px 12px;
+			border-radius: 3px;
+			font-size: 14px;
+		}
+	}
+}
+.related-article-list-container {
+	margin-top: 15px;
+	.related-article-title {
+		font-size: 22px;
+		padding-bottom: 15px;
+		border-bottom: 1px solid #f3f3f3;
+	}
+	ul.related-article-list {
+		list-style: none;
+		padding: 0;
+		li {
+			margin-bottom: 10px;
+			.article-header {
+				h2 {
+					font-size: 1.2rem;
+					a {
+						color: #252525;
+						&:hover {
+							color: #044cd0;
+						}
+					}
+				}
+			}
+			.published {
+				font-size: 14px;
+			}
+		}
 	}
 }
 
@@ -1307,5 +1343,60 @@ select {
 	>div {
 		padding: 20px;
 		position: relative;
+	}
+}
+.form-check-inline {
+	input[type="radio"] {
+		display: none;	
+	}
+}
+#attrib-helix_ultimate_blog_options {
+	#jform_attribs_helix_ultimate_article_format {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		white-space: nowrap;
+			.form-check-inline {
+				margin: 0;
+				margin-right: -5px;
+				label {
+					display: inline-block;
+					padding: 4px 12px;
+					margin-bottom: 0;
+					font-size: 13px;
+					line-height: 18px;
+					text-align: center;
+					vertical-align: middle;
+					cursor: pointer;
+					background-color: #f3f3f3;
+					color: #333;
+					border-top: 1px solid #b3b3b3;
+					border-right: 1px solid #b3b3b3;
+					border-bottom: 1px solid #b3b3b3;
+					box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+					border-radius: 0;
+					&.btn-success {
+						background: #46a546;
+						color: #fff;
+					}
+					input[type="radio"] {
+						display: none !important;
+					}
+				}
+				&:last-child {
+					label {
+						border-top-right-radius: 3px;
+						border-bottom-right-radius: 3px;
+					}
+				}
+				&:first-child {
+					label {
+						border-left: 1px solid #b3b3b3;
+						border-top-left-radius: 3px;
+						border-bottom-left-radius: 3px;
+					}
+				}
+				
+			}
 	}
 }

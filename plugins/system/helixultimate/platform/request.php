@@ -100,6 +100,10 @@ class Request{
             case 'remove-blog-image':
                 Blog::remove_image();
                 break;
+
+            case 'purge-css-file':
+                $this->purgeCssFiles();
+                break;
                 
         }
 
@@ -191,6 +195,40 @@ class Request{
             $this->report['message'] = 'File removed';
             $this->report['layout'] = \JFolder::files($this->layouts_folder_path, '.json');
         }
+    }
+
+    private function purgeCssFiles(){
+        
+        try{
+          $data = $_POST;
+          $inputs = $this->filterInputs($data);
+          
+          if (!$this->id || !is_int($this->id)) {
+              throw new Exception('Page ID required!');
+          };
+  
+          $templateStyle = Helper::getTemplateStyle( $this->id );
+          $cache_path    = JPATH_SITE . '/cache/com_templates/templates/' . $templateStyle->template;
+          if(\JFolder::exists( $cache_path)){
+              $files = scandir( $cache_path );
+              if( count($files) > 0 ){
+                  foreach( $files as $file ){
+                      $ext  = explode('.', $file);
+                      $cache = count( $ext ) > 2 ? $ext[1] : '';
+                      if( end($ext) == 'css' || $cache == 'scss' ){
+                          \JFile::delete( $cache_path.'/'.$file );
+                      }
+                  }
+              }
+          }
+          $this->report['status']  = true;
+          $this->report['message'] = 'CSS purge success';
+  
+        }catch( Exception $e ){
+          $this->report['status']  = false;
+          $this->report['message'] = $e->getMessage();
+        }
+          
     }
 
     private function importTemplateStyle()

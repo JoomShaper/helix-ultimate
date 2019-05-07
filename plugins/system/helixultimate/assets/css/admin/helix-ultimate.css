@@ -2227,8 +2227,11 @@ select:focus::-ms-value {
   width: -webkit-calc(100% - 320px);
   width: -moz-calc(100% - 320px);
   width: calc(100% - 320px);
+  margin: 0 auto;
 }
-
+.helix-ultimate-preview.helix-ultimate-responsive-preview {
+  margin: 0 auto;
+}
 .helix-ultimate-current-fieldset-layout .helix-ultimate-sidebar {
   width: 640px;
 }
@@ -2929,6 +2932,38 @@ select:focus::-ms-value {
 .helix-ultimate-webfont-style {
   margin-bottom: 10px;
 }
+.helix-ultimate-webfont-size {
+  position: relative;
+}
+.helix-ultimate-webfont-size .helix-responsive-devices {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  margin-right: -7px;
+}
+.helix-ultimate-webfont-size .helix-responsive-devices span {
+  cursor: pointer;
+  font-size: 14px;
+  height: 15px;
+  width: 15px;
+  text-align: center;
+}
+.helix-ultimate-webfont-size .helix-responsive-devices span.fa-laptop {
+  margin-right: 3px;
+}
+.helix-ultimate-webfont-size .helix-responsive-devices span.active {
+  color: #007bff;
+}
+.helix-ultimate-webfont-size  .helix-ultimate-webfont-size-input,
+.helix-ultimate-webfont-size  .helix-ultimate-webfont-size-input-sm,
+.helix-ultimate-webfont-size  .helix-ultimate-webfont-size-input-xs{
+  display: none;
+}
+.helix-ultimate-webfont-size  .helix-ultimate-webfont-size-input.active,
+.helix-ultimate-webfont-size  .helix-ultimate-webfont-size-input-sm.active,
+.helix-ultimate-webfont-size  .helix-ultimate-webfont-size-input-xs.active{
+  display: block;
+}
 .helix-ultimate-webfont-preview {
   margin: 15px 0 0;
 }
@@ -3127,4 +3162,7 @@ select:focus::-ms-value {
 #btn-helix-ultimate-export-settings,
 #input-helix-ultimate-settings {
   margin-bottom: 20px;
+}
+.btn-purge-helix-ultimate-css span{
+  margin-left: 10px;
 }

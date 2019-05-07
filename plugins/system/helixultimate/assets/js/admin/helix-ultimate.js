@@ -86,7 +86,31 @@ jQuery(function($){
         $(this).addClass('active');
         //$('.helix-ultimate-input-preset').val($(this).data('preset'));
     });
+    $(".helix-responsive-devices span").click( function(){
+        if( $(this).hasClass('active') )
+            return;
+        const parent = $(this).parents('.helix-ultimate-webfont-size')
+        parent.find('input').removeClass('active')
+        const inputClass = $(this).data('active_class')
+        parent.find(inputClass).addClass('active')
+        $(this).parent().find('span.active').removeClass('active')
+        $(this).addClass('active')
+        const device = $(this).data('device')
+        updateIframe(device);
+    })
 
+    function updateIframe( device ){
+        const iframe = $(".helix-ultimate-preview");
+        if( device === 'md' ){
+            iframe.css({ width: '' })
+        }
+        if( device === 'sm' ){
+            iframe.css({ width: '991px'})
+        }
+        if( device === 'xs' ){
+            iframe.css({ width: '480px'})
+        }
+    }
     // Save settings
     $('.action-save-template').on('click',function(e){
         e.preventDefault();
@@ -126,7 +150,35 @@ jQuery(function($){
 
         });
     });
+    $('.btn-purge-helix-ultimate-css').on('click',function(e){
+        e.preventDefault();
+        var self = $(this);
+        if( self.hasClass('disable') ){
+            return;
+        }
+        self.addClass('disable')
+        $.ajax({
+            type   : 'POST',
+            url    : 'index.php?option=com_ajax&request=task&helix=ultimate&id='+ helixUltimateStyleId +'&action=purge-css-file&format=json',
+            data   : {},
+            beforeSend: function(){
+                self.append('<span class="fa fa-spinner fa-spin"></span>')
+            },
+            success: function (response) {
+                
+                var data = $.parseJSON(response)
+                if( data.status ){
+                    self.find('span').remove();
+                    self.removeClass('disable')
+                }
 
+            },
+            error: function(){
+                alert('Somethings wrong, Try again');
+            }
+
+        });
+    });
     // Import
     $('#btn-helix-ultimate-import-settings').on( 'click', function( event ) {
         event.preventDefault();
@@ -177,7 +229,9 @@ jQuery(function($){
             
             webfont = {
 				'fontFamily' : $that.find('.helix-ultimate-webfont-list').val(),
-				'fontSize'	: $that.find('.helix-ultimate-webfont-size-input').val(),
+                'fontSize'	: $that.find('.helix-ultimate-webfont-size-input').val(),
+                'fontSize_sm'	: $that.find('.helix-ultimate-webfont-size-input-sm').val(),
+				'fontSize_xs'	: $that.find('.helix-ultimate-webfont-size-input-xs').val(),
 				'fontWeight' : $that.find('.helix-ultimate-webfont-weight-list').val(),
 				'fontStyle' : $that.find('.helix-ultimate-webfont-style-list').val(),
 				'fontSubset' : $that.find('.helix-ultimate-webfont-subset-list').val(),

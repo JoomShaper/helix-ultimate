@@ -80,6 +80,19 @@ if ($custom_css = $this->params->get('custom_css'))
     $doc->addStyledeclaration($custom_css);
 }
 
+$progress_bar_position = $this->params->get('reading_timeline_position');
+
+if( $app->input->get('view') == 'article' && $this->params->get('reading_time_progress', 0) ) {
+    
+    $progress_style = 'position:fixed;';
+    $progress_style .= 'z-index:9999;';
+    $progress_style .= 'height:'.$this->params->get('reading_timeline_height').';';
+    $progress_style .= 'background-color:'.$this->params->get('reading_timeline_bg').';';
+    $progress_style .= $progress_bar_position == 'top' ? 'top:0;' : 'bottom:0;';
+    $progress_style = '.sp-reading-progress-bar { '.$progress_style.' }';
+    $doc->addStyledeclaration($progress_style);
+}
+
 //Custom JS
 if ($custom_js = $this->params->get('custom_js'))
 {
@@ -153,6 +166,8 @@ if ($custom_js = $this->params->get('custom_js'))
     <?php if ($this->params->get('goto_top', 0)) : ?>
         <a href="#" class="sp-scroll-up" aria-label="Scroll Up"><span class="fa fa-chevron-up" aria-hidden="true"></span></a>
     <?php endif; ?>
-
+    <?php if( $app->input->get('view') == 'article' && $this->params->get('reading_time_progress', 0) ): ?>
+        <div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>
+    <?php endif; ?>
     </body>
 </html>

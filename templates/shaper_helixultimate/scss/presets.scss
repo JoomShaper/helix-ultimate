@@ -81,7 +81,10 @@ a{
     }
   }
 }
-
+// Reading Progress Bar Color 
+.sp-reading-progress-bar {
+	background-color: $link_color;
+}
 // Megamenu
 .sp-megamenu-parent {
 	>li {

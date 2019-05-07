@@ -17,6 +17,7 @@ __MACOSX
 /media
 /components
 robots.txt.dist
+yarn.lock
 
 LICENSE.txt
 README.txt

@@ -1015,7 +1015,11 @@ class HelixUltimate
     }
 
     public static function getRelatedArticles($params){
-        $authorised = JAccess::getAuthorisedViewLevels(JFactory::getUser()->get('id'));
+        $user   = JFactory::getUser();
+		$userId = $user->get('id');
+		$guest  = $user->get('guest');
+		$groups = $user->getAuthorisedViewLevels();
+        $authorised = JAccess::getAuthorisedViewLevels($userId);
         $db = JFactory::getDbo();
         $app = JFactory::getApplication();
         $nullDate = $db->quote($db->getNullDate());
@@ -1040,7 +1044,7 @@ class HelixUltimate
                 ->select('id')
                 ->from($db->quoteName('#__content'))
                 ->where($db->quoteName('catid'). " = " .$catId)
-                ->setLimit($maximum);
+                ->setLimit($maximum+1);
                 $db->setQuery($catQuery);
                 $catItemIds = $db->loadColumn();
 		}
@@ -1074,6 +1078,7 @@ class HelixUltimate
             ->from($db->quoteName('#__content', 'a'))
             ->select($db->quoteName('b.alias', 'category_alias'))
             ->select($db->quoteName('b.title', 'category'))
+            ->select($db->quoteName('b.access', 'category_access'))
             ->select($db->quoteName('u.name', 'author'))
             ->join('LEFT', $db->quoteName('#__categories', 'b') . ' ON (' . $db->quoteName('a.catid') . ' = ' . $db->quoteName('b.id') . ')')
             ->join('LEFT', $db->quoteName('#__users', 'u') . ' ON (' . $db->quoteName('a.created_by') . ' = ' . $db->quoteName('u.id') . ')')
@@ -1094,6 +1099,18 @@ class HelixUltimate
             $item->slug    	= $item->id . ':' . $item->slug;
             $item->catslug 	= $item->catid . ':' . $item->category_alias;
             $item->params = JComponentHelper::getParams('com_content');
+            $access = (isset($item->access) && $item->access) ? $item->access : true;
+            
+            if ($access) {
+                $item->params->set('access-view', true);
+			} else {
+				if ($item->catid == 0 || $item->category_access === null) {
+					$item->params->set('access-view', in_array($item->access, $groups));
+				} else {
+					$item->params->set('access-view', in_array($item->access, $groups) && in_array($item->category_access, $groups));
+				}
+			}
+
         }
         return $items;
     }

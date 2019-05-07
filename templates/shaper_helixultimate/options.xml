@@ -70,7 +70,6 @@
 		</field>
 		<field name="facebook" helixgroup="social_icons" type="text" label="HELIX_ULTIMATE_SOCIAL_ICON_FACEBOOK" hint="https://www.facebook.com/joomshaper" showon="show_social_icons:1" />
 		<field name="twitter" helixgroup="social_icons" type="text" label="HELIX_ULTIMATE_SOCIAL_ICON_TWITTER" hint="https://twitter.com/joomshaper" showon="show_social_icons:1" />
-		<field name="googleplus" helixgroup="social_icons" type="text" label="HELIX_ULTIMATE_SOCIAL_ICON_GOOGLEPLUS" hint="https://plus.google.com/+JoomShaper" showon="show_social_icons:1" />
 		<field name="pinterest" helixgroup="social_icons" type="text" label="HELIX_ULTIMATE_SOCIAL_ICON_PINTEREST" hint="https://www.pinterest.com/joomshaper" showon="show_social_icons:1" />
 		<field name="linkedin" helixgroup="social_icons" type="text" label="HELIX_ULTIMATE_SOCIAL_ICON_LINKEDIN" hint="https://www.linkedin.com/company/joomshaper" showon="show_social_icons:1" />
 		<field name="dribbble" helixgroup="social_icons" type="text" label="HELIX_ULTIMATE_SOCIAL_ICON_DRIBBBLE" hint="https://dribbble.com/joomshaper" showon="show_social_icons:1" />
@@ -434,7 +433,7 @@
 		</field>
 		<field name="related_article" type="checkbox" helixgroup="blog_details" default="0" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE" description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_DESC" />
 		<field name="related_article_title" type="text" helixgroup="blog_details" default="Related Articles" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE" showon="related_article:1" />
-		<field name="related_article_limit" type="number" default="5" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_LIMIT" description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_LIMIT_DESC" showon="related_article:1" />
+		<field name="related_article_limit" type="number" default="3" helixgroup="blog_details" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_LIMIT" description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_LIMIT_DESC" showon="related_article:1" />
 		<field name="related_article_view_type" type="list" helixgroup="blog_details" default="thumb" label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE" description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_DESC" showon="related_article:1" >
 			<option value="thumb">HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_THUMB</option>
 			<option value="list">HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_LIST</option>

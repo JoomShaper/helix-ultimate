@@ -27,7 +27,7 @@ class HelixUltimateFeatureFooter
 			
 			if($this->params->get('copyright'))
 			{
-				$output .= '<span class="sp-copyright">' . str_ireplace('{year}',date('Y'), str_ireplace('joomshaper', '<a target="_blank" href="https://www.joomshaper.com">JoomShaper</a>', $this->params->get('copyright'))) . '</span>';
+				$output .= '<span class="sp-copyright">' . str_ireplace('{year}', date('Y'),  str_ireplace('joomla templates', '<a target="_blank" href="https://www.joomshaper.com/joomla-templates">Joomla Templates</a>', str_ireplace('joomshaper', '<a target="_blank" href="https://www.joomshaper.com">JoomShaper</a>',  $this->params->get('copyright'))))  . '</span>';
 			}
 
 			return $output;

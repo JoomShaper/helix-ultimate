@@ -11,19 +11,13 @@ defined ('_JEXEC') or die();
 /*
 * This segment of code sets up the autocompleter.
 */
-// if ($this->params->get('show_autosuggest', 1))
-// {
-// 	JHtml::_('script', 'vendor/awesomplete/awesomplete.min.js', array('version' => 'auto', 'relative' => true));
-// 	JFactory::getDocument()->addScriptOptions('finder-search', array('url' => JRoute::_('index.php?option=com_finder&task=suggestions.suggest&format=json&tmpl=component')));
-// }
-
 
 if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosuggest', 1))
 {
 	JHtml::_('jquery.framework');
 
 	$script = "
-jQuery(function() {";
+	jQuery(function() {";
 
 	if ($this->params->get('show_advanced', 1))
 	{
@@ -52,19 +46,19 @@ jQuery(function() {";
 		JHtml::_('script', 'jui/jquery.autocomplete.min.js', array('version' => 'auto', 'relative' => true));
 
 		$script .= "
-	var suggest = jQuery('#q').autocomplete({
-		serviceUrl: '" . JRoute::_('index.php?option=com_finder&task=suggestions.suggest&format=json&tmpl=component') . "',
-		paramName: 'q',
-		minChars: 1,
-		maxHeight: 400,
-		width: 300,
-		zIndex: 9999,
-		deferRequestBy: 500
-	});";
+		var suggest = jQuery('#q').autocomplete({
+			serviceUrl: '" . JRoute::_('index.php?option=com_finder&task=suggestions.suggest&format=json&tmpl=component') . "',
+			paramName: 'q',
+			minChars: 1,
+			maxHeight: 400,
+			width: 300,
+			zIndex: 9999,
+			deferRequestBy: 500
+		});";
 	}
 
 	$script .= "
-});";
+	});";
 
 	JFactory::getDocument()->addScriptDeclaration($script);
 }

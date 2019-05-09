@@ -13,7 +13,7 @@ $attribs = json_decode($displayData->attribs);
 
 $template = JFactory::getApplication('site')->getTemplate(true);
 $tplParams = $template->params;
-$og = $tplParams->get('og', 1);
+$og = $tplParams->get('og',0);
 $blog_image = $tplParams->get('blog_details_image', 'large');
 $full_image = '';
 

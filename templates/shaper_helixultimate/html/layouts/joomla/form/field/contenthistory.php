@@ -43,21 +43,26 @@ defined ('JPATH_BASE') or die();
  */
 extract($displayData);
 
-echo JHtml::_(
-	'bootstrap.renderModal',
-	'versionsModal',
-	array(
-		'url' => $link,
-		'title'  => $label,
-		'height' => '100%',
-		'width'  => '100%',
-		'modalWidth'  => '80',
-		'bodyHeight'  => '60',
-		'footer' => '<a type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">'
-			. JText::_("JLIB_HTML_BEHAVIOR_CLOSE") . '</a>'
-	)
-);
 ?>
-<button onclick="jQuery('#versionsModal').modal('show')" class="btn btn-secondary ml-2" data-toggle="modal" title="<?php echo $label; ?>">
+ <div class="modal fade" id="versionsModal" tabindex="-1" >
+	<div class="modal-dialog" role="dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel"><?php echo $label; ?></h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<iframe height="100%" width="100%" src="<?php echo $link ?>" frameborder="0"></iframe>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+		</div>
+	</div>
+</div>
+
+<div data-target="#versionsModal" class="btn btn-secondary ml-2" data-toggle="modal" title="<?php echo $label; ?>">
 	<span class="fa fa-archive" aria-hidden="true"></span> <?php echo $label; ?>
-</button>
+</div>

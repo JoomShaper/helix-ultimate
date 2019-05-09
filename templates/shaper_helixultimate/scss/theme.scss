@@ -1400,3 +1400,42 @@ select {
 			}
 	}
 }
+.com-contenthistory {
+	.btn-group {
+		display: flex;
+		justify-content: flex-end;
+		button {
+			display: inline-block;
+			padding: 4px 12px;
+			margin-bottom: 0;
+			font-size: 13px;
+			line-height: 18px;
+			text-align: center;
+			vertical-align: middle;
+			cursor: pointer;
+			color: #333;
+			text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+			background-color: #f5f5f5;
+			background-repeat: repeat-x;
+			border: 1px solid #bbb;
+			border-bottom-color: #a2a2a2;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+			&:hover {
+				color: #333;
+				background-color: #e9e9e9;
+			}
+		}
+	}
+}
+#versionsModal {
+	top: 10%;
+	.modal-dialog {
+		max-width: 80%;
+	}
+	iframe {
+		min-height: 300px;
+	}
+}

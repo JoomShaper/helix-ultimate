@@ -940,7 +940,6 @@ class HelixUltimate
         $root_url        = \JURI::root(true);
         $minifiedCode    = '';
         $md5sum          = '';
-
         //Check all local stylesheets
         foreach ($all_stylesheets as $key => $value)
         {
@@ -956,8 +955,10 @@ class HelixUltimate
 
             if (\JFile::exists($css_file))
             {
+                $css_file = str_replace("\\", "/", $css_file);
                 $stylesheets[] = $key;
                 $md5sum .= md5($key);
+                
                 $compressed = $this->minifyCss(file_get_contents($css_file));
 
                 $fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches){

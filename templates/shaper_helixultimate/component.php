@@ -45,6 +45,7 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
   </head>
 
   <body class="contentpane <?php echo $body_class; ?>">
+    <jdoc:include type="message" />
     <jdoc:include type="component" />
   </body>
 </html>

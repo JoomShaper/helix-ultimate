@@ -28,6 +28,8 @@ else
 $intro_image = '';
 if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '')
 {
+	$full_image_alt_txt = isset($attribs->helix_ultimate_image_alt_txt) && $attribs->helix_ultimate_image_alt_txt != '' ? $attribs->helix_ultimate_image_alt_txt : $displayData->title;
+	
 	if($blog_list_image == 'default')
 	{
 		$intro_image = $attribs->helix_ultimate_image;
@@ -48,7 +50,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 		<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
 		<?php endif; ?>
 			<div class="article-intro-image">
-				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>">
+				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($full_image_alt_txt, ENT_COMPAT, 'UTF-8'); ?>">
 			</div>
 		<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
 		</a>

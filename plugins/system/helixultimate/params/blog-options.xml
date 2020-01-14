@@ -3,6 +3,7 @@
 	<fields name="attribs" addfieldpath="/plugins/system/helixultimate/fields">
 		<fieldset name="helix_ultimate_blog_options" label="HELIX_ULTIMATE_BLOG_OPTIONS">
 			<field name="helix_ultimate_image" type="heliximage" label="HELIX_ULTIMATE_BLOG_FEATURED_IMAGE" />
+			<field name="helix_ultimate_image_alt_txt" type="text" label="HELIX_ULTIMATE_BLOG_IMAGE_ALT_TEXT" description="HELIX_ULTIMATE_BLOG_IMAGE_ALT_TEXT_DESCRIPTION"/>
 			<field name="helix_ultimate_article_format" type="radio" label="HELIX_ULTIMATE_BLOG_ARTICLE_FORMAT" default="standard" class="btn-group">
 				<option value="standard">HELIX_ULTIMATE_BLOG_POST_FORMAT_STANDARD</option>
 				<option value="video">HELIX_ULTIMATE_BLOG_POST_FORMAT_VIDEO</option>

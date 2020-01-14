@@ -35,9 +35,11 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 }
 
 ?>
-<?php if($full_image) : ?>
+<?php if($full_image) : 
+	$full_image_alt_txt = isset($attribs->helix_ultimate_image_alt_txt) && $attribs->helix_ultimate_image_alt_txt != '' ? $attribs->helix_ultimate_image_alt_txt : $displayData->title;
+	?>
 	<div class="article-full-image">
-		<img src="<?php echo $full_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
+		<img src="<?php echo $full_image; ?>" alt="<?php echo htmlspecialchars($full_image_alt_txt, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
 	</div>
 <?php else: ?>
 	<?php $images = json_decode($displayData->images); ?>

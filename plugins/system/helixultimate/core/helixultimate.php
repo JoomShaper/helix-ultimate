@@ -825,6 +825,9 @@ class HelixUltimate
     {
         require_once(__DIR__ . '/classes/Minifier.php');
 
+        // add conflict files in the exclude
+        $excludes = ($excludes) ? $excludes . ', core.js, tinymce.min.js' : 'core.js, tinymce.min.js';
+
         $app       = JFactory::getApplication();
         $cachetime = $app->get('cachetime', 15);
 

@@ -62,6 +62,17 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 
 			<a href="<?php echo $this->baseurl; ?>/index.php" class="btn btn-secondary"><span class="fa fa-home" aria-hidden="true"></span> <?php echo Text::_('JERROR_LAYOUT_HOME_PAGE'); ?></a>
 
+			<?php
+			$modules = JModuleHelper::getModules( '404' );
+			$attribs['style'] = 'sp_xhtml';
+			if(!empty($modules) && count($modules)): // Render modules if published in 404 position ?>
+				<div class="error-modules">
+					<?php foreach ($modules as $key => $module) :
+						echo JModuleHelper::renderModule( $module, $attribs );
+					endforeach; ?>
+				</div>
+			<?php endif; ?>
+
 			<?php if ($this->debug) : ?>
 				<div class="error-debug mt-3">
 					<?php echo $this->renderBacktrace(); ?>

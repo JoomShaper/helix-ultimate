@@ -148,7 +148,7 @@ class HelixUltimate
 
         if($view == 'form' && $layout == 'edit')
         {
-            $doc->addStylesheet( \JURI::root(true) . '\plugins/system/helixultimate/assets/css/frontend-edit.css');
+            $doc->addStylesheet( \JURI::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
         }
         
         $this->add_js('popper.min.js, bootstrap.min.js');
@@ -752,7 +752,7 @@ class HelixUltimate
 
                 if (!in_array($font->fontFamily, $systemFonts))
                 {
-                    $fontUrl = '//fonts.googleapis.com/css?family='. $font->fontFamily .':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+                    $fontUrl = '//fonts.googleapis.com/css?family='. str_replace(' ', '+', $font->fontFamily) .':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&amp;display=swap';
                 
                     if (isset($font->fontSubset) && $font->fontSubset)
                     {

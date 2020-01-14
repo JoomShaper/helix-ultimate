@@ -8,3 +8,7 @@
 
 *Finally Build and create Helix Ultimate Installer*
 <pre>gulp</pre>
+
+> Recomanded Node Version is: v11.15.0
+
+See more at: https://www.joomshaper.com/helix

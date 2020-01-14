@@ -12,6 +12,7 @@ extract($displayData);
 
 $app = \JFactory::getApplication();
 $doc = JFactory::getDocument();
+$params = $app->getTemplate(true)->params;
 
 $helix_path = JPATH_PLUGINS . '/system/helixultimate/core/helixultimate.php';
 if (file_exists($helix_path)) {
@@ -22,10 +23,15 @@ if (file_exists($helix_path)) {
 }
 
 $site_title = $app->get('sitename');
+
+// if offline page
+$offline_condition = !$params->get('comingsoon') &&  $app->get('offline');
+$offline_class = ( $offline_condition )? 'offline': '';
+
 ?>
 
 <!doctype html>
-<html class="coming-soon" lang="<?php echo $language; ?>" dir="<?php echo $direction; ?>">
+<html class="coming-soon <?php echo $offline_class; ?>" lang="<?php echo $language; ?>" dir="<?php echo $direction; ?>">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -34,6 +40,7 @@ $site_title = $app->get('sitename');
 			$theme->add_js('jquery.countdown.min.js');
 			$theme->add_js('custom.js');
 			$theme->add_css('font-awesome.min.css, template.css');
+			$theme->add_css('fa-v4-shims.css');
 			$theme->add_css('presets/' . $params->get('preset', 'preset1') . '.css');
 			$theme->add_css('custom.css');
 			//Custom CSS
@@ -48,20 +55,22 @@ $site_title = $app->get('sitename');
     </head>
 	<body>
 		<div class="container">
-
 			<jdoc:include type="message" />
+			<?php if( $offline_condition ) : ?>
+				<div class="offline-wrapper">
+			<?php endif; ?>
 
-			<?php if($params->get('comingsoon_logo')) : ?>
+			<?php if($params->get('comingsoon_logo') && $params->get('comingsoon')) : ?>
 				<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo htmlspecialchars($site_title); ?>">
 			<?php endif; ?>
 
-			<?php if($params->get('comingsoon_title')) : ?>
+			<?php if($params->get('comingsoon_title') && $params->get('comingsoon')) : ?>
 				<h1 class="coming-soon-title"><?php echo htmlspecialchars($params->get('comingsoon_title')); ?></h1>
 			<?php else: ?>
 				<h1 class="coming-soon-title"><?php echo htmlspecialchars($site_title); ?></h1>
 			<?php endif; ?>
 
-			<?php if($params->get('comingsoon_content')) : ?>
+			<?php if($params->get('comingsoon_content') && $params->get('comingsoon')) : ?>
 				<div class="row justify-content-center">
 					<div class="col-lg-8">
 						<div class="coming-soon-content">
@@ -89,7 +98,7 @@ $site_title = $app->get('sitename');
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<?php if($params->get('comingsoon_date')) : ?>
+			<?php if($params->get('comingsoon_date') && $params->get('comingsoon')) : ?>
 				<?php $comingsoon_date = explode('-', $params->get("comingsoon_date")); ?>
 				<div id="coming-soon-countdown" class="clearfix"></div>
 				<script type="text/javascript">
@@ -101,7 +110,7 @@ $site_title = $app->get('sitename');
 				</script>
 			<?php endif; ?>
 
-			<?php if($theme->count_modules('comingsoon')) : ?>
+			<?php if($theme->count_modules('comingsoon') && $params->get('comingsoon')) : ?>
 				<div class="coming-soon-position">
 					<jdoc:include type="modules" name="comingsoon" style="sp_xhtml" />
 				</div>
@@ -119,7 +128,7 @@ $site_title = $app->get('sitename');
 				$flickr 	= $params->get('flickr');
 				$vk 		= $params->get('vk');
 
-				if( $params->get('comingsoon_social_icons') && ( $facebook || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) )
+				if( $params->get('comingsoon_social_icons') && ( $facebook || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) && $params->get('comingsoon') )
 				{
 					$social_output  = '<ul class="social-icons">';
 
@@ -175,6 +184,11 @@ $site_title = $app->get('sitename');
 			<?php endif; ?>
 
 			<?php $theme->after_body(); ?>
+
+			<?php if( $offline_condition ) : ?>
+				</div>
+			<?php endif; ?>
+
 		</div>
 		<?php if($params->get('comingsoon_bg_image')) : ?>
 			<style>

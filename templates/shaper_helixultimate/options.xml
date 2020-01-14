@@ -94,7 +94,7 @@
 		<field name="comingsoon" helixgroup="comingsoon" type="checkbox" default="0" label="HELIX_ULTIMATE_COMINGSOON_MODE" />
 		<field name="comingsoon_title" helixgroup="comingsoon" type="text" default="Coming Soon Title" label="HELIX_ULTIMATE_COMINGSOON_TITLE" showon="comingsoon:1" />
 		<field name="comingsoon_content" helixgroup="comingsoon" type="textarea" rows="6" cols="30" default="Coming soon content" label="HELIX_ULTIMATE_COMINGSOON_CONTENT" filter="safehtml" showon="comingsoon:1" />
-		<field name="comingsoon_date" helixgroup="comingsoon" type="text" default="5-10-2018" label="HELIX_ULTIMATE_COMINGSOON_DATE" showon="comingsoon:1" />
+		<field name="comingsoon_date" helixgroup="comingsoon" type="text" default="25-10-2021" label="HELIX_ULTIMATE_COMINGSOON_DATE" showon="comingsoon:1" />
 		<field name="comingsoon_logo" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_ULTIMATE_COMINGSOON_LOGO" showon="comingsoon:1" />
 		<field name="comingsoon_bg_image" helixgroup="comingsoon" type="helixmedia" preview="true" label="HELIX_ULTIMATE_COMINGSOON_BACKGROUND_IMAGE" showon="comingsoon:1" />
 		<field name="comingsoon_social_icons" helixgroup="comingsoon" type="checkbox" default="1" label="HELIX_ULTIMATE_COMINGSOON_SOCIAL_ICONS" showon="comingsoon:1" />

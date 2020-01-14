@@ -19,8 +19,8 @@ if (file_exists($helix_path)) {
     die('Install and activate <a target="_blank" href="https://www.joomshaper.com/helix">Helix Ultimate Framework</a>.');
 }
 
-//Coming Soon
-if ($this->params->get('comingsoon'))
+// If comingsoon is enabled and logged in user doens't have permission to login in the offline then redirect to comingsoon page
+if ( $this->params->get('comingsoon') && !\JFactory::getUser()->authorise('core.login.offline') )
 {
   header("Location: " . $this->baseUrl . "?tmpl=comingsoon");
 }
@@ -80,10 +80,9 @@ if ($custom_css = $this->params->get('custom_css'))
     $doc->addStyledeclaration($custom_css);
 }
 
+// Reading progress bar position
 $progress_bar_position = $this->params->get('reading_timeline_position');
-
-if( $app->input->get('view') == 'article' && $this->params->get('reading_time_progress', 0) ) {
-    
+if( $app->input->get('view') == 'article' && $this->params->get('reading_time_progress', 0) ) {    
     $progress_style = 'position:fixed;';
     $progress_style .= 'z-index:9999;';
     $progress_style .= 'height:'.$this->params->get('reading_timeline_height').';';
@@ -108,27 +107,29 @@ if ($custom_js = $this->params->get('custom_js'))
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="canonical" href="<?php echo JUri::getInstance()->toString(); ?>">
         <?php
+            $theme->head();
+            // CSS files
+            $theme->add_css('font-awesome.min.css');
+            $theme->add_css('custom');
+            // Fontawesome 4 to 5 compatible CSS file
+            $theme->add_css('fa-v4-shims.css');
+            
+            // Scss files
+            $theme->add_scss('master', $scssVars, 'template');
+            if($this->direction == 'rtl')
+            {
+                $theme->add_scss('rtl', $scssVars, 'rtl');
+            }
+            $theme->add_scss('presets', $scssVars, 'presets/' . $scssVars['preset']);
 
-        $theme->head();
-        
-        $theme->add_css('font-awesome.min.css');
-        $theme->add_js('jquery.sticky.js, main.js');
+            // JS files
+            $theme->add_js('jquery.sticky.js, main.js');
 
-        $theme->add_scss('master', $scssVars, 'template');
-
-        if($this->direction == 'rtl')
-        {
-            $theme->add_scss('rtl', $scssVars, 'rtl');
-        }
-
-        $theme->add_scss('presets', $scssVars, 'presets/' . $scssVars['preset']);
-        $theme->add_css('custom');
-
-        //Before Head
-        if ($before_head = $this->params->get('before_head'))
-        {
-            echo $before_head . "\n";
-        }
+            //Before Head
+            if ($before_head = $this->params->get('before_head'))
+            {
+                echo $before_head . "\n";
+            }
         ?>
     </head>
     <body class="<?php echo $theme->bodyClass(); ?>">

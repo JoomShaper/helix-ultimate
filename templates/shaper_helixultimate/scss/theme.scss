@@ -17,7 +17,7 @@ body {
 		}
 		&:after {
 			content: "\f110";
-			font-family: "FontAwesome";
+			font-family: "Font Awesome 5 Free";
 			font-size: 36px;
 			position: fixed;
 			top: 50%;
@@ -27,6 +27,7 @@ body {
 			width: 48px;
 			height: 48px;
 			line-break: 48px;
+			font-weight: 900;
 			text-align: center;
 			color: #007bff;
 			-webkit-animation: fa-spin 2s infinite linear;
@@ -159,6 +160,10 @@ ul.social-icons {
 	&.header-sticky {
 		position: fixed;
 		z-index: 9999;
+		// sticky header jump fixed
+		& ~ section#sp-main-body {
+			padding-top: 60px;
+		}
 	}
 }
 
@@ -335,6 +340,23 @@ ul.social-icons {
 	}
 }
 
+// signup
+.registration .modal {
+	display: inline-block;
+	position: inherit;
+}
+// fix conflict with popover
+.com-content.layout-edit .nav-tabs .nav-link,
+.com-content.layout-edit label.hasPopover,
+.registration label.hasPopover {
+	display: inline-block !important;
+}
+
+.registration .form-check-inline {
+	input[type="radio"] {
+		display: inline-block;	
+	}
+}
 
 // Search
 
@@ -640,16 +662,17 @@ ul.social-icons {
 		display: inline-block;
 		margin-left: 5px;
 		span.rating-star {
-			font-family: "FontAwesome";
+			font-family: "Font Awesome 5 Free";
 			font-weight: normal;
 			font-style: normal;
 			display: inline-block;
 			&.active:before {
 				content: "\f005";
 				color: #F6BC00;
+				font-weight: 900;
 			}
 			&:before {
-				content: "\f006";
+				content: "\f005";
 				padding-right: 5px;
 			}
 		}
@@ -658,6 +681,7 @@ ul.social-icons {
 		span.rating-star:hover ~ span.rating-star:before {
 			content: "\f005";
 			color: #E7B000;
+			font-weight: 900;
 			cursor: pointer;
 		}
 	}
@@ -821,8 +845,20 @@ ul.social-icons {
 	}
 }
 
+html.offline {
+	body {
+		background: #F3F3F3;
+	}
+
+	.offline-wrapper {
+		padding: 50px;
+		background-color: #FFFFFF;
+		border-radius: 10px;
+	}
+}
+
 // Coming soon
-html.coming-soon {
+html.coming-soon, html.offline {
 	width: 100%;
 	height: 100%;
 	min-height: 100%;
@@ -931,6 +967,9 @@ html.error-page {
 		margin-bottom: 3rem;
 	}
 
+	.error-modules{
+		margin-top: 2rem;
+	}
 }
 
 .sp-social-share {
@@ -1126,7 +1165,8 @@ select {
 					position: relative;
 					&:after {
 						content: "\f0dc";
-						font-family: FontAwesome;
+						font-family: "Font Awesome 5 Free";
+    					font-weight: 900;
 						font-size: 0.875rem;
 						position: absolute;
 						top: 50%;
@@ -1175,7 +1215,8 @@ select {
 
 			&:after {
 				content: "\f002";
-				font-family: FontAwesome;
+				font-family: "Font Awesome 5 Free";
+    			font-weight: 900;
 				font-size: 0.875rem;
 				color: rgba(0, 0, 0, .2);
 				position: absolute;
@@ -1249,7 +1290,8 @@ select {
 						}
 						&:after {
 							content: "\f00d";
-							font-family: FontAwesome;
+							font-family: "Font Awesome 5 Free";
+    						font-weight: 900;
 							font-size: 0.875rem;
 							position: absolute;
 							top: 0;

@@ -240,7 +240,8 @@ body {
 			>li {
 				&.sp-has-child>a:after,
 				&.sp-has-child>span:after{
-					font-family: "FontAwesome";
+					font-family: "Font Awesome 5 Free";
+					font-weight: 900;
 					content: "\f107";
 					float: right;
 					margin-left: 7px;
@@ -260,7 +261,8 @@ body {
 			.sp-dropdown {
 				.sp-dropdown-items{		
 					.sp-has-child>a:after{
-						font-family: "FontAwesome";
+						font-family: "Font Awesome 5 Free";
+						font-weight: 900;
 						content: "\f105";
 						float: right;
 						margin-left: 7px;

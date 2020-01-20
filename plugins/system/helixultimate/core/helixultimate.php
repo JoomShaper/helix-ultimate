@@ -992,27 +992,26 @@ class HelixUltimate
         //Compress All stylesheets
         if ($minifiedCode)
         {
+
+            // if cache file isn't exist then create it
             if (!\JFolder::exists($cache_path))
             {
                 \JFolder::create($cache_path, 0755);
             }
+            
+            $file = $cache_path . '/' . md5($md5sum) . '.css';
+            if (!\JFile::exists($file))
+            {
+                \JFile::write($file, $minifiedCode);
+            }
             else
             {
-                $file = $cache_path . '/' . md5($md5sum) . '.css';
-
-                if (!\JFile::exists($file))
+                if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
                 {
                     \JFile::write($file, $minifiedCode);
                 }
-                else
-                {
-                    if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
-                    {
-                        \JFile::write($file, $minifiedCode);
-                    }
-                }
-                $this->doc->addStylesheet(\JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
             }
+            $this->doc->addStylesheet(\JURI::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
         }
 
         return;

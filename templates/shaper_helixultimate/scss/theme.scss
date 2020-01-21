@@ -162,7 +162,7 @@ ul.social-icons {
 		z-index: 9999;
 		// sticky header jump fixed
 		& ~ section#sp-main-body {
-			padding-top: 60px;
+			padding-top: $header_height;
 		}
 	}
 }

@@ -149,7 +149,7 @@ class plgSystemTmp_helixultInstallerScript
 		);
 
 		$conditions = array(
-			$db->quoteName('type') . ' = ' . $db->quote('plugin'), 
+			$db->quoteName('type') . ' = ' . $db->quote('plugin'),
 			$db->quoteName('element') . ' = ' . $db->quote($name),
 			$db->quoteName('folder') . ' = ' . $db->quote($group)
 		);

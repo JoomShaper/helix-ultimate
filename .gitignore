@@ -14,7 +14,6 @@ web.config.txt
 .DS_Store
 
 # others
-administrator/
 bin/
 cache/
 cli/
@@ -33,6 +32,12 @@ language/*
 !language/en-GB/
 language/en-GB/*
 !language/en-GB/en-GB.tpl_shaper_helixultimate.ini
+administrator/*
+!administrator/language/
+administrator/language/*
+!administrator/language/en-GB/
+administrator/language/en-GB/*
+!administrator/language/en-GB/en-GB.plg_system_helixultimate.ini
 
 
 # Plugins

@@ -1,0 +1,346 @@
+@keyframes spFadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes spFadeInUp {
+	0% {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes spFadeInDown {
+	0% {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes spZoomIn {
+	0% {
+		opacity: 0;
+		transform: scale3d(0.3, 0.3, 0.3);
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes spRotateIn {
+	from {
+		transform-origin: center;
+		transform: rotate3d(0, 0, 1, -45deg);
+		opacity: 0;
+	}
+
+	to {
+		transform-origin: center;
+		transform: none;
+		opacity: 1;
+	}
+}
+
+@keyframes spPulse {
+	from {
+		opacity: 0;
+		transform: scale3d(1, 1, 1);
+	}
+
+	50% {
+		opacity: 0.5;
+		transform: scale3d(1.05, 1.05, 1.05);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+@keyframes spSpin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* Preloader animations */
+
+// loader keyframes
+// Clock Loader Animation
+@-webkit-keyframes grdAiguille {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes grdAiguille {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+@-webkit-keyframes ptAiguille {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+@keyframes ptAiguille {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+// Circle Loader Animation
+@-webkit-keyframes loader1 {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes loader1 {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+// Bubble Loop Loader Animation
+@-webkit-keyframes loader6 {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	50% {
+		-webkit-transform: rotate(180deg);
+	}
+	100% {
+		-webkit-transform: rotate(180deg);
+	}
+}
+@keyframes loader6 {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	100% {
+		transform: rotate(180deg);
+	}
+}
+
+// Ring Loader Animation
+@keyframes rotate-360 {
+	from {
+		-moz-transform: rotate(0);
+		-ms-transform: rotate(0);
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+	to {
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+// Audio Wave Loader Animation
+@keyframes audioWave {
+	25% {
+		background: linear-gradient($link_color, $link_color) 0 50%,
+			linear-gradient($link_color, $link_color) 0.625em 50%,
+			linear-gradient($link_color, $link_color) 1.25em 50%,
+			linear-gradient($link_color, $link_color) 1.875em 50%,
+			linear-gradient($link_color, $link_color) 2.5em 50%;
+		background-repeat: no-repeat;
+		background-size: 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em,
+			0.5em 0.25em;
+	}
+	37.5% {
+		background: linear-gradient($link_color, $link_color) 0 50%,
+			linear-gradient($link_color, $link_color) 0.625em 50%,
+			linear-gradient($link_color, $link_color) 1.25em 50%,
+			linear-gradient($link_color, $link_color) 1.875em 50%,
+			linear-gradient($link_color, $link_color) 2.5em 50%;
+		background-repeat: no-repeat;
+		background-size: 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em, 0.5em 0.25em,
+			0.5em 0.25em;
+	}
+	50% {
+		background: linear-gradient($link_color, $link_color) 0 50%,
+			linear-gradient($link_color, $link_color) 0.625em 50%,
+			linear-gradient($link_color, $link_color) 1.25em 50%,
+			linear-gradient($link_color, $link_color) 1.875em 50%,
+			linear-gradient($link_color, $link_color) 2.5em 50%;
+		background-repeat: no-repeat;
+		background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em, 0.5em 0.25em,
+			0.5em 0.25em;
+	}
+	62.5% {
+		background: linear-gradient($link_color, $link_color) 0 50%,
+			linear-gradient($link_color, $link_color) 0.625em 50%,
+			linear-gradient($link_color, $link_color) 1.25em 50%,
+			linear-gradient($link_color, $link_color) 1.875em 50%,
+			linear-gradient($link_color, $link_color) 2.5em 50%;
+		background-repeat: no-repeat;
+		background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 2em,
+			0.5em 0.25em;
+	}
+	75% {
+		background: linear-gradient($link_color, $link_color) 0 50%,
+			linear-gradient($link_color, $link_color) 0.625em 50%,
+			linear-gradient($link_color, $link_color) 1.25em 50%,
+			linear-gradient($link_color, $link_color) 1.875em 50%,
+			linear-gradient($link_color, $link_color) 2.5em 50%;
+		background-repeat: no-repeat;
+		background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em,
+			0.5em 2em;
+	}
+}
+
+// Circle 2 Loader Animation
+@-webkit-keyframes effect-2 {
+	from {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+@keyframes effect-2 {
+	from {
+		-moz-transform: rotate(0deg);
+		-ms-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+// Audio Wave Loader 2 animation
+@keyframes sequence1 {
+	0% {
+		height: 10px;
+	}
+	50% {
+		height: 50px;
+	}
+	100% {
+		height: 10px;
+	}
+}
+@keyframes sequence2 {
+	0% {
+		height: 20px;
+	}
+	50% {
+		height: 65px;
+	}
+	100% {
+		height: 20px;
+	}
+}
+
+@keyframes rot1 {
+	100% {
+		transform: skew(-10deg) translateX(50px) rotate(405deg);
+	}
+}
+@-webkit-keyframes rot1 {
+	100% {
+		-webkit-transform: skew(-10deg) translateX(50px) rotate(405deg);
+	}
+}
+@keyframes rot2 {
+	100% {
+		transform: skew(-10deg) rotate(525deg);
+	}
+}
+@-webkit-keyframes rot2 {
+	100% {
+		-webkit-transform: skew(-10deg) rotate(525deg);
+	}
+}
+@keyframes rot3 {
+	100% {
+		transform: skew(-10deg) translateX(20px) translateY(-50px)
+			rotate(645deg);
+	}
+}
+@-webkit-keyframes rot3 {
+	100% {
+		-webkit-transform: skew(-10deg) translateX(20px) translateY(-50px)
+			rotate(645deg);
+	}
+}
+
+@keyframes width {
+	10% {
+		width: 10%;
+	}
+	20% {
+		width: 20%;
+	}
+	30% {
+		width: 30%;
+	}
+	40% {
+		width: 40%;
+	}
+	50% {
+		width: 50%;
+	}
+	60% {
+		width: 60%;
+	}
+	70% {
+		width: 70%;
+	}
+	80% {
+		width: 80%;
+	}
+	90% {
+		width: 90%;
+	}
+	100% {
+		width: 100%;
+	}
+}

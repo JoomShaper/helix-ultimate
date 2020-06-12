@@ -1,0 +1,85 @@
+<?php
+/**
+ * @package Helix_Ultimate_Framework
+ * @author JoomShaper <support@joomshaper.com>
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ */
+
+defined('_JEXEC') or die();
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\HTML\HTMLHelper;
+
+/**
+ * Form field for Helix image.
+ *
+ * @since 1.0.0
+ */
+class JFormFieldHeliximage extends FormField
+{
+	/**
+	 * Field type
+	 *
+	 * @var		string	$type
+	 * @since	1.0.0
+	 */
+	protected $type = 'Heliximage';
+
+	/**
+	 * Override getInput function form FormField
+	 *
+	 * @return	string	Field HTML string
+	 * @since	1.0.0
+	 */
+	protected function getInput()
+	{
+		$doc = Factory::getDocument();
+
+		HTMLHelper::_('jquery.framework');
+
+		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
+
+		$class = ' helix-ultimate-image-field-empty';
+
+		if ($this->value)
+		{
+			$class = ' helix-ultimate-image-field-has-image';
+		}
+
+		$output  = '<div class="helix-ultimate-image-field' . $class . ' clearfix">';
+		$output .= '<div class="helix-ultimate-image-upload-wrapper">';
+
+		if ($this->value)
+		{
+			$data_src = $this->value;
+			$src = Uri::root(true) . '/' . $data_src;
+
+			$basename = basename($data_src);
+			$thumbnail = JPATH_ROOT . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
+
+			if (file_exists($thumbnail))
+			{
+				$src = Uri::root(true) . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
+			}
+
+			$output .= '<img src="' . $src . '" data-src="' . $data_src . '" alt="">';
+		}
+
+		$output .= '</div>';
+
+		$output .= '<input type="file" class="helix-ultimate-image-upload" accept="image/*" style="display:none;">';
+		$output .= '<a class="btn btn-primary btn-helix-ultimate-image-upload" href="#"><i class="fa fa-plus"></i> ' . Text::_('HELIX_ULTIMATE_UPLOAD_IMAGE') . '</a>';
+		$output .= '<a class="btn btn-danger btn-helix-ultimate-image-remove" href="#"><i class="fa fa-minus-circle"></i> ' . Text::_('HELIX_ULTIMATE_REMOVE_IMAGE') . '</a>';
+
+		$output .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8')
+				. '"  class="form-field-helix-ultimate-image">';
+		$output .= '</div>';
+
+		return $output;
+	}
+}

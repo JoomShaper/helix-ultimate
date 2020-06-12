@@ -1,0 +1,269 @@
+.sp-pre-loader {
+	background: $bg_color;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 99999;
+
+	// Clock loader
+	.sp-loader-clock {
+		border: 3px solid $link_color;
+		border-radius: 60px;
+		bottom: 0;
+		height: 80px;
+		left: 0;
+		margin: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 80px;
+		&:after {
+			content: '';
+			position: absolute;
+			background-color: $link_color;
+			top: 2px;
+			left: 48%;
+			height: 38px;
+			width: 4px;
+			border-radius: 5px;
+			-webkit-transform-origin: 50% 97%;
+			transform-origin: 50% 97%;
+			-webkit-animation: grdAiguille 2s linear infinite;
+			animation: grdAiguille 2s linear infinite;
+		}
+
+		&:before {
+			content: '';
+			position: absolute;
+			background-color: $link_color;
+			top: 6px;
+			left: 48%;
+			height: 35px;
+			width: 4px;
+			border-radius: 5px;
+			-webkit-transform-origin: 50% 94%;
+			transform-origin: 50% 94%;
+			-webkit-animation: ptAiguille 12s linear infinite;
+			animation: ptAiguille 12s linear infinite;
+		}
+	}
+	// Circle Loader
+	.sp-loader-circle {
+		position: absolute;
+		height: 80px;
+		width: 80px;
+		border-radius: 80px;
+		border: 3px solid fade($link_color, 70%);
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		-webkit-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;
+		-webkit-animation: loader1 3s linear infinite;
+		animation: loader1 3s linear infinite;
+		&:after {
+			content: '';
+			position: absolute;
+			top: -5px;
+			left: 20px;
+			width: 11px;
+			height: 11px;
+			border-radius: 10px;
+			background-color: $link_color;
+		}
+	}
+	// Bubble Loop Loader
+	.sp-loader-bubble-loop {
+		position: absolute;
+		width: 12px;
+		height: 12px;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		border-radius: 12px;
+		background-color: $link_color;
+		-webkit-transform-origin: 50% 50%;
+		transform-origin: 50% 50%;
+		-webkit-animation: loader6 1s ease-in-out infinite;
+		animation: loader6 1s ease-in-out infinite;
+		&:before {
+			content: '';
+			position: absolute;
+			background-color: rgba($link_color, 0.5);
+			top: 0px;
+			left: -25px;
+			height: 12px;
+			width: 12px;
+			border-radius: 12px;
+		}
+		&:after {
+			content: '';
+			position: absolute;
+			background-color: rgba($link_color, 0.5);
+			top: 0px;
+			left: 25px;
+			height: 12px;
+			width: 12px;
+			border-radius: 12px;
+		}
+	}
+	// Circle  Loader Two
+	.circle-two {
+		bottom: 0;
+		height: 100px;
+		left: 0;
+		margin: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 100px;
+	}
+	.circle-two > span,
+	.circle-two > span:before,
+	.circle-two > span:after {
+		content: '';
+		display: block;
+		border-radius: 50%;
+		border: 2px solid $link_color;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		-o-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+	}
+	.circle-two > span {
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		border-left-color: transparent;
+		-webkit-animation: effect-2 2s infinite linear;
+		-moz-animation: effect-2 2s infinite linear;
+		-ms-animation: effect-2 2s infinite linear;
+		-o-animation: effect-2 2s infinite linear;
+		animation: effect-2 2s infinite linear;
+	}
+	.circle-two > span:before {
+		width: 75%;
+		height: 75%;
+		border-right-color: transparent;
+	}
+	.circle-two > span:after {
+		width: 50%;
+		height: 50%;
+		border-bottom-color: transparent;
+	}
+
+	// Audio Wave 2 Loader
+	.wave-two-wrap {
+		position: absolute;
+		margin: auto;
+		left: 0;
+		right: 0;
+		top: 50%;
+		width: 90px;
+	}
+	.wave-two {
+		margin: 0;
+		list-style: none;
+		width: 90px;
+		position: relative;
+		padding: 0;
+		height: 10px;
+	}
+	.wave-two li {
+		position: absolute;
+		width: 2px;
+		height: 0;
+		background-color: $link_color;
+		bottom: 0;
+	}
+
+	.wave-two li:nth-child(1) {
+		left: 0;
+		-webkit-animation: sequence1 1s ease infinite 0;
+		animation: sequence1 1s ease infinite 0;
+	}
+	.wave-two li:nth-child(2) {
+		left: 15px;
+		-webkit-animation: sequence2 1s ease infinite 0.1s;
+		animation: sequence2 1s ease infinite 0.1s;
+	}
+	.wave-two li:nth-child(3) {
+		left: 30px;
+		-webkit-animation: sequence1 1s ease-in-out infinite 0.2s;
+		animation: sequence1 1s ease-in-out infinite 0.2s;
+	}
+	.wave-two li:nth-child(4) {
+		left: 45px;
+		-webkit-animation: sequence2 1s ease-in infinite 0.3s;
+		animation: sequence2 1s ease-in infinite 0.3s;
+	}
+	.wave-two li:nth-child(5) {
+		left: 60px;
+		-webkit-animation: sequence1 1s ease-in-out infinite 0.4s;
+		animation: sequence1 1s ease-in-out infinite 0.4s;
+	}
+	.wave-two li:nth-child(6) {
+		left: 75px;
+		-webkit-animation: sequence2 1s ease infinite 0.5s;
+		animation: sequence2 1s ease infinite 0.5s;
+	}
+
+	// Audio Wave Loader
+	.sp-loader-audio-wave {
+		width: 3em;
+		height: 2em;
+		background: linear-gradient($link_color, $link_color) 0 50%,
+			linear-gradient($link_color, $link_color) 0.625em 50%,
+			linear-gradient($link_color, $link_color) 1.25em 50%,
+			linear-gradient($link_color, $link_color) 1.875em 50%,
+			linear-gradient($link_color, $link_color) 2.5em 50%;
+		background-repeat: no-repeat;
+		background-size: 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em, 0.5em 0.25em,
+			0.5em 0.25em;
+		animation: audioWave 1.5s linear infinite;
+		position: absolute;
+		left: 0;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+	}
+
+	// Loader With Logo
+	.sp-loader-with-logo {
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		text-align: center;
+		position: absolute;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.logo {
+			display: inline-block;
+			width: auto;
+		}
+		.line {
+			background: $link_color;
+			height: 5px;
+			left: 0;
+			position: absolute;
+			top: 0;
+		}
+	}
+}

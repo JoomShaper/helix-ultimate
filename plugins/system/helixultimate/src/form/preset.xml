@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form name="preset">
+	<fieldset name="colors">
+		<field name="text_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Text Color" 
+			track="false" />
+
+		<field name="bg_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Background Color" 
+			track="false" />
+
+		<field name="link_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Link Color" 
+			track="false" />
+
+		<field name="link_hover_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Link Hover Color" 
+			track="false" />
+
+		<field name="header_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_header" 
+			type="color" 
+			label="Header Background Color" 
+			track="false" />
+
+		<field name="topbar_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_topbar" 
+			type="color" 
+			label="Topbar Background Color" 
+			track="false" />
+
+		<field name="topbar_text_color" 
+			class="preset-control" 
+			helixgroup="preset_topbar" 
+			type="color" 
+			label="Topbar Text Color" 
+			track="false" />
+
+		<field name="logo_text_color" 
+			class="preset-control" 
+			helixgroup="preset_header" 
+			type="color" 
+			label="Logo Text Color" 
+			track="false" />
+
+		<field name="menu_text_color" 
+			class="preset-control" 
+			helixgroup="preset_menu" 
+			type="color" 
+			label="Menu Text Color" 
+			track="false" />
+
+		<field name="menu_text_hover_color" 
+			class="preset-control" 
+			helixgroup="preset_menu" 
+			type="color" 
+			label="Menu Text Hover Color" 
+			track="false" />
+
+		<field name="menu_text_active_color" 
+			class="preset-control" 
+			helixgroup="preset_menu" 
+			type="color" 
+			label="Menu Text Active Color" 
+			track="false" />
+
+		<field name="menu_dropdown_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_menu" 
+			type="color" 
+			label="Menu Dropdown Background Color" 
+			track="false" />
+
+		<field name="menu_dropdown_text_color" 
+			class="preset-control" 
+			helixgroup="preset_menu" 
+			type="color" 
+			label="Menu Dropdown Text Color" 
+			track="false" />
+
+		<field name="menu_dropdown_text_hover_color" 
+			class="preset-control" 
+			helixgroup="preset_menu" 
+			type="color" 
+			label="Menu Dropdown Text Hover Color" 
+			track="false" />
+
+		<field name="menu_dropdown_text_active_color" 
+			class="preset-control" 
+			helixgroup="preset_menu" 
+			type="color" 
+			label="Menu Dropdown Text Active Color" 
+			track="false" />
+
+		<field name="footer_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_footer" 
+			type="color" 
+			label="Footer Background Color" 
+			track="false" />
+
+		<field name="footer_text_color" 
+			class="preset-control" 
+			helixgroup="preset_footer" 
+			type="color" 
+			label="Footer Text Color" 
+			track="false" />
+
+		<field name="footer_link_color" 
+			class="preset-control" 
+			helixgroup="preset_footer" 
+			type="color" 
+			label="Footer Link Color" 
+			track="false" />
+
+		<field name="footer_link_hover_color" 
+			class="preset-control" 
+			helixgroup="preset_footer" 
+			type="color" 
+			label="Footer Link Hover Color" 
+			track="false" />
+	</fieldset>
+</form>

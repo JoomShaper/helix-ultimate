@@ -1,0 +1,79 @@
+# Files
+robots.txt.dist
+configuration.php
+index.php
+htaccess.txt
+LICENSE.txt
+README.txt
+robots.txt
+web.config.txt
+.htaccess
+.history/
+.idea/
+.vscode/
+.DS_Store
+
+# others
+administrator/
+bin/
+cache/
+cli/
+components/
+images/
+includes/
+layouts/
+libraries/
+logs/
+media/
+modules/
+tmp/
+
+# Language
+language/*
+!language/en-GB/
+language/en-GB/*
+!language/en-GB/en-GB.tpl_shaper_helixultimate.ini
+
+
+# Plugins
+plugins/*
+!plugins/system/
+plugins/system/*
+!plugins/system/helixultimate/
+
+
+# Templates
+templates/*
+!templates/shaper_helixultimate/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# node modules
+*node_modules/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+
+# next.js build output
+.next

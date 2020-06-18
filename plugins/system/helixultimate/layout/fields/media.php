@@ -35,8 +35,8 @@ class HelixultimateFieldMedia
 		$output .= '<div class="helix-ultimate-image-holder"></div>';
 
 		$output .= '<input type="hidden" class="helix-ultimate-input helix-ultimate-input-media" data-attrname="' . $key . '" data-baseurl="' . Uri::root() . '" value="">';
-		$output .= '<a href="#" class="helix-ultimate-media-picker btn btn-primary btn-sm" data-target="' . $key . '"><span class="fa fa-picture-o"></span> Select Media</a>';
-		$output .= '<a href="#" class="helix-ultimate-media-clear btn btn-secondary btn-sm"><span class="fa fa-times"></span> Clear</a>';
+		$output .= '<a href="#" class="helix-ultimate-media-picker btn btn-primary btn-sm" data-target="' . $key . '"><span class="fas fa-image"></span> Select Media</a>';
+		$output .= '<a href="#" class="helix-ultimate-media-clear btn btn-secondary btn-sm"><span class="fas fa-times"></span> Clear</a>';
 
 		if ((isset($attr['desc'])) && (isset($attr['desc']) !== ''))
 		{

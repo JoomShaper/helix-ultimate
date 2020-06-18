@@ -657,11 +657,11 @@ class HelixultimateMenu
 		{
 			if ($showmenutitle)
 			{
-				$linktitle = '<span class="fa ' . $icon . '"></span> ' . $linktitle;
+				$linktitle = '<span class="fas ' . $icon . '"></span> ' . $linktitle;
 			}
 			else
 			{
-				$linktitle = '<span class="fa ' . $icon . '"></span>';
+				$linktitle = '<span class="fas ' . $icon . '"></span>';
 			}
 		}
 
@@ -710,7 +710,7 @@ class HelixultimateMenu
 
 		if (isset($item->hasChild) && $item->hasChild)
 		{
-			// $linktitle = $linktitle . ' <span class="fa fa-angle-down"></span>';
+			// $linktitle = $linktitle . ' <span class="fas fa-angle-down"></span>';
 		}
 
 		if ($item->params->get('menu_show', 1) !== 0)

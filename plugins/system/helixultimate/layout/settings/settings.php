@@ -349,7 +349,7 @@ class RowColumnSettings
 
 			$output .= '<div class="helix-ultimate-option-group helix-ultimate-option-group-' . strtolower($key2) . $active . '">';
 			$output .= '<div class="helix-ultimate-option-group-title">';
-			$output .= '<span class="fa fa-chevron-up"></span>' . Text::_('HELIX_ULTIMATE_OPTION_GROUP_' . strtoupper($key2));
+			$output .= '<span class="fas fa-angle-up"></span>' . Text::_('HELIX_ULTIMATE_OPTION_GROUP_' . strtoupper($key2));
 			$output .= '</div>';
 			$output .= '<div class="helix-ultimate-option-group-list">';
 
@@ -413,7 +413,7 @@ class RowColumnSettings
 
 			$output .= '<div class="helix-ultimate-option-group helix-ultimate-option-group-' . strtolower($key2) . $active . '">';
 			$output .= '<div class="helix-ultimate-option-group-title">';
-			$output .= '<span class="fa fa-chevron-up"></span>' . Text::_('HELIX_ULTIMATE_OPTION_GROUP_' . strtoupper($key2));
+			$output .= '<span class="fas fa-angle-up"></span>' . Text::_('HELIX_ULTIMATE_OPTION_GROUP_' . strtoupper($key2));
 			$output .= '</div>';
 			$output .= '<div class="helix-ultimate-option-group-list">';
 

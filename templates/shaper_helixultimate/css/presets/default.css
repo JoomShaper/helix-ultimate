@@ -6,7 +6,7 @@
  */
 body, .sp-preloader {
   background-color: #fff;
-  color: #252525;
+  color: #eb1717;
 }
 .sp-preloader > div {
   background: #0345bf;
@@ -41,14 +41,14 @@ a:hover, a:focus, a:active {
   background: #044cd0;
 }
 .article-social-share .social-share-icon ul li a {
-  color: #252525;
+  color: #eb1717;
 }
 .article-social-share .social-share-icon ul li a:hover, .article-social-share .social-share-icon ul li a:focus {
   background: #0345bf;
 }
 .pager > li a {
   border: 1px solid #ededed;
-  color: #252525;
+  color: #eb1717;
 }
 .sp-reading-progress-bar {
   background-color: #0345bf;
@@ -81,6 +81,18 @@ a:hover, a:focus, a:active {
   color: #252525;
 }
 #offcanvas-toggler > .fa:hover, #offcanvas-toggler > .fa:focus, #offcanvas-toggler > .fa:active {
+  color: #0345bf;
+}
+#offcanvas-toggler > .fas {
+  color: #252525;
+}
+#offcanvas-toggler > .fas:hover, #offcanvas-toggler > .fas:focus, #offcanvas-toggler > .fas:active {
+  color: #0345bf;
+}
+#offcanvas-toggler > .far {
+  color: #252525;
+}
+#offcanvas-toggler > .far:hover, #offcanvas-toggler > .far:focus, #offcanvas-toggler > .far:active {
   color: #0345bf;
 }
 .offcanvas-menu {
@@ -117,13 +129,13 @@ ul.social-icons > li a:hover {
   background: #fff;
 }
 .sp-module ul > li > a {
-  color: #252525;
+  color: #eb1717;
 }
 .sp-module ul > li > a:hover {
   color: #0345bf;
 }
 .sp-module .latestnews > div > a {
-  color: #252525;
+  color: #eb1717;
 }
 .sp-module .latestnews > div > a:hover {
   color: #0345bf;
@@ -151,10 +163,10 @@ ul.social-icons > li a:hover {
   background-color: #0345bf;
 }
 .pagination > li > a, .pagination > li > span {
-  color: #252525;
+  color: #eb1717;
 }
 .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
-  color: #252525;
+  color: #eb1717;
 }
 .pagination > .active > a, .pagination > .active > span {
   border-color: #0345bf;

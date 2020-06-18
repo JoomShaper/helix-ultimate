@@ -141,6 +141,24 @@ a {
 			color: $menu_text_hover_color;
 		}
 	}
+
+	> .fas {
+		color: $menu_text_color;
+		&:hover,
+		&:focus,
+		&:active {
+			color: $menu_text_hover_color;
+		}
+	}
+
+	> .far {
+		color: $menu_text_color;
+		&:hover,
+		&:focus,
+		&:active {
+			color: $menu_text_hover_color;
+		}
+	}
 }
 
 .offcanvas-menu {

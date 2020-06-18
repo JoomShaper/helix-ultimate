@@ -44,8 +44,8 @@ class JFormFieldHelixmedia extends FormField
 		$output .= '</div>';
 
 		$output .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $this->value . '">';
-		$output .= '<a href="#" class="helix-ultimate-media-picker btn btn-primary btn-sm" data-id="' . $this->id . '"><span class="fa fa-picture-o"></span> Select Media</a>';
-		$output .= '<a href="#" class="helix-ultimate-media-clear btn btn-secondary btn-sm"><span class="fa fa-times"></span> Clear</a>';
+		$output .= '<a href="#" class="helix-ultimate-media-picker btn btn-primary btn-sm" data-id="' . $this->id . '"><span class="fas fa-image"></span> Select Media</a>';
+		$output .= '<a href="#" class="helix-ultimate-media-clear btn btn-secondary btn-sm"><span class="fas fa-times"></span> Clear</a>';
 
 		return $output;
 	}

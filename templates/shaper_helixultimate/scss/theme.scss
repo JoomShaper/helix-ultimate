@@ -642,16 +642,17 @@ ul.social-icons {
 		display: inline-block;
 		margin-left: 5px;
 		span.rating-star {
-			font-family: 'FontAwesome';
+			font-family: 'Font Awesome 5 Free';
 			font-weight: normal;
 			font-style: normal;
 			display: inline-block;
 			&.active:before {
 				content: '\f005';
+				font-weight: 900;
 				color: #f6bc00;
 			}
 			&:before {
-				content: '\f006';
+				content: '\f005';
 				padding-right: 5px;
 			}
 		}
@@ -660,6 +661,7 @@ ul.social-icons {
 		span.rating-star:hover ~ span.rating-star:before {
 			content: '\f005';
 			color: #e7b000;
+			font-weight: 900;
 			cursor: pointer;
 		}
 	}
@@ -1047,15 +1049,16 @@ table.category {
 	text-align: center;
 	font-size: 16px;
 	color: #fff;
-	background: #333;
-	border-radius: 3px;
+	background: rgba(100, 100, 100, 0.4);
+	border-radius: 100%;
 	z-index: 1000;
+	transition: all 0.3s ease;
 
 	&:hover,
 	&:active,
 	&:focus {
 		color: #fff;
-		background: #444;
+		background: #000;
 	}
 }
 

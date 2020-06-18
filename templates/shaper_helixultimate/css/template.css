@@ -507,22 +507,24 @@ ul.social-icons > li {
   margin-left: 5px;
 }
 .article-ratings .rating-symbol span.rating-star {
-  font-family: 'FontAwesome';
+  font-family: 'Font Awesome 5 Free';
   font-weight: normal;
   font-style: normal;
   display: inline-block;
 }
 .article-ratings .rating-symbol span.rating-star.active:before {
   content: '\f005';
+  font-weight: 900;
   color: #f6bc00;
 }
 .article-ratings .rating-symbol span.rating-star:before {
-  content: '\f006';
+  content: '\f005';
   padding-right: 5px;
 }
 .article-ratings .rating-symbol span.rating-star:hover:before, .article-ratings .rating-symbol span.rating-star:hover ~ span.rating-star:before {
   content: '\f005';
   color: #e7b000;
+  font-weight: 900;
   cursor: pointer;
 }
 .article-ratings .ratings-count {
@@ -827,13 +829,14 @@ table.category thead > tr th, table.category tbody > tr th, table.category thead
   text-align: center;
   font-size: 16px;
   color: #fff;
-  background: #333;
-  border-radius: 3px;
+  background: rgba(100, 100, 100, 0.4);
+  border-radius: 100%;
   z-index: 1000;
+  transition: all 0.3s ease;
 }
 .sp-scroll-up:hover, .sp-scroll-up:active, .sp-scroll-up:focus {
   color: #fff;
-  background: #444;
+  background: #000;
 }
 .control-group {
   margin-bottom: 1rem;

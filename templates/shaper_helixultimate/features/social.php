@@ -110,7 +110,7 @@ class HelixUltimateFeatureSocial
 				 */
 				if (!empty($link))
 				{
-					$iconClass = 'fa ' . $iconName;
+					$iconClass = 'fab ' . $iconName;
 					$html .= '<li class="social-icon-' . $name . '"><a target="_blank" rel="noopener noreferrer" href="' . $link . '" aria-label="' . ucfirst($name) . '"><span class="' . $iconClass . '" aria-hidden="true"></span></a></li>';
 				}
 			}

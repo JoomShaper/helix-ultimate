@@ -57,10 +57,10 @@ JFactory::getDocument()->addScriptDeclaration("
 					<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_TAGS_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>">
 					<span class="input-group-btn">
 						<button type="button" name="filter-search-button" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>" onclick="document.adminForm.submit();" class="btn btn-secondary">
-							<span class="fa fa-search" aria-hidden="true"></span>
+							<span class="fas fa-search" aria-hidden="true"></span>
 						</button>
 						<button type="reset" name="filter-clear-button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" class="btn btn-secondary" onclick="resetFilter(); document.adminForm.submit();">
-							<span class="fa fa-times" aria-hidden="true"></span>
+							<span class="fas fa-times" aria-hidden="true"></span>
 						</button>
 					</span>
 				</div>

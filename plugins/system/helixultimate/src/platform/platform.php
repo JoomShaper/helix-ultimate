@@ -99,7 +99,7 @@ class Platform
 	protected $permission = false;
 
 	/**
-	 * Constructor functioln for platform.
+	 * Constructor function for platform.
 	 *
 	 * @return 	void
 	 * @since	1.0.0
@@ -222,7 +222,7 @@ class Platform
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/helix-ultimate.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/jquery-ui.min.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/modal.css');
-		$doc->addStyleSheet($helix_plg_url . '/assets/css/font-awesome.min.css');
+		$doc->addStyleSheet(Uri::root(true) . '/templates/shaper_helixultimate/css/font-awesome.min.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/devices-field.css');
 
 		$doc->addScript($helix_plg_url . '/assets/js/admin/helix-ultimate.js');

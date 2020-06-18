@@ -3,7 +3,7 @@
 	<fieldset name="basic" 
 		label="HELIX_ULTIMATE_BASIC" 
 		addfieldpath="/plugins/system/helixultimate/src/fields" 
-		icon="fa fa-cog">
+		icon="fas fa-cog">
 
 		<field name="logo_type" 
 			helixgroup="logo" 
@@ -429,7 +429,7 @@
 	<fieldset name="presets" 
 		label="HELIX_ULTIMATE_PRESETS" 
 		addfieldpath="/plugins/system/helixultimate/src/fields" 
-		icon="fa fa-paint-brush">
+		icon="fas fa-paint-brush">
 		<field name="preset" 
 			type="helixpresets" 
 			default="preset1">
@@ -902,7 +902,7 @@
 	<fieldset name="layout" 
 		label="HELIX_ULTIMATE_LAYOUT_BUILDER" 
 		addfieldpath="/plugins/system/helixultimate/src/fields" 
-		icon="fa fa-list-alt">
+		icon="far fa-list-alt">
 		<field name="predefined_header" 
 			type="checkbox" 
 			helixgroup="headers" 
@@ -919,7 +919,7 @@
 
 	<fieldset name="menu" 
 		label="HELIX_ULTIMATE_NAVIGATION" 
-		icon="fa fa-list">
+		icon="fas fa-list-ul">
 		<field name="menu" 
 			type="menu" 
 			helixgroup="megamenu" 
@@ -972,7 +972,7 @@
 	<!--Typography-->
 	<fieldset name="typography" 
 		label="HELIX_ULTIMATE_TYPOGRAPHY" 
-		icon="fa fa-font" 
+		icon="fas fa-font" 
 		addfieldpath="/plugins/system/helixultimate/src/fields">
 		<field name="enable_body_font" 
 			type="checkbox" 
@@ -1105,7 +1105,7 @@
 	<!--Blog-->
 	<fieldset name="blog" 
 		label="HELIX_ULTIMATE_BLOG" 
-		icon="fa fa-comments">
+		icon="fas fa-comments">
 		<field name="image_small" 
 			type="checkbox" 
 			helixgroup="blog_images" 
@@ -1386,7 +1386,7 @@
 	<!--Custom Code-->
 	<fieldset name="custom_code" 
 		label="HELIX_ULTIMATE_CUSTOM_CODE" 
-		icon="fa fa-code">
+		icon="fas fa-code">
 		<field name="before_head" 
 			type="textarea" 
 			helixgroup="custom_code" 
@@ -1420,7 +1420,7 @@
 	<!--Advanced-->
 	<fieldset name="advance" 
 		label="HELIX_ULTIMATE_FIELDSET_ADVANCED" 
-		icon="fa fa-cog">
+		icon="fas fa-cog">
 		<field name="compress_css" 
 			helixgroup="compression" 
 			type="checkbox" 

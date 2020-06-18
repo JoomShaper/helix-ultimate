@@ -25,7 +25,7 @@ JHtml::_('bootstrap.tooltip');
 		<?php if (!$params->get('usetext')) : ?>
 			<div class="input-group">
 				<div class="input-group-prepend">
-					<span class="input-group-text" aria-label="<?php echo JText::_('MOD_LOGIN_VALUE_USERNAME'); ?>"><span class="fa fa-user"></span></span>
+					<span class="input-group-text" aria-label="<?php echo JText::_('MOD_LOGIN_VALUE_USERNAME'); ?>"><span class="fas fa-user"></span></span>
 				</div>
 				<input id="modlgn-username" type="text" name="username" class="form-control" tabindex="0" size="18" placeholder="<?php echo JText::_('MOD_LOGIN_VALUE_USERNAME'); ?>" />
 			</div>
@@ -39,7 +39,7 @@ JHtml::_('bootstrap.tooltip');
 		<?php if (!$params->get('usetext')) : ?>
 			<div class="input-group">
 				<div class="input-group-prepend">
-					<span class="input-group-text" aria-label="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"><span class="fa fa-lock"></span></span>
+					<span class="input-group-text" aria-label="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>"><span class="fas fa-lock"></span></span>
 				</div>
 				<input id="modlgn-passwd" type="password" name="password" class="form-control" tabindex="0" size="18" placeholder="<?php echo JText::_('JGLOBAL_PASSWORD'); ?>" />
 			</div>
@@ -54,19 +54,19 @@ JHtml::_('bootstrap.tooltip');
 			<?php if (!$params->get('usetext')) : ?>
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<span class="input-group-text" aria-label="<?php echo JText::_('JGLOBAL_SECRETKEY'); ?>"><span class="fa fa-star"></span></span>
+						<span class="input-group-text" aria-label="<?php echo JText::_('JGLOBAL_SECRETKEY'); ?>"><span class="fas fa-star"></span></span>
 					</div>
 					<input id="modlgn-secretkey" autocomplete="off" type="text" name="secretkey" class="form-control" tabindex="0" size="18" placeholder="<?php echo JText::_('JGLOBAL_SECRETKEY'); ?>" />
 					<div class="input-group-append">
 						<button class="btn btn-secondary hasTooltip" type="button" title="<?php echo JText::_('JGLOBAL_SECRETKEY_HELP'); ?>">
-							<span class="fa fa-support"></span>
+							<span class="fas fa-headset"></span>
 						</button>
 					</div>
 				</div>
 			<?php else : ?>
 				<label for="modlgn-secretkey"><?php echo JText::_('JGLOBAL_SECRETKEY'); ?></label>
 				<input id="modlgn-secretkey" autocomplete="off" type="text" name="secretkey" class="form-control" tabindex="0" size="18" placeholder="<?php echo JText::_('JGLOBAL_SECRETKEY'); ?>" />
-				<small class="form-text text-muted"><span class="fa fa-asterisk"></span> <?php echo JText::_('JGLOBAL_SECRETKEY_HELP'); ?></small>
+				<small class="form-text text-muted"><span class="fas fa-asterisk"></span> <?php echo JText::_('JGLOBAL_SECRETKEY_HELP'); ?></small>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>

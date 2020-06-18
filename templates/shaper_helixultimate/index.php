@@ -202,7 +202,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<!-- Off Canvas Menu -->
 		<div class="offcanvas-overlay"></div>
 		<div class="offcanvas-menu">
-			<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fa fa-remove"></span></a>
+			<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times"></span></a>
 			<div class="offcanvas-inner">
 				<?php if ($this->countModules('offcanvas')) : ?>
 					<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
@@ -220,7 +220,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		<!-- Go to top -->
 		<?php if ($this->params->get('goto_top', 0)) : ?>
-			<a href="#" class="sp-scroll-up" aria-label="Scroll Up"><span class="fa fa-chevron-up" aria-hidden="true"></span></a>
+			<a href="#" class="sp-scroll-up" aria-label="Scroll Up"><span class="fas fa-angle-up" aria-hidden="true"></span></a>
 		<?php endif; ?>
 		<?php if( $app->input->get('view') == 'article' && $this->params->get('reading_time_progress', 0) ): ?>
 			<div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>

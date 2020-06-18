@@ -3347,7 +3347,7 @@ select:focus::-ms-value {
 	color: #007bff;
 }
 
-.helix-ultimate-option-group-title .fa-chevron-up {
+.helix-ultimate-option-group-title .fa-angle-up {
 	position: absolute;
 	right: 20px;
 	top: 50%;
@@ -3626,9 +3626,13 @@ select:focus::-ms-value {
 	position: relative;
 }
 
+.chzn-container.chzn-container-single .chzn-single abbr {
+	top: 9px;
+}
+
 .chzn-container.chzn-container-single .chzn-single div > b:after {
 	content: '\f0dc';
-	font-family: FontAwesome;
+	font-family: 'Font Awesome 5 Free';
 	font-size: 0.875rem;
 	position: absolute;
 	top: 50%;

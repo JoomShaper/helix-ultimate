@@ -104,7 +104,7 @@ jQuery(function ($) {
 		event.preventDefault();
 		$(this).helixUltimateOptionsModal({
 			flag: 'row-setting',
-			title: "<span class='fa fa-cogs'></span> Row Options",
+			title: "<span class='fas fa-cogs'></span> Row Options",
 			class: 'helix-ultimate-modal-small',
 		});
 
@@ -159,7 +159,7 @@ jQuery(function ($) {
 		event.preventDefault();
 		$(this).helixUltimateOptionsModal({
 			flag: 'column-setting',
-			title: "<span class='fa fa-cog'></span> Column Options",
+			title: "<span class='fas fa-cog'></span> Column Options",
 			class: 'helix-ultimate-modal-small',
 		});
 
@@ -432,7 +432,7 @@ jQuery(function ($) {
 				new_item +=
 					'<span class="helix-ultimate-column-title">none</span>';
 				new_item +=
-					'<a class="helix-ultimate-column-options" href="#"><i class="fa fa-gear"></i></a>';
+					'<a class="helix-ultimate-column-options" href="#"><i class="fas fa-cog"></i></a>';
 				new_item += '</div>';
 			}
 			new_item += '</div>';

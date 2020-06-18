@@ -807,7 +807,9 @@ jQuery(function ($) {
 			data: {},
 			beforeSend: function () {
 				self &&
-					self.append('<span class="fa fa-spinner fa-spin"></span>');
+					self.append(
+						'<span class="fas fa-circle-notch fa-spin"></span>'
+					);
 			},
 			success: function (response) {
 				var data = $.parseJSON(response);

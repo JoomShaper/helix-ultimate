@@ -18,7 +18,7 @@ $upper_limit = $lang->getUpperLimitSearchWord();
 			<input type="text" name="searchword" placeholder="<?php echo JText::_('COM_SEARCH_SEARCH_KEYWORD'); ?>" id="search-searchword" maxlength="<?php echo $upper_limit; ?>" value="<?php echo $this->escape($this->origkeyword); ?>" class="form-control">
 			<div class="input-group-append">
 				<button name="Search" onclick="this.form.submit()" class="btn btn-secondary">
-					<span class="fa fa-search" aria-hidden="true"></span>
+					<span class="fas fa-search" aria-hidden="true"></span>
 					<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>
 				</button>
 			</div>

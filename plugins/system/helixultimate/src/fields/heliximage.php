@@ -73,8 +73,8 @@ class JFormFieldHeliximage extends FormField
 		$output .= '</div>';
 
 		$output .= '<input type="file" class="helix-ultimate-image-upload" accept="image/*" style="display:none;">';
-		$output .= '<a class="btn btn-primary btn-helix-ultimate-image-upload" href="#"><i class="fa fa-plus"></i> ' . Text::_('HELIX_ULTIMATE_UPLOAD_IMAGE') . '</a>';
-		$output .= '<a class="btn btn-danger btn-helix-ultimate-image-remove" href="#"><i class="fa fa-minus-circle"></i> ' . Text::_('HELIX_ULTIMATE_REMOVE_IMAGE') . '</a>';
+		$output .= '<a class="btn btn-primary btn-helix-ultimate-image-upload" href="#"><i class="fas fa-plus"></i> ' . Text::_('HELIX_ULTIMATE_UPLOAD_IMAGE') . '</a>';
+		$output .= '<a class="btn btn-danger btn-helix-ultimate-image-remove" href="#"><i class="fas fa-minus-circle"></i> ' . Text::_('HELIX_ULTIMATE_REMOVE_IMAGE') . '</a>';
 
 		$output .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8')
 				. '"  class="form-field-helix-ultimate-image">';

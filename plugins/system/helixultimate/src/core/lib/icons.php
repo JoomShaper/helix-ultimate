@@ -563,7 +563,7 @@ class FontawesomeIcons
 		'fa-skyatlas',
 		'fa-skype',
 		'fa-slack',
-		'fa-sliders',
+		'fa-sliders-h',
 		'fa-slideshare',
 		'fa-smile-o',
 		'fa-soccer-ball-o',

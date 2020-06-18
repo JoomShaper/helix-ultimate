@@ -17,7 +17,7 @@ defined ('_JEXEC') or die();
 		</li>
 	<?php else : ?>
 		<li class="float-left">
-			<span class="divider fa fa-location" aria-hidden="true"></span>
+			<span class="divider fas fa-map-marker-alt" aria-hidden="true"></span>
 		</li>
 	<?php endif; ?>
 

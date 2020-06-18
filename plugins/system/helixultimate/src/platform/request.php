@@ -675,13 +675,13 @@ class Request
 				$html .= '<div class="layoutbuilder-section" ' . $rowSettings . '>';
 				$html .= '<div class="settings-section clearfix">';
 				$html .= '<div class="settings-left pull-left">';
-				$html .= '<a class="row-move" href="#"><i class="fa fa-arrows"></i></a>';
+				$html .= '<a class="row-move" href="#"><i class="fas fa-arrows-alt"></i></a>';
 				$html .= '<strong class="section-title">' . $name . '</strong>';
 				$html .= '</div>';
 				$html .= '<div class="settings-right pull-right">';
 				$html .= '<ul class="button-group">';
 				$html .= '<li>';
-				$html .= '<a class="btn btn-small add-columns" href="#"><i class="fa fa-columns"></i></a>';
+				$html .= '<a class="btn btn-small add-columns" href="#"><i class="fas fa-columns"></i></a>';
 				$html .= '<ul class="column-list">';
 
 				$_active = '';
@@ -712,9 +712,9 @@ class Request
 				$html .= '</li>';
 				$html .= '</ul>';
 				$html .= '</li>';
-				$html .= '<li><a class="btn btn-small add-row" href="#"><i class="fa fa-bars"></i></a></li>';
-				$html .= '<li><a class="btn btn-small row-ops-set" href="#"><i class="fa fa-gears"></i></a></li>';
-				$html .= '<li><a class="btn btn-danger btn-small remove-row" href="#"><i class="fa fa-times"></i></a></li>';
+				$html .= '<li><a class="btn btn-small add-row" href="#"><i class="fas fa-bars"></i></a></li>';
+				$html .= '<li><a class="btn btn-small row-ops-set" href="#"><i class="fas fa-cogs"></i></a></li>';
+				$html .= '<li><a class="btn btn-danger btn-small remove-row" href="#"><i class="fas fa-times"></i></a></li>';
 				$html .= '</ul>';
 				$html .= '</div>';
 				$html .= '</div>';
@@ -741,7 +741,7 @@ class Request
 						$html .= '<h6 class="col-title pull-left">' . $column->settings->name . '</h6>';
 					}
 
-					$html .= '<a class="col-ops-set pull-right" href="#" ><i class="fa fa-gears"></i></a>';
+					$html .= '<a class="col-ops-set pull-right" href="#" ><i class="fas fa-cogs"></i></a>';
 					$html .= '</div>';
 					$html .= '</div>';
 				}

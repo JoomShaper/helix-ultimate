@@ -39,11 +39,11 @@ JFactory::getDocument()->addScriptDeclaration("
 
 					<div class="input-group-append">
 						<button type="button" name="filter-search-button" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>" onclick="document.adminForm.submit();" class="btn btn-secondary">
-							<span class="fa fa-search" aria-hidden="true"></span>
+							<span class="fas fa-search" aria-hidden="true"></span>
 						</button>
 
 						<button type="reset" name="filter-clear-button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" class="btn btn-secondary" onclick="resetFilter(); document.adminForm.submit();">
-							<span class="fa fa-times" aria-hidden="true"></span>
+							<span class="fas fa-times" aria-hidden="true"></span>
 						</button>
 					</div>
 				</div>

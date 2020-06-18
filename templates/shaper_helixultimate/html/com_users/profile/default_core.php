@@ -17,7 +17,7 @@ defined ('_JEXEC') or die();
 		<div>
 			<?php if (JFactory::getUser()->id == $this->data->id): ?>
 				<a href="<?php echo JRoute::_('index.php?option=com_users&task=profile.edit&user_id=' . (int) $this->data->id); ?>">
-					<span class="fa fa-user"></span> <?php echo JText::_('COM_USERS_EDIT_PROFILE'); ?>
+					<span class="fas fa-user-edit"></span> <?php echo JText::_('COM_USERS_EDIT_PROFILE'); ?>
 				</a>
 			<?php endif;?>
 		</div>

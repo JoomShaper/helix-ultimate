@@ -83,6 +83,18 @@ a:hover, a:focus, a:active {
 #offcanvas-toggler > .fa:hover, #offcanvas-toggler > .fa:focus, #offcanvas-toggler > .fa:active {
   color: #ec430f;
 }
+#offcanvas-toggler > .fas {
+  color: #252525;
+}
+#offcanvas-toggler > .fas:hover, #offcanvas-toggler > .fas:focus, #offcanvas-toggler > .fas:active {
+  color: #ec430f;
+}
+#offcanvas-toggler > .far {
+  color: #252525;
+}
+#offcanvas-toggler > .far:hover, #offcanvas-toggler > .far:focus, #offcanvas-toggler > .far:active {
+  color: #ec430f;
+}
 .offcanvas-menu {
   background-color: #fff;
   color: #252525;

@@ -160,7 +160,7 @@ class JFormFieldHelixpresets extends FormField
 			$html .= '<div class="helix-ultimate-preset' . $class . '" style="background-color: ' . $child->default . '" ' . $html_data_attr . '  class="helix-ultimate-preset">';
 
 			// Edit preset
-			$html .= '<a type="button" role="button" class="helix-ultimate-edit-preset" data-preset="' . $name . '" style="color: ' . $child->default . '" data-preset_data=\'' . json_encode($presetData) . '\'><span class="fa fa-pencil"></span></a>';
+			$html .= '<a type="button" role="button" class="helix-ultimate-edit-preset" data-preset="' . $name . '" style="color: ' . $child->default . '" data-preset_data=\'' . json_encode($presetData) . '\'><span class="fas fa-pen"></span></a>';
 
 			$html .= Settings::preparePresetEditForm($presetData, $name);
 
@@ -233,7 +233,7 @@ class JFormFieldHelixpresets extends FormField
 				$html .= '<div class="helix-ultimate-preset' . $class . '" style="background-color: ' . $child['default'] . '" ' . $html_data_attr . '  class="helix-ultimate-preset">';
 
 				// Edit preset
-				$html .= '<a type="button" role="button" class="helix-ultimate-edit-preset" data-preset="' . $child['name'] . '" style="color: ' . $child['default'] . '" data-preset_data=\'' . json_encode($presetData) . '\'><span class="fa fa-pencil"></span></a>';
+				$html .= '<a type="button" role="button" class="helix-ultimate-edit-preset" data-preset="' . $child['name'] . '" style="color: ' . $child['default'] . '" data-preset_data=\'' . json_encode($presetData) . '\'><span class="fas fa-pen"></span></a>';
 
 				$html .= Settings::preparePresetEditForm($presetData, $child['name']);
 

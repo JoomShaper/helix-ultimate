@@ -288,8 +288,7 @@ class Helper
 			'breakpoints' => array(
 				'tablet' => 991,
 				'mobile' => 480
-			),
-			'topbarHeight' => 50
+			)
 		);
 
 		$doc->addScriptOptions('data', $data);

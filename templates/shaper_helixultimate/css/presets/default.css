@@ -5,14 +5,14 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 body, .sp-preloader {
-  background-color: #ba1a1a;
+  background-color: #fff;
   color: #252525;
 }
 .sp-preloader > div {
   background: #0345bf;
 }
 .sp-preloader > div:after {
-  background: #ba1a1a;
+  background: #fff;
 }
 #sp-top-bar {
   background: #333;
@@ -114,7 +114,7 @@ ul.social-icons > li a:hover {
   background: #0345bf;
 }
 .layout-boxed .body-innerwrapper {
-  background: #ba1a1a;
+  background: #fff;
 }
 .sp-module ul > li > a {
   color: #252525;

@@ -5,6 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+/*Import*/
+@import "./helper.css";
+
 :root {
 	--blue: #007bff;
 	--indigo: #6610f2;
@@ -19,7 +22,7 @@
 	--white: #fff;
 	--gray: #868e96;
 	--gray-dark: #343a40;
-	--primary: #007bff;
+	--primary: #3366FF;
 	--secondary: #868e96;
 	--success: #28a745;
 	--info: #17a2b8;
@@ -57,6 +60,10 @@ html {
 body,
 html {
 	height: 100%;
+}
+
+body {
+	padding-top: 40px;
 }
 
 .ui-tooltip {
@@ -1536,20 +1543,9 @@ small,
 	padding: 0.375rem 0.75rem;
 	font-size: 1rem;
 	line-height: 1.5;
-	border-radius: 0.25rem;
+	border-radius: 7.5px;
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
 		border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.btn:focus,
-.btn:hover {
-	text-decoration: none;
-}
-
-.btn:focus,
-.btn.focus {
-	outline: 0;
-	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .btn.disabled,
@@ -1573,8 +1569,8 @@ fieldset[disabled] a.btn {
 
 .btn-primary {
 	color: #fff;
-	background-color: #007bff;
-	border-color: #007bff;
+	background: linear-gradient(180deg, #7497FF -46.87%, #688CFD -7.92%, #567DFA 49.16%, #3E69F6 127.08%);
+	box-shadow: 0px 2px 4px rgba(97, 135, 252, 0.3);
 }
 
 .btn-primary:hover {
@@ -2347,22 +2343,16 @@ select:focus::-ms-value {
 }
 
 .helix-ultimate-logo {
-	margin: 0 12px;
-	display: flex;
-	border-right: 1px solid #efedf7;
-	height: 100%;
-	padding: 0 12px;
+	margin-left: 20px;
+	display: inline-flex;
 }
 
-.helix-ultimate-logo img.hamburger {
-	width: 35px;
-	display: none;
-	transition: all 0.3s ease;
-}
-
-.helix-ultimate-logo img {
-	width: 150px;
-	height: auto;
+.helix-ultimate-logo .hu-version {
+	align-self: flex-end;
+	font-size: 8px;
+	font-weight: 700;
+	color: var(--primary);
+	margin: 0 0 2px 5px;
 }
 
 #helix-ultimate {
@@ -2379,6 +2369,9 @@ select:focus::-ms-value {
 	text-align: center;
 	justify-content: center;
 	transition: all 0.3s ease;
+	background: linear-gradient(180deg, #7497FF -46.87%, #688CFD -7.92%, #567DFA 49.16%, #3E69F6 127.08%);
+	box-shadow: 0px 2px 4px rgba(97, 135, 252, 0.3);
+	border-radius: 7.5px;
 }
 
 .helix-btn svg {
@@ -2401,18 +2394,10 @@ select:focus::-ms-value {
 	box-shadow: none;
 }
 
-.helix-btn.btn-rounded {
-	border-radius: 30px;
-}
-
-.helix-btn.btn-circle {
-	border-radius: 50%;
-}
-
 .helix-btn.helix-btn-primary {
-	background: #2a98ff;
-	border-color: #2a98ff;
 	color: #fff;
+	background: linear-gradient(180deg, #7497FF -46.87%, #688CFD -7.92%, #567DFA 49.16%, #3E69F6 127.08%);
+	box-shadow: 0px 2px 4px rgba(97, 135, 252, 0.3);
 }
 .helix-btn.helix-btn-primary:hover {
 	background: #0069d9;
@@ -2461,29 +2446,19 @@ select:focus::-ms-value {
 	display: flex;
 	justify-content: space-between;
 	align-items: stretch;
-	height: 50px;
-	/* box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.5); */
-	border-bottom: 1px solid #f1f1f1;
+	height: 40px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 2;
 	width: 100%;
-	background: #fff;
+	background: #EFF4FB;
+	box-shadow: 0px 1px 2px rgba(2, 11, 83, 0.25);
 }
 
 .helix-ultimate-topbar .topbar-left {
 	display: flex;
 	align-items: center;
-}
-
-.helix-ultimate-topbar .topbar-control-board {
-	margin-left: 0;
-}
-
-.helix-ultimate-fieldset-header.active {
-	background: #deeeff;
-	border-bottom: 1px solid #2a98ff;
 }
 
 .helix-ultimate-topbar .topbar-middle {
@@ -2540,7 +2515,7 @@ select:focus::-ms-value {
 	.helix-ultimate-display-variants
 	button.display-btn.active {
 	background: #deeeff;
-	border-bottom: 1px solid #2a98ff;
+	border-bottom: 1px solid var(--primary);
 }
 .helix-ultimate-topbar
 	.topbar-middle
@@ -2548,7 +2523,7 @@ select:focus::-ms-value {
 	button.display-btn.active
 	svg
 	path {
-	fill: #2a98ff;
+	fill: var(--primary);
 }
 
 /* @media (min-width: 576px) {
@@ -2572,14 +2547,6 @@ select:focus::-ms-value {
 	.helix-ultimate-topbar .topbar-right .helix-topbar-show-preview-text {
 		display: none;
 	}
-
-	.helix-ultimate-logo img {
-		display: none;
-	}
-
-	.helix-ultimate-logo img.hamburger {
-		display: block;
-	}
 }
 
 @media (max-width: 768px) {
@@ -2590,58 +2557,6 @@ select:focus::-ms-value {
 		border-left: 0;
 	}
 }
-
-/* 
-@media only screen and (max-width: 768px) {
-	.helix-ultimate-topbar .topbar-middle {
-		display: none;
-	}
-	.helix-ultimate-topbar .topbar-right .helix-topbar-save-text {
-		display: none;
-	}
-
-	.helix-btn svg {
-		margin-right: 0 !important;
-	}
-
-	.helix-ultimate-topbar .topbar-right .helix-topbar-show-preview-text {
-		display: none;
-	}
-
-	.helix-ultimate-logo img {
-		display: none;
-	}
-
-	.helix-ultimate-logo img.hamburger {
-		display: block;
-	}
-}
-
-@media only screen and (max-width: 991px) {
-	.helix-ultimate-topbar .topbar-middle {
-		display: none;
-	}
-	.helix-ultimate-topbar .topbar-right {
-		border-left: 0;
-	}
-} */
-
-.helix-ultimate-fieldset-header.active .helix-ultimate-fieldset-icon img {
-	filter: invert(44%) sepia(92%) saturate(1452%) hue-rotate(189deg)
-		brightness(101%) contrast(102%);
-}
-
-/* .helix-ultimate-fieldset-header.active::before {
-	content: '';
-	width: 3px;
-	height: 100%;
-	display: block;
-	background: #2a98ff;
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	border-radius: 10px;
-} */
 
 .helix-ultimate-edit-panel {
 	background: #fff;
@@ -2661,7 +2576,7 @@ select:focus::-ms-value {
 }
 
 .helix-ultimate-edit-panel .helix-ultimate-panel-header {
-	background: #2a98ff;
+	background: var(--primary);
 	padding: 8px 12px;
 	color: #fff;
 	font-size: 16px;
@@ -2689,16 +2604,6 @@ select:focus::-ms-value {
 	z-index: 1;
 }
 
-.helix-ultimate-sidebar {
-	position: fixed;
-	width: 60px;
-	height: 100%;
-	left: 0;
-	background: #ffffff;
-	border-right: 1px solid #e8eef3;
-	z-index: 2;
-}
-
 .helix-ultimate-options-wrap {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
@@ -2707,8 +2612,53 @@ select:focus::-ms-value {
 	display: none;
 }
 
-#helix-ultimate-options {
-	display: flex;
+/*Sidebar*/
+#hu-options-panel {
+	position: fixed;
+	top: 100px;
+	left: 40px;
+	width: 100px;
+	background-color: var(--white);
+	border-radius: 10px;
+	box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.15), inset -4px -4px 4px #D3D9E7, inset 4px 4px 4px #FCFDFE;
+	backdrop-filter: blur(4px);
+	text-align: center;
+	z-index: 999;
+}
+
+.hu-panel-handle {
+	text-align: center;
+	padding: 5px 0;
+}
+.hu-panel-handle svg {
+	width: 16px;
+}
+
+.helix-ultimate-fieldset-header .hu-option-icon {
+	height: 16px;
+	display: inline-block;
+	filter: invert(64%) sepia(18%) saturate(397%) hue-rotate(197deg) brightness(88%) contrast(89%);
+}
+
+.helix-ultimate-fieldset-header .hu-option-title {
+	display: block;
+	margin-top: 8px;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 14px;
+	color: rgba(2, 11, 83, 0.7);
+}
+
+.helix-ultimate-fieldset-header.active {
+	background: rgba(51, 102, 255, 0.1);
+}
+
+.helix-ultimate-fieldset-header.active .hu-option-title {
+	color: var(--primary);
+}
+
+.helix-ultimate-fieldset-header.active  img {
+	filter: invert(25%) sepia(66%) saturate(2223%) hue-rotate(215deg) brightness(120%) contrast(101%);
 }
 
 .helix-ultimate-groups-container {
@@ -2750,13 +2700,6 @@ select:focus::-ms-value {
 	background: rgba(0, 0, 0, 0.3);
 	border-color: transparent;
 }
-
-/* .helix-ultimate-logo {
-  background: #1D92E9;
-  padding: 0 20px;
-  height: 80px;
-  line-height: 80px;
-} */
 
 .helix-ultimate-options-wrap {
 	position: absolute;
@@ -2815,17 +2758,27 @@ select:focus::-ms-value {
 }
 
 .helix-ultimate-fieldset-header {
-	padding: 0;
-	height: 50px;
-	line-height: 50px;
+	padding: 12px 0;
 	font-size: 14px;
 	display: block;
 	cursor: pointer;
 	position: relative;
+	text-align: center;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+#helix-ultimate-options > div:not(:last-child) > .helix-ultimate-fieldset-header:after {
+	content: " ";
+	position: absolute;
+	height: 1px;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background: linear-gradient(90deg, #EFF4FB 0%, #7983A7 55.01%, #EFF4FB 101.56%);
+	opacity: 0.4;
 }
 
 .helix-ultimate-group-header-box {
@@ -2835,28 +2788,10 @@ select:focus::-ms-value {
 	user-select: none;
 }
 
-.helix-ultimate-fieldset-header {
-	padding: 0 12px;
-}
-
-.helix-ultimate-fieldset-header:hover {
-	color: #1d84e9;
-}
-
 .helix-ultimate-group-list,
 .helix-ultimate-fieldset-toggle-icon {
 	display: none;
 }
-
-.helix-ultimate-fieldset-icon img {
-	width: 16px;
-	height: auto;
-}
-/* .helix-ultimate-fieldset-icon {
-  margin-right: 15px;
-  font-size: 20px;
-  vertical-align: middle;
-} */
 
 .active-helix-ultimate-fieldset .helix-ultimate-fieldset:not(.active) {
 	display: none;

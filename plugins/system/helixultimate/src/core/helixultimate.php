@@ -603,7 +603,14 @@ class HelixUltimate
 			}
 			else
 			{
-				$className = 'col-lg-' . $col_grid_size;
+				if (isset($options->lg_col) && $options->lg_col)
+				{
+					$className = $className . ' col-lg-' . $options->lg_col;
+				}
+				else
+				{
+					$className = 'col-lg-' . $col_grid_size;
+				}
 			}
 
 			if (isset($options->xl_col) && $options->xl_col)

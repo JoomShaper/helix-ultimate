@@ -221,6 +221,14 @@ $columnSettings = array(
 			'std' => 0,
 		),
 
+		'lg_col' => array(
+			'type' => 'select',
+			'group' => 'grid',
+			'title' => Text::_('HELIX_ULTIMATE_SMALLER_DESKTOP_GRID'),
+			'values' => column_grid_system('lg'),
+			'std' => 0,
+		),
+
 		'md_col' => array(
 			'type' => 'select',
 			'group' => 'grid',

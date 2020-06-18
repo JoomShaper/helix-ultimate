@@ -29,7 +29,7 @@
 	--warning: #ffc107;
 	--danger: #dc3545;
 	--light: #f8f9fa;
-	--dark: #343a40;
+	--dark: #020B53;
 	--breakpoint-xs: 0;
 	--breakpoint-sm: 576px;
 	--breakpoint-md: 768px;
@@ -2469,10 +2469,44 @@ select:focus::-ms-value {
 	transition: all 0.3s ease;
 }
 
-.helix-ultimate-topbar .topbar-middle .helix-ultimate-display-variants {
+.hu-devices {
 	height: 100%;
 	display: flex;
 	align-items: center;
+}
+
+.hu-device {
+	outline: none;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	height: 40px;
+	width: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-shadow: none;
+	border-bottom: 2px solid transparent;
+}
+
+.hu-device svg {
+	fill: #9097B8;
+	transition: 200ms ease-in;
+}
+
+.hu-device.active svg,
+.hu-device:hover svg {
+	fill: var(--dark);
+}
+
+.hu-device.active {
+	border-bottom-color: var(--dark);
+}
+
+.hu-device:focus,
+.hu-device:active {
+	box-shadow: none;
+	outline: 0;
 }
 
 .helix-ultimate-topbar .topbar-right {

@@ -547,7 +547,7 @@ jQuery(function ($) {
 	}
 
 	// Device switching from `desktop -> tablet -> mobile` or vice versa.
-	$('.display-btn').on('click', function (e) {
+	$('.hu-device').on('click', function (e) {
 		e.preventDefault();
 		const device = $(this).data('device');
 
@@ -583,11 +583,11 @@ jQuery(function ($) {
 
 		const $iframe = $('#helix-ultimate-template-preview');
 
-		$(`.display-btn[data-device=${deviceMap[device]}]`)
+		$(`.hu-device[data-device=${deviceMap[device]}]`)
 			.parent()
 			.find('.active')
 			.removeClass('active');
-		$(`.display-btn[data-device=${deviceMap[device]}]`).addClass('active');
+		$(`.hu-device[data-device=${deviceMap[device]}]`).addClass('active');
 
 		$iframe.animate(
 			{

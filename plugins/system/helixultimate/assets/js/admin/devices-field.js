@@ -49,11 +49,11 @@ jQuery(document).ready(function ($) {
 			mobile: 'mobile',
 		};
 
-		$(`.display-btn[data-device=${deviceMap[device]}]`)
+		$(`.hu-device[data-device=${deviceMap[device]}]`)
 			.parent()
 			.find('.active')
 			.removeClass('active');
-		$(`.display-btn[data-device=${deviceMap[device]}]`).addClass('active');
+		$(`.hu-device[data-device=${deviceMap[device]}]`).addClass('active');
 
 		const $iframe = $('#helix-ultimate-template-preview');
 

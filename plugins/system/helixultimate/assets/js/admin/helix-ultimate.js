@@ -118,7 +118,7 @@ jQuery(function ($) {
 				'ui-tooltip': 'ui-corner-all',
 			},
 			position: {
-				my: 'left+100px bottom',
+				my: 'left+80px bottom',
 				at: 'left bottom',
 				collision: 'flipfit',
 			},
@@ -616,16 +616,50 @@ jQuery(function ($) {
 		});
 
 	/**
+	 * Calculate the editor panel position and display the panel
+	 */
+
+	function panelPositioning() {
+		let $fieldsetContents = $('.helix-ultimate-fieldset-contents');
+		let $panel = $('.helix-ultimate-edit-panel');
+		let $sidebar = $('#helix-ultimate-sidebar');
+		let $container = $('.helix-ultimate-container');
+
+		let sidebarOffset = $sidebar.offset();
+		let sidebarWidth = $sidebar.width();
+
+		let panelWidth = $panel.width();
+		let panelHeight = $panel.height();
+
+		let containerWidth = $container.width();
+		let containerHeight = $container.height();
+		let gap = 20;
+
+		console.log(containerHeight, panelHeight);
+
+		let panelHorizontalPosition = sidebarOffset.left + sidebarWidth + gap;
+		let panelVerticalPosition = sidebarOffset.top;
+
+		if (panelHorizontalPosition + panelWidth > containerWidth) {
+			panelHorizontalPosition = sidebarOffset.left - panelWidth - gap;
+		}
+
+		if (panelVerticalPosition + panelHeight > containerHeight) {
+			panelVerticalPosition = containerHeight - panelHeight;
+		}
+
+		$fieldsetContents.css('left', panelHorizontalPosition + 'px');
+		$fieldsetContents.css('top', panelVerticalPosition + 'px');
+	}
+
+	/**
 	 * Display editor panel on click sidebar icon
 	 *
 	 */
 	$('.helix-ultimate-fieldset-header').on('click', function (e) {
 		e.preventDefault();
 
-		let offset = $(this).offset();
-		let $panel = $('.helix-ultimate-fieldset-contents');
-
-		$panel.css('left', (offset.left >> 0) + 110 + 'px');
+		panelPositioning();
 
 		let fieldset = $(this).data('fieldset');
 		$('.' + fieldset + '-panel')
@@ -656,6 +690,7 @@ jQuery(function ($) {
 		$('.helix-ultimate-edit-panel.active-panel').draggable({
 			cursor: 'grabbing',
 			handle: '.helix-ultimate-panel-header',
+			containment: 'body',
 		});
 	});
 

@@ -2728,7 +2728,7 @@ select:focus::-ms-value {
 	position: fixed;
 	z-index: 3;
 	left: 200px;
-	top: 60px;
+	top: 120px;
 }
 
 .action-helix-ultimate-exit {

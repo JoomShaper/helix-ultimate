@@ -3,7 +3,7 @@ robots.txt.dist
 configuration.php
 /index.php
 htaccess.txt
-LICENSE.txt
+/LICENSE.txt
 README.txt
 robots.txt
 web.config.txt
@@ -14,18 +14,18 @@ web.config.txt
 .DS_Store
 
 # others
-bin/
-cache/
-cli/
-components/
-/images/
-includes/
-layouts/
-libraries/
-logs/
-media/
-modules/
-tmp/
+/bin
+/cache
+/cli
+/components
+/images
+/includes
+/layouts
+/libraries
+/logs
+/media
+/modules
+/tmp
 
 # Language
 language/*

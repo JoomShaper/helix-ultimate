@@ -103,29 +103,7 @@ jQuery(function ($) {
 		});
 	});
 
-	/**
-	 * Draggable sidebar
-	 */
-	$('#hu-options-panel').draggable({
-		containment: 'body',
-		cursor: 'grabbing',
-		handle: '.hu-panel-handle',
-	});
-
 	(function initTooltips() {
-		$('.helix-ultimate-sidebar').tooltip({
-			classes: {
-				'ui-tooltip': 'ui-corner-all',
-			},
-			position: {
-				my: 'left+80px bottom',
-				at: 'left bottom',
-				collision: 'flipfit',
-			},
-			hide: false,
-			show: false,
-		});
-
 		$('.helix-ultimate-topbar').tooltip({
 			classes: {
 				'ui-tooltip': 'ui-corner-all',
@@ -616,6 +594,19 @@ jQuery(function ($) {
 		});
 
 	/**
+	 * Draggable sidebar
+	 */
+	$('#hu-options-panel').draggable({
+		cursor: 'grabbing',
+		handle: '.hu-panel-handle',
+		containment: 'body',
+		iframeFix: true,
+		drag: function (event, ui) {
+			panelPositioning();
+		},
+	});
+
+	/**
 	 * Calculate the editor panel position and display the panel
 	 */
 	function panelPositioning() {
@@ -659,6 +650,12 @@ jQuery(function ($) {
 		panelPositioning();
 
 		let fieldset = $(this).data('fieldset');
+
+		if ($('.' + fieldset + '-panel').hasClass('active-panel')) {
+			$('.' + fieldset + '-panel').removeClass('active-panel');
+			return;
+		}
+
 		$('.' + fieldset + '-panel')
 			.parent()
 			.find('.active-panel')
@@ -684,11 +681,11 @@ jQuery(function ($) {
 
 		$(this).addClass('active');
 
-		$('.helix-ultimate-edit-panel.active-panel').draggable({
-			cursor: 'grabbing',
-			handle: '.helix-ultimate-panel-header',
-			containment: 'body',
-		});
+		// $('.helix-ultimate-edit-panel.active-panel').draggable({
+		// 	cursor: 'grabbing',
+		// 	handle: '.helix-ultimate-panel-header',
+		// 	containment: 'body',
+		// });
 	});
 
 	/**

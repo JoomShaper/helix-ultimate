@@ -100,7 +100,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	 * Only when the type of the form is of interest.
 	 *
 	 * @param	Form		$form	The form.
-	 * @param	strClass	$data	The data.
+	 * @param	stdClass	$data	The data.
 	 *
 	 * @return	void
 	 * @since	1.0.0
@@ -109,6 +109,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	{
 		$doc = Factory::getDocument();
 		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
+		$tmpl_path = Uri::root(true) . '/templates/shaper_helixultimate';
 
 		Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
 
@@ -117,7 +118,7 @@ class  PlgSystemHelixultimate extends JPlugin
 			HTMLHelper::_('jquery.framework');
 			HTMLHelper::_('jquery.ui', array('core', 'more', 'sortable'));
 
-			$doc->addStyleSheet($plg_path . '/assets/css/font-awesome.min.css');
+			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
 			$doc->addStyleSheet($plg_path . '/assets/css/admin/modal.css');
 			$doc->addStyleSheet($plg_path . '/assets/css/admin/menu.generator.css');
 			$doc->addScript($plg_path . '/assets/js/admin/modal.js');

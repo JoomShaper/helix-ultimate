@@ -46,7 +46,6 @@ $display_class = '';
 $dropdown_class = '';
 $unique_menu_item_count = 0;
 
-
 if (isset($menu_data->megamenu))
 {
 	 $enable_megamenu = $menu_data->megamenu;
@@ -136,7 +135,7 @@ if ($unique_menu_items)
 
 			<div class="helix-ultimate-megamenu-actions">
 				<?php
-				if ($menu_item->parent_id === 1)
+				if ((int) $menu_item->parent_id === 1)
 				{
 					echo $this->switchFieldHTML('toggler', Text::_('HELIX_ULTIMATE_MENU_ENABLED'), $enable_megamenu);
 					echo $this->textFieldHTML('width', Text::_('HELIX_ULTIMATE_MENU_SUB_WIDTH'), 400, $menu_width, 'number', $display_class);
@@ -207,7 +206,7 @@ if ($unique_menu_items)
 														}
 													}
 
-													if ($unique_menu_item_count && $col_number === 0)
+													if ($unique_menu_item_count && (int) $col_number === 0)
 													{
 														$col_number++;
 
@@ -267,12 +266,12 @@ if ($unique_menu_items)
 
 	</div>
 
-	<?php if ($menu_item->parent_id === 1 && $module_list): ?>
+	<?php if ((int) $menu_item->parent_id === 1 && $module_list) : ?>
 		<div class="helix-ultimate-col-sm-3">
 			<div class="helix-ultimate-megamenu-sidebar <?php echo ($enable_megamenu != 1) ? ' hide-menu-builder' : ''; ?>">
 				<h3><span class="fas fa-bars"></span> <?php echo Text::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h3>
 				<div class="helix-ultimate-megamenu-module-list">
-					<?php foreach ($module_list as $module): ?>
+					<?php foreach ($module_list as $module) : ?>
 						<div class="helix-ultimate-megamenu-draggable-module" data-mod_id="<?php echo $module->id; ?>" data-type="module"><span class="fas fa-arrows-alt"></span> <?php echo $module->title; ?></div>
 					<?php endforeach; ?>
 				</div>

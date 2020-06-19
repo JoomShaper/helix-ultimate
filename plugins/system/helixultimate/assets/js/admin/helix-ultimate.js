@@ -106,10 +106,10 @@ jQuery(function ($) {
 	/**
 	 * Draggable sidebar
 	 */
-	$('#helix-ultimate-sidebar').draggable({
+	$('#hu-options-panel').draggable({
 		containment: 'body',
 		cursor: 'grabbing',
-		handle: '.sidebar-draggable-handler',
+		handle: '.hu-panel-handle',
 	});
 
 	(function initTooltips() {
@@ -621,7 +621,7 @@ jQuery(function ($) {
 	function panelPositioning() {
 		let $fieldsetContents = $('.helix-ultimate-fieldset-contents');
 		let $panel = $('.helix-ultimate-edit-panel');
-		let $sidebar = $('#helix-ultimate-sidebar');
+		let $sidebar = $('#hu-options-panel');
 		let $container = $('.helix-ultimate-container');
 
 		let sidebarOffset = $sidebar.offset();

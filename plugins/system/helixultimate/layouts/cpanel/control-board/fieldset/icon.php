@@ -18,12 +18,10 @@ extract($displayData);
 $iconsrc = Uri::root() . "plugins/system/helixultimate/assets/images/icons/{$fieldset->name}.svg";
 
 ?>
-
-
 <div class="helix-ultimate-fieldset helix-ultimate-fieldset-<?php echo $fieldset->name; ?>">
 	<div class="helix-ultimate-fieldset-header" data-fieldset="<?php echo strtolower($fieldset->name); ?>">
 		<div class="helix-ultimate-fieldset-header-inner">
-			<img class="hu-option-icon dfhdgfhgdfhjgg" src="<?php echo $iconsrc; ?>" alt="<?php echo $fieldset->name; ?>" alt="<?php echo Text::_($fieldset->label); ?>" />
+			<img class="hu-option-icon" src="<?php echo $iconsrc; ?>" alt="<?php echo $fieldset->name; ?>" alt="<?php echo Text::_($fieldset->label); ?>" />
 			<span class="hu-option-title"><?php echo Text::_($fieldset->label); ?></span>
 		</div>
 	</div>

@@ -95,12 +95,12 @@ class JFormFieldHelixfont extends FormField
 		);
 
 		// Font Family
-		$html .= '<div class="helix-ultimate-field-webfont ' . $classes . '">';
+		$html .= '<div class="hu-field-webfont ' . $classes . '">';
 		$html .= '<div class="row">';
 
-		$html .= '<div class="col-12 helix-ultimate-webfont-family">';
+		$html .= '<div class="col-12 hu-webfont-family">';
 		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_FAMILY') . '</small></label>';
-		$html .= '<select class="helix-ultimate-webfont-list">';
+		$html .= '<select class="hu-webfont-list">';
 
 		$html .= '<optgroup label="' . Text::_('HELIX_ULTIMATE_SYSTEM_FONT') . '">';
 
@@ -127,20 +127,20 @@ class JFormFieldHelixfont extends FormField
 		$fontSize = (isset($value->fontSize)) ? $value->fontSize : '';
 		$fontSize_sm = (isset($value->fontSize_sm)) ? $value->fontSize_sm : '';
 		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
-		$html .= '<div class="col-6 helix-ultimate-webfont-size">';
+		$html .= '<div class="col-6 hu-webfont-size">';
 		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</small></label>';
 		$html .= '<div class="helix-responsive-devices">';
-		$html .= '<span data-device="md" data-active_class=".helix-ultimate-webfont-size-input" class="fas fa-laptop active"></span><span data-device="sm" data-active_class=".helix-ultimate-webfont-size-input-sm" class="fas fa-tablet-alt"></span><span data-device="xs" data-active_class=".helix-ultimate-webfont-size-input-xs" class="fas fa-mobile-alt"></span>';
+		$html .= '<span data-device="md" data-active_class=".hu-webfont-size-input" class="fas fa-laptop active"></span><span data-device="sm" data-active_class=".hu-webfont-size-input-sm" class="fas fa-tablet-alt"></span><span data-device="xs" data-active_class=".hu-webfont-size-input-xs" class="fas fa-mobile-alt"></span>';
 		$html .= '</div>';
-		$html .= '<input type="number" value="' . $fontSize . '" class="helix-ultimate-webfont-size-input active" min="6">';
-		$html .= '<input type="number" value="' . $fontSize_sm . '" class="helix-ultimate-webfont-size-input-sm" min="6">';
-		$html .= '<input type="number" value="' . $fontSize_xs . '" class="helix-ultimate-webfont-size-input-xs" min="6">';
+		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6">';
+		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6">';
+		$html .= '<input type="number" value="' . $fontSize_xs . '" class="hu-webfont-size-input-xs" min="6">';
 		$html .= '</div>';
 
 		// Font Weight
-		$html .= '<div class="col-6 helix-ultimate-webfont-weight">';
+		$html .= '<div class="col-6 hu-webfont-weight">';
 		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_WEIGHT') . '</small></label>';
-		$html .= '<select class="helix-ultimate-webfont-weight-list">';
+		$html .= '<select class="hu-webfont-weight-list">';
 		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
 
 		foreach ($fontWeights as $key => $fontWeight)
@@ -159,9 +159,9 @@ class JFormFieldHelixfont extends FormField
 		$html .= '</div>';
 
 		// Font Style
-		$html .= '<div class="col-6 helix-ultimate-webfont-style">';
+		$html .= '<div class="col-6 hu-webfont-style">';
 		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_STYLE') . '</small></label>';
-		$html .= '<select class="helix-ultimate-webfont-style-list">';
+		$html .= '<select class="hu-webfont-style-list">';
 		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
 
 		foreach ($fontStyles as $key => $fontStyle)
@@ -180,9 +180,9 @@ class JFormFieldHelixfont extends FormField
 		$html .= '</div>';
 
 		// Font Subsets
-		$html .= '<div class="col-6 helix-ultimate-webfont-subset">';
+		$html .= '<div class="col-6 hu-webfont-subset">';
 		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SUBSET') . '</small></label>';
-		$html .= '<select class="helix-ultimate-webfont-subset-list">';
+		$html .= '<select class="hu-webfont-subset-list">';
 		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
 
 		if (isset($value->fontFamily) && $value->fontFamily)
@@ -199,8 +199,8 @@ class JFormFieldHelixfont extends FormField
 		$html .= '</div>';
 
 		// Preview
-		$html .= '<p style="display:none" class="helix-ultimate-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</p>';
-		$html .= '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '" class="helix-ultimate-webfont-input" id="' . $this->id . '">';
+		$html .= '<p style="display:none" class="hu-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</p>';
+		$html .= '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '" class="hu-webfont-input" id="' . $this->id . '">';
 		$html .= '</div>';
 
 		return $html;

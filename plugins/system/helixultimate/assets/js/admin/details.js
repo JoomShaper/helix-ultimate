@@ -6,6 +6,6 @@
 */
 
 jQuery(function($) {
-	$('.helix-ultimate-options').unwrap();
-	$('.helix-ultimate-options').prev().remove();
+	$('.hu-options').unwrap();
+	$('.hu-options').prev().remove();
 });

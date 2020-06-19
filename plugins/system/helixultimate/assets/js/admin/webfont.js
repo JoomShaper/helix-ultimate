@@ -7,7 +7,7 @@
 
 jQuery(function ($) {
 	//Web Fonts
-	$(document).on('change', '.helix-ultimate-webfont-list', function (event) {
+	$(document).on('change', '.hu-webfont-list', function (event) {
 		event.preventDefault();
 
 		var $that = $(this),
@@ -25,8 +25,8 @@ jQuery(function ($) {
 
 		if ($.inArray(fontName, systemFonts) !== -1) {
 			$that
-				.closest('.helix-ultimate-field-webfont')
-				.find('.helix-ultimate-webfont-subset-list')
+				.closest('.hu-field-webfont')
+				.find('.hu-webfont-subset-list')
 				.html('')
 				.trigger('liszt:updated');
 		} else {
@@ -49,8 +49,8 @@ jQuery(function ($) {
 				success: function (response) {
 					var font = $.parseJSON(response);
 					$that
-						.closest('.helix-ultimate-field-webfont')
-						.find('.helix-ultimate-webfont-subset-list')
+						.closest('.hu-field-webfont')
+						.find('.hu-webfont-subset-list')
 						.html(font.subsets)
 						.trigger('liszt:updated');
 				},
@@ -65,8 +65,8 @@ jQuery(function ($) {
 		}
 
 		$(this)
-			.closest('.helix-ultimate-field-webfont')
-			.find('.helix-ultimate-webfont-preview')
+			.closest('.hu-field-webfont')
+			.find('.hu-webfont-preview')
 			.fadeIn()
 			.css('font-family', $(this).val());
 
@@ -74,71 +74,71 @@ jQuery(function ($) {
 	});
 
 	// Font Size
-	$(document).on('change', '.helix-ultimate-webfont-size-input', function (
+	$(document).on('change', '.hu-webfont-size-input', function (
 		event
 	) {
 		event.preventDefault();
 
 		$(this)
-			.closest('.helix-ultimate-field-webfont')
-			.find('.helix-ultimate-webfont-preview')
+			.closest('.hu-field-webfont')
+			.find('.hu-webfont-preview')
 			.fadeIn()
 			.css({
 				'font-family': $(this)
-					.closest('.helix-ultimate-field-webfont')
-					.find('.helix-ultimate-webfont-list')
+					.closest('.hu-field-webfont')
+					.find('.hu-webfont-list')
 					.val(),
 				'font-size': $(this).val() + 'px',
 			});
 	});
 
 	// Font Weight
-	$(document).on('change', '.helix-ultimate-webfont-weight-list', function (
+	$(document).on('change', '.hu-webfont-weight-list', function (
 		event
 	) {
 		event.preventDefault();
 
 		$(this)
-			.closest('.helix-ultimate-field-webfont')
-			.find('.helix-ultimate-webfont-preview')
+			.closest('.hu-field-webfont')
+			.find('.hu-webfont-preview')
 			.fadeIn()
 			.css({
 				'font-family': $(this)
-					.closest('.helix-ultimate-field-webfont')
-					.find('.helix-ultimate-webfont-list')
+					.closest('.hu-field-webfont')
+					.find('.hu-webfont-list')
 					.val(),
 				'font-size':
 					$(this)
-						.closest('.helix-ultimate-field-webfont')
-						.find('.helix-ultimate-webfont-size-input')
+						.closest('.hu-field-webfont')
+						.find('.hu-webfont-size-input')
 						.val() + 'px',
 				'font-weight': $(this).val(),
 			});
 	});
 
 	// Font Style
-	$(document).on('change', '.helix-ultimate-webfont-style-list', function (
+	$(document).on('change', '.hu-webfont-style-list', function (
 		event
 	) {
 		event.preventDefault();
 
 		$(this)
-			.closest('.helix-ultimate-field-webfont')
-			.find('.helix-ultimate-webfont-preview')
+			.closest('.hu-field-webfont')
+			.find('.hu-webfont-preview')
 			.fadeIn()
 			.css({
 				'font-family': $(this)
-					.closest('.helix-ultimate-field-webfont')
-					.find('.helix-ultimate-webfont-list')
+					.closest('.hu-field-webfont')
+					.find('.hu-webfont-list')
 					.val(),
 				'font-size':
 					$(this)
-						.closest('.helix-ultimate-field-webfont')
-						.find('.helix-ultimate-webfont-size-input')
+						.closest('.hu-field-webfont')
+						.find('.hu-webfont-size-input')
 						.val() + 'px',
 				'font-weight': $(this)
-					.closest('.helix-ultimate-field-webfont')
-					.find('.helix-ultimate-webfont-weight-list')
+					.closest('.hu-field-webfont')
+					.find('.hu-webfont-weight-list')
 					.val(),
 				'font-style': $(this).val(),
 			});
@@ -149,8 +149,8 @@ jQuery(function ($) {
 		event.preventDefault();
 
 		var font = $(this)
-			.closest('.helix-ultimate-field-webfont')
-			.find('.helix-ultimate-webfont-list')
+			.closest('.hu-field-webfont')
+			.find('.hu-webfont-list')
 			.val()
 			.replace(' ', '+');
 		$('head').append(
@@ -163,7 +163,7 @@ jQuery(function ($) {
 	});
 
 	//Update Fonts list
-	$('.btn-update-helix-ultimate-fonts').on('click', function (event) {
+	$('.btn-update-hu-fonts').on('click', function (event) {
 		event.preventDefault();
 
 		var $that = $(this);

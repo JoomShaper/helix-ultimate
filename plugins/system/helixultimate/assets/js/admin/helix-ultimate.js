@@ -17,7 +17,7 @@ jQuery(function ($) {
 		window.MozMutationObserver;
 
 	let $previewFrame = document.getElementById(
-		'helix-ultimate-template-preview'
+		'hu-template-preview'
 	);
 
 	/**
@@ -104,7 +104,7 @@ jQuery(function ($) {
 	});
 
 	(function initTooltips() {
-		$('.helix-ultimate-topbar').tooltip({
+		$('.hu-topbar').tooltip({
 			classes: {
 				'ui-tooltip': 'ui-corner-all',
 			},
@@ -140,7 +140,7 @@ jQuery(function ($) {
 	};
 
 	function updateSetvalue() {
-		let $controls = $('form#helix-ultimate-style-form').find(
+		let $controls = $('form#hu-style-form').find(
 			'.controls.helix-input-touched'
 		);
 		if ($controls.length > 0) {
@@ -171,7 +171,7 @@ jQuery(function ($) {
 	 * @return void
 	 */
 	function resetBySafepointValue() {
-		let $controls = $('form#helix-ultimate-style-form').find(
+		let $controls = $('form#hu-style-form').find(
 			'.controls.helix-input-touched.field-reset'
 		);
 
@@ -218,7 +218,7 @@ jQuery(function ($) {
 
 					// Reset media preview image.
 					let $imagePreview = $controlEl.find(
-						'.helix-ultimate-image-holder img'
+						'.hu-image-holder img'
 					);
 
 					if ($imagePreview.length > 0) {
@@ -236,12 +236,12 @@ jQuery(function ($) {
 		$('#layout').val(JSON.stringify(getGeneratedLayout()));
 		webfontData();
 
-		$('.helix-ultimate-input-preset').val(
-			JSON.stringify($('.helix-ultimate-preset.active').data())
+		$('.hu-input-preset').val(
+			JSON.stringify($('.hu-preset.active').data())
 		);
 
-		let data = $('#helix-ultimate-style-form')
-			.find(':not(.helix-ultimate-preset-container input)')
+		let data = $('#hu-style-form')
+			.find(':not(.hu-preset-container input)')
 			.serializeArray();
 
 		$.ajax({
@@ -259,7 +259,7 @@ jQuery(function ($) {
 
 				if (data.status) {
 					let $previewFrame = document.getElementById(
-						'helix-ultimate-template-preview'
+						'hu-template-preview'
 					);
 
 					reloadPreview();
@@ -294,7 +294,7 @@ jQuery(function ($) {
 	 *
 	 */
 	(function trackChanges() {
-		$('form#helix-ultimate-style-form')
+		$('form#hu-style-form')
 			.find(
 				'input[type="text"], input[type="email"], input[type="number"], textarea'
 			)
@@ -318,7 +318,7 @@ jQuery(function ($) {
 				}
 			});
 
-		$('form#helix-ultimate-style-form')
+		$('form#hu-style-form')
 			.find('input[type="checkbox"]')
 			.on('change', function (e) {
 				e.preventDefault();
@@ -340,7 +340,7 @@ jQuery(function ($) {
 				}
 			});
 
-		$('form#helix-ultimate-style-form')
+		$('form#hu-style-form')
 			.find('select, input[type="hidden"]')
 			.on('change', function (e) {
 				e.preventDefault();
@@ -364,7 +364,7 @@ jQuery(function ($) {
 	})();
 
 	function prepareResetFields() {
-		let $controls = $('form#helix-ultimate-style-form').find(
+		let $controls = $('form#hu-style-form').find(
 			'.controls.helix-input-touched'
 		);
 
@@ -396,8 +396,8 @@ jQuery(function ($) {
 			$('#layout').val(JSON.stringify(getGeneratedLayout()));
 			webfontData();
 
-			$('.helix-ultimate-input-preset').val(
-				JSON.stringify($('.helix-ultimate-preset.active').data())
+			$('.hu-input-preset').val(
+				JSON.stringify($('.hu-preset.active').data())
 			);
 
 			$.ajax({
@@ -414,7 +414,7 @@ jQuery(function ($) {
 
 					if (data.status) {
 						let $previewFrame = document.getElementById(
-							'helix-ultimate-template-preview'
+							'hu-template-preview'
 						);
 
 						reloadPreview();
@@ -446,14 +446,14 @@ jQuery(function ($) {
 		$('#layout').val(JSON.stringify(getGeneratedLayout()));
 		webfontData();
 
-		$('.helix-ultimate-input-preset').val(
-			JSON.stringify($('.helix-ultimate-preset.active').data())
+		$('.hu-input-preset').val(
+			JSON.stringify($('.hu-preset.active').data())
 		);
 
 		var tmplID = $(this).data('id'),
 			tmplView = $(this).data('view'),
-			data = $('#helix-ultimate-style-form')
-				.find(':not(.helix-ultimate-preset-container input)')
+			data = $('#hu-style-form')
+				.find(':not(.hu-preset-container input)')
 				.serialize();
 
 		$.ajax({
@@ -471,7 +471,7 @@ jQuery(function ($) {
 
 				if (data.status) {
 					let $previewFrame = document.getElementById(
-						'helix-ultimate-template-preview'
+						'hu-template-preview'
 					);
 					$previewFrame.contentWindow.location.reload(true);
 					$previewFrame.addEventListener('load', function () {
@@ -568,7 +568,7 @@ jQuery(function ($) {
 			mobile: 'mobile',
 		};
 
-		const $iframe = $('#helix-ultimate-template-preview');
+		const $iframe = $('#hu-template-preview');
 
 		$(`.hu-device[data-device=${deviceMap[device]}]`)
 			.parent()
@@ -586,7 +586,7 @@ jQuery(function ($) {
 	}
 
 	// Switcher
-	$('#helix-ultimate-style-form')
+	$('#hu-style-form')
 		.find('input[type="checkbox"]')
 		.each(function () {
 			var $this = $(this);
@@ -610,10 +610,10 @@ jQuery(function ($) {
 	 * Calculate the editor panel position and display the panel
 	 */
 	function panelPositioning() {
-		let $fieldsetContents = $('.helix-ultimate-fieldset-contents');
-		let $panel = $('.helix-ultimate-edit-panel');
+		let $fieldsetContents = $('.hu-fieldset-contents');
+		let $panel = $('.hu-edit-panel');
 		let $sidebar = $('#hu-options-panel');
-		let $container = $('.helix-ultimate-container');
+		let $container = $('.hu-container');
 
 		let sidebarOffset = $sidebar.offset();
 		let sidebarWidth = $sidebar.width();
@@ -644,7 +644,7 @@ jQuery(function ($) {
 	 * Display editor panel on click sidebar icon
 	 *
 	 */
-	$('.helix-ultimate-fieldset-header').on('click', function (e) {
+	$('.hu-fieldset-header').on('click', function (e) {
 		e.preventDefault();
 
 		panelPositioning();
@@ -665,25 +665,25 @@ jQuery(function ($) {
 		// Make active sidebar icon
 		if (
 			$(this)
-				.parents('#helix-ultimate-options')
+				.parents('#hu-options')
 				.find(
-					'.helix-ultimate-fieldset .helix-ultimate-fieldset-header'
+					'.hu-fieldset .hu-fieldset-header'
 				)
 				.hasClass('active')
 		) {
 			$(this)
-				.parents('#helix-ultimate-options')
+				.parents('#hu-options')
 				.find(
-					'.helix-ultimate-fieldset .helix-ultimate-fieldset-header'
+					'.hu-fieldset .hu-fieldset-header'
 				)
 				.removeClass('active');
 		}
 
 		$(this).addClass('active');
 
-		// $('.helix-ultimate-edit-panel.active-panel').draggable({
+		// $('.hu-edit-panel.active-panel').draggable({
 		// 	cursor: 'grabbing',
-		// 	handle: '.helix-ultimate-panel-header',
+		// 	handle: '.hu-panel-header',
 		// 	containment: 'body',
 		// });
 	});
@@ -691,21 +691,21 @@ jQuery(function ($) {
 	/**
 	 * Close an opned panel
 	 */
-	$('.helix-ultimate-panel-close').on('click', function (e) {
+	$('.hu-panel-close').on('click', function (e) {
 		e.preventDefault();
 
 		if (
 			$(this)
-				.closest('.helix-ultimate-edit-panel')
+				.closest('.hu-edit-panel')
 				.hasClass('active-panel')
 		) {
 			$(this)
-				.closest('.helix-ultimate-edit-panel')
+				.closest('.hu-edit-panel')
 				.removeClass('active-panel');
 		}
 
 		let $sidebarItem = $(
-			`.${$(this).data('sidebarclass')} .helix-ultimate-fieldset-header`
+			`.${$(this).data('sidebarclass')} .hu-fieldset-header`
 		);
 
 		if ($sidebarItem.hasClass('active')) {
@@ -713,20 +713,20 @@ jQuery(function ($) {
 		}
 	});
 
-	$('.helix-ultimate-fieldset-toggle-icon').on('click', function (e) {
+	$('.hu-fieldset-toggle-icon').on('click', function (e) {
 		e.preventDefault();
 
-		$('.helix-ultimate-fieldset').removeClass('active');
-		$('#helix-ultimate, #helix-ultimate-options').removeClass();
+		$('.hu-fieldset').removeClass('active');
+		$('#hu, #hu-options').removeClass();
 	});
 
-	$('.helix-ultimate-group-header-box').on('click', function (e) {
+	$('.hu-group-header-box').on('click', function (e) {
 		e.preventDefault();
 
 		let $prevActiveEl = $(this)
-			.closest('.helix-ultimate-edit-panel')
-			.find('.helix-ultimate-group-wrap')
-			.find('.helix-ultimate-field-list.active-group');
+			.closest('.hu-edit-panel')
+			.find('.hu-group-wrap')
+			.find('.hu-field-list.active-group');
 
 		if ($prevActiveEl.length > 0) {
 			let prevUid = $prevActiveEl.data('uid');
@@ -738,15 +738,15 @@ jQuery(function ($) {
 				$prevActiveEl
 					.parent()
 					.find(
-						'.helix-ultimate-group-header-box .helix-ultimate-group-toggle-icon'
+						'.hu-group-header-box .hu-group-toggle-icon'
 					)
 					.removeClass('fa-angle-up')
 					.addClass('fa-angle-down');
 			}
 		}
 
-		// helix-ultimate-group-toggle-icon
-		let $iconEl = $(this).find('.helix-ultimate-group-toggle-icon');
+		// hu-group-toggle-icon
+		let $iconEl = $(this).find('.hu-group-toggle-icon');
 		if ($iconEl.hasClass('fa-angle-down')) {
 			$iconEl.removeClass('fa-angle-down').addClass('fa-angle-up', 1000);
 		} else if ($iconEl.hasClass('fa-angle-up')) {
@@ -764,21 +764,21 @@ jQuery(function ($) {
 		}
 
 		// @TODO: remove after successfull testing.
-		// if( $(this).closest('.helix-ultimate-group-wrap').hasClass('active-group') ){
-		//     $(this).closest('.helix-ultimate-group-wrap').removeClass('active-group');
+		// if( $(this).closest('.hu-group-wrap').hasClass('active-group') ){
+		//     $(this).closest('.hu-group-wrap').removeClass('active-group');
 		//     return;
 		// }
 
-		// $('.helix-ultimate-group-wrap').removeClass('active-group')
-		// $(this).closest('.helix-ultimate-group-wrap').addClass('active-group');
+		// $('.hu-group-wrap').removeClass('active-group')
+		// $(this).closest('.hu-group-wrap').addClass('active-group');
 	});
 
-	$('.helix-ultimate-header-item').on('click', function (e) {
+	$('.hu-header-item').on('click', function (e) {
 		e.preventDefault();
 
-		var $parent = $(this).closest('.helix-ultimate-header-list');
+		var $parent = $(this).closest('.hu-header-list');
 
-		$parent.find('.helix-ultimate-header-item').removeClass('active');
+		$parent.find('.hu-header-item').removeClass('active');
 		$(this).addClass('active');
 
 		var styleName = $(this).data('style'),
@@ -790,12 +790,12 @@ jQuery(function ($) {
 	// Preset
 	$(document).ready(function () {
 		if ($('#custom_style').attr('checked') == 'checked') {
-			$('.helix-ultimate-fieldset-presets')
-				.find('.helix-ultimate-group-wrap')
+			$('.hu-fieldset-presets')
+				.find('.hu-group-wrap')
 				.show();
 		} else {
-			$('.helix-ultimate-fieldset-presets')
-				.find('.helix-ultimate-group-wrap')
+			$('.hu-fieldset-presets')
+				.find('.hu-group-wrap')
 				.hide();
 		}
 	});
@@ -803,20 +803,20 @@ jQuery(function ($) {
 	$(document).on('change', '#custom_style', function (e) {
 		e.preventDefault();
 		if ($(this).attr('checked') == 'checked') {
-			$('.helix-ultimate-fieldset-presets')
-				.find('.helix-ultimate-group-wrap')
+			$('.hu-fieldset-presets')
+				.find('.hu-group-wrap')
 				.slideDown();
 		} else {
-			$('.helix-ultimate-fieldset-presets')
-				.find('.helix-ultimate-group-wrap')
+			$('.hu-fieldset-presets')
+				.find('.hu-group-wrap')
 				.slideUp();
 		}
 	});
 
-	$(document).on('click', '.helix-ultimate-preset', function (e) {
+	$(document).on('click', '.hu-preset', function (e) {
 		e.preventDefault();
 
-		$('.helix-ultimate-preset').removeClass('active');
+		$('.hu-preset').removeClass('active');
 		$(this).addClass('active');
 
 		draftChanges();
@@ -824,7 +824,7 @@ jQuery(function ($) {
 
 	$('.helix-responsive-devices span').click(function () {
 		if ($(this).hasClass('active')) return;
-		const parent = $(this).parents('.helix-ultimate-webfont-size');
+		const parent = $(this).parents('.hu-webfont-size');
 		parent.find('input').removeClass('active');
 		const inputClass = $(this).data('active_class');
 		parent.find(inputClass).addClass('active');
@@ -862,7 +862,7 @@ jQuery(function ($) {
 		});
 	};
 
-	$('.btn-purge-helix-ultimate-css').on('click', function (e) {
+	$('.btn-purge-hu-css').on('click', function (e) {
 		e.preventDefault();
 		var self = $(this);
 		if (self.hasClass('disable')) {
@@ -874,11 +874,11 @@ jQuery(function ($) {
 	});
 
 	// Import
-	$('#btn-helix-ultimate-import-settings').on('click', function (event) {
+	$('#btn-hu-import-settings').on('click', function (event) {
 		event.preventDefault();
 
 		var $that = $(this),
-			temp_settings = $.trim($('#input-helix-ultimate-settings').val());
+			temp_settings = $.trim($('#input-hu-settings').val());
 
 		if (temp_settings == '') {
 			return false;
@@ -922,42 +922,42 @@ jQuery(function ($) {
 	});
 
 	function webfontData() {
-		$('.helix-ultimate-field-webfont').each(function () {
+		$('.hu-field-webfont').each(function () {
 			var $that = $(this),
 				webfont = {
 					fontFamily: $that
-						.find('.helix-ultimate-webfont-list')
+						.find('.hu-webfont-list')
 						.val(),
 					fontSize: $that
-						.find('.helix-ultimate-webfont-size-input')
+						.find('.hu-webfont-size-input')
 						.val(),
 					fontSize_sm: $that
-						.find('.helix-ultimate-webfont-size-input-sm')
+						.find('.hu-webfont-size-input-sm')
 						.val(),
 					fontSize_xs: $that
-						.find('.helix-ultimate-webfont-size-input-xs')
+						.find('.hu-webfont-size-input-xs')
 						.val(),
 					fontWeight: $that
-						.find('.helix-ultimate-webfont-weight-list')
+						.find('.hu-webfont-weight-list')
 						.val(),
 					fontStyle: $that
-						.find('.helix-ultimate-webfont-style-list')
+						.find('.hu-webfont-style-list')
 						.val(),
 					fontSubset: $that
-						.find('.helix-ultimate-webfont-subset-list')
+						.find('.hu-webfont-subset-list')
 						.val(),
 				};
 
 			$that
-				.find('.helix-ultimate-webfont-input')
+				.find('.hu-webfont-input')
 				.val(JSON.stringify(webfont));
 		});
 	}
 
 	function getGeneratedLayout() {
 		var item = [];
-		$('#helix-ultimate-layout-builder')
-			.find('.helix-ultimate-layout-section')
+		$('#hu-layout-builder')
+			.find('.hu-layout-section')
 			.each(function (index) {
 				var $row = $(this),
 					rowIndex = index,
@@ -965,7 +965,7 @@ jQuery(function ($) {
 				delete rowObj.sortableItem;
 
 				var activeLayout = $row.find(
-						'.helix-ultimate-column-layout.active'
+						'.hu-column-layout.active'
 					),
 					layoutArray = activeLayout.data('layout'),
 					layout = 12;
@@ -982,7 +982,7 @@ jQuery(function ($) {
 				};
 
 				// Find Column Elements
-				$row.find('.helix-ultimate-layout-column').each(function (
+				$row.find('.hu-layout-column').each(function (
 					index
 				) {
 					var $column = $(this),
@@ -1001,12 +1001,12 @@ jQuery(function ($) {
 	}
 
 	/*Option Group*/
-	$(document).on('click', '.helix-ultimate-option-group-title', function (
+	$(document).on('click', '.hu-option-group-title', function (
 		event
 	) {
 		event.preventDefault();
 		$(this)
-			.closest('.helix-ultimate-option-group')
+			.closest('.hu-option-group')
 			.toggleClass('active')
 			.siblings()
 			.removeClass('active');

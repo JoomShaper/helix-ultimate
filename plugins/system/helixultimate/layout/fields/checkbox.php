@@ -30,7 +30,7 @@ class HelixultimateFieldCheckbox
 		$output   = '<div class="control-group">';
 		$output  .= '<div class="checkbox clearfix">';
 		$output  .= '<label class="control-label">' . $attr['title'];
-		$output  .= '<input class="helix-ultimate-input helix-ultimate-input-' . $key . '" data-attrname="' . $key . '" type="checkbox">';
+		$output  .= '<input class="hu-input hu-input-' . $key . '" data-attrname="' . $key . '" type="checkbox">';
 		$output  .= '</label>';
 		$output  .= '</div>';
 

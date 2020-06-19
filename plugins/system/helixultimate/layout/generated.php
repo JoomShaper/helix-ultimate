@@ -43,7 +43,7 @@ $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 <div class="clearfix"></div>
 
 <!-- Layout Builder Section -->
-<div id="helix-ultimate-layout-builder" >
+<div id="hu-layout-builder" >
 <?php
     $output = '';
     if ($layout_data)

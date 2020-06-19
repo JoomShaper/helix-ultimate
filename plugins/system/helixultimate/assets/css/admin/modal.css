@@ -6,18 +6,18 @@
 */
 
 /*Media Modal*/
-.helix-ultimate-modal-open,
-.helix-ultimate-options-modal-open {
+.hu-modal-open,
+.hu-options-modal-open {
 	overflow: hidden;
 }
 
-.helix-ultimate-modal-open .helix-ultimate-options-modal-overlay,
-.helix-ultimate-modal-open .helix-ultimate-options-modal {
+.hu-modal-open .hu-options-modal-overlay,
+.hu-modal-open .hu-options-modal {
 	display: none;
 }
 
-.helix-ultimate-modal-overlay,
-.helix-ultimate-options-modal-overlay {
+.hu-modal-overlay,
+.hu-options-modal-overlay {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -27,8 +27,8 @@
 	background: rgba(0, 0, 0, 0.6);
 }
 
-.helix-ultimate-modal,
-.helix-ultimate-options-modal {
+.hu-modal,
+.hu-options-modal {
 	position: fixed;
 	top: 100px;
 	left: 50%;
@@ -42,26 +42,26 @@
 	-webkit-transform: translateX(-50%);
 }
 
-.helix-ultimate-modal-small {
+.hu-modal-small {
 	top: 5%;
 	width: 420px;
 	height: 90%;
 }
 
-.helix-ultimate-modal-medium {
+.hu-modal-medium {
 	top: 5%;
 	width: 600px;
 	height: 90%;
 }
 
-.helix-ultimate-modal-large {
+.hu-modal-large {
 	top: 5%;
 	width: 800px;
 	height: 90%;
 }
 
-.helix-ultimate-modal-header,
-.helix-ultimate-options-modal-header {
+.hu-modal-header,
+.hu-options-modal-header {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -75,15 +75,15 @@
 	align-items: center;
 }
 
-.helix-ultimate-modal-header-title,
-.helix-ultimate-options-modal-header-title {
+.hu-modal-header-title,
+.hu-options-modal-header-title {
 	font-size: 14px;
 	font-weight: 500;
 	color: #6f737a;
 }
 
-.helix-ultimate-modal-footer,
-.helix-ultimate-options-modal-footer {
+.hu-modal-footer,
+.hu-options-modal-footer {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -97,17 +97,17 @@
 	align-items: center;
 }
 
-.helix-ultimate-modal-footer .btn,
-.helix-ultimate-options-modal-footer .btn {
+.hu-modal-footer .btn,
+.hu-options-modal-footer .btn {
 	margin-right: 10px;
 	font-size: 12px;
 }
 
-.helix-ultimate-modal-breadcrumbs {
+.hu-modal-breadcrumbs {
 	width: 560px;
 }
 
-.helix-ultimate-modal-actions-left {
+.hu-modal-actions-left {
 	position: absolute;
 	top: 0;
 	left: 20px;
@@ -119,13 +119,13 @@
 	display: none;
 }
 
-.helix-ultimate-modal-actions-right {
+.hu-modal-actions-right {
 	width: 220px;
 	text-align: right;
 }
 
-.action-helix-ultimate-modal-close,
-.action-helix-ultimate-options-modal-close {
+.action-hu-modal-close,
+.action-hu-options-modal-close {
 	background-color: #dc3545;
 	border-radius: 25px;
 	color: #fff;
@@ -139,24 +139,24 @@
 	z-index: 3;
 }
 
-.action-helix-ultimate-modal-close:hover,
-.action-helix-ultimate-options-modal-close:hover {
+.action-hu-modal-close:hover,
+.action-hu-options-modal-close:hover {
 	background-color: #c82333;
 	color: #fff;
 }
 
-.helix-ultimate-modal-actions-left .btn,
-.helix-ultimate-modal-actions-right .btn {
+.hu-modal-actions-left .btn,
+.hu-modal-actions-right .btn {
 	font-size: 12px;
 	margin-right: 10px;
 }
 
-.helix-ultimate-modal-actions-left .btn-last,
-.helix-ultimate-modal-actions-right .btn-last {
+.hu-modal-actions-left .btn-last,
+.hu-modal-actions-right .btn-last {
 	margin-right: 0;
 }
 
-.helix-ultimate-media-breadcrumb {
+.hu-media-breadcrumb {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -167,15 +167,15 @@
 	list-style: none;
 }
 
-.helix-ultimate-media-breadcrumb-item {
+.hu-media-breadcrumb-item {
 	height: 60px;
 	line-height: 60px;
 	font-size: 14px;
 	text-transform: capitalize;
 }
 
-.helix-ultimate-media-breadcrumb-item
-	+ .helix-ultimate-media-breadcrumb-item::before {
+.hu-media-breadcrumb-item
+	+ .hu-media-breadcrumb-item::before {
 	display: inline-block;
 	padding-right: 0.5rem;
 	padding-left: 0.5rem;
@@ -184,29 +184,29 @@
 	font-family: FontAwesome;
 }
 
-.helix-ultimate-media-breadcrumb-item
-	+ .helix-ultimate-media-breadcrumb-item:hover::before {
+.hu-media-breadcrumb-item
+	+ .hu-media-breadcrumb-item:hover::before {
 	text-decoration: underline;
 }
 
-.helix-ultimate-media-breadcrumb-item
-	+ .helix-ultimate-media-breadcrumb-item:hover::before {
+.hu-media-breadcrumb-item
+	+ .hu-media-breadcrumb-item:hover::before {
 	text-decoration: none;
 }
 
-.helix-ultimate-media-breadcrumb-item {
+.hu-media-breadcrumb-item {
 	color: #868e96;
 }
 
-.helix-ultimate-modal-inner,
-.helix-ultimate-options-modal-inner {
+.hu-modal-inner,
+.hu-options-modal-inner {
 	position: relative;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 }
 
-.helix-ultimate-modal-preloader {
+.hu-modal-preloader {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -214,13 +214,13 @@
 	text-align: center;
 }
 
-.helix-ultimate-modal-preloader .fas {
+.hu-modal-preloader .fas {
 	display: table-cell;
 	vertical-align: middle;
 }
 
-#helix-ultimate-media-manager,
-.helix-ultimate-modal-content {
+#hu-media-manager,
+.hu-modal-content {
 	position: absolute;
 	top: 80px;
 	left: 20px;
@@ -229,7 +229,7 @@
 	overflow-y: auto;
 }
 
-.helix-ultimate-options-modal-content {
+.hu-options-modal-content {
 	position: absolute;
 	top: 60px;
 	left: 0px;
@@ -238,24 +238,24 @@
 	overflow-y: auto;
 }
 
-.helix-ultimate-modal-content,
-.helix-ultimate-options-modal-content {
+.hu-modal-content,
+.hu-options-modal-content {
 	bottom: 80px;
 }
 
-.helix-ultimate-options-modal-content > .control-group:first-child {
+.hu-options-modal-content > .control-group:first-child {
 	margin-top: 0;
 	padding-top: 0;
 	border-top: 0;
 }
 
-.helix-ultimate-media {
+.hu-media {
 	list-style: none;
 	padding: 0;
 	margin: -10px;
 }
 
-.helix-ultimate-media:empty {
+.hu-media:empty {
 	margin: 0;
 	border: 2px dashed #e8eef3;
 	position: absolute;
@@ -267,7 +267,7 @@
 	overflow: hidden;
 }
 
-.helix-ultimate-media:empty:before {
+.hu-media:empty:before {
 	content: 'This folder is empty';
 	font-size: 16px;
 	font-weight: bold;
@@ -277,7 +277,7 @@
 	transform: translate(-50%);
 }
 
-.helix-ultimate-media > li {
+.hu-media > li {
 	width: 140px;
 	height: 180px;
 	display: block;
@@ -286,7 +286,7 @@
 	position: relative;
 }
 
-.helix-ultimate-media-thumb {
+.hu-media-thumb {
 	height: 140px;
 	width: 140px;
 	display: -webkit-box;
@@ -306,7 +306,7 @@
 	background-color: #fff;
 }
 
-.helix-ultimate-media-thumb-new {
+.hu-media-thumb-new {
 	animation: newFolder 5000ms;
 }
 
@@ -319,18 +319,18 @@
 	}
 }
 
-.helix-ultimate-media-image .helix-ultimate-media-thumb img {
+.hu-media-image .hu-media-thumb img {
 	background: #e7e8ec;
 	border: 1px solid #d4d5d9;
 	border-radius: 3px;
 }
 
-.helix-ultimate-media-selected .helix-ultimate-media-thumb {
+.hu-media-selected .hu-media-thumb {
 	background: #d6e8fa;
 	border-color: #d6e8fa;
 }
 
-.helix-ultimate-media-select {
+.hu-media-select {
 	display: block;
 	position: absolute;
 	top: 10px;
@@ -349,27 +349,27 @@
 	-webkit-transition: opacity 400ms;
 }
 
-.helix-ultimate-media > li:hover .helix-ultimate-media-select {
+.hu-media > li:hover .hu-media-select {
 	opacity: 1;
 }
 
-.helix-ultimate-media-select > span {
+.hu-media-select > span {
 	display: none;
 }
 
-.helix-ultimate-media-selected .helix-ultimate-media-select {
+.hu-media-selected .hu-media-select {
 	border-color: #1d84e9;
 	background-color: #1d84e9;
 	opacity: 1;
 }
 
-.helix-ultimate-media-selected .helix-ultimate-media-select > span {
+.hu-media-selected .hu-media-select > span {
 	display: block;
 	color: #fff;
 	line-height: 24px;
 }
 
-.helix-ultimate-media-label {
+.hu-media-label {
 	width: 90%;
 	margin-left: 5%;
 	height: 40px;
@@ -393,7 +393,7 @@
 	overflow: hidden;
 }
 
-.helix-ultimate-media-thumb img {
+.hu-media-thumb img {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	max-height: 100%;
@@ -402,7 +402,7 @@
 	outline: none;
 }
 
-.helix-ultimate-image-holder img {
+.hu-image-holder img {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	max-height: 100%;
@@ -414,16 +414,16 @@
 	border-radius: 3px;
 }
 
-.helix-ultimate-image-holder:not(:empty) {
+.hu-image-holder:not(:empty) {
 	margin-bottom: 15px;
 }
 
-.helix-ultimate-media-picker {
+.hu-media-picker {
 	margin-right: 10px;
 }
 
 /* Progress */
-.helix-ultimate-progress {
+.hu-progress {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -435,7 +435,7 @@
 	border-radius: 0.25rem;
 }
 
-.helix-ultimate-progress-bar {
+.hu-progress-bar {
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;

@@ -51,12 +51,12 @@ class JFormFieldHelixheaders extends FormField
 
 			if (!empty($headers))
 			{
-				$html = '<div class="helix-ultimate-predefined-headers">';
-				$html .= '<ul class="helix-ultimate-header-list clearfix" data-name="' . $this->name . '">';
+				$html = '<div class="hu-predefined-headers">';
+				$html .= '<ul class="hu-header-list clearfix" data-name="' . $this->name . '">';
 
 				foreach ($headers as $header)
 				{
-					$html .= '<li class="helix-ultimate-header-item' . (($this->value === $header) ? ' active' : '') . '" data-style="' . $header . '">';
+					$html .= '<li class="hu-header-item' . (($this->value === $header) ? ' active' : '') . '" data-style="' . $header . '">';
 
 					if (file_exists($headers_src . '/' . $header . '/thumb.svg'))
 					{

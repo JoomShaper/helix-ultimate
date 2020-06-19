@@ -14,7 +14,7 @@ extract($displayData);
 
 ?>
 
-<div id="helix-ultimate-options">
+<div id="hu-options">
 	<?php foreach ($fieldsets as $key => $fieldset): ?>
 		<?php echo LayoutHelper::render('cpanel.control-board.fieldset.icon', ['fieldset' => $fieldset, 'key' => $key, 'form' => $form], HELIX_LAYOUTS_PATH); ?>
 	<?php endforeach; ?>

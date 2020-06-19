@@ -152,7 +152,7 @@ class Blog
 
 						if ($gallery)
 						{
-							$report['output'] = '<a href="#" class="btn btn-mini btn-danger btn-helix-ultimate-remove-gallery-image"><span class="fas fa-times"></span></a><img src="' . URI::root(true) . '/' . $src . '" alt="">';
+							$report['output'] = '<a href="#" class="btn btn-mini btn-danger btn-hu-remove-gallery-image"><span class="fas fa-times"></span></a><img src="' . URI::root(true) . '/' . $src . '" alt="">';
 							$report['data_src'] = $data_src;
 						}
 						else

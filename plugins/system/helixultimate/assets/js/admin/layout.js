@@ -17,10 +17,10 @@ jQuery(function ($) {
 				tolerance: 'pointer',
 
 				start: function (event, ui) {
-					$('.helix-ultimate-layout-section .row')
+					$('.hu-layout-section .row')
 						.find('.ui-state-highlight')
 						.addClass($(ui.item).attr('class'));
-					$('.helix-ultimate-layout-section .row')
+					$('.hu-layout-section .row')
 						.find('.ui-state-highlight')
 						.css('height', $(ui.item).outerHeight());
 				},
@@ -31,7 +31,7 @@ jQuery(function ($) {
 	jqueryUiLayout();
 
 	function jqueryUiLayout() {
-		$('#helix-ultimate-layout-builder')
+		$('#hu-layout-builder')
 			.sortable({
 				placeholder: 'ui-state-highlight',
 				forcePlaceholderSize: true,
@@ -41,7 +41,7 @@ jQuery(function ($) {
 			})
 			.disableSelection();
 
-		$('.helix-ultimate-layout-section').find('.row').rowSortable();
+		$('.hu-layout-section').find('.row').rowSortable();
 	}
 
 	// setInputValue Callback Function
@@ -100,47 +100,47 @@ jQuery(function ($) {
 	};
 
 	// Open Row settings Modal
-	$(document).on('click', '.helix-ultimate-row-options', function (event) {
+	$(document).on('click', '.hu-row-options', function (event) {
 		event.preventDefault();
 		$(this).helixUltimateOptionsModal({
 			flag: 'row-setting',
 			title: "<span class='fas fa-cogs'></span> Row Options",
-			class: 'helix-ultimate-modal-small',
+			class: 'hu-modal-small',
 		});
 
-		$('.helix-ultimate-layout-section').removeClass('row-active');
-		$parent = $(this).closest('.helix-ultimate-layout-section');
+		$('.hu-layout-section').removeClass('row-active');
+		$parent = $(this).closest('.hu-layout-section');
 		$parent.addClass('row-active');
 
-		$('#helix-ultimate-row-settings')
-			.find('select.helix-ultimate-input')
+		$('#hu-row-settings')
+			.find('select.hu-input')
 			.each(function () {
 				$(this).chosen('destroy');
 			});
 
-		var $clone = $('#helix-ultimate-row-settings').clone(true);
-		$clone.find('.helix-ultimate-input-color').each(function () {
+		var $clone = $('#hu-row-settings').clone(true);
+		$clone.find('.hu-input-color').each(function () {
 			$(this).addClass('minicolors');
 		});
 
-		$clone.find('select.helix-ultimate-input').each(function () {
+		$clone.find('select.hu-input').each(function () {
 			$(this).chosen({ width: '100%' });
 		});
 
-		$clone = $('.helix-ultimate-options-modal-inner').html(
+		$clone = $('.hu-options-modal-inner').html(
 			$clone
 				.removeAttr('id')
-				.addClass('helix-ultimate-options-modal-content')
+				.addClass('hu-options-modal-content')
 		);
 
-		$clone.find('.helix-ultimate-input').each(function () {
+		$clone.find('.hu-input').each(function () {
 			var $that = $(this),
 				attrValue = $parent.data($that.data('attrname'));
 			$that.setInputValue({ field: attrValue });
-			if ($that.hasClass('helix-ultimate-input-media')) {
+			if ($that.hasClass('hu-input-media')) {
 				if (attrValue) {
 					$that
-						.prev('.helix-ultimate-image-holder')
+						.prev('.hu-image-holder')
 						.html(
 							'<img src="' +
 								$that.data('baseurl') +
@@ -155,54 +155,54 @@ jQuery(function ($) {
 	});
 
 	// Open Column settings Modal
-	$(document).on('click', '.helix-ultimate-column-options', function (event) {
+	$(document).on('click', '.hu-column-options', function (event) {
 		event.preventDefault();
 		$(this).helixUltimateOptionsModal({
 			flag: 'column-setting',
 			title: "<span class='fas fa-cog'></span> Column Options",
-			class: 'helix-ultimate-modal-small',
+			class: 'hu-modal-small',
 		});
 
-		$('.helix-ultimate-layout-column').removeClass('column-active');
-		$parent = $(this).closest('.helix-ultimate-layout-column');
+		$('.hu-layout-column').removeClass('column-active');
+		$parent = $(this).closest('.hu-layout-column');
 		$parent.addClass('column-active');
 
-		$('#helix-ultimate-column-settings')
-			.find('select.helix-ultimate-input')
+		$('#hu-column-settings')
+			.find('select.hu-input')
 			.each(function () {
 				$(this).chosen('destroy');
 			});
 
-		var $clone = $('#helix-ultimate-column-settings').clone(true);
-		$clone.find('.helix-ultimate-input-color').each(function () {
+		var $clone = $('#hu-column-settings').clone(true);
+		$clone.find('.hu-input-color').each(function () {
 			$(this).addClass('minicolors');
 		});
 
-		$clone = $('.helix-ultimate-options-modal-inner').html(
+		$clone = $('.hu-options-modal-inner').html(
 			$clone
 				.removeAttr('id')
-				.addClass('helix-ultimate-options-modal-content')
+				.addClass('hu-options-modal-content')
 		);
 
-		$clone.find('.helix-ultimate-input').each(function () {
+		$clone.find('.hu-input').each(function () {
 			var $that = $(this),
 				attrValue = $parent.data($that.data('attrname'));
 			$that.setInputValue({ field: attrValue });
 		});
 
-		$clone.find('select.helix-ultimate-input').each(function () {
+		$clone.find('select.hu-input').each(function () {
 			$(this).chosen({ width: '100%' });
 		});
 
 		$clone.initColorPicker();
 	});
 
-	$('.helix-ultimate-input-column_type').change(function (event) {
-		var $parent = $(this).closest('.helix-ultimate-modal-content'),
+	$('.hu-input-column_type').change(function (event) {
+		var $parent = $(this).closest('.hu-modal-content'),
 			flag = false;
 
-		$('#helix-ultimate-layout-builder')
-			.find('.helix-ultimate-layout-column')
+		$('#hu-layout-builder')
+			.find('.hu-layout-column')
 			.not('.column-active')
 			.each(function (index, val) {
 				if ($(this).data('column_type') == '1') {
@@ -219,28 +219,28 @@ jQuery(function ($) {
 		}
 
 		if ($(this).attr('checked')) {
-			$('.helix-ultimate-layout-column.column-active')
-				.find('.helix-ultimate-column')
-				.addClass('helix-ultimate-column-component');
+			$('.hu-layout-column.column-active')
+				.find('.hu-column')
+				.addClass('hu-column-component');
 			$parent.children('.control-group.name').slideUp('400');
 		} else {
-			$('#helix-ultimate-layout-builder')
-				.find('.helix-ultimate-column-component')
-				.removeClass('helix-ultimate-column-component');
+			$('#hu-layout-builder')
+				.find('.hu-column-component')
+				.removeClass('hu-column-component');
 			$parent.children('.control-group.name').slideDown('400');
 		}
 	});
 
 	// Save Row Column Settings
-	$(document).on('click', '.helix-ultimate-settings-apply', function (event) {
+	$(document).on('click', '.hu-settings-apply', function (event) {
 		event.preventDefault();
 
 		var flag = $(this).data('flag');
 
 		switch (flag) {
 			case 'row-setting':
-				$('.helix-ultimate-options-modal-content')
-					.find('.helix-ultimate-input')
+				$('.hu-options-modal-content')
+					.find('.hu-input')
 					.each(function () {
 						var $this = $(this),
 							$parent = $('.row-active'),
@@ -252,11 +252,11 @@ jQuery(function ($) {
 
 							if (nameVal == '' || nameVal == null) {
 								$(
-									'.row-active .helix-ultimate-section-title'
+									'.row-active .hu-section-title'
 								).text('Section Header');
 							} else {
 								$(
-									'.row-active .helix-ultimate-section-title'
+									'.row-active .hu-section-title'
 								).text($this.val());
 							}
 						}
@@ -265,16 +265,16 @@ jQuery(function ($) {
 					});
 
 				$(
-					'.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal'
+					'.hu-options-modal-overlay, .hu-options-modal'
 				).remove();
-				$('body').removeClass('helix-ultimate-options-modal-open');
+				$('body').removeClass('hu-options-modal-open');
 				break;
 
 			case 'column-setting':
 				var component = false;
 
-				$('.helix-ultimate-options-modal-content')
-					.find('.helix-ultimate-input')
+				$('.hu-options-modal-content')
+					.find('.hu-input')
 					.each(function () {
 						var $this = $(this),
 							$parent = $('.column-active'),
@@ -289,23 +289,23 @@ jQuery(function ($) {
 						) {
 							component = true;
 							$(
-								'.column-active .helix-ultimate-column-title'
+								'.column-active .hu-column-title'
 							).text('Component');
 						} else if ($attrname == 'name' && component != true) {
 							if (dataVal == '' || dataVal == undefined) {
 								dataVal = 'none';
 							}
 							$(
-								'.column-active .helix-ultimate-column-title'
+								'.column-active .hu-column-title'
 							).text(dataVal);
 						}
 
 						$parent.data($attrname, $this.getInputValue());
 					});
 				$(
-					'.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal'
+					'.hu-options-modal-overlay, .hu-options-modal'
 				).remove();
-				$('body').removeClass('helix-ultimate-options-modal-open');
+				$('body').removeClass('hu-options-modal-open');
 				break;
 
 			default:
@@ -316,18 +316,18 @@ jQuery(function ($) {
 	// Cancel Modal
 	$(document).on(
 		'click',
-		'.helix-ultimate-settings-cancel, .action-helix-ultimate-options-modal-close',
+		'.hu-settings-cancel, .action-hu-options-modal-close',
 		function (event) {
 			event.preventDefault();
 			$(
-				'.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal'
+				'.hu-options-modal-overlay, .hu-options-modal'
 			).remove();
-			$('body').removeClass('helix-ultimate-options-modal-open');
+			$('body').removeClass('hu-options-modal-open');
 		}
 	);
 
 	// Column Layout Arrange
-	$(document).on('click', '.helix-ultimate-column-layout', function (event) {
+	$(document).on('click', '.hu-column-layout', function (event) {
 		event.preventDefault();
 
 		var $that = $(this),
@@ -345,8 +345,8 @@ jQuery(function ($) {
 			);
 		}
 
-		var $parent = $that.closest('.helix-ultimate-column-list'),
-			$gparent = $that.closest('.helix-ultimate-layout-section'),
+		var $parent = $that.closest('.hu-column-list'),
+			$gparent = $that.closest('.hu-layout-section'),
 			oldLayoutData = $parent.find('.active').data('layout'),
 			oldLayout = ['12'],
 			layoutData = $that.data('layout'),
@@ -388,7 +388,7 @@ jQuery(function ($) {
 		var col = [],
 			colAttr = [];
 
-		$gparent.find('.helix-ultimate-layout-column').each(function (i, val) {
+		$gparent.find('.hu-layout-column').each(function (i, val) {
 			col[i] = $(this).html();
 			var colData = $(this).data();
 
@@ -420,7 +420,7 @@ jQuery(function ($) {
 			});
 
 			new_item +=
-				'<div class="helix-ultimate-layout-column col-md-' +
+				'<div class="hu-layout-column col-md-' +
 				newLayout[i].trim() +
 				'" ' +
 				dataAttr +
@@ -428,17 +428,17 @@ jQuery(function ($) {
 			if (col[i]) {
 				new_item += col[i];
 			} else {
-				new_item += '<div class="helix-ultimate-column clearfix">';
+				new_item += '<div class="hu-column clearfix">';
 				new_item +=
-					'<span class="helix-ultimate-column-title">none</span>';
+					'<span class="hu-column-title">none</span>';
 				new_item +=
-					'<a class="helix-ultimate-column-options" href="#"><i class="fas fa-cog"></i></a>';
+					'<a class="hu-column-options" href="#"><i class="fas fa-cog"></i></a>';
 				new_item += '</div>';
 			}
 			new_item += '</div>';
 		}
 
-		$old_column = $gparent.find('.helix-ultimate-layout-column');
+		$old_column = $gparent.find('.hu-layout-column');
 		$gparent.find('.row.ui-sortable').append(new_item);
 
 		$old_column.remove();
@@ -446,27 +446,27 @@ jQuery(function ($) {
 	});
 
 	// add row
-	$(document).on('click', '.helix-ultimate-add-row', function (event) {
+	$(document).on('click', '.hu-add-row', function (event) {
 		event.preventDefault();
 
-		var $parent = $(this).closest('.helix-ultimate-layout-section'),
-			$rowClone = $('#helix-ultimate-layout-section').clone(true);
+		var $parent = $(this).closest('.hu-layout-section'),
+			$rowClone = $('#hu-layout-section').clone(true);
 
-		$rowClone.addClass('helix-ultimate-layout-section').removeAttr('id');
+		$rowClone.addClass('hu-layout-section').removeAttr('id');
 		$($rowClone).insertAfter($parent);
 
 		jqueryUiLayout();
 	});
 
 	// Remove Row
-	$(document).on('click', '.helix-ultimate-remove-row', function (event) {
+	$(document).on('click', '.hu-remove-row', function (event) {
 		event.preventDefault();
 
 		if (
 			confirm('Click Ok button to delete Row, Cancel to leave.') == true
 		) {
 			$(this)
-				.closest('.helix-ultimate-layout-section')
+				.closest('.hu-layout-section')
 				.slideUp(500, function () {
 					$(this).remove();
 				});
@@ -487,8 +487,8 @@ jQuery(function ($) {
 	// Generate Layout JSON
 	function getGeneratedLayout() {
 		var item = [];
-		$('#helix-ultimate-layout-builder')
-			.find('.helix-ultimate-layout-section')
+		$('#hu-layout-builder')
+			.find('.hu-layout-section')
 			.each(function (index) {
 				var $row = $(this),
 					rowIndex = index,
@@ -511,7 +511,7 @@ jQuery(function ($) {
 				};
 
 				// Find Column Elements
-				$row.find('.helix-ultimate-layout-column').each(function (
+				$row.find('.hu-layout-column').each(function (
 					index
 				) {
 					var $column = $(this),

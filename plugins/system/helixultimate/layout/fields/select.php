@@ -30,7 +30,7 @@ class HelixultimateFieldSelect
 		$output  = '<div class="control-group ' . $key . '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
-		$output .= '<select class="helix-ultimate-input input-select" data-attrname="' . $key . '">';
+		$output .= '<select class="hu-input input-select" data-attrname="' . $key . '">';
 
 		foreach ($attr['values'] as $key => $value)
 		{

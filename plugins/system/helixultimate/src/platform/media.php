@@ -47,7 +47,7 @@ class Media
 		$crumbs = explode('/', ltrim($path, '/'));
 		$crumb_url = '';
 
-		$breadcrumb = '<ul class="helix-ultimate-media-breadcrumb">';
+		$breadcrumb = '<ul class="hu-media-breadcrumb">';
 
 		foreach ($crumbs as $key => $crumb)
 		{
@@ -55,11 +55,11 @@ class Media
 
 			if (count($crumbs) === ($key + 1))
 			{
-				$breadcrumb .= '<li class="helix-ultimate-media-breadcrumb-item active" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</li>';
+				$breadcrumb .= '<li class="hu-media-breadcrumb-item active" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</li>';
 			}
 			else
 			{
-				$breadcrumb .= '<li class="helix-ultimate-media-breadcrumb-item" data-path="' . $crumb_url . '"><a href="#" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</a></li>';
+				$breadcrumb .= '<li class="hu-media-breadcrumb-item" data-path="' . $crumb_url . '"><a href="#" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</a></li>';
 			}
 		}
 
@@ -72,8 +72,8 @@ class Media
 		$media['images'] = $images;
 		$media['folders'] = $folders;
 
-		$output = '<div id="helix-ultimate-media-manager">';
-		$output .= '<ul class="helix-ultimate-media clearfix">';
+		$output = '<div id="hu-media-manager">';
+		$output .= '<ul class="hu-media clearfix">';
 
 		if (!empty($folders))
 		{
@@ -112,29 +112,29 @@ class Media
 			{
 				if ($file['type'] === 'folder')
 				{
-					$output .= '<li class="helix-ultimate-media-folder" data-path="' . $file['folder'] . '">';
-					$output .= '<div class="helix-ultimate-media-thumb">';
+					$output .= '<li class="hu-media-folder" data-path="' . $file['folder'] . '">';
+					$output .= '<div class="hu-media-thumb">';
 					$output .= '<svg width="160" height="160" viewBox="0 0 160 160"><g fill="none" fill-rule="evenodd"><path d="M77.955 53h50.04A3.002 3.002 0 0 1 131 56.007v58.988a4.008 4.008 0 0 1-4.003 4.005H39.003A4.002 4.002 0 0 1 35 114.995V45.99c0-2.206 1.79-3.99 3.997-3.99h26.002c1.666 0 3.667 1.166 4.49 2.605l3.341 5.848s1.281 2.544 5.12 2.544l.005.003z" fill="#71B9F4"></path><path d="M77.955 52h50.04A3.002 3.002 0 0 1 131 55.007v58.988a4.008 4.008 0 0 1-4.003 4.005H39.003A4.002 4.002 0 0 1 35 113.995V44.99c0-2.206 1.79-3.99 3.997-3.99h26.002c1.666 0 3.667 1.166 4.49 2.605l3.341 5.848s1.281 2.544 5.12 2.544l.005.003z" fill="#92CEFF"></path></g></svg>';
 					$output .= '</div>';
-					$output .= '<span class="helix-ultimate-media-select"><span class="fas fa-check"></span></span>';
-					$output .= '<div class="helix-ultimate-media-label">' . $file['name'] . '</div>';
+					$output .= '<span class="hu-media-select"><span class="fas fa-check"></span></span>';
+					$output .= '<div class="hu-media-label">' . $file['name'] . '</div>';
 					$output .= '</li>';
 				}
 				else
 				{
-					$output .= '<li class="helix-ultimate-media-image" data-path="' . $file['path'] . '" data-preview="' . $file['preview'] . '">';
-					$output .= '<div class="helix-ultimate-media-thumb">';
+					$output .= '<li class="hu-media-image" data-path="' . $file['path'] . '" data-preview="' . $file['preview'] . '">';
+					$output .= '<div class="hu-media-thumb">';
 					$output .= '<img src="' . $file['preview'] . '" alt="">';
 					$output .= '</div>';
-					$output .= '<span class="helix-ultimate-media-select"><span class="fas fa-check"></span></span>';
-					$output .= '<div class="helix-ultimate-media-label">' . $file['name'] . '</div>';
+					$output .= '<span class="hu-media-select"><span class="fas fa-check"></span></span>';
+					$output .= '<div class="hu-media-label">' . $file['name'] . '</div>';
 					$output .= '</li>';
 				}
 			}
 		}
 		else
 		{
-			// $output .= '<li class="helix-ultimate-media-folder-empty"></li>';
+			// $output .= '<li class="hu-media-folder-empty"></li>';
 		}
 
 		$output .= '</ul>';
@@ -315,11 +315,11 @@ class Media
 							$report['title'] = $media_name;
 							$report['path'] = $src;
 
-							$output = '<div class="helix-ultimate-media-thumb">';
+							$output = '<div class="hu-media-thumb">';
 							$output .= '<img src="' . $report['src'] . '" alt="">';
 							$output .= '</div>';
-							$output .= '<span class="helix-ultimate-media-select"><span class="fas fa-check"></span></span>';
-							$output .= '<div class="helix-ultimate-media-label">' . $report['title'] . '</div>';
+							$output .= '<span class="hu-media-select"><span class="fas fa-check"></span></span>';
+							$output .= '<div class="hu-media-label">' . $report['title'] . '</div>';
 
 							$report['output'] = $output;
 						}

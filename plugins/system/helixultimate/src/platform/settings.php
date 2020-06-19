@@ -199,7 +199,7 @@ class Settings
 			$presetField->id = $presetName . '-' . $presetField->id;
 		}
 
-		$html = '<div id="' . $presetData['name'] . '" class="helix-ultimate-preset-container" style="display: none;">';
+		$html = '<div id="' . $presetData['name'] . '" class="hu-preset-container" style="display: none;">';
 		$html .= '<div  class="' . $presetData['name'] . '">';
 
 		$html .= LayoutHelper::render(

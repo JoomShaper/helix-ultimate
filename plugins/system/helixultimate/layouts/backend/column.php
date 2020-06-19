@@ -14,26 +14,26 @@ if(isset($settings->grid_size) && $settings->grid_size){
     $colSettings = RowColumnSettings::getSettings($settings);
 }
 
-$output = '<div class="helix-ultimate-layout-column col-md-' . ((isset($settings->grid_size) && $settings->grid_size)? $settings->grid_size :12) .'" ' . $colSettings .'>';
-$output .= '<div class="helix-ultimate-column' . ((isset($settings->column_type) && $settings->column_type) ? ' helix-ultimate-column-component' : '') . ' clearfix">';
+$output = '<div class="hu-layout-column col-md-' . ((isset($settings->grid_size) && $settings->grid_size)? $settings->grid_size :12) .'" ' . $colSettings .'>';
+$output .= '<div class="hu-column' . ((isset($settings->column_type) && $settings->column_type) ? ' hu-column-component' : '') . ' clearfix">';
 
 if (isset($settings->column_type) && $settings->column_type)
 {
-    $output .= '<span class="helix-ultimate-column-title">Component</span>';
+    $output .= '<span class="hu-column-title">Component</span>';
 }
 else
 {
     if (isset($settings->name))
     {
-        $output .= '<span class="helix-ultimate-column-title">'. $settings->name .'</span>';
+        $output .= '<span class="hu-column-title">'. $settings->name .'</span>';
     }
     else
     {
-        $output .= '<span class="helix-ultimate-column-title">None</span>';
+        $output .= '<span class="hu-column-title">None</span>';
     }
 }
 
-$output .= '<a class="helix-ultimate-column-options" href="#" ><i class="fas fa-cog fa-fw"></i></a>';
+$output .= '<a class="hu-column-options" href="#" ><i class="fas fa-cog fa-fw"></i></a>';
 $output .= '</div>';
 $output .= '</div>';
 

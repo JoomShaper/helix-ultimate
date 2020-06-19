@@ -27,17 +27,17 @@ $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 $layout_column = new JLayoutFile('backend.column', $layout_path );
 
 $output = '';
-$output .= '<div '.((isset($row->sectionID) && $row->sectionID)?'id="helix-ultimate-layout-section"':'').' class="helix-ultimate-layout-section" ' . $rowSettings .'>';
-$output .= '<div class="helix-ultimate-section-settings clearfix">';
+$output .= '<div '.((isset($row->sectionID) && $row->sectionID)?'id="hu-layout-section"':'').' class="hu-layout-section" ' . $rowSettings .'>';
+$output .= '<div class="hu-section-settings clearfix">';
 $output .= '<div class="pull-left">';
-$output .= '<a class="helix-ultimate-move-row" href="#"><i class="fas fa-arrows-alt"></i></a>';
-$output .= '<strong class="helix-ultimate-section-title">' . $name . '</strong>';
+$output .= '<a class="hu-move-row" href="#"><i class="fas fa-arrows-alt"></i></a>';
+$output .= '<strong class="hu-section-title">' . $name . '</strong>';
 $output .= '</div>';
 $output .= '<div class="pull-right">';
-$output .= '<ul class="helix-ultimate-row-option-list">';
+$output .= '<ul class="hu-row-option-list">';
 $output .= '<li>';
-$output .= '<a class="helix-ultimate-add-columns" href="#"><span class="fas fa-columns"></span></a>';
-$output .= '<ul class="helix-ultimate-column-list">';
+$output .= '<a class="hu-add-columns" href="#"><span class="fas fa-columns"></span></a>';
+$output .= '<ul class="hu-column-list">';
 
 if(!isset($row->layout)){
     $row->layout =  12;
@@ -46,25 +46,25 @@ if(!isset($row->layout)){
 foreach ($colGrid as $grid)
 {
     $cols = explode('+', $grid);
-    $output .= '<li><a href="#" class="helix-ultimate-column-layout '.(($grid == $row->layout)? 'active' : '' ).'" data-layout="'.$grid.'">';
+    $output .= '<li><a href="#" class="hu-column-layout '.(($grid == $row->layout)? 'active' : '' ).'" data-layout="'.$grid.'">';
 
     foreach ($cols as $col)
     {
-        $output .= '<span class="helix-ultimate-column-layout-col-'. $col .'"><span>'. $col .'</span></span>';
+        $output .= '<span class="hu-column-layout-col-'. $col .'"><span>'. $col .'</span></span>';
     }
     $output .= '</a></li>';
 }
 
-$output .= '<li><a href="#" class="helix-ultimate-column-layout-custom helix-ultimate-column-layout helix-ultimate-custom ' . ((isset($row->layout) && !in_array($row->layout, $colGrid)) ? 'active' : '' ) .'" data-layout="'. $row->layout .'" data-type="custom" title="Custom Layout"><span class="helix-ultimate-column-layout-col-3"><span>[</span></span><span class="helix-ultimate-column-layout-col-6"><span>+</span></span><span class="helix-ultimate-column-layout-col-3"><span>]</span></span></a></li>';
+$output .= '<li><a href="#" class="hu-column-layout-custom hu-column-layout hu-custom ' . ((isset($row->layout) && !in_array($row->layout, $colGrid)) ? 'active' : '' ) .'" data-layout="'. $row->layout .'" data-type="custom" title="Custom Layout"><span class="hu-column-layout-col-3"><span>[</span></span><span class="hu-column-layout-col-6"><span>+</span></span><span class="hu-column-layout-col-3"><span>]</span></span></a></li>';
 $output .= '</ul>';
 $output .= '</li>';
-$output .= '<li><a class="helix-ultimate-row-options" href="#"><i class="fas fa-cogs fa-fw"></i></a></li>';
-$output .= '<li><a class="helix-ultimate-remove-row" href="#"><i class="fas fa-trash fa-fw"></i></a></li>';
+$output .= '<li><a class="hu-row-options" href="#"><i class="fas fa-cogs fa-fw"></i></a></li>';
+$output .= '<li><a class="hu-remove-row" href="#"><i class="fas fa-trash fa-fw"></i></a></li>';
 $output .= '</ul>';
 $output .= '</div>';
 $output .= '</div>';
 
-$output .= '<div class="helix-ultimate-row-container ui-sortable">';
+$output .= '<div class="hu-row-container ui-sortable">';
 $output .= '<div class="row ui-sortable">';
 
 if(isset($row->attr) && $row->attr)
@@ -81,7 +81,7 @@ else
 
 $output .= '</div>';
 $output .= '</div>';
-$output .= '<a class="helix-ultimate-add-row" href="#"><i class="fas fa-plus"></i></a>';
+$output .= '<a class="hu-add-row" href="#"><i class="fas fa-plus"></i></a>';
 $output .= '</div>';
 
 echo $output;

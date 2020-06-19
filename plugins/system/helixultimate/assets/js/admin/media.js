@@ -7,7 +7,7 @@
 
 jQuery(function ($) {
 	// Media
-	$('.helix-ultimate-media-picker').on('click', function (e) {
+	$('.hu-media-picker').on('click', function (e) {
 		e.preventDefault();
 		var self = this;
 		var target_type = 'id';
@@ -50,15 +50,15 @@ jQuery(function ($) {
 					.removeClass('fa-spinner fa-spin')
 					.addClass('fa-picture-o');
 				if (data.status) {
-					$('.helix-ultimate-modal-breadcrumbs').html(
+					$('.hu-modal-breadcrumbs').html(
 						data.breadcrumbs
 					);
-					$('.helix-ultimate-modal-inner').html(data.output);
+					$('.hu-modal-inner').html(data.output);
 				} else {
 					$(
-						'.helix-ultimate-modal-overlay, .helix-ultimate-modal'
+						'.hu-modal-overlay, .hu-modal'
 					).remove();
-					$('body').addClass('helix-ultimate-modal-open');
+					$('body').addClass('hu-modal-open');
 					alert(data.output);
 				}
 			},
@@ -68,7 +68,7 @@ jQuery(function ($) {
 		});
 	});
 
-	$(document).on('dblclick', '.helix-ultimate-media-folder', function (e) {
+	$(document).on('dblclick', '.hu-media-folder', function (e) {
 		e.preventDefault();
 		var self = this;
 
@@ -85,22 +85,22 @@ jQuery(function ($) {
 			type: 'POST',
 			data: request,
 			beforeSend: function () {
-				$('.helix-ultimate-media-selected').removeClass(
-					'helix-ultimate-media-selected'
+				$('.hu-media-selected').removeClass(
+					'hu-media-selected'
 				);
-				$('.helix-ultimate-modal-actions-left').hide();
-				$('.helix-ultimate-modal-actions-right').show();
-				$('.helix-ultimate-modal-inner').html(
-					'<div class="helix-ultimate-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw"></span></div>'
+				$('.hu-modal-actions-left').hide();
+				$('.hu-modal-actions-right').show();
+				$('.hu-modal-inner').html(
+					'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw"></span></div>'
 				);
 			},
 			success: function (response) {
 				var data = $.parseJSON(response);
 				if (data.status) {
-					$('.helix-ultimate-modal-breadcrumbs').html(
+					$('.hu-modal-breadcrumbs').html(
 						data.breadcrumbs
 					);
-					$('.helix-ultimate-modal-inner').html(data.output);
+					$('.hu-modal-inner').html(data.output);
 				} else {
 					alert(data.output);
 				}
@@ -113,7 +113,7 @@ jQuery(function ($) {
 
 	$(document).on(
 		'click',
-		'.helix-ultimate-media-breadcrumb-item > a',
+		'.hu-media-breadcrumb-item > a',
 		function (e) {
 			e.preventDefault();
 			var self = this;
@@ -131,17 +131,17 @@ jQuery(function ($) {
 				type: 'POST',
 				data: request,
 				beforeSend: function () {
-					$('.helix-ultimate-modal-inner').html(
-						'<div class="helix-ultimate-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw"></span></div>'
+					$('.hu-modal-inner').html(
+						'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw"></span></div>'
 					);
 				},
 				success: function (response) {
 					var data = $.parseJSON(response);
 					if (data.status) {
-						$('.helix-ultimate-modal-breadcrumbs').html(
+						$('.hu-modal-breadcrumbs').html(
 							data.breadcrumbs
 						);
-						$('.helix-ultimate-modal-inner').html(data.output);
+						$('.hu-modal-inner').html(data.output);
 					} else {
 						alert(data.output);
 					}
@@ -155,91 +155,91 @@ jQuery(function ($) {
 
 	$(document).on(
 		'click',
-		'.helix-ultimate-media-folder, .helix-ultimate-media-image',
+		'.hu-media-folder, .hu-media-image',
 		function (event) {
 			event.preventDefault();
-			$('.helix-ultimate-media-selected').removeClass(
-				'helix-ultimate-media-selected'
+			$('.hu-media-selected').removeClass(
+				'hu-media-selected'
 			);
-			$(this).addClass('helix-ultimate-media-selected');
-			if ($(this).hasClass('helix-ultimate-media-folder')) {
-				$('.helix-ultimate-modal-action-select').hide();
+			$(this).addClass('hu-media-selected');
+			if ($(this).hasClass('hu-media-folder')) {
+				$('.hu-modal-action-select').hide();
 			} else {
-				$('.helix-ultimate-modal-action-select').removeAttr('style');
+				$('.hu-modal-action-select').removeAttr('style');
 			}
-			$('.helix-ultimate-modal-actions-left').show();
-			$('.helix-ultimate-modal-actions-right').hide();
+			$('.hu-modal-actions-left').show();
+			$('.hu-modal-actions-right').hide();
 		}
 	);
 
-	$(document).on('click', '.helix-ultimate-modal-action-select', function (
+	$(document).on('click', '.hu-modal-action-select', function (
 		event
 	) {
 		event.preventDefault();
-		var value = $('.helix-ultimate-media-selected').data('path');
-		var preview = $('.helix-ultimate-media-selected').data('preview');
-		var target = $('.helix-ultimate-modal').attr('data-target');
-		var target_type = $('.helix-ultimate-modal').attr('data-target_type');
+		var value = $('.hu-media-selected').data('path');
+		var preview = $('.hu-media-selected').data('preview');
+		var target = $('.hu-modal').attr('data-target');
+		var target_type = $('.hu-modal').attr('data-target_type');
 
 		if (target_type == 'data') {
-			$('.helix-ultimate-options-modal')
+			$('.hu-options-modal')
 				.find('[data-attrname="' + target + '"]')
 				.val(value)
 				.trigger('change');
-			$('.helix-ultimate-options-modal')
+			$('.hu-options-modal')
 				.find('[data-attrname="' + target + '"]')
-				.prev('.helix-ultimate-image-holder')
+				.prev('.hu-image-holder')
 				.html('<img src="' + preview + '" alt="">');
 		} else {
 			$('#' + target)
 				.val(value)
 				.trigger('change');
 			$('#' + target)
-				.prev('.helix-ultimate-image-holder')
+				.prev('.hu-image-holder')
 				.html('<img src="' + preview + '" alt="">');
 		}
 
-		$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
-		$('body').removeClass('helix-ultimate-modal-open');
+		$('.hu-modal-overlay, .hu-modal').remove();
+		$('body').removeClass('hu-modal-open');
 	});
 
-	$(document).on('click', '.helix-ultimate-modal-action-cancel', function (
+	$(document).on('click', '.hu-modal-action-cancel', function (
 		event
 	) {
 		event.preventDefault();
-		$('.helix-ultimate-media-selected').removeClass(
-			'helix-ultimate-media-selected'
+		$('.hu-media-selected').removeClass(
+			'hu-media-selected'
 		);
-		$('.helix-ultimate-modal-actions-left').hide();
-		$('.helix-ultimate-modal-actions-right').show();
+		$('.hu-modal-actions-left').hide();
+		$('.hu-modal-actions-right').show();
 	});
 
-	$(document).on('click', '.action-helix-ultimate-modal-close', function (
+	$(document).on('click', '.action-hu-modal-close', function (
 		event
 	) {
 		event.preventDefault();
-		$('.helix-ultimate-modal-overlay, .helix-ultimate-modal').remove();
-		$('body').removeClass('helix-ultimate-modal-open');
+		$('.hu-modal-overlay, .hu-modal').remove();
+		$('body').removeClass('hu-modal-open');
 	});
 
-	$(document).on('click', '.helix-ultimate-media-clear', function (event) {
+	$(document).on('click', '.hu-media-clear', function (event) {
 		event.preventDefault();
 		$(this).parent().find('input').val('').trigger('change');
-		$(this).parent().find('.helix-ultimate-image-holder').empty();
+		$(this).parent().find('.hu-image-holder').empty();
 	});
 
 	//Delete Media
-	$(document).on('click', '.helix-ultimate-modal-action-delete', function (
+	$(document).on('click', '.hu-modal-action-delete', function (
 		e
 	) {
 		e.preventDefault();
 		var self = this;
 		var deleteType = 'file';
 
-		if ($('.helix-ultimate-media-selected').length) {
+		if ($('.hu-media-selected').length) {
 			if (
-				$('.helix-ultimate-media-selected').hasClass(
-					'helix-ultimate-media-folder'
+				$('.hu-media-selected').hasClass(
+					'hu-media-folder'
 				)
 			) {
 				deleteType = 'folder';
@@ -260,7 +260,7 @@ jQuery(function ($) {
 				helix: 'ultimate',
 				request: 'task',
 				type: deleteType,
-				path: $('.helix-ultimate-media-selected').data('path'),
+				path: $('.hu-media-selected').data('path'),
 				format: 'json',
 			};
 
@@ -270,9 +270,9 @@ jQuery(function ($) {
 				success: function (response) {
 					var data = $.parseJSON(response);
 					if (data.status) {
-						$('.helix-ultimate-media-selected').remove();
-						$('.helix-ultimate-modal-actions-left').hide();
-						$('.helix-ultimate-modal-actions-right').show();
+						$('.hu-media-selected').remove();
+						$('.hu-modal-actions-left').hide();
+						$('.hu-modal-actions-right').show();
 					} else {
 						alert(data.message);
 					}
@@ -287,7 +287,7 @@ jQuery(function ($) {
 	// Create folder
 	$(document).on(
 		'click',
-		'.helix-ultimate-modal-action-new-folder',
+		'.hu-modal-action-new-folder',
 		function (e) {
 			e.preventDefault();
 			var self = this;
@@ -304,7 +304,7 @@ jQuery(function ($) {
 					request: 'task',
 					folder_name: folder_name,
 					path: $(
-						'.helix-ultimate-media-breadcrumb-item.active'
+						'.hu-media-breadcrumb-item.active'
 					).data('path'),
 					format: 'json',
 				};
@@ -315,7 +315,7 @@ jQuery(function ($) {
 					success: function (response) {
 						var data = $.parseJSON(response);
 						if (data.status) {
-							$('.helix-ultimate-modal-inner').html(data.output);
+							$('.hu-modal-inner').html(data.output);
 						} else {
 							alert(data.message);
 						}
@@ -347,33 +347,33 @@ jQuery(function ($) {
 			processData: false,
 			beforeSend: function () {
 				var progress =
-					'<li class="helix-ultimate-media-progress ' +
+					'<li class="hu-media-progress ' +
 					options.index +
 					'">';
-				progress += '<div class="helix-ultimate-media-thumb">';
+				progress += '<div class="hu-media-thumb">';
 				progress +=
-					'<div class="helix-ultimate-progress"><div class="helix-ultimate-progress-bar"></div></div>';
+					'<div class="hu-progress"><div class="hu-progress-bar"></div></div>';
 				progress += '</div>';
 				progress +=
-					'<div class="helix-ultimate-media-label"><span class="fas fa-circle-notch fa-spin"></span> <span class="helix-ultimate-media-upload-percentage"></span>Uploading...</div>';
+					'<div class="hu-media-label"><span class="fas fa-circle-notch fa-spin"></span> <span class="hu-media-upload-percentage"></span>Uploading...</div>';
 				progress += '</li>';
 
-				$('#helix-ultimate-media-manager').animate(
+				$('#hu-media-manager').animate(
 					{
-						scrollTop: $('#helix-ultimate-media-manager').prop(
+						scrollTop: $('#hu-media-manager').prop(
 							'scrollHeight'
 						),
 					},
 					1000
 				);
-				$('.helix-ultimate-media').append(progress);
+				$('.hu-media').append(progress);
 			},
 			success: function (response) {
 				var data = $.parseJSON(response);
 				if (data.status) {
 					$('.' + options.index)
 						.removeClass()
-						.addClass('helix-ultimate-media-image')
+						.addClass('hu-media-image')
 						.attr('data-path', data.path)
 						.attr('data-preview', data.src)
 						.html(data.output);
@@ -389,14 +389,14 @@ jQuery(function ($) {
 						'progress',
 						function (evt) {
 							$('.' + options.index)
-								.find('.helix-ultimate-progress-bar')
+								.find('.hu-progress-bar')
 								.css(
 									'width',
 									Math.floor((evt.loaded / evt.total) * 100) +
 										'%'
 								);
 							$('.' + options.index)
-								.find('.helix-ultimate-media-upload-percentage')
+								.find('.hu-media-upload-percentage')
 								.text(
 									Math.floor((evt.loaded / evt.total) * 100) +
 										'% '
@@ -413,14 +413,14 @@ jQuery(function ($) {
 	};
 
 	// Upload Image
-	$(document).on('click', '.helix-ultimate-modal-action-upload', function (
+	$(document).on('click', '.hu-modal-action-upload', function (
 		e
 	) {
 		e.preventDefault();
-		$('#helix-ultimate-file-input').click();
+		$('#hu-file-input').click();
 	});
 
-	$(document).on('change', '#helix-ultimate-file-input', function (event) {
+	$(document).on('change', '#hu-file-input', function (event) {
 		event.preventDefault();
 		var $this = $(this);
 		var files = $(this).prop('files');
@@ -439,7 +439,7 @@ jQuery(function ($) {
 				formdata.append('file', files[i]);
 				formdata.append(
 					'path',
-					$('.helix-ultimate-media-breadcrumb-item.active').data(
+					$('.hu-media-breadcrumb-item.active').data(
 						'path'
 					)
 				);

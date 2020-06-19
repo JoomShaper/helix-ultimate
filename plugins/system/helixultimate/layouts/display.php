@@ -23,8 +23,8 @@ $sidebar = new Settings;
 <div id="helix-ultimate">
 	<?php echo LayoutHelper::render('cpanel.editor.topbar', ['id' => $id, 'view' => $view], HELIX_LAYOUTS_PATH); ?>
 	<?php echo LayoutHelper::render('cpanel.editor.controls', ['id' => $id, 'view' => $view], HELIX_LAYOUTS_PATH); ?>
-	<div class="helix-ultimate-fieldset-contents">
-		<form id="helix-ultimate-style-form" action="index.php">
+	<div class="hu-fieldset-contents">
+		<form id="hu-style-form" action="index.php">
 			<?php echo $sidebar->renderFieldsetContents(); ?>
 
 			<!-- meta hidden values  -->
@@ -35,8 +35,8 @@ $sidebar = new Settings;
 			<input type="hidden" name="title" value="<?php echo $style->title; ?>">
 		</form>
 	</div>
-	<div class="helix-ultimate-container">
-		<div class="helix-ultimate-preview">
+	<div class="hu-container">
+		<div class="hu-preview">
 			<?php echo LayoutHelper::render('preview.iframe', ['url' => Uri::root(true) . '/index.php?template=' . $style->template, 'width' => '100%', 'height' => '100%'], HELIX_LAYOUTS_PATH); ?>
 		</div>
 	</div>

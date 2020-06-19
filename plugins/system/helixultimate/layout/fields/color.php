@@ -32,7 +32,7 @@ class HelixultimateFieldColor
 
 		$output  = '<div class="control-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
-		$output .= '<input type="text" class="helix-ultimate-input helix-ultimate-input-color" data-attrname="' . $key . '" placeholder="#rrggbb" value="">';
+		$output .= '<input type="text" class="hu-input hu-input-color" data-attrname="' . $key . '" placeholder="#rrggbb" value="">';
 
 		if ((isset($attr['desc'])) && (isset($attr['desc']) !== ''))
 		{

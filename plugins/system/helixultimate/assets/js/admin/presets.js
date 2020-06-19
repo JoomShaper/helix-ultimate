@@ -6,9 +6,9 @@
  */
 
 jQuery(function ($) {
-	let $presetsDataElement = $('.helix-ultimate-presets #presets-data');
+	let $presetsDataElement = $('.hu-presets #presets-data');
 	let $presetsDivElement = $(
-		'.helix-ultimate-presets .helix-ultimate-preset'
+		'.hu-presets .hu-preset'
 	);
 
 	// All the presets data
@@ -56,7 +56,7 @@ jQuery(function ($) {
 		// Update the input field #presets-data
 		$presetsDataElement.val(JSON.stringify(presetsData));
 
-		// Update the attributes of the .helix-ultimate-preset
+		// Update the attributes of the .hu-preset
 		$presetsDivElement.each(function () {
 			let self = this;
 			if ($(this).data('preset') === name) {
@@ -80,25 +80,25 @@ jQuery(function ($) {
 		 * Close the modal
 		 */
 		$(
-			'.helix-ultimate-options-modal-overlay, .helix-ultimate-options-modal'
+			'.hu-options-modal-overlay, .hu-options-modal'
 		).remove();
-		$('body').removeClass('helix-ultimate-options-modal-open');
+		$('body').removeClass('hu-options-modal-open');
 
 		let majorColor = detectMajorColor(data);
-		let $presetElement = $(`.helix-ultimate-preset[data-preset=${name}]`);
+		let $presetElement = $(`.hu-preset[data-preset=${name}]`);
 
 		$presetElement.css({
 			'background-color': majorColor,
 		});
 
 		$presetElement
-			.find('.helix-ultimate-edit-preset')
+			.find('.hu-edit-preset')
 			.css({ color: majorColor });
 
-		$(`.helix-ultimate-preset[data-preset=${name}]`).click();
+		$(`.hu-preset[data-preset=${name}]`).click();
 	}
 
-	$(document).on('click', '.helix-ultimate-edit-preset', function (e) {
+	$(document).on('click', '.hu-edit-preset', function (e) {
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -110,7 +110,7 @@ jQuery(function ($) {
 		 * into the settings modal.
 		 */
 		let $presetContainerOriginal = $(
-			`.helix-ultimate-preset-container#${name}`
+			`.hu-preset-container#${name}`
 		);
 		let $presetContainer = $presetContainerOriginal.clone(true);
 
@@ -128,8 +128,8 @@ jQuery(function ($) {
 		$(this).helixUltimateOptionsModal({
 			flag: 'edit-presets',
 			title: `<span class='fas fa-cogs'></span> Edit Preset: ${name}`,
-			class: `helix-ultimate-modal-small edit-preset-modal modal-${name}`,
-			applyBtnClass: 'helix-ultimate-save-preset',
+			class: `hu-modal-small edit-preset-modal modal-${name}`,
+			applyBtnClass: 'hu-save-preset',
 			footerButtons: [
 				`<a href="#" class="btn btn-danger btn-xs helix-preset-reset" style="margin-left: auto;"><span class="fas fa-sync-alt"></span> Reset to Default</a>`,
 			],
@@ -139,11 +139,11 @@ jQuery(function ($) {
 		 * Add the cloned container into
 		 * the modal inner body
 		 */
-		$('.helix-ultimate-options-modal-inner').html(
+		$('.hu-options-modal-inner').html(
 			$presetContainer
 				.removeAttr('id')
 				.removeAttr('style')
-				.addClass('helix-ultimate-options-modal-content')
+				.addClass('hu-options-modal-content')
 		);
 
 		let $colorInputs = $presetContainer.find('input.preset-control');
@@ -164,7 +164,7 @@ jQuery(function ($) {
 		});
 
 		let $applyBtn = $(`.edit-preset-modal.modal-${name}`).find(
-			'.helix-ultimate-save-preset'
+			'.hu-save-preset'
 		);
 
 		let $resetBtn = $(`.edit-preset-modal.modal-${name}`).find(

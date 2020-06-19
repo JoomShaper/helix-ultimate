@@ -34,7 +34,7 @@ class JFormFieldHelixmedia extends FormField
 	 */
 	public function getInput()
 	{
-		$output = '<div class="helix-ultimate-image-holder">';
+		$output = '<div class="hu-image-holder">';
 
 		if ($this->value !== '')
 		{
@@ -44,8 +44,8 @@ class JFormFieldHelixmedia extends FormField
 		$output .= '</div>';
 
 		$output .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" value="' . $this->value . '">';
-		$output .= '<a href="#" class="helix-ultimate-media-picker btn btn-primary btn-sm" data-id="' . $this->id . '"><span class="fas fa-image"></span> Select Media</a>';
-		$output .= '<a href="#" class="helix-ultimate-media-clear btn btn-secondary btn-sm"><span class="fas fa-times"></span> Clear</a>';
+		$output .= '<a href="#" class="hu-media-picker btn btn-primary btn-sm" data-id="' . $this->id . '"><span class="fas fa-image"></span> Select Media</a>';
+		$output .= '<a href="#" class="hu-media-clear btn btn-secondary btn-sm"><span class="fas fa-times"></span> Clear</a>';
 
 		return $output;
 	}

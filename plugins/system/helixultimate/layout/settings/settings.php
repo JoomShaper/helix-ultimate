@@ -319,7 +319,7 @@ class RowColumnSettings
 	{
 
 		$output = '<div style="display: none;">';
-		$output .= '<div id="helix-ultimate-row-settings">';
+		$output .= '<div id="hu-row-settings">';
 
 		$options = array();
 
@@ -347,11 +347,11 @@ class RowColumnSettings
 				$active = ' active';
 			}
 
-			$output .= '<div class="helix-ultimate-option-group helix-ultimate-option-group-' . strtolower($key2) . $active . '">';
-			$output .= '<div class="helix-ultimate-option-group-title">';
+			$output .= '<div class="hu-option-group hu-option-group-' . strtolower($key2) . $active . '">';
+			$output .= '<div class="hu-option-group-title">';
 			$output .= '<span class="fas fa-angle-up"></span>' . Text::_('HELIX_ULTIMATE_OPTION_GROUP_' . strtoupper($key2));
 			$output .= '</div>';
-			$output .= '<div class="helix-ultimate-option-group-list">';
+			$output .= '<div class="hu-option-group-list">';
 
 			foreach ($option_list as $key3 => $option)
 			{
@@ -383,7 +383,7 @@ class RowColumnSettings
 		$col_settings['attr']['name']['values'] = self::getPositions();
 
 		$output = '<div style="display: none;">';
-		$output .= '<div id="helix-ultimate-column-settings">';
+		$output .= '<div id="hu-column-settings">';
 
 		$options = array();
 
@@ -411,11 +411,11 @@ class RowColumnSettings
 				$active = ' active';
 			}
 
-			$output .= '<div class="helix-ultimate-option-group helix-ultimate-option-group-' . strtolower($key2) . $active . '">';
-			$output .= '<div class="helix-ultimate-option-group-title">';
+			$output .= '<div class="hu-option-group hu-option-group-' . strtolower($key2) . $active . '">';
+			$output .= '<div class="hu-option-group-title">';
 			$output .= '<span class="fas fa-angle-up"></span>' . Text::_('HELIX_ULTIMATE_OPTION_GROUP_' . strtoupper($key2));
 			$output .= '</div>';
-			$output .= '<div class="helix-ultimate-option-group-list">';
+			$output .= '<div class="hu-option-group-list">';
 
 			foreach ($option_list as $key3 => $option)
 			{

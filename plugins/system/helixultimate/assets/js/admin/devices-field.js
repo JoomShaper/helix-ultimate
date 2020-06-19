@@ -55,7 +55,7 @@ jQuery(document).ready(function ($) {
 			.removeClass('active');
 		$(`.hu-device[data-device=${deviceMap[device]}]`).addClass('active');
 
-		const $iframe = $('#helix-ultimate-template-preview');
+		const $iframe = $('#hu-template-preview');
 
 		$iframe.animate(
 			{

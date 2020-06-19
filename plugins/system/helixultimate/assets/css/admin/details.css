@@ -5,7 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-.helix-ultimate-options {
+.hu-options {
   background: #05D21F;
   border-radius: 3px;
   color:#fff;
@@ -16,9 +16,9 @@
   margin-top: 10px;
 }
 
-.helix-ultimate-options:hover,
-.helix-ultimate-options:focus,
-.helix-ultimate-options:active {
+.hu-options:hover,
+.hu-options:focus,
+.hu-options:active {
   text-decoration: none;
   color: #fff;
   background: #05BB1B;

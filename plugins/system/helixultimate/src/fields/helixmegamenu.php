@@ -183,17 +183,17 @@ class JFormFieldHelixmegamenu extends FormField
 
 		if ($name === 'alignment')
 		{
-			$view_class = 'helix-ultimate-megamenu-field-control ' . $display_class;
+			$view_class = 'hu-megamenu-field-control ' . $display_class;
 		}
 		elseif ($name === 'dropdown')
 		{
-			$view_class = 'helix-ultimate-dropdown-field-control ' . $display_class;
+			$view_class = 'hu-dropdown-field-control ' . $display_class;
 		}
 
 		$html  = '';
 		$html .= '<div class="' . $view_class . '">';
-		$html .= '<span class="helix-ultimate-megamenu-label">' . $label . '</span>';
-		$html .= '<select id="helix-ultimate-megamenu-' . $name . '">';
+		$html .= '<span class="hu-megamenu-label">' . $label . '</span>';
+		$html .= '<select id="hu-megamenu-' . $name . '">';
 
 		if ($name === 'fa-icon')
 		{
@@ -233,8 +233,8 @@ class JFormFieldHelixmegamenu extends FormField
 	{
 		$html  = '';
 		$html .= '<div>';
-		$html .= '<span class="helix-ultimate-megamenu-label">' . $label . '</span>';
-		$html .= '<input type="text" class="minicolors" id="helix-ultimate-menu-badge-' . $name . '" placeholder="' . $placeholder . '" value="' . $value . '" />';
+		$html .= '<span class="hu-megamenu-label">' . $label . '</span>';
+		$html .= '<input type="text" class="minicolors" id="hu-menu-badge-' . $name . '" placeholder="' . $placeholder . '" value="' . $value . '" />';
 		$html .= '</div>';
 
 		return $html;
@@ -257,13 +257,13 @@ class JFormFieldHelixmegamenu extends FormField
 	{
 		if ($type === 'number')
 		{
-			$display_class = 'helix-ultimate-megamenu-field-control' . $display_class;
+			$display_class = 'hu-megamenu-field-control' . $display_class;
 		}
 
 		$html  = '';
 		$html .= '<div class="' . $display_class . '">';
-		$html .= '<span class="helix-ultimate-megamenu-label">' . $label . '</span>';
-		$html .= '<input type="' . $type . '" id="helix-ultimate-megamenu-' . $name . '" placeholder="' . $placeholder . '" value="' . $value . '" />';
+		$html .= '<span class="hu-megamenu-label">' . $label . '</span>';
+		$html .= '<input type="' . $type . '" id="hu-megamenu-' . $name . '" placeholder="' . $placeholder . '" value="' . $value . '" />';
 		$html .= '</div>';
 
 		return $html;
@@ -283,8 +283,8 @@ class JFormFieldHelixmegamenu extends FormField
 	{
 		$html  = '';
 		$html .= '<div>';
-		$html .= '<span class="helix-ultimate-megamenu-label">' . $label . '</span>';
-		$html .= '<input type="checkbox" class="helix-ultimate-checkbox" id="helix-ultimate-megamenu-' . $name . '" ' . (!empty($value) ? 'checked' : '') . '/>';
+		$html .= '<span class="hu-megamenu-label">' . $label . '</span>';
+		$html .= '<input type="checkbox" class="hu-checkbox" id="hu-megamenu-' . $name . '" ' . (!empty($value) ? 'checked' : '') . '/>';
 		$html .= '</div>';
 
 		return $html;

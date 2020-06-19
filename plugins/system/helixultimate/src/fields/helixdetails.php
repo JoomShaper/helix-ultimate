@@ -48,7 +48,7 @@ class JFormFieldHelixdetails extends FormField
 		$id  = $app->input->get('id', 0, 'INT');
 
 		$url = Route::_('index.php?option=com_ajax&helix=ultimate&id=' . $id);
-		$html = '<a href="' . $url . '" class="helix-ultimate-options"><i class="icon-options"></i> Template Options</a>';
+		$html = '<a href="' . $url . '" class="hu-options"><i class="icon-options"></i> Template Options</a>';
 
 		return $html;
 	}

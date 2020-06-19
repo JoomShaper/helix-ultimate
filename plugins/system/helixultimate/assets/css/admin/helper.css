@@ -5,6 +5,19 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+.ui-tooltip {
+	background: #000 !important;
+	height: auto !important;
+	max-width: 200px !important;
+	padding: 5px !important;
+	border-radius: 3px !important;
+}
+
+.ui-tooltip .ui-tooltip-content {
+	font-size: 11px;
+	font-weight: 100;
+}
+
 .hu-fade-border {
 	height: 1px;
 	width: 100%;

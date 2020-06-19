@@ -131,7 +131,7 @@ jQuery(function ($) {
 				'ui-tooltip': 'ui-corner-all',
 			},
 			position: {
-				my: 'left top-10px',
+				my: 'left top+8px',
 			},
 			hide: false,
 			show: false,
@@ -618,7 +618,6 @@ jQuery(function ($) {
 	/**
 	 * Calculate the editor panel position and display the panel
 	 */
-
 	function panelPositioning() {
 		let $fieldsetContents = $('.helix-ultimate-fieldset-contents');
 		let $panel = $('.helix-ultimate-edit-panel');
@@ -634,8 +633,6 @@ jQuery(function ($) {
 		let containerWidth = $container.width();
 		let containerHeight = $container.height();
 		let gap = 20;
-
-		console.log(containerHeight, panelHeight);
 
 		let panelHorizontalPosition = sidebarOffset.left + sidebarWidth + gap;
 		let panelVerticalPosition = sidebarOffset.top;

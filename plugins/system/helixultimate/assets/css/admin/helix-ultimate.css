@@ -6,7 +6,7 @@
 */
 
 /*Import*/
-@import "./helper.css";
+@import './helper.css';
 
 :root {
 	--blue: #007bff;
@@ -22,14 +22,14 @@
 	--white: #fff;
 	--gray: #868e96;
 	--gray-dark: #343a40;
-	--primary: #3366FF;
+	--primary: #3366ff;
 	--secondary: #868e96;
 	--success: #28a745;
 	--info: #17a2b8;
 	--warning: #ffc107;
 	--danger: #dc3545;
 	--light: #f8f9fa;
-	--dark: #020B53;
+	--dark: #020b53;
 	--breakpoint-xs: 0;
 	--breakpoint-sm: 576px;
 	--breakpoint-md: 768px;
@@ -1556,7 +1556,13 @@ fieldset[disabled] a.btn {
 
 .btn-primary {
 	color: #fff;
-	background: linear-gradient(180deg, #7497FF -46.87%, #688CFD -7.92%, #567DFA 49.16%, #3E69F6 127.08%);
+	background: linear-gradient(
+		180deg,
+		#7497ff -46.87%,
+		#688cfd -7.92%,
+		#567dfa 49.16%,
+		#3e69f6 127.08%
+	);
 	box-shadow: 0px 2px 4px rgba(97, 135, 252, 0.3);
 }
 
@@ -2356,7 +2362,13 @@ select:focus::-ms-value {
 	text-align: center;
 	justify-content: center;
 	transition: all 0.3s ease;
-	background: linear-gradient(180deg, #7497FF -46.87%, #688CFD -7.92%, #567DFA 49.16%, #3E69F6 127.08%);
+	background: linear-gradient(
+		180deg,
+		#7497ff -46.87%,
+		#688cfd -7.92%,
+		#567dfa 49.16%,
+		#3e69f6 127.08%
+	);
 	box-shadow: 0px 2px 4px rgba(97, 135, 252, 0.3);
 	border-radius: 7.5px;
 }
@@ -2383,7 +2395,13 @@ select:focus::-ms-value {
 
 .helix-btn.helix-btn-primary {
 	color: #fff;
-	background: linear-gradient(180deg, #7497FF -46.87%, #688CFD -7.92%, #567DFA 49.16%, #3E69F6 127.08%);
+	background: linear-gradient(
+		180deg,
+		#7497ff -46.87%,
+		#688cfd -7.92%,
+		#567dfa 49.16%,
+		#3e69f6 127.08%
+	);
 	box-shadow: 0px 2px 4px rgba(97, 135, 252, 0.3);
 }
 .helix-btn.helix-btn-primary:hover {
@@ -2439,7 +2457,7 @@ select:focus::-ms-value {
 	left: 0;
 	z-index: 2;
 	width: 100%;
-	background: #EFF4FB;
+	background: #eff4fb;
 	box-shadow: 0px 1px 2px rgba(2, 11, 83, 0.25);
 }
 
@@ -2477,7 +2495,7 @@ select:focus::-ms-value {
 }
 
 .hu-device svg {
-	fill: #9097B8;
+	fill: #9097b8;
 	transition: 200ms ease-in;
 }
 
@@ -2645,7 +2663,8 @@ select:focus::-ms-value {
 	width: 100px;
 	background-color: var(--white);
 	border-radius: 10px;
-	box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.15), inset -4px -4px 4px #D3D9E7, inset 4px 4px 4px #FCFDFE;
+	box-shadow: 20px 20px 20px rgba(0, 0, 0, 0.15), inset -4px -4px 4px #d3d9e7,
+		inset 4px 4px 4px #fcfdfe;
 	backdrop-filter: blur(4px);
 	text-align: center;
 	z-index: 999;
@@ -2662,7 +2681,8 @@ select:focus::-ms-value {
 .helix-ultimate-fieldset-header .hu-option-icon {
 	height: 16px;
 	display: inline-block;
-	filter: invert(64%) sepia(18%) saturate(397%) hue-rotate(197deg) brightness(88%) contrast(89%);
+	filter: invert(64%) sepia(18%) saturate(397%) hue-rotate(197deg)
+		brightness(88%) contrast(89%);
 }
 
 .helix-ultimate-fieldset-header .hu-option-title {
@@ -2795,14 +2815,21 @@ select:focus::-ms-value {
 	user-select: none;
 }
 
-#helix-ultimate-options > div:not(:last-child) > .helix-ultimate-fieldset-header:after {
-	content: " ";
+#helix-ultimate-options
+	> div:not(:last-child)
+	> .helix-ultimate-fieldset-header:after {
+	content: ' ';
 	position: absolute;
 	height: 1px;
 	width: 100%;
 	bottom: 0;
 	left: 0;
-	background: linear-gradient(90deg, #EFF4FB 0%, #7983A7 55.01%, #EFF4FB 101.56%);
+	background: linear-gradient(
+		90deg,
+		#eff4fb 0%,
+		#7983a7 55.01%,
+		#eff4fb 101.56%
+	);
 	opacity: 0.4;
 }
 
@@ -3829,4 +3856,22 @@ select:focus::-ms-value {
 }
 .btn-purge-helix-ultimate-css span {
 	margin-left: 10px;
+}
+
+/* @TODO: Must be removed */
+#helix-ultimate-style-form {
+	width: 0;
+	height: 0;
+}
+
+.helix-ultimate-sidebar {
+	width: 100px;
+	position: absolute;
+	left: 60px;
+	top: 80px;
+	z-index: 2;
+	background: #fff;
+	border-right: 1px solid #f1f1f1;
+	box-shadow: 0px 0px 15px 10px #22222230;
+	border-radius: 10px;
 }

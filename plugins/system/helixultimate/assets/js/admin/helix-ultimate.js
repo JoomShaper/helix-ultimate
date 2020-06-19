@@ -103,13 +103,22 @@ jQuery(function ($) {
 		});
 	});
 
+	/**
+	 * Draggable sidebar
+	 */
+	$('#helix-ultimate-sidebar').draggable({
+		containment: 'body',
+		cursor: 'grabbing',
+		handle: '.sidebar-draggable-handler',
+	});
+
 	(function initTooltips() {
 		$('.helix-ultimate-sidebar').tooltip({
 			classes: {
 				'ui-tooltip': 'ui-corner-all',
 			},
 			position: {
-				my: 'left+45px bottom',
+				my: 'left+100px bottom',
 				at: 'left bottom',
 				collision: 'flipfit',
 			},
@@ -616,14 +625,14 @@ jQuery(function ($) {
 		let offset = $(this).offset();
 		let $panel = $('.helix-ultimate-fieldset-contents');
 
-		$panel.css('left', offset.left >> 0);
+		$panel.css('left', (offset.left >> 0) + 110 + 'px');
 
 		let fieldset = $(this).data('fieldset');
-		$('.panel-for-' + fieldset)
+		$('.' + fieldset + '-panel')
 			.parent()
 			.find('.active-panel')
 			.removeClass('active-panel');
-		$('.panel-for-' + fieldset).addClass('active-panel');
+		$('.' + fieldset + '-panel').addClass('active-panel');
 
 		// Make active sidebar icon
 		if (
@@ -645,7 +654,7 @@ jQuery(function ($) {
 		$(this).addClass('active');
 
 		$('.helix-ultimate-edit-panel.active-panel').draggable({
-			cursor: 'dragging',
+			cursor: 'grabbing',
 			handle: '.helix-ultimate-panel-header',
 		});
 	});

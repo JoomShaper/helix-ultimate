@@ -203,7 +203,7 @@
 			type="textarea" 
 			rows="6" 
 			cols="30" 
-			default="© 2018 Your Company. Designed By JoomShaper" 
+			default="© {year} Your Company. Designed By JoomShaper" 
 			label="HELIX_ULTIMATE_COPYRIGHT" 
 			filter="safehtml" 
 			showon="enabled_copyright:1" />

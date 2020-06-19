@@ -6,11 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
+defined('_JEXEC') or die();
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
 
-defined('_JEXEC') or die();
 
 /**
  * Form field for Helix mega menu
@@ -283,7 +284,7 @@ class JFormFieldHelixmegamenu extends FormField
 		$html  = '';
 		$html .= '<div>';
 		$html .= '<span class="helix-ultimate-megamenu-label">' . $label . '</span>';
-		$html .= '<input type="checkbox" class="helix-ultimate-checkbox" id="helix-ultimate-megamenu-' . $name . '" ' . (($value) ? 'checked' : '') . '/>';
+		$html .= '<input type="checkbox" class="helix-ultimate-checkbox" id="helix-ultimate-megamenu-' . $name . '" ' . (!empty($value) ? 'checked' : '') . '/>';
 		$html .= '</div>';
 
 		return $html;

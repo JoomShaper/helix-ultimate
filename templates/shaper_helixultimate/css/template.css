@@ -1387,10 +1387,11 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
   animation: spPulse 300ms;
 }
 body.ltr .sp-megamenu-parent > li.sp-has-child > a:after, body.ltr .sp-megamenu-parent > li.sp-has-child > span:after {
-  font-family: "FontAwesome";
-  content: "\f107";
+  font-family: "Font Awesome 5 Free";
+  content: "\f0d7";
   float: right;
   margin-left: 7px;
+  font-weight: 900;
 }
 body.ltr .sp-megamenu-parent > li .sp-menu-badge.sp-menu-badge-right {
   margin-left: 5px;
@@ -1399,10 +1400,11 @@ body.ltr .sp-megamenu-parent > li .sp-menu-badge.sp-menu-badge-left {
   margin-right: 5px;
 }
 body.ltr .sp-megamenu-parent .sp-dropdown .sp-dropdown-items .sp-has-child > a:after {
-  font-family: "FontAwesome";
-  content: "\f105";
+  font-family: "Font Awesome 5 Free";
+  content: "\f0d7";
   float: right;
   margin-left: 7px;
+  font-weight: 900;
 }
 body.ltr .sp-megamenu-parent .sp-dropdown.sp-menu-center {
   margin-left: 45px;

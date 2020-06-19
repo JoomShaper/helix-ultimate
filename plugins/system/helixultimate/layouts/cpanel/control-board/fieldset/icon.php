@@ -21,11 +21,10 @@ $iconsrc = Uri::root() . "plugins/system/helixultimate/assets/images/icons/{$fie
 
 
 <div class="helix-ultimate-fieldset helix-ultimate-fieldset-<?php echo $fieldset->name; ?>">
-	<div class="helix-ultimate-fieldset-header" data-fieldset="<?php echo strtolower($fieldset->name); ?>" data-toggle="tooltip" title="<?php echo Text::_($fieldset->label); ?>">
+	<div class="helix-ultimate-fieldset-header" data-fieldset="<?php echo strtolower($fieldset->name); ?>">
 		<div class="helix-ultimate-fieldset-header-inner">
-			<div class="helix-ultimate-fieldset-icon">
-				<img src="<?php echo $iconsrc; ?>" alt="<?php echo $fieldset->name; ?>" width="16" height="16">
-			</div>
+			<img class="hu-option-icon dfhdgfhgdfhjgg" src="<?php echo $iconsrc; ?>" alt="<?php echo $fieldset->name; ?>" alt="<?php echo Text::_($fieldset->label); ?>" />
+			<span class="hu-option-title"><?php echo Text::_($fieldset->label); ?></span>
 		</div>
 	</div>
 </div>

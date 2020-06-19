@@ -19,7 +19,7 @@ extract($displayData);
 		<div class="helix-ultimate-group-wrap helix-ultimate-group-<?php echo $key; ?>">
 			<div class="helix-ultimate-group-header-box">
 				<span class="helix-ultimate-group-title"><?php echo Text::_('HELIX_ULTIMATE_GROUP_' . strtoupper($key)); ?></span>
-				<span class="helix-ultimate-group-toggle-icon fas fa-angle-down"></span>
+				<span class="helix-ultimate-group-toggle-icon fa fa-angle-down"></span>
 			</div>
 			<div class="helix-ultimate-field-list" data-uid="<?php echo $fieldset_name . '-'. $key; ?>">
 				<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'fields' => $group['fields']], HELIX_LAYOUTS_PATH); ?>

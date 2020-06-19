@@ -21,7 +21,8 @@ $sidebar = new Settings;
 ?>
 
 <div id="helix-ultimate">
-	<?php echo LayoutHelper::render('cpanel.topbar.topbar', ['id' => $id, 'view' => $view], HELIX_LAYOUTS_PATH); ?>
+	<?php echo LayoutHelper::render('cpanel.editor.topbar', ['id' => $id, 'view' => $view], HELIX_LAYOUTS_PATH); ?>
+	<?php echo LayoutHelper::render('cpanel.editor.controls', ['id' => $id, 'view' => $view], HELIX_LAYOUTS_PATH); ?>
 	<div class="helix-ultimate-fieldset-contents">
 		<form id="helix-ultimate-style-form" action="index.php">
 			<?php echo $sidebar->renderFieldsetContents(); ?>
@@ -35,11 +36,6 @@ $sidebar = new Settings;
 		</form>
 	</div>
 	<div class="helix-ultimate-container">
-		<div id="helix-ultimate-sidebar" class="helix-ultimate-sidebar">
-			<div class="topbar-control-board">
-				<?php echo $sidebar->renderBuilderControlBoard(); ?>
-			</div>
-		</div>
 		<div class="helix-ultimate-preview">
 			<?php echo LayoutHelper::render('preview.iframe', ['url' => Uri::root(true) . '/index.php?template=' . $style->template, 'width' => '100%', 'height' => '100%'], HELIX_LAYOUTS_PATH); ?>
 		</div>

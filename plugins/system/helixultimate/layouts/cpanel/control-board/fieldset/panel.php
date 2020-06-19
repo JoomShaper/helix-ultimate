@@ -28,7 +28,7 @@ $headerTitle = implode(' ', explode('_', $fieldset->name));
 
 ?>
 
-<div class="helix-ultimate-edit-panel <?php echo strtolower($fieldset->name); ?>-panel">
+<div class="helix-ultimate-edit-panel panel-for-<?php echo strtolower($fieldset->name); ?>">
 	<div class="helix-ultimate-panel-header">
 		<span><?php echo ucwords($headerTitle); ?></span>
 		<button type="button" role="button" class="helix-ultimate-panel-close" data-sidebarclass="<?php echo 'helix-ultimate-fieldset-' . $fieldset->name; ?>">

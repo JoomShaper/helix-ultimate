@@ -197,7 +197,7 @@ JFactory::getDocument()->addScriptDeclaration(
 			href="#"
 			onclick="jInsertFieldValue('', '<?php echo $id; ?>'); return false;"
 		>
-			<span class="fas fa-times" aria-hidden="true"></span>
+			<span class="fa fa-times" aria-hidden="true"></span>
 		</a>
 	</div>
 </div>

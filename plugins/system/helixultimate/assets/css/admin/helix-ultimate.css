@@ -2528,10 +2528,13 @@ select:focus::-ms-value {
 	margin-right: 12px;
 }
 
+.helix-ultimate-topbar .topbar-middle .helix-ultimate-display-variants {
+	display: flex;
+}
 .helix-ultimate-topbar
 	.topbar-middle
 	.helix-ultimate-display-variants
-	button.display-btn {
+	button.hu-device {
 	border: none;
 	background: transparent;
 	cursor: pointer;
@@ -2545,21 +2548,21 @@ select:focus::-ms-value {
 .helix-ultimate-topbar
 	.topbar-middle
 	.helix-ultimate-display-variants
-	button.display-btn:focus {
+	button.hu-device:focus {
 	outline: none;
 	box-shadow: none;
 }
 .helix-ultimate-topbar
 	.topbar-middle
 	.helix-ultimate-display-variants
-	button.display-btn.active {
+	button.hu-devices.active {
 	background: #deeeff;
 	border-bottom: 1px solid var(--primary);
 }
 .helix-ultimate-topbar
 	.topbar-middle
 	.helix-ultimate-display-variants
-	button.display-btn.active
+	button.hu-device.active
 	svg
 	path {
 	fill: var(--primary);
@@ -2718,7 +2721,7 @@ select:focus::-ms-value {
 	position: fixed;
 	z-index: 3;
 	left: 200px;
-	top: 60px;
+	top: 120px;
 }
 
 .action-helix-ultimate-exit {
@@ -3874,4 +3877,16 @@ select:focus::-ms-value {
 	border-right: 1px solid #f1f1f1;
 	box-shadow: 0px 0px 15px 10px #22222230;
 	border-radius: 10px;
+}
+
+.sidebar-draggable-handler {
+	display: block;
+	height: 40px;
+	text-align: center;
+	padding-top: 10px;
+	cursor: grab;
+}
+
+.sidebar-draggable-handler > span {
+	color: #9797978a;
 }

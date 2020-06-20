@@ -611,7 +611,7 @@ jQuery(function ($) {
 	 */
 	function panelPositioning() {
 		let $fieldsetContents = $('.hu-fieldset-contents');
-		let $panel = $('.hu-edit-panel');
+		let $panel = $('.hu-edit-panel.active-panel');
 		let $sidebar = $('#hu-options-panel');
 		let $container = $('.hu-container');
 
@@ -647,12 +647,11 @@ jQuery(function ($) {
 	$('.hu-fieldset-header').on('click', function (e) {
 		e.preventDefault();
 
-		panelPositioning();
-
 		let fieldset = $(this).data('fieldset');
 
 		if ($('.' + fieldset + '-panel').hasClass('active-panel')) {
 			$('.' + fieldset + '-panel').removeClass('active-panel');
+			$(this).removeClass('active');
 			return;
 		}
 
@@ -681,15 +680,11 @@ jQuery(function ($) {
 
 		$(this).addClass('active');
 
-		// $('.hu-edit-panel.active-panel').draggable({
-		// 	cursor: 'grabbing',
-		// 	handle: '.hu-panel-header',
-		// 	containment: 'body',
-		// });
+		panelPositioning();
 	});
 
 	/**
-	 * Close an opned panel
+	 * Close an opened panel
 	 */
 	$('.hu-panel-close').on('click', function (e) {
 		e.preventDefault();
@@ -734,43 +729,22 @@ jQuery(function ($) {
 
 			if (prevUid !== currUid) {
 				$prevActiveEl.removeClass('active-group');
+				$prevActiveEl.parent().removeClass('active');
 				$prevActiveEl.slideUp(400);
-				$prevActiveEl
-					.parent()
-					.find(
-						'.hu-group-header-box .hu-group-toggle-icon'
-					)
-					.removeClass('fa-angle-up')
-					.addClass('fa-angle-down');
 			}
-		}
-
-		// hu-group-toggle-icon
-		let $iconEl = $(this).find('.hu-group-toggle-icon');
-		if ($iconEl.hasClass('fa-angle-down')) {
-			$iconEl.removeClass('fa-angle-down').addClass('fa-angle-up', 1000);
-		} else if ($iconEl.hasClass('fa-angle-up')) {
-			$iconEl.removeClass('fa-angle-up').addClass('fa-angle-down', 1000);
 		}
 
 		let $fieldList = $(this).next();
 
 		if ($fieldList.hasClass('active-group')) {
+			$(this).parent().removeClass('active');
 			$fieldList.removeClass('active-group');
 			$fieldList.slideUp(400);
 		} else {
 			$fieldList.addClass('active-group');
+			$(this).parent().addClass('active');
 			$fieldList.slideDown(400);
 		}
-
-		// @TODO: remove after successfull testing.
-		// if( $(this).closest('.hu-group-wrap').hasClass('active-group') ){
-		//     $(this).closest('.hu-group-wrap').removeClass('active-group');
-		//     return;
-		// }
-
-		// $('.hu-group-wrap').removeClass('active-group')
-		// $(this).closest('.hu-group-wrap').addClass('active-group');
 	});
 
 	$('.hu-header-item').on('click', function (e) {
@@ -999,6 +973,33 @@ jQuery(function ($) {
 
 		return item;
 	}
+
+	/* Helix Help Control functionalities */
+	$('.hu-help-icon').on('click', function (e) {
+		e.preventDefault();
+		let $helpElement = $(this).closest('.control-group').find('.control-help');		
+
+		if ($helpElement.hasClass('show')) {
+			$helpElement.removeClass('show');
+			$helpElement.slideUp(300);
+		} else {
+			$helpElement.addClass('show');
+			$helpElement.slideDown(300);
+		}
+
+		let $siblings = $(this).closest('.control-group').siblings();
+
+
+
+		$siblings.each(function () {
+			let $help = $(this).find('.control-help');
+
+			if ($help.hasClass('show')) {
+				$help.removeClass('show');
+				$help.slideUp(300);
+			}
+		});
+	});
 
 	/*Option Group*/
 	$(document).on('click', '.hu-option-group-title', function (

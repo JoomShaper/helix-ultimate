@@ -2268,7 +2268,18 @@ select:focus::-ms-value {
 	line-height: 1.6;
 	font-weight: 300;
 	color: #999;
-	margin-top: 10px;
+	margin-bottom: 10px;
+	display: none;
+}
+
+.hu-help-icon {
+	color: #999;
+	cursor: pointer;
+	transition: color .3s ease;
+}
+
+.hu-help-icon:hover {
+	color: #222;
 }
 
 .controls > .minicolors,

@@ -40,8 +40,8 @@ class HelixultimateFieldMedia
 
 		$output .= '<div class="hu-image-holder"></div>';
 		$output .= '<input type="hidden" class="hu-input hu-input-media" data-attrname="' . $key . '" data-baseurl="' . Uri::root() . '" value="">';
-		$output .= '<a href="#" class="hu-media-picker btn btn-primary btn-sm" data-target="' . $key . '"><span class="fas fa-image"></span> Select Media</a>';
-		$output .= '<a href="#" class="hu-media-clear btn btn-secondary btn-sm"><span class="fas fa-times"></span> Clear</a>';
+		$output .= '<a href="#" class="hu-media-picker hu-btn hu-btn-primary hu-mr-2" data-target="' . $key . '"><span class="fas fa-image"></span> Select Media</a>';
+		$output .= '<a href="#" class="hu-media-clear hu-btn hu-btn-secondary"><span class="fas fa-times"></span> Clear</a>';
 
 		$output .= '</div>';
 

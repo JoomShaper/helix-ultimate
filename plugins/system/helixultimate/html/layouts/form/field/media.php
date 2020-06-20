@@ -188,7 +188,7 @@ JFactory::getDocument()->addScriptDeclaration(
 ?>
 
 	<div class="input-group-append">
-		<a class="modal modal-btn btn-primary btn" title="<?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?>" href="<?php echo $modalLink; ?>" rel="{handler: 'iframe', size: {x: 800, y: 500}}">
+		<a class="modal modal-btn btn btn-primary" title="<?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?>" href="<?php echo $modalLink; ?>" rel="{handler: 'iframe', size: {x: 800, y: 500}}">
 			<?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?>
 		</a>
 

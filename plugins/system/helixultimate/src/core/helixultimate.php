@@ -1589,7 +1589,7 @@ class HelixUltimate
 		$minifiedCode    = '';
 		$md5sum          = '';
 
-		$criticalCssRegex = "#(bootstrap.*|template)\.css#";
+		$criticalCssRegex = "#(bootstrap.*|template|font-awesome.*|preset.*)\.css#";
 		$criticalCssHash = '';
 		$criticalCssCode = '';
 

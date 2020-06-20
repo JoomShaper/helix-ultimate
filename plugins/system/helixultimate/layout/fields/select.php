@@ -30,6 +30,12 @@ class HelixultimateFieldSelect
 		$output  = '<div class="control-group ' . $key . '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
+		if (!empty($attr['desc']))
+		{
+			$output .= '<span class="hu-help-icon fas fa-info-circle"></span>';
+			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
+		}
+
 		$output .= '<select class="hu-input input-select" data-attrname="' . $key . '">';
 
 		foreach ($attr['values'] as $key => $value)
@@ -38,11 +44,6 @@ class HelixultimateFieldSelect
 		}
 
 		$output .= '</select>';
-
-		if ((isset($attr['desc'])) && (isset($attr['desc']) !== '' ))
-		{
-			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
-		}
 
 		$output .= '</div>';
 

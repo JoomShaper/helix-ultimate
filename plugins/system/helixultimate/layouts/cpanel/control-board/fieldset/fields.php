@@ -43,18 +43,38 @@ extract($displayData);
 		{
 			$hasTrack = !($track === 'false' || $track === 'off');
 		}
+
+		$hideLabel = $field->getAttribute('hideLabel', false);
+		$description = Text::_($field->getAttribute('description', ''));
+		$type = $field->getAttribute('type', 'text');
 	?>
 	<div class="control-group <?php echo (($group) ? 'group-style-' . $group : ''); ?>" <?php echo $attribs; ?>>
 		<div class="control-group-inner">
-			<?php if (!$field->getAttribute('hideLabel')): ?>
-				<div class="control-label"><?php echo $field->label; ?></div>
+			<?php if (!$field->getAttribute('hideLabel', false)): ?>
+				<div class="control-label">
+					<?php echo $field->label; ?>
+
+					<!-- if description exists then show the help icon -->
+					<?php if (!empty($description)): ?>
+						<span class="hu-help-icon fas fa-info-circle"></span>
+					<?php endif ?>
+
+				</div>
+
+				<!-- if description exists and type is not the checkbox then show the help text above of the input field. -->
+				<?php if (!empty($description) && $type !== 'checkbox'): ?>
+					<div class="control-help"><?php echo $description; ?></div>
+				<?php endif; ?>
+
 			<?php endif; ?>
 
 			<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
 				<?php echo $field->input; ?>
 			</div>
-			<?php if ($field->getAttribute('description') !== ''): ?>
-				<div class="control-help"><?php echo Text::_($field->getAttribute('description')); ?></div>
+
+			<!-- if description exists and type is checkbox then show the help text next to the input field. -->
+			<?php if (!empty($description) && $type === 'checkbox'): ?>
+				<div class="control-help"><?php echo $description; ?></div>
 			<?php endif; ?>
 		</div>
 	</div>

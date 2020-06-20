@@ -30,13 +30,14 @@ class HelixultimateFieldText
 
 		$output  = '<div class="control-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
-		$output	.= '<input class="hu-input addon-' . $key . '" type="text" data-attrname="' . $key . '" value="" ' . $attributes . ' />';
 
-		if ((isset($attr['desc'])) && (isset($attr['desc']) !== ''))
+		if (!empty($attr['desc']))
 		{
+			$output .= '<span class="hu-help-icon fas fa-info-circle"></span>';
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 
+		$output	.= '<input class="hu-input addon-' . $key . '" type="text" data-attrname="' . $key . '" value="" ' . $attributes . ' />';
 		$output .= '</div>';
 
 		return $output;

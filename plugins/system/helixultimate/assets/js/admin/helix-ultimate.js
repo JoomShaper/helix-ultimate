@@ -979,6 +979,8 @@ jQuery(function ($) {
 		e.preventDefault();
 		let $helpElement = $(this).closest('.control-group').find('.control-help');		
 
+		$(this).toggleClass('active');
+
 		if ($helpElement.hasClass('show')) {
 			$helpElement.removeClass('show');
 			$helpElement.slideUp(300);

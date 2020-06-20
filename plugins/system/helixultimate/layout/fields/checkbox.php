@@ -30,15 +30,21 @@ class HelixultimateFieldCheckbox
 		$output   = '<div class="control-group">';
 		$output  .= '<div class="checkbox clearfix">';
 		$output  .= '<label class="control-label">' . $attr['title'];
+
+		if (!empty($attr['desc']))
+		{
+			$output  .= '<span class="hu-help-icon fas fa-info-circle"></span>';
+		}
+
 		$output  .= '<input class="hu-input hu-input-' . $key . '" data-attrname="' . $key . '" type="checkbox">';
 		$output  .= '</label>';
-		$output  .= '</div>';
 
-		if ((isset($attr['desc'])) && (isset($attr['desc']) !== ''))
+		if (!empty($attr['desc']))
 		{
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 
+		$output  .= '</div>';
 		$output  .= '</div>';
 
 		return $output;

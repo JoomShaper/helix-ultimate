@@ -32,13 +32,14 @@ class HelixultimateFieldColor
 
 		$output  = '<div class="control-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
-		$output .= '<input type="text" class="hu-input hu-input-color" data-attrname="' . $key . '" placeholder="#rrggbb" value="">';
 
-		if ((isset($attr['desc'])) && (isset($attr['desc']) !== ''))
+		if (!empty($attr['desc']))
 		{
+			$output .= '<span class="hu-help-icon fas fa-info-circle"></span>';
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 
+		$output .= '<input type="text" class="hu-input hu-input-color" data-attrname="' . $key . '" placeholder="#rrggbb" value="">';
 		$output .= '</div>';
 
 		return $output;

@@ -32,16 +32,16 @@ class HelixultimateFieldMedia
 		$output  = '<div class="control-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
-		$output .= '<div class="hu-image-holder"></div>';
+		if (!empty($attr['desc']))
+		{
+			$output .= '<span class="hu-help-icon fas fa-info-circle"></span>';
+			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
+		}
 
+		$output .= '<div class="hu-image-holder"></div>';
 		$output .= '<input type="hidden" class="hu-input hu-input-media" data-attrname="' . $key . '" data-baseurl="' . Uri::root() . '" value="">';
 		$output .= '<a href="#" class="hu-media-picker btn btn-primary btn-sm" data-target="' . $key . '"><span class="fas fa-image"></span> Select Media</a>';
 		$output .= '<a href="#" class="hu-media-clear btn btn-secondary btn-sm"><span class="fas fa-times"></span> Clear</a>';
-
-		if ((isset($attr['desc'])) && (isset($attr['desc']) !== ''))
-		{
-			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
-		}
 
 		$output .= '</div>';
 

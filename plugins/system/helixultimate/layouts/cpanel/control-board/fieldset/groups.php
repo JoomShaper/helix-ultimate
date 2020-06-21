@@ -16,12 +16,12 @@ extract($displayData);
 ?>
 <?php foreach ($groups as $key => $group):  ?>
 	<?php if ($key !== 'no-group'): ?>
-		<div class="hu-group-wrap hu-group-<?php echo $key; ?>">
+		<div class="hu-group-wrap hu-group-<?php echo $key; ?> <?php echo $group['isActive'] ? 'active' : ''; ?>">
 			<div class="hu-group-header-box">
 				<span class="hu-group-title"><?php echo Text::_('HELIX_ULTIMATE_GROUP_' . strtoupper($key)); ?></span>
 				<span class="hu-group-toggle-icon fas fa-angle-right"></span>
 			</div>
-			<div class="hu-field-list" data-uid="<?php echo $fieldset_name . '-'. $key; ?>">
+			<div class="hu-field-list <?php echo $group['isActive'] ? 'active-group' : ''; ?>" data-uid="<?php echo $fieldset_name . '-'. $key; ?>" <?php echo $group['isActive'] ? 'style="display:block;"' : ''; ?>>
 				<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'fields' => $group['fields']], HELIX_LAYOUTS_PATH); ?>
 			</div>
 		</div>

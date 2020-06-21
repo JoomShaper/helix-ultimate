@@ -198,7 +198,7 @@ jQuery(function ($) {
 						$inputEl.val(safepoint);
 						$inputEl.attr('value', safepoint);
 
-						// Fire change event for appling showon behavior
+						// Fire change event for applying showon behavior
 						$inputEl.change();
 
 						// Update currPoint value
@@ -224,6 +224,19 @@ jQuery(function ($) {
 					if ($imagePreview.length > 0) {
 						$imagePreview.attr('src', `${meta.base}/${safepoint}`);
 					}
+
+					// Reset the predefined header
+					let $predefinedHeader = $controlEl.find('.hu-header-item');
+					
+					$predefinedHeader.each(function() {
+						if ($(this).hasClass('active')) {
+							$(this).removeClass('active');
+						}
+
+						if ($(this).data('style') === safepoint) {
+							$(this).addClass('active');
+						}
+					});
 
 					$controlEl.removeClass('helix-input-touched');
 					$controlEl.removeClass('field-reset');
@@ -758,7 +771,7 @@ jQuery(function ($) {
 		var styleName = $(this).data('style'),
 			filedName = $parent.data('name');
 
-		$('#' + filedName).val(styleName);
+		$('#' + filedName).val(styleName).trigger('change');
 	});
 
 	// Preset

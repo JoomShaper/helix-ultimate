@@ -15,16 +15,25 @@ extract($displayData);
 $fields 	= $form->getFieldset($key);
 $groups = array();
 
+$activeGroup = isset($fieldset->activegroup) ? $fieldset->activegroup : '';
+
 if (!empty($fields))
 {
 	foreach ($fields as $i => $field)
 	{
 		$group = $field->getAttribute('helixgroup') ? $field->getAttribute('helixgroup') : 'no-group';
 		$groups[$group]['fields'][] = $field;
+		$groups[$group]['isActive'] = false;
+
+		if ($activeGroup === $group)
+		{
+			$groups[$group]['isActive'] = true;
+		}
 	}
 }
 
 $headerTitle = implode(' ', explode('_', $fieldset->name));
+
 
 ?>
 

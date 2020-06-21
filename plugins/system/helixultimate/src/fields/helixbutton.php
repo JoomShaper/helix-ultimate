@@ -40,6 +40,6 @@ class JFormFieldHelixbutton extends FormField
 		$text = !empty($this->element['text']) ? $this->element['text'] : 'Button';
 		$target = !empty($this->element['target']) ? $this->element['target'] : '_self';
 
-		return '<a id="' . $this->id . '" class="btn' . $class . '" href="' . $url . '" target="' . $target . '">' . Text::_($text) . '</a>';	
+		return '<a id="' . $this->id . '" class="hu-btn' . str_replace('btn-', 'hu-btn-', $class) . '" href="' . $url . '" target="' . $target . '">' . Text::_($text) . '</a>';	
 	}
 }

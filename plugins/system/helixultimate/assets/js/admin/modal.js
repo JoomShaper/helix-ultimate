@@ -99,9 +99,9 @@ jQuery(function ($) {
 		optionsModal += '</div>';
 
 		optionsModal += '<div class="hu-options-modal-footer">';
-		optionsModal += `<a href="#" class="hu-btn hu-btn-primary hu-mr-2 ${options.applyBtnClass}" data-flag="${options.flag}"><span class="fas fa-check"></span> Apply</a>`;
-		optionsModal +=
-			'<a href="#" class="hu-btn hu-btn-secondary hu-settings-cancel"><span class="fas fa-times"></span> Cancel</a>';
+		optionsModal += `<a href="#" class="hu-btn hu-btn-primary ${options.applyBtnClass}" data-flag="${options.flag}"><span class="fas fa-check"></span> Apply</a>`;
+		// optionsModal +=
+		// 	'<a href="#" class="hu-btn hu-btn-secondary hu-settings-cancel"><span class="fas fa-times"></span> Cancel</a>';
 
 		if (options.footerButtons.length) {
 			optionsModal += options.footerButtons.map(button => button);

@@ -40,9 +40,9 @@ class JFormFieldHelixexportimport extends FormField
 
 		$export_url = 'index.php?option=com_ajax&helix=ultimate&task=export&id=' . $template_id;
 
-		$output  = '<a class="btn btn-success" id="btn-hu-export-settings" rel="noopener noreferrer" target="_blank" href="' . $export_url . '">' . Text::_("HELIX_ULTIMATE_SETTINGS_EXPORT") . '</a>';
+		$output  = '<a class="hu-btn hu-btn-primary" id="btn-hu-export-settings" rel="noopener noreferrer" target="_blank" href="' . $export_url . '">' . Text::_("HELIX_ULTIMATE_SETTINGS_EXPORT") . '</a>';
 		$output .= '<textarea id="input-hu-settings" rows="5"></textarea>';
-		$output .= '<a id="btn-hu-import-settings" class="btn btn-primary" rel="noopener noreferrer" data-template_id="' . $template_id . '" target="_blank" href="#">' . Text::_("HELIX_ULTIMATE_SETTINGS_IMPORT") . '</a>';
+		$output .= '<a id="btn-hu-import-settings" class="hu-btn hu-btn-primary" rel="noopener noreferrer" data-template_id="' . $template_id . '" target="_blank" href="#">' . Text::_("HELIX_ULTIMATE_SETTINGS_IMPORT") . '</a>';
 
 		return $output;
 	}

@@ -2,7 +2,8 @@
 <form>
 	<fieldset name="basic" 
 		label="HELIX_ULTIMATE_BASIC" 
-		addfieldpath="/plugins/system/helixultimate/src/fields" 
+		addfieldpath="/plugins/system/helixultimate/src/fields"
+		activegroup="logo" 
 		icon="fas fa-cog">
 
 		<field name="logo_type" 
@@ -54,6 +55,20 @@
 			type="text" 
 			label="HELIX_ULTIMATE_LOGO_SLOGAN" 
 			showon="logo_type:text" />
+
+		<field name="predefined_header" 
+			type="checkbox" 
+			helixgroup="header" 
+			label="HELIX_ULTIMATE_PREDEFINED_HEADER"
+			description="HELIX_ULTIMATE_PREDEFINED_HEADER_DESC"
+			default="0" />
+
+		<field type="helixheaders" 
+			name="header_style" 
+			helixgroup="header" 
+			label="HELIX_ULTIMATE_SELECT_HEADER" 
+			showon="predefined_header:1" />
+
 		<field name="header_height" 
 			helixgroup="header" 
 			type="text" 
@@ -903,22 +918,13 @@
 		label="HELIX_ULTIMATE_LAYOUT_BUILDER" 
 		addfieldpath="/plugins/system/helixultimate/src/fields" 
 		icon="far fa-list-alt">
-		<field name="predefined_header" 
-			type="checkbox" 
-			helixgroup="headers" 
-			default="0" 
-			hideLabel="true" />
-		<field type="helixheaders" 
-			name="header_style" 
-			helixgroup="headers" 
-			label="HELIX_ULTIMATE_SELECT_HEADER" 
-			showon="predefined_header:1" />
 		<field type="helixlayout" 
 			name="layout" />
 	</fieldset>
 
 	<fieldset name="menu" 
 		label="HELIX_ULTIMATE_NAVIGATION" 
+		activegroup="megamenu" 
 		icon="fas fa-list-ul">
 		<field name="menu" 
 			type="menu" 
@@ -973,6 +979,7 @@
 	<fieldset name="typography" 
 		label="HELIX_ULTIMATE_TYPOGRAPHY" 
 		icon="fas fa-font" 
+		activegroup="body_font" 
 		addfieldpath="/plugins/system/helixultimate/src/fields">
 		<field name="enable_body_font" 
 			type="checkbox" 
@@ -1105,6 +1112,7 @@
 	<!--Blog-->
 	<fieldset name="blog" 
 		label="HELIX_ULTIMATE_BLOG" 
+		activegroup="blog_images"
 		icon="fas fa-comments">
 		<field name="image_small" 
 			type="checkbox" 
@@ -1386,6 +1394,7 @@
 	<!--Custom Code-->
 	<fieldset name="custom_code" 
 		label="HELIX_ULTIMATE_CUSTOM_CODE" 
+		activegroup="custom_code"
 		icon="fas fa-code">
 		<field name="before_head" 
 			type="textarea" 
@@ -1420,6 +1429,7 @@
 	<!--Advanced-->
 	<fieldset name="advance" 
 		label="HELIX_ULTIMATE_FIELDSET_ADVANCED" 
+		activegroup="compression"
 		icon="fas fa-cog">
 		<field name="compress_css" 
 			helixgroup="compression" 

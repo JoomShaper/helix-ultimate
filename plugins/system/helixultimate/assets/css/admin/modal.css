@@ -97,12 +97,6 @@
 	align-items: center;
 }
 
-.hu-modal-footer .btn,
-.hu-options-modal-footer .btn {
-	margin-right: 10px;
-	font-size: 12px;
-}
-
 .hu-modal-breadcrumbs {
 	width: 560px;
 }
@@ -120,7 +114,7 @@
 }
 
 .hu-modal-actions-right {
-	width: 220px;
+	width: 320px;
 	text-align: right;
 }
 
@@ -143,17 +137,6 @@
 .action-hu-options-modal-close:hover {
 	background-color: #c82333;
 	color: #fff;
-}
-
-.hu-modal-actions-left .btn,
-.hu-modal-actions-right .btn {
-	font-size: 12px;
-	margin-right: 10px;
-}
-
-.hu-modal-actions-left .btn-last,
-.hu-modal-actions-right .btn-last {
-	margin-right: 0;
 }
 
 .hu-media-breadcrumb {
@@ -358,8 +341,8 @@
 }
 
 .hu-media-selected .hu-media-select {
-	border-color: #1d84e9;
-	background-color: #1d84e9;
+	border-color: rgb(var(--primary));
+	background-color: rgb(var(--primary));
 	opacity: 1;
 }
 
@@ -416,10 +399,6 @@
 
 .hu-image-holder:not(:empty) {
 	margin-bottom: 15px;
-}
-
-.hu-media-picker {
-	margin-right: 10px;
 }
 
 /* Progress */

@@ -34,18 +34,18 @@ jQuery(function ($) {
 
 		mediaModal += '<div class="hu-modal-actions-left">';
 		mediaModal +=
-			'<a href="#" class="btn btn-success btn-xs hu-modal-action-select"><span class="fas fa-check"></span> Select</a>';
+			'<a href="#" class="hu-btn hu-btn-primary hu-modal-action-select hu-mr-2"><span class="fas fa-check"></span> Select</a>';
 		mediaModal +=
-			'<a href="#" class="btn btn-secondary btn-xs hu-modal-action-cancel"><span class="fas fa-times"></span> Cancel</a>';
+			'<a href="#" class="hu-btn hu-btn-secondary hu-modal-action-cancel hu-mr-2"><span class="fas fa-times"></span> Cancel</a>';
 		mediaModal +=
-			'<a href="#" class="btn btn-danger btn-xs btn-last hu-modal-action-delete"><span class="fas fa-minus-circle"></span> Delete</a>';
+			'<a href="#" class="hu-btn hu-btn-danger hu-btn-last hu-modal-action-delete"><span class="fas fa-minus-circle"></span> Delete</a>';
 		mediaModal += '</div>';
 
 		mediaModal += '<div class="hu-modal-actions-right">';
 		mediaModal +=
-			'<a href="#" class="btn btn-success btn-xs hu-modal-action-upload"><span class="fas fa-upload"></span> Upload</a>';
+			'<a href="#" class="hu-btn hu-btn-primary hu-modal-action-upload hu-mr-2"><span class="fas fa-upload"></span> Upload</a>';
 		mediaModal +=
-			'<a href="#" class="btn btn-primary btn-xs btn-last hu-modal-action-new-folder"><span class="fas fa-plus"></span> New Folder</a>';
+			'<a href="#" class="hu-btn hu-btn-secondary hu-btn-last hu-modal-action-new-folder"><span class="fas fa-plus"></span> New Folder</a>';
 		mediaModal += '</div>';
 		mediaModal += '</div>';
 
@@ -99,9 +99,9 @@ jQuery(function ($) {
 		optionsModal += '</div>';
 
 		optionsModal += '<div class="hu-options-modal-footer">';
-		optionsModal += `<a href="#" class="btn btn-success btn-xs ${options.applyBtnClass}" data-flag="${options.flag}"><span class="fas fa-check"></span> Apply</a>`;
+		optionsModal += `<a href="#" class="hu-btn hu-btn-primary hu-mr-2 ${options.applyBtnClass}" data-flag="${options.flag}"><span class="fas fa-check"></span> Apply</a>`;
 		optionsModal +=
-			'<a href="#" class="btn btn-secondary btn-xs hu-settings-cancel"><span class="fas fa-times"></span> Cancel</a>';
+			'<a href="#" class="hu-btn hu-btn-secondary hu-settings-cancel"><span class="fas fa-times"></span> Cancel</a>';
 
 		if (options.footerButtons.length) {
 			optionsModal += options.footerButtons.map(button => button);

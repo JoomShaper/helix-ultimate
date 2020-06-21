@@ -67,9 +67,10 @@
 	left: 0;
 	width: 100%;
 	display: flex;
-	background-color: #e8eef3;
+	background: #DEE7FB;
+	border-bottom: 1px solid rgba(51, 102, 255, 0.14);
 	height: 60px;
-	border-radius: 4px 4px 0 0;
+	border-radius: 8px 8px 0 0;
 	padding: 0 20px;
 	z-index: 99;
 	align-items: center;
@@ -79,7 +80,7 @@
 .hu-options-modal-header-title {
 	font-size: 14px;
 	font-weight: 500;
-	color: #6f737a;
+	color: rgb(var(--primary));
 }
 
 .hu-modal-footer,
@@ -89,9 +90,10 @@
 	left: 0;
 	width: 100%;
 	display: flex;
-	background-color: #e8eef3;
+	background: #DEE7FB;
+	border-top: 1px solid rgba(51, 102, 255, 0.14);
 	height: 60px;
-	border-radius: 0 0 4px 4px;
+	border-radius: 0 0 8px 8px;
 	padding: 0 20px;
 	z-index: 99;
 	align-items: center;
@@ -120,7 +122,7 @@
 
 .action-hu-modal-close,
 .action-hu-options-modal-close {
-	background-color: #dc3545;
+	background-color: #F53D62;
 	border-radius: 25px;
 	color: #fff;
 	height: 30px;
@@ -131,11 +133,12 @@
 	top: -15px;
 	width: 30px;
 	z-index: 3;
+	transition: color 400ms, background-color 400ms;
 }
 
 .action-hu-modal-close:hover,
 .action-hu-options-modal-close:hover {
-	background-color: #c82333;
+	background-color: #F20D3B;
 	color: #fff;
 }
 

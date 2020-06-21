@@ -127,11 +127,11 @@ jQuery(function ($) {
 		 */
 		$(this).helixUltimateOptionsModal({
 			flag: 'edit-presets',
-			title: `<span class='fas fa-cogs'></span> Edit Preset: ${name}`,
+			title: `<span class='fas fa-cogs hu-mr-2'></span> Edit Preset: ${name}`,
 			class: `hu-modal-small edit-preset-modal modal-${name}`,
 			applyBtnClass: 'hu-save-preset',
 			footerButtons: [
-				`<a href="#" class="hu-btn hu-btn-secondary helix-preset-reset" style="margin-left: auto;"><span class="fas fa-sync-alt"></span> Reset to Default</a>`,
+				`<a href="#" class="hu-btn hu-btn-secondary helix-preset-reset hu-ml-auto"><span class="fas fa-sync-alt"></span> Reset to Default</a>`,
 			],
 		});
 

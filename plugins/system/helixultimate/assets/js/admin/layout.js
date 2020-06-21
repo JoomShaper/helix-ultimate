@@ -104,7 +104,7 @@ jQuery(function ($) {
 		event.preventDefault();
 		$(this).helixUltimateOptionsModal({
 			flag: 'row-setting',
-			title: "<span class='fas fa-cogs'></span> Row Options",
+			title: "<span class='fas fa-cogs hu-mr-2'></span> Row Options",
 			class: 'hu-modal-small',
 		});
 

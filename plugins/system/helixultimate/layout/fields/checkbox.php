@@ -33,7 +33,7 @@ class HelixultimateFieldCheckbox
 
 		if (!empty($attr['desc']))
 		{
-			$output  .= '<span class="hu-help-icon fas fa-info-circle"></span>';
+			$output  .= '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>';
 		}
 
 		$output  .= '<input class="hu-input hu-input-' . $key . '" data-attrname="' . $key . '" type="checkbox">';

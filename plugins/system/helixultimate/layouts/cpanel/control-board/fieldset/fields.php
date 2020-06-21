@@ -56,7 +56,7 @@ extract($displayData);
 
 					<!-- if description exists then show the help icon -->
 					<?php if (!empty($description)): ?>
-						<span class="hu-help-icon fas fa-info-circle"></span>
+						<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
 					<?php endif ?>
 
 				</div>

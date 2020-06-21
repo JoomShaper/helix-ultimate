@@ -1774,20 +1774,21 @@ select:focus::-ms-value {
 .control-help {
 	font-size: 13px;
 	line-height: 1.6;
-	font-weight: 300;
-	color: #999;
+	font-weight: 400;
+	color: rgba(var(--dark), 0.7);
 	margin-bottom: 10px;
 	display: none;
 }
 
 .hu-help-icon {
-	color: #999;
+	color: rgba(var(--dark), 0.6);
 	cursor: pointer;
-	transition: color .3s ease;
+	transition: color 400ms;
 }
 
-.hu-help-icon:hover {
-	color: #222;
+.hu-help-icon:hover,
+.hu-help-icon.active {
+	color: rgb(var(--primary));
 }
 
 .controls > .minicolors,
@@ -1881,15 +1882,35 @@ select:focus::-ms-value {
 	z-index: 1;
 }
 
-.helix-close-btn {
-	background: #f5f7fc;
-	color: #a7b1c3;
-	width: 36px;
-	height: 36px;
-	border-radius: 100%;
+.hu-btn-round {
+	width: 32px;
+	height: 32px;
+	line-height: 1;
+	padding: 0;
 	display: inline-flex;
-	justify-content: center;
 	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: rgb(255, 255, 255, 0.5);
+	transition: background-color 400ms;
+}
+
+.hu-btn-round svg {
+    fill: #797FA7;
+    transition: fill 400ms;
+}
+
+.hu-btn-round:hover {
+	background-color: rgba(var(--primary));
+}
+
+.hu-btn-round:hover svg {
+	fill: #fff;
+}
+
+.hu-btn-round-sm {
+	width: 22px;
+	height: 22px;
 }
 
 .hu-topbar {
@@ -2041,7 +2062,7 @@ select:focus::-ms-value {
 
 .hu-edit-panel {
 	background: #fff;
-	width: 260px;
+	width: 290px;
 	box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.1);
 	box-shadow: 6px 10px 40px rgba(1, 3, 18, 0.15), 0px 3px 6px rgba(0, 0, 0, 0.25);
 	border-radius: 10px;
@@ -2074,25 +2095,6 @@ select:focus::-ms-value {
 	border-radius: 10px 10px 0 0;
 	border-bottom: 1px solid rgba(var(--primary), 0.15);
 
-}
-
-.hu-panel-close {
-	background: rgb(255, 255, 255, 0.5);
-	display: inline-flex;
-	align-items: center;
-	width: 20px;
-	height: 20px;
-	line-height: 20px;
-	text-align: center;
-	border: none;
-	color: #787FA7;
-	outline: none;
-	cursor: pointer;
-	border-radius: 100%;
-}
-
-.hu-panel-close svg {
-	display: inline-block;
 }
 
 .hu-preview {

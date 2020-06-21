@@ -34,7 +34,7 @@ class HelixultimateFieldMedia
 
 		if (!empty($attr['desc']))
 		{
-			$output .= '<span class="hu-help-icon fas fa-info-circle"></span>';
+			$output .= '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>';
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 

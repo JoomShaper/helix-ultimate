@@ -31,8 +31,8 @@ $headerTitle = implode(' ', explode('_', $fieldset->name));
 <div class="hu-edit-panel <?php echo strtolower($fieldset->name); ?>-panel">
 	<div class="hu-panel-header">
 		<span><?php echo ucwords($headerTitle); ?></span>
-		<button type="button" role="button" class="hu-panel-close" data-sidebarclass="<?php echo 'hu-fieldset-' . $fieldset->name; ?>">
-			<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none"><path fill="#787FA7" d="M9.708.292a.999.999 0 00-1.413 0l-3.289 3.29L1.717.291A.999.999 0 00.305 1.705l3.289 3.289-3.29 3.289a.999.999 0 101.413 1.412l3.29-3.289 3.288 3.29a.999.999 0 001.413-1.413l-3.29-3.29 3.29-3.288a.999.999 0 000-1.413z"/></svg>
+		<button type="button" role="button" class="hu-btn hu-btn-round hu-btn-round-sm hu-panel-close" data-sidebarclass="<?php echo 'hu-fieldset-' . $fieldset->name; ?>">
+			<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="none"><path d="M9.708.292a.999.999 0 00-1.413 0l-3.289 3.29L1.717.291A.999.999 0 00.305 1.705l3.289 3.289-3.29 3.289a.999.999 0 101.413 1.412l3.29-3.289 3.288 3.29a.999.999 0 001.413-1.413l-3.29-3.29 3.29-3.288a.999.999 0 000-1.413z"/></svg>
 		</button>
 	</div>
 	<div class="hu-groups-container">

@@ -1119,12 +1119,15 @@
 			helixgroup="blog_images" 
 			default="0" 
 			label="HELIX_ULTIMATE_IMAGE_SMALL" />
-		<field name="image_small_size" 
-			type="text" 
+		<field
+			name="image_small_size" 
+			type="helixdimension" 
 			helixgroup="blog_images" 
 			default="100X100" 
-			hint="100X100" 
-			label="HELIX_ULTIMATE_IMAGE_SMALL_SIZE" 
+			hint="100X100"
+			toggle="true"
+			label="HELIX_ULTIMATE_IMAGE_SMALL_SIZE"
+			hideLabel="true" 
 			showon="image_small:1" />
 
 		<field name="image_thumbnail" 

@@ -234,3 +234,123 @@
 .hu-ml-auto {
 	margin-left: auto !important;
 }
+
+/*Input group*/
+.hu-input-group {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+	width: 100%;
+}
+
+.hu-input-group > .form-control,
+.hu-input-group > .form-select,
+.hu-input-group > .form-file {
+	position: relative;
+	flex: 1 1 auto;
+	width: 1%;
+	min-width: 0;
+}
+
+.hu-input-group > .form-control:focus,
+.hu-input-group > .form-select:focus,
+.hu-input-group > .form-file .form-file-input:focus ~ .form-file-label {
+	z-index: 3;
+}
+
+.hu-input-group > .form-file > .form-file-input:focus {
+	z-index: 4;
+}
+
+.hu-input-group > .form-file:not(:last-child) > .form-file-label {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.hu-input-group > .form-file:not(:first-child) > .form-file-label {
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.hu-input-group .btn {
+	position: relative;
+	z-index: 2;
+}
+
+.hu-input-group .btn:focus {
+	z-index: 3;
+}
+
+.hu-input-group-text {
+	display: flex;
+	align-items: center;
+	padding: 6px;
+	font-size: 12px;
+	font-weight: 400;
+	line-height: 1.5;
+	background-color: #fff;
+	color: rgba(var(--dark));
+	text-align: center;
+	white-space: nowrap;
+	border: 1px solid rgba(121, 127, 167, 0.3);
+	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
+	border-radius: 0.25rem;
+}
+
+.hu-input-group > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu),
+.hu-input-group > .dropdown-toggle:nth-last-child(n + 3) {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.hu-input-group > :not(:first-child):not(.dropdown-menu) {
+	margin-left: -1px;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+/*Display*/
+.hu-d-flex {
+	display: flex !important;
+}
+
+.hu-d-inline-flex {
+	display: inline-flex !important;
+}
+
+.hu-align-items-start {
+	align-items: flex-start !important;
+}
+
+.hu-align-items-end {
+	align-items: flex-end !important;
+}
+
+.hu-align-items-center {
+	align-items: center !important;
+}
+
+.hu-justify-content-start {
+	justify-content: flex-start !important;
+}
+
+.hu-justify-content-end {
+	justify-content: flex-end !important;
+}
+
+.hu-justify-content-center {
+	justify-content: center !important;
+}
+
+.hu-justify-content-between {
+	justify-content: space-between !important;
+}
+
+.hu-justify-content-around {
+	justify-content: space-around !important;
+}
+
+.hu-justify-content-evenly {
+	justify-content: space-evenly !important;
+}

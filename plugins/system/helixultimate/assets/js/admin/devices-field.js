@@ -41,9 +41,9 @@ jQuery(document).ready(function ($) {
 		};
 
 		const deviceMap = {
-			lg: 'desktop',
-			md: 'tablet',
-			sm: 'mobile',
+			md: 'desktop',
+			sm: 'tablet',
+			xs: 'mobile',
 			desktop: 'desktop',
 			tablet: 'tablet',
 			mobile: 'mobile',

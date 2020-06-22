@@ -76,29 +76,28 @@
 			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
 
 		<!-- sticky header options for devices -->
-		<field name="header_device" 
+		<!-- <field name="header_device" 
 			type="helixdevices" 
 			helixgroup="header" 
-			default="lg" 
-			track="false" />
+			default="md" 
+			track="false" /> -->
 		<field name="sticky_header" 
 			helixgroup="header" 
 			type="checkbox" 
 			default="1" 
-			label="HELIX_ULTIMATE_STICKY_HEADER_MD" 
-			showon="header_device:lg" />
-		<field name="sticky_header_md" 
-			helixgroup="header" 
-			type="checkbox" 
-			default="0" 
-			label="HELIX_ULTIMATE_STICKY_HEADER_SM" 
-			showon="header_device:md" />
+			label="HELIX_ULTIMATE_STICKY_HEADER_MD" />
 		<field name="sticky_header_sm" 
 			helixgroup="header" 
 			type="checkbox" 
 			default="0" 
-			label="HELIX_ULTIMATE_STICKY_HEADER_XS" 
+			label="HELIX_ULTIMATE_STICKY_HEADER_SM" 
 			showon="header_device:sm" />
+		<field name="sticky_header_xs" 
+			helixgroup="header" 
+			type="checkbox" 
+			default="0" 
+			label="HELIX_ULTIMATE_STICKY_HEADER_XS" 
+			showon="header_device:xs" />
 
 		<field name="favicon" 
 			helixgroup="header" 
@@ -1151,6 +1150,7 @@
 			type="checkbox" 
 			helixgroup="blog_images" 
 			default="1" 
+			separator="true"
 			label="HELIX_ULTIMATE_IMAGE_THUMBNAIL" />
 		<field name="image_thumbnail_size" 
 			type="text" 

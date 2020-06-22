@@ -581,6 +581,12 @@ jQuery(function ($) {
 			mobile: 'mobile',
 		};
 
+		const map = {
+			desktop: 'md',
+			tablet: 'sm',
+			mobile: 'xs',
+		};
+
 		const $iframe = $('#hu-template-preview');
 
 		$(`.hu-device[data-device=${deviceMap[device]}]`)
@@ -588,6 +594,15 @@ jQuery(function ($) {
 			.find('.active')
 			.removeClass('active');
 		$(`.hu-device[data-device=${deviceMap[device]}]`).addClass('active');
+
+		// Change the typography field device wise size field
+		$('input[class^=hu-webfont-size-input]').each(function () {
+			if ($(this).hasClass('active')) {
+				$(this).removeClass('active');
+			}
+		});
+
+		$(`input.hu-webfont-size-input${map[device] === 'md' ? '' : '-' + map[device]}`).addClass('active');
 
 		$iframe.animate(
 			{

@@ -23,10 +23,10 @@ extract($displayData);
 				<span class="hu-group-toggle-icon fas fa-angle-right"></span>
 			</div>
 			<div class="hu-field-list <?php echo $group['isActive'] ? 'active-group' : ''; ?>" data-uid="<?php echo $fieldset_name . '-'. $key; ?>" <?php echo $group['isActive'] ? 'style="display:block;"' : ''; ?>>
-				<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'fields' => $group['fields']], HELIX_LAYOUTS_PATH); ?>
+				<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'groupData' => $group], HELIX_LAYOUTS_PATH); ?>
 			</div>
 		</div>
 	<?php else: ?>
-		<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'fields' => $group['fields']], HELIX_LAYOUTS_PATH); ?>
+		<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'groupData' => $group], HELIX_LAYOUTS_PATH); ?>
 	<?php endif ?>
 <?php endforeach; ?>

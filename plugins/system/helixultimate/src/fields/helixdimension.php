@@ -37,17 +37,17 @@ class JFormFieldHelixdimension extends FormField
 	{
 		$unit = $this->getAttribute('unit', 'px');
 		list($width, $height) = explode('x', strtolower($this->value));
-		
+
 		// Output
 		$output = '';
 
 		$output .= '<div class="row">';
-		
+
 		$output .= '<div class="col-6">';
 		$output .= '<div class="hu-d-flex hu-align-items-center">';
 		$output .= '<span class="hu-mr-1">W</span>';
 		$output .= '<div class="hu-input-group">';
-		$output .= '<input type="text" class="hu-field-dimension-width form-control" value="' . $width . '" /><span class="hu-input-group-text">'. $unit .'</span>';
+		$output .= '<input type="text" class="hu-field-dimension-width form-control" value="' . $width . '" /><span class="hu-input-group-text">' . $unit . '</span>';
 		$output .= '</div>';
 		$output .= '</div>';
 		$output .= '</div>';
@@ -56,14 +56,14 @@ class JFormFieldHelixdimension extends FormField
 		$output .= '<div class="hu-d-flex hu-align-items-center">';
 		$output .= '<span class="hu-mr-1">H</span>';
 		$output .= '<div class="hu-input-group">';
-		$output .= '<input type="text" class="hu-field-dimension-height form-control" value="' . $height . '" /><span class="hu-input-group-text">'. $unit .'</span>';
+		$output .= '<input type="text" class="hu-field-dimension-height form-control" value="' . $height . '" /><span class="hu-input-group-text">' . $unit . '</span>';
 		$output .= '</div>';
 		$output .= '</div>';
-		$output .= '</div>';
-		
 		$output .= '</div>';
 
-		$output .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" class="hu-field-dimension-input '. $this->class .'" value="' . $this->value . '" />';
+		$output .= '</div>';
+
+		$output .= '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '" class="hu-field-dimension-input ' . $this->class . '" value="' . $this->value . '" />';
 
 		return $output;
 

@@ -13,16 +13,28 @@ use Joomla\CMS\Layout\LayoutHelper;
 extract($displayData);
 
 $fields 	= $form->getFieldset($key);
-$groups = array();
 
 $activeGroup = isset($fieldset->activegroup) ? $fieldset->activegroup : '';
 
 if (!empty($fields))
 {
+	$index = 0;
+
 	foreach ($fields as $i => $field)
 	{
+		$subgroup = $field->getAttribute('helixsubgroup');
 		$group = $field->getAttribute('helixgroup') ? $field->getAttribute('helixgroup') : 'no-group';
-		$groups[$group]['fields'][] = $field;
+
+		if (isset($subgroup))
+		{
+			$groups[$group]['subgroup-' . $subgroup][] = $field;
+		}
+		else
+		{
+			$groups[$group][] = $field;
+		}
+
+
 		$groups[$group]['isActive'] = false;
 		$groups[$group]['dependent'] = $field->getAttribute('dependant', '');
 
@@ -34,7 +46,6 @@ if (!empty($fields))
 }
 
 $headerTitle = implode(' ', explode('_', $fieldset->name));
-
 
 ?>
 

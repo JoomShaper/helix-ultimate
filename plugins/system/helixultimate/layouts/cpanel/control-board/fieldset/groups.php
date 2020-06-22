@@ -13,10 +13,11 @@ use Joomla\CMS\Layout\LayoutHelper;
 
 extract($displayData);
 
+
 ?>
 <?php foreach ($groups as $key => $group):  ?>
 	<?php if ($key !== 'no-group'): ?>
-		<div class="hu-group-wrap hu-group-<?php echo $key; ?> <?php echo $group['isActive'] ? 'active' : ''; ?>">
+		<div class="hu-group-wrap hu-group-<?php echo $key; ?> <?php echo $group['isActive'] ? 'active' : ''; ?>" <?php echo !empty($group['dependent']) ? 'data-dependon="' . $group['dependent'] . '"' : ''; ?>>
 			<div class="hu-group-header-box">
 				<span class="hu-group-title"><?php echo Text::_('HELIX_ULTIMATE_GROUP_' . strtoupper($key)); ?></span>
 				<span class="hu-group-toggle-icon fas fa-angle-right"></span>

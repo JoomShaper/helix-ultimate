@@ -1027,4 +1027,41 @@ jQuery(function ($) {
 			.siblings()
 			.removeClass('active');
 	});
+
+	/* Helix Group Depend On functionalities */
+	let $togglers = {};
+
+	function handleDependOnRelationship() {
+		let $groups = $('.hu-group-wrap');
+		$groups.each(function() {
+			if ($(this).attr('data-dependon')) {
+				let depend = $(this).data('dependon');
+				let [name, value] = depend.split(':');
+				let $parentElement = $(`[name=${name}]`);
+				let parentValue = $parentElement.val();
+
+				if ($parentElement.prop('type') === 'checkbox') {
+					parentValue = $parentElement.prop('checked');
+					value = value == 1;
+				}
+
+				if (parentValue == value) {
+					$(this).fadeIn(300);
+				} else {
+					$(this).fadeOut(300);
+				}
+
+				$togglers[name] = $parentElement;
+			}
+		});
+	}
+
+	handleDependOnRelationship();
+
+	Object.values($togglers).forEach(function ($toggler) {
+		$toggler.on('change', function (e) {
+			e.preventDefault();
+			handleDependOnRelationship();
+		})
+	})
 });

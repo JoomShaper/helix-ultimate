@@ -14,7 +14,7 @@ if(isset($settings->grid_size) && $settings->grid_size){
     $colSettings = RowColumnSettings::getSettings($settings);
 }
 
-$output = '<div class="hu-layout-column col-md-' . ((isset($settings->grid_size) && $settings->grid_size)? $settings->grid_size :12) .'" ' . $colSettings .'>';
+$output = '<div class="hu-layout-column col-' . ((isset($settings->grid_size) && $settings->grid_size)? $settings->grid_size :12) .'" ' . $colSettings .'>';
 $output .= '<div class="hu-column' . ((isset($settings->column_type) && $settings->column_type) ? ' hu-column-component' : '') . ' clearfix">';
 
 if (isset($settings->column_type) && $settings->column_type)
@@ -33,7 +33,7 @@ else
     }
 }
 
-$output .= '<a class="hu-column-options" href="#" ><i class="fas fa-cog fa-fw"></i></a>';
+$output .= '<a class="hu-column-options" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill="#020B53" fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd" opacity=".4"/></svg></a>';
 $output .= '</div>';
 $output .= '</div>';
 

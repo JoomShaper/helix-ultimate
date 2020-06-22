@@ -311,6 +311,12 @@
 }
 
 /*Display*/
+.hu-sr-only {
+	visibility: hidden;
+}
+.hu-d-none {
+	display: none;
+}
 .hu-d-flex {
 	display: flex !important;
 }

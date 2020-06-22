@@ -581,6 +581,12 @@ jQuery(function ($) {
 			mobile: 'mobile',
 		};
 
+		const map = {
+			desktop: 'md',
+			tablet: 'sm',
+			mobile: 'xs',
+		};
+
 		const $iframe = $('#hu-template-preview');
 
 		$(`.hu-device[data-device=${deviceMap[device]}]`)
@@ -588,6 +594,15 @@ jQuery(function ($) {
 			.find('.active')
 			.removeClass('active');
 		$(`.hu-device[data-device=${deviceMap[device]}]`).addClass('active');
+
+		// Change the typography field device wise size field
+		$('input[class^=hu-webfont-size-input]').each(function () {
+			if ($(this).hasClass('active')) {
+				$(this).removeClass('active');
+			}
+		});
+
+		$(`input.hu-webfont-size-input${map[device] === 'md' ? '' : '-' + map[device]}`).addClass('active');
 
 		$iframe.animate(
 			{
@@ -1027,4 +1042,41 @@ jQuery(function ($) {
 			.siblings()
 			.removeClass('active');
 	});
+
+	/* Helix Group Depend On functionalities */
+	let $togglers = {};
+
+	function handleDependOnRelationship() {
+		let $groups = $('.hu-group-wrap');
+		$groups.each(function() {
+			if ($(this).attr('data-dependon')) {
+				let depend = $(this).data('dependon');
+				let [name, value] = depend.split(':');
+				let $parentElement = $(`[name=${name}]`);
+				let parentValue = $parentElement.val();
+
+				if ($parentElement.prop('type') === 'checkbox') {
+					parentValue = $parentElement.prop('checked');
+					value = value == 1;
+				}
+
+				if (parentValue == value) {
+					$(this).fadeIn(300);
+				} else {
+					$(this).fadeOut(300);
+				}
+
+				$togglers[name] = $parentElement;
+			}
+		});
+	}
+
+	handleDependOnRelationship();
+
+	Object.values($togglers).forEach(function ($toggler) {
+		$toggler.on('change', function (e) {
+			e.preventDefault();
+			handleDependOnRelationship();
+		})
+	})
 });

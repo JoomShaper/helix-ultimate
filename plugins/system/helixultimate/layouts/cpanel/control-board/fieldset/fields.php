@@ -47,8 +47,11 @@ extract($displayData);
 		$hideLabel = $field->getAttribute('hideLabel', false);
 		$description = Text::_($field->getAttribute('description', ''));
 		$type = $field->getAttribute('type', 'text');
+		$separator = $field->getAttribute('separator');
+
+		$separator = isset($separator) && ($separator === 'true' || $separator === 'on') ? true : false;
 	?>
-	<div class="control-group <?php echo (($group) ? 'group-style-' . $group : ''); ?>" <?php echo $attribs; ?>>
+	<div class="control-group <?php echo (($group) ? 'group-style-' . $group : ''); ?> <?php echo $separator ? 'has-separator': ''; ?>" <?php echo $attribs; ?>>
 		<div class="control-group-inner">
 			<?php if (!$field->getAttribute('hideLabel', false)): ?>
 				<div class="control-label">

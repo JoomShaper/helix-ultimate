@@ -130,7 +130,7 @@ class JFormFieldHelixfont extends FormField
 		$html .= '<div class="col-6 hu-webfont-size">';
 		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</small></label>';
 		$html .= '<div class="helix-responsive-devices">';
-		$html .= '<span data-device="md" data-active_class=".hu-webfont-size-input" class="fas fa-laptop active"></span><span data-device="sm" data-active_class=".hu-webfont-size-input-sm" class="fas fa-tablet-alt"></span><span data-device="xs" data-active_class=".hu-webfont-size-input-xs" class="fas fa-mobile-alt"></span>';
+		// $html .= '<span data-device="md" data-active_class=".hu-webfont-size-input" class="fas fa-laptop active"></span><span data-device="sm" data-active_class=".hu-webfont-size-input-sm" class="fas fa-tablet-alt"></span><span data-device="xs" data-active_class=".hu-webfont-size-input-xs" class="fas fa-mobile-alt"></span>';
 		$html .= '</div>';
 		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6">';
 		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6">';

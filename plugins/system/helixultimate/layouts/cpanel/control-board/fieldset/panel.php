@@ -24,6 +24,7 @@ if (!empty($fields))
 		$group = $field->getAttribute('helixgroup') ? $field->getAttribute('helixgroup') : 'no-group';
 		$groups[$group]['fields'][] = $field;
 		$groups[$group]['isActive'] = false;
+		$groups[$group]['dependent'] = $field->getAttribute('dependant', '');
 
 		if ($activeGroup === $group)
 		{

@@ -8,77 +8,51 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Language\Text;
 use HelixUltimate\Framework\Platform\Settings;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 extract($displayData);
 
 ?>
 
-<?php foreach ($fields as $field): ?>
-	<?php
-		$showon = $field->getAttribute('showon');
-		$attribs = '';
+<?php foreach ($groupData as $key => $data): ?>
+	<?php if (\is_numeric($key)): ?>
+		<?php echo LayoutHelper::render('cpanel.control-board.fieldset.field', ['field' => $data, 'group' => $group], HELIX_LAYOUTS_PATH); ?>
+	<?php elseif (preg_match("#^subgroup-.+$#", $key)): ?>
+		<?php
+			$masterLabel = $data[0]->getAttribute('masterlabel');
+			$masterLabel = isset($masterLabel) ? Text::_($masterLabel) : '';
 
-		if ($showon)
-		{
-			$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon)) . '\'';
-		}
+			$masterDescription = $data[0]->getAttribute('masterdesc');
+			$masterDescription = isset($masterDescription) ? Text::_($masterDescription) : '';
 
-		$setvalue = '';
-
-		if (\is_array($field->value) || \is_object($field->value))
-		{
-			$setvalue = json_encode($field->value);
-		}
-		else
-		{
-			$setvalue = $field->value;
-		}
-
-		$track = $field->getAttribute('track');
-		$hasTrack = true;
-
-		if (!empty($track))
-		{
-			$hasTrack = !($track === 'false' || $track === 'off');
-		}
-
-		$hideLabel = $field->getAttribute('hideLabel', false);
-		$description = Text::_($field->getAttribute('description', ''));
-		$type = $field->getAttribute('type', 'text');
-		$separator = $field->getAttribute('separator');
-
-		$separator = isset($separator) && ($separator === 'true' || $separator === 'on') ? true : false;
-	?>
-	<div class="control-group <?php echo (($group) ? 'group-style-' . $group : ''); ?> <?php echo $separator ? 'has-separator': ''; ?>" <?php echo $attribs; ?>>
-		<div class="control-group-inner">
-			<?php if (!$field->getAttribute('hideLabel', false)): ?>
+			$masterClass = $data[0]->getAttribute('masterclass');
+			$masterClass = isset($masterClass) ? $masterClass : 'row';
+		?>
+		<!-- if master label provider for the subgroup -->
+		<?php if (!empty($masterLabel)): ?>
+			<div class="control-group master-label-group">
 				<div class="control-label">
-					<?php echo $field->label; ?>
-
-					<!-- if description exists then show the help icon -->
-					<?php if (!empty($description)): ?>
+					<label for=""><?php echo $masterLabel; ?></label>
+					<?php if (!empty($masterDescription)): ?>
 						<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
+						<p class="control-help"><?php echo $masterDescription; ?></p>
 					<?php endif ?>
-
 				</div>
-
-				<!-- if description exists and type is not the checkbox then show the help text above of the input field. -->
-				<?php if (!empty($description) && $type !== 'checkbox'): ?>
-					<div class="control-help"><?php echo $description; ?></div>
-				<?php endif; ?>
-
-			<?php endif; ?>
-
-			<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
-				<?php echo $field->input; ?>
 			</div>
+		<?php endif ?>
 
-			<!-- if description exists and type is checkbox then show the help text next to the input field. -->
-			<?php if (!empty($description) && $type === 'checkbox'): ?>
-				<div class="control-help"><?php echo $description; ?></div>
-			<?php endif; ?>
+		<div class="hu-subgroup <?php echo $masterClass; ?>">
+			<?php foreach ($data as $subgroup => $field): ?>
+				<?php
+					$classes =  $field->getAttribute('subclasses');
+					$classes = isset($classes) ? $classes : 'col';
+				?>
+				<div class="<?php echo $classes; ?>">
+					<?php echo LayoutHelper::render('cpanel.control-board.fieldset.field', ['field' => $field, 'group' => $group], HELIX_LAYOUTS_PATH); ?>
+				</div>
+			<?php endforeach ?>
 		</div>
-	</div>
-<?php endforeach; ?>
+	<?php endif  ?>
+<?php endforeach ?>

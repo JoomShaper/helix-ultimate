@@ -2431,6 +2431,10 @@ select:focus::-ms-value {
 	display: none;
 }
 
+.master-label-group ~ .hu-subgroup .control-group {
+    margin-top: 0px;
+}
+
 .control-group-checkbox .control-group-inner {
 	display: flex;
 	flex-wrap: wrap;
@@ -2502,6 +2506,10 @@ select:focus::-ms-value {
 }
 
 .control-group-checkbox input[type='checkbox']:disabled {
+	opacity: 0.5;
+}
+
+.control-group.not-editable {
 	opacity: 0.5;
 }
 

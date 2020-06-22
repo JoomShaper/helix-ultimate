@@ -1078,5 +1078,78 @@ jQuery(function ($) {
 			e.preventDefault();
 			handleDependOnRelationship();
 		})
-	})
+	});
+
+	/* Helix dimension Field */
+	(function handleDimensionData() {
+		let $width =  $('.hu-field-dimension-width');
+		let $height = $('.hu-field-dimension-height');
+		let $input = $('.hu-field-dimension-input');
+		
+
+		$width.on('keyup', function (e) {
+			e.preventDefault();
+			let fieldValue = $input.val() || '0x0';
+			let value = $(this).val();
+			let [width, height] = fieldValue.toLowerCase().split('x');
+			
+			if (value === '') {
+				value = '0';
+			}
+
+			width = value;
+			fieldValue = `${width}x${height}`;
+			$input.val(fieldValue);
+		});
+		
+		$height.on('keyup', function (e) {
+			e.preventDefault();
+			let fieldValue = $input.val() || '0x0';
+			let value = $(this).val();
+			let [width, height] = fieldValue.toLowerCase().split('x');
+
+			if (value === '') {
+				value = '0';
+			}
+
+			height = value;
+			fieldValue = `${width}x${height}`;
+			$input.val(fieldValue);
+		});
+	})();
+
+
+
+	/** Handle enable on  */
+	let $enableParentElement = null;
+
+	function handleEnableOn() {
+		let $childElement =  $('.control-group[data-enableon]');
+		let [name, value] = $childElement.data('enableon').split(':');
+		
+
+		$enableParentElement = $(`[name=${name}]`);
+		let parentValue = $enableParentElement.val();
+
+
+		if ($enableParentElement.prop('type') === 'checkbox') {
+			parentValue = $enableParentElement.prop('checked');
+			value = value == 1;
+		}
+
+		if (parentValue == value) {
+			$childElement.find('input, select, textarea').prop('readonly', false);
+			if ($childElement.hasClass('not-editable')) $childElement.removeClass('not-editable');
+		} else {
+			$childElement.find('input, select, textarea').prop('readonly', true);
+			if (!$childElement.hasClass('not-editable')) $childElement.addClass('not-editable');
+		}
+	};
+
+	handleEnableOn();
+
+	$enableParentElement.on('change', function() {
+		handleEnableOn();
+	});
+
 });

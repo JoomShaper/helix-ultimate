@@ -13,14 +13,14 @@ jQuery(function ($) {
 				placeholder: 'ui-state-highlight',
 				forcePlaceholderSize: true,
 				axis: 'x',
-				opacity: 0.8,
+				opacity: 1,
 				tolerance: 'pointer',
 
 				start: function (event, ui) {
-					$('.hu-layout-section .row')
+					$('.hu-layout-section [data-hu-layout-row]')
 						.find('.ui-state-highlight')
 						.addClass($(ui.item).attr('class'));
-					$('.hu-layout-section .row')
+					$('.hu-layout-section [data-hu-layout-row]')
 						.find('.ui-state-highlight')
 						.css('height', $(ui.item).outerHeight());
 				},
@@ -36,12 +36,12 @@ jQuery(function ($) {
 				placeholder: 'ui-state-highlight',
 				forcePlaceholderSize: true,
 				axis: 'y',
-				opacity: 0.8,
+				opacity: 1,
 				tolerance: 'pointer',
 			})
 			.disableSelection();
 
-		$('.hu-layout-section').find('.row').rowSortable();
+		$('.hu-layout-section').find('[data-hu-layout-row]').rowSortable();
 	}
 
 	// setInputValue Callback Function
@@ -420,7 +420,7 @@ jQuery(function ($) {
 			});
 
 			new_item +=
-				'<div class="hu-layout-column col-md-' +
+				'<div class="hu-layout-column col-' +
 				newLayout[i].trim() +
 				'" ' +
 				dataAttr +
@@ -428,18 +428,18 @@ jQuery(function ($) {
 			if (col[i]) {
 				new_item += col[i];
 			} else {
-				new_item += '<div class="hu-column clearfix">';
+				new_item += '<div class="hu-column">';
 				new_item +=
 					'<span class="hu-column-title">none</span>';
 				new_item +=
-					'<a class="hu-column-options" href="#"><i class="fas fa-cog"></i></a>';
+					'<a class="hu-column-options" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill="#020B53" fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd" opacity=".4"/></svg></a>';
 				new_item += '</div>';
 			}
 			new_item += '</div>';
 		}
 
 		$old_column = $gparent.find('.hu-layout-column');
-		$gparent.find('.row.ui-sortable').append(new_item);
+		$gparent.find('[data-hu-layout-row]').append(new_item);
 
 		$old_column.remove();
 		jqueryUiLayout();

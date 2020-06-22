@@ -15,7 +15,7 @@ if(isset($settings->grid_size) && $settings->grid_size){
 }
 
 $output = '<div class="hu-layout-column col-' . ((isset($settings->grid_size) && $settings->grid_size)? $settings->grid_size :12) .'" ' . $colSettings .'>';
-$output .= '<div class="hu-column' . ((isset($settings->column_type) && $settings->column_type) ? ' hu-column-component' : '') . ' clearfix">';
+$output .= '<div class="hu-column' . ((isset($settings->column_type) && $settings->column_type) ? ' hu-column-component' : '') . '">';
 
 if (isset($settings->column_type) && $settings->column_type)
 {

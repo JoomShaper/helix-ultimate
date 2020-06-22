@@ -1139,7 +1139,7 @@
 			helixgroup="blog_images" 
 			helixsubgroup="small_image"
 			layout="checkbox"
-			subclasses="col-4"
+			subclasses="col-3"
 			default="0" 
 			label="HELIX_ULTIMATE_IMAGE_SMALL" />
 		<field
@@ -1147,7 +1147,7 @@
 			type="helixdimension" 
 			helixgroup="blog_images" 
 			helixsubgroup="small_image"
-			subclasses="col-8"
+			subclasses="col-9"
 			default="100X100" 
 			hint="100X100"
 			toggle="true"

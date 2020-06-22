@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\Utilities\ArrayHelper;
+
 $grids = array(
     array(
         '12',
@@ -91,6 +93,8 @@ if(!isset($row->layout)){
     $row->layout =  12;
 }
 
+$custom = true;
+
 foreach ($grids as $grid)
 {
     $output .= '<div class="col-3">';
@@ -99,10 +103,15 @@ foreach ($grids as $grid)
     $output .= '<span class="hu-column-layout-name">' . $grid[0]  . '</span>';
     $output .= '</a>';
     $output .= '</div>';
+
+    if($grid[0] == $row->layout)
+    {
+        $custom = false;
+    }
 }
 
 $output .= '<div class="col-3">';
-$output .= '<a href="#" class="hu-column-layout hu-custom ' . ((isset($row->layout) && !in_array($row->layout, $grids)) ? 'active' : '' ) .'" data-layout="'. $grid[0] .'" data-layout="'. $row->layout .'" data-type="custom" title="Custom Layout">';
+$output .= '<a href="#" class="hu-column-layout hu-custom ' . ((isset($row->layout) && $custom) ? 'active' : '' ) .'" data-layout="'. $grid[0] .'" data-layout="'. $row->layout .'" data-type="custom" title="Custom Layout">';
 $output .= '<div class="hu-column-layout-preview">Custom</div>';
 $output .= '<span class="hu-column-layout-name hu-sr-only">Custom</span>';
 $output .= '</a>';
@@ -117,8 +126,8 @@ $output .= '</ul>';
 $output .= '</div>';
 $output .= '</div>';
 
-$output .= '<div class="hu-row-container ui-sortable">';
-$output .= '<div class="row hu-layout-row ui-sortable">';
+$output .= '<div class="hu-row-container">';
+$output .= '<div class="row hu-layout-row" data-hu-layout-row>';
 
 if(isset($row->attr) && $row->attr)
 {

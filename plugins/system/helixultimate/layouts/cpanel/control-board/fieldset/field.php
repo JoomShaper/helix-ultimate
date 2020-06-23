@@ -58,10 +58,19 @@ extract($displayData);
 	}
 
 	$checkboxStyle = $field->getAttribute('style', 'switch');
-?>
-<div class="control-group <?php echo (($group) ? 'group-style-' . $group : ''); ?> <?php echo $separator ? 'has-separator': ''; ?> <?php echo $type === 'checkbox' && $checkboxStyle === 'plain' ? 'plain-checkbox': ''; ?>" <?php echo $attribs; ?>>
-	<div class="control-group-inner">
 
+	// Group Class
+	$group_class = (($group) ? ' group-style-' . $group : '');
+	if ($type === 'checkbox')
+	{
+		$group_class .= ($checkboxStyle === 'plain') ? ' hu-style-checkbox': ' hu-style-switcher';
+	}
+
+	$group_class .= $separator ? ' hu-field-separator': '';
+
+?>
+<div class="control-group<?php echo $group_class . ' ' . $attribs; ?>">
+	<div class="control-group-inner">
 		<!-- if checkbox style is plain then the input comes before the label -->
 		<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
 			<div class="control-label">

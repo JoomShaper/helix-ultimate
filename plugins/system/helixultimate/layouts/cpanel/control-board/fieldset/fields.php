@@ -28,10 +28,10 @@ extract($displayData);
 			$masterDescription = isset($masterDescription) ? Text::_($masterDescription) : '';
 
 			$masterClass = $data[0]->getAttribute('masterclass');
-			$masterClass = isset($masterClass) ? $masterClass : 'row';
+			$masterClass = isset($masterClass) ? $masterClass : 'row hu-align-items-center';
 
 			$masterHasSeparator = $data[0]->getAttribute('masterseparator');
-			$masterHasSeparator = isset($masterHasSeparator) && ($masterHasSeparator === 'true' || $masterHasSeparator === 'on') ? ' has-separator': '';
+			$masterHasSeparator = isset($masterHasSeparator) && ($masterHasSeparator === 'true' || $masterHasSeparator === 'on') ? ' hu-field-separator': '';
 		?>
 		<!-- if master label provider for the subgroup -->
 		<?php if (!empty($masterLabel)): ?>

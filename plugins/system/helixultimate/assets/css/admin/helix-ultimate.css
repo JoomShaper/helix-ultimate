@@ -1772,7 +1772,7 @@ select:focus::-ms-value {
 	margin-top: 20px;
 }
 
-.control-group.has-separator {
+.hu-field-separator {
 	padding-bottom: 20px;
 	border-bottom: 1px solid rgba(var(--dark), 0.20);
 }
@@ -1782,6 +1782,7 @@ select:focus::-ms-value {
 }
 
 .control-group label {
+	font-size: 12px;
 	font-weight: 500;
 	color: rgb(var(--dark));
 }
@@ -2380,7 +2381,7 @@ select:focus::-ms-value {
 .hu-field-list {
 	display: none;
 	background: #EFF4FB;
-	padding: 10px 20px;
+	padding: 10px 15px;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15) inset;
 }
 .hu-group-toggle-icon {
@@ -2435,21 +2436,14 @@ select:focus::-ms-value {
     margin-top: 0px;
 }
 
-.control-group-checkbox .control-group-inner {
+/* hu-style-checkbox */
+.hu-style-switcher .control-group-inner {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
 
-.control-group-checkbox .control-group-inner > div.control-label {
-	margin-right: 16px !important;
-}
-
-.control-group-checkbox > div.control-label label {
-	margin-bottom: 0;
-}
-
-.control-group-checkbox input[type='checkbox'] {
+.hu-style-switcher input[type='checkbox'] {
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -2466,12 +2460,8 @@ select:focus::-ms-value {
 	cursor: pointer;
 }
 
-.control-group-checkbox input[type='checkbox']:focus {
-	outline: 0;
-}
-
-.control-group-checkbox input[type='checkbox']:after {
-	content: '';
+.hu-style-switcher input[type='checkbox']:after {
+	content: ' ';
 	position: absolute;
 	top: -2px;
 	left: -2px;
@@ -2482,31 +2472,89 @@ select:focus::-ms-value {
 	transition: left 0.1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
 
-.control-group-checkbox input[type='checkbox']:checked {
+.hu-style-switcher > div.control-label label {
+	margin-bottom: 0;
+}
+
+.hu-style-switcher input[type='checkbox']:checked {
 	background: rgba(var(--primary), 0.3);
 }
 
-.control-group-checkbox input[type='checkbox']:checked:after {
+.hu-style-switcher input[type='checkbox']:checked:after {
 	background: rgb(var(--primary));
 	left: 12px;
 }
 
-.control-group-checkbox
-	input[type='checkbox']:hover:not(:checked):not(:disabled):after,
-.control-group-checkbox
-	input[type='checkbox']:focus:not(:checked):not(:disabled):after {
+.hu-style-switcher input[type='checkbox']:hover:not(:checked):not(:disabled):after,
+.hu-style-switcher input[type='checkbox']:focus:not(:checked):not(:disabled):after {
 	left: -2px;
 }
 
-.control-group-checkbox
-	input[type='checkbox']:hover:checked:not(:disabled):after,
-.control-group-checkbox
-	input[type='checkbox']:focus:checked:not(:disabled):after {
+.hu-style-switcher input[type='checkbox']:hover:checked:not(:disabled):after,
+.hu-style-switcher input[type='checkbox']:focus:checked:not(:disabled):after {
 	left: 12px;
 }
 
-.control-group-checkbox input[type='checkbox']:disabled {
+.hu-style-switcher input[type='checkbox']:disabled {
 	opacity: 0.5;
+}
+
+.hu-style-switcher input[type='checkbox']:focus {
+	outline: 0;
+}
+
+.hu-style-checkbox .control-label {
+	display: flex;
+	align-items: center;
+}
+
+.hu-style-checkbox .control-label label {
+	margin: 0 0 0 8px;
+}
+
+.hu-style-checkbox input[type='checkbox'] {
+	width: 16px;
+	height: 16px;
+	margin-top: 0;
+	vertical-align: top;
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	border: 1px solid rgba(var(--dark), 0.3);
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	-webkit-print-color-adjust: exact;
+	color-adjust: exact;
+	border-radius: 4px;
+	box-sizing: border-box;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 1.5px rgba(20, 50, 80, 0.38);
+	transition: background-color 0.15s ease-in-out, background-position 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.hu-style-checkbox input[type='checkbox']:checked {
+	background-color: rgb(var(--primary));
+	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+	border-color: rgb(var(--primary));
+}
+
+.hu-style-checkbox input[type='checkbox']:active {
+    -webkit-filter: brightness(90%);
+    filter: brightness(90%);
+}
+
+.hu-style-checkbox input[type='checkbox']:focus {
+    border-color: #8bbafe;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(13,110,253,.25);
+}
+
+.hu-style-checkbox input[type='checkbox']:disabled {
+	pointer-events: none;
+	-webkit-filter: none;
+	filter: none;
+	opacity: .5;
 }
 
 .control-group.not-editable {

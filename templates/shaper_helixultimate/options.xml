@@ -1139,18 +1139,18 @@
 			style="plain"
 			helixgroup="blog_images" 
 			helixsubgroup="thumbnail_image"
-			subclasses="col-3"
+			subclasses="col-4"
 			default="1" 
 			masterseparator="true"
 			label="HELIX_ULTIMATE_IMAGE_THUMBNAIL" />
+
 		<field name="image_thumbnail_size" 
 			type="helixdimension" 
 			helixgroup="blog_images" 
 			helixsubgroup="thumbnail_image"
-			subclasses="col-9"
+			subclasses="col-8"
 			default="200X200" 
-			hint="200X200" 
-			toggle="true"
+			hint="200X200"
 			label="HELIX_ULTIMATE_IMAGE_THUMBNAIL_SIZE" 
 			hideLabel="true" 
 			enableon="image_thumbnail:1" />
@@ -1160,18 +1160,18 @@
 			style="plain"
 			helixgroup="blog_images" 
 			helixsubgroup="small_image"
-			subclasses="col-3"
+			subclasses="col-4"
 			default="0" 
 			label="HELIX_ULTIMATE_IMAGE_SMALL" />
+
 		<field
 			name="image_small_size" 
 			type="helixdimension" 
 			helixgroup="blog_images" 
 			helixsubgroup="small_image"
-			subclasses="col-9"
+			subclasses="col-8"
 			default="100X100" 
 			hint="100X100"
-			toggle="true"
 			label="HELIX_ULTIMATE_IMAGE_SMALL_SIZE"
 			hideLabel="true" 
 			enableon="image_small:1" />
@@ -1181,17 +1181,17 @@
 			style="plain" 
 			helixgroup="blog_images" 
 			helixsubgroup="medium_image"
-			subclasses="col-3"
+			subclasses="col-4"
 			default="0" 
 			label="HELIX_ULTIMATE_IMAGE_MEDIUM" />
+
 		<field name="image_medium_size" 
 			type="helixdimension" 
 			helixgroup="blog_images" 
 			helixsubgroup="medium_image"
-			subclasses="col-9"
+			subclasses="col-8"
 			default="300X300" 
 			hint="300X300" 
-			toggle="true"
 			label="HELIX_ULTIMATE_IMAGE_MEDIUM_SIZE" 
 			hideLabel="true" 
 			enableon="image_medium:1" />
@@ -1201,20 +1201,21 @@
 			style="plain"
 			helixgroup="blog_images" 
 			helixsubgroup="large_image"
-			subclasses="col-3"
+			subclasses="col-4"
 			default="0" 
 			label="HELIX_ULTIMATE_IMAGE_LARGE" />
+
 		<field name="image_large_size" 
 			type="helixdimension" 
 			helixgroup="blog_images" 
 			helixsubgroup="large_image"
-			subclasses="col-9"
+			subclasses="col-8"
 			default="600X600" 
 			hint="600X600"
-			toggle="true"
 			label="HELIX_ULTIMATE_IMAGE_LARGE_SIZE" 
 			hideLabel="true" 
 			enableon="image_large:1" />
+
 		<field name="image_crop_quality" 
 			type="number" 
 			helixgroup="blog_images" 
@@ -1288,19 +1289,23 @@
 		</field>
 
 		<field name="disable_module" 
-			type="checkbox" 
-			helixgroup="blog_details" 
+			type="checkbox"
+			style="plain" 
+			helixgroup="blog_details"
 			default="0" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE_DESC" />
 		<field name="author_info" 
 			type="checkbox" 
+			style="plain" 
 			helixgroup="blog_details" 
 			default="0" 
+			separator="true"
 			label="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO_DESC" />
 		<field name="og" 
 			type="checkbox" 
+			style="plain" 
 			helixgroup="blog_details" 
 			default="1" 
 			label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH" 
@@ -1314,6 +1319,7 @@
 			type="text" 
 			helixgroup="blog_details" 
 			label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH_TWITTER_SITE" 
+			separator="true"
 			showon="og:1" />
 		<field name="reading_time_progress" 
 			type="checkbox" 
@@ -1340,6 +1346,7 @@
 			default="top" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_POSITION" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_POSITION_DESC" 
+			separator="true"
 			showon="reading_time_progress:1">
 			<option value="top">HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_TOP</option>
 			<option value="bottom">HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_BOTTOM</option>

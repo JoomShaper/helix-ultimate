@@ -10,6 +10,7 @@
 defined('JPATH_BASE') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
@@ -81,7 +82,7 @@ if ($showPreview)
 {
 	if ($value && file_exists(JPATH_ROOT . '/' . $value))
 	{
-		$src = JUri::root() . $value;
+		$src = Uri::root() . $value;
 	}
 	else
 	{
@@ -129,7 +130,7 @@ if ($showPreview)
 
 echo '	<input type="text" name="' . $name . '" id="' . $id . '" value="'
 	. htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '" readonly="readonly"' . $attr . ' data-basepath="'
-	. JUri::root() . '"/>';
+	. Uri::root() . '"/>';
 
 ?>
 

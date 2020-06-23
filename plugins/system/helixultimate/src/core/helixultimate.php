@@ -655,7 +655,7 @@ class HelixUltimate
 
 		if (isset($options->background_image) && $options->background_image)
 		{
-			$row_css .= 'background-image:url("' . JURI::base(true) . '/' . $options->background_image . '");';
+			$row_css .= 'background-image:url("' . Uri::base(true) . '/' . $options->background_image . '");';
 
 			if (isset($options->background_repeat) && $options->background_repeat)
 			{

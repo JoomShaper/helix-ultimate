@@ -78,7 +78,7 @@ if ($showPreview)
 {
 	if ($value && file_exists(JPATH_ROOT . '/' . $value))
 	{
-		$src = JUri::root() . $value;
+		$src = Uri::root() . $value;
 	}
 	else
 	{
@@ -126,7 +126,7 @@ if ($showPreview)
 
 echo '	<input type="text" name="' . $name . '" id="' . $id . '" value="'
 	. htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '" readonly="readonly"' . $attr . ' data-basepath="'
-	. JUri::root() . '"/>';
+	. Uri::root() . '"/>';
 
 ?>
 <a class="modal btn" title="<?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?>" href="

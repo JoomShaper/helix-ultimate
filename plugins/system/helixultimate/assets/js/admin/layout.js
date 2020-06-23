@@ -147,6 +147,12 @@ jQuery(function ($) {
 								attrValue +
 								'" alt="">'
 						);
+					
+					let $clear = $that.siblings('.hu-media-clear');
+
+					if ($clear.hasClass('hide')) {
+						$clear.removeClass('hide');
+					}
 				}
 			}
 		});

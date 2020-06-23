@@ -1685,6 +1685,35 @@ input[type='button'].hu-btn-block {
 	width: 100%;
 }
 
+/*Button Group*/
+.hu-inline-group {
+	display: inline-block;
+	text-align: center;
+}
+.hu-btn-group {
+	padding: 2px;
+	background: #F1F6FC;
+	box-shadow: inset -6px -6px 10px #FFFFFF, inset 6px 6px 10px #D3D9E7;
+	border-radius: 5px;
+} 
+
+.hu-btn-group .hu-btn {
+	color: rgba(var(--dark), 0.5);
+}
+
+.hu-btn-group .hu-btn.active {
+	color: rgb(var(--primary));
+	background: #EFF4FB;
+	box-shadow: 0px 1px 2px rgba(2, 11, 83, 0.5);
+	border-radius: 5px;
+	outline: 0;
+}
+
+.hu-btn-group .hu-btn:active,
+.hu-btn-group .hu-btn:focus {
+	outline: 0;
+}
+
 .fade {
 	opacity: 0;
 	transition: opacity 0.15s linear;

@@ -1142,10 +1142,10 @@ jQuery(function ($) {
 
 			if (parentValue == value) {
 				$(this).find('input, select, textarea').prop('readonly', false);
-				if ($(this).hasClass('not-editable')) $(this).removeClass('not-editable');
+				if ($(this).hasClass('uneditable')) $(this).removeClass('uneditable');
 			} else {
 				$(this).find('input, select, textarea').prop('readonly', true);
-				if (!$(this).hasClass('not-editable')) $(this).addClass('not-editable');
+				if (!$(this).hasClass('uneditable')) $(this).addClass('uneditable');
 			}
 		});
 	};
@@ -1157,4 +1157,14 @@ jQuery(function ($) {
 			handleEnableOn();
 		});
 	});
+
+	/* inline group buttons groups */
+	$('.hu-inline-group .hu-btn-group button').on('click', function(e){
+		let value = $(this).val();
+		$(this).parent().find('button').removeClass('active');
+		$(this).addClass('active');
+		let $input = $(this).closest('.hu-inline-group').find('input[type=hidden]');
+		$input.val(value).trigger('change');
+	});
+
 });

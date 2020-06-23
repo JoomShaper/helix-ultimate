@@ -2557,7 +2557,7 @@ select:focus::-ms-value {
 	opacity: .5;
 }
 
-.control-group.not-editable {
+.control-group.uneditable {
 	opacity: 0.5;
 }
 

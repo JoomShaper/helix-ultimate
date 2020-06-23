@@ -1159,9 +1159,9 @@ jQuery(function ($) {
 	});
 
 	/* inline group buttons groups */
-	$('.hu-switcher .hu-btn-group button').on('click', function(e){
-		let value = $(this).val();
-		$(this).parent().find('button').removeClass('active');
+	$('.hu-switcher .hu-action-group [hu-switcher-action]').on('click', function(e){
+		let value = $(this).data('value');
+		$(this).parent().find('[hu-switcher-action]').removeClass('active');
 		$(this).addClass('active');
 		let $input = $(this).closest('.hu-switcher').find('input[type=hidden]');
 		$input.val(value).trigger('change');

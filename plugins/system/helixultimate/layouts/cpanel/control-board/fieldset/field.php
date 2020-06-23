@@ -63,7 +63,7 @@ extract($displayData);
 	$checkboxStyle = $field->getAttribute('style', 'switch');
 
 	// Group Class
-	$group_class = (($group) ? ' group-style-' . $group : '');
+	$group_class = (($group) ? 'group-style-' . $group : '');
 	if ($type === 'checkbox')
 	{
 		$group_class .= ($checkboxStyle === 'plain') ? ' hu-style-checkbox': ' hu-style-switcher';
@@ -73,51 +73,53 @@ extract($displayData);
 
 	$listStyle = $field->getAttribute('style');
 ?>
-<div class="control-group<?php echo $group_class;?>" <?php echo $attribs; ?>>
-	<div class="control-group-inner">
-		<!-- if checkbox style is plain then the input comes before the label -->
-		<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
-			<div class="control-label">
+<div class="<?php echo $group_class;?>" <?php echo $attribs; ?>>
+	<div class="control-group">
+		<div class="control-group-inner">
+			<!-- if checkbox style is plain then the input comes before the label -->
+			<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
+				<div class="control-label">
+					<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
+						<?php echo $field->input; ?>
+					</div>
+
+					<?php if (!$field->getAttribute('hideLabel', false)): ?>
+						<?php echo $field->label; ?>
+
+						<!-- if description exists then show the help icon -->
+						<?php if (!empty($description)): ?>
+							<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
+						<?php endif ?>
+					<?php endif; ?>
+				</div>
+			<?php else: ?>
+				<?php if (!$field->getAttribute('hideLabel', false)): ?>
+					<div class="control-label">
+						<?php echo $field->label; ?>
+		
+						<!-- if description exists then show the help icon -->
+						<?php if (!empty($description)): ?>
+							<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
+						<?php endif ?>
+		
+					</div>
+		
+					<!-- if description exists and type is not the checkbox then show the help text above of the input field. -->
+					<?php if (!empty($description) && $type !== 'checkbox'): ?>
+						<div class="control-help"><?php echo $description; ?></div>
+					<?php endif; ?>
+		
+				<?php endif; ?>
+		
 				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
 					<?php echo $field->input; ?>
 				</div>
-
-				<?php if (!$field->getAttribute('hideLabel', false)): ?>
-					<?php echo $field->label; ?>
-
-					<!-- if description exists then show the help icon -->
-					<?php if (!empty($description)): ?>
-						<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
-					<?php endif ?>
-				<?php endif; ?>
-			</div>
-		<?php else: ?>
-			<?php if (!$field->getAttribute('hideLabel', false)): ?>
-				<div class="control-label">
-					<?php echo $field->label; ?>
-	
-					<!-- if description exists then show the help icon -->
-					<?php if (!empty($description)): ?>
-						<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
-					<?php endif ?>
-	
-				</div>
-	
-				<!-- if description exists and type is not the checkbox then show the help text above of the input field. -->
-				<?php if (!empty($description) && $type !== 'checkbox'): ?>
+		
+				<!-- if description exists and type is checkbox then show the help text next to the input field. -->
+				<?php if (!empty($description) && $type === 'checkbox'): ?>
 					<div class="control-help"><?php echo $description; ?></div>
 				<?php endif; ?>
-	
-			<?php endif; ?>
-	
-			<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
-				<?php echo $field->input; ?>
-			</div>
-	
-			<!-- if description exists and type is checkbox then show the help text next to the input field. -->
-			<?php if (!empty($description) && $type === 'checkbox'): ?>
-				<div class="control-help"><?php echo $description; ?></div>
-			<?php endif; ?>
-		<?php endif ?>
+			<?php endif ?>
+		</div>
 	</div>
 </div>

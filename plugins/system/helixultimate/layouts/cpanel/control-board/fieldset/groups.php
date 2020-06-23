@@ -12,9 +12,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
 extract($displayData);
-
-
 ?>
+
 <?php foreach ($groups as $key => $group):  ?>
 	<?php if ($key !== 'no-group'): ?>
 		<div class="hu-group-wrap hu-group-<?php echo $key; ?> <?php echo $group['isActive'] ? 'active' : ''; ?>" <?php echo !empty($group['dependent']) ? 'data-dependon="' . $group['dependent'] . '"' : ''; ?>>
@@ -27,6 +26,8 @@ extract($displayData);
 			</div>
 		</div>
 	<?php else: ?>
-		<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'groupData' => $group], HELIX_LAYOUTS_PATH); ?>
+		<div class="hu-no-group-wrap">
+			<?php echo LayoutHelper::render('cpanel.control-board.fieldset.fields', ['group' => $key, 'groupData' => $group], HELIX_LAYOUTS_PATH); ?>
+		</div>
 	<?php endif ?>
 <?php endforeach; ?>

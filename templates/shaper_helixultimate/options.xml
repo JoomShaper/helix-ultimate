@@ -9,28 +9,15 @@
 		<field name="logo_type"
 			helixgroup="logo"
 			type="helixswitcher"
+			switcherStyle="tab"
 			default="image"
-			textrule="icon-text"
-			fixedwidth="true"
 			alignment="center"
 			label="HELIX_ULTIMATE_LOGO_TYPE"
-		>
-			<option value="image" icon="fas fa-image" >HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
-			<option value="text" icon="fas fa-font">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
-		</field>
-
-		<!-- <field name="logo_type" 
-			helixgroup="logo" 
-			type="list" 
-			default="image"
-			style="inline-group"
-			textrule="image"
-			fixedwidth="false"
 			hideLabel="true"
-			label="HELIX_ULTIMATE_LOGO_TYPE">
-			<option value="image" class="size-2x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
-			<option value="text" class="size-4x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
-		</field> -->
+		>
+			<option value="image">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
+			<option value="text">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
+		</field>
 
 		<field name="logo_image" 
 			helixgroup="logo" 
@@ -45,7 +32,7 @@
 			preview="true" 
 			label="HELIX_ULTIMATE_MOBILE_LOGO_RETINA" 
 			description="HELIX_ULTIMATE_MOBILE_LOGO_RETINA_DESC"
-			showon="logo_type:image" />
+			showon="logo_type:image[AND]logo_image!:" />
 
 		<field name="mobile_logo" 
 			helixgroup="logo" 
@@ -54,14 +41,14 @@
 			label="HELIX_ULTIMATE_MOBILE_LOGO" 
 			description="HELIX_ULTIMATE_MOBILE_LOGO_DESC" 
 			separator="true"
-			showon="logo_type:image" />
+			showon="logo_type:image[AND]logo_image!:" />
 
 		<field name="logo_height" 
 			helixgroup="logo" 
 			type="number" 
 			default="36" 
 			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
-			showon="logo_type:image" />
+			showon="logo_type:image[AND]logo_image!:" />
 
 		<field name="logo_text" 
 			helixgroup="logo" 
@@ -472,6 +459,7 @@
 		icon="fas fa-paint-brush">
 		<field name="preset" 
 			type="helixpresets" 
+			separator="true"
 			default="preset1">
 			<preset name="preset1" 
 				label="Preset 1" 
@@ -1254,29 +1242,31 @@
 			default="100" />
 
 		<field name="blog_list_image" 
-			type="list" 
-			helixgroup="blog_list" 
-			default="thumbnail" 
+			type="helixswitcher" 
+			switcherStyle="simple"
+			helixgroup="blog_list"
+			default="thumbnail"
+			separator="true"
 			label="HELIX_ULTIMATE_BLOG_LIST_IMAGE" 
 			description="HELIX_ULTIMATE_BLOG_LIST_IMAGE_DESC">
-			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
-			<option value="small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
-			<option value="thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
-			<option value="medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
-			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
+			<option value="small" svg="image-small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
+			<option value="thumbnail" svg="image-thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
+			<option value="medium" svg="image-medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
+			<option value="large" svg="image-large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
 		</field>
 
 		<field name="leading_blog_list_image" 
-			type="list" 
+			type="helixswitcher" 
+			switcherStyle="simple"
 			helixgroup="blog_list" 
-			default="large" 
+			default="large"
+			separator="true"
 			label="HELIX_ULTIMATE_LEADING_BLOG_LIST_IMAGE" 
 			description="HELIX_ULTIMATE_LEADING_BLOG_LIST_IMAGE_DESC">
-			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
-			<option value="small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
-			<option value="thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
-			<option value="medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
-			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
+			<option value="small" svg="image-small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
+			<option value="thumbnail" svg="image-thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
+			<option value="medium" svg="image-medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
+			<option value="large" svg="image-large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
 		</field>
 		<field name="show_list_tags" 
 			type="checkbox" 
@@ -1286,28 +1276,30 @@
 			description="HELIX_ULTIMATE_LIST_TAGS_OPTION_DESC" />
 
 		<field name="blog_details_image" 
-			type="list" 
+			type="helixswitcher" 
+			switcherStyle="simple"
 			helixgroup="blog_details" 
-			default="large" 
+			default="large"
+			separator="true"
 			label="HELIX_ULTIMATE_BLOG_DETAILS_IMAGE" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_IMAGE_DESC">
-			<option value="default">HELIX_ULTIMATE_BLOG_IMAGE_DEFAULT</option>
-			<option value="small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
-			<option value="thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
-			<option value="medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
-			<option value="large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
+			<option value="small" svg="image-small">HELIX_ULTIMATE_BLOG_IMAGE_SMALL</option>
+			<option value="thumbnail" svg="image-thumbnail">HELIX_ULTIMATE_BLOG_IMAGE_THUMBNAIL</option>
+			<option value="medium" svg="image-medium">HELIX_ULTIMATE_BLOG_IMAGE_MEDIUM</option>
+			<option value="large" svg="image-large">HELIX_ULTIMATE_BLOG_IMAGE_LARGE</option>
 		</field>
 		<field name="social_share" 
-			type="checkbox" 
+			type="checkbox"
 			helixgroup="blog_details" 
-			default="1" 
-			label="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE" 
+			default="1"
+			label="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE"
 			description="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_DESC" />
 		<field name="social_share_lists" 
 			type="list" 
 			multiple="true" 
 			helixgroup="blog_details" 
-			default="thumbnail,large" 
+			default="thumbnail,large"
+			separator="true"
 			label="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_LIST" 
 			description="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_LIST_DESC" 
 			showon="social_share:1">
@@ -1318,22 +1310,18 @@
 
 		<field name="disable_module" 
 			type="checkbox"
-			style="plain" 
 			helixgroup="blog_details"
 			default="0" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE_DESC" />
 		<field name="author_info" 
 			type="checkbox" 
-			style="plain" 
 			helixgroup="blog_details" 
 			default="0" 
-			separator="true"
 			label="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO_DESC" />
 		<field name="og" 
 			type="checkbox" 
-			style="plain" 
 			helixgroup="blog_details" 
 			default="1" 
 			label="HELIX_ULTIMATE_BLOG_OPEN_GRAPH" 
@@ -1350,7 +1338,7 @@
 			separator="true"
 			showon="og:1" />
 		<field name="reading_time_progress" 
-			type="checkbox" 
+			type="checkbox"
 			helixgroup="blog_details" 
 			default="0" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS" 
@@ -1369,7 +1357,7 @@
 			description="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_HEIGHT_DESC" 
 			showon="reading_time_progress:1" />
 		<field name="reading_timeline_position" 
-			type="list" 
+			type="list"
 			helixgroup="blog_details" 
 			default="top" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_POSITION" 
@@ -1380,7 +1368,7 @@
 			<option value="bottom">HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_BOTTOM</option>
 		</field>
 		<field name="related_article" 
-			type="checkbox" 
+			type="checkbox"
 			helixgroup="blog_details" 
 			default="0" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE" 
@@ -1483,28 +1471,25 @@
 		icon="fas fa-code">
 		<field name="before_head" 
 			type="textarea" 
-			helixgroup="custom_code" 
 			rows="5" 
 			label="HELIX_ULTIMATE_BEFORE_HEAD" 
-			description="HELIX_ULTIMATE_BEFORE_HEAD_DESC" 
+			description="HELIX_ULTIMATE_BEFORE_HEAD_DESC"
+			separator="true"
 			filter="raw" />
 		<field name="before_body" 
 			type="textarea" 
-			helixgroup="custom_code" 
 			rows="5" 
 			label="HELIX_ULTIMATE_BEFORE_BODY" 
 			description="HELIX_ULTIMATE_BEFORE_BODY_DESC" 
 			filter="raw" />
 		<field name="custom_css" 
 			type="textarea" 
-			helixgroup="custom_code" 
 			rows="5" 
 			label="HELIX_ULTIMATE_CUSTOM_CSS" 
 			description="HELIX_ULTIMATE_CUSTOM_CSS_DESC" 
 			filter="raw" />
 		<field name="custom_js" 
 			type="textarea" 
-			helixgroup="custom_code" 
 			rows="5" 
 			label="HELIX_ULTIMATE_CUSTOM_JS" 
 			description="HELIX_ULTIMATE_CUSTOM_JS_DESC" 

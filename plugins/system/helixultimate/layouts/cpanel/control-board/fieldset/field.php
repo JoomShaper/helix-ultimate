@@ -111,11 +111,7 @@ extract($displayData);
 			<?php endif; ?>
 	
 			<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
-				<?php if ($type === 'list' && !$multiple && $listStyle === 'inline-group'): ?>
-					<?php echo LayoutHelper::render('cpanel.control-board.fieldset.field-inline-list', ['field' => $field], HELIX_LAYOUTS_PATH); ?>
-				<?php else: ?>
-					<?php echo $field->input; ?>
-				<?php endif ?>
+				<?php echo $field->input; ?>
 			</div>
 	
 			<!-- if description exists and type is checkbox then show the help text next to the input field. -->

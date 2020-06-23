@@ -2917,19 +2917,20 @@ select:focus::-ms-value {
 	color: #007bff;
 }
 
-.hu-option-group-title .fa-angle-up {
+.hu-option-group-title .fa-angle-right {
 	position: absolute;
 	right: 20px;
 	top: 50%;
 	transform: translateY(-50%);
 	-webkit-transform: translateY(-50%);
+	transition: transform 300ms ease;
 }
 
 .hu-option-group.active
 	.hu-option-group-title
-	.fa-chevron-up {
-	transform: translateY(-50%) rotate(-180deg);
-	-webkit-transform: translateY(-50%) rotate(-180deg);
+	.fa-angle-right {
+	transform: translateY(-50%) rotate(90deg);
+	-webkit-transform: translateY(-50%) rotate(90deg);
 }
 
 .hu-options-modal .control-group-checkbox .control-label {

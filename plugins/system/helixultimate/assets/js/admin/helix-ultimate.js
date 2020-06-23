@@ -1159,11 +1159,11 @@ jQuery(function ($) {
 	});
 
 	/* inline group buttons groups */
-	$('.hu-inline-group .hu-btn-group button').on('click', function(e){
+	$('.hu-switcher .hu-btn-group button').on('click', function(e){
 		let value = $(this).val();
 		$(this).parent().find('button').removeClass('active');
 		$(this).addClass('active');
-		let $input = $(this).closest('.hu-inline-group').find('input[type=hidden]');
+		let $input = $(this).closest('.hu-switcher').find('input[type=hidden]');
 		$input.val(value).trigger('change');
 	});
 

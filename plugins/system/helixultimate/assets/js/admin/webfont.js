@@ -7,6 +7,83 @@
 
 jQuery(function ($) {
 	//Web Fonts
+	let $parentId = $('.hu-field-webfont').data('id');
+	let $parentEl = $('#' + $parentId);
+
+	function renderPreview($parent) {
+		let fontFamily = $parent.find('.hu-webfont-list').val(),
+			fontWeight = $parent.find('.hu-webfont-weight-list').val(),
+			fontSize = $parent.find('.hu-webfont-size-input.active').val(),
+			fontColor = $parent.find('.hu-font-color-input').val(),
+			fontSubset = $parent.find('.hu-webfont-subset-list').val(),
+			fontLineHeight = $parent.find('.hu-font-line-height-input').val(),
+			fontSpacing = $parent.find('.hu-font-letter-spacing-input').val(),
+			textDecoration = $parent.find('input.hu-text-decoration').val(),
+			textAlign = $parent.find('input.hu-text-align').val();
+
+		let $preview = $parent
+			.find('.hu-webfont-preview');
+
+		
+		if (!!fontFamily) {
+			$preview.css('font-family', fontFamily);
+		}
+		
+		if (!!fontWeight) {
+			$preview.css('font-weight', fontWeight);
+		} else {
+			$preview.css('font-weight', '100');
+		}
+		
+		if (!!fontSize) {
+			if (!(/^\d+[^\d]+/.test(fontSize))) {
+				fontSize += 'px';
+			}
+			fontSize = fontSize.replace(/\s+/, '');
+
+			$preview.css('font-size', fontSize);
+		} else {
+			$preview.css('font-size', '');
+		}
+		
+		
+		if (!!fontColor) {
+			$preview.css('color', fontColor);
+		} else {
+			$preview.css('color', '#000000');
+		}
+		
+		if (!!fontLineHeight) {
+			$preview.css('line-height', fontLineHeight);
+		} else {
+			$preview.css('line-height', '');
+		}
+		
+		if (!!fontSpacing) {
+			if (!(/^\d+[^\d]+/.test(fontSpacing))) {
+				fontSpacing += 'px';
+			}
+
+			fontSpacing = fontSpacing.replace(/\s+/, '');
+
+			$preview.css('letter-spacing', fontSpacing);
+		} else {
+			$preview.css('letter-spacing', '');
+		}
+
+		if (!!textDecoration) {
+			$preview.css('text-decoration', textDecoration);
+		}
+		
+		if (!!textAlign) {
+			$preview.css('text-align', textAlign);
+		}
+	}
+
+	$('.hu-field-webfont').each(function() {
+		renderPreview($(this));
+	});
+
 	$(document).on('change', '.hu-webfont-list', function (event) {
 		event.preventDefault();
 
@@ -64,11 +141,7 @@ jQuery(function ($) {
 			);
 		}
 
-		$(this)
-			.closest('.hu-field-webfont')
-			.find('.hu-webfont-preview')
-			.fadeIn()
-			.css('font-family', $(this).val());
+		renderPreview($(this).closest('.hu-field-webfont'));
 
 		return false;
 	});
@@ -78,18 +151,22 @@ jQuery(function ($) {
 		event
 	) {
 		event.preventDefault();
+		renderPreview($(this).closest('.hu-field-webfont'));
+	});
 
-		$(this)
-			.closest('.hu-field-webfont')
-			.find('.hu-webfont-preview')
-			.fadeIn()
-			.css({
-				'font-family': $(this)
-					.closest('.hu-field-webfont')
-					.find('.hu-webfont-list')
-					.val(),
-				'font-size': $(this).val() + 'px',
-			});
+	$('.hu-font-color-input').on('input', function (event) {
+		event.preventDefault();
+		renderPreview($(this).closest('.hu-field-webfont'));
+	});
+	
+	$('.hu-font-line-height-input').on('change', function (event) {
+		event.preventDefault();
+		renderPreview($(this).closest('.hu-field-webfont'));
+	});
+
+	$('.hu-font-letter-spacing-input').on('change', function (event) {
+		event.preventDefault();
+		renderPreview($(this).closest('.hu-field-webfont'));
 	});
 
 	// Font Weight
@@ -97,23 +174,7 @@ jQuery(function ($) {
 		event
 	) {
 		event.preventDefault();
-
-		$(this)
-			.closest('.hu-field-webfont')
-			.find('.hu-webfont-preview')
-			.fadeIn()
-			.css({
-				'font-family': $(this)
-					.closest('.hu-field-webfont')
-					.find('.hu-webfont-list')
-					.val(),
-				'font-size':
-					$(this)
-						.closest('.hu-field-webfont')
-						.find('.hu-webfont-size-input')
-						.val() + 'px',
-				'font-weight': $(this).val(),
-			});
+		renderPreview($(this).closest('.hu-field-webfont'));
 	});
 
 	// Font Style
@@ -121,27 +182,7 @@ jQuery(function ($) {
 		event
 	) {
 		event.preventDefault();
-
-		$(this)
-			.closest('.hu-field-webfont')
-			.find('.hu-webfont-preview')
-			.fadeIn()
-			.css({
-				'font-family': $(this)
-					.closest('.hu-field-webfont')
-					.find('.hu-webfont-list')
-					.val(),
-				'font-size':
-					$(this)
-						.closest('.hu-field-webfont')
-						.find('.hu-webfont-size-input')
-						.val() + 'px',
-				'font-weight': $(this)
-					.closest('.hu-field-webfont')
-					.find('.hu-webfont-weight-list')
-					.val(),
-				'font-style': $(this).val(),
-			});
+		renderPreview($(this).closest('.hu-field-webfont'));
 	});
 
 	//Font Subset
@@ -160,6 +201,26 @@ jQuery(function ($) {
 				$(this).val() +
 				"' rel='stylesheet' type='text/css'>"
 		);
+	});
+
+	// Text decoration
+	$('.hu-font-decoration .hu-btn-group button').on('click', function(e) {
+		e.preventDefault();
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$(this).closest('.hu-font-decoration').find('input.hu-text-decoration').val($(this).val()).trigger('change');
+
+		renderPreview($(this).closest('.hu-field-webfont'));
+	});
+	
+	// Text alignment
+	$('.hu-font-alignment .hu-btn-group button').on('click', function(e) {
+		e.preventDefault();
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$(this).closest('.hu-font-decoration').find('input.hu-text-align').val($(this).val()).trigger('change');
+
+		renderPreview($(this).closest('.hu-field-webfont'));
 	});
 
 	//Update Fonts list

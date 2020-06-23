@@ -96,111 +96,101 @@ class JFormFieldHelixfont extends FormField
 
 		// Font Family
 		$html .= '<div class="hu-field-webfont ' . $classes . '">';
+
+		/**
+		 * Preview Row
+		 */
+		$html .= '<div class="row preview-row">';
+		$html .= '<p class="hu-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</p>';
+		$html .= '</div>';
+
+		/**
+		 * Start Fonts List row
+		 */
+		$html .= '<div class="row">';
+		$html .= '<div class="col-12 hu-webfont-family">';
+		$html .= $this->renderFontsList($systemFonts, $value, $items);
+		$html .= '</div>';
+		$html .= '</div>';
+
+		/**
+		 * Font size, weight, color row
+		 */
 		$html .= '<div class="row">';
 
-		$html .= '<div class="col-12 hu-webfont-family">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_FAMILY') . '</small></label>';
-		$html .= '<select class="hu-webfont-list">';
-
-		$html .= '<optgroup label="' . Text::_('HELIX_ULTIMATE_SYSTEM_FONT') . '">';
-
-		foreach ($systemFonts as $systemFont)
-		{
-			$html .= '<option ' . ((isset($value->fontFamily) && $systemFont === $value->fontFamily) ? 'selected="selected"' : '') . ' value="' . $systemFont . '">' . $systemFont . '</option>';
-		}
-
-		$html .= '</optgroup>';
-
-		$html .= '<optgroup label="' . Text::_('HELIX_ULTIMATE_GOOGLE_FONT') . '">';
-
-		foreach ($items as $item)
-		{
-			$html .= '<option ' . ((isset($value->fontFamily) && $item->family === $value->fontFamily) ? 'selected="selected"' : '') . ' value="' . $item->family . '">' . $item->family . '</option>';
-		}
-
-		$html .= '</optgroup>';
-
-		$html .= '</select>';
+		/**
+		 * Start Font Weight
+		 */
+		$html .= '<div class="col-6">';
+		$html .= $this->renderFontWeight($fontWeights, $value);
 		$html .= '</div>';
 
-		// Font Size
-		$fontSize = (isset($value->fontSize)) ? $value->fontSize : '';
-		$fontSize_sm = (isset($value->fontSize_sm)) ? $value->fontSize_sm : '';
-		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
-		$html .= '<div class="col-6 hu-webfont-size">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</small></label>';
-		$html .= '<div class="helix-responsive-devices">';
-		// $html .= '<span data-device="md" data-active_class=".hu-webfont-size-input" class="fas fa-laptop active"></span><span data-device="sm" data-active_class=".hu-webfont-size-input-sm" class="fas fa-tablet-alt"></span><span data-device="xs" data-active_class=".hu-webfont-size-input-xs" class="fas fa-mobile-alt"></span>';
-		$html .= '</div>';
-		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6">';
-		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6">';
-		$html .= '<input type="number" value="' . $fontSize_xs . '" class="hu-webfont-size-input-xs" min="6">';
+		/**
+		 * Start Font Size
+		 */
+		$html .= '<div class="col-3">';
+		$html .= $this->renderFontSize($value);
 		$html .= '</div>';
 
-		// Font Weight
-		$html .= '<div class="col-6 hu-webfont-weight">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_WEIGHT') . '</small></label>';
-		$html .= '<select class="hu-webfont-weight-list">';
-		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
-
-		foreach ($fontWeights as $key => $fontWeight)
-		{
-			if (isset($value->fontWeight) && $value->fontWeight === $key)
-			{
-				$html .= '<option value="' . $key . '" selected>' . $fontWeight . '</option>';
-			}
-			else
-			{
-				$html .= '<option value="' . $key . '">' . $fontWeight . '</option>';
-			}
-		}
-
-		$html .= '</select>';
-		$html .= '</div>';
-
-		// Font Style
-		$html .= '<div class="col-6 hu-webfont-style">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_STYLE') . '</small></label>';
-		$html .= '<select class="hu-webfont-style-list">';
-		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
-
-		foreach ($fontStyles as $key => $fontStyle)
-		{
-			if (isset($value->fontStyle) && $value->fontStyle === $key)
-			{
-				$html .= '<option value="' . $key . '" selected>' . $fontStyle . '</option>';
-			}
-			else
-			{
-				$html .= '<option value="' . $key . '">' . $fontStyle . '</option>';
-			}
-		}
-
-		$html .= '</select>';
-		$html .= '</div>';
-
-		// Font Subsets
-		$html .= '<div class="col-6 hu-webfont-subset">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SUBSET') . '</small></label>';
-		$html .= '<select class="hu-webfont-subset-list">';
-		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
-
-		if (isset($value->fontFamily) && $value->fontFamily)
-		{
-			if (!in_array($value->fontFamily, $systemFonts))
-			{
-				$html .= $this->generateSelectOptions($font->subsets, $value->fontSubset);
-			}
-		}
-
-		$html .= '</select>';
+		/**
+		 * Start Font Color
+		 */
+		$html .= '<div class="col-3">';
+		$html .= $this->renderFontColor($value);
 		$html .= '</div>';
 
 		$html .= '</div>';
 
-		// Preview
-		$html .= '<p style="display:none" class="hu-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</p>';
-		$html .= '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '" class="hu-webfont-input" id="' . $this->id . '">';
+		/**
+		 * Font subset, letter spacing, line height row
+		 */
+		$html .= '<div class="row spacing-row">';
+
+		/**
+		 * Font subset section
+		 */
+		$html .= '<div class="col-6">';
+		$html .= $this->renderFontSubset($systemFonts, $font, $value);
+		$html .= '</div>';
+
+		/**
+		 * Set line height
+		 */
+		$html .= '<div class="col-3">';
+		$html .= $this->renderLineHeight($value);
+		$html .= '</div>';
+
+		/**
+		 * Set Letter Spacing
+		 */
+		$html .= '<div class="col-3">';
+		$html .= $this->renderLetterSpacing($value);
+		$html .= '</div>';
+
+		$html .= '</div>';
+
+		/**
+		 * Font style, alignment row
+		 */
+		$html .= '<div class="row style-alignment">';
+
+		/**
+		 * Text Decoration
+		 */
+		$html .= '<div class="col-6">';
+		$html .= $this->renderTextDecoration($value);
+		$html .= '</div>';
+
+		/**
+		 * Font Alignment
+		 */
+		$html .= '<div class="col-6">';
+		$html .= $this->renderFontAlignment($value);
+		$html .= '</div>';
+
+		$html .= '</div>';
+
+		$html .= '<input type="hidden" name="' . $this->name . '" value=\'' . $this->value . '\' class="hu-webfont-input" id="' . $this->id . '">';
 		$html .= '</div>';
 
 		return $html;
@@ -247,6 +237,195 @@ class JFormFieldHelixfont extends FormField
 		}
 
 		return false;
+	}
+
+	private function renderFontsList($systemFonts, $value, $items)
+	{
+		$html = '';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_FAMILY') . '</small></label>';
+		$html .= '<select class="hu-webfont-list">';
+		$html .= '<optgroup label="' . Text::_('HELIX_ULTIMATE_SYSTEM_FONT') . '">';
+
+		foreach ($systemFonts as $systemFont)
+		{
+			$html .= '<option ' . ((isset($value->fontFamily) && $systemFont === $value->fontFamily) ? 'selected="selected"' : '') . ' value="' . $systemFont . '">' . $systemFont . '</option>';
+		}
+
+		$html .= '</optgroup>';
+
+		$html .= '<optgroup label="' . Text::_('HELIX_ULTIMATE_GOOGLE_FONT') . '">';
+
+		foreach ($items as $item)
+		{
+			$html .= '<option ' . ((isset($value->fontFamily) && $item->family === $value->fontFamily) ? 'selected="selected"' : '') . ' value="' . $item->family . '">' . $item->family . '</option>';
+		}
+
+		$html .= '</optgroup>';
+
+		$html .= '</select>';
+
+		return $html;
+	}
+
+	private function renderFontWeight($fontWeights, $value)
+	{
+		$html = '';
+		$html .= '<div class="hu-webfont-weight">';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_WEIGHT') . '</small></label>';
+		$html .= '<select class="hu-webfont-weight-list">';
+		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
+
+		foreach ($fontWeights as $key => $fontWeight)
+		{
+			if (isset($value->fontWeight) && $value->fontWeight === $key)
+			{
+				$html .= '<option value="' . $key . '" selected>' . $fontWeight . '</option>';
+			}
+			else
+			{
+				$html .= '<option value="' . $key . '">' . $fontWeight . '</option>';
+			}
+		}
+
+		$html .= '</select>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private function renderFontSize($value)
+	{
+		$html = '';
+
+		$fontSize = (isset($value->fontSize)) ? $value->fontSize : '';
+		$fontSize_sm = (isset($value->fontSize_sm)) ? $value->fontSize_sm : '';
+		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
+		$html .= '<div class="hu-webfont-size">';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</small></label>';
+		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6">';
+		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6">';
+		$html .= '<input type="number" value="' . $fontSize_xs . '" class="hu-webfont-size-input-xs" min="6">';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private function renderFontColor($value)
+	{
+		$color = !empty($value->fontColor) ? $value->fontColor : '#000000';
+		$html = '';
+		$html .= '<div class="hu-font-color">';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_COLOR') . '</small></label>';
+		// $html .= '<span class="hu-color-preview" style="background: ' . $color . '"></span>';
+		// $html .= '<small class="hu-color-code" style="color: ' . $color . '">' . str_replace('#', '', $color) . '</small>';
+		$html .= '<input type="color" class="hu-font-color-input" value="' . $color . '"/>';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private function renderFontSubset($systemFonts, $font, $value)
+	{
+		$html = '';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SUBSET') . '</small></label>';
+		$html .= '<select class="hu-webfont-subset-list">';
+		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
+
+		if (isset($value->fontFamily) && $value->fontFamily)
+		{
+			if (!in_array($value->fontFamily, $systemFonts))
+			{
+				$html .= $this->generateSelectOptions($font->subsets, $value->fontSubset);
+			}
+		}
+
+		$html .= '</select>';
+
+		return $html;
+	}
+
+	private function renderLineHeight($value)
+	{
+		$height = !empty($value->fontLineHeight) ? $value->fontLineHeight : '';
+		$html = '';
+		$html .= '<div class="hu-font-line-height">';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_LINE_HEIGHT') . '</small></label>';
+		$html .= '<input type="text" class="hu-font-line-height-input" value="' . $height . '" />';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private function renderLetterSpacing($value)
+	{
+		$spacing = !empty($value->fontLetterSpacing) ? $value->fontLetterSpacing : '';
+		$html = '';
+		$html .= '<div class="hu-font-letter-spacing">';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_LETTER_SPACING') . '</small></label>';
+		$html .= '<input type="text" class="hu-font-letter-spacing-input" value="' . $spacing . '" />';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private function renderTextDecoration($value)
+	{
+		$decoration = !empty($value->textDecoration) ? $value->textDecoration : 'none';
+
+		$html = '';
+		$html .= '<div class="hu-font-decoration">';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_DECORATION') . '</small></label>';
+		$html .= '<div class="hu-btn-group">';
+		$html .= '<button type="button" value="none" class="hu-btn ' . ($decoration === 'none' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-times"></span>';
+		$html .= '</button>';
+
+		$html .= '<button type="button" value="underline" class="hu-btn ' . ($decoration === 'underline' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-underline"></span>';
+		$html .= '</button>';
+
+		$html .= '<button type="button" value="line-through" class="hu-btn ' . ($decoration === 'strikethrough' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-strikethrough"></span>';
+		$html .= '</button>';
+
+		$html .= '<button type="button" value="overline" class="hu-btn ' . ($decoration === 'overline' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-overline">O</span>';
+		$html .= '</button>';
+		$html .= '</div>';
+		$html .= '<input type="hidden" class="hu-text-decoration" value="' . $decoration . '" />';
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private function renderFontAlignment($value)
+	{
+		$alignment = !empty($value->textAlign) ? $value->textAlign : '';
+
+		$html = '';
+		$html .= '<div class="hu-font-alignment">';
+		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_ALIGNMENT') . '</small></label>';
+		$html .= '<div class="hu-btn-group">';
+		$html .= '<button type="button" value="left" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-align-left"></span>';
+		$html .= '</button>';
+
+		$html .= '<button type="button" value="center" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-align-center"></span>';
+		$html .= '</button>';
+
+		$html .= '<button type="button" value="right" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-align-right"></span>';
+		$html .= '</button>';
+
+		$html .= '<button type="button" value="justify" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<span class="fas fa-align-justify"></span>';
+		$html .= '</button>';
+		$html .= '</div>';
+		$html .= '<input type="hidden" class="hu-text-align" value="' . $alignment . '" />';
+		$html .= '</div>';
+
+		return $html;
 	}
 
 }

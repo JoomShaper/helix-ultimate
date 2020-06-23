@@ -332,7 +332,7 @@ jQuery(function ($) {
 			});
 
 		$('form#hu-style-form')
-			.find('input[type="checkbox"]')
+			.find('input[type="checkbox"], input[type=color]')
 			.on('change', function (e) {
 				e.preventDefault();
 
@@ -947,6 +947,21 @@ jQuery(function ($) {
 						.val(),
 					fontSubset: $that
 						.find('.hu-webfont-subset-list')
+						.val(),
+					fontColor: $that
+						.find('.hu-font-color-input')
+						.val(),
+					fontLineHeight: $that
+						.find('.hu-font-line-height-input')
+						.val(),
+					fontLetterSpacing: $that
+						.find('.hu-font-letter-spacing-input')
+						.val(),
+					textDecoration: $that
+						.find('.hu-text-decoration')
+						.val(),
+					textAlign: $that
+						.find('.hu-text-align')
 						.val(),
 				};
 

@@ -73,13 +73,12 @@ extract($displayData);
 
 	$listStyle = $field->getAttribute('style');
 ?>
-<div class="<?php echo $group_class;?>" <?php echo $attribs; ?>>
+<div class="<?php echo $group_class; ?>" <?php echo $attribs; ?>>
 	<div class="control-group">
 		<div class="control-group-inner">
-			<!-- if checkbox style is plain then the input comes before the label -->
 			<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
 				<div class="control-label">
-					<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
+					<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">
 						<?php echo $field->input; ?>
 					</div>
 
@@ -108,7 +107,6 @@ extract($displayData);
 					<?php if (!empty($description) && $type !== 'checkbox'): ?>
 						<div class="control-help"><?php echo $description; ?></div>
 					<?php endif; ?>
-		
 				<?php endif; ?>
 		
 				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">

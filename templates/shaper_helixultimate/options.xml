@@ -11,11 +11,11 @@
 			type="list" 
 			default="image"
 			style="inline-group"
-			textrule="icon-text"
+			textrule="image"
 			fixedwidth="true"
 			label="HELIX_ULTIMATE_LOGO_TYPE">
-			<option value="image" class="{fas fa-image}">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
-			<option value="text" class="{fas fa-text-height}">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
+			<option value="image" class="size-2x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
+			<option value="text" class="size-4x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
 		</field>
 
 		<field name="logo_image" 

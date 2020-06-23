@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
@@ -34,13 +35,20 @@ $textRule = $field->getAttribute('textrule', 'text');
 				<?php
 					$optionClass = $option->class;
 					$iconClass = '';
+					$imageSrc = '';
 
 					if (!empty($optionClass))
 					{
-						if (preg_match("#\{(.+)\}#", $optionClass, $matches))
+						if (preg_match("#\[icon\](.+)\[\/icon\]#", $optionClass, $matches))
 						{
 							$iconClass = $matches[1];
-							$optionClass = preg_replace("#\{(.+)\}#", "", $optionClass);
+							$optionClass = preg_replace("#\[icon\](.+)\[\/icon\]#", "", $optionClass);
+						}
+
+						if (preg_match("#\[src\](.+)\[\/src\]#", $optionClass, $matches))
+						{
+							$imageSrc = $matches[1];
+							$optionClass = preg_replace("#\[src\](.+)\[\/src\]#", "", $optionClass);
 						}
 					}
 				?>
@@ -59,6 +67,21 @@ $textRule = $field->getAttribute('textrule', 'text');
 							break;
 							case 'icon-text':
 								echo '<span class="' . $iconClass . '"></span> ' . $option->text;
+							break;
+							case 'image':
+								echo '<div class="hu-inline-group-img-wrapper"><img class="group-img" src="' . Uri::root() . $imageSrc . '" /></div>';
+							break;
+							case 'image-text':
+								echo '<div class="hu-inline-group-img-wrapper">'.
+										'<img class="group-img" src="' . Uri::root() . $imageSrc . '" />'.
+										'<p class="img-text">' . $option->text . '</p>'.
+									'</div>';
+							break;
+							case 'text-image':
+								echo '<div class="hu-inline-group-img-wrapper">'.
+										'<p class="img-text">' . $option->text . '</p>'.
+										'<img class="group-img" src="' . Uri::root() . $imageSrc . '" />'.
+									'</div>';
 							break;
 							default:
 								echo $option->text;

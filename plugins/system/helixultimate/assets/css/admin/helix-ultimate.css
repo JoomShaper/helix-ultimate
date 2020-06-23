@@ -3296,3 +3296,7 @@ select:focus::-ms-value {
 .sidebar-draggable-handler > span {
 	color: #9797978a;
 }
+
+.hu-media-clear.hide {
+	display: none;
+}

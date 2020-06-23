@@ -28,7 +28,6 @@ class HelixultimateFieldMedia
 	 */
 	public static function getInput($key, $attr)
 	{
-
 		$output  = '<div class="control-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
@@ -41,7 +40,7 @@ class HelixultimateFieldMedia
 		$output .= '<div class="hu-image-holder"></div>';
 		$output .= '<input type="hidden" class="hu-input hu-input-media" data-attrname="' . $key . '" data-baseurl="' . Uri::root() . '" value="">';
 		$output .= '<a href="#" class="hu-media-picker hu-btn hu-btn-primary hu-mr-2" data-target="' . $key . '"><span class="fas fa-image"></span> Select Media</a>';
-		$output .= '<a href="#" class="hu-media-clear hu-btn hu-btn-secondary"><span class="fas fa-times"></span> Clear</a>';
+		$output .= '<a href="#" class="hu-media-clear hu-btn hu-btn-secondary hide"><span class="fas fa-times"></span> Clear</a>';
 
 		$output .= '</div>';
 

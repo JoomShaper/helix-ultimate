@@ -190,6 +190,15 @@ jQuery(function ($) {
 				.find('[data-attrname="' + target + '"]')
 				.prev('.hu-image-holder')
 				.html('<img src="' + preview + '" alt="">');
+
+			// Visible the clear button if hidden
+			let $clear = $('.hu-options-modal')
+				.find('[data-attrname="' + target + '"]')
+				.siblings('.hu-media-clear');
+			
+			if ($clear.hasClass('hide')) {
+				$clear.removeClass('hide');
+			}
 		} else {
 			$('#' + target)
 				.val(value)
@@ -197,6 +206,14 @@ jQuery(function ($) {
 			$('#' + target)
 				.prev('.hu-image-holder')
 				.html('<img src="' + preview + '" alt="">');
+
+			// Visible the clear button if hidden
+			let $clear = $('#' + target)
+				.siblings('.hu-media-clear');
+			
+			if ($clear.hasClass('hide')) {
+				$clear.removeClass('hide');
+			}
 		}
 
 		$('.hu-modal-overlay, .hu-modal').remove();
@@ -226,6 +243,7 @@ jQuery(function ($) {
 		event.preventDefault();
 		$(this).parent().find('input').val('').trigger('change');
 		$(this).parent().find('.hu-image-holder').empty();
+		if (!$(this).hasClass('hide')) $(this).addClass('hide');
 	});
 
 	//Delete Media

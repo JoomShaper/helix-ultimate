@@ -1690,6 +1690,7 @@ input[type='button'].hu-btn-block {
 	display: inline-block;
 	text-align: center;
 }
+
 .hu-btn-group {
 	padding: 2px;
 	background: #F1F6FC;
@@ -1701,12 +1702,25 @@ input[type='button'].hu-btn-block {
 	color: rgba(var(--dark), 0.5);
 }
 
+.hu-btn-group .hu-btn svg {
+	fill: rgba(var(--dark), 0.5);
+}
+
+/* .hu-btn-group .hu-btn {
+	padding: 3px;
+	min-width: 20px;
+} */
+
 .hu-btn-group .hu-btn.active {
 	color: rgb(var(--primary));
 	background: #EFF4FB;
 	box-shadow: 0px 1px 2px rgba(2, 11, 83, 0.5);
 	border-radius: 5px;
 	outline: 0;
+}
+
+.hu-btn-group .hu-btn.active svg {
+	fill: rgb(var(--primary));
 }
 
 .hu-btn-group .hu-btn:active,
@@ -1841,9 +1855,18 @@ select:focus::-ms-value {
 	transition: color 400ms;
 }
 
+.hu-help-icon:not(.active) {
+	opacity: 0;
+	transition: opacity 400ms;
+}
+
 .hu-help-icon:hover,
 .hu-help-icon.active {
 	color: rgb(var(--primary));
+}
+
+.control-group:hover .hu-help-icon {
+	opacity: 1;
 }
 
 .controls > .minicolors,
@@ -3156,9 +3179,9 @@ select:focus::-ms-value {
 	line-height: 1.5;
 	height: 32px;
 	color: rgba(var(--dark));
-	background-color: #fff;
 	background-image: none;
 	background-clip: padding-box;
+	background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
 	border: 1px solid rgba(121, 127, 167, 0.3);
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;

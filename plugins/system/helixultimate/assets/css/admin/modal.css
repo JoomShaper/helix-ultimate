@@ -394,10 +394,7 @@
 	max-height: 100%;
 	max-width: 100%;
 	outline: none;
-	background: #e7e8ec;
-	border: 1px solid #d4d5d9;
-	padding: 5px;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 .hu-image-holder:not(:empty) {

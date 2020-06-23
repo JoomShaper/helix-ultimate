@@ -12,7 +12,8 @@
 			default="image"
 			style="inline-group"
 			textrule="image"
-			fixedwidth="true"
+			fixedwidth="false"
+			hideLabel="true"
 			label="HELIX_ULTIMATE_LOGO_TYPE">
 			<option value="image" class="size-2x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
 			<option value="text" class="size-4x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
@@ -30,14 +31,7 @@
 			type="helixmedia" 
 			preview="true" 
 			label="HELIX_ULTIMATE_MOBILE_LOGO_RETINA" 
-			description="HELIX_ULTIMATE_MOBILE_LOGO_RETINA_DESC" 
-			showon="logo_type:image" />
-
-		<field name="logo_height" 
-			helixgroup="logo" 
-			type="number" 
-			default="36" 
-			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
+			description="HELIX_ULTIMATE_MOBILE_LOGO_RETINA_DESC"
 			showon="logo_type:image" />
 
 		<field name="mobile_logo" 
@@ -46,6 +40,14 @@
 			preview="true" 
 			label="HELIX_ULTIMATE_MOBILE_LOGO" 
 			description="HELIX_ULTIMATE_MOBILE_LOGO_DESC" 
+			separator="true"
+			showon="logo_type:image" />
+
+		<field name="logo_height" 
+			helixgroup="logo" 
+			type="number" 
+			default="36" 
+			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
 			showon="logo_type:image" />
 
 		<field name="logo_text" 
@@ -146,40 +148,24 @@
 			helixgroup="body" 
 			type="list" 
 			default="inherit" 
+			helixsubgroup="body_bg_image"
+			subclasses="col-6"
 			label="HELIX_ULTIMATE_BACKGROUND_REPEAT" 
-			showon="boxed_layout:1">
+			showon="boxed_layout:1[AND]body_bg_image!:">
 			<option value="no-repeat">HELIX_ULTIMATE_BACKGROUND_REPEAT_NO</option>
 			<option value="repeat">HELIX_ULTIMATE_BACKGROUND_REPEAT_ALL</option>
 			<option value="repeat-x">HELIX_ULTIMATE_BACKGROUND_REPEAT_HORIZ</option>
 			<option value="repeat-y">HELIX_ULTIMATE_BACKGROUND_REPEAT_VERTI</option>
 			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_REPEAT_INHERIT</option>
 		</field>
-		<field name="body_bg_size" 
-			helixgroup="body" 
-			type="list" 
-			default="inherit" 
-			label="HELIX_ULTIMATE_BACKGROUND_SIZE" 
-			showon="boxed_layout:1">
-			<option value="cover">HELIX_ULTIMATE_BACKGROUND_COVER</option>
-			<option value="contain">HELIX_ULTIMATE_BACKGROUND_CONTAIN</option>
-			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_INHERIT</option>
-		</field>
-		<field name="body_bg_attachment" 
-			helixgroup="body" 
-			type="list" 
-			default="inherit" 
-			label="HELIX_ULTIMATE_BACKGROUND_ATTACHMENT" 
-			showon="boxed_layout:1">
-			<option value="fixed">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_FIXED</option>
-			<option value="scroll">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_SCROLL</option>
-			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_INHERIT</option>
-		</field>
 		<field name="body_bg_position" 
 			helixgroup="body" 
 			type="list" 
-			default="0 0" 
+			default="0 0"
+			helixsubgroup="body_bg_image"
+			subclasses="col-6"
 			label="HELIX_ULTIMATE_BACKGROUND_POSITION" 
-			showon="boxed_layout:1">
+			showon="boxed_layout:1[AND]body_bg_image!:">
 			<option value="0 0">HELIX_ULTIMATE_BACKGROUND_POSITION_LEFT_TOP</option>
 			<option value="0 50%">HELIX_ULTIMATE_BACKGROUND_POSITION_LEFT_CENTER</option>
 			<option value="0 100%">HELIX_ULTIMATE_BACKGROUND_POSITION_LEFT_BOTTOM</option>
@@ -189,6 +175,30 @@
 			<option value="100% 0">HELIX_ULTIMATE_BACKGROUND_POSITION_RIGHT_TOP</option>
 			<option value="100% 50%">HELIX_ULTIMATE_BACKGROUND_POSITION_RIGHT_CENTER</option>
 			<option value="100% 100%">HELIX_ULTIMATE_BACKGROUND_POSITION_RIGHT_BOTTOM</option>
+		</field>
+		<field name="body_bg_size" 
+			helixgroup="body" 
+			type="list" 
+			default="inherit"
+			helixsubgroup="body_bg_image"
+			subclasses="col-6"
+			label="HELIX_ULTIMATE_BACKGROUND_SIZE" 
+			showon="boxed_layout:1[AND]body_bg_image!:">
+			<option value="cover">HELIX_ULTIMATE_BACKGROUND_COVER</option>
+			<option value="contain">HELIX_ULTIMATE_BACKGROUND_CONTAIN</option>
+			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_INHERIT</option>
+		</field>
+		<field name="body_bg_attachment" 
+			helixgroup="body" 
+			type="list" 
+			default="inherit"
+			helixsubgroup="body_bg_image"
+			subclasses="col-6"
+			label="HELIX_ULTIMATE_BACKGROUND_ATTACHMENT" 
+			showon="boxed_layout:1[AND]body_bg_image!:">
+			<option value="fixed">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_FIXED</option>
+			<option value="scroll">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_SCROLL</option>
+			<option value="inherit">HELIX_ULTIMATE_BACKGROUND_ATTACHMENT_INHERIT</option>
 		</field>
 
 		<field name="enabled_copyright" 
@@ -835,7 +845,9 @@
 			type="color" 
 			default="#0345BF" 
 			dependant="custom_style:1"
-			label="HELIX_ULTIMATE_PRESET_HEADER_BACKGROUND_COLOR" />
+			label="HELIX_ULTIMATE_PRESET_HEADER_BACKGROUND_COLOR"
+			separator="true"
+			/>
 		<field name="topbar_bg_color" 
 			class="preset-control" 
 			helixgroup="preset_topbar" 

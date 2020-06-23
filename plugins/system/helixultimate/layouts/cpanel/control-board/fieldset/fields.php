@@ -29,6 +29,9 @@ extract($displayData);
 
 			$masterClass = $data[0]->getAttribute('masterclass');
 			$masterClass = isset($masterClass) ? $masterClass : 'row';
+
+			$masterHasSeparator = $data[0]->getAttribute('masterseparator');
+			$masterHasSeparator = isset($masterHasSeparator) && ($masterHasSeparator === 'true' || $masterHasSeparator === 'on') ? ' has-separator': '';
 		?>
 		<!-- if master label provider for the subgroup -->
 		<?php if (!empty($masterLabel)): ?>
@@ -43,7 +46,7 @@ extract($displayData);
 			</div>
 		<?php endif ?>
 
-		<div class="hu-subgroup <?php echo $masterClass; ?>">
+		<div class="hu-subgroup <?php echo $masterClass . $masterHasSeparator; ?>">
 			<?php foreach ($data as $subgroup => $field): ?>
 				<?php
 					$classes =  $field->getAttribute('subclasses');

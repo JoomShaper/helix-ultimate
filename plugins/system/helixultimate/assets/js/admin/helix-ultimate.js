@@ -1121,35 +1121,40 @@ jQuery(function ($) {
 
 
 	/** Handle enable on  */
-	let $enableParentElement = null;
+	let $enableOnParentElements = [];
 
 	function handleEnableOn() {
 		let $childElement =  $('.control-group[data-enableon]');
-		let [name, value] = $childElement.data('enableon').split(':');
-		
 
-		$enableParentElement = $(`[name=${name}]`);
-		let parentValue = $enableParentElement.val();
+		$childElement.each(function() {
+			let [name, value] = $(this).data('enableon').split(':');
+			
+
+			let $parentElement = $(`[name=${name}]`);
+			$enableOnParentElements.push($parentElement);
+			let parentValue = $parentElement.val();
 
 
-		if ($enableParentElement.prop('type') === 'checkbox') {
-			parentValue = $enableParentElement.prop('checked');
-			value = value == 1;
-		}
+			if ($parentElement.prop('type') === 'checkbox') {
+				parentValue = $parentElement.prop('checked');
+				value = value == 1;
+			}
 
-		if (parentValue == value) {
-			$childElement.find('input, select, textarea').prop('readonly', false);
-			if ($childElement.hasClass('not-editable')) $childElement.removeClass('not-editable');
-		} else {
-			$childElement.find('input, select, textarea').prop('readonly', true);
-			if (!$childElement.hasClass('not-editable')) $childElement.addClass('not-editable');
-		}
+			if (parentValue == value) {
+				$(this).find('input, select, textarea').prop('readonly', false);
+				if ($(this).hasClass('not-editable')) $(this).removeClass('not-editable');
+			} else {
+				$(this).find('input, select, textarea').prop('readonly', true);
+				if (!$(this).hasClass('not-editable')) $(this).addClass('not-editable');
+			}
+		});
 	};
 
 	handleEnableOn();
 
-	$enableParentElement.on('change', function() {
-		handleEnableOn();
+	$enableOnParentElements.forEach(function($element) {
+		$element.on('change', function() {
+			handleEnableOn();
+		});
 	});
-
 });

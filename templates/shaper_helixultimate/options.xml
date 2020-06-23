@@ -9,10 +9,13 @@
 		<field name="logo_type" 
 			helixgroup="logo" 
 			type="list" 
-			default="image" 
+			default="image"
+			style="inline-group"
+			textrule="icon-text"
+			fixedwidth="true"
 			label="HELIX_ULTIMATE_LOGO_TYPE">
-			<option value="image">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
-			<option value="text">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
+			<option value="image" class="{fas fa-image}">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
+			<option value="text" class="{fas fa-text-height}">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
 		</field>
 
 		<field name="logo_image" 

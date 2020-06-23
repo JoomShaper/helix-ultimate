@@ -8,8 +8,9 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Language\Text;
 use HelixUltimate\Framework\Platform\Settings;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 extract($displayData);
 
@@ -45,6 +46,8 @@ extract($displayData);
 	$hideLabel = $field->getAttribute('hideLabel', false);
 	$description = Text::_($field->getAttribute('description', ''));
 	$type = $field->getAttribute('type', 'text');
+	$multiple = $field->getAttribute('multiple');
+	$multiple = isset($multiple) && ($multiple === 'true' || $multiple === 'on');
 	$separator = $field->getAttribute('separator');
 
 	$separator = isset($separator) && ($separator === 'true' || $separator === 'on') ? true : false;
@@ -58,6 +61,7 @@ extract($displayData);
 	}
 
 	$checkboxStyle = $field->getAttribute('style', 'switch');
+	$listStyle = $field->getAttribute('style');
 ?>
 <div class="control-group <?php echo (($group) ? 'group-style-' . $group : ''); ?> <?php echo $separator ? 'has-separator': ''; ?> <?php echo $type === 'checkbox' && $checkboxStyle === 'plain' ? 'plain-checkbox': ''; ?>" <?php echo $attribs; ?>>
 	<div class="control-group-inner">
@@ -98,7 +102,11 @@ extract($displayData);
 			<?php endif; ?>
 	
 			<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
-				<?php echo $field->input; ?>
+				<?php if ($type === 'list' && !$multiple && $listStyle === 'inline-group'): ?>
+					<?php echo LayoutHelper::render('cpanel.control-board.fieldset.field-inline-list', ['field' => $field], HELIX_LAYOUTS_PATH); ?>
+				<?php else: ?>
+					<?php echo $field->input; ?>
+				<?php endif ?>
 			</div>
 	
 			<!-- if description exists and type is checkbox then show the help text next to the input field. -->

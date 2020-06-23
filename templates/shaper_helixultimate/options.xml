@@ -6,7 +6,20 @@
 		activegroup="logo" 
 		icon="fas fa-cog">
 
-		<field name="logo_type" 
+		<field name="logo_type"
+			helixgroup="logo"
+			type="helixswitcher"
+			default="image"
+			textrule="icon-text"
+			fixedwidth="true"
+			alignment="center"
+			label="HELIX_ULTIMATE_LOGO_TYPE"
+		>
+			<option value="image" icon="fas fa-image" >HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
+			<option value="text" icon="fas fa-font">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
+		</field>
+
+		<!-- <field name="logo_type" 
 			helixgroup="logo" 
 			type="list" 
 			default="image"
@@ -16,7 +29,7 @@
 			label="HELIX_ULTIMATE_LOGO_TYPE">
 			<option value="image" class="size-2x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_IMAGE</option>
 			<option value="text" class="size-4x [icon]fas fa-image[/icon] [src]plugins/system/helixultimate/assets/images/icons/basic.svg[/src]">HELIX_ULTIMATE_LOGO_TYPE_TEXT</option>
-		</field>
+		</field> -->
 
 		<field name="logo_image" 
 			helixgroup="logo" 

@@ -3349,3 +3349,29 @@ select:focus::-ms-value {
 .hu-media-clear.hide {
 	display: none;
 }
+
+.hu-font-color {
+	position: relative;
+}
+
+input[type=color] {
+	height: 30px;
+}
+
+.hu-font-color
+.hu-color-preview {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: 6px;
+    bottom: 6px;
+    border-radius: 3px;
+}
+
+.hu-font-color
+.hu-color-code {
+    position: absolute;
+    left: 18px;
+    bottom: 3px;
+    border-radius: 3px;
+}

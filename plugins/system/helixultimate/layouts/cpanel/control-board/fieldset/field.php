@@ -78,7 +78,7 @@ extract($displayData);
 		<!-- if checkbox style is plain then the input comes before the label -->
 		<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
 			<div class="control-label">
-				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
+				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">
 					<?php echo $field->input; ?>
 				</div>
 

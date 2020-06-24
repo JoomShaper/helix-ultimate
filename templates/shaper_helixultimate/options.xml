@@ -458,7 +458,8 @@
 		addfieldpath="/plugins/system/helixultimate/src/fields" 
 		icon="fas fa-paint-brush">
 		<field name="preset" 
-			type="helixpresets" 
+			type="helixpresets"
+			label="HELIX_ULTIMATE_PREDEFINED_PRESETS"
 			separator="true"
 			default="preset1">
 			<preset name="preset1" 

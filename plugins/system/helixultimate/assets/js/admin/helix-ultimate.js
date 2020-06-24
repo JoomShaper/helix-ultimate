@@ -16,9 +16,7 @@ jQuery(function ($) {
 		window.WebKitMutationObserver ||
 		window.MozMutationObserver;
 
-	let $previewFrame = document.getElementById(
-		'hu-template-preview'
-	);
+	let $previewFrame = document.getElementById('hu-template-preview');
 
 	/**
 	 * Reload the preview Iframe
@@ -217,9 +215,7 @@ jQuery(function ($) {
 					}
 
 					// Reset media preview image.
-					let $imagePreview = $controlEl.find(
-						'.hu-image-holder img'
-					);
+					let $imagePreview = $controlEl.find('.hu-image-holder img');
 
 					if ($imagePreview.length > 0) {
 						$imagePreview.attr('src', `${meta.base}/${safepoint}`);
@@ -227,8 +223,8 @@ jQuery(function ($) {
 
 					// Reset the predefined header
 					let $predefinedHeader = $controlEl.find('.hu-header-item');
-					
-					$predefinedHeader.each(function() {
+
+					$predefinedHeader.each(function () {
 						if ($(this).hasClass('active')) {
 							$(this).removeClass('active');
 						}
@@ -602,7 +598,11 @@ jQuery(function ($) {
 			}
 		});
 
-		$(`input.hu-webfont-size-input${map[device] === 'md' ? '' : '-' + map[device]}`).addClass('active');
+		$(
+			`input.hu-webfont-size-input${
+				map[device] === 'md' ? '' : '-' + map[device]
+			}`
+		).addClass('active');
 
 		$iframe.animate(
 			{
@@ -645,27 +645,25 @@ jQuery(function ($) {
 
 		let sidebarOffset = $sidebar.offset();
 		let sidebarWidth = $sidebar.width();
-
 		let panelWidth = $panel.width();
-		let panelHeight = $panel.height();
-
 		let containerWidth = $container.width();
-		let containerHeight = $container.height();
-		let gap = 20;
+		let gap = 10;
 
 		let panelHorizontalPosition = sidebarOffset.left + sidebarWidth + gap;
-		let panelVerticalPosition = sidebarOffset.top;
 
 		if (panelHorizontalPosition + panelWidth > containerWidth) {
-			panelHorizontalPosition = sidebarOffset.left - panelWidth - gap;
-		}
+			if ($fieldsetContents.hasClass('hu-panel-position-right')) {
+				$fieldsetContents.removeClass('hu-panel-position-right');
+			}
 
-		if (panelVerticalPosition + panelHeight > containerHeight) {
-			panelVerticalPosition = containerHeight - panelHeight;
-		}
+			$fieldsetContents.addClass('hu-panel-position-left');
+		} else {
+			if ($fieldsetContents.hasClass('hu-panel-position-left')) {
+				$fieldsetContents.removeClass('hu-panel-position-left');
+			}
 
-		$fieldsetContents.css('left', panelHorizontalPosition + 'px');
-		$fieldsetContents.css('top', panelVerticalPosition + 'px');
+			$fieldsetContents.addClass('hu-panel-position-right');
+		}
 	}
 
 	/**
@@ -693,16 +691,12 @@ jQuery(function ($) {
 		if (
 			$(this)
 				.parents('#hu-options')
-				.find(
-					'.hu-fieldset .hu-fieldset-header'
-				)
+				.find('.hu-fieldset .hu-fieldset-header')
 				.hasClass('active')
 		) {
 			$(this)
 				.parents('#hu-options')
-				.find(
-					'.hu-fieldset .hu-fieldset-header'
-				)
+				.find('.hu-fieldset .hu-fieldset-header')
 				.removeClass('active');
 		}
 
@@ -717,14 +711,8 @@ jQuery(function ($) {
 	$('.hu-panel-close').on('click', function (e) {
 		e.preventDefault();
 
-		if (
-			$(this)
-				.closest('.hu-edit-panel')
-				.hasClass('active-panel')
-		) {
-			$(this)
-				.closest('.hu-edit-panel')
-				.removeClass('active-panel');
+		if ($(this).closest('.hu-edit-panel').hasClass('active-panel')) {
+			$(this).closest('.hu-edit-panel').removeClass('active-panel');
 		}
 
 		let $sidebarItem = $(
@@ -786,32 +774,26 @@ jQuery(function ($) {
 		var styleName = $(this).data('style'),
 			filedName = $parent.data('name');
 
-		$('#' + filedName).val(styleName).trigger('change');
+		$('#' + filedName)
+			.val(styleName)
+			.trigger('change');
 	});
 
 	// Preset
 	$(document).ready(function () {
 		if ($('#custom_style').attr('checked') == 'checked') {
-			$('.hu-fieldset-presets')
-				.find('.hu-group-wrap')
-				.show();
+			$('.hu-fieldset-presets').find('.hu-group-wrap').show();
 		} else {
-			$('.hu-fieldset-presets')
-				.find('.hu-group-wrap')
-				.hide();
+			$('.hu-fieldset-presets').find('.hu-group-wrap').hide();
 		}
 	});
 
 	$(document).on('change', '#custom_style', function (e) {
 		e.preventDefault();
 		if ($(this).attr('checked') == 'checked') {
-			$('.hu-fieldset-presets')
-				.find('.hu-group-wrap')
-				.slideDown();
+			$('.hu-fieldset-presets').find('.hu-group-wrap').slideDown();
 		} else {
-			$('.hu-fieldset-presets')
-				.find('.hu-group-wrap')
-				.slideUp();
+			$('.hu-fieldset-presets').find('.hu-group-wrap').slideUp();
 		}
 	});
 
@@ -927,47 +909,25 @@ jQuery(function ($) {
 		$('.hu-field-webfont').each(function () {
 			var $that = $(this),
 				webfont = {
-					fontFamily: $that
-						.find('.hu-webfont-list')
-						.val(),
-					fontSize: $that
-						.find('.hu-webfont-size-input')
-						.val(),
-					fontSize_sm: $that
-						.find('.hu-webfont-size-input-sm')
-						.val(),
-					fontSize_xs: $that
-						.find('.hu-webfont-size-input-xs')
-						.val(),
-					fontWeight: $that
-						.find('.hu-webfont-weight-list')
-						.val(),
-					fontStyle: $that
-						.find('.hu-webfont-style-list')
-						.val(),
-					fontSubset: $that
-						.find('.hu-webfont-subset-list')
-						.val(),
-					fontColor: $that
-						.find('.hu-font-color-input')
-						.val(),
+					fontFamily: $that.find('.hu-webfont-list').val(),
+					fontSize: $that.find('.hu-webfont-size-input').val(),
+					fontSize_sm: $that.find('.hu-webfont-size-input-sm').val(),
+					fontSize_xs: $that.find('.hu-webfont-size-input-xs').val(),
+					fontWeight: $that.find('.hu-webfont-weight-list').val(),
+					fontStyle: $that.find('.hu-webfont-style-list').val(),
+					fontSubset: $that.find('.hu-webfont-subset-list').val(),
+					fontColor: $that.find('.hu-font-color-input').val(),
 					fontLineHeight: $that
 						.find('.hu-font-line-height-input')
 						.val(),
 					fontLetterSpacing: $that
 						.find('.hu-font-letter-spacing-input')
 						.val(),
-					textDecoration: $that
-						.find('.hu-text-decoration')
-						.val(),
-					textAlign: $that
-						.find('.hu-text-align')
-						.val(),
+					textDecoration: $that.find('.hu-text-decoration').val(),
+					textAlign: $that.find('.hu-text-align').val(),
 				};
 
-			$that
-				.find('.hu-webfont-input')
-				.val(JSON.stringify(webfont));
+			$that.find('.hu-webfont-input').val(JSON.stringify(webfont));
 		});
 	}
 
@@ -981,9 +941,7 @@ jQuery(function ($) {
 					rowObj = $row.data();
 				delete rowObj.sortableItem;
 
-				var activeLayout = $row.find(
-						'.hu-column-layout.active'
-					),
+				var activeLayout = $row.find('.hu-column-layout.active'),
 					layoutArray = activeLayout.data('layout'),
 					layout = 12;
 
@@ -999,9 +957,7 @@ jQuery(function ($) {
 				};
 
 				// Find Column Elements
-				$row.find('.hu-layout-column').each(function (
-					index
-				) {
+				$row.find('.hu-layout-column').each(function (index) {
 					var $column = $(this),
 						colIndex = index,
 						colObj = $column.data();
@@ -1020,7 +976,9 @@ jQuery(function ($) {
 	/* Helix Help Control functionalities */
 	$('.hu-help-icon').on('click', function (e) {
 		e.preventDefault();
-		let $helpElement = $(this).closest('.control-group').find('.control-help');		
+		let $helpElement = $(this)
+			.closest('.control-group')
+			.find('.control-help');
 
 		$(this).toggleClass('active');
 
@@ -1034,8 +992,6 @@ jQuery(function ($) {
 
 		let $siblings = $(this).closest('.control-group').siblings();
 
-
-
 		$siblings.each(function () {
 			let $help = $(this).find('.control-help');
 
@@ -1047,9 +1003,7 @@ jQuery(function ($) {
 	});
 
 	/*Option Group*/
-	$(document).on('click', '.hu-option-group-title', function (
-		event
-	) {
+	$(document).on('click', '.hu-option-group-title', function (event) {
 		event.preventDefault();
 		$(this)
 			.closest('.hu-option-group')
@@ -1063,7 +1017,7 @@ jQuery(function ($) {
 
 	function handleDependOnRelationship() {
 		let $groups = $('.hu-group-wrap');
-		$groups.each(function() {
+		$groups.each(function () {
 			if ($(this).attr('data-dependon')) {
 				let depend = $(this).data('dependon');
 				let [name, value] = depend.split(':');
@@ -1092,22 +1046,21 @@ jQuery(function ($) {
 		$toggler.on('change', function (e) {
 			e.preventDefault();
 			handleDependOnRelationship();
-		})
+		});
 	});
 
 	/* Helix dimension Field */
 	(function handleDimensionData() {
-		let $width =  $('.hu-field-dimension-width');
+		let $width = $('.hu-field-dimension-width');
 		let $height = $('.hu-field-dimension-height');
 		let $input = $('.hu-field-dimension-input');
-		
 
 		$width.on('keyup', function (e) {
 			e.preventDefault();
 			let fieldValue = $input.val() || '0x0';
 			let value = $(this).val();
 			let [width, height] = fieldValue.toLowerCase().split('x');
-			
+
 			if (value === '') {
 				value = '0';
 			}
@@ -1116,7 +1069,7 @@ jQuery(function ($) {
 			fieldValue = `${width}x${height}`;
 			$input.val(fieldValue);
 		});
-		
+
 		$height.on('keyup', function (e) {
 			e.preventDefault();
 			let fieldValue = $input.val() || '0x0';
@@ -1133,22 +1086,18 @@ jQuery(function ($) {
 		});
 	})();
 
-
-
 	/** Handle enable on  */
 	let $enableOnParentElements = [];
 
 	function handleEnableOn() {
-		let $childElement =  $('.control-group[data-enableon]');
+		let $childElement = $('.control-group[data-enableon]');
 
-		$childElement.each(function() {
+		$childElement.each(function () {
 			let [name, value] = $(this).data('enableon').split(':');
-			
 
 			let $parentElement = $(`[name=${name}]`);
 			$enableOnParentElements.push($parentElement);
 			let parentValue = $parentElement.val();
-
 
 			if ($parentElement.prop('type') === 'checkbox') {
 				parentValue = $parentElement.prop('checked');
@@ -1157,29 +1106,35 @@ jQuery(function ($) {
 
 			if (parentValue == value) {
 				$(this).find('input, select, textarea').prop('readonly', false);
-				if ($(this).hasClass('uneditable')) $(this).removeClass('uneditable');
+				if ($(this).hasClass('uneditable'))
+					$(this).removeClass('uneditable');
 			} else {
 				$(this).find('input, select, textarea').prop('readonly', true);
-				if (!$(this).hasClass('uneditable')) $(this).addClass('uneditable');
+				if (!$(this).hasClass('uneditable'))
+					$(this).addClass('uneditable');
 			}
 		});
-	};
+	}
 
 	handleEnableOn();
 
-	$enableOnParentElements.forEach(function($element) {
-		$element.on('change', function() {
+	$enableOnParentElements.forEach(function ($element) {
+		$element.on('change', function () {
 			handleEnableOn();
 		});
 	});
 
 	/* inline group buttons groups */
-	$('.hu-switcher .hu-action-group [hu-switcher-action]').on('click', function(e){
-		let value = $(this).data('value');
-		$(this).parent().find('[hu-switcher-action]').removeClass('active');
-		$(this).addClass('active');
-		let $input = $(this).closest('.hu-switcher').find('input[type=hidden]');
-		$input.val(value).trigger('change');
-	});
-
+	$('.hu-switcher .hu-action-group [hu-switcher-action]').on(
+		'click',
+		function (e) {
+			let value = $(this).data('value');
+			$(this).parent().find('[hu-switcher-action]').removeClass('active');
+			$(this).addClass('active');
+			let $input = $(this)
+				.closest('.hu-switcher')
+				.find('input[type=hidden]');
+			$input.val(value).trigger('change');
+		}
+	);
 });

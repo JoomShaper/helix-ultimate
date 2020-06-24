@@ -3035,16 +3035,18 @@ select:focus::-ms-value {
 }
 
 .control-group.control-group-checkbox .control-label {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin: 0;
-	line-height: 32px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 	cursor: pointer;
+}
+
+.hu-options-modal .control-group.control-group-checkbox .control-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0;
 }
 
 .hu-options-modal .control-group-checkbox input[type='checkbox'] {

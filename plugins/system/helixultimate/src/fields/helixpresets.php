@@ -250,15 +250,4 @@ class JFormFieldHelixpresets extends FormField
 
 		return [$data, $html];
 	}
-
-	/**
-	 * Get label
-	 *
-	 * @return	boolean
-	 * @since	1.0.0
-	 */
-	public function getLabel()
-	{
-		return false;
-	}
 }

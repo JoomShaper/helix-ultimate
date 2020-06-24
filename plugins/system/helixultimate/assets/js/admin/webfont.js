@@ -21,22 +21,20 @@ jQuery(function ($) {
 			textDecoration = $parent.find('input.hu-text-decoration').val(),
 			textAlign = $parent.find('input.hu-text-align').val();
 
-		let $preview = $parent
-			.find('.hu-webfont-preview');
+		let $preview = $parent.find('.hu-webfont-preview');
 
-		
 		if (!!fontFamily) {
 			$preview.css('font-family', fontFamily);
 		}
-		
+
 		if (!!fontWeight) {
 			$preview.css('font-weight', fontWeight);
 		} else {
 			$preview.css('font-weight', '100');
 		}
-		
+
 		if (!!fontSize) {
-			if (!(/^\d+[^\d]+/.test(fontSize))) {
+			if (!/^\d+[^\d]+/.test(fontSize)) {
 				fontSize += 'px';
 			}
 			fontSize = fontSize.replace(/\s+/, '');
@@ -45,22 +43,21 @@ jQuery(function ($) {
 		} else {
 			$preview.css('font-size', '');
 		}
-		
-		
+
 		if (!!fontColor) {
 			$preview.css('color', fontColor);
 		} else {
 			$preview.css('color', '#000000');
 		}
-		
+
 		if (!!fontLineHeight) {
 			$preview.css('line-height', fontLineHeight);
 		} else {
 			$preview.css('line-height', '');
 		}
-		
+
 		if (!!fontSpacing) {
-			if (!(/^\d+[^\d]+/.test(fontSpacing))) {
+			if (!/^\d+[^\d]+/.test(fontSpacing)) {
 				fontSpacing += 'px';
 			}
 
@@ -74,13 +71,13 @@ jQuery(function ($) {
 		if (!!textDecoration) {
 			$preview.css('text-decoration', textDecoration);
 		}
-		
+
 		if (!!textAlign) {
 			$preview.css('text-align', textAlign);
 		}
 	}
 
-	$('.hu-field-webfont').each(function() {
+	$('.hu-field-webfont').each(function () {
 		renderPreview($(this));
 	});
 
@@ -147,9 +144,7 @@ jQuery(function ($) {
 	});
 
 	// Font Size
-	$(document).on('change', '.hu-webfont-size-input', function (
-		event
-	) {
+	$(document).on('change', '.hu-webfont-size-input', function (event) {
 		event.preventDefault();
 		renderPreview($(this).closest('.hu-field-webfont'));
 	});
@@ -158,7 +153,7 @@ jQuery(function ($) {
 		event.preventDefault();
 		renderPreview($(this).closest('.hu-field-webfont'));
 	});
-	
+
 	$('.hu-font-line-height-input').on('change', function (event) {
 		event.preventDefault();
 		renderPreview($(this).closest('.hu-field-webfont'));
@@ -170,17 +165,13 @@ jQuery(function ($) {
 	});
 
 	// Font Weight
-	$(document).on('change', '.hu-webfont-weight-list', function (
-		event
-	) {
+	$(document).on('change', '.hu-webfont-weight-list', function (event) {
 		event.preventDefault();
 		renderPreview($(this).closest('.hu-field-webfont'));
 	});
 
 	// Font Style
-	$(document).on('change', '.hu-webfont-style-list', function (
-		event
-	) {
+	$(document).on('change', '.hu-webfont-style-list', function (event) {
 		event.preventDefault();
 		renderPreview($(this).closest('.hu-field-webfont'));
 	});
@@ -204,24 +195,42 @@ jQuery(function ($) {
 	});
 
 	// Text decoration
-	$('.hu-font-decoration .hu-btn-group button').on('click', function(e) {
-		e.preventDefault();
-		$(this).siblings().removeClass('active');
-		$(this).addClass('active');
-		$(this).closest('.hu-font-decoration').find('input.hu-text-decoration').val($(this).val()).trigger('change');
+	$('.hu-font-decoration .hu-action-group .hu-switcher-action').on(
+		'click',
+		function (e) {
+			e.preventDefault();
+			e.stopPropagation();
 
-		renderPreview($(this).closest('.hu-field-webfont'));
-	});
-	
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			$(this)
+				.closest('.hu-font-decoration')
+				.find('input.hu-text-decoration')
+				.val($(this).data('value'))
+				.trigger('change');
+
+			renderPreview($(this).closest('.hu-field-webfont'));
+		}
+	);
+
 	// Text alignment
-	$('.hu-font-alignment .hu-btn-group button').on('click', function(e) {
-		e.preventDefault();
-		$(this).siblings().removeClass('active');
-		$(this).addClass('active');
-		$(this).closest('.hu-font-decoration').find('input.hu-text-align').val($(this).val()).trigger('change');
+	$('.hu-font-alignment .hu-action-group .hu-switcher-action').on(
+		'click',
+		function (e) {
+			e.preventDefault();
+			e.stopPropagation();
 
-		renderPreview($(this).closest('.hu-field-webfont'));
-	});
+			$(this).siblings().removeClass('active');
+			$(this).addClass('active');
+			$(this)
+				.closest('.hu-font-alignment')
+				.find('input.hu-text-align')
+				.val($(this).data('value'))
+				.trigger('change');
+
+			renderPreview($(this).closest('.hu-field-webfont'));
+		}
+	);
 
 	//Update Fonts list
 	$('.btn-update-hu-fonts').on('click', function (event) {

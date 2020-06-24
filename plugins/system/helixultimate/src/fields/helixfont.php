@@ -414,15 +414,15 @@ class JFormFieldHelixfont extends FormField
 		$html .= '<span class="fas fa-align-left"></span>';
 		$html .= '</span>';
 
-		$html .= '<span data-value="center" class="hu-switcher-action ' . ($alignment === 'left' ? 'active' : '') . '" role="button">';
+		$html .= '<span data-value="center" class="hu-switcher-action ' . ($alignment === 'center' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-align-center"></span>';
 		$html .= '</span>';
 
-		$html .= '<span data-value="right" class="hu-switcher-action ' . ($alignment === 'left' ? 'active' : '') . '" role="button">';
+		$html .= '<span data-value="right" class="hu-switcher-action ' . ($alignment === 'right' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-align-right"></span>';
 		$html .= '</span>';
 
-		$html .= '<span data-value="justify" class="hu-switcher-action ' . ($alignment === 'left' ? 'active' : '') . '" role="button">';
+		$html .= '<span data-value="justify" class="hu-switcher-action ' . ($alignment === 'justify' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-align-justify"></span>';
 		$html .= '</span>';
 		$html .= '</div>';

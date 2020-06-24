@@ -12,6 +12,7 @@ web.config.txt
 .idea/
 .vscode/
 .DS_Store
+/package
 
 # others
 /bin

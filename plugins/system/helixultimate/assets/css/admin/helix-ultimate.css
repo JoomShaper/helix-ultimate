@@ -3218,6 +3218,15 @@ select:focus::-ms-value {
 	border-radius: 0 3px 0 0;
 }
 
+.hu-options-modal .hu-preset-container {
+	padding: 20px 15px 0px;
+}
+
+.hu-options-modal .hu-preset-container label {
+	margin-bottom: 0;
+}
+
+
 /*Webfonts*/
 .hu-webfont-size {
 	position: relative;

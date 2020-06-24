@@ -3028,8 +3028,10 @@ select:focus::-ms-value {
 	margin-bottom: 10px;
 }
 
-.hu-options-modal .control-group-checkbox .control-label {
-	display: block;
+.control-group.control-group-checkbox .control-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	margin: 0;
 	line-height: 32px;
 	-webkit-user-select: none;
@@ -3040,7 +3042,7 @@ select:focus::-ms-value {
 }
 
 .hu-options-modal .control-group-checkbox input[type='checkbox'] {
-	float: right;
+	margin-left: auto;
 }
 
 /*Custom Headers*/

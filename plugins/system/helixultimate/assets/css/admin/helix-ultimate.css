@@ -1715,7 +1715,7 @@ input[type='button'].hu-btn-block {
 	padding: 2px;
 	background: #f1f6fc;
 	box-shadow: inset -6px -6px 10px #ffffff, inset 6px 6px 10px #d3d9e7;
-	border: 1px solid #EEF2F8;
+	border: 1px solid #eef2f8;
 	border-radius: 5px;
 }
 
@@ -2310,9 +2310,6 @@ select:focus::-ms-value {
 
 /*Sidebar*/
 #hu-options-panel {
-	position: fixed;
-	top: 100px;
-	left: 40px;
 	width: 100px;
 	background-color: #eff4fb;
 	border-radius: 10px;
@@ -2320,6 +2317,12 @@ select:focus::-ms-value {
 		inset 4px 4px 4px #fcfdfe;
 	backdrop-filter: blur(4px);
 	text-align: center;
+}
+
+.hu-options-core {
+	position: fixed;
+	top: 100px;
+	left: 40px;
 	z-index: 999;
 }
 
@@ -2369,11 +2372,13 @@ select:focus::-ms-value {
 	display: none;
 }
 
+.hu-options-container {
+	display: flex;
+}
+
 .hu-fieldset-contents {
-	position: fixed;
-	z-index: 3;
-	left: 110px;
-	top: 0px;
+	margin-left: 10px;
+	z-index: 999;
 }
 
 .action-hu-exit {
@@ -3245,7 +3250,7 @@ select:focus::-ms-value {
 	color: rgba(var(--dark));
 	background-image: none;
 	background-clip: padding-box;
-	background: linear-gradient(180deg, #FFFFFF 0%, #EAEDEF 100%);
+	background: linear-gradient(180deg, #ffffff 0%, #eaedef 100%);
 	border: 1px solid rgba(121, 127, 167, 0.3);
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;
@@ -3527,7 +3532,7 @@ input[type='color'] {
 	padding: 15px 15px 0 15px;
 }
 
-.hu-webfont-preview-wrapper{
+.hu-webfont-preview-wrapper {
 	margin: -10px -15px 10px;
 	padding: 15px;
 	background: rgba(51, 102, 255, 0.15);

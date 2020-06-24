@@ -624,7 +624,7 @@ jQuery(function ($) {
 	/**
 	 * Draggable sidebar
 	 */
-	$('#hu-options-panel').draggable({
+	$('.hu-options-core').draggable({
 		cursor: 'grabbing',
 		handle: '.hu-panel-handle',
 		containment: 'body',
@@ -638,7 +638,7 @@ jQuery(function ($) {
 	 * Calculate the editor panel position and display the panel
 	 */
 	function panelPositioning() {
-		let $fieldsetContents = $('.hu-fieldset-contents');
+		let $optionsCore = $('.hu-options-core');
 		let $panel = $('.hu-edit-panel.active-panel');
 		let $sidebar = $('#hu-options-panel');
 		let $container = $('.hu-container');
@@ -652,17 +652,17 @@ jQuery(function ($) {
 		let panelHorizontalPosition = sidebarOffset.left + sidebarWidth + gap;
 
 		if (panelHorizontalPosition + panelWidth > containerWidth) {
-			if ($fieldsetContents.hasClass('hu-panel-position-right')) {
-				$fieldsetContents.removeClass('hu-panel-position-right');
+			if ($optionsCore.hasClass('hu-panel-position-right')) {
+				$optionsCore.removeClass('hu-panel-position-right');
 			}
 
-			$fieldsetContents.addClass('hu-panel-position-left');
+			$optionsCore.addClass('hu-panel-position-left');
 		} else {
-			if ($fieldsetContents.hasClass('hu-panel-position-left')) {
-				$fieldsetContents.removeClass('hu-panel-position-left');
+			if ($optionsCore.hasClass('hu-panel-position-left')) {
+				$optionsCore.removeClass('hu-panel-position-left');
 			}
 
-			$fieldsetContents.addClass('hu-panel-position-right');
+			$optionsCore.addClass('hu-panel-position-right');
 		}
 	}
 

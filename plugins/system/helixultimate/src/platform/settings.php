@@ -189,6 +189,7 @@ class Settings
 		}
 
 		$fieldset = $presetForm->getFieldset('colors');
+		$group = array();
 
 		/**
 		 * Make the field id unique by adding
@@ -197,6 +198,7 @@ class Settings
 		foreach ($fieldset as &$presetField)
 		{
 			$presetField->id = $presetName . '-' . $presetField->id;
+			$group[] = $presetField;
 		}
 
 		$html = '<div id="' . $presetData['name'] . '" class="hu-preset-container" style="display: none;">';
@@ -204,7 +206,7 @@ class Settings
 
 		$html .= LayoutHelper::render(
 			'cpanel.control-board.fieldset.fields',
-			['group' => 'no-group', 'fields' => $fieldset],
+			['group' => 'no-group', 'groupData' => $group],
 			HELIX_LAYOUTS_PATH
 		);
 

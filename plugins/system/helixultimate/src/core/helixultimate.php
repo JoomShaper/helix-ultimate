@@ -1088,6 +1088,31 @@ class HelixUltimate
 					$fontCSS .= 'font-style: ' . $font->fontStyle . ';';
 				}
 
+				if (!empty($font->fontColor))
+				{
+					$fontCSS .= 'color: ' . $font->fontColor . ';';
+				}
+
+				if (!empty($font->fontLineHeight))
+				{
+					$fontCSS .= 'line-height: ' . $font->fontLineHeight . ';';
+				}
+
+				if (!empty($font->fontLetterSpacing))
+				{
+					$fontCSS .= 'letter-spacing: ' . $font->fontLetterSpacing . ';';
+				}
+
+				if (!empty($font->textDecoration))
+				{
+					$fontCSS .= 'text-decoration: ' . $font->textDecoration . ';';
+				}
+
+				if (!empty($font->textAlign))
+				{
+					$fontCSS .= 'text-align: ' . $font->textAlign . ';';
+				}
+
 				$fontCSS .= "}\n";
 
 				if (isset($font->fontSize_sm) && $font->fontSize_sm)

@@ -2823,6 +2823,7 @@ select:focus::-ms-value {
 	color: rgba(var(--dark), 0, 6);
 	background: rgba(51, 102, 255, 0.1);
 	border: 1px dashed rgba(2, 11, 83, 0.2);
+	margin: 0 !important;
 	border-radius: 2px;
 }
 

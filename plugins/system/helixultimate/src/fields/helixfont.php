@@ -314,9 +314,7 @@ class JFormFieldHelixfont extends FormField
 		$html = '';
 		$html .= '<div class="hu-font-color">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_COLOR') . '</label>';
-		// $html .= '<span class="hu-color-preview" style="background: ' . $color . '"></span>';
-		// $html .= '<small class="hu-color-code" style="color: ' . $color . '">' . str_replace('#', '', $color) . '';
-		$html .= '<input type="color" class="hu-font-color-input" value="' . $color . '"/>';
+		$html .= '<input type="text" class="hu-font-color-input minicolors" id="hu-menu-badge-body-font" placeholder="Font Color" value="' . $color . '" />';
 		$html .= '</div>';
 
 		return $html;

@@ -625,10 +625,10 @@ jQuery(function ($) {
 	 * Draggable sidebar
 	 */
 	$('.hu-options-core').draggable({
+		iframeFix: true,
 		cursor: 'grabbing',
 		handle: '.hu-panel-handle',
-		containment: 'body',
-		iframeFix: true,
+		containment: '#helix-ultimate',
 		drag: function (event, ui) {
 			panelPositioning();
 		},

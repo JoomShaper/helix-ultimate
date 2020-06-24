@@ -310,10 +310,12 @@
 	border-bottom-left-radius: 0;
 }
 
-.hu-subgroup .hu-input-group > .form-control {
+.hu-subgroup .hu-input-group > .form-control,
+.hu-narrow-input .form-control {
 	padding-left: 8px;
 	padding-right: 8px;
 }
+
 
 /*Display*/
 .hu-sr-only {

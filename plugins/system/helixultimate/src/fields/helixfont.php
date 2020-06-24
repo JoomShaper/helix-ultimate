@@ -107,7 +107,7 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Start Fonts List row
 		 */
-		$html .= '<div class="hu-webfont-family hu-mb-2">';
+		$html .= '<div class="hu-webfont-family hu-mb-3">';
 		$html .= $this->renderFontsList($systemFonts, $value, $items);
 		$html .= '</div>';
 
@@ -119,21 +119,21 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Start Font Weight
 		 */
-		$html .= '<div class="col-6 hu-mb-2">';
+		$html .= '<div class="col-5 hu-mb-3">';
 		$html .= $this->renderFontWeight($fontWeights, $value);
 		$html .= '</div>';
 
 		/**
 		 * Start Font Size
 		 */
-		$html .= '<div class="col-3 hu-mb-2">';
+		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontSize($value);
 		$html .= '</div>';
 
 		/**
 		 * Start Font Color
 		 */
-		$html .= '<div class="col-3 hu-mb-2">';
+		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontColor($value);
 		$html .= '</div>';
 
@@ -147,21 +147,21 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Font subset section
 		 */
-		$html .= '<div class="col-6 hu-mb-2">';
+		$html .= '<div class="col-5 hu-mb-3">';
 		$html .= $this->renderFontSubset($systemFonts, $font, $value);
 		$html .= '</div>';
 
 		/**
 		 * Set line height
 		 */
-		$html .= '<div class="col-3 hu-mb-2">';
+		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderLineHeight($value);
 		$html .= '</div>';
 
 		/**
 		 * Set Letter Spacing
 		 */
-		$html .= '<div class="col-3 hu-mb-2">';
+		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderLetterSpacing($value);
 		$html .= '</div>';
 
@@ -175,14 +175,14 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Text Decoration
 		 */
-		$html .= '<div class="col-6 hu-mb-2">';
+		$html .= '<div class="col-6 hu-mb-3">';
 		$html .= $this->renderTextDecoration($value);
 		$html .= '</div>';
 
 		/**
 		 * Font Alignment
 		 */
-		$html .= '<div class="col-6 hu-mb-2">';
+		$html .= '<div class="col-6 hu-mb-3">';
 		$html .= $this->renderFontAlignment($value);
 		$html .= '</div>';
 
@@ -300,9 +300,9 @@ class JFormFieldHelixfont extends FormField
 		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
 		$html .= '<div class="hu-webfont-size">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</label>';
-		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6" max="200">';
-		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6" max="200">';
-		$html .= '<input type="number" value="' . $fontSize_xs . '" class="hu-webfont-size-input-xs" min="6" max="200">';
+		$html .= '<input type="number" value="' . $fontSize . '" class="form-control hu-webfont-size-input active" min="6" max="200">';
+		$html .= '<input type="number" value="' . $fontSize_sm . '" class="form-control hu-webfont-size-input-sm" min="6" max="200">';
+		$html .= '<input type="number" value="' . $fontSize_xs . '" class="form-control hu-webfont-size-input-xs" min="6" max="200">';
 		$html .= '</div>';
 
 		return $html;
@@ -314,7 +314,7 @@ class JFormFieldHelixfont extends FormField
 		$html = '';
 		$html .= '<div class="hu-font-color">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_COLOR') . '</label>';
-		$html .= '<input type="text" class="hu-font-color-input minicolors" id="hu-menu-badge-body-font" placeholder="Font Color" value="' . $color . '" />';
+		$html .= '<input type="text" class="form-control hu-font-color-input minicolors" id="hu-menu-badge-body-font" placeholder="Font Color" value="' . $color . '" />';
 		$html .= '</div>';
 
 		return $html;
@@ -346,7 +346,7 @@ class JFormFieldHelixfont extends FormField
 		$html = '';
 		$html .= '<div class="hu-font-line-height">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_LINE_HEIGHT') . '</label>';
-		$html .= '<input type="number" class="hu-font-line-height-input" min="1" max="200" value="' . $height . '" />';
+		$html .= '<input type="number" class="form-control hu-font-line-height-input" min="1" max="200" value="' . $height . '" />';
 		$html .= '</div>';
 
 		return $html;
@@ -358,7 +358,7 @@ class JFormFieldHelixfont extends FormField
 		$html = '';
 		$html .= '<div class="hu-font-letter-spacing">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_LETTER_SPACING') . '</label>';
-		$html .= '<input type="text" class="hu-font-letter-spacing-input" value="' . $spacing . '" />';
+		$html .= '<input type="number" class="form-control hu-font-letter-spacing-input" value="' . $spacing . '" step=".1" />';
 		$html .= '</div>';
 
 		return $html;

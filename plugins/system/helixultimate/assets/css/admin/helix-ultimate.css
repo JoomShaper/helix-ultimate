@@ -3545,3 +3545,8 @@ input[type='color'] {
 	padding: 15px;
 	background: rgba(51, 102, 255, 0.15);
 }
+
+.hu-typography-wrapper .minicolors-theme-bootstrap .minicolors-panel {
+	left: auto !important;
+	right: 0;
+}

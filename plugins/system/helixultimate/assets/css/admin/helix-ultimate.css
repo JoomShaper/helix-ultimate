@@ -2371,8 +2371,8 @@ select:focus::-ms-value {
 .hu-fieldset-contents {
 	position: fixed;
 	z-index: 3;
-	left: 200px;
-	top: 120px;
+	left: 110px;
+	top: 0px;
 }
 
 .action-hu-exit {

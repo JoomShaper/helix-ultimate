@@ -92,15 +92,15 @@ class JFormFieldHelixSwitcher extends FormField
 
 				if (isset($option['icon']) && !empty($option['icon']))
 				{
-					$html[] = '<span class="hu-switcher-icon"><span class="'. (string) $option['icon'] .'"></span></span>';
+					$html[] = '<span class="hu-switcher-icon"><span class="' . (string) $option['icon'] . '"></span></span>';
 				}
-				else if(isset($option['svg']) && !empty($option['svg']))
+				elseif (isset($option['svg']) && !empty($option['svg']))
 				{
 					$svg_path = JPATH_PLUGINS . '/system/helixultimate/assets/images/icons/' . (string) $option['svg'] . '.svg';
 					$svg = File::exists($svg_path) ? File::read($svg_path) : (string) $option['svg'];
-					$html[] = '<span class="hu-switcher-svg">'. $svg .'</span>';
+					$html[] = '<span class="hu-switcher-svg">' . $svg . '</span>';
 				}
-				else if (isset($option['image']) && !empty($option['image']))
+				elseif (isset($option['image']) && !empty($option['image']))
 				{
 					$html[] = '<span class="hu-switcher-img"><img src="' . (string) $option['image'] . '"  /></span>';
 				}

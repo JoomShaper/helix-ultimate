@@ -9,6 +9,8 @@
 defined('_JEXEC') or die();
 use HelixUltimate\Framework\Platform\Settings;
 
+extract($displayData);
+
 $sidebar = new Settings;
 ?>
 

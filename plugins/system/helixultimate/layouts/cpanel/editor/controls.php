@@ -20,16 +20,4 @@ $sidebar = new Settings;
 	</div>
 	<div class="hu-fade-border"></div>
 	<?php echo $sidebar->renderBuilderControlBoard(); ?>
-	<div class="hu-fieldset-contents">
-		<form id="hu-style-form" action="index.php">
-			<?php echo $sidebar->renderFieldsetContents(); ?>
-
-			<!-- meta hidden values  -->
-			<input type="hidden" name="id" value="<?php echo $style->id; ?>">
-			<input type="hidden" name="template" value="<?php echo $style->template; ?>">
-			<input type="hidden" name="client_id" value="<?php echo $style->client_id; ?>">
-			<input type="hidden" name="home" value="<?php echo $style->home; ?>">
-			<input type="hidden" name="title" value="<?php echo $style->title; ?>">
-		</form>
-	</div>
 </div>

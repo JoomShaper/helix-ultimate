@@ -27,7 +27,7 @@ class HelixultimateFieldCheckbox
 	public static function getInput($key, $attr)
 	{
 
-		$output   = '<div class="control-group">';
+		$output   = '<div class="control-group hu-style-switcher">';
 		$output  .= '<div class="checkbox clearfix">';
 		$output  .= '<label class="control-label">' . $attr['title'];
 

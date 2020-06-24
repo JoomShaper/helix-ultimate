@@ -1124,12 +1124,12 @@ jQuery(function ($) {
 		});
 	});
 
-	/* inline group buttons groups */
+	/* Switcher action */
 	$('.hu-switcher .hu-action-group [hu-switcher-action]').on(
 		'click',
 		function (e) {
 			let value = $(this).data('value');
-			$(this).parent().find('[hu-switcher-action]').removeClass('active');
+			$(this).siblings().removeClass('active');
 			$(this).addClass('active');
 			let $input = $(this)
 				.closest('.hu-switcher')

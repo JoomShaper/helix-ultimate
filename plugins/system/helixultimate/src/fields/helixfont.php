@@ -107,10 +107,8 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Start Fonts List row
 		 */
-		$html .= '<div class="row">';
-		$html .= '<div class="col-12 hu-webfont-family">';
+		$html .= '<div class="hu-webfont-family hu-mb-2">';
 		$html .= $this->renderFontsList($systemFonts, $value, $items);
-		$html .= '</div>';
 		$html .= '</div>';
 
 		/**
@@ -121,21 +119,21 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Start Font Weight
 		 */
-		$html .= '<div class="col-6">';
+		$html .= '<div class="col-6 hu-mb-2">';
 		$html .= $this->renderFontWeight($fontWeights, $value);
 		$html .= '</div>';
 
 		/**
 		 * Start Font Size
 		 */
-		$html .= '<div class="col-3">';
+		$html .= '<div class="col-3 hu-mb-2">';
 		$html .= $this->renderFontSize($value);
 		$html .= '</div>';
 
 		/**
 		 * Start Font Color
 		 */
-		$html .= '<div class="col-3">';
+		$html .= '<div class="col-3 hu-mb-2">';
 		$html .= $this->renderFontColor($value);
 		$html .= '</div>';
 
@@ -149,21 +147,21 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Font subset section
 		 */
-		$html .= '<div class="col-6">';
+		$html .= '<div class="col-6 hu-mb-2">';
 		$html .= $this->renderFontSubset($systemFonts, $font, $value);
 		$html .= '</div>';
 
 		/**
 		 * Set line height
 		 */
-		$html .= '<div class="col-3">';
+		$html .= '<div class="col-3 hu-mb-2">';
 		$html .= $this->renderLineHeight($value);
 		$html .= '</div>';
 
 		/**
 		 * Set Letter Spacing
 		 */
-		$html .= '<div class="col-3">';
+		$html .= '<div class="col-3 hu-mb-2">';
 		$html .= $this->renderLetterSpacing($value);
 		$html .= '</div>';
 
@@ -177,14 +175,14 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Text Decoration
 		 */
-		$html .= '<div class="col-6">';
+		$html .= '<div class="col-6 hu-mb-2">';
 		$html .= $this->renderTextDecoration($value);
 		$html .= '</div>';
 
 		/**
 		 * Font Alignment
 		 */
-		$html .= '<div class="col-6">';
+		$html .= '<div class="col-6 hu-mb-2">';
 		$html .= $this->renderFontAlignment($value);
 		$html .= '</div>';
 
@@ -242,7 +240,7 @@ class JFormFieldHelixfont extends FormField
 	private function renderFontsList($systemFonts, $value, $items)
 	{
 		$html = '';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_FAMILY') . '</small></label>';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_FAMILY') . '</label>';
 		$html .= '<select class="hu-webfont-list">';
 		$html .= '<optgroup label="' . Text::_('HELIX_ULTIMATE_SYSTEM_FONT') . '">';
 
@@ -271,7 +269,7 @@ class JFormFieldHelixfont extends FormField
 	{
 		$html = '';
 		$html .= '<div class="hu-webfont-weight">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_WEIGHT') . '</small></label>';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_WEIGHT') . '</label>';
 		$html .= '<select class="hu-webfont-weight-list">';
 		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
 
@@ -301,7 +299,7 @@ class JFormFieldHelixfont extends FormField
 		$fontSize_sm = (isset($value->fontSize_sm)) ? $value->fontSize_sm : '';
 		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
 		$html .= '<div class="hu-webfont-size">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</small></label>';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</label>';
 		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6">';
 		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6">';
 		$html .= '<input type="number" value="' . $fontSize_xs . '" class="hu-webfont-size-input-xs" min="6">';
@@ -315,9 +313,9 @@ class JFormFieldHelixfont extends FormField
 		$color = !empty($value->fontColor) ? $value->fontColor : '#000000';
 		$html = '';
 		$html .= '<div class="hu-font-color">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_COLOR') . '</small></label>';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_COLOR') . '</label>';
 		// $html .= '<span class="hu-color-preview" style="background: ' . $color . '"></span>';
-		// $html .= '<small class="hu-color-code" style="color: ' . $color . '">' . str_replace('#', '', $color) . '</small>';
+		// $html .= '<small class="hu-color-code" style="color: ' . $color . '">' . str_replace('#', '', $color) . '';
 		$html .= '<input type="color" class="hu-font-color-input" value="' . $color . '"/>';
 		$html .= '</div>';
 
@@ -327,7 +325,7 @@ class JFormFieldHelixfont extends FormField
 	private function renderFontSubset($systemFonts, $font, $value)
 	{
 		$html = '';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_SUBSET') . '</small></label>';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_SUBSET') . '</label>';
 		$html .= '<select class="hu-webfont-subset-list">';
 		$html .= '<option value="">' . Text::_('HELIX_ULTIMATE_SELECT') . '</option>';
 
@@ -349,7 +347,7 @@ class JFormFieldHelixfont extends FormField
 		$height = !empty($value->fontLineHeight) ? $value->fontLineHeight : '';
 		$html = '';
 		$html .= '<div class="hu-font-line-height">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_LINE_HEIGHT') . '</small></label>';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_LINE_HEIGHT') . '</label>';
 		$html .= '<input type="text" class="hu-font-line-height-input" value="' . $height . '" />';
 		$html .= '</div>';
 
@@ -361,7 +359,7 @@ class JFormFieldHelixfont extends FormField
 		$spacing = !empty($value->fontLetterSpacing) ? $value->fontLetterSpacing : '';
 		$html = '';
 		$html .= '<div class="hu-font-letter-spacing">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_LETTER_SPACING') . '</small></label>';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_LETTER_SPACING') . '</label>';
 		$html .= '<input type="text" class="hu-font-letter-spacing-input" value="' . $spacing . '" />';
 		$html .= '</div>';
 
@@ -374,24 +372,28 @@ class JFormFieldHelixfont extends FormField
 
 		$html = '';
 		$html .= '<div class="hu-font-decoration">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_DECORATION') . '</small></label>';
-		$html .= '<div class="hu-btn-group">';
-		$html .= '<button type="button" value="none" class="hu-btn ' . ($decoration === 'none' ? 'active' : '') . '">';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_DECORATION') . '</label>';
+		
+		$html .= '<div class="hu-switcher hu-switcher-inline hu-switcher-style-tab hu-switcher-style-tab-sm">';
+		$html .= '<div class="hu-action-group">';
+		$html .= '<span data-value="none" class="hu-switcher-action ' . ($decoration === 'none' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-times"></span>';
-		$html .= '</button>';
+		$html .= '</span>';
 
-		$html .= '<button type="button" value="underline" class="hu-btn ' . ($decoration === 'underline' ? 'active' : '') . '">';
+		$html .= '<span data-value="underline" class="hu-switcher-action ' . ($decoration === 'underline' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-underline"></span>';
-		$html .= '</button>';
+		$html .= '</span>';
 
-		$html .= '<button type="button" value="line-through" class="hu-btn ' . ($decoration === 'strikethrough' ? 'active' : '') . '">';
+		$html .= '<span data-value="line-through" class="hu-switcher-action ' . ($decoration === 'strikethrough' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-strikethrough"></span>';
-		$html .= '</button>';
+		$html .= '</span>';
 
-		$html .= '<button type="button" value="overline" class="hu-btn ' . ($decoration === 'overline' ? 'active' : '') . '">';
+		$html .= '<span data-value="overline" class="hu-switcher-action ' . ($decoration === 'overline' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-overline">O</span>';
-		$html .= '</button>';
+		$html .= '</span>';
 		$html .= '</div>';
+		$html .= '</div>';
+
 		$html .= '<input type="hidden" class="hu-text-decoration" value="' . $decoration . '" />';
 		$html .= '</div>';
 
@@ -404,23 +406,27 @@ class JFormFieldHelixfont extends FormField
 
 		$html = '';
 		$html .= '<div class="hu-font-alignment">';
-		$html .= '<label><small>' . Text::_('HELIX_ULTIMATE_FONT_ALIGNMENT') . '</small></label>';
-		$html .= '<div class="hu-btn-group">';
-		$html .= '<button type="button" value="left" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_ALIGNMENT') . '</label>';
+		$html .= '<div class="hu-switcher hu-switcher-inline hu-switcher-style-tab hu-switcher-style-tab-sm">';
+
+		$html .= '<div class="hu-action-group">';
+		$html .= '<span data-value="left" class="hu-switcher-action ' . ($alignment === 'left' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-align-left"></span>';
-		$html .= '</button>';
+		$html .= '</span>';
 
-		$html .= '<button type="button" value="center" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<span data-value="center" class="hu-switcher-action ' . ($alignment === 'left' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-align-center"></span>';
-		$html .= '</button>';
+		$html .= '</span>';
 
-		$html .= '<button type="button" value="right" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<span data-value="right" class="hu-switcher-action ' . ($alignment === 'left' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-align-right"></span>';
-		$html .= '</button>';
+		$html .= '</span>';
 
-		$html .= '<button type="button" value="justify" class="hu-btn ' . ($alignment === 'left' ? 'active' : '') . '">';
+		$html .= '<span data-value="justify" class="hu-switcher-action ' . ($alignment === 'left' ? 'active' : '') . '" role="button">';
 		$html .= '<span class="fas fa-align-justify"></span>';
-		$html .= '</button>';
+		$html .= '</span>';
+		$html .= '</div>';
+
 		$html .= '</div>';
 		$html .= '<input type="hidden" class="hu-text-align" value="' . $alignment . '" />';
 		$html .= '</div>';

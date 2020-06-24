@@ -1699,7 +1699,6 @@ input[type='button'].hu-btn-block {
 	display: inline-block;
 }
 
-
 .hu-switcher-style-tab .hu-action-group {
 	padding: 2px;
 	background: #F1F6FC;
@@ -1739,10 +1738,14 @@ input[type='button'].hu-btn-block {
 	fill: rgba(var(--dark), 0.5);
 }
 
-/* .hu-btn-group .hu-btn {
-	padding: 3px;
+.hu-switcher-style-tab-sm .hu-switcher-action {
+	padding: 5px 7px;
 	min-width: 20px;
-} */
+}
+
+.hu-switcher-style-tab.hu-switcher-inline {
+	display: inline-block;
+}
 
 .hu-switcher-style-tab .hu-switcher-action.active {
 	color: rgb(var(--primary));
@@ -3188,33 +3191,8 @@ select:focus::-ms-value {
 }
 
 /*Webfonts*/
-.hu-webfont-family,
-.hu-webfont-size,
-.hu-webfont-weight,
-.hu-webfont-style {
-	margin-bottom: 10px;
-}
 .hu-webfont-size {
 	position: relative;
-}
-.hu-webfont-size .helix-responsive-devices {
-	position: absolute;
-	right: 10px;
-	top: 8px;
-	margin-right: -7px;
-}
-.hu-webfont-size .helix-responsive-devices span {
-	cursor: pointer;
-	font-size: 14px;
-	height: 15px;
-	width: 15px;
-	text-align: center;
-}
-.hu-webfont-size .helix-responsive-devices span.fa-laptop {
-	margin-right: 3px;
-}
-.hu-webfont-size .helix-responsive-devices span.active {
-	color: #007bff;
 }
 .hu-webfont-size .hu-webfont-size-input,
 .hu-webfont-size .hu-webfont-size-input-sm,

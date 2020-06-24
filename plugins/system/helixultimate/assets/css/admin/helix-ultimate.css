@@ -1715,6 +1715,7 @@ input[type='button'].hu-btn-block {
 	padding: 2px;
 	background: #f1f6fc;
 	box-shadow: inset -6px -6px 10px #ffffff, inset 6px 6px 10px #d3d9e7;
+	border: 1px solid #EEF2F8;
 	border-radius: 5px;
 }
 
@@ -3023,6 +3024,10 @@ select:focus::-ms-value {
 	-webkit-transform: translateY(-50%) rotate(90deg);
 }
 
+.hu-options-modal .control-group label {
+	margin-bottom: 10px;
+}
+
 .hu-options-modal .control-group-checkbox .control-label {
 	display: block;
 	margin: 0;
@@ -3205,9 +3210,6 @@ select:focus::-ms-value {
 .hu-webfont-size .hu-webfont-size-input-xs.active {
 	display: block;
 }
-.hu-webfont-preview {
-	margin: 15px 0 0;
-}
 
 .font-update-success,
 .font-update-failed {
@@ -3240,11 +3242,7 @@ select:focus::-ms-value {
 	color: rgba(var(--dark));
 	background-image: none;
 	background-clip: padding-box;
-	background: linear-gradient(
-		180deg,
-		#ffffff 0%,
-		rgba(255, 255, 255, 0) 100%
-	);
+	background: linear-gradient(180deg, #FFFFFF 0%, #EAEDEF 100%);
 	border: 1px solid rgba(121, 127, 167, 0.3);
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;
@@ -3504,9 +3502,30 @@ input[type='color'] {
 	background: #fff;
 	border-radius: 5px;
 	box-shadow: 0px 1px 1px 0px #bfbdbd;
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 15px;
+}
+
+.hu-typography-wrapper > div {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.hu-typography-wrapper .hu-is-header {
+	padding: 10px 15px 0px 15px;
+}
+
+.hu-typography-wrapper .hu-is-header .control-group-checkbox {
 	margin-bottom: 10px;
 }
 
-.hu-typography-wrapper .is-header {
-	padding: 10px 10px 0px 10px;
+.hu-typography-wrapper .hu-field-webfont {
+	padding: 15px 15px 0 15px;
+}
+
+.hu-webfont-preview-wrapper{
+	margin: -10px -15px 10px;
+	padding: 15px;
+	background: rgba(51, 102, 255, 0.15);
 }

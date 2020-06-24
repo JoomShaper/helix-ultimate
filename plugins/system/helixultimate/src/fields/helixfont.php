@@ -100,8 +100,8 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Preview Row
 		 */
-		$html .= '<div class="row preview-row">';
-		$html .= '<p class="hu-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</p>';
+		$html .= '<div class="hu-webfont-preview-wrapper">';
+		$html .= '<div class="hu-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</div>';
 		$html .= '</div>';
 
 		/**
@@ -300,9 +300,9 @@ class JFormFieldHelixfont extends FormField
 		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
 		$html .= '<div class="hu-webfont-size">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</label>';
-		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6">';
-		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6">';
-		$html .= '<input type="number" value="' . $fontSize_xs . '" class="hu-webfont-size-input-xs" min="6">';
+		$html .= '<input type="number" value="' . $fontSize . '" class="hu-webfont-size-input active" min="6" max="200">';
+		$html .= '<input type="number" value="' . $fontSize_sm . '" class="hu-webfont-size-input-sm" min="6" max="200">';
+		$html .= '<input type="number" value="' . $fontSize_xs . '" class="hu-webfont-size-input-xs" min="6" max="200">';
 		$html .= '</div>';
 
 		return $html;
@@ -348,7 +348,7 @@ class JFormFieldHelixfont extends FormField
 		$html = '';
 		$html .= '<div class="hu-font-line-height">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_LINE_HEIGHT') . '</label>';
-		$html .= '<input type="text" class="hu-font-line-height-input" value="' . $height . '" />';
+		$html .= '<input type="number" class="hu-font-line-height-input" min="1" max="200" value="' . $height . '" />';
 		$html .= '</div>';
 
 		return $html;

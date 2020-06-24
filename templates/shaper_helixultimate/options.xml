@@ -1019,7 +1019,7 @@
 		<!-- helixgroup="body_font"  -->
 		<field name="enable_body_font" 
 			helixsubgroup="body_font"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="1" 
@@ -1035,7 +1035,7 @@
 <!-- helixgroup="heading_font"  -->
 		<field name="enable_h1_font" 
 			helixsubgroup="heading_font_h1"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="1" 
@@ -1050,7 +1050,7 @@
 
 		<field name="enable_h2_font" 
 			helixsubgroup="heading_font_h2"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="1" 
@@ -1065,7 +1065,7 @@
 
 		<field name="enable_h3_font" 
 			helixsubgroup="heading_font_h3"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="1" 
@@ -1080,7 +1080,7 @@
 
 		<field name="enable_h4_font"
 			helixsubgroup="heading_font_h4"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="1" 
@@ -1095,7 +1095,7 @@
 
 		<field name="enable_h5_font"
 			helixsubgroup="heading_font_h5"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper" 
 			type="checkbox" 
 			default="1" 
@@ -1110,7 +1110,7 @@
 
 		<field name="enable_h6_font"
 			helixsubgroup="heading_font_h6"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="1" 
@@ -1125,7 +1125,7 @@
 
 		<field name="enable_navigation_font"
 			helixsubgroup="font_navigation"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="0" 
@@ -1139,7 +1139,7 @@
 
 		<field name="enable_custom_font"
 			helixsubgroup="font_custom"
-			subclasses="col-12 is-header"
+			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
 			default="0" 
@@ -1157,21 +1157,6 @@
 			label="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS" 
 			description="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS_DESC" 
 			showon="enable_custom_font:1" />
-
-		<field name="gfont_api" 
-			type="text" 
-			class="parent" 
-			helixgroup="update_font" 
-			label="HELIX_ULTIMATE_GFONT_API" 
-			description="HELIX_ULTIMATE_GFONT_API_DESC" />
-		<field name="update_fonts" 
-			type="helixbutton" 
-			helixgroup="update_font" 
-			url="#" 
-			text="HELIX_ULTIMATE_UPDATE_FONTS_CLICK" 
-			hideLabel="true" 
-			description="HELIX_ULTIMATE_UPDATE_FONT_LIST_DESC" 
-			class="btn-primary btn-update-helix-ultimate-fonts" />
 	</fieldset>
 
 	<!--Blog-->

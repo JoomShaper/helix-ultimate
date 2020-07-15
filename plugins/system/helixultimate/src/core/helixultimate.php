@@ -1067,7 +1067,9 @@ class HelixUltimate
 						$fontUrl .= '&amp;subset=' . $font->fontSubset;
 					}
 
-					$this->doc->addStylesheet($fontUrl);
+					$fontUrl .= '&amp;display=swap';
+
+					$this->doc->addStylesheet($fontUrl, ['version' => 'auto'], ['media' => 'none', 'onload' => 'media="all"']);
 				}
 
 				$fontCSS = $key . "{";
@@ -1358,9 +1360,6 @@ class HelixUltimate
 				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . $fileMd5 . '.js',
 				[
 					'version' => $versionHashes['critical']
-				],
-				[
-					'defer' => false
 				]
 			);
 		}
@@ -1614,7 +1613,7 @@ class HelixUltimate
 		$minifiedCode    = '';
 		$md5sum          = '';
 
-		$criticalCssRegex = "#(bootstrap.*|template|font-awesome.*|preset.*)\.css#";
+		$criticalCssRegex = "#(preset.*|font-awesome.*)\.css#";
 		$criticalCssHash = '';
 		$criticalCssCode = '';
 

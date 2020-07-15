@@ -10,6 +10,24 @@ jQuery(function ($) {
 
 	var settings = Joomla.getOptions('data') || {};
 	let meta = Joomla.getOptions('meta') || {};
+	const storage = localStorage || window.localStorage;
+
+	/**
+	 * Positioning the toolbar of its previous location.
+	 */
+	let position = storage.getItem('toolbarPosition') || {};
+	position =
+		typeof position === 'string' && position.length > 0
+			? JSON.parse(position)
+			: false;
+
+	if (position) {
+		$('.hu-options-core').css({
+			left: position.left + 'px',
+			top: position.top + 'px',
+		});
+	}
+	$('.hu-options-core').show();
 
 	var MutationObserver =
 		window.MutationObserver ||
@@ -630,6 +648,7 @@ jQuery(function ($) {
 		handle: '.hu-panel-handle',
 		containment: '#helix-ultimate',
 		drag: function (event, ui) {
+			storage.setItem('toolbarPosition', JSON.stringify(ui.position));
 			panelPositioning();
 		},
 	});

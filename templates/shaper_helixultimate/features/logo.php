@@ -95,6 +95,8 @@ class HelixUltimateFeatureLogo
 
 		if ($this->params->get('logo_type') === 'image')
 		{
+			$altText = $this->params->get('logo_alt', $sitename);	
+
 			if ($this->params->get('logo_image'))
 			{
 				$html .= '<div class="logo">';
@@ -118,7 +120,7 @@ class HelixUltimateFeatureLogo
 				<img class='logo-image {$custom_logo_class}'
 					srcset='{$srcset}'
 					src='{$defaultLogo}'
-					alt='{$sitename}'
+					alt='{$altText}'
 				/>
 				";
 
@@ -126,7 +128,8 @@ class HelixUltimateFeatureLogo
 
 				if ($this->params->get('mobile_logo'))
 				{
-					$html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' . $this->params->get('mobile_logo') . '" alt="' . $sitename . '" />';
+					$html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' .
+						$this->params->get('mobile_logo') . '" alt="' . $altText . '" />';
 				}
 
 				$html .= '</a>';
@@ -138,23 +141,25 @@ class HelixUltimateFeatureLogo
 				$html .= '<div class="logo">';
 				$html .= '<a href="' . Uri::base(true) . '/">';
 
-				$html .= '<img class="logo-image' . $custom_logo_class . '" src="' . Uri::base(true) . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.svg" alt="' . $sitename . '" />';
+				$html .= '<img class="logo-image' . $custom_logo_class .
+					'" src="' . Uri::base(true) . '/templates/' .
+					$template_name . '/images/presets/' . $preset . '/logo.svg" alt="' . $altText . '" />';
 
 				if ($this->params->get('mobile_logo'))
 				{
-					$html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' . $this->params->get('mobile_logo') . '" alt="' . $sitename . '" />';
+					$html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' . $this->params->get('mobile_logo') . '" alt="' . $altText . '" />';
 				}
 
 				$html .= '</a>';
 				$html .= '</div>';
 			}
 
-			if($logo_height = $this->params->get('logo_height'))
+			if ($logo_height = $this->params->get('logo_height'))
 			{
 				$logoStyle = '.logo-image {height:' . $logo_height . 'px;}';
 				$logoStyle .= '.logo-image-phone {height:' . $logo_height . 'px;}';
 
-				$doc->addStyledeclaration($logoStyle);
+				$doc->addStyleDeclaration($logoStyle);
 			}
 		}
 		else

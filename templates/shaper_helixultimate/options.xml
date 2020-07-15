@@ -42,6 +42,13 @@
 			description="HELIX_ULTIMATE_MOBILE_LOGO_DESC" 
 			separator="true"
 			showon="logo_type:image[AND]logo_image!:" />
+		
+		<field name="logo_alt"
+			helixgroup="logo"
+			type="text"
+			label="HELIX_ULTIMATE_LOGO_ALT_TEXT"
+			description="HELIX_ULTIMATE_LOGO_ALT_TEXT_DESC"
+			showon="logo_type:image" />
 
 		<field name="logo_height" 
 			helixgroup="logo" 

@@ -2327,6 +2327,7 @@ select:focus::-ms-value {
 	top: 100px;
 	left: 40px;
 	z-index: 999;
+	display: none;
 }
 
 .hu-panel-handle {
@@ -3225,7 +3226,6 @@ select:focus::-ms-value {
 .hu-options-modal .hu-preset-container label {
 	margin-bottom: 0;
 }
-
 
 /*Webfonts*/
 .hu-webfont-size {

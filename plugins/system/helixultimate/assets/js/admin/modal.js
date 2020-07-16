@@ -71,12 +71,9 @@ jQuery(function ($) {
 			options
 		);
 
-		$(
-			'.hu-options-modal-overlay, .hu-options-modal'
-		).remove();
+		$('.hu-options-modal-overlay, .hu-options-modal').remove();
 
-		var optionsModal =
-			'<div class="hu-options-modal-overlay"></div>';
+		var optionsModal = '<div class="hu-options-modal-overlay"></div>';
 		optionsModal +=
 			'<div class="hu-options-modal ' +
 			options.class +
@@ -111,8 +108,6 @@ jQuery(function ($) {
 
 		optionsModal += '</div>';
 
-		$('body')
-			.addClass('hu-options-modal-open')
-			.append(optionsModal);
+		$('body').addClass('hu-options-modal-open').append(optionsModal);
 	};
 });

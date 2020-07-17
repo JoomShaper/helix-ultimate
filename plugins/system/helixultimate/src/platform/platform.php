@@ -224,6 +224,7 @@ class Platform
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/modal.css');
 		$doc->addStyleSheet(Uri::root(true) . '/templates/shaper_helixultimate/css/font-awesome.min.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/devices-field.css');
+		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/menu-builder.css');
 
 		$doc->addScript($helix_plg_url . '/assets/js/admin/helix-ultimate.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
@@ -233,6 +234,7 @@ class Platform
 		$doc->addScript($helix_plg_url . '/assets/js/admin/media.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/devices-field.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/presets.js');
+		$doc->addScript($helix_plg_url . '/assets/js/admin/menu-builder.js');
 
 		/**
 		 * Push the platform contents inside

@@ -15,19 +15,40 @@ jQuery(function ($) {
 	/**
 	 * Positioning the toolbar of its previous location.
 	 */
-	let position = storage.getItem('toolbarPosition') || {};
-	position =
-		typeof position === 'string' && position.length > 0
-			? JSON.parse(position)
-			: false;
+	const initialToolbarPosition = () => {
+		let position = storage.getItem('toolbarPosition') || {};
+		position =
+			typeof position === 'string' && position.length > 0
+				? JSON.parse(position)
+				: false;
 
-	if (position) {
-		$('.hu-options-core').css({
-			left: position.left + 'px',
-			top: position.top + 'px',
-		});
-	}
-	$('.hu-options-core').show();
+		let $huContainer = $('.hu-container'),
+			$huSidebar = $('#hu-options-panel'),
+			containerWidth = $huContainer.width(),
+			sidebarWidth = $huSidebar.width(),
+			gap = 20;
+
+		if (position.left + sidebarWidth > containerWidth) {
+			position.left = containerWidth - sidebarWidth - gap;
+		} else if (position.left < 0) {
+			position.left = gap;
+		}
+
+		if (position) {
+			$('.hu-options-core').css({
+				left: position.left + 'px',
+				top: position.top + 'px',
+			});
+		}
+		$('.hu-options-core').show();
+	};
+
+	/**
+	 * Listen the resize event and re positioning the toolbar from
+	 * storage position.
+	 */
+	initialToolbarPosition();
+	window.addEventListener('resize', initialToolbarPosition);
 
 	var MutationObserver =
 		window.MutationObserver ||

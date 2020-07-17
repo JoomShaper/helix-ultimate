@@ -1,0 +1,42 @@
+.hu-menu-builder .hu-menu-items-container {
+	border: 1px solid #12121229;
+	border-radius: 5px;
+}
+
+.hu-menu-builder .hu-menu-item-modifiers {
+	padding: 15px;
+}
+
+.hu-menu-builder .hu-menu-items {
+	list-style: none;
+	display: flex;
+	padding: 10px 15px;
+	margin: 0;
+	width: 100%;
+	flex-wrap: wrap;
+	background: #ffffff;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+
+.hu-menu-items li.hu-menu-item {
+	cursor: pointer;
+	padding: 5px 10px;
+	transition: all 0.2s cubic-bezier(0.25, 0.25, 0.25, 1.25);
+}
+
+.hu-menu-items li.hu-menu-item:hover {
+	background: #222;
+	color: #ffffff;
+	border-radius: 30px;
+}
+
+.hu-menu-items li.hu-menu-item.active {
+	background: #222;
+	color: #ffffff;
+	border-radius: 30px;
+}
+
+.hu-menu-items li.hu-menu-item:not(:last-child) {
+	margin-right: 15px;
+}

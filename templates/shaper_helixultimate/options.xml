@@ -974,6 +974,12 @@
 			helixgroup="megamenu" 
 			default="mainmenu" 
 			label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
+		
+		<field name="menu_builder"
+			type="helixmenubuilder"
+			helixgroup="megamenu"
+			label="Menu Builder" />
+
 		<field name="menu_type" 
 			helixgroup="megamenu" 
 			type="list" 

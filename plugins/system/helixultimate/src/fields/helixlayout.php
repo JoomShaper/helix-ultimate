@@ -55,10 +55,10 @@ class JFormFieldHelixlayout extends FormField
 			$rows = json_decode($value->layout);
 		}
 
-		$htmls = $this->generateLayout($helix_layout_path, $rows);
-		$htmls .= '<input type="hidden" id="' . $this->id . '" name="' . $this->name . '">';
+		$html = $this->generateLayout($helix_layout_path, $rows);
+		$html .= '<input type="hidden" id="' . $this->id . '" name="' . $this->name . '">';
 
-		return $htmls;
+		return $html;
 	}
 
 	/**

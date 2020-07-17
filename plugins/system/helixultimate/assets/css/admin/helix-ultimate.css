@@ -2251,6 +2251,10 @@ select:focus::-ms-value {
 	width: 420px;
 }
 
+.hu-edit-panel.menu-panel {
+	width: 620px;
+}
+
 .hu-edit-panel .hu-groups-container {
 	height: 525px;
 	overflow-y: auto;

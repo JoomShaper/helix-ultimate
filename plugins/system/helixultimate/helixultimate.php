@@ -36,6 +36,7 @@ use Joomla\Registry\Registry;
 
 // Constant definition
 define('HELIX_LAYOUTS_PATH', JPATH_PLUGINS . '/system/helixultimate/layouts');
+define('HELIX_LAYOUT_PATH', JPATH_PLUGINS . '/system/helixultimate/layout');
 
 /**
  * Class for System Plugin HelixUltimate.

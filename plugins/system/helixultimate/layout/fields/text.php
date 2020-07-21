@@ -27,7 +27,6 @@ class HelixultimateFieldText
 	public static function getInput($key, $attr)
 	{
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
-
 		$attributes = (isset($attr['placeholder']) && $attr['placeholder']) ? 'placeholder="' . $attr['placeholder'] . '"' : '';
 
 		if ($isMenuBuilder)

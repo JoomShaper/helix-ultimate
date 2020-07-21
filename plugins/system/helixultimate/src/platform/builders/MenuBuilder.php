@@ -147,6 +147,8 @@ class MenuBuilder
 				->from($db->quoteName('#__menu'))
 				->where($conditions);
 
+			$query->order($db->quoteName('lft') . ' ASC');
+
 			$db->setQuery($query);
 
 			$menuItems = $db->loadObjectList();

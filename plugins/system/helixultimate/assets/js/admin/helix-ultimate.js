@@ -64,6 +64,8 @@ jQuery(function ($) {
 		$previewFrame.contentWindow.location.reload();
 	}
 
+	Joomla.reloadPreview = reloadPreview;
+
 	$previewFrame.addEventListener('load', function () {
 		Joomla.helixLoading(false);
 		let iDocument = $previewFrame.contentWindow.document;

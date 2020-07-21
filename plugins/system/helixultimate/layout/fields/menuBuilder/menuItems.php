@@ -24,7 +24,14 @@ $builder = new MenuBuilder($params->get('menu', 'mainmenu'));
 		<ul class="hu-menu-items">
 			<?php if (!empty($items)): ?>
 				<?php foreach ($items as $key => $item): ?>
-					<li class="hu-menu-item <?php echo $key === 0 ? 'active' : ''; ?>" data-name="<?php echo $item->alias; ?>"><?php echo $item->title; ?></li>
+					<li
+						class="hu-menu-item <?php echo $key === 0 ? 'active' : ''; ?>"
+						data-name="<?php echo $item->alias; ?>"
+						data-cid="<?php echo $item->id; ?>"
+						title="<?php echo $item->title; ?>"
+					>
+							<?php echo $item->title; ?>
+					</li>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</ul>

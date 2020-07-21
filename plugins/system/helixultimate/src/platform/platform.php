@@ -226,6 +226,7 @@ class Platform
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/devices-field.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/menu-builder.css');
 
+		$doc->addScript($helix_plg_url . '/assets/js/admin/fields.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/helix-ultimate.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/webfont.js');

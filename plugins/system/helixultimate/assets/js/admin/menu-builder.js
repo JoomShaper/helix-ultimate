@@ -1,4 +1,6 @@
 jQuery(function ($) {
+	const config = Joomla.getOptions('meta') || {};
+
 	/**
 	 * Activating the menu item sorting
 	 */
@@ -7,8 +9,23 @@ jQuery(function ($) {
 			containment: '.hu-menu-items-wrapper',
 			cursor: 'move',
 			opacity: 0.6,
+			scroll: true,
 			axis: 'x',
 			tolerance: 'pointer',
+			update: (event, ui) => {
+				const $items = $('.hu-menu-items > li');
+				const data = {
+					cid: [],
+					order: [],
+				};
+
+				$items.each(function (index, el) {
+					data.cid.push($(el).data('cid'));
+					data.order.push(index + 1);
+				});
+
+				saveMenuOrder(data);
+			},
 		});
 
 		$('.hu-menu-items').disableSelection();
@@ -42,4 +59,26 @@ jQuery(function ($) {
 	};
 
 	handlingMenuItemSelection();
+
+	const saveMenuOrder = data => {
+		const url = `${config.base}/administrator/index.php?option=com_menus&view=items&task=items.saveOrderAjax&tmpl=component`;
+
+		$.ajax({
+			method: 'POST',
+			url,
+			data,
+			beforeSend: () => {
+				Joomla.helixLoading(true);
+			},
+			success: response => {
+				Joomla.reloadPreview();
+			},
+			error: err => {
+				alert(err);
+			},
+			completed: () => {
+				Joomla.helixLoading(false);
+			},
+		});
+	};
 });

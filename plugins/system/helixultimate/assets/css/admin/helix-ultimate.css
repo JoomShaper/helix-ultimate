@@ -1927,7 +1927,7 @@ select:focus::-ms-value {
 .control-group label {
 	font-size: 13px;
 	color: rgb(var(--dark));
-	margin: 0;
+	margin: 0 0 5px 0;
 }
 
 .hu-field-list > div:first-child {
@@ -2252,7 +2252,7 @@ select:focus::-ms-value {
 }
 
 .hu-edit-panel.menu-panel {
-	width: 620px;
+	width: 520px;
 }
 
 .hu-edit-panel .hu-groups-container {

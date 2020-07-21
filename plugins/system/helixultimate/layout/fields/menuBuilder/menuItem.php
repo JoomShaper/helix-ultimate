@@ -10,6 +10,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
@@ -32,6 +33,12 @@ $fields = [
 		'title' => Text::_('HELIX_ULTIMATE_MENU_CAPTION'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_CAPTION_PLACEHOLDER'),
 		'menu-builder' => true
+	],
+	'mega_menu' => [
+		'type' => 'checkbox',
+		'title' => Text::_('HELIX_ULTIMATE_ENABLE_MEGA_MENU'),
+		'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', $item->title),
+		'menu-builder' => true
 	]
 ];
 
@@ -47,6 +54,22 @@ $fields = [
 			</div>
 			<div class="col-4">
 				<?php echo $builder->renderFieldElement('caption', $fields['caption']); ?>
+			</div>
+		</div>
+	</div>
+
+	<div class="hu-mega-menu-settings">
+		<div class="row">
+			<div class="col-12">
+				<?php echo $builder->renderFieldElement('mega_menu', $fields['mega_menu']); ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<?php
+					$layout = new FileLayout('fields.menuBuilder.megaSettings', HELIX_LAYOUT_PATH);
+					echo $layout->render(['item' => $item, 'params' => $params, 'builder' => $builder]);
+				?>
 			</div>
 		</div>
 	</div>

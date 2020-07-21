@@ -1282,7 +1282,6 @@ class HelixUltimate
 						$md5sum .= md5($key);
 					}
 
-
 					/**
 					 * Check if an empty file is given for compression
 					 */

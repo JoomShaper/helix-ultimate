@@ -40,3 +40,12 @@
 .hu-menu-items li.hu-menu-item:not(:last-child) {
 	margin-right: 15px;
 }
+
+/** Menu Item settings */
+.hu-menu-item-settings {
+	display: none;
+}
+
+.hu-menu-item-settings.active {
+	display: block;
+}

@@ -10,6 +10,7 @@ namespace HelixUltimate\Framework\Platform\Builders;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Helper class for building menu
@@ -36,6 +37,43 @@ class MenuBuilder
 	public function __construct($menuType = 'mainmenu')
 	{
 		$this->menuType = $menuType;
+		$this->includeFields();
+	}
+
+	/**
+	 * Include fields
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public function includeFields()
+	{
+		$fields = Folder::files(HELIX_LAYOUT_PATH . '/fields', '\.php$', false, true);
+
+		if (!empty($fields))
+		{
+			foreach ($fields as $field)
+			{
+				require_once $field;
+			}
+		}
+	}
+
+	/**
+	 * Render field element
+	 *
+	 * @param	string	$key
+	 * @param	array	$attr
+	 *
+	 * @return	string	HTML string for the field element rendering
+	 * @since	2.0.0
+	 */
+	public function renderFieldElement($key, $attr)
+	{
+		return \call_user_func_array(
+			['HelixultimateField' . ucfirst($attr['type']), 'getInput'],
+			[$key, $attr]
+		);
 	}
 
 	/**

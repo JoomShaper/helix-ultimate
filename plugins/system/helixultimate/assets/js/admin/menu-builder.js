@@ -4,7 +4,7 @@ jQuery(function ($) {
 	 */
 	const activateMenuItemSorting = () => {
 		$('.hu-menu-items').sortable({
-			containment: '.hu-menu-items-container',
+			containment: '.hu-menu-items-wrapper',
 			cursor: 'move',
 			opacity: 0.6,
 			axis: 'x',
@@ -15,6 +15,11 @@ jQuery(function ($) {
 	};
 
 	activateMenuItemSorting();
+
+	const triggerMenuSettings = active => {
+		$('.hu-menu-item-settings').removeClass('active');
+		$(`.hu-menu-item-settings.hu-menu-item-${active}`).addClass('active');
+	};
 
 	/**
 	 * Handling the menu selection on click event
@@ -31,6 +36,8 @@ jQuery(function ($) {
 			if (!$(this).hasClass('active')) {
 				$(this).addClass('active');
 			}
+
+			triggerMenuSettings($(this).data('name'));
 		});
 	};
 

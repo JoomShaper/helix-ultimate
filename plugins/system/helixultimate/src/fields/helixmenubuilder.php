@@ -9,6 +9,7 @@
 defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Builders\MenuBuilder;
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Language\Text;
@@ -38,7 +39,10 @@ class JFormFieldHelixMenuBuilder extends FormField
 	 */
 	public function getInput()
 	{
-		$builder = new MenuBuilder('mainmenu');
+		$data = Helper::loadTemplateData();
+		$params = $data->params;
+
+		$builder = new MenuBuilder($params->get('menu', 'mainmenu'));
 		$items = $builder->getMenuItems();
 		$html = [];
 
@@ -47,7 +51,7 @@ class JFormFieldHelixMenuBuilder extends FormField
 		if (!empty($items))
 		{
 			$layout = new FileLayout('fields.menuBuilder.menuItems', HELIX_LAYOUT_PATH);
-			$html[] = $layout->render(['items' => $items]);
+			$html[] = $layout->render(['items' => $items, 'params' => $params]);
 		}
 
 		// End menu builder

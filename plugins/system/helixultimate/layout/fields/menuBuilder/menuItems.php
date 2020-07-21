@@ -8,35 +8,34 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Builders\MenuBuilder;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
+$builder = new MenuBuilder($params->get('menu', 'mainmenu'));
+
 ?>
 <div class="hu-menu-items-container">
-	<ul class="hu-menu-items">
-		<?php if (!empty($items)): ?>
-			<?php foreach ($items as $key => $item): ?>
-				<li class="hu-menu-item <?php echo $key === 0 ? 'active' : ''; ?>"><?php echo $item->title; ?></li>
-			<?php endforeach; ?>
-		<?php endif; ?>
-	</ul>
-
-	<div class="hu-menu-item-modifiers">
-		<div class="row">
-			<div class="col-4">
-				<label for="">Class</label>
-				<input type="text">
-			</div>
-			<div class="col-4">
-				<label for="">Icon</label>
-				<input type="text">
-			</div>
-			<div class="col-4">
-				<label for="">Caption</label>
-				<input type="text">
-			</div>
-		</div>
+	<div class="hu-menu-items-wrapper">
+		<ul class="hu-menu-items">
+			<?php if (!empty($items)): ?>
+				<?php foreach ($items as $key => $item): ?>
+					<li class="hu-menu-item <?php echo $key === 0 ? 'active' : ''; ?>" data-name="<?php echo $item->alias; ?>"><?php echo $item->title; ?></li>
+				<?php endforeach; ?>
+			<?php endif; ?>
+		</ul>
 	</div>
+
+	<?php if (!empty($items)): ?>
+		<?php foreach ($items as $key => $item): ?>
+			<?php
+				$layout = new FileLayout('fields.menuBuilder.menuItem', HELIX_LAYOUT_PATH);
+				echo $layout->render(['item' => $item, 'active' => ($key === 0),'params' => $params, 'builder' => $builder]);
+			?>
+		<?php endforeach ?>
+	<?php endif ?>
 </div>

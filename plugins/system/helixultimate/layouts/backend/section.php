@@ -11,50 +11,50 @@ defined('_JEXEC') or die();
 use Joomla\Utilities\ArrayHelper;
 
 $grids = array(
-    array(
-        '12',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="51" height="17" fill="none"><rect width="50.78" height="16.927" fill-opacity=".3" rx="2"/></svg>'
-    ),
-    array(
-        '6+6',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="23.79" height="16.221" fill-opacity=".3" rx="2"/><rect width="23.79" height="16.221" fill-opacity=".7" rx="2"/><rect width="23.79" height="16.221" x="25.681" fill-opacity=".3" rx="2"/></svg>'
-    ),
-    array(
-        '4+4+4',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="15.139" height="16.221" fill-opacity=".3" rx="2"/><rect width="15.139" height="16.221" x="17.302" fill-opacity=".3" rx="2"/><rect width="15.139" height="16.221" x="17.302" fill-opacity=".7" rx="2"/><rect width="15.139" height="16.221" x="34.605" fill-opacity=".3" rx="2"/></svg>'
-    ),
-    array(
-        '3+3+3+3',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="51" height="17" fill="none"><rect width="10.814" height="16.221" fill-opacity=".3" rx="2"/><rect width="10.814" height="16.221" x="12.974" fill-opacity=".3" rx="2"/><rect width="10.814" height="16.221" x="12.974" fill-opacity=".7" rx="2"/><rect width="10.814" height="16.221" x="25.95" fill-opacity=".3" rx="2"/><rect width="11.354" height="16.221" x="38.929" fill-opacity=".3" rx="2"/><rect width="11.354" height="16.221" x="38.929" fill-opacity=".7" rx="2"/></svg>'
-    ),
-    array(
-        '4+8',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="15.139" height="16.221" fill-opacity=".3" rx="2"/><rect width="33" height="16" x="17" fill-opacity=".3" rx="2"/><rect width="33" height="16" x="17" fill-opacity=".7" rx="2"/></svg>'
-    ),
-    array(
-        '3+9',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="10.814" height="16.221" fill-opacity=".7" rx="2"/><rect width="37" height="16" x="13" fill-opacity=".3" rx="2"/></svg>'
-    ),
-    array(
-        '3+6+3',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="10.543" height="16.221" fill-opacity=".3" rx="2"/><rect width="11.084" height="16.221" x="38.659" fill-opacity=".3" rx="2"/><rect width="23.79" height="16.221" x="12.704" fill-opacity=".7" rx="2"/></svg>'
-    ),
-    array(
-        '2+6+4',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="51" height="17" fill="none"><rect width="6.488" height="16.221" x=".143" fill-opacity=".7" rx="2"/><rect width="23.79" height="16.221" x="9" fill-opacity=".3" rx="2"/><rect width="15.139" height="16.221" x="35" fill-opacity=".7" rx="2"/></svg>'
-    ),
-    array(
-        '2+10',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="6.488" height="16.221" x=".143" fill-opacity=".3" rx="2"/><rect width="41" height="16" x="9" fill-opacity=".7" rx="2"/></svg>'
-    ),
-    array(
-        '5+7',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="28.927" height="16.221" x="20.653" fill-opacity=".7" rx="2"/><rect width="18.654" height="16.221" fill-opacity=".3" rx="2"/></svg>'
-    ),
-    array(
-        '2+3+7',
-        '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="6.488" height="16.221" x=".143" fill-opacity=".7" rx="2"/><rect width="10" height="16.221" x="8.7" fill-opacity=".3" rx="2"/><rect width="28.927" height="16.221" x="20.653" fill-opacity=".7" rx="2"/></svg>'
-    )
+	array(
+		'12',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="51" height="17" fill="none"><rect width="50.78" height="16.927" fill-opacity=".3" rx="2"/></svg>'
+	),
+	array(
+		'6+6',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="23.79" height="16.221" fill-opacity=".3" rx="2"/><rect width="23.79" height="16.221" fill-opacity=".7" rx="2"/><rect width="23.79" height="16.221" x="25.681" fill-opacity=".3" rx="2"/></svg>'
+	),
+	array(
+		'4+4+4',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="15.139" height="16.221" fill-opacity=".3" rx="2"/><rect width="15.139" height="16.221" x="17.302" fill-opacity=".3" rx="2"/><rect width="15.139" height="16.221" x="17.302" fill-opacity=".7" rx="2"/><rect width="15.139" height="16.221" x="34.605" fill-opacity=".3" rx="2"/></svg>'
+	),
+	array(
+		'3+3+3+3',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="51" height="17" fill="none"><rect width="10.814" height="16.221" fill-opacity=".3" rx="2"/><rect width="10.814" height="16.221" x="12.974" fill-opacity=".3" rx="2"/><rect width="10.814" height="16.221" x="12.974" fill-opacity=".7" rx="2"/><rect width="10.814" height="16.221" x="25.95" fill-opacity=".3" rx="2"/><rect width="11.354" height="16.221" x="38.929" fill-opacity=".3" rx="2"/><rect width="11.354" height="16.221" x="38.929" fill-opacity=".7" rx="2"/></svg>'
+	),
+	array(
+		'4+8',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="15.139" height="16.221" fill-opacity=".3" rx="2"/><rect width="33" height="16" x="17" fill-opacity=".3" rx="2"/><rect width="33" height="16" x="17" fill-opacity=".7" rx="2"/></svg>'
+	),
+	array(
+		'3+9',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="10.814" height="16.221" fill-opacity=".7" rx="2"/><rect width="37" height="16" x="13" fill-opacity=".3" rx="2"/></svg>'
+	),
+	array(
+		'3+6+3',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="10.543" height="16.221" fill-opacity=".3" rx="2"/><rect width="11.084" height="16.221" x="38.659" fill-opacity=".3" rx="2"/><rect width="23.79" height="16.221" x="12.704" fill-opacity=".7" rx="2"/></svg>'
+	),
+	array(
+		'2+6+4',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="51" height="17" fill="none"><rect width="6.488" height="16.221" x=".143" fill-opacity=".7" rx="2"/><rect width="23.79" height="16.221" x="9" fill-opacity=".3" rx="2"/><rect width="15.139" height="16.221" x="35" fill-opacity=".7" rx="2"/></svg>'
+	),
+	array(
+		'2+10',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="6.488" height="16.221" x=".143" fill-opacity=".3" rx="2"/><rect width="41" height="16" x="9" fill-opacity=".7" rx="2"/></svg>'
+	),
+	array(
+		'5+7',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="28.927" height="16.221" x="20.653" fill-opacity=".7" rx="2"/><rect width="18.654" height="16.221" fill-opacity=".3" rx="2"/></svg>'
+	),
+	array(
+		'2+3+7',
+		'<svg xmlns="http://www.w3.org/2000/svg" width="50" height="17" fill="none"><rect width="6.488" height="16.221" x=".143" fill-opacity=".7" rx="2"/><rect width="10" height="16.221" x="8.7" fill-opacity=".3" rx="2"/><rect width="28.927" height="16.221" x="20.653" fill-opacity=".7" rx="2"/></svg>'
+	)
 );
 
 $row = $displayData;
@@ -62,13 +62,14 @@ $row = $displayData;
 $rowSettings = '';
 if(isset($row->settings))
 {
-    $rowSettings = RowColumnSettings::getSettings($row->settings);
+	$rowSettings = RowColumnSettings::getSettings($row->settings);
 }
 
 $name = JText::_('HELIX_ULTIMATE_SECTION_TITLE');
+
 if (isset($row->settings->name))
 {
-    $name = $row->settings->name;
+	$name = $row->settings->name;
 }
 
 $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
@@ -90,24 +91,24 @@ $output .= '<div class="hu-column-list">';
 $output .= '<div class="row">';
 
 if(!isset($row->layout)){
-    $row->layout =  12;
+	$row->layout =  12;
 }
 
 $custom = true;
 
 foreach ($grids as $grid)
 {
-    $output .= '<div class="col-3">';
-    $output .= '<a href="#" class="hu-column-layout '.(($grid[0] == $row->layout)? 'active' : '' ).'" data-layout="'. $grid[0] .'">';
-    $output .= '<div class="hu-column-layout-preview">' . $grid[1]  . '</div>';
-    $output .= '<span class="hu-column-layout-name">' . $grid[0]  . '</span>';
-    $output .= '</a>';
-    $output .= '</div>';
+	$output .= '<div class="col-3">';
+	$output .= '<a href="#" class="hu-column-layout '.(($grid[0] == $row->layout)? 'active' : '' ).'" data-layout="'. $grid[0] .'">';
+	$output .= '<div class="hu-column-layout-preview">' . $grid[1]  . '</div>';
+	$output .= '<span class="hu-column-layout-name">' . $grid[0]  . '</span>';
+	$output .= '</a>';
+	$output .= '</div>';
 
-    if($grid[0] == $row->layout)
-    {
-        $custom = false;
-    }
+	if($grid[0] == $row->layout)
+	{
+		$custom = false;
+	}
 }
 
 $output .= '<div class="col-3">';
@@ -131,14 +132,14 @@ $output .= '<div class="row hu-layout-row" data-hu-layout-row>';
 
 if(isset($row->attr) && $row->attr)
 {
-    foreach ($row->attr as $column)
-    {
-        $output .= $layout_column->render($column->settings);
-    }
+	foreach ($row->attr as $column)
+	{
+		$output .= $layout_column->render($column->settings);
+	}
 }
 else
 {
-    $output .= $layout_column->render(new stdClass);
+	$output .= $layout_column->render(new stdClass);
 }
 
 $output .= '</div>';

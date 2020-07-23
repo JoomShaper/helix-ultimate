@@ -64,13 +64,9 @@ $fields = [
 				<?php echo $builder->renderFieldElement('mega_menu', $fields['mega_menu']); ?>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-12">
-				<?php
-					$layout = new FileLayout('fields.menuBuilder.megaSettings', HELIX_LAYOUT_PATH);
-					echo $layout->render(['item' => $item, 'params' => $params, 'builder' => $builder]);
-				?>
-			</div>
-		</div>
+		<?php
+			$layout = new FileLayout('fields.menuBuilder.megaSettings', HELIX_LAYOUT_PATH);
+			echo $layout->render(['item' => $item, 'active' => $active, 'params' => $params, 'builder' => $builder]);
+		?>
 	</div>
 </div>

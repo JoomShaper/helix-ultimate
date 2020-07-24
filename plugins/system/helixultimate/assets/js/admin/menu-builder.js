@@ -37,7 +37,7 @@ jQuery(function ($) {
 		$('#hu-megamenu-layout-container.active-layout').sortable({
 			placeholder: 'ui-state-highlight',
 			forcePlaceholderSize: true,
-			containment: '.hu-menu-builder',
+			containment: '.hu-mega-basic-settings',
 			handle: '.hu-megamenu-move-row',
 			cursor: 'move',
 			opacity: 1,
@@ -58,6 +58,8 @@ jQuery(function ($) {
 		$(`.hu-menu-item-settings.hu-menu-item-${active}`)
 			.find('#hu-megamenu-layout-container')
 			.addClass('active-layout');
+
+		makeMegamenuSectionSortable();
 	}
 
 	/**
@@ -67,10 +69,12 @@ jQuery(function ($) {
 		$(document).on('click', '.hu-megamenu-add-row', function (e) {
 			e.preventDefault();
 			const $parent = $(this).closest('.hu-megamenu-layout-section');
-			const $cloned = $('#hu-reserved-layout-section').clone(true);
+			const $cloned = $('#hu-megamenu-layout-container.active-layout')
+				.find('.hu-reserved-layout-section')
+				.clone(true);
 
 			$cloned
-				.removeAttr('id')
+				.removeClass('hu-reserved-layout-section')
 				.addClass('hu-megamenu-layout-section')
 				.hide();
 			$cloned.insertAfter($parent);
@@ -107,6 +111,15 @@ jQuery(function ($) {
 		});
 	}
 	deleteRow();
+
+	function toggleColumnOptions() {
+		$(document).on('click', '.hu-megamenu-add-columns', function (e) {
+			e.preventDefault();
+			const $colList = $(this).next('.hu-megamenu-column-list');
+			$colList.toggleClass('show');
+		});
+	}
+	toggleColumnOptions();
 
 	/**
 	 * Handling the menu selection on click event

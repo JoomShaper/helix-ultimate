@@ -73,6 +73,7 @@
 }
 
 /** Mega menu building */
+
 .hu-menu-builder .hu-mega-menu-settings {
 	padding: 10px;
 	background: #dfeafb;
@@ -81,7 +82,8 @@
 }
 
 /** Mega menu layout */
-#hu-reserved-layout-section {
+
+.hu-reserved-layout-section {
 	display: none;
 }
 
@@ -358,6 +360,6 @@
 	color: rgb(var(--primary));
 }
 
-.hu-megamenu-row-option-list > li:hover > .hu-megamenu-column-list {
+.hu-megamenu-column-list.show {
 	display: block;
 }

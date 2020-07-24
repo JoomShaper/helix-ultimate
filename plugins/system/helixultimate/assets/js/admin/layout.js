@@ -128,9 +128,7 @@ jQuery(function ($) {
 		});
 
 		$clone = $('.hu-options-modal-inner').html(
-			$clone
-				.removeAttr('id')
-				.addClass('hu-options-modal-content')
+			$clone.removeAttr('id').addClass('hu-options-modal-content')
 		);
 
 		$clone.find('.hu-input').each(function () {
@@ -147,7 +145,7 @@ jQuery(function ($) {
 								attrValue +
 								'" alt="">'
 						);
-					
+
 					let $clear = $that.siblings('.hu-media-clear');
 
 					if ($clear.hasClass('hide')) {
@@ -185,9 +183,7 @@ jQuery(function ($) {
 		});
 
 		$clone = $('.hu-options-modal-inner').html(
-			$clone
-				.removeAttr('id')
-				.addClass('hu-options-modal-content')
+			$clone.removeAttr('id').addClass('hu-options-modal-content')
 		);
 
 		$clone.find('.hu-input').each(function () {
@@ -257,22 +253,20 @@ jQuery(function ($) {
 							var nameVal = $this.val();
 
 							if (nameVal == '' || nameVal == null) {
-								$(
-									'.row-active .hu-section-title'
-								).text('Section Header');
+								$('.row-active .hu-section-title').text(
+									'Section Header'
+								);
 							} else {
-								$(
-									'.row-active .hu-section-title'
-								).text($this.val());
+								$('.row-active .hu-section-title').text(
+									$this.val()
+								);
 							}
 						}
 
 						$parent.data($attrname, $this.getInputValue());
 					});
 
-				$(
-					'.hu-options-modal-overlay, .hu-options-modal'
-				).remove();
+				$('.hu-options-modal-overlay, .hu-options-modal').remove();
 				$('body').removeClass('hu-options-modal-open');
 				break;
 
@@ -294,23 +288,19 @@ jQuery(function ($) {
 							$(this).attr('checked')
 						) {
 							component = true;
-							$(
-								'.column-active .hu-column-title'
-							).text('Component');
+							$('.column-active .hu-column-title').text(
+								'Component'
+							);
 						} else if ($attrname == 'name' && component != true) {
 							if (dataVal == '' || dataVal == undefined) {
 								dataVal = 'none';
 							}
-							$(
-								'.column-active .hu-column-title'
-							).text(dataVal);
+							$('.column-active .hu-column-title').text(dataVal);
 						}
 
 						$parent.data($attrname, $this.getInputValue());
 					});
-				$(
-					'.hu-options-modal-overlay, .hu-options-modal'
-				).remove();
+				$('.hu-options-modal-overlay, .hu-options-modal').remove();
 				$('body').removeClass('hu-options-modal-open');
 				break;
 
@@ -325,9 +315,7 @@ jQuery(function ($) {
 		'.hu-settings-cancel, .action-hu-options-modal-close',
 		function (event) {
 			event.preventDefault();
-			$(
-				'.hu-options-modal-overlay, .hu-options-modal'
-			).remove();
+			$('.hu-options-modal-overlay, .hu-options-modal').remove();
 			$('body').removeClass('hu-options-modal-open');
 		}
 	);
@@ -385,7 +373,7 @@ jQuery(function ($) {
 
 			if (error) {
 				alert(
-					'Error generated. Please correct your column arragnement and try again.'
+					'Error generated. Please correct your column arrangement and try again.'
 				);
 				return false;
 			}
@@ -435,8 +423,7 @@ jQuery(function ($) {
 				new_item += col[i];
 			} else {
 				new_item += '<div class="hu-column">';
-				new_item +=
-					'<span class="hu-column-title">none</span>';
+				new_item += '<span class="hu-column-title">none</span>';
 				new_item +=
 					'<a class="hu-column-options" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill="#020B53" fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd" opacity=".4"/></svg></a>';
 				new_item += '</div>';
@@ -517,9 +504,7 @@ jQuery(function ($) {
 				};
 
 				// Find Column Elements
-				$row.find('.hu-layout-column').each(function (
-					index
-				) {
+				$row.find('.hu-layout-column').each(function (index) {
 					var $column = $(this),
 						colIndex = index,
 						className = $column.attr('class'),

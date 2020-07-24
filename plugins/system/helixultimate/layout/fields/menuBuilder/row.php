@@ -16,6 +16,7 @@ use Joomla\CMS\Uri\Uri;
 extract($displayData);
 
 $layout = new FileLayout('fields.menuBuilder.grids', HELIX_LAYOUT_PATH);
+$columnsLayout = new FileLayout('fields.menuBuilder.columns', HELIX_LAYOUT_PATH);
 ?>
 
 <div class="<?php echo !empty($reserve) ? 'hu-reserved-layout-section' : 'hu-megamenu-layout-section'; ?>">
@@ -34,7 +35,7 @@ $layout = new FileLayout('fields.menuBuilder.grids', HELIX_LAYOUT_PATH);
 							<svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" fill="none"><path d="M.996 4.805h3.926c.662 0 1.002-.323 1.002-1.014V1.02C5.924.322 5.584 0 4.922 0H.996C.34 0 0 .322 0 1.02V3.79c0 .691.34 1.014.996 1.014zm6.932 0h3.926c.662 0 1.002-.323 1.002-1.014V1.02c0-.698-.34-1.02-1.002-1.02H7.928c-.657 0-.996.322-.996 1.02V3.79c0 .691.34 1.014.996 1.014zm-6.92-.65c-.252 0-.363-.112-.363-.376V1.02c0-.251.11-.369.363-.369H4.91c.252 0 .363.118.363.37v2.76c0 .263-.11.374-.363.374H1.008zm6.937 0c-.258 0-.369-.112-.369-.376V1.02c0-.251.112-.369.37-.369h3.896c.252 0 .363.118.363.37v2.76c0 .263-.111.374-.363.374H7.945zM.996 10.61h3.926c.662 0 1.002-.322 1.002-1.013V6.826c0-.691-.34-1.013-1.002-1.013H.996C.34 5.813 0 6.135 0 6.825v2.772c0 .691.34 1.013.996 1.013zm6.932 0h3.926c.662 0 1.002-.322 1.002-1.013V6.826c0-.691-.34-1.013-1.002-1.013H7.928c-.657 0-.996.322-.996 1.013v2.772c0 .691.34 1.013.996 1.013zm-6.92-.644c-.252 0-.363-.117-.363-.375v-2.76c0-.258.11-.375.363-.375H4.91c.252 0 .363.117.363.375v2.76c0 .258-.11.375-.363.375H1.008zm6.937 0c-.258 0-.369-.117-.369-.375v-2.76c0-.258.112-.375.37-.375h3.896c.252 0 .363.117.363.375v2.76c0 .258-.111.375-.363.375H7.945z"/></svg>
 						</a>
 						<div class="hu-megamenu-column-list">
-							<?php echo $layout->render(); ?>
+							<?php echo $layout->render(['item' => $item, 'active' => $active, 'params' => $params, 'builder' => $builder]); ?>
 						</div>
 					</li>
 
@@ -53,14 +54,7 @@ $layout = new FileLayout('fields.menuBuilder.grids', HELIX_LAYOUT_PATH);
 		</div>
 		<div class="hu-megamenu-row-container">
 			<div class="row hu-megamenu-layout-row">
-				<div class="hu-megamenu-layout-column col-12">
-					<div class="hu-megamenu-column">
-						<span class="hu-megamenu-column-title">none</span>
-						<a class="hu-megamenu-column-options" href="#">
-							<svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill="#020B53" fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd" opacity=".4"></path></svg>
-						</a>
-					</div>
-				</div>
+				<?php echo $columnsLayout->render(['item' => $item, 'active' => $active, 'params' => $params, 'builder' => $builder]); ?>
 			</div>
 		</div>
 		<button class="hu-megamenu-add-row hu-btn hu-btn-primary">

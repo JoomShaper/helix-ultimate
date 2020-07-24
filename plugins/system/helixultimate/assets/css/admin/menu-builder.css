@@ -195,6 +195,7 @@
 .hu-megamenu-layout-row {
 	margin-left: -2.5px;
 	margin-right: -2.5px;
+	position: relative;
 }
 
 .hu-megamenu-layout-row .hu-megamenu-layout-column {

@@ -2834,6 +2834,7 @@ select:focus::-ms-value {
 .hu-layout-row {
 	margin-left: -2.5px;
 	margin-right: -2.5px;
+	position: relative;
 }
 
 .hu-layout-row .hu-layout-column {

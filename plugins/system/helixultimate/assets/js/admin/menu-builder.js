@@ -1,5 +1,72 @@
 jQuery(function ($) {
 	const config = Joomla.getOptions('meta') || {};
+	const $builder = $('.hu-menu-builder');
+	/**
+	 * Perform operation in reactive way
+	 */
+
+	const state = {
+		menuItems: {},
+		some: 'other',
+	};
+
+	const setState = function (object, callback = undefined) {
+		Object.entries(object).forEach(([key, value]) => {
+			state[key] = value;
+		});
+
+		!!callback && callback(state);
+		render();
+	};
+
+	(function componentDidMount() {
+		const $builder = $('.hu-menu-builder');
+		$builder.find('.hu-menu-item').each(function (index) {
+			const itemId = $(this).data('cid');
+			const itemTitle = $(this).data('name');
+			const item = {
+				id: itemId,
+				title: itemTitle,
+			};
+
+			setState({
+				menuItems: {
+					...state.menuItems,
+					[itemId]: item,
+				},
+			});
+		});
+	})();
+
+	(function handleInputChange() {
+		$(document).on('keyup', '.hu-menu-builder input', function (e) {
+			const name = $(this).attr('name');
+			const value = $(this).val();
+			const itemId = $(this).data('itemid');
+
+			if (!itemId) return;
+
+			setState({
+				menuItems: {
+					...state.menuItems,
+					[itemId]: {
+						...state.menuItems[itemId],
+						[name]: value,
+					},
+				},
+			});
+		});
+	})();
+
+	function render() {
+		// Update input value
+		console.log(state);
+		$('.hu-menu-builder')
+			.find('.hu-megamenu-field')
+			.val(JSON.stringify(state));
+	}
+
+	/** ================================================================== */
 
 	/**
 	 * Activating the menu item sorting
@@ -196,8 +263,7 @@ jQuery(function ($) {
 	columnSorting();
 
 	function isValidLayout(grids) {
-		const total = grids.reduce((acc, curr) => acc + curr);
-		return total <= 12;
+		return grids.reduce((acc, curr) => acc + curr) <= 12;
 	}
 
 	/**

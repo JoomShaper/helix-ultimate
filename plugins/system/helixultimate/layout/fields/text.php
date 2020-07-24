@@ -32,6 +32,7 @@ class HelixultimateFieldText
 		if ($isMenuBuilder)
 		{
 			$value = !empty($attr['value']) ? $attr['value'] : '';
+			$itemId = !empty($attr['itemId']) ? $attr['itemId'] : '';
 		}
 
 		$output  = '<div class="control-group">';
@@ -45,7 +46,7 @@ class HelixultimateFieldText
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="text" name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
+			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="text" data-itemid="' . $itemId . '" name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
 		}
 		else
 		{

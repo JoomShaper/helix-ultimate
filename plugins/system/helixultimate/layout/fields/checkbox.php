@@ -31,6 +31,7 @@ class HelixultimateFieldCheckbox
 		if ($isMenuBuilder)
 		{
 			$value = !empty($attr['value']) ? $attr['value'] : '';
+			$itemId = !empty($attr['itemId']) ? $attr['itemId'] : '';
 		}
 
 		$output   = '<div class="control-group hu-style-switcher">';
@@ -44,7 +45,7 @@ class HelixultimateFieldCheckbox
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="checkbox" name="' . $key . '" value="' . $value . '" />';
+			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="checkbox" data-itemid="' . $itemId . '" name="' . $key . '" value="' . $value . '" />';
 		}
 		else
 		{

@@ -20,18 +20,21 @@ $fields = [
 	'mega-width' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
-		'menu-builder' => true
+		'menu-builder' => true,
+		'itemId' => $item->id
 	],
 	'mega-custom-classes' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_CUSTOM_CLASSES'),
-		'menu-builder' => true
+		'menu-builder' => true,
+		'itemId' => $item->id
 	],
 	'mega-alignment' => [
 		'type' => 'alignment',
 		'title' => 'Alignments',
 		'desc' => 'Set mega menu alignment.',
-		'default' => 'left'
+		'default' => 'left',
+		'itemId' => $item->id
 	]
 ];
 

@@ -27,6 +27,7 @@ class HelixultimateFieldAlignment
 	public static function getInput($key, $attr)
 	{
 		$value = !empty($attr['value']) ? $attr['value'] : (isset($attr['default']) ? $attr['default'] : '');
+		$itemId = !empty($attr['itemId']) ? $attr['itemId'] : '';
 
 		$output  = '<div class="control-group hu-field-alignment">';
 		$output .= '<label>' . $attr['title'] . '</label>';
@@ -48,7 +49,7 @@ class HelixultimateFieldAlignment
 		$output .= '</div>';
 		$output .= '</div>';
 
-		$output .= '<input type="hidden" name="' . $key . '" value="' . $value . '" />';
+		$output .= '<input type="hidden" data-itemid="' . $itemId . '" name="' . $key . '" value="' . $value . '" />';
 
 		$output .= '</div>';
 

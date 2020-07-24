@@ -42,6 +42,23 @@ class JFormFieldHelixMenuBuilder extends FormField
 		$data = Helper::loadTemplateData();
 		$params = $data->params;
 
+		if (empty($this->value))
+		{
+			$this->value = new \stdClass;
+			$value = json_encode($this->value);
+		}
+		else
+		{
+			if (!\is_string($this->value))
+			{
+				$value = json_encode($this->value);
+			}
+			else
+			{
+				$value = $this->value;
+			}
+		}
+
 		$builder = new MenuBuilder($params->get('menu', 'mainmenu'));
 		$items = $builder->getMenuItems();
 		$html = [];
@@ -53,6 +70,8 @@ class JFormFieldHelixMenuBuilder extends FormField
 			$layout = new FileLayout('fields.menuBuilder.menuItems', HELIX_LAYOUT_PATH);
 			$html[] = $layout->render(['items' => $items, 'params' => $params]);
 		}
+
+		$html[] = '<input type="hidden" class="hu-megamenu-field" name="' . $this->name . '" id="' . $this->id . '" value=\'' . $value . '\' />';
 
 		// End menu builder
 		$html[] = '</div>';

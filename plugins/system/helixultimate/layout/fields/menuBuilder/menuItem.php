@@ -20,30 +20,34 @@ $fields = [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS_PLACEHOLDER'),
-		'menu-builder' => true
+		'menu-builder' => true,
+		'itemId' => $item->id
 	],
 	'menu_icon' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MENU_ICON'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_ICON_PLACEHOLDER'),
-		'menu-builder' => true
+		'menu-builder' => true,
+		'itemId' => $item->id
 	],
 	'caption' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MENU_CAPTION'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_CAPTION_PLACEHOLDER'),
-		'menu-builder' => true
+		'menu-builder' => true,
+		'itemId' => $item->id
 	],
 	'mega_menu' => [
 		'type' => 'checkbox',
 		'title' => Text::_('HELIX_ULTIMATE_ENABLE_MEGA_MENU'),
 		'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', $item->title),
-		'menu-builder' => true
+		'menu-builder' => true,
+		'itemId' => $item->id
 	]
 ];
 
 ?>
-<div class="hu-menu-item-settings hu-menu-item-<?php echo $item->alias . ($active ? ' active' : ''); ?>">
+<div class="hu-menu-item-settings hu-menu-item-<?php echo $item->alias . ($active ? ' active' : ''); ?>" data-itemId="<?php echo $item->id; ?>">
 	<div class="hu-menu-item-modifiers">
 		<div class="row">
 			<div class="col-4">

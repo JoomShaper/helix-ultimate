@@ -17,19 +17,19 @@ use Joomla\CMS\Uri\Uri;
 extract($displayData);
 
 $fields = [
-	'mega-width' => [
+	'mega_width' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
 		'menu-builder' => true,
 		'itemId' => $item->id
 	],
-	'mega-custom-classes' => [
+	'mega_custom_classes' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_CUSTOM_CLASSES'),
 		'menu-builder' => true,
 		'itemId' => $item->id
 	],
-	'mega-alignment' => [
+	'mega_alignment' => [
 		'type' => 'alignment',
 		'title' => 'Alignments',
 		'desc' => 'Set mega menu alignment.',
@@ -45,15 +45,15 @@ $layout = new FileLayout('fields.menuBuilder.row', HELIX_LAYOUT_PATH);
 <div class="hu-mega-basic-settings">
 	<div class="row">
 		<div class="col-6">
-			<?php echo $builder->renderFieldElement('mega-width', $fields['mega-width']); ?>
+			<?php echo $builder->renderFieldElement('mega_width', $fields['mega_width']); ?>
 		</div>
 		<div class="col-6">
-			<?php echo $builder->renderFieldElement('mega-custom-classes', $fields['mega-custom-classes']); ?>
+			<?php echo $builder->renderFieldElement('mega_custom_classes', $fields['mega_custom_classes']); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-6">
-			<?php echo $builder->renderFieldElement('mega-alignment', $fields['mega-alignment']); ?>
+			<?php echo $builder->renderFieldElement('mega_alignment', $fields['mega_alignment']); ?>
 		</div>
 	</div>
 

@@ -19,7 +19,7 @@ $layout = new FileLayout('fields.menuBuilder.grids', HELIX_LAYOUT_PATH);
 $columnsLayout = new FileLayout('fields.menuBuilder.columns', HELIX_LAYOUT_PATH);
 ?>
 
-<div class="<?php echo !empty($reserve) ? 'hu-reserved-layout-section' : 'hu-megamenu-layout-section'; ?>">
+<div class="<?php echo !empty($reserve) ? 'hu-reserved-layout-section' : 'hu-megamenu-layout-section'; ?>" data-rowid="1" data-itemid="<?php echo $item->id; ?>">
 	<div class="hu-megamenu-layout-section-inner">
 		<div class="hu-megamenu-section-settings hu-d-flex hu-justify-content-between hu-align-items-center">
 			<div>

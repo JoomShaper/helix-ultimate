@@ -17,7 +17,7 @@ extract($displayData);
 
 ?>
 
-<div class="hu-megamenu-layout-column col-12">
+<div class="hu-megamenu-layout-column col-12" data-itemid="<?php echo $item->id; ?>" data-rowid="1" data-columnid="1">
 	<div class="hu-megamenu-column">
 		<span class="hu-megamenu-column-title">none</span>
 		<a class="hu-megamenu-column-options" href="#">

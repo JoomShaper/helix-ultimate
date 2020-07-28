@@ -16,33 +16,33 @@ use Joomla\CMS\Uri\Uri;
 extract($displayData);
 
 $fields = [
-	'custom_class' => [
+	'menu_custom_classes' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS_PLACEHOLDER'),
 		'menu-builder' => true,
-		'itemId' => $item->id
+		'itemId' => $item->id,
 	],
 	'menu_icon' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MENU_ICON'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_ICON_PLACEHOLDER'),
 		'menu-builder' => true,
-		'itemId' => $item->id
+		'itemId' => $item->id,
 	],
-	'caption' => [
+	'menu_caption' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MENU_CAPTION'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_CAPTION_PLACEHOLDER'),
 		'menu-builder' => true,
-		'itemId' => $item->id
+		'itemId' => $item->id,
 	],
 	'mega_menu' => [
 		'type' => 'checkbox',
 		'title' => Text::_('HELIX_ULTIMATE_ENABLE_MEGA_MENU'),
 		'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', $item->title),
 		'menu-builder' => true,
-		'itemId' => $item->id
+		'itemId' => $item->id,
 	]
 ];
 
@@ -51,13 +51,13 @@ $fields = [
 	<div class="hu-menu-item-modifiers">
 		<div class="row">
 			<div class="col-4">
-				<?php echo $builder->renderFieldElement('custom_class', $fields['custom_class']); ?>
+				<?php echo $builder->renderFieldElement('menu_custom_classes', $fields['menu_custom_classes']); ?>
 			</div>
 			<div class="col-4">
 				<?php echo $builder->renderFieldElement('menu_icon', $fields['menu_icon']); ?>
 			</div>
 			<div class="col-4">
-				<?php echo $builder->renderFieldElement('caption', $fields['caption']); ?>
+				<?php echo $builder->renderFieldElement('menu_caption', $fields['menu_caption']); ?>
 			</div>
 		</div>
 	</div>

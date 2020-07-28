@@ -8,5 +8,6 @@ jQuery(function ($) {
 
 		$(this).addClass('active');
 		$('.hu-field-alignment input[type=hidden]').val($(this).data('value'));
+		$('.hu-field-alignment input[type=hidden]').trigger('change');
 	});
 });

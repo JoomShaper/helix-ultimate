@@ -68,7 +68,7 @@ class JFormFieldHelixMenuBuilder extends FormField
 		if (!empty($items))
 		{
 			$layout = new FileLayout('fields.menuBuilder.menuItems', HELIX_LAYOUT_PATH);
-			$html[] = $layout->render(['items' => $items, 'params' => $params]);
+			$html[] = $layout->render(['items' => $items, 'params' => $params, 'menuSettings' => $value]);
 		}
 
 		$html[] = '<input type="hidden" class="hu-megamenu-field" name="' . $this->name . '" id="' . $this->id . '" value=\'' . $value . '\' />';

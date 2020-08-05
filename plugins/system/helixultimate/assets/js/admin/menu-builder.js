@@ -21,8 +21,11 @@ jQuery(function ($) {
 		render();
 	};
 
+	var $inputField = $('.hu-menu-builder').find('.hu-megamenu-field');
+
 	(function componentDidMount() {
 		const $builder = $('.hu-menu-builder');
+		const menuItems = {};
 		$builder.find('.hu-menu-item').each(function (index) {
 			const itemId = $(this).data('cid');
 
@@ -44,13 +47,14 @@ jQuery(function ($) {
 				],
 			};
 
-			setState({
-				menuItems: {
-					...state.menuItems,
-					[itemId]: item,
-				},
-			});
+			menuItems[itemId] = item;
 		});
+
+		if ($inputField.val() === '' || $inputField.val() === '{}') {
+			setState({ menuItems });
+		} else {
+			setState({ menuItems: JSON.parse($inputField.val()).menuItems });
+		}
 	})();
 
 	function getFields() {
@@ -112,10 +116,13 @@ jQuery(function ($) {
 
 	function render() {
 		// Update input value
-		console.log(state);
+		console.log('state:', state);
+
 		$('.hu-menu-builder')
 			.find('.hu-megamenu-field')
 			.val(JSON.stringify(state));
+
+		// .trigger('change');
 	}
 
 	/** ================================================================== */
@@ -208,6 +215,8 @@ jQuery(function ($) {
 				.clone(true);
 			const rowId = getLastRowId() + 1;
 
+			const itemId = $parent.data('itemid');
+
 			$cloned
 				.removeClass('hu-reserved-layout-section')
 				.addClass('hu-megamenu-layout-section')
@@ -219,7 +228,7 @@ jQuery(function ($) {
 			$cloned.slideDown(300);
 
 			const insertIndex = $parent.index();
-			insertNewRow(101, insertIndex, {
+			insertNewRow(itemId, insertIndex, {
 				id: rowId,
 				settings: {},
 				columns: [],
@@ -343,6 +352,8 @@ jQuery(function ($) {
 			if (isValidLayout(grids)) {
 				let columnStr = '';
 
+				let columns = [];
+
 				grids.forEach((col, index) => {
 					columnStr += `
 						<div class="hu-megamenu-layout-column col-${col}" data-itemid="${itemId}" data-rowid="${rowId}" data-columnid="${
@@ -356,6 +367,32 @@ jQuery(function ($) {
 							</div>
 						</div>
 					`;
+
+					columns.push({
+						id: index + 1,
+						itemId,
+						rowId,
+						settings: {
+							col,
+						},
+					});
+				});
+
+				const rows = [...state.menuItems[itemId].mega_rows];
+				console.log(rowId);
+				const rowIndex = rows.findIndex(
+					row => row.id >> 0 === rowId >> 0
+				);
+				rows[rowIndex].columns = columns;
+
+				setState({
+					menuItems: {
+						...state.menuItems,
+						[itemId]: {
+							...state.menuItems[itemId],
+							mega_rows: rows,
+						},
+					},
 				});
 
 				const $gParent = $(this).closest('.hu-megamenu-layout-section');

@@ -21,20 +21,23 @@ $fields = [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
 		'menu-builder' => true,
-		'itemId' => $item->id
+		'itemId' => $item->id,
+		'value' => !empty($menuItemSettings->mega_width) ? $menuItemSettings->mega_width : ''
 	],
 	'mega_custom_classes' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_CUSTOM_CLASSES'),
 		'menu-builder' => true,
-		'itemId' => $item->id
+		'itemId' => $item->id,
+		'value' => !empty($menuItemSettings->mega_custom_classes) ? $menuItemSettings->mega_custom_classes : ''
 	],
 	'mega_alignment' => [
 		'type' => 'alignment',
-		'title' => 'Alignments',
-		'desc' => 'Set mega menu alignment.',
+		'title' => Text::_('Alignments'),
+		'desc' => Text::_('Set mega menu alignment.'),
 		'default' => 'left',
-		'itemId' => $item->id
+		'itemId' => $item->id,
+		'value' => !empty($menuItemSettings->mega_alignment) ? $menuItemSettings->mega_alignment : ''
 	]
 ];
 
@@ -58,9 +61,60 @@ $layout = new FileLayout('fields.menuBuilder.row', HELIX_LAYOUT_PATH);
 	</div>
 
 	<div id="hu-megamenu-layout-container" class="<?php echo $active ? 'active-layout' : ''; ?>">
-		<?php echo $layout->render(['item' => $item, 'active' => $active, 'params' => $params, 'builder' => $builder, 'reserve' => true]); ?>
 		<?php
-			echo $layout->render(['item' => $item, 'active' => $active, 'params' => $params, 'builder' => $builder]);
+			/**
+			 * Create an empty row for generating row using JS from it.
+			 * In JS the row is copied/cloned and replicate like this.
+			 * This is a reserved row.
+			 */
+			$emptyRow = new \stdClass;
+			$emptyRow->id = 0;
+			$emptyRow->settings = new \stdClass;
+			$emptyRow->columns = [];
+			echo $layout->render(
+				[
+					'item' => $item,
+					'rowSettings' => $emptyRow,
+					'active' => $active,
+					'params' => $params,
+					'builder' => $builder,
+					'reserve' => true
+				]
+			);
+		?>
+
+		<?php
+		if (!empty($menuItemSettings->mega_rows))
+		{
+			foreach ($menuItemSettings->mega_rows as $row)
+			{
+				echo $layout->render(
+					[
+						'item' => $item,
+						'rowSettings' => $row,
+						'active' => $active,
+						'params' => $params,
+						'builder' => $builder
+					]
+				);
+			}
+		}
+		else
+		{
+			$emptyRow = new \stdClass;
+			$emptyRow->id = 1;
+			$emptyRow->settings = new \stdClass;
+			$emptyRow->columns = [];
+			echo $layout->render(
+				[
+					'item' => $item,
+					'rowSettings' => $emptyRow,
+					'active' => $active,
+					'params' => $params,
+					'builder' => $builder,
+				]
+			);
+		}
 		?>
 	</div>
 </div>

@@ -14,10 +14,15 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
-
+$col = isset($columnSettings->settings->col) ? $columnSettings->settings->col : 12;
 ?>
 
-<div class="hu-megamenu-layout-column col-12" data-itemid="<?php echo $item->id; ?>" data-rowid="1" data-columnid="1">
+<div
+	class="hu-megamenu-layout-column col-<?php echo $col; ?>"
+	data-itemid="<?php echo $columnSettings->itemId; ?>"
+	data-rowid="<?php echo $columnSettings->rowId; ?>"
+	data-columnid="<?php echo $columnSettings->id; ?>"
+>
 	<div class="hu-megamenu-column">
 		<span class="hu-megamenu-column-title">none</span>
 		<a class="hu-megamenu-column-options" href="#">

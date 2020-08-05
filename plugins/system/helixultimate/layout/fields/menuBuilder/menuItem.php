@@ -15,6 +15,23 @@ use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
+$menuItemSettings = new \stdClass;
+
+if (!empty($menuSettings))
+{
+	$menuItemSettings = json_decode($menuSettings);
+
+	if (isset($menuItemSettings->menuItems))
+	{
+		$menuItemSettings = $menuItemSettings->menuItems;
+
+		if (isset($menuItemSettings->{$item->id}))
+		{
+			$menuItemSettings = $menuItemSettings->{$item->id};
+		}
+	}
+}
+
 $fields = [
 	'menu_custom_classes' => [
 		'type' => 'text',
@@ -22,6 +39,7 @@ $fields = [
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS_PLACEHOLDER'),
 		'menu-builder' => true,
 		'itemId' => $item->id,
+		'value' => !empty($menuItemSettings->menu_custom_classes) ? $menuItemSettings->menu_custom_classes : ''
 	],
 	'menu_icon' => [
 		'type' => 'text',
@@ -29,6 +47,7 @@ $fields = [
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_ICON_PLACEHOLDER'),
 		'menu-builder' => true,
 		'itemId' => $item->id,
+		'value' => !empty($menuItemSettings->menu_icon) ? $menuItemSettings->menu_icon : ''
 	],
 	'menu_caption' => [
 		'type' => 'text',
@@ -36,6 +55,7 @@ $fields = [
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_CAPTION_PLACEHOLDER'),
 		'menu-builder' => true,
 		'itemId' => $item->id,
+		'value' => !empty($menuItemSettings->menu_caption) ? $menuItemSettings->menu_caption : ''
 	],
 	'mega_menu' => [
 		'type' => 'checkbox',
@@ -43,8 +63,10 @@ $fields = [
 		'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', $item->title),
 		'menu-builder' => true,
 		'itemId' => $item->id,
+		'value' => !empty($menuItemSettings->mega_menu) ? $menuItemSettings->mega_menu : ''
 	]
 ];
+
 
 ?>
 <div class="hu-menu-item-settings hu-menu-item-<?php echo $item->alias . ($active ? ' active' : ''); ?>" data-itemId="<?php echo $item->id; ?>">
@@ -70,7 +92,15 @@ $fields = [
 		</div>
 		<?php
 			$layout = new FileLayout('fields.menuBuilder.megaSettings', HELIX_LAYOUT_PATH);
-			echo $layout->render(['item' => $item, 'active' => $active, 'params' => $params, 'builder' => $builder]);
+			echo $layout->render(
+				[
+					'item' => $item,
+					'menuItemSettings' => $menuItemSettings,
+					'active' => $active,
+					'params' => $params,
+					'builder' => $builder
+				]
+			);
 		?>
 	</div>
 </div>

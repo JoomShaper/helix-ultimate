@@ -41,7 +41,7 @@ $builder = new MenuBuilder($params->get('menu', 'mainmenu'));
 		<?php foreach ($items as $key => $item): ?>
 			<?php
 				$layout = new FileLayout('fields.menuBuilder.menuItem', HELIX_LAYOUT_PATH);
-				echo $layout->render(['item' => $item, 'active' => ($key === 0),'params' => $params, 'builder' => $builder]);
+				echo $layout->render(['item' => $item, 'menuSettings' => $menuSettings, 'active' => ($key === 0),'params' => $params, 'builder' => $builder]);
 			?>
 		<?php endforeach ?>
 	<?php endif ?>

@@ -35,7 +35,9 @@ class HelixultimateFieldText
 			$itemId = !empty($attr['itemId']) ? $attr['itemId'] : '';
 		}
 
-		$output  = '<div class="control-group">';
+		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+
+		$output  = '<div class="control-group ' . ($depend ? 'hidden' : '') . '" ' . ($depend ? 'data-depend="' . $depend . '"' : '') . '>';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

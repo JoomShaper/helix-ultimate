@@ -45,7 +45,10 @@ class HelixultimateFieldCheckbox
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="checkbox" data-itemid="' . $itemId . '" name="' . $key . '" value="' . $value . '" />';
+			$output .= '<input class="hu-input hu-menu-builder-' .
+				$key . '" type="checkbox" data-itemid="' .
+				$itemId . '" name="' .
+				$key . '" value="' . $value . '" ' . ($value ? 'checked="checked"' : '') . ' />';
 		}
 		else
 		{

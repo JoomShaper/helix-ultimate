@@ -55,6 +55,18 @@ jQuery(function ($) {
 		} else {
 			setState({ menuItems: JSON.parse($inputField.val()).menuItems });
 		}
+
+		/**
+		 * Initialized the functions
+		 */
+		handlingMenuItemSelection();
+		activateMenuItemSorting();
+		makeRowSortable();
+		addNewRow();
+		deleteRow();
+		toggleColumnOptions();
+		generateColumns();
+		columnSorting();
 	})();
 
 	function getFields() {
@@ -128,6 +140,26 @@ jQuery(function ($) {
 	/** ================================================================== */
 
 	/**
+	 * Handling the menu selection on click event
+	 */
+	function handlingMenuItemSelection() {
+		$('.hu-menu-item').on('click', function (event) {
+			event.preventDefault();
+			const $siblings = $(this).siblings();
+
+			if ($siblings.hasClass('active')) {
+				$siblings.removeClass('active');
+			}
+
+			if (!$(this).hasClass('active')) {
+				$(this).addClass('active');
+			}
+
+			triggerMenuSettings($(this).data('name'));
+		});
+	}
+
+	/**
 	 * Activating the menu item sorting
 	 */
 	function activateMenuItemSorting() {
@@ -157,9 +189,10 @@ jQuery(function ($) {
 			.disableSelection();
 	}
 
-	activateMenuItemSorting();
-
-	function makeMegamenuSectionSortable() {
+	/**
+	 * Make the mega menu rows sortable
+	 */
+	function makeRowSortable() {
 		let prevIndex = null;
 
 		$('#hu-megamenu-layout-container.active-layout')
@@ -186,8 +219,12 @@ jQuery(function ($) {
 			})
 			.disableSelection();
 	}
-	makeMegamenuSectionSortable();
 
+	/**
+	 * Trigger Menu item settings
+	 *
+	 * @param {string} active Active class
+	 */
 	function triggerMenuSettings(active) {
 		$('.hu-menu-item-settings').removeClass('active');
 		$('.hu-menu-item-settings')
@@ -199,11 +236,11 @@ jQuery(function ($) {
 			.find('#hu-megamenu-layout-container')
 			.addClass('active-layout');
 
-		makeMegamenuSectionSortable();
+		makeRowSortable();
 	}
 
 	/**
-	 * Add new row
+	 * Add a new row after a specific row
 	 */
 	function addNewRow() {
 		$(document).on('click', '.hu-megamenu-add-row', function (e) {
@@ -241,19 +278,14 @@ jQuery(function ($) {
 			columnSorting();
 		});
 	}
-	addNewRow();
 
-	function getLastRowId() {
-		const ids = [];
-		$(
-			'.hu-menu-builder #hu-megamenu-layout-container.active-layout .hu-megamenu-layout-section'
-		).each(function (index, el) {
-			ids.push($(el).data('rowid'));
-		});
-
-		return Math.max(...ids);
-	}
-
+	/**
+	 * Insert a new row
+	 *
+	 * @param {int} 	itemId 	The menu Item Id
+	 * @param {int} 	index 	Insertion index
+	 * @param {object} 	newItem The item to insert
+	 */
 	function insertNewRow(itemId, index, newItem) {
 		let rows = [...state.menuItems[itemId].mega_rows];
 		rows.splice(index, 0, newItem);
@@ -269,6 +301,13 @@ jQuery(function ($) {
 		});
 	}
 
+	/**
+	 * Swap two rows positions
+	 *
+	 * @param {int} itemId 		Menu Item Id
+	 * @param {int} prevIndex 	Index before sorting
+	 * @param {int} currIndex 	Index after sorting
+	 */
 	function swapRows(itemId, prevIndex, currIndex) {
 		const rows = [...state.menuItems[itemId].mega_rows];
 		const item = rows.splice(prevIndex, 1);
@@ -306,6 +345,22 @@ jQuery(function ($) {
 			const confirm = window.confirm('Are you sure to delete the row?');
 			if (confirm) {
 				$section = $(this).closest('.hu-megamenu-layout-section');
+				const itemId = $section.data('itemid');
+				const rowId = $section.data('rowid');
+
+				const rows = [...state.menuItems[itemId].mega_rows];
+				const rowIndex = rows.findIndex(row => row.id === rowId);
+				rows.splice(rowIndex, 1);
+
+				setState({
+					menuItems: {
+						...state.menuItems,
+						[itemId]: {
+							...state.menuItems[itemId],
+							mega_rows: rows,
+						},
+					},
+				});
 
 				$section.slideUp(300, function () {
 					$(this).remove();
@@ -315,8 +370,11 @@ jQuery(function ($) {
 			}
 		});
 	}
-	deleteRow();
 
+	/**
+	 * Toggle column options.
+	 * This will brings you the column layouts for generation.
+	 */
 	function toggleColumnOptions() {
 		$(document).on('click', '.hu-megamenu-add-columns', function (e) {
 			e.preventDefault();
@@ -324,8 +382,10 @@ jQuery(function ($) {
 			$colList.toggleClass('show');
 		});
 	}
-	toggleColumnOptions();
 
+	/**
+	 * Generate columns from column options.
+	 */
 	function generateColumns() {
 		$(document).on('click', '.hu-megamenu-column-layout', function (e) {
 			$('.hu-megamenu-layout-row').sortable('destroy');
@@ -406,9 +466,48 @@ jQuery(function ($) {
 			}
 		});
 	}
-	generateColumns();
 
+	/**
+	 * Swap columns positions between themselves.
+	 *
+	 * @param {int} itemId 		Menu Item ID
+	 * @param {int} rowId 		Row ID
+	 * @param {int} prevIndex 	The index number before sorting
+	 * @param {int} currIndex 	The index number after sorting
+	 */
+	function swapColumn(itemId, rowId, prevIndex, currIndex) {
+		const rows = [...state.menuItems[itemId].mega_rows];
+		const rowItem = rows.find(row => row.id === rowId) || false;
+		const rowIndex = rows.findIndex(row => row.id === rowId);
+
+		if (rowIndex > -1) {
+			const columns = rowItem.columns || [];
+			const item = columns.splice(prevIndex, 1);
+
+			if (!item) return;
+
+			columns.splice(currIndex, 0, item[0]);
+
+			rows[rowIndex].columns = columns;
+
+			setState({
+				menuItems: {
+					...state.menuItems,
+					[itemId]: {
+						...state.menuItems[itemId],
+						mega_rows: rows,
+					},
+				},
+			});
+		}
+	}
+
+	/**
+	 * Functionalities for colum sorting between themselves.
+	 */
 	function columnSorting() {
+		let prevIndex = null;
+
 		$('.hu-megamenu-layout-row')
 			.sortable({
 				connectWith: '.hu-megamenu-layout-row',
@@ -417,7 +516,6 @@ jQuery(function ($) {
 				axis: 'x',
 				opacity: 1,
 				tolerance: 'pointer',
-
 				start: function (event, ui) {
 					$('.hu-megamenu-layout-section')
 						.find('.ui-state-highlight')
@@ -425,38 +523,47 @@ jQuery(function ($) {
 					$('.hu-megamenu-layout-section')
 						.find('.ui-state-highlight')
 						.css('height', $(ui.item).outerHeight());
+					prevIndex = ui.item.index();
+				},
+				update: function (event, ui) {
+					const item = ui.item;
+					const itemId = item.data('itemid');
+					const rowId = item.data('rowid');
+					const itemIndex = item.index();
+
+					swapColumn(itemId, rowId, prevIndex, itemIndex);
 				},
 			})
 			.disableSelection();
 	}
-	columnSorting();
 
+	/**
+	 * Utility functions
+	 */
 	function isValidLayout(grids) {
 		return grids.reduce((acc, curr) => acc + curr) <= 12;
 	}
 
 	/**
-	 * Handling the menu selection on click event
+	 * Get the last row Id for generating next row
 	 */
-	function handlingMenuItemSelection() {
-		$('.hu-menu-item').on('click', function (event) {
-			event.preventDefault();
-			const $siblings = $(this).siblings();
-
-			if ($siblings.hasClass('active')) {
-				$siblings.removeClass('active');
-			}
-
-			if (!$(this).hasClass('active')) {
-				$(this).addClass('active');
-			}
-
-			triggerMenuSettings($(this).data('name'));
+	function getLastRowId() {
+		const ids = [];
+		$(
+			'.hu-menu-builder #hu-megamenu-layout-container.active-layout .hu-megamenu-layout-section'
+		).each(function (index, el) {
+			ids.push($(el).data('rowid'));
 		});
+
+		return Math.max(...ids);
 	}
 
-	handlingMenuItemSelection();
+	/** ========================================================================= */
 
+	/**
+	 * Save menu ordering after D&D
+	 * @param {object} data		The orderID anc CID object
+	 */
 	function saveMenuOrder(data) {
 		const url = `${config.base}/administrator/index.php?option=com_menus&view=items&task=items.saveOrderAjax&tmpl=component`;
 
@@ -478,4 +585,35 @@ jQuery(function ($) {
 			},
 		});
 	}
+	/** ===================================================================== */
+
+	/**
+	 * Row Settings
+	 */
+	$(document).on(
+		'click',
+		'.hu-menu-builder .hu-megamenu-row-options',
+		function (e) {
+			e.preventDefault();
+			$(this).helixUltimateOptionsModal({
+				flag: 'row-setting',
+				title: "<span class='fas fa-cog'></span> Row Settings",
+				class: 'hu-modal-small',
+			});
+
+			const $cloned = $(this)
+				.closest('.hu-megamenu-layout-section')
+				.find('.hu-mega-row-settings')
+				.clone(true);
+			console.log($cloned);
+
+			$('.hu-options-modal-inner').html(
+				$cloned
+					.removeClass('hidden')
+					.addClass('hu-options-modal-content')
+			);
+		}
+	);
+
+	/** ====================================================== */
 });

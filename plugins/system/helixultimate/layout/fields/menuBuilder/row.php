@@ -17,7 +17,7 @@ extract($displayData);
 
 $layout = new FileLayout('fields.menuBuilder.grids', HELIX_LAYOUT_PATH);
 $columnsLayout = new FileLayout('fields.menuBuilder.columns', HELIX_LAYOUT_PATH);
-
+$rowSettingsLayout = new FileLayout('fields.menuBuilder.settings.row', HELIX_LAYOUT_PATH);
 $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 ?>
 
@@ -91,4 +91,16 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 			<span class="fas fa-plus"></span>
 		</button>
 	</div>
+
+	<?php
+		echo $rowSettingsLayout->render(
+			[
+				'item' => $item,
+				'settings' => $rowSettings->settings,
+				'params' => $params,
+				'builder' => $builder,
+				'id' => $rowId
+			]
+		);
+	?>
 </div>

@@ -62,7 +62,6 @@ class JFormFieldHelixMenuBuilder extends FormField
 		$builder = new MenuBuilder($params->get('menu', 'mainmenu'));
 		$items = $builder->getMenuItems();
 		$html = [];
-
 		$html[] = '<div class="hu-menu-builder">';
 
 		if (!empty($items))

@@ -27,11 +27,15 @@ class HelixultimateFieldCheckbox
 	public static function getInput($key, $attr)
 	{
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
+		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$dataAttrs = '';
 
-		if ($isMenuBuilder)
+		if (!empty($attr['data']))
 		{
-			$value = !empty($attr['value']) ? $attr['value'] : '';
-			$itemId = !empty($attr['itemId']) ? $attr['itemId'] : '';
+			foreach ($attr['data'] as $dataName => $dataValue)
+			{
+				$dataAttrs .= ' data-' . $dataName . '=' . $dataValue;
+			}
 		}
 
 		$output   = '<div class="control-group hu-style-switcher">';
@@ -46,8 +50,7 @@ class HelixultimateFieldCheckbox
 		if ($isMenuBuilder)
 		{
 			$output .= '<input class="hu-input hu-menu-builder-' .
-				$key . '" type="checkbox" data-itemid="' .
-				$itemId . '" name="' .
+				$key . '" type="checkbox" ' . $dataAttrs . ' name="' .
 				$key . '" value="' . $value . '" ' . ($value ? 'checked="checked"' : '') . ' />';
 		}
 		else

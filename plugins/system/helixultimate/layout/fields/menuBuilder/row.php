@@ -16,7 +16,7 @@ use Joomla\CMS\Uri\Uri;
 extract($displayData);
 
 $layout = new FileLayout('fields.menuBuilder.grids', HELIX_LAYOUT_PATH);
-$columnsLayout = new FileLayout('fields.menuBuilder.columns', HELIX_LAYOUT_PATH);
+$columnLayout = new FileLayout('fields.menuBuilder.column', HELIX_LAYOUT_PATH);
 $rowSettingsLayout = new FileLayout('fields.menuBuilder.settings.row', HELIX_LAYOUT_PATH);
 $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 ?>
@@ -61,7 +61,7 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 				{
 					foreach ($rowSettings->columns as $col)
 					{
-						echo $columnsLayout->render(
+						echo $columnLayout->render(
 							[
 								'item' => $item,
 								'columnSettings' => $col,
@@ -74,7 +74,7 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 				}
 				else
 				{
-					echo $columnsLayout->render(
+					echo $columnLayout->render(
 						[
 							'item' => $item,
 							'columnSettings' => !empty($rowSettings->columns) ? $rowSettings->columns : [],
@@ -96,9 +96,9 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 		echo $rowSettingsLayout->render(
 			[
 				'item' => $item,
-				'settings' => $rowSettings->settings,
 				'params' => $params,
 				'builder' => $builder,
+				'settings' => $rowSettings->settings,
 				'id' => $rowId
 			]
 		);

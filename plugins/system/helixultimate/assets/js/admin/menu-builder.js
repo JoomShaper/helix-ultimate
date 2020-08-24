@@ -7,10 +7,25 @@ jQuery(function ($) {
 
 	const state = {
 		menuItems: {},
-		some: 'other',
+	};
+
+	const defaultRowSettings = {
+		row_label: '',
+		enable_row_title: false,
+		row_title: '',
+		row_id: '',
+		row_class: '',
+		row_margin: '',
+		row_padding: '',
+		row_hide_phone: false,
+		row_hide_large_phone: false,
+		row_hide_tablet: false,
+		row_hide_small_desktop: false,
+		row_hide_desktop: false,
 	};
 
 	const fields = getFields();
+	const rowSettingsFields = getRowSettingsFields();
 
 	const setState = function (object, callback = undefined) {
 		Object.entries(object).forEach(([key, value]) => {
@@ -24,6 +39,22 @@ jQuery(function ($) {
 	var $inputField = $('.hu-menu-builder').find('.hu-megamenu-field');
 
 	(function componentDidMount() {
+		initBuilderData();
+
+		/**
+		 * Initialized the functions
+		 */
+		handlingMenuItemSelection();
+		activateMenuItemSorting();
+		makeRowSortable();
+		addNewRow();
+		deleteRow();
+		toggleColumnOptions();
+		generateColumns();
+		columnSorting();
+	})();
+
+	function initBuilderData() {
 		const $builder = $('.hu-menu-builder');
 		const menuItems = {};
 		$builder.find('.hu-menu-item').each(function (index) {
@@ -41,7 +72,7 @@ jQuery(function ($) {
 				mega_rows: [
 					{
 						id: 1,
-						settings: {},
+						settings: defaultRowSettings,
 						columns: [],
 					},
 				],
@@ -55,19 +86,7 @@ jQuery(function ($) {
 		} else {
 			setState({ menuItems: JSON.parse($inputField.val()).menuItems });
 		}
-
-		/**
-		 * Initialized the functions
-		 */
-		handlingMenuItemSelection();
-		activateMenuItemSorting();
-		makeRowSortable();
-		addNewRow();
-		deleteRow();
-		toggleColumnOptions();
-		generateColumns();
-		columnSorting();
-	})();
+	}
 
 	function getFields() {
 		return [
@@ -80,6 +99,10 @@ jQuery(function ($) {
 					'input[name=menu_caption]',
 					'input[name=mega_width]',
 					'input[name=mega_custom_classes]',
+					'input[name=row_label]',
+					'input[name=row_title]',
+					'input[name=row_id]',
+					'input[name=row_class]',
 				],
 			},
 			{
@@ -88,6 +111,35 @@ jQuery(function ($) {
 				selectors: [
 					'input[name=mega_menu]',
 					'input[name=mega_alignment]',
+					'input[name=enable_row_title]',
+				],
+			},
+		];
+	}
+	function getRowSettingsFields() {
+		return [
+			{
+				event: 'blur',
+				parent: '.hu-menu-builder',
+				selectors: [
+					'row_label',
+					'row_title',
+					'row_id',
+					'row_class',
+					'row_margin',
+					'row_padding',
+				],
+			},
+			{
+				event: 'change',
+				parent: '.hu-menu-builder',
+				selectors: [
+					'enable_row_title',
+					'row_hide_phone',
+					'row_hide_large_phone',
+					'row_hide_tablet',
+					'row_hide_small_desktop',
+					'row_hide_desktop',
 				],
 			},
 		];
@@ -126,6 +178,52 @@ jQuery(function ($) {
 		});
 	})(fields);
 
+	(function handleRowSettingsInputChange(fields) {
+		fields.forEach(events => {
+			events.selectors.forEach(selector => {
+				$(document).on(
+					events.event,
+					`input[name=${selector}]`,
+					function (e) {
+						let value = $(this).val();
+						const name = $(this).attr('name'),
+							itemId = $(this).data('itemid'),
+							rowId = $(this).data('rowid'),
+							type = $(this).attr('type');
+
+						if (type === 'checkbox') {
+							value = $(this).prop('checked') >> 0;
+						}
+
+						if (!itemId || !rowId) return;
+
+						let rows = [...state.menuItems[itemId].mega_rows];
+						let rowIndex = rows.findIndex(row => row.id === rowId);
+
+						if (rowIndex > -1) {
+							let settings = {
+								...rows[rowIndex].settings,
+								[name]: value,
+							};
+
+							rows[rowIndex].settings = settings;
+						}
+
+						setState({
+							menuItems: {
+								...state.menuItems,
+								[itemId]: {
+									...state.menuItems[itemId],
+									mega_rows: rows,
+								},
+							},
+						});
+					}
+				);
+			});
+		});
+	})(rowSettingsFields);
+
 	function render() {
 		// Update input value
 		console.log('state:', state);
@@ -135,6 +233,29 @@ jQuery(function ($) {
 			.val(JSON.stringify(state));
 
 		// .trigger('change');
+
+		renderDOM();
+	}
+
+	function renderDOM() {
+		renderingRowLabel();
+	}
+
+	function renderingRowLabel() {
+		// Render row labels
+		const menuItems = state.menuItems;
+		Object.values(menuItems).forEach(items => {
+			if (items.mega_rows.length > 0) {
+				items.mega_rows.forEach(row => {
+					let $parent = $(
+						`.hu-menu-builder .hu-megamenu-layout-section[data-itemid=${items.id}][data-rowid=${row.id}]`
+					);
+					$parent
+						.find('.hu-megamenu-section-title')
+						.text(row.settings.row_label);
+				});
+			}
+		});
 	}
 
 	/** ================================================================== */
@@ -267,7 +388,7 @@ jQuery(function ($) {
 			const insertIndex = $parent.index();
 			insertNewRow(itemId, insertIndex, {
 				id: rowId,
-				settings: {},
+				settings: defaultRowSettings,
 				columns: [],
 			});
 
@@ -420,7 +541,7 @@ jQuery(function ($) {
 						index + 1
 					}">
 							<div class="hu-megamenu-column">
-								<span class="hu-megamenu-column-title">none</span>
+								<span class="hu-megamenu-column-title">col-${col}</span>
 								<a class="hu-megamenu-column-options" href="#">
 									<svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill="#020B53" fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd" opacity=".4"></path></svg>
 								</a>
@@ -601,11 +722,17 @@ jQuery(function ($) {
 				class: 'hu-modal-small',
 			});
 
+			const $parent = $(this).closest('.hu-megamenu-layout-section');
+			const itemId = $parent.data('itemid');
+			const rowId = $parent.data('rowid');
+
 			const $cloned = $(this)
 				.closest('.hu-megamenu-layout-section')
 				.find('.hu-mega-row-settings')
 				.clone(true);
-			console.log($cloned);
+			$cloned.data('rowid', rowId).attr('data-rowid', rowId);
+
+			reflectStateDataIntoClonedRowSettings(itemId, rowId, $cloned);
 
 			$('.hu-options-modal-inner').html(
 				$cloned
@@ -615,5 +742,65 @@ jQuery(function ($) {
 		}
 	);
 
+	function reflectStateDataIntoClonedRowSettings(itemId, rowId, $container) {
+		const rows = [...state.menuItems[itemId].mega_rows];
+		const row = rows.find(row => row.id === rowId);
+
+		if (!!row) {
+			const fields = rowSettingsFields.reduce(
+				(a, c) => [...a, ...c.selectors],
+				[]
+			);
+			fields.forEach(field => {
+				let $inputField = $container.find(`input[name=${field}]`);
+				const type = $inputField.attr('type');
+				$inputField.data('rowid', rowId).attr('data-rowid', rowId);
+				if (type === 'checkbox') {
+					$inputField.prop('checked', row.settings[field]);
+				} else {
+					$inputField.val(row.settings[field]);
+				}
+			});
+		}
+	}
+
 	/** ====================================================== */
+
+	/**
+	 * Column settings
+	 */
+	$(document).on(
+		'click',
+		'.hu-menu-builder .hu-megamenu-column-options',
+		function (e) {
+			e.preventDefault();
+			$(this).helixUltimateOptionsModal({
+				flag: 'row-setting',
+				title: "<span class='fas fa-cog'></span> Column Settings",
+				class: 'hu-modal-small',
+			});
+
+			const $parent = $(this).closest('.hu-megamenu-layout-column');
+
+			$parent.find('select.hu-input').each(function () {
+				$(this).chosen('destroy');
+			});
+
+			const itemId = $parent.data('itemid');
+			const rowId = $parent.data('rowid');
+			const columnId = $parent.data('columnid');
+
+			const $cloned = $parent.find('.hu-mega-column-setting').clone(true);
+
+			$cloned.find('select.hu-input').each(function () {
+				$(this).chosen({ width: '100%' });
+			});
+
+			$('.hu-options-modal-inner').html(
+				$cloned
+					.removeClass('hidden')
+					.addClass('hu-options-modal-content')
+			);
+		}
+	);
 });

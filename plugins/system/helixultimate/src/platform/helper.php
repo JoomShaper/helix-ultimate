@@ -11,6 +11,7 @@ namespace HelixUltimate\Framework\Platform;
 use HelixUltimate\Framework\System\HelixCache;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
@@ -293,5 +294,117 @@ class Helper
 		);
 
 		$doc->addScriptOptions('data', $data);
+	}
+
+	/**
+	 * Get template position
+	 */
+	public static function getTemplatePositions()
+	{
+		$positions = array();
+
+		$templateBaseDir = JPATH_SITE;
+		$filePath = Path::clean($templateBaseDir . '/templates/shaper_helixultimate/templateDetails.xml');
+
+		if (is_file($filePath))
+		{
+			// Read the file to see if it's a valid component XML file
+			$xml = simplexml_load_file($filePath);
+
+			if (!$xml)
+			{
+				return false;
+			}
+
+			// Check for a valid XML root tag.
+
+			// Extensions use 'extension' as the root tag.  Languages use 'metafile' instead
+
+			if ($xml->getName() != 'extension' && $xml->getName() != 'metafile')
+			{
+				unset($xml);
+
+				return false;
+			}
+
+			$positions = (array) $xml->positions;
+
+			if (isset($positions['position']))
+			{
+				$positions = (array) $positions['position'];
+			}
+			else
+			{
+				$positions = array();
+			}
+		}
+
+		return $positions;
+	}
+
+	public static function getModules()
+	{
+		$modules = [];
+
+		try
+		{
+			$db    = Factory::getDbo();
+			$query = $db->getQuery(true)
+				->select('id, title, position, params')
+				->from($db->quoteName('#__modules'))
+				->where($db->quoteName('client_id') . ' = 0');
+			$query->order($db->quoteName('title') . ' ASC');
+
+			return $db->loadObjectList();
+		}
+		catch (Exception $e)
+		{
+			return [];
+		}
+
+		return $modules;
+	}
+
+	public static function getMenuElements($parentId, &$menuItemList)
+	{
+		$elements = [];
+
+		try
+		{
+			$db 	= Factory::getDbo();
+			$query 	= $db->getQuery(true);
+			$query->select('id, title, parent_id, level')
+				->from($db->quoteName('#__menu'))
+				->where($db->quoteName('parent_id') . ' = ' . (int) $parentId)
+				->where($db->quoteName('published') . ' = 1')
+				->where($db->quoteName('client_id') . ' = 0');
+			$db->setQuery($query);
+
+			$elements = $db->loadObjectList();
+		}
+		catch (Exception $e)
+		{
+			return [];
+		}
+
+		if (!empty($elements))
+		{
+			foreach ($elements as $element)
+			{
+				if (isset($menuItemList->{$parentId}))
+				{
+					$menuItemList->$parentId->children[] = $element->id;
+				}
+
+				$temp = new \stdClass;
+				$temp->id = $element->id;
+				$temp->title = $element->title;
+				$temp->level = $element->level;
+				$temp->children = [];
+				$menuItemList->{$element->id} = $temp;
+
+				self::getMenuElements($temp->id, $menuItemList);
+			}
+		}
 	}
 }

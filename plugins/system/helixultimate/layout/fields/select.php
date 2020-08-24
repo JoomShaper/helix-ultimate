@@ -26,6 +26,20 @@ class HelixultimateFieldSelect
 	 */
 	public static function getInput($key, $attr)
 	{
+		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
+
+		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$options = !empty($attr['options']) ? $attr['options'] : ($attr['values'] || []);
+
+		$dataAttrs = '';
+
+		if (!empty($attr['data']))
+		{
+			foreach ($attr['data'] as $dataName => $dataValue)
+			{
+				$dataAttrs .= ' data-' . $dataName . '=' . $dataValue;
+			}
+		}
 
 		$output  = '<div class="control-group ' . $key . '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
@@ -36,11 +50,21 @@ class HelixultimateFieldSelect
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 
-		$output .= '<select class="hu-input input-select" data-attrname="' . $key . '">';
-
-		foreach ($attr['values'] as $key => $value)
+		if ($isMenuBuilder)
 		{
-			$output .= '<option value="' . $key . '">' . $value . '</option>';
+			$output .= '<select class="hu-input input-select hu-menu-builder-"' . $key . ' name="' . $key . '" ' . $dataAttrs . '>';
+		}
+		else
+		{
+			$output .= '<select class="hu-input input-select" data-attrname="' . $key . '">';
+		}
+
+		if (!empty($options))
+		{
+			foreach ($options as $key => $text)
+			{
+				$output .= '<option value="' . $key . '" ' . ($key === $value ? 'selected="selected"' : '') . '>' . $text . '</option>';
+			}
 		}
 
 		$output .= '</select>';

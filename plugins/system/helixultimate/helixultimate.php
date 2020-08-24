@@ -215,6 +215,28 @@ class  PlgSystemHelixultimate extends JPlugin
 
 		$doc = Factory::getDocument();
 
+		// $itemId = 101;
+		// $menuItems = new \stdClass;
+		// $menuItems->$itemId = new \stdClass;
+		// $menuItems->$itemId->id = $itemId;
+		// $menuItems->$itemId->title = 'root';
+		// $menuItems->$itemId->children = [];
+
+		// Helper::getMenuElements($itemId, $menuItems);
+
+		// $children = $menuItems->$itemId->children;
+
+		// while (count($children))
+		// {
+		// 	$child = array_shift($children);
+
+		// 	if (!empty($menuItems->$child->children))
+		// 	{
+		// 		array_push($children, ...$menuItems->$child->children);
+		// 	}
+		// }
+
+
 		if ($this->app->isClient('administrator') && $option === 'com_ajax'
 			&& $helix === 'ultimate' && !Factory::getUser()->id)
 		{

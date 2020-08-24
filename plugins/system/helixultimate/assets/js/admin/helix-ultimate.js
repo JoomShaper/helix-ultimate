@@ -1026,10 +1026,10 @@ jQuery(function ($) {
 
 		if ($helpElement.hasClass('show')) {
 			$helpElement.removeClass('show');
-			$helpElement.slideUp(300);
+			$helpElement.slideUp(200);
 		} else {
 			$helpElement.addClass('show');
-			$helpElement.slideDown(300);
+			$helpElement.slideDown(200);
 		}
 
 		let $siblings = $(this).closest('.control-group').siblings();

@@ -38,7 +38,7 @@ $fields = [
 		'title' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS_PLACEHOLDER'),
 		'menu-builder' => true,
-		'itemId' => $item->id,
+		'data' => ['itemid' => $item->id],
 		'value' => !empty($menuItemSettings->menu_custom_classes) ? $menuItemSettings->menu_custom_classes : ''
 	],
 	'menu_icon' => [
@@ -46,7 +46,7 @@ $fields = [
 		'title' => Text::_('HELIX_ULTIMATE_MENU_ICON'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_ICON_PLACEHOLDER'),
 		'menu-builder' => true,
-		'itemId' => $item->id,
+		'data' => ['itemid' => $item->id],
 		'value' => !empty($menuItemSettings->menu_icon) ? $menuItemSettings->menu_icon : ''
 	],
 	'menu_caption' => [
@@ -54,7 +54,7 @@ $fields = [
 		'title' => Text::_('HELIX_ULTIMATE_MENU_CAPTION'),
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_CAPTION_PLACEHOLDER'),
 		'menu-builder' => true,
-		'itemId' => $item->id,
+		'data' => ['itemid' => $item->id],
 		'value' => !empty($menuItemSettings->menu_caption) ? $menuItemSettings->menu_caption : ''
 	],
 	'mega_menu' => [
@@ -62,7 +62,7 @@ $fields = [
 		'title' => Text::_('HELIX_ULTIMATE_ENABLE_MEGA_MENU'),
 		'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', $item->title),
 		'menu-builder' => true,
-		'itemId' => $item->id,
+		'data' => ['itemid' => $item->id],
 		'value' => !empty($menuItemSettings->mega_menu) ? $menuItemSettings->mega_menu : ''
 	]
 ];

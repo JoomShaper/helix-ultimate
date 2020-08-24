@@ -21,22 +21,22 @@ $fields = [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
 		'menu-builder' => true,
-		'itemId' => $item->id,
+		'data' => ['itemid' => $item->id],
 		'value' => !empty($menuItemSettings->mega_width) ? $menuItemSettings->mega_width : ''
 	],
 	'mega_custom_classes' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_CUSTOM_CLASSES'),
 		'menu-builder' => true,
-		'itemId' => $item->id,
+		'data' => ['itemid' => $item->id],
 		'value' => !empty($menuItemSettings->mega_custom_classes) ? $menuItemSettings->mega_custom_classes : ''
 	],
 	'mega_alignment' => [
 		'type' => 'alignment',
-		'title' => Text::_('Alignments'),
-		'desc' => Text::_('Set mega menu alignment.'),
+		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_ALIGNMENT'),
+		'desc' => Text::_('HELIX_ULTIMATE_MEGA_MENU_ALIGNMENT_DESC'),
 		'default' => 'left',
-		'itemId' => $item->id,
+		'data' => ['itemid' => $item->id],
 		'value' => !empty($menuItemSettings->mega_alignment) ? $menuItemSettings->mega_alignment : ''
 	]
 ];

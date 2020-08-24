@@ -29,13 +29,17 @@ class HelixultimateFieldText
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
 		$attributes = (isset($attr['placeholder']) && $attr['placeholder']) ? 'placeholder="' . $attr['placeholder'] . '"' : '';
 
-		if ($isMenuBuilder)
-		{
-			$value = !empty($attr['value']) ? $attr['value'] : '';
-			$itemId = !empty($attr['itemId']) ? $attr['itemId'] : '';
-		}
-
+		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+		$dataAttrs = '';
+
+		if (!empty($attr['data']))
+		{
+			foreach ($attr['data'] as $dataName => $dataValue)
+			{
+				$dataAttrs .= ' data-' . $dataName . '=' . $dataValue;
+			}
+		}
 
 		$output  = '<div class="control-group ' . ($depend ? 'hidden' : '') . '" ' . ($depend ? 'data-depend="' . $depend . '"' : '') . '>';
 		$output .= '<label>' . $attr['title'] . '</label>';
@@ -48,7 +52,7 @@ class HelixultimateFieldText
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="text" data-itemid="' . $itemId . '" name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
+			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="text" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
 		}
 		else
 		{

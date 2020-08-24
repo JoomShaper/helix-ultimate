@@ -49,7 +49,6 @@ jQuery(function ($) {
 	handleDepend();
 
 	Object.values(togglers).forEach($element => {
-		console.log($element);
 		$(document).on('change', $element, function (e) {
 			e.preventDefault();
 			handleDepend();

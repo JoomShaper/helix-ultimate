@@ -55,8 +55,37 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 			</div>
 		</div>
 		<div class="hu-megamenu-row-container">
+			<?php
+				/**
+				 * Make a reserved column for making clone
+				 */
+				$column = [
+					'id' => 0,
+					'rowId' => $rowId,
+					'itemId' => $item->id,
+					'settings' => [
+						'col' => 12,
+						'col_type' => 'module',
+						'module' => '',
+						'module_position' => '',
+						'module_style' => 'sp_xhtml',
+						'menu_items' => '[]'
+					]
+				];
+
+				echo $columnLayout->render(
+					[
+						'item' => $item,
+						'columnSettings' => (object) $column,
+						'active' => $active,
+						'params' => $params,
+						'builder' => $builder,
+						'reserved' => true
+					]
+				);
+			?>
 			<div class="row hu-megamenu-layout-row">
-				<?php
+			<?php
 				if (!empty($rowSettings->columns))
 				{
 					foreach ($rowSettings->columns as $col)
@@ -74,10 +103,17 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 				}
 				else
 				{
+					$column = [
+						'id' => 0,
+						'rowId' => $rowId,
+						'itemId' => $item->id,
+						'settings' => []
+					];
+
 					echo $columnLayout->render(
 						[
 							'item' => $item,
-							'columnSettings' => !empty($rowSettings->columns) ? $rowSettings->columns : [],
+							'columnSettings' => (object) $column,
 							'active' => $active,
 							'params' => $params,
 							'builder' => $builder

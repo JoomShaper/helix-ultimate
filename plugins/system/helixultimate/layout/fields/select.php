@@ -30,6 +30,7 @@ class HelixultimateFieldSelect
 
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$options = !empty($attr['options']) ? $attr['options'] : ($attr['values'] || []);
+		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 
 		$dataAttrs = '';
 
@@ -41,7 +42,8 @@ class HelixultimateFieldSelect
 			}
 		}
 
-		$output  = '<div class="control-group ' . $key . '">';
+		$output  = '<div class="control-group ' . $key . ' ' . ($depend ? 'hidden' : '') . '" ' . ($depend ? 'data-depend="' . $depend . '"' : '') . '>';
+		// $output  = '<div class="control-group ' . $key . '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))
@@ -59,12 +61,9 @@ class HelixultimateFieldSelect
 			$output .= '<select class="hu-input input-select" data-attrname="' . $key . '">';
 		}
 
-		if (!empty($options))
+		foreach ($options as $key => $text)
 		{
-			foreach ($options as $key => $text)
-			{
-				$output .= '<option value="' . $key . '" ' . ($key === $value ? 'selected="selected"' : '') . '>' . $text . '</option>';
-			}
+			$output .= '<option value="' . $key . '" ' . ($key === $value ? 'selected="selected"' : '') . '>' . $text . '</option>';
 		}
 
 		$output .= '</select>';

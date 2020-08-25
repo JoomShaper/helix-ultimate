@@ -656,7 +656,7 @@ jQuery(function ($) {
 
 	// Switcher
 	$('#hu-style-form')
-		.find('input[type="checkbox"]')
+		.find('input[type="checkbox"]:not(.hu-menu-item-selector)')
 		.each(function () {
 			var $this = $(this);
 			$this.closest('.control-group').addClass('control-group-checkbox');

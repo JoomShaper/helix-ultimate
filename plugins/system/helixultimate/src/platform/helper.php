@@ -296,6 +296,30 @@ class Helper
 		$doc->addScriptOptions('data', $data);
 	}
 
+	public static function getModules()
+	{
+		$modules = [];
+
+		try
+		{
+			$db = Factory::getDbo();
+			$query = $db->getQuery(true);
+			$query->select('id, title, position, params')
+				->from($db->quoteName('#__modules'))
+				->where($db->quoteName('client_id') . ' = 0');
+			$query->order($db->quoteName('title') . ' ASC');
+			$db->setQuery($query);
+
+			$modules = $db->loadObjectList();
+		}
+		catch (Exception $e)
+		{
+			return [];
+		}
+
+		return $modules;
+	}
+
 	/**
 	 * Get template position
 	 */
@@ -342,30 +366,7 @@ class Helper
 		return $positions;
 	}
 
-	public static function getModules()
-	{
-		$modules = [];
-
-		try
-		{
-			$db    = Factory::getDbo();
-			$query = $db->getQuery(true)
-				->select('id, title, position, params')
-				->from($db->quoteName('#__modules'))
-				->where($db->quoteName('client_id') . ' = 0');
-			$query->order($db->quoteName('title') . ' ASC');
-
-			return $db->loadObjectList();
-		}
-		catch (Exception $e)
-		{
-			return [];
-		}
-
-		return $modules;
-	}
-
-	public static function getMenuElements($parentId, &$menuItemList)
+	public static function getMenuItems($parentId, &$menuItemList)
 	{
 		$elements = [];
 
@@ -391,7 +392,7 @@ class Helper
 		{
 			foreach ($elements as $element)
 			{
-				if (isset($menuItemList->{$parentId}))
+				if (isset($menuItemList->$parentId))
 				{
 					$menuItemList->$parentId->children[] = $element->id;
 				}
@@ -403,7 +404,7 @@ class Helper
 				$temp->children = [];
 				$menuItemList->{$element->id} = $temp;
 
-				self::getMenuElements($temp->id, $menuItemList);
+				self::getMenuItems($element->id, $menuItemList);
 			}
 		}
 	}

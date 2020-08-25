@@ -18,19 +18,21 @@ extract($displayData);
 
 $settingsId = 'hu-mega-row-' . $item->id . '-' . $id;
 $positions = Helper::getTemplatePositions();
-$modules = Helper::getModules();
+$siteModules = Helper::getModules();
 $positionOptions = [];
 $moduleOptions = [];
+
+foreach ($siteModules as $siteModule)
+{
+	$moduleOptions[$siteModule->id] = $siteModule->title;
+}
 
 foreach ($positions as $position)
 {
 	$positionOptions[$position] = $position;
 }
 
-foreach ($modules as $module)
-{
-	$moduleOptions[$module->id] = $module->title;
-}
+
 
 $fields = [
 	'col_label' => [
@@ -48,13 +50,13 @@ $fields = [
 		'menu-builder' => true,
 		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
 		'options' => [
-			'position' => Text::_('Module Position'),
-			'module' => Text::_('Module'),
-			'menu' => Text::_('Menu Item'),
+			'module_position' => Text::_('HELIX_ULTIMATE_COLUMN_SETTINGS_MODULE_POSITION'),
+			'module' => Text::_('HELIX_ULTIMATE_COLUMN_SETTINGS_MODULE'),
+			'menu_items' => Text::_('HELIX_ULTIMATE_COLUMN_SETTINGS_MENU_ITEMS'),
 		],
 		'value' => !empty($settings->col_type) ? $settings->col_type : '',
 	],
-	'module_positions' => [
+	'module_position' => [
 		'type' => 'select',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_POSITIONS'),
 		'desc' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_POSITIONS_DESC'),
@@ -62,16 +64,18 @@ $fields = [
 		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
 		'options' => $positionOptions,
 		'value' => !empty($settings->module_positions) ? $settings->module_positions : '',
+		'depend' => 'col_type:module_position'
 	],
-	// 'module' => [
-	// 	'type' => 'select',
-	// 	'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE'),
-	// 	'desc' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_DESC'),
-	// 	'menu-builder' => true,
-	// 	'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
-	// 	'options' => $moduleOptions,
-	// 	'value' => !empty($settings->module) ? $settings->module : '',
-	// ],
+	'module' => [
+		'type' => 'select',
+		'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE'),
+		'desc' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_DESC'),
+		'menu-builder' => true,
+		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
+		'options' => $moduleOptions,
+		'value' => !empty($settings->module) ? $settings->module : '',
+		'depend' => 'col_type:module'
+	],
 	'module_style' => [
 		'type' => 'select',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_STYLE'),
@@ -84,11 +88,14 @@ $fields = [
 			'none' => Text::_('None'),
 		],
 		'value' => !empty($settings->module_style) ? $settings->module_style : '',
+		'depend' => 'col_type:module|module_position'
 	],
 	'menu_items' => [
 		'type' => 'menuHierarchy',
 		'title' => 'Menu Items',
-		'itemid' => $item->id
+		'desc' => 'Check menu item(s)',
+		'itemid' => $item->id,
+		'depend' => 'col_type:menu_items'
 	],
 ];
 ?>

@@ -24,6 +24,16 @@ jQuery(function ($) {
 		row_hide_desktop: false,
 	};
 
+	const defaultColSettings = {
+		col: 12,
+		col_label: '',
+		col_type: 'module',
+		module_position: '',
+		module: '',
+		module_style: 'sp_xhtml',
+		menu_items: '[]',
+	};
+
 	const fields = getFields();
 	const rowSettingsFields = getRowSettingsFields();
 
@@ -535,32 +545,36 @@ jQuery(function ($) {
 
 				let columns = [];
 
-				grids.forEach((col, index) => {
-					columnStr += `
-						<div class="hu-megamenu-layout-column col-${col}" data-itemid="${itemId}" data-rowid="${rowId}" data-columnid="${
-						index + 1
-					}">
-							<div class="hu-megamenu-column">
-								<span class="hu-megamenu-column-title">col-${col}</span>
-								<a class="hu-megamenu-column-options" href="#">
-									<svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill="#020B53" fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd" opacity=".4"></path></svg>
-								</a>
-							</div>
-						</div>
-					`;
+				const $reservedColumn = $section
+					.find('.hu-megamenu-reserved-layout-column')
+					.clone(true);
 
+				if ($reservedColumn) {
+					$reservedColumn.removeClass('col-12');
+				}
+
+				grids.forEach((col, index) => {
+					$reservedColumn
+						.removeClass('hu-megamenu-reserved-layout-column')
+						.addClass('hu-megamenu-layout-column')
+						.addClass(`col-${col}`);
+					$reservedColumn.data('rowid', rowId);
+					$reservedColumn.attr('data-rowid', rowId);
+					$reservedColumn.data('columnid', index + 1);
+					$reservedColumn.attr('data-columnid', index + 1);
+
+					columnStr += $reservedColumn[0].outerHTML;
+
+					defaultColSettings.col = col;
 					columns.push({
 						id: index + 1,
 						itemId,
+						settings: defaultColSettings,
 						rowId,
-						settings: {
-							col,
-						},
 					});
 				});
 
 				const rows = [...state.menuItems[itemId].mega_rows];
-				console.log(rowId);
 				const rowIndex = rows.findIndex(
 					row => row.id >> 0 === rowId >> 0
 				);
@@ -748,7 +762,7 @@ jQuery(function ($) {
 
 		if (!!row) {
 			const fields = rowSettingsFields.reduce(
-				(a, c) => [...a, ...c.selectors],
+				(acc, curr) => [...acc, ...curr.selectors],
 				[]
 			);
 			fields.forEach(field => {
@@ -775,7 +789,7 @@ jQuery(function ($) {
 		function (e) {
 			e.preventDefault();
 			$(this).helixUltimateOptionsModal({
-				flag: 'row-setting',
+				flag: 'col-setting',
 				title: "<span class='fas fa-cog'></span> Column Settings",
 				class: 'hu-modal-small',
 			});
@@ -791,6 +805,7 @@ jQuery(function ($) {
 			const columnId = $parent.data('columnid');
 
 			const $cloned = $parent.find('.hu-mega-column-setting').clone(true);
+			console.log($parent, $cloned);
 
 			$cloned.find('select.hu-input').each(function () {
 				$(this).chosen({ width: '100%' });

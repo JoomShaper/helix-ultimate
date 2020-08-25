@@ -19,7 +19,7 @@ $columnSettingsLayout = new FileLayout('fields.menuBuilder.settings.column', HEL
 ?>
 
 <div
-	class="hu-megamenu-layout-column col-<?php echo $col; ?>"
+	class="<?php echo !empty($reserved) ? 'hu-megamenu-reserved-layout-column' : 'hu-megamenu-layout-column'; ?> col-<?php echo $col; ?>"
 	data-itemid="<?php echo $columnSettings->itemId; ?>"
 	data-rowid="<?php echo $columnSettings->rowId; ?>"
 	data-columnid="<?php echo $columnSettings->id; ?>"

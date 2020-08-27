@@ -60,7 +60,7 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 				 * Make a reserved column for making clone
 				 */
 				$column = [
-					'id' => 0,
+					'id' => 1,
 					'rowId' => $rowId,
 					'itemId' => $item->id,
 					'settings' => [

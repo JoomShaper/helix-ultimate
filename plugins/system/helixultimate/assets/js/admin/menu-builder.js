@@ -27,15 +27,27 @@ jQuery(function ($) {
 	const defaultColSettings = {
 		col: 12,
 		col_label: '',
+		enable_col_title: false,
+		col_title: '',
 		col_type: 'module',
 		module_position: '',
 		module: '',
 		module_style: 'sp_xhtml',
 		menu_items: '[]',
+		col_id: '',
+		col_class: '',
+		col_margin: '',
+		col_padding: '',
+		col_hide_phone: false,
+		col_hide_large_phone: false,
+		col_hide_tablet: false,
+		col_hide_small_desktop: false,
+		col_hide_desktop: false,
 	};
 
 	const fields = getFields();
 	const rowSettingsFields = getRowSettingsFields();
+	const colSettingsFields = getColSettingsFields();
 
 	const setState = function (object, callback = undefined) {
 		Object.entries(object).forEach(([key, value]) => {
@@ -56,8 +68,8 @@ jQuery(function ($) {
 		 */
 		handlingMenuItemSelection();
 		activateMenuItemSorting();
-		makeRowSortable();
 		addNewRow();
+		makeRowSortable();
 		deleteRow();
 		toggleColumnOptions();
 		generateColumns();
@@ -155,6 +167,40 @@ jQuery(function ($) {
 		];
 	}
 
+	function getColSettingsFields() {
+		return [
+			{
+				event: 'blur',
+				parent: '.hu-menu-builder',
+				selectors: [
+					'col_label',
+					'col_title',
+					'col_id',
+					'col_class',
+					'col_margin',
+					'col_padding',
+				],
+			},
+			{
+				event: 'change',
+				parent: '.hu-menu-builder',
+				selectors: [
+					'enable_col_title',
+					'col_type',
+					'module',
+					'module_position',
+					'module_style',
+					'menu_items',
+					'col_hide_phone',
+					'col_hide_large_phone',
+					'col_hide_tablet',
+					'col_hide_small_desktop',
+					'col_hide_desktop',
+				],
+			},
+		];
+	}
+
 	(function handleInputChange(fields) {
 		fields.forEach(events => {
 			events.selectors.forEach(selector => {
@@ -233,6 +279,64 @@ jQuery(function ($) {
 			});
 		});
 	})(rowSettingsFields);
+
+	(function handleColSettingsInputChange(fields) {
+		fields.forEach(events => {
+			events.selectors.forEach(selector => {
+				$(document).on(
+					events.event,
+					`input[name=${selector}], select[name=${selector}]`,
+					function (e) {
+						let value = $(this).val();
+						const name = $(this).attr('name'),
+							tagName = $(this).prop('tagName'),
+							itemId = $(this).data('itemid'),
+							rowId = $(this).data('rowid'),
+							colId = $(this).data('columnid');
+						const type =
+							tagName.toLowerCase() === 'input'
+								? $(this).attr('type')
+								: false;
+
+						if (type && type === 'checkbox') {
+							value = $(this).prop('checked') >> 0;
+						}
+
+						if (!itemId || !rowId || !colId) return;
+
+						let rows = [...state.menuItems[itemId].mega_rows];
+						let rowIndex = rows.findIndex(row => row.id === rowId);
+
+						if (rowIndex > -1) {
+							let columns = rows[rowIndex].columns;
+							let colIndex = columns.findIndex(
+								col => col.id === colId
+							);
+							if (colIndex > -1) {
+								let colSettings = {
+									...columns[colIndex].settings,
+									[name]: value,
+								};
+								rows[rowIndex].columns[
+									colIndex
+								].settings = colSettings;
+							}
+						}
+
+						setState({
+							menuItems: {
+								...state.menuItems,
+								[itemId]: {
+									...state.menuItems[itemId],
+									mega_rows: rows,
+								},
+							},
+						});
+					}
+				);
+			});
+		});
+	})(colSettingsFields);
 
 	function render() {
 		// Update input value
@@ -330,7 +434,6 @@ jQuery(function ($) {
 			.sortable({
 				placeholder: 'ui-state-highlight',
 				forcePlaceholderSize: true,
-				containment: '.hu-mega-basic-settings',
 				handle: '.hu-megamenu-move-row',
 				cursor: 'move',
 				opacity: 1,
@@ -338,6 +441,10 @@ jQuery(function ($) {
 				tolerance: 'pointer',
 				start: function (event, ui) {
 					prevIndex = ui.item.index();
+					$('#hu-megamenu-layout-container.active-layout')
+						.find('.ui-state-highlight')
+						.addClass($(ui.item).attr('class'))
+						.css('height', $(ui.item).outerHeight());
 				},
 				update: function (event, ui) {
 					const item = ui.item;
@@ -378,11 +485,21 @@ jQuery(function ($) {
 			e.preventDefault();
 			$('.hu-megamenu-layout-row').sortable('destroy');
 			const $parent = $(this).closest('.hu-megamenu-layout-section');
-			const $cloned = $('#hu-megamenu-layout-container.active-layout')
-				.find('.hu-reserved-layout-section')
-				.clone(true);
-			const rowId = getLastRowId() + 1;
+			const $section = $(
+				'#hu-megamenu-layout-container.active-layout'
+			).find('.hu-reserved-layout-section');
 
+			$section.find('select.hu-input').each(function () {
+				$(this).chosen('destroy');
+			});
+
+			const $cloned = $section.clone(true);
+
+			$cloned.find('select.hu-input').each(function () {
+				$(this).chosen({ width: '100%' });
+			});
+
+			const rowId = getLastRowId() + 1;
 			const itemId = $parent.data('itemid');
 
 			$cloned
@@ -392,6 +509,17 @@ jQuery(function ($) {
 				.data('rowid', rowId)
 				.hide();
 
+			const $colSettings = $cloned.find(
+				'.hu-megamenu-layout-row .hu-mega-column-setting'
+			);
+
+			$colSettings.data('rowid', rowId).attr('data-rowid', rowId);
+			$colSettings.data('columnid', 1).attr('data-columnid', 1);
+			$colSettings
+				.closest('.hu-megamenu-layout-column')
+				.data('columnid', 1)
+				.attr('data-columnid', 1);
+
 			$cloned.insertAfter($parent);
 			$cloned.slideDown(300);
 
@@ -399,7 +527,9 @@ jQuery(function ($) {
 			insertNewRow(itemId, insertIndex, {
 				id: rowId,
 				settings: defaultRowSettings,
-				columns: [],
+				columns: [
+					{ id: 1, itemId, rowId, settings: defaultColSettings },
+				],
 			});
 
 			const $column = $cloned.find('.hu-megamenu-layout-column');
@@ -528,6 +658,9 @@ jQuery(function ($) {
 
 			let layout = $(this).data('layout');
 
+			// If layout is a number then make it string for performing trim/split etc.
+			layout = typeof layout === 'number' ? layout.toString() : layout;
+
 			if (layout === 'custom') {
 				layout = prompt(
 					'Enter your custom layout like 4+2+2+2+2 as total 12 grid',
@@ -547,21 +680,24 @@ jQuery(function ($) {
 
 				const $reservedColumn = $section
 					.find('.hu-megamenu-reserved-layout-column')
-					.clone(true);
+					.clone();
 
 				if ($reservedColumn) {
 					$reservedColumn.removeClass('col-12');
+					$reservedColumn
+						.removeClass('hu-megamenu-reserved-layout-column')
+						.addClass('hu-megamenu-layout-column');
+					$reservedColumn.data('rowid', rowId);
+					$reservedColumn.attr('data-rowid', rowId);
 				}
 
 				grids.forEach((col, index) => {
-					$reservedColumn
-						.removeClass('hu-megamenu-reserved-layout-column')
-						.addClass('hu-megamenu-layout-column')
-						.addClass(`col-${col}`);
-					$reservedColumn.data('rowid', rowId);
-					$reservedColumn.attr('data-rowid', rowId);
+					$reservedColumn.addClass(`col-${col}`);
 					$reservedColumn.data('columnid', index + 1);
 					$reservedColumn.attr('data-columnid', index + 1);
+					$reservedColumn
+						.find('.hu-megamenu-column-title')
+						.text(`col-${col}`);
 
 					columnStr += $reservedColumn[0].outerHTML;
 
@@ -590,8 +726,16 @@ jQuery(function ($) {
 					},
 				});
 
-				const $gParent = $(this).closest('.hu-megamenu-layout-section');
-				$gParent.find('.hu-megamenu-layout-row').html(columnStr);
+				const $layoutRow = $section.find('.hu-megamenu-layout-row');
+				$layoutRow.html(columnStr);
+
+				// Explicitly remove the .chzn-container i.e the chosen as the chosen('destroy') not working here.
+				$layoutRow
+					.find('.hu-mega-column-setting select.hu-input')
+					.each(function () {
+						$(this).next('.chzn-container').remove();
+					});
+
 				$(this).closest('.hu-megamenu-column-list').removeClass('show');
 				columnSorting();
 			} else {
@@ -731,7 +875,7 @@ jQuery(function ($) {
 		function (e) {
 			e.preventDefault();
 			$(this).helixUltimateOptionsModal({
-				flag: 'row-setting',
+				flag: 'menu-row-setting',
 				title: "<span class='fas fa-cog'></span> Row Settings",
 				class: 'hu-modal-small',
 			});
@@ -780,6 +924,48 @@ jQuery(function ($) {
 
 	/** ====================================================== */
 
+	function reflectStateDataIntoClonedColumnSettings(
+		itemId,
+		rowId,
+		colId,
+		$container
+	) {
+		const rows = [...state.menuItems[itemId].mega_rows];
+		const row = rows.find(row => row.id === rowId);
+
+		if (!row) return;
+		const col = row.columns.find(column => column.id === colId);
+
+		if (!!col) {
+			const fields = colSettingsFields.reduce(
+				(acc, curr) => [...acc, ...curr.selectors],
+				[]
+			);
+			fields.forEach(field => {
+				let $inputField = $container.find(`input[name=${field}]`);
+				let $inputSelect = $container.find(`select[name=${field}]`);
+
+				if ($inputField.length) {
+					const type = $inputField.attr('type');
+					$inputField.data('rowid', rowId).attr('data-rowid', rowId);
+					if (type === 'checkbox') {
+						$inputField.prop(
+							'checked',
+							col.settings[field] ? true : false
+						);
+					} else {
+						$inputField.val(col.settings[field]);
+					}
+				}
+
+				if ($inputSelect.length) {
+					$inputSelect
+						.val(col.settings[field])
+						.trigger('liszt:updated');
+				}
+			});
+		}
+	}
 	/**
 	 * Column settings
 	 */
@@ -789,27 +975,32 @@ jQuery(function ($) {
 		function (e) {
 			e.preventDefault();
 			$(this).helixUltimateOptionsModal({
-				flag: 'col-setting',
+				flag: 'menu-col-setting',
 				title: "<span class='fas fa-cog'></span> Column Settings",
 				class: 'hu-modal-small',
 			});
 
 			const $parent = $(this).closest('.hu-megamenu-layout-column');
 
-			$parent.find('select.hu-input').each(function () {
+			const $colSettings = $parent.find('.hu-mega-column-setting');
+			$colSettings.find('select.hu-input').each(function () {
 				$(this).chosen('destroy');
 			});
 
-			const itemId = $parent.data('itemid');
-			const rowId = $parent.data('rowid');
-			const columnId = $parent.data('columnid');
+			const itemId = $colSettings.data('itemid');
+			const rowId = $colSettings.data('rowid');
+			const columnId = $colSettings.data('columnid');
 
-			const $cloned = $parent.find('.hu-mega-column-setting').clone(true);
-			console.log($parent, $cloned);
-
+			const $cloned = $colSettings.clone(true);
 			$cloned.find('select.hu-input').each(function () {
 				$(this).chosen({ width: '100%' });
 			});
+			reflectStateDataIntoClonedColumnSettings(
+				itemId,
+				rowId,
+				columnId,
+				$cloned
+			);
 
 			$('.hu-options-modal-inner').html(
 				$cloned

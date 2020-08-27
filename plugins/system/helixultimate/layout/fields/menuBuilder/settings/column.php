@@ -16,6 +16,11 @@ use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
+if (!\class_exists('SettingsFields'))
+{
+	require_once __DIR__ . '/settingsFields.php';
+}
+
 $settingsId = 'hu-mega-row-' . $item->id . '-' . $id;
 $positions = Helper::getTemplatePositions();
 $siteModules = Helper::getModules();
@@ -32,72 +37,20 @@ foreach ($positions as $position)
 	$positionOptions[$position] = $position;
 }
 
+$fields = [];
 
+$settingsFields = new SettingsFields(
+	[
+		'id' => $id,
+		'rowId' => $rowId,
+		'item' => $item,
+		'settings' => $settings,
+		'positionOptions' => $positionOptions,
+		'moduleOptions' => $moduleOptions
+	]
+);
+$fields = $settingsFields->getColumnSettingsFields();
 
-$fields = [
-	'col_label' => [
-		'type' => 'text',
-		'title' => Text::_('HELIX_ULTIMATE_MEGA_COL_LABEL'),
-		'desc' => Text::_('HELIX_ULTIMATE_MEGA_COL_LABEL_DESC'),
-		'menu-builder' => true,
-		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
-		'value' => !empty($settings->col_label) ? $settings->col_label : '',
-	],
-	'col_type' => [
-		'type' => 'select',
-		'title' => Text::_('HELIX_ULTIMATE_MEGA_COL_TYPE'),
-		'desc' => Text::_('HELIX_ULTIMATE_MEGA_COL_TYPE_DESC'),
-		'menu-builder' => true,
-		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
-		'options' => [
-			'module_position' => Text::_('HELIX_ULTIMATE_COLUMN_SETTINGS_MODULE_POSITION'),
-			'module' => Text::_('HELIX_ULTIMATE_COLUMN_SETTINGS_MODULE'),
-			'menu_items' => Text::_('HELIX_ULTIMATE_COLUMN_SETTINGS_MENU_ITEMS'),
-		],
-		'value' => !empty($settings->col_type) ? $settings->col_type : '',
-	],
-	'module_position' => [
-		'type' => 'select',
-		'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_POSITIONS'),
-		'desc' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_POSITIONS_DESC'),
-		'menu-builder' => true,
-		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
-		'options' => $positionOptions,
-		'value' => !empty($settings->module_positions) ? $settings->module_positions : '',
-		'depend' => 'col_type:module_position'
-	],
-	'module' => [
-		'type' => 'select',
-		'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE'),
-		'desc' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_DESC'),
-		'menu-builder' => true,
-		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
-		'options' => $moduleOptions,
-		'value' => !empty($settings->module) ? $settings->module : '',
-		'depend' => 'col_type:module'
-	],
-	'module_style' => [
-		'type' => 'select',
-		'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_STYLE'),
-		'desc' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_STYLE_DESC'),
-		'menu-builder' => true,
-		'data' => ['rowid' => $id, 'itemid' => $item->id, 'columnid' => $id],
-		'options' => [
-			'sp_xhtml' => Text::_('sp_xhtml'),
-			'default' => Text::_('Default'),
-			'none' => Text::_('None'),
-		],
-		'value' => !empty($settings->module_style) ? $settings->module_style : '',
-		'depend' => 'col_type:module|module_position'
-	],
-	'menu_items' => [
-		'type' => 'menuHierarchy',
-		'title' => 'Menu Items',
-		'desc' => 'Check menu item(s)',
-		'itemid' => $item->id,
-		'depend' => 'col_type:menu_items'
-	],
-];
 ?>
 
 <div class="hu-mega-column-setting hidden"
@@ -105,9 +58,23 @@ $fields = [
 	data-rowid="<?php echo $rowId; ?>"
 	data-columnid="<?php echo $id; ?>"
 	>
-	<div class="hu-option-group-list">
-		<?php foreach ($fields as $key => $field): ?>
-			<?php echo $builder->renderFieldElement($key, $field); ?>
-		<?php endforeach ?>
-	</div>
+	<?php foreach ($fields as $name => $group): ?>
+		<?php if (!empty($group)): ?>
+			<div class="hu-option-group hu-option-group-<?php echo strtolower($name) . ' ' . ($group['active'] ? 'active' : ''); ?>" >
+				<div class="hu-option-group-title">
+					<span class="fas fa-angle-right"></span>
+					<?php if (!empty($group['icon'])): ?>
+						<span class="<?php echo $group['icon']; ?>"></span>
+					<?php endif ?>
+					<?php echo $group['title']; ?>
+				</div>
+
+				<div class="hu-option-group-list">
+					<?php foreach ($group['group_fields'] as $key => $field): ?>
+						<?php echo $builder->renderFieldElement($key, $field); ?>
+					<?php endforeach ?>	
+				</div>
+			</div>
+		<?php endif ?>
+	<?php endforeach ?>
 </div>

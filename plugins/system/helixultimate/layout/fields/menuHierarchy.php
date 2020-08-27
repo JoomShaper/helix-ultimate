@@ -34,6 +34,15 @@ class HelixultimateFieldMenuHierarchy
 		$value = isset($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 
+		if (!empty($value) && \is_string($value))
+		{
+			$value = json_decode($value, true);
+		}
+		else
+		{
+			$value = [];
+		}
+
 		if (!empty($attr['data']))
 		{
 			foreach ($attr['data'] as $dataName => $dataValue)
@@ -60,12 +69,36 @@ class HelixultimateFieldMenuHierarchy
 
 		Helper::getMenuItems($itemId, $menuElements);
 
+		/**
+		 * Calculate the total menu Items for detecting the select all checkbox.
+		 */
+		$totalElements = 0;
+		$children = $menuElements->$itemId->children;
+		$totalElements += count($children);
+		$allElements = [];
+		$allElements = array_merge($allElements, $children);
+
+		while (count($children))
+		{
+			$child = array_shift($children);
+
+			if (!empty($menuElements->$child->children))
+			{
+				array_unshift($children, ...$menuElements->$child->children);
+				$totalElements += count($menuElements->$child->children);
+				$allElements = array_merge($allElements, $menuElements->$child->children);
+			}
+		}
+
 		if (!empty($menuElements) && !empty($menuElements->$itemId->children))
 		{
+			$checkAll = count($value) === $totalElements ? 'checked="checked"' : '';
+			$elements = ' data-elements=\'' . json_encode($allElements) . '\'';
+
 			$html[] = '<ul class="hu-menu-hierarchy-list">';
 			$html[] = '<li class="hu-menu-hierarchy-item level-0">';
 			$html[] = '	<label class="hu-menu-item-title">';
-			$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector select-all level-0" data-level="0"/>';
+			$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector select-all level-0" data-level="0" ' . $checkAll . $elements . '/>';
 			$html[] = '		<span>' . Text::_('HELIX_ULTIMATE_MENU_HIERARCHY_SELECT_ALL') . '</span>';
 			$html[] = '	</label>';
 			$html[] = '</li>';
@@ -78,10 +111,11 @@ class HelixultimateFieldMenuHierarchy
 				$margin = ($menuElements->$child->level - 2) * 10;
 				$level = $menuElements->$child->level - 1;
 				$val = $menuElements->$child->id;
+				$check = \in_array($val, $value) ? 'checked="checked"' : '';
 
 				$html[] = '<li class="hu-menu-hierarchy-item level-' . $level . '">';
 				$html[] = '	<label class="hu-menu-item-title">';
-				$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector level-' . $level . '" value="' . $val . '" data-level="' . $level . '" />';
+				$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector level-' . $level . '" value="' . $val . '" data-level="' . $level . '" ' . $check . ' />';
 				$html[] = '		<span style="margin-left: ' . $margin . 'px;">' . $menuElements->$child->title . '</span>';
 				$html[] = '	</label>';
 				$html[] = '</li>';
@@ -95,7 +129,12 @@ class HelixultimateFieldMenuHierarchy
 			$html[] = '</ul>';
 		}
 
-		$html[] = '<input type="hidden" name="' . $key . '" value=\'' . $value . '\' />';
+		if (\is_array($value))
+		{
+			$value = json_encode($value);
+		}
+
+		$html[] = '<input type="hidden" name="' . $key . '" value=\'' . $value . '\' ' . $dataAttrs . ' />';
 		$html[] = '</div>';
 
 		return implode("\n", $html);

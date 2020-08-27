@@ -39,6 +39,11 @@ jQuery(function ($) {
 				}
 
 				value = value.split('|');
+				controllerValue =
+					controllerValue !== undefined &&
+					typeof controllerValue === 'number'
+						? controllerValue.toString()
+						: controllerValue;
 
 				if (value.indexOf(controllerValue) > -1) {
 					$(el).slideDown(300);
@@ -73,34 +78,41 @@ jQuery(function ($) {
 			const $siblings = $parent.find(
 				'.hu-menu-hierarchy-item:not(.level-0)'
 			);
+			const $inputField = $(this)
+				.closest('.hu-menu-hierarchy-container')
+				.find('input[type=hidden]');
 
-			let val = $(this).prop('checked');
+			let checked = $(this).prop('checked');
 			let value = [];
 
-			if (!val) if (value.length > 0) value = [];
+			if (!checked) if (value.length > 0) value = [];
 
 			$siblings.each(function () {
 				const $input = $(this).find('input[type=checkbox]');
-				$input.prop('checked', val);
+				$input.prop('checked', checked);
 				const v = $input.val();
-				if (val) if (value.indexOf(v) === -1) value.push(v);
+				if (checked) if (value.indexOf(v) === -1) value.push(v);
 			});
 
-			$('.hu-menu-hierarchy-container input[type=hidden]').val(
-				JSON.stringify(value)
-			);
+			$inputField.val(JSON.stringify(value)).trigger('change');
 		}
 	);
+
 	$(document).on(
 		'change',
 		'.hu-menu-hierarchy-container .hu-menu-item-selector:not(.level-0)',
 		function (e) {
 			e.preventDefault();
-			let value = $(
-				'.hu-menu-hierarchy-container input[type=hidden]'
-			).val();
+			const $inputField = $(this)
+				.closest('.hu-menu-hierarchy-container')
+				.find('input[type=hidden]');
+			const $selectAllInputField = $(this)
+				.closest('.hu-menu-hierarchy-list')
+				.find('input[type=checkbox].select-all');
+			const elements = $selectAllInputField.data('elements');
 
-			value = value.length && JSON.parse(value);
+			let value = $inputField.val();
+			value = (value.length && JSON.parse(value)) || [];
 
 			const val = $(this).val();
 
@@ -113,9 +125,13 @@ jQuery(function ($) {
 				}
 			}
 
-			$('.hu-menu-hierarchy-container input[name=menu-hierarchy]').val(
-				JSON.stringify(value)
-			);
+			if (value.length === elements.length) {
+				$selectAllInputField.prop('checked', true);
+			} else {
+				$selectAllInputField.prop('checked', false);
+			}
+
+			$inputField.val(JSON.stringify(value)).trigger('change');
 		}
 	);
 });

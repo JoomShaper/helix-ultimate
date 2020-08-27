@@ -29,7 +29,7 @@ class HelixultimateFieldSelect
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
 
 		$value = !empty($attr['value']) ? $attr['value'] : '';
-		$options = !empty($attr['options']) ? $attr['options'] : ($attr['values'] || []);
+		$options = !empty($attr['options']) ? $attr['options'] : (!empty($attr['values']) ? $attr['values'] : []);
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 
 		$dataAttrs = '';
@@ -43,7 +43,6 @@ class HelixultimateFieldSelect
 		}
 
 		$output  = '<div class="control-group ' . $key . ' ' . ($depend ? 'hidden' : '') . '" ' . ($depend ? 'data-depend="' . $depend . '"' : '') . '>';
-		// $output  = '<div class="control-group ' . $key . '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))
@@ -54,7 +53,7 @@ class HelixultimateFieldSelect
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<select class="hu-input input-select hu-menu-builder-"' . $key . ' name="' . $key . '" ' . $dataAttrs . '>';
+			$output .= '<select class="hu-input input-select hu-menu-builder-' . $key . '" name="' . $key . '" ' . $dataAttrs . '>';
 		}
 		else
 		{

@@ -303,7 +303,11 @@ jQuery(function ($) {
 				$('.hu-options-modal-overlay, .hu-options-modal').remove();
 				$('body').removeClass('hu-options-modal-open');
 				break;
-
+			case 'menu-row-setting':
+			case 'menu-col-setting':
+				$('.hu-options-modal-overlay, .hu-options-modal').remove();
+				$('body').removeClass('hu-options-modal-open');
+				break;
 			default:
 				alert('You are doing somethings wrongs. Try again');
 		}

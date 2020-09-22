@@ -74,7 +74,32 @@ jQuery(function ($) {
 		toggleColumnOptions();
 		generateColumns();
 		columnSorting();
+		toggleMegaSettings();
 	})();
+
+	function toggleMegaSettings() {
+		$('.hu-menu-item-settings').each(function () {
+			const itemId = $(this).data('itemid');
+			let { mega_menu } = state.menuItems[itemId];
+			mega_menu = mega_menu >> 0;
+			const $basicSettings = $('.hu-mega-basic-settings');
+			if (mega_menu) {
+				$basicSettings.slideDown(300);
+			} else {
+				$basicSettings.slideUp(300);
+			}
+		});
+
+		$(document).on('change', 'input[name=mega_menu]', function (e) {
+			e.preventDefault();
+
+			if ($(this).prop('checked')) {
+				$('.hu-mega-basic-settings').slideDown(300);
+			} else {
+				$('.hu-mega-basic-settings').slideUp(300);
+			}
+		});
+	}
 
 	function initBuilderData() {
 		const $builder = $('.hu-menu-builder');
@@ -83,7 +108,7 @@ jQuery(function ($) {
 			const itemId = $(this).data('cid');
 
 			const item = {
-				id: $(this).data('cid'),
+				id: itemId,
 				title: $(this).data('name'),
 				menu_custom_classes: '',
 				menu_icon: '',
@@ -91,11 +116,19 @@ jQuery(function ($) {
 				mega_menu: 0,
 				mega_width: '',
 				mega_custom_classes: '',
+				mega_alignment: 'left',
 				mega_rows: [
 					{
 						id: 1,
 						settings: defaultRowSettings,
-						columns: [],
+						columns: [
+							{
+								id: 1,
+								rowId: 1,
+								itemId,
+								settings: defaultColSettings,
+							},
+						],
 					},
 				],
 			};
@@ -208,6 +241,8 @@ jQuery(function ($) {
 					events.event,
 					`${events.parent} ${selector}`,
 					function (e) {
+						e.preventDefault();
+
 						let value = $(this).val();
 						const name = $(this).attr('name'),
 							itemId = $(this).data('itemid'),
@@ -280,13 +315,15 @@ jQuery(function ($) {
 		});
 	})(rowSettingsFields);
 
-	(function handleColSettingsInputChange(fields) {
+	function handleColSettingsInputChange(fields) {
 		fields.forEach(events => {
 			events.selectors.forEach(selector => {
 				$(document).on(
 					events.event,
 					`input[name=${selector}], select[name=${selector}]`,
 					function (e) {
+						e.preventDefault();
+
 						let value = $(this).val();
 						const name = $(this).attr('name'),
 							tagName = $(this).prop('tagName'),
@@ -336,12 +373,12 @@ jQuery(function ($) {
 				);
 			});
 		});
-	})(colSettingsFields);
+	}
 
 	function render() {
-		// Update input value
 		console.log('state:', state);
 
+		// Update input value
 		$('.hu-menu-builder')
 			.find('.hu-megamenu-field')
 			.val(JSON.stringify(state));
@@ -356,10 +393,9 @@ jQuery(function ($) {
 	}
 
 	function renderingRowLabel() {
-		// Render row labels
-		const menuItems = state.menuItems;
+		const menuItems = { ...state.menuItems };
 		Object.values(menuItems).forEach(items => {
-			if (items.mega_rows.length > 0) {
+			if (items && items.mega_rows && items.mega_rows.length > 0) {
 				items.mega_rows.forEach(row => {
 					let $parent = $(
 						`.hu-menu-builder .hu-megamenu-layout-section[data-itemid=${items.id}][data-rowid=${row.id}]`
@@ -537,6 +573,7 @@ jQuery(function ($) {
 			$column.attr('data-rowid', rowId);
 
 			columnSorting();
+			// handleColSettingsInputChange(colSettingsFields);
 		});
 	}
 
@@ -683,7 +720,6 @@ jQuery(function ($) {
 					.clone();
 
 				if ($reservedColumn) {
-					$reservedColumn.removeClass('col-12');
 					$reservedColumn
 						.removeClass('hu-megamenu-reserved-layout-column')
 						.addClass('hu-megamenu-layout-column');
@@ -692,12 +728,22 @@ jQuery(function ($) {
 				}
 
 				grids.forEach((col, index) => {
+					let classNames = $reservedColumn.attr('class');
+					classNames = classNames.replace(/col-\d+/g, '');
+					$reservedColumn.attr('class', classNames);
 					$reservedColumn.addClass(`col-${col}`);
-					$reservedColumn.data('columnid', index + 1);
-					$reservedColumn.attr('data-columnid', index + 1);
+					$reservedColumn
+						.data('columnid', index + 1)
+						.attr('data-columnid', index + 1);
 					$reservedColumn
 						.find('.hu-megamenu-column-title')
 						.text(`col-${col}`);
+					$reservedColumn
+						.find('.hu-mega-column-setting')
+						.data('columnid', index + 1)
+						.attr('data-columnid', index + 1)
+						.data('rowid', rowId)
+						.attr('data-rowid', rowId);
 
 					columnStr += $reservedColumn[0].outerHTML;
 
@@ -948,6 +994,9 @@ jQuery(function ($) {
 				if ($inputField.length) {
 					const type = $inputField.attr('type');
 					$inputField.data('rowid', rowId).attr('data-rowid', rowId);
+					$inputField
+						.data('columnid', colId)
+						.attr('data-columnid', colId);
 					if (type === 'checkbox') {
 						$inputField.prop(
 							'checked',
@@ -959,6 +1008,10 @@ jQuery(function ($) {
 				}
 
 				if ($inputSelect.length) {
+					$inputSelect.data('rowid', rowId).attr('data-rowid', rowId);
+					$inputSelect
+						.data('columnid', colId)
+						.attr('data-columnid', colId);
 					$inputSelect
 						.val(col.settings[field])
 						.trigger('liszt:updated');
@@ -1001,12 +1054,17 @@ jQuery(function ($) {
 				columnId,
 				$cloned
 			);
-
 			$('.hu-options-modal-inner').html(
 				$cloned
 					.removeClass('hidden')
 					.addClass('hu-options-modal-content')
+					.addClass('hu-megamenu-colum-settings')
 			);
+
+			Joomla.setUpShowon(
+				$(`.hu-megamenu-colum-settings[data-itemid=${itemId}]`)
+			);
+			handleColSettingsInputChange(colSettingsFields);
 		}
 	);
 });

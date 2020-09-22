@@ -292,7 +292,7 @@ class Settings
 	 * @return	array		Showon data array.
 	 * @since	1.0.0
 	 */
-	public static function parseShowOnConditions($showOn, $formControl = null, $group = null)
+	public static function parseShowOnConditions($showOn, $formControl = null, $group = null, $context = null)
 	{
 		// Process the showon data.
 		if (!$showOn)
@@ -342,6 +342,7 @@ class Settings
 				'values' => explode(',', $showOnPartBlocks[1]),
 				'sign'   => $compareEqual === true ? '=' : '!=',
 				'op'     => $op,
+				'context' => !empty($context) ? $context : ''
 			);
 
 			if ($op !== '')

@@ -324,8 +324,8 @@ jQuery(function ($) {
 				d = $(document).height(),
 				c = $(window).height();
 			var scrollPercent = (s / (d - c)) * 100;
-			const postition = scrollBar.data('position');
-			if (postition === 'top') {
+			const position = scrollBar.data('position');
+			if (position === 'top') {
 				// var sticky = $('.header-sticky');
 				// if( sticky.length > 0 ){
 				//     sticky.css({ top: scrollBar.height() })

@@ -57,7 +57,7 @@ class HelixultimateFieldAlignment
 		$output .= '</div>';
 		$output .= '</div>';
 
-		$output .= '<input type="hidden" ' . $dataAttrs . '" name="' . $key . '" value="' . $value . '" />';
+		$output .= '<input type="hidden" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" />';
 
 		$output .= '</div>';
 

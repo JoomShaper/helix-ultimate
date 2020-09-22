@@ -2,72 +2,23 @@ jQuery(function ($) {
 	$('.hu-field-alignment .hu-switcher-action').on('click', function (e) {
 		e.preventDefault();
 
-		if ($('.hu-switcher-action').hasClass('active')) {
-			$('.hu-switcher-action').removeClass('active');
+		const $siblings = $(this).siblings();
+		if ($siblings.hasClass('active')) {
+			$siblings.removeClass('active');
 		}
 
 		$(this).addClass('active');
-		$('.hu-field-alignment input[type=hidden]').val($(this).data('value'));
-		$('.hu-field-alignment input[type=hidden]').trigger('change');
-	});
-
-	/**
-	 * Handle depend on fields
-	 */
-	let togglers = {};
-	function handleDepend() {
-		let $field = $('.control-group[data-depend]');
-		$field.each(function (index, el) {
-			let depend = $(el).data('depend');
-			if (depend) {
-				let [key, value] = depend.split(':');
-				let $controller = $(el)
-					.parent()
-					.find(
-						`.control-group input[name=${key}], .control-group select[name=${key}]`
-					);
-
-				let controllerValue = null;
-
-				switch ($controller.attr('type')) {
-					case 'checkbox':
-						controllerValue = $controller.prop('checked') >> 0;
-						break;
-					default:
-						controllerValue = $controller.val();
-						break;
-				}
-
-				value = value.split('|');
-				controllerValue =
-					controllerValue !== undefined &&
-					typeof controllerValue === 'number'
-						? controllerValue.toString()
-						: controllerValue;
-
-				if (value.indexOf(controllerValue) > -1) {
-					$(el).slideDown(300);
-				} else {
-					$(el).slideUp(300);
-				}
-
-				togglers[key] = $controller;
-			}
-		});
-	}
-	handleDepend();
-
-	Object.values(togglers).forEach($element => {
-		$(document).on('change', $element, function (e) {
-			e.preventDefault();
-			handleDepend();
-		});
+		const $inputField = $(this)
+			.closest('.hu-field-alignment')
+			.find('input[type=hidden]');
+		$inputField.val($(this).data('value')).trigger('change');
 	});
 
 	/**
 	 * Menu Items selector
 	 *
 	 */
+
 	// Select all
 	$(document).on(
 		'change',
@@ -130,8 +81,159 @@ jQuery(function ($) {
 			} else {
 				$selectAllInputField.prop('checked', false);
 			}
-
 			$inputField.val(JSON.stringify(value)).trigger('change');
 		}
 	);
+
+	/**
+	 * Method to check condition and change the target visibility
+	 * @param {jQuery}  target
+	 * @param {Boolean} animate
+	 */
+	function linkedoptions(target, animate, $context) {
+		var showfield = true,
+			jsondata = target.data('revealon') || [],
+			itemval,
+			condition,
+			fieldName,
+			$fields;
+
+		// Check if target conditions are satisfied
+		for (var j = 0, lj = jsondata.length; j < lj; j++) {
+			condition = jsondata[j] || {};
+			fieldName = condition.field;
+			$fields = $context.find(
+				'[name="' + fieldName + '"], [name="' + fieldName + '[]"]'
+			);
+
+			condition['valid'] = 0;
+
+			// Test in each of the elements in the field array if condition is valid
+			$fields.each(function () {
+				var $field = $(this);
+
+				// If checkbox or radio box the value is read from properties
+				if (['checkbox', 'radio'].indexOf($field.attr('type')) !== -1) {
+					itemval = ($field.prop('checked') >> 0).toString();
+				} else {
+					// select lists, textarea etc. Note that multiple-select list returns an Array here
+					// se we can always tream 'itemval' as an array
+					itemval = $field.val();
+					// a multi-select <select> $field  will return null when no elements are selected so we need to define itemval accordingly
+					if (
+						itemval == null &&
+						$field.prop('tagName').toLowerCase() == 'select'
+					) {
+						itemval = [];
+					}
+				}
+
+				// Convert to array to allow multiple values in the field (e.g. type=list multiple)
+				// and normalize as string
+				if (!(typeof itemval === 'object')) {
+					itemval = JSON.parse('["' + itemval + '"]');
+				}
+
+				for (var i in itemval) {
+					if (!itemval.propertyIsEnumerable(i)) {
+						continue;
+					}
+
+					if (
+						jsondata[j]['sign'] == '=' &&
+						jsondata[j]['values'].indexOf(itemval[i]) !== -1
+					) {
+						jsondata[j]['valid'] = 1;
+					}
+
+					if (
+						jsondata[j]['sign'] == '!=' &&
+						jsondata[j]['values'].indexOf(itemval[i]) === -1
+					) {
+						jsondata[j]['valid'] = 1;
+					}
+				}
+			});
+
+			if (condition['op'] === '') {
+				if (condition['valid'] === 0) {
+					showfield = false;
+				}
+			} else {
+				if (
+					condition['op'] === 'AND' &&
+					condition['valid'] + jsondata[j - 1]['valid'] < 2
+				) {
+					showfield = false;
+					condition['valid'] = 0;
+				}
+
+				if (
+					condition['op'] === 'OR' &&
+					condition['valid'] + jsondata[j - 1]['valid'] > 0
+				) {
+					showfield = true;
+					condition['valid'] = 1;
+				}
+			}
+		}
+
+		if (target.is('option')) {
+			target.toggle(showfield);
+			target.attr('disabled', showfield ? false : true);
+
+			var parent = target.parent();
+			if ($('#' + parent.attr('id') + '_chzn').length) {
+				parent.trigger('liszt:updated');
+				parent.trigger('chosen:updated');
+			}
+		}
+
+		animate =
+			animate &&
+			!target.hasClass('no-animation') &&
+			!target.hasClass('no-animate') &&
+			!target.find('.no-animation, .no-animate').length;
+
+		if (animate) {
+			showfield ? target.slideDown() : target.slideUp();
+			return;
+		}
+
+		target.toggle(showfield);
+	}
+
+	/**
+	 * Method for setup the 'showon' feature, for the fields in given container
+	 * @param {HTMLElement} container
+	 */
+	Joomla.setUpShowon = function (container) {
+		container = container || document;
+		var $showonFields = $(container).find('[data-revealon]');
+
+		for (var is = 0, ls = $showonFields.length; is < ls; is++) {
+			(function () {
+				var $target = $($showonFields[is]),
+					jsondata = $target.data('revealon') || [],
+					field,
+					$fields = $();
+
+				// Collect an all referenced elements
+				for (var ij = 0, lj = jsondata.length; ij < lj; ij++) {
+					field = jsondata[ij]['field'];
+					$fields = $fields.add(
+						$('[name="' + field + '"], [name="' + field + '[]"]')
+					);
+				}
+
+				// Check current condition for element
+				linkedoptions($target, true, container);
+
+				// Attach events to referenced element, to check condition on change and keyup
+				$fields.on('change keyup', function () {
+					linkedoptions($target, true, container);
+				});
+			})();
+		}
+	};
 });

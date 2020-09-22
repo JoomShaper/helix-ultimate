@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Settings;
+
 /**
  * Text field.
  *
@@ -32,6 +34,13 @@ class HelixultimateFieldText
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 		$dataAttrs = '';
+		$dataShowon = '';
+
+		if ($depend)
+		{
+			$showon = Settings::parseShowOnConditions($attr['depend']);
+			$dataShowon = ' data-revealon=\'' . json_encode($showon) . '\' ';
+		}
 
 		if (!empty($attr['data']))
 		{
@@ -41,7 +50,7 @@ class HelixultimateFieldText
 			}
 		}
 
-		$output  = '<div class="control-group ' . ($depend ? 'hidden' : '') . '" ' . ($depend ? 'data-depend="' . $depend . '"' : '') . '>';
+		$output  = '<div class="control-group" ' . $dataShowon . ' >';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

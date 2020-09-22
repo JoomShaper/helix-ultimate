@@ -104,7 +104,7 @@ $rowId = !empty($reserve) ? '0' : $rowSettings->id;
 				else
 				{
 					$column = [
-						'id' => 0,
+						'id' => 1,
 						'rowId' => $rowId,
 						'itemId' => $item->id,
 						'settings' => []

@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Settings;
+
 /**
  * Select field
  *
@@ -31,8 +33,14 @@ class HelixultimateFieldSelect
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$options = !empty($attr['options']) ? $attr['options'] : (!empty($attr['values']) ? $attr['values'] : []);
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
-
 		$dataAttrs = '';
+		$dataShowon = '';
+
+		if ($depend)
+		{
+			$showon = Settings::parseShowOnConditions($attr['depend']);
+			$dataShowon = ' data-revealon=\'' . json_encode($showon) . '\' ';
+		}
 
 		if (!empty($attr['data']))
 		{
@@ -42,7 +50,7 @@ class HelixultimateFieldSelect
 			}
 		}
 
-		$output  = '<div class="control-group ' . $key . ' ' . ($depend ? 'hidden' : '') . '" ' . ($depend ? 'data-depend="' . $depend . '"' : '') . '>';
+		$output  = '<div class="control-group ' . $key . '" ' . $dataShowon . '>';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

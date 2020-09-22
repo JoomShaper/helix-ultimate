@@ -978,7 +978,9 @@
 		<field name="megamenu"
 			type="helixmenubuilder"
 			helixgroup="megamenu"
-			label="Menu Builder" />
+			label="Menu Builder"
+			track="off"
+		/>
 
 		<field name="menu_type" 
 			helixgroup="megamenu" 

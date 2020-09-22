@@ -122,7 +122,7 @@ class SettingsFields
 							'none' => Text::_('None'),
 						],
 						'value' => !empty($settings->module_style) ? $settings->module_style : '',
-						'depend' => 'col_type:module|module_position'
+						'depend' => 'col_type:module[OR]col_type:module_position'
 					],
 					'menu_items' => [
 						'type' => 'menuHierarchy',

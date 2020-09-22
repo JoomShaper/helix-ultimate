@@ -9,6 +9,7 @@
 defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Helper;
+use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -34,6 +35,12 @@ class HelixultimateFieldMenuHierarchy
 		$value = isset($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 
+		if ($depend)
+		{
+			$showon = Settings::parseShowOnConditions($attr['depend']);
+			$dataShowon = ' data-revealon=\'' . json_encode($showon) . '\' ';
+		}
+
 		if (!empty($value) && \is_string($value))
 		{
 			$value = json_decode($value, true);
@@ -52,7 +59,7 @@ class HelixultimateFieldMenuHierarchy
 		}
 
 		$html = [];
-		$html[]  = '<div class="control-group hu-menu-hierarchy-container ' . $key . ' ' . ($depend ? 'hidden' : '') . '" ' . ($depend ? 'data-depend="' . $depend . '"' : '') . '>';
+		$html[]  = '<div class="control-group hu-menu-hierarchy-container ' . $key . '" ' . $dataShowon . '>';
 		$html[] = '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

@@ -292,6 +292,7 @@ jQuery(function ($) {
 
 		let data = $('#hu-style-form')
 			.find(':not(.hu-preset-container input)')
+			.not('.internal-use-only')
 			.serializeArray();
 
 		$.ajax({
@@ -504,7 +505,8 @@ jQuery(function ($) {
 			tmplView = $(this).data('view'),
 			data = $('#hu-style-form')
 				.find(':not(.hu-preset-container input)')
-				.serialize();
+				.not('.internal-use-only')
+				.serializeArray();
 
 		$.ajax({
 			type: 'POST',

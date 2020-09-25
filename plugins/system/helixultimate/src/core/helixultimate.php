@@ -109,6 +109,11 @@ class HelixUltimate
 		 *
 		 */
 		$this->template = Helper::loadTemplateData();
+		// echo '<xmp>';
+		// print_r($this->template);
+		// echo '</xmp>';
+		// die();
+		
 
 		$this->params   = $this->template->params;
 		$this->get_template_uri();

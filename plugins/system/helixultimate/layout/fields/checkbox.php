@@ -29,6 +29,7 @@ class HelixultimateFieldCheckbox
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$dataAttrs = '';
+		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
 
 		if (!empty($attr['data']))
 		{
@@ -50,7 +51,7 @@ class HelixultimateFieldCheckbox
 		if ($isMenuBuilder)
 		{
 			$output .= '<input class="hu-input hu-menu-builder-' .
-				$key . '" type="checkbox" ' . $dataAttrs . ' name="' .
+				$key . $internal . '" type="checkbox" ' . $dataAttrs . ' name="' .
 				$key . '" value="' . $value . '" ' . ($value ? 'checked="checked"' : '') . ' />';
 		}
 		else

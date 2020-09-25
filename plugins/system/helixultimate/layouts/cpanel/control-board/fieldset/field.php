@@ -109,7 +109,7 @@ extract($displayData);
 					<?php endif; ?>
 				<?php endif; ?>
 		
-				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint="<?php echo $setvalue; ?>" data-currpoint="<?php echo $setvalue; ?>" data-selector="#<?php echo $field->id; ?>">
+				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">
 					<?php echo $field->input; ?>
 				</div>
 		

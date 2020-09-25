@@ -972,7 +972,8 @@
 		<field name="menu" 
 			type="menu" 
 			helixgroup="megamenu" 
-			default="mainmenu" 
+			default="mainmenu"
+			track="off"
 			label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
 		
 		<field name="megamenu"

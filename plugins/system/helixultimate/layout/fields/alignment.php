@@ -28,6 +28,7 @@ class HelixultimateFieldAlignment
 	{
 		$value = !empty($attr['value']) ? $attr['value'] : (isset($attr['default']) ? $attr['default'] : '');
 		$dataAttrs = '';
+		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
 
 		if (!empty($attr['data']))
 		{
@@ -57,7 +58,7 @@ class HelixultimateFieldAlignment
 		$output .= '</div>';
 		$output .= '</div>';
 
-		$output .= '<input type="hidden" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" />';
+		$output .= '<input type="hidden" class="' . $internal . '" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" />';
 
 		$output .= '</div>';
 

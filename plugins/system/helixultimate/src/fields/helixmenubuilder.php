@@ -59,18 +59,23 @@ class JFormFieldHelixMenuBuilder extends FormField
 			}
 		}
 
-		$builder = new MenuBuilder($params->get('menu', 'mainmenu'));
-		$items = $builder->getMenuItems();
+		$builder = new MenuBuilder;
 		$html = [];
-		$html[] = '<div class="hu-menu-builder">';
+		$types = $builder->getMenuTypes();
+		$typeNames = array_keys((array) $types);
 
-		if (!empty($items))
+		$html[] = '<div class="hu-menu-builder" data-menutypes="' . (implode(',', $typeNames)) . '">';
+
+		if (!empty($types))
 		{
-			$layout = new FileLayout('fields.menuBuilder.menuItems', HELIX_LAYOUT_PATH);
-			$html[] = $layout->render(['items' => $items, 'params' => $params, 'menuSettings' => $value]);
+			$layout = new FileLayout('fields.menuBuilder.menuTypes', HELIX_LAYOUT_PATH);
+			$html[] = $layout->render(['types' => $types, 'params' => $params, 'menuSettings' => $value, 'builder' => $builder]);
 		}
 
-		$html[] = '<input type="hidden" class="hu-megamenu-field" name="' . $this->name . '" id="' . $this->id . '" value=\'' . $value . '\' />';
+		$html[] = '<input type="hidden" class="hu-megamenu-field " name="' . $this->name . '" id="' . $this->id . '" value=\'' . $value . '\' />';
+		// $html[] = '<input type="hidden" class="megamenu-store" value=\'' . $value . '\' />';
+		// $html[] = '<input type="hidden" class="megamenu-store" value="" />';
+		// $html[] = '<input type="hidden" class="megamenu-change-tracker" name="' . $this->name . '" id="' . $this->id . '" value=""/>';
 
 		// End menu builder
 		$html[] = '</div>';

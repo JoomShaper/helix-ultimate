@@ -196,7 +196,6 @@ class Platform
 		$style_id = (int) $app->input->get('id', 0, 'INT');
 
 		$template = Helper::loadTemplateData();
-
 		$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
 
 		Factory::getLanguage()->load('tpl_' . $template->template, JPATH_SITE, null, true);
@@ -226,6 +225,7 @@ class Platform
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/devices-field.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/menu-builder.css');
 
+		$doc->addScript($helix_plg_url . '/assets/js/admin/utils.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/fields.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/helix-ultimate.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
@@ -248,7 +248,8 @@ class Platform
 
 		// Pass important data to Joomla variable for javascript
 		$meta = array(
-			'base' => rtrim(Uri::root(), '/')
+			'base' => rtrim(Uri::root(), '/'),
+			'activeMenu' => $template->params->get('menu', 'mainmenu', 'STRING')
 		);
 		$doc->addScriptOptions('meta', $meta);
 

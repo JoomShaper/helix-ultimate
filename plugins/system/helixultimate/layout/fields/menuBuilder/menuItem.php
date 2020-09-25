@@ -21,13 +21,14 @@ if (!empty($menuSettings))
 {
 	$menuItemSettings = json_decode($menuSettings);
 
-	if (isset($menuItemSettings->menuItems))
+	if (isset($menuItemSettings->menu->$menuType->menuItems))
 	{
-		$menuItemSettings = $menuItemSettings->menuItems;
+		$menuItemSettings = $menuItemSettings->menu->$menuType->menuItems;
+		$itemId = $item->id;
 
-		if (isset($menuItemSettings->{$item->id}))
+		if (isset($menuItemSettings->$itemId))
 		{
-			$menuItemSettings = $menuItemSettings->{$item->id};
+			$menuItemSettings = $menuItemSettings->$itemId;
 		}
 	}
 }
@@ -39,7 +40,8 @@ $fields = [
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS_PLACEHOLDER'),
 		'menu-builder' => true,
 		'data' => ['itemid' => $item->id],
-		'value' => !empty($menuItemSettings->menu_custom_classes) ? $menuItemSettings->menu_custom_classes : ''
+		'value' => !empty($menuItemSettings->menu_custom_classes) ? $menuItemSettings->menu_custom_classes : '',
+		'internal' => true,
 	],
 	'menu_icon' => [
 		'type' => 'text',
@@ -47,7 +49,8 @@ $fields = [
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_ICON_PLACEHOLDER'),
 		'menu-builder' => true,
 		'data' => ['itemid' => $item->id],
-		'value' => !empty($menuItemSettings->menu_icon) ? $menuItemSettings->menu_icon : ''
+		'value' => !empty($menuItemSettings->menu_icon) ? $menuItemSettings->menu_icon : '',
+		'internal' => true,
 	],
 	'menu_caption' => [
 		'type' => 'text',
@@ -55,7 +58,8 @@ $fields = [
 		'placeholder' => Text::_('HELIX_ULTIMATE_MENU_CAPTION_PLACEHOLDER'),
 		'menu-builder' => true,
 		'data' => ['itemid' => $item->id],
-		'value' => !empty($menuItemSettings->menu_caption) ? $menuItemSettings->menu_caption : ''
+		'value' => !empty($menuItemSettings->menu_caption) ? $menuItemSettings->menu_caption : '',
+		'internal' => true,
 	],
 	'mega_menu' => [
 		'type' => 'checkbox',
@@ -63,7 +67,8 @@ $fields = [
 		'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', $item->title),
 		'menu-builder' => true,
 		'data' => ['itemid' => $item->id],
-		'value' => !empty($menuItemSettings->mega_menu) ? $menuItemSettings->mega_menu : ''
+		'value' => !empty($menuItemSettings->mega_menu) ? $menuItemSettings->mega_menu : '',
+		'internal' => true,
 	]
 ];
 
@@ -72,15 +77,11 @@ $fields = [
 <div class="hu-menu-item-settings hu-menu-item-<?php echo $item->alias . ($active ? ' active' : ''); ?>" data-itemId="<?php echo $item->id; ?>">
 	<div class="hu-menu-item-modifiers">
 		<div class="row">
-			<div class="col-4">
-				<?php echo $builder->renderFieldElement('menu_custom_classes', $fields['menu_custom_classes']); ?>
-			</div>
-			<div class="col-4">
-				<?php echo $builder->renderFieldElement('menu_icon', $fields['menu_icon']); ?>
-			</div>
-			<div class="col-4">
-				<?php echo $builder->renderFieldElement('menu_caption', $fields['menu_caption']); ?>
-			</div>
+			<?php foreach (['menu_custom_classes', 'menu_icon', 'menu_caption'] as $fieldName): ?>
+				<div class="col-4">
+					<?php echo $builder->renderFieldElement($fieldName, $fields[$fieldName]); ?>
+				</div>
+			<?php endforeach ?>
 		</div>
 	</div>
 
@@ -95,6 +96,7 @@ $fields = [
 			echo $layout->render(
 				[
 					'item' => $item,
+					'menuType' => $menuType,
 					'menuItemSettings' => $menuItemSettings,
 					'active' => $active,
 					'params' => $params,

@@ -227,9 +227,7 @@ class Request
 		$data = $_POST;
 		$inputs = $this->filterInputs($data);
 
-		$storeData = array(
-
-		);
+		$storeData = array();
 
 		if (isset($inputs['id']))
 		{

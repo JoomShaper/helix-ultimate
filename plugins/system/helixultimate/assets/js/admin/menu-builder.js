@@ -1,12 +1,15 @@
 jQuery(function ($) {
 	const config = Joomla.getOptions('meta') || {};
 	const $builder = $('.hu-menu-builder');
+	let activeMenuType = config.activeMenu || 'mainmenu';
+	console.log(activeMenuType);
+
 	/**
 	 * Perform operation in reactive way
 	 */
 
 	const state = {
-		menuItems: {},
+		menu: {},
 	};
 
 	const defaultRowSettings = {
@@ -45,6 +48,33 @@ jQuery(function ($) {
 		col_hide_desktop: false,
 	};
 
+	const defaultItem = {
+		id: null,
+		title: '',
+		menu_custom_classes: '',
+		menu_icon: '',
+		menu_caption: '',
+		mega_menu: 0,
+		mega_width: '',
+		mega_custom_classes: '',
+		mega_alignment: 'left',
+		mega_rows: [
+			{
+				id: 1,
+				itemId: null,
+				settings: $.extend(true, {}, defaultRowSettings),
+				columns: [
+					{
+						id: 1,
+						rowId: 1,
+						itemId: null,
+						settings: $.extend(true, {}, defaultColSettings),
+					},
+				],
+			},
+		],
+	};
+
 	const fields = getFields();
 	const rowSettingsFields = getRowSettingsFields();
 	const colSettingsFields = getColSettingsFields();
@@ -58,7 +88,7 @@ jQuery(function ($) {
 		render();
 	};
 
-	var $inputField = $('.hu-menu-builder').find('.hu-megamenu-field');
+	// var $inputField = $('.hu-menu-builder').find('.hu-megamenu-field');
 
 	(function componentDidMount() {
 		initBuilderData();
@@ -80,13 +110,16 @@ jQuery(function ($) {
 	function toggleMegaSettings() {
 		$('.hu-menu-item-settings').each(function () {
 			const itemId = $(this).data('itemid');
-			let { mega_menu } = state.menuItems[itemId];
-			mega_menu = mega_menu >> 0;
-			const $basicSettings = $('.hu-mega-basic-settings');
-			if (mega_menu) {
-				$basicSettings.slideDown(300);
-			} else {
-				$basicSettings.slideUp(300);
+			const menuItems = state.menu[activeMenuType].menuItems;
+			if (menuItems[itemId] !== undefined) {
+				let mega_menu = menuItems[itemId].mega_menu;
+				mega_menu = mega_menu >> 0;
+				const $basicSettings = $(this).find('.hu-mega-basic-settings');
+				if (mega_menu) {
+					$basicSettings.slideDown(300);
+				} else {
+					$basicSettings.slideUp(300);
+				}
 			}
 		});
 
@@ -102,45 +135,149 @@ jQuery(function ($) {
 	}
 
 	function initBuilderData() {
-		const $builder = $('.hu-menu-builder');
-		const menuItems = {};
-		$builder.find('.hu-menu-item').each(function (index) {
-			const itemId = $(this).data('cid');
+		let menu = {};
+		const $megamenuField = $builder.find('input[name=megamenu]');
 
-			const item = {
-				id: itemId,
-				title: $(this).data('name'),
-				menu_custom_classes: '',
-				menu_icon: '',
-				menu_caption: '',
-				mega_menu: 0,
-				mega_width: '',
-				mega_custom_classes: '',
-				mega_alignment: 'left',
-				mega_rows: [
-					{
-						id: 1,
-						settings: defaultRowSettings,
-						columns: [
-							{
-								id: 1,
-								rowId: 1,
-								itemId,
-								settings: defaultColSettings,
-							},
-						],
-					},
-				],
-			};
+		$builder.find('.hu-menu-type').each(function () {
+			const menuType = $(this).data('menutype');
+			menu[menuType] = { menuItems: {} };
+			$(this)
+				.find('.hu-menu-item')
+				.each(function () {
+					const itemId = $(this).data('cid');
 
-			menuItems[itemId] = item;
+					// Make a deep copy/clone of the default item for not changing
+					// the original default values at deep level.
+					const clonedDefaultItem = $.extend(true, {}, defaultItem);
+					let item = {
+						...clonedDefaultItem,
+						id: itemId,
+						title: $(this).data('name'),
+					};
+					item.mega_rows[0].itemId = itemId;
+					item.mega_rows[0].columns[0].itemId = itemId;
+					menu[menuType].menuItems[itemId] = item;
+				});
 		});
 
-		if ($inputField.val() === '' || $inputField.val() === '{}') {
-			setState({ menuItems });
+		if ($megamenuField.val() === '' || $megamenuField.val() === '{}') {
+			setState({ menu });
 		} else {
-			setState({ menuItems: JSON.parse($inputField.val()).menuItems });
+			let prevMenu = JSON.parse($megamenuField.val());
+			setState({ menu: prevMenu.menu }, nextState => {
+				fixMenuTypeMismatches(nextState);
+				fixMenuItemMismatches(nextState);
+			});
 		}
+	}
+
+	/**
+	 * Check if any new MenuType added or removed, then handle them
+	 *
+	 * @param {object} nextState
+	 */
+	function fixMenuTypeMismatches(nextState) {
+		const stateMenu = { ...nextState.menu };
+		const menuTypes = ($builder.data('menutypes') || '').split(',');
+		const stateMenuTypes = Object.keys(stateMenu);
+		const missingTypes = menuTypes.filter(
+			type => !stateMenuTypes.includes(type)
+		);
+		const removedTypes = stateMenuTypes.filter(
+			type => !menuTypes.includes(type)
+		);
+
+		if (missingTypes.length) {
+			let updatedMenu = { ...stateMenu };
+			$builder.find('.hu-menu-type').each(function () {
+				const type = $(this).data('menutype');
+				const menuItems = {};
+				if (missingTypes.includes(type)) {
+					$(this)
+						.find('.hu-menu-item')
+						.each(function () {
+							const itemId = $(this).data('cid');
+							const item = {
+								...defaultItem,
+								id: itemId,
+								title: $(this).data('name'),
+							};
+							item.mega_rows[0].itemId = itemId;
+							item.mega_rows[0].columns[0].itemId = itemId;
+							menuItems[itemId] = item;
+						});
+					updatedMenu = {
+						...updatedMenu,
+						[type]: {
+							menuItems,
+						},
+					};
+				}
+			});
+
+			setState({ menu: updatedMenu });
+		}
+
+		// Remove from the state if the menu type is removed from the backend
+		if (removedTypes.length) {
+			const menuAfterRemove = { ...stateMenu };
+			removedTypes.forEach(type => {
+				delete menuAfterRemove[type];
+			});
+			setState({ menu: menuAfterRemove });
+		}
+	}
+
+	/**
+	 * Find updated menu items i.e. removed or added from the backend
+	 *
+	 * @param {object} nextState The updated state
+	 */
+	function fixMenuItemMismatches(nextState) {
+		const stateMenu = { ...nextState.menu };
+		let updatedMenu = { ...stateMenu };
+		$builder.find('.hu-menu-type').each(function () {
+			const type = $(this).data('menutype');
+			const stateMenuItems = Object.keys(stateMenu[type].menuItems).map(
+				item => item >> 0
+			);
+			const items = [];
+			let removed = [],
+				added = [];
+			$(this)
+				.find('.hu-menu-item')
+				.each(function () {
+					items.push({
+						id: $(this).data('cid'),
+						title: $(this).data('name'),
+					});
+				});
+			removed = stateMenuItems.filter(
+				item => !items.find(x => x.id === item)
+			);
+			added = items.filter(item => !stateMenuItems.includes(item.id));
+
+			if (added.length) {
+				added.forEach(item => {
+					const menuItem = {
+						...defaultItem,
+						id: item.id,
+						title: item.title,
+					};
+					menuItem.mega_rows[0].itemId = item.id;
+					menuItem.mega_rows[0].columns[0].itemId = item.id;
+					updatedMenu[type].menuItems[item.id] = menuItem;
+				});
+			}
+
+			if (removed.length) {
+				removed.forEach(itemId => {
+					delete updatedMenu[type].menuItems[itemId];
+				});
+			}
+		});
+
+		setState({ menu: updatedMenu });
 	}
 
 	function getFields() {
@@ -171,6 +308,7 @@ jQuery(function ($) {
 			},
 		];
 	}
+
 	function getRowSettingsFields() {
 		return [
 			{
@@ -253,13 +391,18 @@ jQuery(function ($) {
 						}
 
 						if (!itemId) return;
-
 						setState({
-							menuItems: {
-								...state.menuItems,
-								[itemId]: {
-									...state.menuItems[itemId],
-									[name]: value,
+							menu: {
+								...state.menu,
+								[activeMenuType]: {
+									menuItems: {
+										...state.menu[activeMenuType].menuItems,
+										[itemId]: {
+											...state.menu[activeMenuType]
+												.menuItems[itemId],
+											[name]: value,
+										},
+									},
 								},
 							},
 						});
@@ -288,7 +431,10 @@ jQuery(function ($) {
 
 						if (!itemId || !rowId) return;
 
-						let rows = [...state.menuItems[itemId].mega_rows];
+						let rows = [
+							...state.menu[activeMenuType].menuItems[itemId]
+								.mega_rows,
+						];
 						let rowIndex = rows.findIndex(row => row.id === rowId);
 
 						if (rowIndex > -1) {
@@ -301,11 +447,17 @@ jQuery(function ($) {
 						}
 
 						setState({
-							menuItems: {
-								...state.menuItems,
-								[itemId]: {
-									...state.menuItems[itemId],
-									mega_rows: rows,
+							menu: {
+								...state.menu,
+								[activeMenuType]: {
+									menuItems: {
+										...state.menu[activeMenuType].menuItems,
+										[itemId]: {
+											...state.menu[activeMenuType]
+												.menuItems[itemId],
+											mega_rows: rows,
+										},
+									},
 								},
 							},
 						});
@@ -341,7 +493,10 @@ jQuery(function ($) {
 
 						if (!itemId || !rowId || !colId) return;
 
-						let rows = [...state.menuItems[itemId].mega_rows];
+						let rows = [
+							...state.menu[activeMenuType].menuItems[itemId]
+								.mega_rows,
+						];
 						let rowIndex = rows.findIndex(row => row.id === rowId);
 
 						if (rowIndex > -1) {
@@ -361,11 +516,17 @@ jQuery(function ($) {
 						}
 
 						setState({
-							menuItems: {
-								...state.menuItems,
-								[itemId]: {
-									...state.menuItems[itemId],
-									mega_rows: rows,
+							menu: {
+								...state.menu,
+								[activeMenuType]: {
+									menuItems: {
+										...state.menu[activeMenuType].menuItems,
+										[itemId]: {
+											...state.menu[activeMenuType]
+												.menuItems[itemId],
+											mega_rows: rows,
+										},
+									},
 								},
 							},
 						});
@@ -379,12 +540,10 @@ jQuery(function ($) {
 		console.log('state:', state);
 
 		// Update input value
-		$('.hu-menu-builder')
-			.find('.hu-megamenu-field')
-			.val(JSON.stringify(state));
-
-		// .trigger('change');
-
+		$builder
+			.find('input[name=megamenu]')
+			.val(JSON.stringify(state))
+			.trigger('change');
 		renderDOM();
 	}
 
@@ -393,7 +552,7 @@ jQuery(function ($) {
 	}
 
 	function renderingRowLabel() {
-		const menuItems = { ...state.menuItems };
+		const menuItems = { ...state.menu[activeMenuType].menuItems };
 		Object.values(menuItems).forEach(items => {
 			if (items && items.mega_rows && items.mega_rows.length > 0) {
 				items.mega_rows.forEach(row => {
@@ -427,18 +586,70 @@ jQuery(function ($) {
 			}
 
 			triggerMenuSettings($(this).data('name'));
+			toggleMegaSettings();
 		});
 	}
+
+	(function handleMenuTypeChange() {
+		$('select[name=menu]').on('change', function (e) {
+			e.preventDefault();
+
+			// Destroy previously created sortable instances
+			$('.hu-menu-type.active')
+				.find('.hu-menu-items')
+				.sortable('destroy');
+
+			const value = $(this).val();
+			activeMenuType = value;
+			const $selectedMenu = $(
+				`.hu-menu-type[data-menutype=${activeMenuType}]`
+			);
+			$selectedMenu.siblings().removeClass('active');
+			$selectedMenu.addClass('active');
+
+			/**
+			 * IF menu type changes then reset the active menu item and their settings.
+			 * Make the first item active and remove the active class from others.
+			 */
+			$selectedMenu
+				.find('.hu-megamenu-layout-container')
+				.each(function () {
+					$(this).hasClass('active-layout') &&
+						$(this).removeClass('active-layout');
+				});
+			$selectedMenu.find('.hu-menu-item-settings').each(function () {
+				$(this).hasClass('active') && $(this).removeClass('active');
+			});
+			$selectedMenu.find('.hu-menu-item').each(function () {
+				$(this).hasClass('active') && $(this).removeClass('active');
+			});
+			$selectedMenu
+				.find('.hu-menu-item-settings')
+				.first()
+				.addClass('active');
+			$selectedMenu.find('.hu-menu-item').first().addClass('active');
+			$selectedMenu
+				.find('.hu-megamenu-layout-container')
+				.first()
+				.addClass('active-layout');
+
+			// Recheck the mega settings after changing the menu type.
+			toggleMegaSettings();
+
+			// Reinitialize the menu items sortable instance.
+			activateMenuItemSorting();
+		});
+	})();
 
 	/**
 	 * Activating the menu item sorting
 	 */
 	function activateMenuItemSorting() {
-		$('.hu-menu-items')
+		$('.hu-menu-type.active')
+			.find('.hu-menu-items')
 			.sortable({
-				containment: '.hu-menu-items-wrapper',
 				cursor: 'move',
-				opacity: 0.6,
+				opacity: 0.8,
 				scroll: true,
 				axis: 'x',
 				tolerance: 'pointer',
@@ -466,7 +677,7 @@ jQuery(function ($) {
 	function makeRowSortable() {
 		let prevIndex = null;
 
-		$('#hu-megamenu-layout-container.active-layout')
+		$('.hu-megamenu-layout-container.active-layout')
 			.sortable({
 				placeholder: 'ui-state-highlight',
 				forcePlaceholderSize: true,
@@ -477,7 +688,7 @@ jQuery(function ($) {
 				tolerance: 'pointer',
 				start: function (event, ui) {
 					prevIndex = ui.item.index();
-					$('#hu-megamenu-layout-container.active-layout')
+					$('.hu-megamenu-layout-container.active-layout')
 						.find('.ui-state-highlight')
 						.addClass($(ui.item).attr('class'))
 						.css('height', $(ui.item).outerHeight());
@@ -502,12 +713,12 @@ jQuery(function ($) {
 	function triggerMenuSettings(active) {
 		$('.hu-menu-item-settings').removeClass('active');
 		$('.hu-menu-item-settings')
-			.find('#hu-megamenu-layout-container')
+			.find('.hu-megamenu-layout-container')
 			.removeClass('active-layout');
 
 		$(`.hu-menu-item-settings.hu-menu-item-${active}`).addClass('active');
 		$(`.hu-menu-item-settings.hu-menu-item-${active}`)
-			.find('#hu-megamenu-layout-container')
+			.find('.hu-megamenu-layout-container')
 			.addClass('active-layout');
 
 		makeRowSortable();
@@ -519,11 +730,13 @@ jQuery(function ($) {
 	function addNewRow() {
 		$(document).on('click', '.hu-megamenu-add-row', function (e) {
 			e.preventDefault();
-			$('.hu-megamenu-layout-row').sortable('destroy');
+			$('.hu-megamenu-layout-row').hasClass('ui-sortable') &&
+				$('.hu-megamenu-layout-row').sortable('destroy');
+
 			const $parent = $(this).closest('.hu-megamenu-layout-section');
-			const $section = $(
-				'#hu-megamenu-layout-container.active-layout'
-			).find('.hu-reserved-layout-section');
+			const $section = $(this)
+				.closest('.hu-megamenu-layout-container.active-layout')
+				.find('.hu-reserved-layout-section');
 
 			$section.find('select.hu-input').each(function () {
 				$(this).chosen('destroy');
@@ -554,7 +767,9 @@ jQuery(function ($) {
 			$colSettings
 				.closest('.hu-megamenu-layout-column')
 				.data('columnid', 1)
-				.attr('data-columnid', 1);
+				.attr('data-columnid', 1)
+				.data('rowid', rowId)
+				.attr('data-rowid', rowId);
 
 			$cloned.insertAfter($parent);
 			$cloned.slideDown(300);
@@ -562,18 +777,19 @@ jQuery(function ($) {
 			const insertIndex = $parent.index();
 			insertNewRow(itemId, insertIndex, {
 				id: rowId,
-				settings: defaultRowSettings,
+				settings: $.extend(true, {}, defaultRowSettings),
+				itemId,
 				columns: [
-					{ id: 1, itemId, rowId, settings: defaultColSettings },
+					{
+						id: 1,
+						itemId,
+						rowId,
+						settings: $.extend(true, {}, defaultColSettings),
+					},
 				],
 			});
 
-			const $column = $cloned.find('.hu-megamenu-layout-column');
-			$column.data('rowid', rowId);
-			$column.attr('data-rowid', rowId);
-
 			columnSorting();
-			// handleColSettingsInputChange(colSettingsFields);
 		});
 	}
 
@@ -585,15 +801,20 @@ jQuery(function ($) {
 	 * @param {object} 	newItem The item to insert
 	 */
 	function insertNewRow(itemId, index, newItem) {
-		let rows = [...state.menuItems[itemId].mega_rows];
+		let rows = [...state.menu[activeMenuType].menuItems[itemId].mega_rows];
 		rows.splice(index, 0, newItem);
 
 		setState({
-			menuItems: {
-				...state.menuItems,
-				[itemId]: {
-					...state.menuItems[itemId],
-					mega_rows: rows,
+			menu: {
+				...state.menu,
+				[activeMenuType]: {
+					menuItems: {
+						...state.menu[activeMenuType].menuItems,
+						[itemId]: {
+							...state.menu[activeMenuType].menuItems[itemId],
+							mega_rows: rows,
+						},
+					},
 				},
 			},
 		});
@@ -607,7 +828,9 @@ jQuery(function ($) {
 	 * @param {int} currIndex 	Index after sorting
 	 */
 	function swapRows(itemId, prevIndex, currIndex) {
-		const rows = [...state.menuItems[itemId].mega_rows];
+		const rows = [
+			...state.menu[activeMenuType].menuItems[itemId].mega_rows,
+		];
 		const item = rows.splice(prevIndex, 1);
 
 		if (item.length === 0) return;
@@ -615,11 +838,16 @@ jQuery(function ($) {
 		rows.splice(currIndex, 0, item[0]);
 
 		setState({
-			menuItems: {
-				...state.menuItems,
-				[itemId]: {
-					...state.menuItems[itemId],
-					mega_rows: rows,
+			menu: {
+				...state.menu,
+				[activeMenuType]: {
+					menuItems: {
+						...state.menu[activeMenuType].menuItems,
+						[itemId]: {
+							...state.menu[activeMenuType].menuItems[itemId],
+							mega_rows: rows,
+						},
+					},
 				},
 			},
 		});
@@ -636,7 +864,8 @@ jQuery(function ($) {
 				.closest('.hu-megamenu-layout-section')
 				.siblings().length;
 
-			if (totalSections <= 0) {
+			if (totalSections <= 1) {
+				alert('You cannot delete the only row!');
 				return;
 			}
 
@@ -646,16 +875,25 @@ jQuery(function ($) {
 				const itemId = $section.data('itemid');
 				const rowId = $section.data('rowid');
 
-				const rows = [...state.menuItems[itemId].mega_rows];
+				const rows = [
+					...state.menu[activeMenuType].menuItems[itemId].mega_rows,
+				];
 				const rowIndex = rows.findIndex(row => row.id === rowId);
 				rows.splice(rowIndex, 1);
 
 				setState({
-					menuItems: {
-						...state.menuItems,
-						[itemId]: {
-							...state.menuItems[itemId],
-							mega_rows: rows,
+					menu: {
+						...state.menu,
+						[activeMenuType]: {
+							menuItems: {
+								...state.menu[activeMenuType].menuItems,
+								[itemId]: {
+									...state.menu[activeMenuType].menuItems[
+										itemId
+									],
+									mega_rows: rows,
+								},
+							},
 						},
 					},
 				});
@@ -686,7 +924,8 @@ jQuery(function ($) {
 	 */
 	function generateColumns() {
 		$(document).on('click', '.hu-megamenu-column-layout', function (e) {
-			$('.hu-megamenu-layout-row').sortable('destroy');
+			$('.hu-megamenu-layout-row').hasClass('ui-sortable') &&
+				$('.hu-megamenu-layout-row').sortable('destroy');
 
 			const $section = $(this).closest('.hu-megamenu-layout-section');
 
@@ -710,10 +949,57 @@ jQuery(function ($) {
 				.split('+')
 				.map(col => col >> 0);
 
+			/**
+			 * Calculate the number of columns already exists for the row.
+			 * If the newly created grid has more columns, then the current
+			 * one then update the previous columns and add the extra columns.
+			 *
+			 * If newly created grid has less columns, then update the previous
+			 * columns col value and remove the extras from the previous columns.
+			 */
+			const stateRows = [
+				...state.menu[activeMenuType].menuItems[itemId].mega_rows,
+			];
+			const theRow = stateRows.find(row => +row.id === +rowId);
+			const theRowIndex = stateRows.findIndex(row => +row.id === +rowId);
+			const columns = [];
+
+			if (theRow) {
+				const stateColumns = theRow.columns;
+
+				// If the new grid has more columns
+				if (stateColumns.length < grids.length) {
+					for (let i = 0, l = stateColumns.length; i < l; ++i) {
+						stateColumns[i].settings.col = grids[i];
+						columns.push(stateColumns[i]);
+					}
+					// Add the extra columns
+					for (let i = stateColumns.length; i < grids.length; ++i) {
+						const colSet = $.extend(true, {}, defaultColSettings);
+						colSet.col = grids[i];
+						columns.push({
+							id: i + 1,
+							itemId,
+							settings: colSet,
+							rowId,
+						});
+					}
+				}
+				// If new grid has equal or less columns
+				else {
+					for (let i = 0, l = grids.length; i < l; ++i) {
+						stateColumns[i].settings.col = grids[i];
+						columns.push(stateColumns[i]);
+					}
+				}
+			}
+
+			if (columns.length) {
+				stateRows[theRowIndex].columns = columns;
+			}
+
 			if (isValidLayout(grids)) {
 				let columnStr = '';
-
-				let columns = [];
 
 				const $reservedColumn = $section
 					.find('.hu-megamenu-reserved-layout-column')
@@ -746,28 +1032,21 @@ jQuery(function ($) {
 						.attr('data-rowid', rowId);
 
 					columnStr += $reservedColumn[0].outerHTML;
-
-					defaultColSettings.col = col;
-					columns.push({
-						id: index + 1,
-						itemId,
-						settings: defaultColSettings,
-						rowId,
-					});
 				});
 
-				const rows = [...state.menuItems[itemId].mega_rows];
-				const rowIndex = rows.findIndex(
-					row => row.id >> 0 === rowId >> 0
-				);
-				rows[rowIndex].columns = columns;
-
 				setState({
-					menuItems: {
-						...state.menuItems,
-						[itemId]: {
-							...state.menuItems[itemId],
-							mega_rows: rows,
+					menu: {
+						...state.menu,
+						[activeMenuType]: {
+							menuItems: {
+								...state.menu[activeMenuType].menuItems,
+								[itemId]: {
+									...state.menu[activeMenuType].menuItems[
+										itemId
+									],
+									mega_rows: stateRows,
+								},
+							},
 						},
 					},
 				});
@@ -786,7 +1065,7 @@ jQuery(function ($) {
 				columnSorting();
 			} else {
 				alert(
-					'Your grid is invalid. The summation of the columns never exceed 12'
+					'Your grid is invalid. The summation of the columns never exceed 12 nor below 1'
 				);
 			}
 		});
@@ -801,7 +1080,9 @@ jQuery(function ($) {
 	 * @param {int} currIndex 	The index number after sorting
 	 */
 	function swapColumn(itemId, rowId, prevIndex, currIndex) {
-		const rows = [...state.menuItems[itemId].mega_rows];
+		const rows = [
+			...state.menu[activeMenuType].menuItems[itemId].mega_rows,
+		];
 		const rowItem = rows.find(row => row.id === rowId) || false;
 		const rowIndex = rows.findIndex(row => row.id === rowId);
 
@@ -816,11 +1097,16 @@ jQuery(function ($) {
 			rows[rowIndex].columns = columns;
 
 			setState({
-				menuItems: {
-					...state.menuItems,
-					[itemId]: {
-						...state.menuItems[itemId],
-						mega_rows: rows,
+				menu: {
+					...state.menu,
+					[activeMenuType]: {
+						menuItems: {
+							...state.menu[activeMenuType].menuItems,
+							[itemId]: {
+								...state.menu[activeMenuType].menuItems[itemId],
+								mega_rows: rows,
+							},
+						},
 					},
 				},
 			});
@@ -866,7 +1152,8 @@ jQuery(function ($) {
 	 * Utility functions
 	 */
 	function isValidLayout(grids) {
-		return grids.reduce((acc, curr) => acc + curr) <= 12;
+		const total = grids.reduce((acc, curr) => acc + curr);
+		return total <= 12 && total >= 1;
 	}
 
 	/**
@@ -875,9 +1162,9 @@ jQuery(function ($) {
 	function getLastRowId() {
 		const ids = [];
 		$(
-			'.hu-menu-builder #hu-megamenu-layout-container.active-layout .hu-megamenu-layout-section'
-		).each(function (index, el) {
-			ids.push($(el).data('rowid'));
+			'.hu-menu-builder .hu-menu-type.active .hu-megamenu-layout-container.active-layout .hu-megamenu-layout-section'
+		).each(function () {
+			ids.push($(this).data('rowid'));
 		});
 
 		return Math.max(...ids);
@@ -943,11 +1230,17 @@ jQuery(function ($) {
 					.removeClass('hidden')
 					.addClass('hu-options-modal-content')
 			);
+
+			Joomla.setUpShowon(
+				$(`.hu-mega-row-settings[data-itemid=${itemId}]`)
+			);
 		}
 	);
 
 	function reflectStateDataIntoClonedRowSettings(itemId, rowId, $container) {
-		const rows = [...state.menuItems[itemId].mega_rows];
+		const rows = [
+			...state.menu[activeMenuType].menuItems[itemId].mega_rows,
+		];
 		const row = rows.find(row => row.id === rowId);
 
 		if (!!row) {
@@ -976,7 +1269,9 @@ jQuery(function ($) {
 		colId,
 		$container
 	) {
-		const rows = [...state.menuItems[itemId].mega_rows];
+		const rows = [
+			...state.menu[activeMenuType].menuItems[itemId].mega_rows,
+		];
 		const row = rows.find(row => row.id === rowId);
 
 		if (!row) return;

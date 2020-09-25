@@ -20,23 +20,14 @@ use Joomla\CMS\Filesystem\Folder;
 class MenuBuilder
 {
 	/**
-	 * Menu Type for which the builder perform its tasks.
-	 *
-	 * @var		string	$menuType	The type name
-	 * @since	2.0.0
-	 */
-	private $menuType;
-
-	/**
 	 * Constructor function for the builder.
 	 *
 	 * @param	string	$menuType	The menu type
 	 *
 	 * @since	2.0.0
 	 */
-	public function __construct($menuType = 'mainmenu')
+	public function __construct()
 	{
-		$this->menuType = $menuType;
 		$this->includeFields();
 	}
 
@@ -77,22 +68,50 @@ class MenuBuilder
 	}
 
 	/**
-	 * Set menu type if we need to overwrite the menu type by using
-	 * the same class instance.
+	 * Get Menu Types and their menu items.
 	 *
-	 * @param	string	$_menuType		The menu type.
+	 * @param	int			$client	The client id
 	 *
-	 * @return	void
+	 * @return	stdClass	The menu types with the items.
 	 * @since	2.0.0
 	 */
-	public function setMenuType($_menuType)
+	public function getMenuTypes($client = 0)
 	{
-		$this->menuType = $_menuType;
+		$menu = [];
+
+		try
+		{
+			$db 	= Factory::getDbo();
+			$query 	= $db->getQuery(true);
+			$query->select('id, menutype, title')
+				->from($db->quoteName('#__menu_types'))
+				->where($db->quoteName('client_id') . ' = ' . (int) $client);
+			$db->setQuery($query);
+			$menu = $db->loadObjectList();
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+		}
+
+		$menuTypes = new \stdClass;
+
+		if (!empty($menu))
+		{
+			foreach ($menu as $m)
+			{
+				$type = $m->menutype;
+				$menuTypes->$type = $this->getMenuItems($type, $client);
+			}
+		}
+
+		return $menuTypes;
 	}
 
 	/**
 	 * Get Menu Item for the menu type.
 	 *
+	 * @param	string			$menuType	The menu type
 	 * @param	string|array	$filter		The filter string.
 	 * 										A dot(.) separated key value pair or an array of key/value pairs
 	 *
@@ -101,7 +120,7 @@ class MenuBuilder
 	 *
 	 * @throws	Exception
 	 */
-	public function getMenuItems($filter = 'level.1')
+	public function getMenuItems($menuType = 'mainmenu', $client = 0, $filter = 'level.1')
 	{
 		$menuItems = [];
 
@@ -114,8 +133,10 @@ class MenuBuilder
 			 * Generate conditions based on the filters and others.
 			 */
 			$conditions = [
-				$db->quoteName('menutype') . ' = ' . $db->quote($this->menuType),
-				$db->quoteName('published') . ' = 1'
+				$db->quoteName('menutype') . ' = ' . $db->quote($menuType),
+				$db->quoteName('published') . ' = 1',
+				$db->quoteName('client_id') . ' = ' . (int) $client,
+				$db->quoteName('access') . ' IN (0, 1)',
 			];
 
 			if (!empty($filter) && \is_string($filter))
@@ -143,7 +164,7 @@ class MenuBuilder
 				}
 			}
 
-			$query->select('*')
+			$query->select('id, title, alias, menutype, path, link')
 				->from($db->quoteName('#__menu'))
 				->where($conditions);
 

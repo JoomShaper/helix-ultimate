@@ -34,6 +34,7 @@ class HelixultimateFieldMenuHierarchy
 		$dataAttrs = '';
 		$value = isset($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
 
 		if ($depend)
 		{
@@ -105,7 +106,7 @@ class HelixultimateFieldMenuHierarchy
 			$html[] = '<ul class="hu-menu-hierarchy-list">';
 			$html[] = '<li class="hu-menu-hierarchy-item level-0">';
 			$html[] = '	<label class="hu-menu-item-title">';
-			$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector select-all level-0" data-level="0" ' . $checkAll . $elements . '/>';
+			$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector select-all level-0 ' . $internal . '" data-level="0" ' . $checkAll . $elements . '/>';
 			$html[] = '		<span>' . Text::_('HELIX_ULTIMATE_MENU_HIERARCHY_SELECT_ALL') . '</span>';
 			$html[] = '	</label>';
 			$html[] = '</li>';
@@ -122,7 +123,7 @@ class HelixultimateFieldMenuHierarchy
 
 				$html[] = '<li class="hu-menu-hierarchy-item level-' . $level . '">';
 				$html[] = '	<label class="hu-menu-item-title">';
-				$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector level-' . $level . '" value="' . $val . '" data-level="' . $level . '" ' . $check . ' />';
+				$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector level-' . $level . $internal . '" value="' . $val . '" data-level="' . $level . '" ' . $check . ' />';
 				$html[] = '		<span style="margin-left: ' . $margin . 'px;">' . $menuElements->$child->title . '</span>';
 				$html[] = '	</label>';
 				$html[] = '</li>';
@@ -141,7 +142,7 @@ class HelixultimateFieldMenuHierarchy
 			$value = json_encode($value);
 		}
 
-		$html[] = '<input type="hidden" name="' . $key . '" value=\'' . $value . '\' ' . $dataAttrs . ' />';
+		$html[] = '<input type="hidden" class="' . $internal . '" name="' . $key . '" value=\'' . $value . '\' ' . $dataAttrs . ' />';
 		$html[] = '</div>';
 
 		return implode("\n", $html);

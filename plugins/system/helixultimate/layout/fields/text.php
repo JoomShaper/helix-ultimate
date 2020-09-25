@@ -35,6 +35,7 @@ class HelixultimateFieldText
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 		$dataAttrs = '';
 		$dataShowon = '';
+		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
 
 		if ($depend)
 		{
@@ -61,7 +62,7 @@ class HelixultimateFieldText
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<input class="hu-input hu-menu-builder-' . $key . '" type="text" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
+			$output .= '<input class="hu-input hu-menu-builder-' . $key . $internal . '" type="text" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
 		}
 		else
 		{

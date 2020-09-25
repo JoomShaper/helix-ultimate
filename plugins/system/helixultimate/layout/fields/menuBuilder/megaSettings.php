@@ -22,14 +22,16 @@ $fields = [
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
 		'menu-builder' => true,
 		'data' => ['itemid' => $item->id],
-		'value' => !empty($menuItemSettings->mega_width) ? $menuItemSettings->mega_width : ''
+		'value' => !empty($menuItemSettings->mega_width) ? $menuItemSettings->mega_width : '',
+		'internal' => true,
 	],
 	'mega_custom_classes' => [
 		'type' => 'text',
 		'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_CUSTOM_CLASSES'),
 		'menu-builder' => true,
 		'data' => ['itemid' => $item->id],
-		'value' => !empty($menuItemSettings->mega_custom_classes) ? $menuItemSettings->mega_custom_classes : ''
+		'value' => !empty($menuItemSettings->mega_custom_classes) ? $menuItemSettings->mega_custom_classes : '',
+		'internal' => true,
 	],
 	'mega_alignment' => [
 		'type' => 'alignment',
@@ -37,7 +39,8 @@ $fields = [
 		'desc' => Text::_('HELIX_ULTIMATE_MEGA_MENU_ALIGNMENT_DESC'),
 		'default' => 'left',
 		'data' => ['itemid' => $item->id],
-		'value' => !empty($menuItemSettings->mega_alignment) ? $menuItemSettings->mega_alignment : ''
+		'value' => !empty($menuItemSettings->mega_alignment) ? $menuItemSettings->mega_alignment : '',
+		'internal' => true,
 	]
 ];
 
@@ -60,7 +63,7 @@ $layout = new FileLayout('fields.menuBuilder.row', HELIX_LAYOUT_PATH);
 		</div>
 	</div>
 
-	<div id="hu-megamenu-layout-container" class="<?php echo $active ? 'active-layout' : ''; ?>">
+	<div class="hu-megamenu-layout-container <?php echo $active ? 'active-layout' : ''; ?>">
 		<?php
 			/**
 			 * Create an empty row for generating row using JS from it.

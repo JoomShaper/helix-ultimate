@@ -59,6 +59,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_label) ? $settings->col_label : '',
+						'internal' => true
 					],
 					'enable_col_title' => [
 						'type' => 'checkbox',
@@ -67,6 +68,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->enable_col_title) ? $settings->enable_col_title : '',
+						'internal' => true,
 					],
 					'col_title' => [
 						'type' => 'text',
@@ -75,7 +77,8 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_title) ? $settings->col_title : '',
-						'depend' => 'enable_col_title:1'
+						'depend' => 'enable_col_title:1',
+						'internal' => true,
 					],
 					'col_type' => [
 						'type' => 'select',
@@ -89,6 +92,7 @@ class SettingsFields
 							'menu_items' => Text::_('HELIX_ULTIMATE_COLUMN_SETTINGS_MENU_ITEMS'),
 						],
 						'value' => !empty($settings->col_type) ? $settings->col_type : '',
+						'internal' => true,
 					],
 					'module_position' => [
 						'type' => 'select',
@@ -98,7 +102,8 @@ class SettingsFields
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'options' => $positionOptions,
 						'value' => !empty($settings->module_positions) ? $settings->module_positions : '',
-						'depend' => 'col_type:module_position'
+						'depend' => 'col_type:module_position',
+						'internal' => true,
 					],
 					'module' => [
 						'type' => 'select',
@@ -108,7 +113,8 @@ class SettingsFields
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'options' => $moduleOptions,
 						'value' => !empty($settings->module) ? $settings->module : '',
-						'depend' => 'col_type:module'
+						'depend' => 'col_type:module',
+						'internal' => true,
 					],
 					'module_style' => [
 						'type' => 'select',
@@ -122,7 +128,8 @@ class SettingsFields
 							'none' => Text::_('None'),
 						],
 						'value' => !empty($settings->module_style) ? $settings->module_style : '',
-						'depend' => 'col_type:module[OR]col_type:module_position'
+						'depend' => 'col_type:module[OR]col_type:module_position',
+						'internal' => true,
 					],
 					'menu_items' => [
 						'type' => 'menuHierarchy',
@@ -131,7 +138,8 @@ class SettingsFields
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'itemid' => $item->id,
 						'value' => !empty($settings->menu_items) ? $settings->menu_items : '[]',
-						'depend' => 'col_type:menu_items'
+						'depend' => 'col_type:menu_items',
+						'internal' => true,
 					],
 					'col_id' => [
 						'type' => 'text',
@@ -140,6 +148,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->row_id) ? $settings->row_id : '',
+						'internal' => true,
 					],
 					'col_class' => [
 						'type' => 'text',
@@ -148,6 +157,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->row_class) ? $settings->row_class : '',
+						'internal' => true,
 					]
 				]
 			],
@@ -163,7 +173,8 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_margin) ? $settings->col_margin : '',
-						'placeholder' => 'eg: 0px 0px 0px 0px'
+						'placeholder' => 'eg: 0px 0px 0px 0px',
+						'internal' => true,
 					],
 					'col_padding' => [
 						'type' => 'text',
@@ -172,7 +183,8 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_padding) ? $settings->col_padding : '',
-						'placeholder' => 'eg: 0px 0px 0px 0px'
+						'placeholder' => 'eg: 0px 0px 0px 0px',
+						'internal' => true,
 					]
 				]
 			],
@@ -188,6 +200,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_hide_phone) ? $settings->col_hide_phone : '',
+						'internal' => true,
 					],
 					'col_hide_large_phone' => [
 						'type' => 'checkbox',
@@ -196,6 +209,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_hide_large_phone) ? $settings->col_hide_large_phone : '',
+						'internal' => true,
 					],
 					'col_hide_tablet' => [
 						'type' => 'checkbox',
@@ -204,6 +218,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_hide_tablet) ? $settings->col_hide_tablet : '',
+						'internal' => true,
 					],
 					'col_hide_small_desktop' => [
 						'type' => 'checkbox',
@@ -212,6 +227,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_hide_small_desktop) ? $settings->col_hide_small_desktop : '',
+						'internal' => true,
 					],
 					'col_hide_desktop' => [
 						'type' => 'checkbox',
@@ -220,6 +236,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
 						'value' => !empty($settings->col_hide_desktop) ? $settings->col_hide_desktop : '',
+						'internal' => true,
 					],
 				]
 			]
@@ -243,6 +260,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_label) ? $settings->row_label : '',
+						'internal' => true,
 					],
 					'enable_row_title' => [
 						'type' => 'checkbox',
@@ -251,6 +269,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->enable_row_title) ? $settings->enable_row_title : '',
+						'internal' => true,
 					],
 					'row_title' => [
 						'type' => 'text',
@@ -259,7 +278,8 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_title) ? $settings->row_title : '',
-						'depend' => 'enable_row_title:1'
+						'depend' => 'enable_row_title:1',
+						'internal' => true,
 					],
 					'row_id' => [
 						'type' => 'text',
@@ -268,6 +288,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_id) ? $settings->row_id : '',
+						'internal' => true,
 					],
 					'row_class' => [
 						'type' => 'text',
@@ -276,6 +297,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_class) ? $settings->row_class : '',
+						'internal' => true,
 					]
 				]
 			],
@@ -291,7 +313,8 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_margin) ? $settings->row_margin : '',
-						'placeholder' => 'eg: 0px 0px 0px 0px'
+						'placeholder' => 'eg: 0px 0px 0px 0px',
+						'internal' => true,
 					],
 					'row_padding' => [
 						'type' => 'text',
@@ -300,7 +323,8 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_padding) ? $settings->row_padding : '',
-						'placeholder' => 'eg: 0px 0px 0px 0px'
+						'placeholder' => 'eg: 0px 0px 0px 0px',
+						'internal' => true,
 					]
 				]
 			],
@@ -316,6 +340,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_hide_phone) ? $settings->row_hide_phone : '',
+						'internal' => true,
 					],
 					'row_hide_large_phone' => [
 						'type' => 'checkbox',
@@ -324,6 +349,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_hide_large_phone) ? $settings->row_hide_large_phone : '',
+						'internal' => true,
 					],
 					'row_hide_tablet' => [
 						'type' => 'checkbox',
@@ -332,6 +358,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_hide_tablet) ? $settings->row_hide_tablet : '',
+						'internal' => true,
 					],
 					'row_hide_small_desktop' => [
 						'type' => 'checkbox',
@@ -340,6 +367,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_hide_small_desktop) ? $settings->row_hide_small_desktop : '',
+						'internal' => true,
 					],
 					'row_hide_desktop' => [
 						'type' => 'checkbox',
@@ -348,6 +376,7 @@ class SettingsFields
 						'menu-builder' => true,
 						'data' => ['rowid' => $id, 'itemid' => $item->id],
 						'value' => !empty($settings->row_hide_desktop) ? $settings->row_hide_desktop : '',
+						'internal' => true,
 					],
 				]
 			]

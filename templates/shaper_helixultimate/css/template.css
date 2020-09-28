@@ -1387,8 +1387,8 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
   animation: spPulse 300ms;
 }
 body.ltr .sp-megamenu-parent > li.sp-has-child > a:after, body.ltr .sp-megamenu-parent > li.sp-has-child > span:after {
-  font-family: "Font Awesome 5 Free";
-  content: "\f0d7";
+  font-family: 'Font Awesome 5 Free';
+  content: '\f0d7';
   float: right;
   margin-left: 7px;
   font-weight: 900;
@@ -1400,8 +1400,8 @@ body.ltr .sp-megamenu-parent > li .sp-menu-badge.sp-menu-badge-left {
   margin-right: 5px;
 }
 body.ltr .sp-megamenu-parent .sp-dropdown .sp-dropdown-items .sp-has-child > a:after {
-  font-family: "Font Awesome 5 Free";
-  content: "\f0d7";
+  font-family: 'Font Awesome 5 Free';
+  content: '\f0d7';
   float: right;
   margin-left: 7px;
   font-weight: 900;

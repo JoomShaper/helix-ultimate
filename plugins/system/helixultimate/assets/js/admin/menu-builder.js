@@ -2,7 +2,6 @@ jQuery(function ($) {
 	const config = Joomla.getOptions('meta') || {};
 	const $builder = $('.hu-menu-builder');
 	let activeMenuType = config.activeMenu || 'mainmenu';
-	console.log(activeMenuType);
 
 	/**
 	 * Perform operation in reactive way
@@ -58,6 +57,10 @@ jQuery(function ($) {
 		mega_width: '',
 		mega_custom_classes: '',
 		mega_alignment: 'left',
+		menu_badge: '',
+		menu_badge_position: 'left',
+		menu_badge_background: '',
+		menu_badge_color: '',
 		mega_rows: [
 			{
 				id: 1,
@@ -295,6 +298,7 @@ jQuery(function ($) {
 					'input[name=row_title]',
 					'input[name=row_id]',
 					'input[name=row_class]',
+					'input[name=menu_badge]',
 				],
 			},
 			{
@@ -304,6 +308,9 @@ jQuery(function ($) {
 					'input[name=mega_menu]',
 					'input[name=mega_alignment]',
 					'input[name=enable_row_title]',
+					'select[name=menu_badge_position]',
+					'input[name=menu_badge_background]',
+					'input[name=menu_badge_color]',
 				],
 			},
 		];

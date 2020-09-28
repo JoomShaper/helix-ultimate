@@ -1,4 +1,8 @@
 jQuery(function ($) {
+	$('.hu-input-color').each(function () {
+		$(this).addClass('minicolors');
+	});
+
 	$('.hu-field-alignment .hu-switcher-action').on('click', function (e) {
 		e.preventDefault();
 

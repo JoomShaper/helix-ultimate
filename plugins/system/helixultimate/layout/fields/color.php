@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Settings;
+
 /**
  * Color field
  *
@@ -30,6 +32,27 @@ class HelixultimateFieldColor
 		JHtml::_('jquery.framework');
 		JHtml::_('script', 'system/html5fallback.js', false, true);
 
+		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
+		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+		$dataAttrs = '';
+		$dataShowon = '';
+		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
+
+		if ($depend)
+		{
+			$showon = Settings::parseShowOnConditions($attr['depend']);
+			$dataShowon = ' data-revealon=\'' . json_encode($showon) . '\' ';
+		}
+
+		if (!empty($attr['data']))
+		{
+			foreach ($attr['data'] as $dataName => $dataValue)
+			{
+				$dataAttrs .= ' data-' . $dataName . '=' . $dataValue;
+			}
+		}
+
 		$output  = '<div class="control-group">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
@@ -39,7 +62,15 @@ class HelixultimateFieldColor
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 
-		$output .= '<input type="text" class="hu-input hu-input-color" data-attrname="' . $key . '" placeholder="#rrggbb" value="">';
+		if ($isMenuBuilder)
+		{
+			$output .= '<input type="text" class="hu-input hu-input-color hu-menu-builder-' . $key . $internal . '" placeholder="#rrggbb" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" />';
+		}
+		else
+		{
+			$output .= '<input type="text" class="hu-input hu-input-color" data-attrname="' . $key . '" placeholder="#rrggbb" value="">';
+		}
+
 		$output .= '</div>';
 
 		return $output;

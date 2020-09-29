@@ -282,6 +282,20 @@ jQuery(function ($) {
 		}
 	}
 
+	(function handleMenuBuilderChanges() {
+		const $builderField = $('.hu-menu-builder input[name=megamenu]');
+		$builderField.on('change', function (e) {
+			e.preventDefault();
+
+			const $controls = $(this).closest('.controls');
+			const safePoint = $controls.data('safepoint');
+			const currentPoint = $controls.data('currpoint');
+			const value = Joomla.utils.helixHash($(this).val());
+
+			triggerDraftChange($(this), safePoint, currentPoint, value);
+		});
+	})();
+
 	function draftChanges() {
 		$('#layout').val(JSON.stringify(getGeneratedLayout()));
 		webfontData();

@@ -973,7 +973,7 @@
 			type="menu" 
 			helixgroup="megamenu" 
 			default="mainmenu"
-			track="off"
+			track="on"
 			label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
 		
 		<field name="megamenu"

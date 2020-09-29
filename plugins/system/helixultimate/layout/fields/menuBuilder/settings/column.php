@@ -37,6 +37,8 @@ foreach ($positions as $position)
 	$positionOptions[$position] = $position;
 }
 
+$positionOptions['custom'] = 'custom';
+
 $fields = [];
 
 $settingsFields = new SettingsFields(

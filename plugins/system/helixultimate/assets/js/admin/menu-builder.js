@@ -2,6 +2,7 @@ jQuery(function ($) {
 	const config = Joomla.getOptions('meta') || {};
 	const $builder = $('.hu-menu-builder');
 	let activeMenuType = config.activeMenu || 'mainmenu';
+	let triggerChange = false;
 
 	/**
 	 * Perform operation in reactive way
@@ -33,6 +34,7 @@ jQuery(function ($) {
 		col_title: '',
 		col_type: 'module',
 		module_position: '',
+		custom_position: '',
 		module: '',
 		module_style: 'sp_xhtml',
 		menu_items: '[]',
@@ -172,6 +174,17 @@ jQuery(function ($) {
 				fixMenuItemMismatches(nextState);
 			});
 		}
+
+		const stateString = JSON.stringify(state);
+		const hash = Joomla.utils.helixHash(stateString);
+
+		$megamenuField
+			.closest('.controls')
+			.data('safepoint', hash)
+			.attr('data-safepoint', hash)
+			.data('currpoint', hash)
+			.attr('data-currpoint', hash);
+		triggerChange = true;
 	}
 
 	/**
@@ -357,6 +370,7 @@ jQuery(function ($) {
 					'col_class',
 					'col_margin',
 					'col_padding',
+					'custom_position',
 				],
 			},
 			{
@@ -544,13 +558,18 @@ jQuery(function ($) {
 	}
 
 	function render() {
-		console.log('state:', state);
+		// console.log('state:', state);
+		const stateString = JSON.stringify(state);
 
 		// Update input value
-		$builder
-			.find('input[name=megamenu]')
-			.val(JSON.stringify(state))
-			.trigger('change');
+		const $megamenuField = $builder.find('input[name=megamenu]');
+
+		if (triggerChange) {
+			$megamenuField.val(stateString).trigger('change');
+		} else {
+			$megamenuField.val(stateString);
+		}
+
 		renderDOM();
 	}
 
@@ -1214,10 +1233,12 @@ jQuery(function ($) {
 		'.hu-menu-builder .hu-megamenu-row-options',
 		function (e) {
 			e.preventDefault();
+			triggerChange = false;
+
 			$(this).helixUltimateOptionsModal({
 				flag: 'menu-row-setting',
 				title: "<span class='fas fa-cog'></span> Row Settings",
-				class: 'hu-modal-small',
+				class: 'hu-modal-small hu-megamenu-row-settings',
 			});
 
 			const $parent = $(this).closest('.hu-megamenu-layout-section');
@@ -1241,6 +1262,13 @@ jQuery(function ($) {
 			Joomla.setUpShowon(
 				$(`.hu-mega-row-settings[data-itemid=${itemId}]`)
 			);
+
+			const selectors = [
+				'a[data-flag=menu-row-setting]',
+				'.hu-megamenu-row-settings .action-hu-options-modal-close',
+			];
+			enableChangeTriggerOnApply(selectors);
+			removeListener(selectors, 'click');
 		}
 	);
 
@@ -1329,10 +1357,12 @@ jQuery(function ($) {
 		'.hu-menu-builder .hu-megamenu-column-options',
 		function (e) {
 			e.preventDefault();
+			triggerChange = false;
+
 			$(this).helixUltimateOptionsModal({
 				flag: 'menu-col-setting',
 				title: "<span class='fas fa-cog'></span> Column Settings",
-				class: 'hu-modal-small',
+				class: 'hu-modal-small hu-megamenu-col-settings',
 			});
 
 			const $parent = $(this).closest('.hu-megamenu-layout-column');
@@ -1367,6 +1397,33 @@ jQuery(function ($) {
 				$(`.hu-megamenu-colum-settings[data-itemid=${itemId}]`)
 			);
 			handleColSettingsInputChange(colSettingsFields);
+
+			const selectors = [
+				'a[data-flag=menu-col-setting]',
+				'.hu-megamenu-col-settings .action-hu-options-modal-close',
+			];
+			enableChangeTriggerOnApply(selectors);
+			removeListener(selectors, 'click');
 		}
 	);
+
+	/**
+	 * On opening modal the change triggering is getting off.
+	 * After click to apply or close modal button re-enable the change triggering.
+	 */
+	function enableChangeTriggerOnApply(selectors) {
+		selectors.forEach(selector => {
+			$(document).on('click', selector, function (e) {
+				e.preventDefault();
+				triggerChange = true;
+
+				// re-render
+				setState({ menu: state.menu });
+			});
+		});
+	}
+
+	function removeListener(selectors, eventName) {
+		selectors.forEach(selector => $(selector).off(eventName));
+	}
 });

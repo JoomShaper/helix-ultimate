@@ -105,6 +105,16 @@ class SettingsFields
 						'depend' => 'col_type:module_position',
 						'internal' => true,
 					],
+					'custom_position' => [
+						'type' => 'text',
+						'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_CUSTOM_POSITIONS'),
+						'desc' => Text::_('HELIX_ULTIMATE_MEGA_MODULE_CUSTOM_POSITIONS_DESC'),
+						'menu-builder' => true,
+						'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
+						'value' => !empty($settings->custom_position) ? $settings->custom_position : '',
+						'depend' => 'col_type:module_position[AND]module_position:custom',
+						'internal' => true,
+					],
 					'module' => [
 						'type' => 'select',
 						'title' => Text::_('HELIX_ULTIMATE_MEGA_MODULE'),

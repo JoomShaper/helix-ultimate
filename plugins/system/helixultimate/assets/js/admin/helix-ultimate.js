@@ -234,11 +234,19 @@ jQuery(function ($) {
 							$inputEl.prop('checked', checked);
 						}
 
-						$inputEl.val(safepoint);
-						$inputEl.attr('value', safepoint);
+						if ($inputEl.attr('name') === 'megamenu') {
+							$('.hu-megamenu-action-tracker')
+								.val('restore')
+								.trigger('change');
+						}
 
-						// Fire change event for applying showon behavior
-						$inputEl.change();
+						if ($inputEl.attr('name') !== 'megamenu') {
+							$inputEl.val(safepoint);
+							$inputEl.attr('value', safepoint);
+
+							// Fire change event for applying showon behavior
+							$inputEl.change();
+						}
 
 						// Update currPoint value
 						$controlEl.attr('data-currpoint', safepoint);

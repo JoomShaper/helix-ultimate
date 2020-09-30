@@ -7,7 +7,7 @@ jQuery(function ($) {
 	/**
 	 * Perform operation in reactive way
 	 */
-
+	let stateBackup = {};
 	const state = {
 		menu: {},
 	};
@@ -184,8 +184,22 @@ jQuery(function ($) {
 			.attr('data-safepoint', hash)
 			.data('currpoint', hash)
 			.attr('data-currpoint', hash);
+
+		stateBackup = $.extend(true, {}, state);
 		triggerChange = true;
 	}
+
+	function trackSaveAndRestore() {
+		$('.hu-megamenu-action-tracker').on('change', function (e) {
+			e.preventDefault();
+
+			setState({ menu: stateBackup.menu }, nextState => {
+				reflectStateDataIntoItemFields(nextState);
+			});
+		});
+	}
+
+	trackSaveAndRestore();
 
 	/**
 	 * Check if any new MenuType added or removed, then handle them
@@ -558,7 +572,7 @@ jQuery(function ($) {
 	}
 
 	function render() {
-		// console.log('state:', state);
+		console.log('state:', state);
 		const stateString = JSON.stringify(state);
 
 		// Update input value
@@ -575,6 +589,40 @@ jQuery(function ($) {
 
 	function renderDOM() {
 		renderingRowLabel();
+	}
+
+	function reflectStateDataIntoItemFields(nextState) {
+		const menu = { ...nextState.menu };
+		const menuItems = menu[activeMenuType].menuItems;
+
+		Object.keys(menuItems).forEach(itemId => {
+			const $parent = $(
+				`.hu-menu-builder .hu-menu-item-settings[data-itemid=${itemId}]`
+			);
+			const keys = Object.entries(menuItems[itemId]);
+
+			if (keys.length > 0) {
+				keys.forEach(([key, value]) => {
+					const $field = $parent.find(`[name=${key}]`);
+					if ($field.length > 0) {
+						switch ($field.prop('tagName').toLowerCase()) {
+							case 'select':
+								$field
+									.val(value)
+									.trigger('liszt:updated')
+									.trigger('chosen:updated');
+								break;
+							default:
+								$field.attr('type').toLowerCase() === 'checkbox'
+									? $field.prop('checked', !!value)
+									: $field.val(value);
+								break;
+						}
+					}
+				});
+				toggleMegaSettings();
+			}
+		});
 	}
 
 	function renderingRowLabel() {
@@ -1296,8 +1344,6 @@ jQuery(function ($) {
 		}
 	}
 
-	/** ====================================================== */
-
 	function reflectStateDataIntoClonedColumnSettings(
 		itemId,
 		rowId,
@@ -1320,6 +1366,30 @@ jQuery(function ($) {
 			fields.forEach(field => {
 				let $inputField = $container.find(`input[name=${field}]`);
 				let $inputSelect = $container.find(`select[name=${field}]`);
+
+				if (field === 'menu_items') {
+					let items = col.settings[field];
+					if (typeof items === 'string' && items.length > 0) {
+						items = JSON.parse(items);
+						const $itemFields = $container.find(
+							`.hu-menu-hierarchy-list li.hu-menu-hierarchy-item input`
+						);
+
+						$itemFields.each(function () {
+							$(this).prop(
+								'checked',
+								items.includes($(this).val())
+							);
+						});
+
+						$itemFields
+							.first()
+							.prop(
+								'checked',
+								items.length === $itemFields.length - 1
+							);
+					}
+				}
 
 				if ($inputField.length) {
 					const type = $inputField.attr('type');
@@ -1344,11 +1414,14 @@ jQuery(function ($) {
 						.attr('data-columnid', colId);
 					$inputSelect
 						.val(col.settings[field])
-						.trigger('liszt:updated');
+						.trigger('liszt:updated')
+						.trigger('chosen:updated');
 				}
 			});
 		}
 	}
+
+	/** ====================================================== */
 	/**
 	 * Column settings
 	 */

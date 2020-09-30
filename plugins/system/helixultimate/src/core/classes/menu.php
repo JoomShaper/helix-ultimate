@@ -128,6 +128,7 @@ class HelixultimateMenu
 			$menuType = $this->menuname;
 			$this->menuItems = $defaultMenuItems->menu->$menuType->menuItems;
 		}
+		
 
 		$this->initMenu();
 		$this->render();

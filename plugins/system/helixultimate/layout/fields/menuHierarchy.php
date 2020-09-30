@@ -86,55 +86,63 @@ class HelixultimateFieldMenuHierarchy
 		$allElements = [];
 		$allElements = array_merge($allElements, $children);
 
-		while (count($children))
+		if (empty($children))
 		{
-			$child = array_shift($children);
-
-			if (!empty($menuElements->$child->children))
-			{
-				array_unshift($children, ...$menuElements->$child->children);
-				$totalElements += count($menuElements->$child->children);
-				$allElements = array_merge($allElements, $menuElements->$child->children);
-			}
+			$html[] = '<div><strong>There is not child items for this menu item.</strong></div>';
+			$value = [];
 		}
-
-		if (!empty($menuElements) && !empty($menuElements->$itemId->children))
+		else
 		{
-			$checkAll = count($value) === $totalElements ? 'checked="checked"' : '';
-			$elements = ' data-elements=\'' . json_encode($allElements) . '\'';
-
-			$html[] = '<ul class="hu-menu-hierarchy-list">';
-			$html[] = '<li class="hu-menu-hierarchy-item level-0">';
-			$html[] = '	<label class="hu-menu-item-title">';
-			$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector select-all level-0 ' . $internal . '" data-level="0" ' . $checkAll . $elements . '/>';
-			$html[] = '		<span>' . Text::_('HELIX_ULTIMATE_MENU_HIERARCHY_SELECT_ALL') . '</span>';
-			$html[] = '	</label>';
-			$html[] = '</li>';
-			$children = $menuElements->$itemId->children;
-
-			while (count($children) > 0)
+			while (count($children))
 			{
 				$child = array_shift($children);
-
-				$margin = ($menuElements->$child->level - 2) * 10;
-				$level = $menuElements->$child->level - 1;
-				$val = $menuElements->$child->id;
-				$check = \in_array($val, $value) ? 'checked="checked"' : '';
-
-				$html[] = '<li class="hu-menu-hierarchy-item level-' . $level . '">';
-				$html[] = '	<label class="hu-menu-item-title">';
-				$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector level-' . $level . $internal . '" value="' . $val . '" data-level="' . $level . '" ' . $check . ' />';
-				$html[] = '		<span style="margin-left: ' . $margin . 'px;">' . $menuElements->$child->title . '</span>';
-				$html[] = '	</label>';
-				$html[] = '</li>';
 
 				if (!empty($menuElements->$child->children))
 				{
 					array_unshift($children, ...$menuElements->$child->children);
+					$totalElements += count($menuElements->$child->children);
+					$allElements = array_merge($allElements, $menuElements->$child->children);
 				}
 			}
 
-			$html[] = '</ul>';
+			if (!empty($menuElements) && !empty($menuElements->$itemId->children))
+			{
+				$checkAll = count($value) === $totalElements ? 'checked="checked"' : '';
+				$elements = ' data-elements=\'' . json_encode($allElements) . '\'';
+
+				$html[] = '<ul class="hu-menu-hierarchy-list">';
+				$html[] = '<li class="hu-menu-hierarchy-item level-0">';
+				$html[] = '	<label class="hu-menu-item-title">';
+				$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector select-all level-0 ' . $internal . '" data-level="0" ' . $checkAll . $elements . '/>';
+				$html[] = '		<span>' . Text::_('HELIX_ULTIMATE_MENU_HIERARCHY_SELECT_ALL') . '</span>';
+				$html[] = '	</label>';
+				$html[] = '</li>';
+				$children = $menuElements->$itemId->children;
+
+				while (count($children) > 0)
+				{
+					$child = array_shift($children);
+
+					$margin = ($menuElements->$child->level - 2) * 10;
+					$level = $menuElements->$child->level - 1;
+					$val = $menuElements->$child->id;
+					$check = \in_array($val, $value) ? 'checked="checked"' : '';
+
+					$html[] = '<li class="hu-menu-hierarchy-item level-' . $level . '">';
+					$html[] = '	<label class="hu-menu-item-title">';
+					$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector level-' . $level . $internal . '" value="' . $val . '" data-level="' . $level . '" ' . $check . ' />';
+					$html[] = '		<span style="margin-left: ' . $margin . 'px;">' . $menuElements->$child->title . '</span>';
+					$html[] = '	</label>';
+					$html[] = '</li>';
+
+					if (!empty($menuElements->$child->children))
+					{
+						array_unshift($children, ...$menuElements->$child->children);
+					}
+				}
+
+				$html[] = '</ul>';
+			}
 		}
 
 		if (\is_array($value))

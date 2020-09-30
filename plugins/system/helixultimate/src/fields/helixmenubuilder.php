@@ -73,9 +73,6 @@ class JFormFieldHelixMenuBuilder extends FormField
 		}
 
 		$html[] = '<input type="hidden" class="hu-megamenu-field " name="' . $this->name . '" id="' . $this->id . '" value=\'' . $value . '\' />';
-		// $html[] = '<input type="hidden" class="megamenu-store" value=\'' . $value . '\' />';
-		// $html[] = '<input type="hidden" class="megamenu-store" value="" />';
-		// $html[] = '<input type="hidden" class="megamenu-change-tracker" name="' . $this->name . '" id="' . $this->id . '" value=""/>';
 
 		// End menu builder
 		$html[] = '</div>';

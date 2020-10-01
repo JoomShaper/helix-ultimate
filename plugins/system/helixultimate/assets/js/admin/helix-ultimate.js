@@ -312,8 +312,13 @@ jQuery(function ($) {
 			JSON.stringify($('.hu-preset.active').data())
 		);
 
+		// let data = $('#hu-style-form')
+		// 	.find(':not(.hu-preset-container input)')
+		// 	.not('.internal-use-only')
+		// 	.serializeArray();
+
 		let data = $('#hu-style-form')
-			.find(':not(.hu-preset-container input)')
+			.find('input, select, textarea')
 			.not('.internal-use-only')
 			.serializeArray();
 
@@ -524,11 +529,15 @@ jQuery(function ($) {
 		);
 
 		var tmplID = $(this).data('id'),
-			tmplView = $(this).data('view'),
-			data = $('#hu-style-form')
-				.find(':not(.hu-preset-container input)')
-				.not('.internal-use-only')
-				.serializeArray();
+			tmplView = $(this).data('view');
+		// data = $('#hu-style-form')
+		// 	.find(':not(.hu-preset-container input)')
+		// 	.not('.internal-use-only')
+		// 	.serializeArray();
+		const data = $('#hu-style-form')
+			.find('input, select, textarea')
+			.not('.internal-use-only')
+			.serializeArray();
 
 		$.ajax({
 			type: 'POST',

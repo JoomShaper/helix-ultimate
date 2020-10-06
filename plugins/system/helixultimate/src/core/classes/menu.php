@@ -128,7 +128,6 @@ class HelixultimateMenu
 			$menuType = $this->menuname;
 			$this->menuItems = $defaultMenuItems->menu->$menuType->menuItems;
 		}
-		
 
 		$this->initMenu();
 		$this->render();
@@ -204,6 +203,7 @@ class HelixultimateMenu
 		foreach ($items as &$item)
 		{
 			$class = '';
+			$itemParams = $item->getParams();
 
 			if ($item->id == $this->active)
 			{
@@ -216,7 +216,7 @@ class HelixultimateMenu
 			}
 			elseif ($item->type == 'alias')
 			{
-				$aliasToId = $item->params->get('aliasoptions');
+				$aliasToId = $itemParams->get('aliasoptions');
 
 				if (count($this->active_tree) > 0 && $aliasToId == $this->active_tree[count($this->active_tree) - 1])
 				{
@@ -255,7 +255,7 @@ class HelixultimateMenu
 					break;
 
 				case 'alias':
-					$item->flink = 'index.php?Itemid=' . $item->params->get('aliasoptions');
+					$item->flink = 'index.php?Itemid=' . $itemParams->get('aliasoptions');
 					break;
 
 				default:
@@ -265,7 +265,7 @@ class HelixultimateMenu
 
 			if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http'))
 			{
-				$item->flink = Route::_($item->flink, true, $item->params->get('secure'));
+				$item->flink = Route::_($item->flink, true, $itemParams->get('secure'));
 			}
 			else
 			{
@@ -273,9 +273,9 @@ class HelixultimateMenu
 			}
 
 			$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_css   = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->menu_image   = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
+			$item->anchor_css   = htmlspecialchars($itemParams->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
+			$item->anchor_title = htmlspecialchars($itemParams->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
+			$item->menu_image   = $itemParams->get('menu_image', '') ? htmlspecialchars($itemParams->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
 		}
 	}
 
@@ -450,7 +450,7 @@ class HelixultimateMenu
 		$dropdown_width = $this->_params->get('dropdown_width', 240);
 		$dropdown_alignment = 'right';
 		$dropdown_style = 'width: ' . $dropdown_width . 'px;';
-		$layout = json_decode($this->_items[$item->id]->params->get('helixultimatemenulayout'));
+		$layout = json_decode($this->_items[$item->id]->getParams()->get('helixultimatemenulayout'));
 
 		if (isset($layout->dropdown) && $layout->dropdown === 'left')
 		{
@@ -487,7 +487,7 @@ class HelixultimateMenu
 
 		foreach ($items as $menu_item)
 		{
-			if ((int) $menu_item->params->get('menu_show', 1) === 1)
+			if ((int) $menu_item->getParams()->get('menu_show', 1) === 1)
 			{
 				$show_menu ++;
 			}
@@ -774,6 +774,7 @@ class HelixultimateMenu
 	{
 		$menu = $this->app->getMenu('site');
 		$item = $menu->getItem($id);
+		$itemParams = $item->getParams();
 
 		$title = !empty($item->anchor_title) ? $item->anchor_title : '';
 		$class = !empty($item->anchor_css) ? $item->anchor_css : '';
@@ -782,7 +783,7 @@ class HelixultimateMenu
 
 		if ($item->menu_image)
 		{
-			$linkTitle = $item->params->get('menu_text', 1) ?
+			$linkTitle = $itemParams->get('menu_text', 1) ?
 				'<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :
 				'<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
 		}
@@ -795,7 +796,7 @@ class HelixultimateMenu
 		$flink = str_replace('&amp;', '&', \JFilterOutput::ampReplace(htmlspecialchars($flink)));
 		$anchor = '';
 
-		if ($item->params->get('menu_show', 1) !== 0)
+		if ($itemParams->get('menu_show', 1) !== 0)
 		{
 			switch ($item->browserNav)
 			{
@@ -807,7 +808,7 @@ class HelixultimateMenu
 					$anchor .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linkTitle . '</a>';
 					break;
 				case 2:
-					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $item->params->get('window_open');
+					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $itemParams->get('window_open');
 					$anchor .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linkTitle . '</a>';
 					break;
 			}
@@ -868,7 +869,6 @@ class HelixultimateMenu
 		// Menu show
 		$menu_show = $this->getMenuShow($args['item']->id);
 
-		// $layout = json_decode($item->params->get('helixultimatemenulayout'));
 		$menuItem = null;
 
 		if ((int) $item->level === 1)
@@ -923,6 +923,7 @@ class HelixultimateMenu
 	private function item($item, $extra_class='')
 	{
 		$menuItem = null;
+		$itemParams = $item->getParams();
 
 		if ((int) $item->level === 1)
 		{
@@ -944,7 +945,7 @@ class HelixultimateMenu
 
 		if ($item->menu_image)
 		{
-			$item->params->get('menu_text', 1) ?
+			$itemParams->get('menu_text', 1) ?
 				$linkTitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :
 				$linkTitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
 		}
@@ -1034,7 +1035,7 @@ class HelixultimateMenu
 			$linkTitle .= $captionHtml;
 		}
 
-		if ($item->params->get('menu_show', 1) !== 0)
+		if ($itemParams->get('menu_show', 1) !== 0)
 		{
 			switch ($item->browserNav)
 			{
@@ -1046,7 +1047,7 @@ class HelixultimateMenu
 					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linkTitle . '</a>';
 					break;
 				case 2:
-					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $item->params->get('window_open');
+					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $itemParams->get('window_open');
 					$output .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linkTitle . '</a>';
 					break;
 			}

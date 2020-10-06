@@ -95,7 +95,7 @@ class HelixUltimateFeatureLogo
 
 		if ($this->params->get('logo_type') === 'image')
 		{
-			$altText = $this->params->get('logo_alt', $sitename);	
+			$altText = $this->params->get('logo_alt', $sitename);
 
 			if ($this->params->get('logo_image'))
 			{

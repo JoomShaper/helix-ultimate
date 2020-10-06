@@ -129,7 +129,8 @@ class HelixUltimate
 	 */
 	public function bodyClass($class = '')
 	{
-		$menu            = $this->app->getMenu()->getActive();
+		$menu           = $this->app->getMenu()->getActive();
+		$menuParams		= $menu->getParams();
 
 		$stickyHeader 	= $this->params->get('sticky_header', 0) ? ' sticky-header' : '';
 		$stickyHeader 	= $this->params->get('sticky_header_md', 0) ? $stickyHeader . ' sticky-header-md' : $stickyHeader;
@@ -148,9 +149,9 @@ class HelixUltimate
 
 		if (isset($menu) && $menu)
 		{
-			if ($menu->params->get('pageclass_sfx'))
+			if ($menuParams->get('pageclass_sfx'))
 			{
-				$bodyClass .= ' ' . $menu->params->get('pageclass_sfx');
+				$bodyClass .= ' ' . $menuParams->get('pageclass_sfx');
 			}
 		}
 

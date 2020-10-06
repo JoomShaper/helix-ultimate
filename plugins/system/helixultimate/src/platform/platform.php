@@ -208,7 +208,6 @@ class Platform
 		HTMLHelper::_('jquery.framework');
 		HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 
-		HTMLHelper::_('jquery.ui', array('core', 'sortable'));
 		HTMLHelper::_('bootstrap.framework');
 		HTMLHelper::_('behavior.formvalidator');
 		HTMLHelper::_('behavior.keepalive');
@@ -218,17 +217,17 @@ class Platform
 
 		$doc->setMetaData('viewport', 'width=device-width, initial-scale=1.0');
 
-		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/helix-ultimate.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/jquery-ui.min.css');
+		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/helix-ultimate.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/modal.css');
 		$doc->addStyleSheet(Uri::root(true) . '/templates/shaper_helixultimate/css/font-awesome.min.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/devices-field.css');
 		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/menu-builder.css');
 
+		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/utils.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/fields.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/helix-ultimate.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/webfont.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/modal.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/layout.js');

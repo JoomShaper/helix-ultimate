@@ -41,7 +41,8 @@ class JFormFieldHelixgallery extends FormField
 		$doc = Factory::getDocument();
 
 		HTMLHelper::_('jquery.framework');
-		HTMLHelper::_('jquery.ui', array('core', 'sortable'));
+		$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
+		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
 
 		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
 

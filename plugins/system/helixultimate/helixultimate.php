@@ -117,7 +117,8 @@ class  PlgSystemHelixultimate extends JPlugin
 		if ($form->getName() === 'com_menus.item')
 		{
 			HTMLHelper::_('jquery.framework');
-			HTMLHelper::_('jquery.ui', array('core', 'more', 'sortable'));
+			$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
+			$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
 
 			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
 			$doc->addStyleSheet($plg_path . '/assets/css/admin/modal.css');

@@ -1,23 +1,47 @@
 <?php
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @package Helix_Ultimate_Framework
+ * @author JoomShaper <support@joomshaper.com>
+ * @copyright Copyright (c) 2010 - 2020 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ */
+
 
 defined ('_JEXEC') or die();
 
+/**
+ * Helix Ultimate Site Title.
+ *
+ * @since	1.0.0
+ */
 class HelixUltimateFeatureTitle
 {
-
+	/**
+	 * Template parameters
+	 *
+	 * @var		object	$params		The parameters object
+	 * @since	1.0.0
+	 */
 	private $params;
 
+	/**
+	 * Constructor function
+	 *
+	 * @param	object	$params		The template parameters
+	 *
+	 * @since	1.0.0
+	 */
 	public function __construct($params)
 	{
 		$this->position = 'title';
 	}
 
+	/**
+	 * Render the logo features.
+	 *
+	 * @return	string
+	 * @since	1.0.0
+	 */
 	public function renderFeature()
 	{
 
@@ -27,7 +51,7 @@ class HelixUltimateFeatureTitle
 		if($menuitem)
 		{
 
-			$params = $menuitem->params;
+			$params = $menuitem->getParams();
 
 			if($params->get('helixultimate_enable_page_title', 0))
 			{

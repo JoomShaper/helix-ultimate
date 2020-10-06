@@ -42,7 +42,7 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
-JHtml::_('behavior.caption');
+// JHtml::_('behavior.caption');
 ?>
 <div class="article-details <?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>">

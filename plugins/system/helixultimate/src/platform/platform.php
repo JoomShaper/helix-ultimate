@@ -129,12 +129,7 @@ class Platform
 	 */
 	public function initialize()
 	{
-		if ($this->option === 'com_ajax' && $this->helix === 'ultimate' && $this->request === 'task')
-		{
-			$request = new Request;
-			$request->initialize();
-		}
-		elseif ($this->option === 'com_ajax' && $this->helix === 'ultimate' && $this->id && $this->permission)
+		if ($this->option === 'com_ajax' && $this->helix === 'ultimate' && $this->id && $this->permission)
 		{
 			$app = Factory::getApplication();
 			$id = (int) $app->input->get('id', 0, 'INT');
@@ -148,7 +143,7 @@ class Platform
 				'iframe'	=> ['url' => Uri::root(true) . '/index.php?template=' . $style->template]
 			);
 
-			echo LayoutHelper::render('display', $layoutData, HELIX_LAYOUTS_PATH);
+			return LayoutHelper::render('display', $layoutData, HELIX_LAYOUTS_PATH);
 		}
 	}
 
@@ -162,10 +157,12 @@ class Platform
 	 */
 	public function handleRequests()
 	{
+		$request = new Request;
+
 		if ($this->option === 'com_ajax' && $this->helix === 'ultimate' && $this->request === 'task')
 		{
-			$request = new Request;
 			$request->initialize();
+			exit;
 		}
 	}
 
@@ -236,28 +233,21 @@ class Platform
 		$doc->addScript($helix_plg_url . '/assets/js/admin/presets.js');
 		$doc->addScript($helix_plg_url . '/assets/js/admin/menu-builder.js');
 
-		/**
-		 * Push the platform contents inside
-		 * the body part of the backend template,
-		 * or more specifically into the component
-		 * <jdoc:include /> section
-		 */
-		// $content = (new self)->initialize();
-		// $doc->setBuffer($content, 'component');
-
 		// Pass important data to Joomla variable for javascript
 		$meta = array(
 			'base' => rtrim(Uri::root(), '/'),
 			'activeMenu' => $template->params->get('menu', 'mainmenu', 'STRING')
 		);
 		$doc->addScriptOptions('meta', $meta);
+		$doc->setBuffer((new self)->initialize(), 'component');
 
-		echo $doc->render(
-			false,
-			[
-				'file' => 'component.php',
-				'template' => 'HelixUltimate',
-			]
-		);
+		// echo $doc->render(
+		// 	false,
+		// 	[
+		// 		'directory' => JPATH_ROOT . '/templates',
+		// 		'file' => 'component.php',
+		// 		'template' => 'HelixUltimate',
+		// 	]
+		// );
 	}
 }

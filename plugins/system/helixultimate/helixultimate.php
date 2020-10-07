@@ -62,41 +62,6 @@ class  PlgSystemHelixultimate extends JPlugin
 	protected $app;
 
 	/**
-	 * Method to catch the onAfterDispatch event.
-	 *
-	 * @return	void
-	 * @since	1.0.0
-	 */
-	public function onAfterDispatch()
-	{
-		if (!$this->app->isClient('administrator'))
-		{
-			$activeMenu = $this->app->getMenu()->getActive();
-
-			if (is_null($activeMenu))
-			{
-				$template_style_id = 0;
-			}
-			else
-			{
-				$template_style_id = (int) $activeMenu->template_style_id;
-			}
-
-			if ($template_style_id > 0)
-			{
-				Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-				$style = Table::getInstance('Style', 'TemplatesTable');
-				$style->load($template_style_id);
-
-				if (!empty($style->template))
-				{
-					$this->app->setTemplate($style->template, $style->params);
-				}
-			}
-		}
-	}
-
-	/**
 	 * The form event. Load additional parameters when available into the field form.
 	 * Only when the type of the form is of interest.
 	 *
@@ -213,6 +178,13 @@ class  PlgSystemHelixultimate extends JPlugin
 		$request    = $this->app->input->get('request', '', 'STRING');
 		$action     = $this->app->input->get('action', '', 'STRING');
 		$id         = $this->app->input->get('id', 0, 'INT');
+		$tmpl		= $this->app->input->get('tmpl', '', 'STRING');
+
+		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
+		{
+			$this->app->input->set('tmpl', 'component');
+			// echo JVERSION;
+		}
 
 		$doc = Factory::getDocument();
 
@@ -245,11 +217,11 @@ class  PlgSystemHelixultimate extends JPlugin
 				}
 				elseif ($request === '')
 				{
-					Platform::loadFrameworkSystem();
+					// Platform::loadFrameworkSystem();
 				}
 
 				$this->app->triggerEvent('onAfterRespond');
-				exit();
+				// exit();
 			}
 		}
 
@@ -293,10 +265,67 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	public function onAfterRespond()
 	{
-		if ($this->app->isClient('administrator'))
+		$request = $this->app->input->get('request', '', 'STRING');
+
+		if ($this->app->isClient('administrator') && !empty($request))
 		{
-			$platform = new Platform;
-			$platform->initialize();
+			/**
+			 * On every ajax request handle the request from here.
+			 */
+			(new Platform)->handleRequests();
+		}
+	}
+
+	/**
+	 * Method to catch the onAfterDispatch event.
+	 * This event is responsible for rendering the framework settings.
+	 *
+	 * @return	void
+	 * @since	1.0.0
+	 */
+	public function onAfterDispatch()
+	{
+		$option     = $this->app->input->get('option', '', 'STRING');
+		$helix      = $this->app->input->get('helix', '', 'STRING');
+		$view       = $this->app->input->get('view', '', 'STRING');
+		$task       = $this->app->input->get('task', '', 'STRING');
+		$request    = $this->app->input->get('request', '', 'STRING');
+		$action     = $this->app->input->get('action', '', 'STRING');
+		$id         = $this->app->input->get('id', 0, 'INT');
+
+		if ($this->app->isClient('administrator')
+			&& $option === 'com_ajax'
+			&& $helix === 'ultimate'
+			&& !empty($id)
+			&& empty($request))
+		{
+			Platform::loadFrameworkSystem();
+		}
+
+		if (!$this->app->isClient('administrator'))
+		{
+			$activeMenu = $this->app->getMenu()->getActive();
+
+			if (is_null($activeMenu))
+			{
+				$template_style_id = 0;
+			}
+			else
+			{
+				$template_style_id = (int) $activeMenu->template_style_id;
+			}
+
+			if ($template_style_id > 0)
+			{
+				Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+				$style = Table::getInstance('Style', 'TemplatesTable');
+				$style->load($template_style_id);
+
+				if (!empty($style->template))
+				{
+					$this->app->setTemplate($style->template, $style->params);
+				}
+			}
 		}
 	}
 

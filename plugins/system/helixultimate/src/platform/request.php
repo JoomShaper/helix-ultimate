@@ -96,7 +96,7 @@ class Request
 	}
 
 	/**
-	 * Initialize the requrest.
+	 * Initialize the request.
 	 *
 	 * @return	void
 	 * @since	1.0.0

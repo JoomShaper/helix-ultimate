@@ -13,6 +13,8 @@ defined('_JEXEC') or die();
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Request;
 use HelixUltimate\Framework\System\HelixCache;
+use HelixUltimate\Framework\System\HelixDocument;
+use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
@@ -186,10 +188,11 @@ class Platform
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public static function loadFrameworkSystem()
+	public static function loadFrameworkSystem2()
 	{
 		$app = Factory::getApplication();
 		$doc = Factory::getDocument();
+		$helixDoc = new HelixDocument;
 		$style_id = (int) $app->input->get('id', 0, 'INT');
 
 		$template = Helper::loadTemplateData();
@@ -201,10 +204,15 @@ class Platform
 		$doc->addFavicon($helix_plg_url . '/assets/images/favicon.ico');
 
 		$doc->addScriptDeclaration('var helixUltimateStyleId = ' . $style_id . ';');
+		$helixDoc->addInlineScript('var helixUltimateStyleId = ' . $style_id . ';');
 
+		$helixDoc->useScript('jquery');
+		$helixDoc->registerAndUseScript('cms', '', ['version' => 'auto', 'relative' => true]);
+		$helixDoc->registerAndUseScript('bootstrap', '', ['version' => 'auto', 'relative' => true]);
 		HTMLHelper::_('jquery.framework');
 		HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 
+		HTMLHelper::_('script', 'bootstrap.framework');
 		HTMLHelper::_('bootstrap.framework');
 		HTMLHelper::_('behavior.formvalidator');
 		HTMLHelper::_('behavior.keepalive');
@@ -238,16 +246,85 @@ class Platform
 			'base' => rtrim(Uri::root(), '/'),
 			'activeMenu' => $template->params->get('menu', 'mainmenu', 'STRING')
 		);
+
 		$doc->addScriptOptions('meta', $meta);
 		$doc->setBuffer((new self)->initialize(), 'component');
+	}
 
-		// echo $doc->render(
-		// 	false,
-		// 	[
-		// 		'directory' => JPATH_ROOT . '/templates',
-		// 		'file' => 'component.php',
-		// 		'template' => 'HelixUltimate',
-		// 	]
-		// );
+	public static function loadFrameworkSystem()
+	{
+		$app = Factory::getApplication();
+		$doc = Factory::getDocument();
+		$helixDocument = new HelixDocument;
+		$style_id = (int) $app->input->get('id', 0, 'INT');
+
+		$template = Helper::loadTemplateData();
+		$helix_plg_uri = Uri::root(true) . '/plugins/system/helixultimate';
+		$helix_assets_url = Uri::root() . 'plugins/system/helixultimate/assets';
+
+		Factory::getLanguage()->load('tpl_' . $template->template, JPATH_SITE, null, true);
+
+		/**
+		 * Set meta information.
+		 */
+		$doc->setTitle("Helix Ultimate Framework");
+		$doc->setGenerator('Joomla Framework: Helix Ultimate');
+		$doc->addFavicon($helix_plg_uri . '/assets/images/favicon.ico');
+		$doc->setMetaData('viewport', 'width=device-width, initial-scale=1.0');
+
+		$helixDocument->addInlineScript('var helixUltimateStyleId = ' . $style_id . ';');
+
+		/**
+		 * System defined assets
+		 */
+		$helixDocument->useScript('jquery')
+			->useScript('jquery-noconflict')
+			->useScript('jquery-migrate')
+			->registerAndUseScript('cms', '', ['version' => 'auto', 'relative' => true])
+			->registerAndUseScript('script.bootstrap', '', ['version' => 'auto', 'relative' => true])
+			->useScript('keepalive')
+			->registerAndUseScript('script.chosen', '', ['version' => 'auto', 'relative' => true])
+			->registerAndUseScript('script.colorPicker', '', ['version' => 'auto', 'relative' => true]);
+
+		HTMLHelper::_('jquery.token');
+
+		if (JoomlaBridge::getVersion('major') >= 4)
+		{
+			$helixDocument->useScript('core');
+		}
+
+		
+		/**
+		 * Framework defined assets
+		 */
+		$helixDocument->registerAndUseStyle('style.chosen', '', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('style.colorPicker', '', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('helix.jquery.ui', $helix_assets_url . '/css/admin/jquery-ui.min.css', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('helix.ultimate', $helix_assets_url . '/css/admin/helix-ultimate.css', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('helix.modal', $helix_assets_url . '/css/admin/modal.css', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('helix.fontAwesome', Uri::root() . 'templates/shaper_helixultimate/css/font-awesome.min.css')
+			->registerAndUseStyle('helix.device-field', $helix_assets_url . '/css/admin/devices-field.css', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('helix.menuBuilder', $helix_assets_url . '/css/admin/menu-builder.css', ['version' => 'auto', 'relative' => true]);
+		
+		$helixDocument->registerAndUseScript('helix.jquery.ui', $helix_assets_url . '/js/admin/jquery-ui.min.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.utils', $helix_assets_url . '/js/admin/utils.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.fields', $helix_assets_url . '/js/admin/fields.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.ultimate', $helix_assets_url . '/js/admin/helix-ultimate.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.webFont', $helix_assets_url . '/js/admin/webfont.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.modal', $helix_assets_url . '/js/admin/modal.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.layout', $helix_assets_url . '/js/admin/layout.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.media', $helix_assets_url . '/js/admin/media.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.device-field', $helix_assets_url . '/js/admin/devices-field.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.presets', $helix_assets_url . '/js/admin/presets.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.menuBuilder', $helix_assets_url . '/js/admin/menu-builder.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
+
+		// Pass important data to Joomla variable for javascript
+		$meta = array(
+			'base' => rtrim(Uri::root(), '/'),
+			'activeMenu' => $template->params->get('menu', 'mainmenu', 'STRING')
+		);
+
+		$doc->addScriptOptions('meta', $meta);
+		$doc->setBuffer((new self)->initialize(), 'component');
 	}
 }

@@ -3,6 +3,15 @@ jQuery(function ($) {
 		$(this).addClass('minicolors');
 	});
 
+	$('.minicolors').each(function(){
+		$(this).minicolors({
+			control: 'hue',
+			position: 'top left',
+			theme: 'bootstrap',
+			opacity: true
+		});
+	});
+
 	$('.hu-field-alignment .hu-switcher-action').on('click', function (e) {
 		e.preventDefault();
 

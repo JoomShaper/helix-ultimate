@@ -10,8 +10,9 @@ Namespace HelixUltimate\Framework\Core;
 
 defined('_JEXEC') or die();
 
-use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\Platform\Helper;
+use HelixUltimate\Framework\System\HelixCache;
+use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -280,7 +281,15 @@ class HelixUltimate
 
 		$this->doc->addScriptdeclaration('template="' . $this->template->template . '";');
 
-		echo '<jdoc:include type="head" />';
+		if (JoomlaBridge::getVersion('major') < 4)
+		{
+			echo '<jdoc:include type="head" />';
+		}
+		else
+		{
+			echo '<jdoc:include type="metas" />';
+			echo '<jdoc:include type="styles" />';
+		}
 
 		$this->add_css('bootstrap.min.css');
 
@@ -1306,7 +1315,7 @@ class HelixUltimate
 						}
 						else
 						{
-							$compressed = \JShrink\Minifier::minify(File::read($js_file), array('flaggedComments' => false));
+							$compressed = \JShrink\Minifier::minify(file_get_contents($js_file), array('flaggedComments' => false));
 						}
 					}
 

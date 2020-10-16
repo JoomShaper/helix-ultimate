@@ -225,5 +225,9 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<?php if( $app->input->get('view') == 'article' && $this->params->get('reading_time_progress', 0) ): ?>
 			<div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>
 		<?php endif; ?>
+
+		<?php if (HelixUltimate\Framework\System\JoomlaBridge::getVersion('major') >= 4): ?>
+			<jdoc:include type="scripts" />
+		<?php endif ?>
 	</body>
 </html>

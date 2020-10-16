@@ -22,6 +22,7 @@ use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Media;
 use HelixUltimate\Framework\Platform\Platform;
 use HelixUltimate\Framework\System\HelixCache;
+use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\Form;
@@ -183,10 +184,12 @@ class  PlgSystemHelixultimate extends JPlugin
 		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
 		{
 			$this->app->input->set('tmpl', 'component');
-			// echo JVERSION;
-		}
 
-		$doc = Factory::getDocument();
+			if ($this->app->input->get('format', '', 'STRING') !== 'html')
+			{
+				$this->app->input->set('format', 'html');
+			}
+		}
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax'
 			&& $helix === 'ultimate' && !Factory::getUser()->id)
@@ -215,13 +218,14 @@ class  PlgSystemHelixultimate extends JPlugin
 					echo $template->params;
 					exit();
 				}
-				elseif ($request === '')
-				{
-					// Platform::loadFrameworkSystem();
-				}
 
-				$this->app->triggerEvent('onAfterRespond');
-				// exit();
+				/**
+				 * Trigger the onAfterRespond event in every ajax route hit.
+				 */
+				if (!empty($request))
+				{
+					$this->app->triggerEvent('onAfterRespond');
+				}
 			}
 		}
 
@@ -324,6 +328,80 @@ class  PlgSystemHelixultimate extends JPlugin
 				if (!empty($style->template))
 				{
 					$this->app->setTemplate($style->template, $style->params);
+				}
+			}
+		}
+	}
+
+	public function onBeforeCompileHead()
+	{
+		if ($this->app->isClient('administrator') && $this->app->input->get('option') === 'com_ajax' && $this->app->input->get('helix') === 'ultimate')
+		{
+			// Generating method `sanitizeAssetsForJ3` or `sanitizeAssetsForJ4` according to the Joomla major version.
+			$sanitizeMethod = 'sanitizeAssetsForJ' . JoomlaBridge::getVersion('major');
+			$this->$sanitizeMethod();
+		}
+	}
+
+	private function sanitizeAssetsForJ3()
+	{
+		$headData = Factory::getDocument()->getHeadData();
+		$styles = $headData['styleSheets'];
+		$scripts = $headData['scripts'];
+
+		if (!empty($styles))
+		{
+			foreach ($styles as $url => $style)
+			{
+				$paths = explode('/', $url);
+
+				if ($paths[count($paths) - 1] === 'template.css')
+				{
+					unset($styles[$url]);
+				}
+			}
+		}
+
+		if (!empty($scripts))
+		{
+			foreach ($scripts as $url => $script)
+			{
+				$paths = explode('/', $url);
+
+				if ($paths[count($paths) - 1] === 'template.js')
+				{
+					unset($scripts[$url]);
+				}
+			}
+		}
+
+		$headData['styleSheets'] = $styles;
+		$headData['scripts'] = $scripts;
+
+		Factory::getDocument()->setHeadData($headData);
+	}
+
+	private function sanitizeAssetsForJ4()
+	{
+		$doc = Factory::getDocument();
+		$wa = $doc->getWebAssetManager();
+
+		/**
+		 * Disable the atum specific styles and scripts.
+		 */
+		$assets = [
+			'style' => ['template.atum.base', 'template.atum', 'template.active', 'template.active.language', 'template.user', 'template.atum.ltr', 'template.atum.rtl'],
+			'script' => ['choicesjs', 'dragula']
+		];
+
+		foreach ($assets as $type => $names)
+		{
+			foreach ($names as $name)
+			{
+				if ($wa->assetExists($type, $name))
+				{
+					$methodName = 'disable' . ucfirst($type);
+					$wa->$methodName($name);
 				}
 			}
 		}

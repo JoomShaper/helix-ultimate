@@ -286,7 +286,7 @@ class HelixultimateMenu
 	 * @since	1.0.0
 	 */
 	public function render()
-	{
+	{		
 		$this->menu = '';
 		$keys = array_keys($this->_items);
 
@@ -1087,8 +1087,8 @@ class HelixultimateMenu
 		$now = $date->toSql();
 		$nullDate = $db->getNullDate();
 
-		$query->where('(m.publish_up = ' . $db->Quote($nullDate) . ' OR m.publish_up <= ' . $db->Quote($now) . ')');
-		$query->where('(m.publish_down = ' . $db->Quote($nullDate) . ' OR m.publish_down >= ' . $db->Quote($now) . ')');
+		$query->where('(m.publish_up = ' . $db->Quote($nullDate) . ' OR m.publish_up IS NULL OR m.publish_up <= ' . $db->Quote($now) . ')');
+		$query->where('(m.publish_down = ' . $db->Quote($nullDate) . ' OR m.publish_down IS NULL OR m.publish_down >= ' . $db->Quote($now) . ')');
 		$query->where($db->quoteName('m.access') . ' IN (' . $groups . ')');
 		$query->where($db->quoteName('m.client_id') . ' = ' . (int) $clientId);
 

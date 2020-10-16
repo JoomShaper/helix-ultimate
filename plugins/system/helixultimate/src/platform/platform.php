@@ -188,69 +188,6 @@ class Platform
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public static function loadFrameworkSystem2()
-	{
-		$app = Factory::getApplication();
-		$doc = Factory::getDocument();
-		$helixDoc = new HelixDocument;
-		$style_id = (int) $app->input->get('id', 0, 'INT');
-
-		$template = Helper::loadTemplateData();
-		$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
-
-		Factory::getLanguage()->load('tpl_' . $template->template, JPATH_SITE, null, true);
-
-		$doc->setTitle("Helix Ultimate Framework");
-		$doc->addFavicon($helix_plg_url . '/assets/images/favicon.ico');
-
-		$doc->addScriptDeclaration('var helixUltimateStyleId = ' . $style_id . ';');
-		$helixDoc->addInlineScript('var helixUltimateStyleId = ' . $style_id . ';');
-
-		$helixDoc->useScript('jquery');
-		$helixDoc->registerAndUseScript('cms', '', ['version' => 'auto', 'relative' => true]);
-		$helixDoc->registerAndUseScript('bootstrap', '', ['version' => 'auto', 'relative' => true]);
-		HTMLHelper::_('jquery.framework');
-		HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
-
-		HTMLHelper::_('script', 'bootstrap.framework');
-		HTMLHelper::_('bootstrap.framework');
-		HTMLHelper::_('behavior.formvalidator');
-		HTMLHelper::_('behavior.keepalive');
-		HTMLHelper::_('formbehavior.chosen', 'select');
-		HTMLHelper::_('behavior.colorpicker');
-		HTMLHelper::_('jquery.token');
-
-		$doc->setMetaData('viewport', 'width=device-width, initial-scale=1.0');
-
-		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/jquery-ui.min.css');
-		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/helix-ultimate.css');
-		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/modal.css');
-		$doc->addStyleSheet(Uri::root(true) . '/templates/shaper_helixultimate/css/font-awesome.min.css');
-		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/devices-field.css');
-		$doc->addStyleSheet($helix_plg_url . '/assets/css/admin/menu-builder.css');
-
-		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/utils.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/fields.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/helix-ultimate.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/webfont.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/modal.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/layout.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/media.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/devices-field.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/presets.js');
-		$doc->addScript($helix_plg_url . '/assets/js/admin/menu-builder.js');
-
-		// Pass important data to Joomla variable for javascript
-		$meta = array(
-			'base' => rtrim(Uri::root(), '/'),
-			'activeMenu' => $template->params->get('menu', 'mainmenu', 'STRING')
-		);
-
-		$doc->addScriptOptions('meta', $meta);
-		$doc->setBuffer((new self)->initialize(), 'component');
-	}
-
 	public static function loadFrameworkSystem()
 	{
 		$app = Factory::getApplication();

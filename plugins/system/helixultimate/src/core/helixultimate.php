@@ -280,6 +280,7 @@ class HelixUltimate
 		$this->addGoogleFont($webfonts);
 
 		$this->doc->addScriptdeclaration('template="' . $this->template->template . '";');
+		$this->doc->setGenerator('Helix Ultimate - The Most Popular Joomla! Template Framework.');
 
 		if (JoomlaBridge::getVersion('major') < 4)
 		{

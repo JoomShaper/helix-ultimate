@@ -21,6 +21,7 @@
 
   <languages>
     <language tag="en-GB">language/plg_system_helixultimate.ini</language>
+    <language tag="en-GB">language/en-GB.plg_system_helixultimate.ini</language>
   </languages>
 
   <files>

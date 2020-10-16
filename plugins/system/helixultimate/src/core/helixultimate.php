@@ -468,7 +468,8 @@ class HelixUltimate
 				die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');
 			}
 
-			$layout_data = json_decode(File::read($layout_file));
+			// $layout_data = json_decode(File::read($layout_file));
+			$layout_data = json_decode(file_get_contents($layout_file));
 			$rows = json_decode($layout_data->layout);
 		}
 

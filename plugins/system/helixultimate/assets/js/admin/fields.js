@@ -3,12 +3,11 @@ jQuery(function ($) {
 		$(this).addClass('minicolors');
 	});
 
-	$('.minicolors').each(function(){
+	$('.hu-menu-builder .minicolors').each(function(){
 		$(this).minicolors({
 			control: 'hue',
 			position: 'top left',
-			theme: 'bootstrap',
-			opacity: true
+			theme: 'bootstrap'
 		});
 	});
 

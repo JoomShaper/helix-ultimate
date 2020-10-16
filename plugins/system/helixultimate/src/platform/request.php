@@ -568,11 +568,13 @@ class Request
 
 		if (File::exists($template_path))
 		{
-			$json = File::read($template_path);
+			// $json = File::read($template_path);
+			$json = file_get_contents($template_path);
 		}
 		else
 		{
-			$json = File::read($plugin_path);
+			// $json = File::read($plugin_path);
+			$json = file_get_contents($plugin_path);
 		}
 
 		$webfonts   = json_decode($json);

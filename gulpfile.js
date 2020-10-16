@@ -51,11 +51,22 @@ function manifestStreamTask() {
 function templateLanguageStreamTask() {
 	const languagePath = path.resolve(
 		config.srcPath,
-		'./language/en-GB/en-GB.tpl_shaper_helixultimate.ini'
+		'./language/en-GB/tpl_shaper_helixultimate.ini'
 	);
 
 	return src([languagePath]).pipe(
 		dest(path.resolve(config.buildPath, './template/'))
+	);
+}
+
+function templatePluginLanguageStreamTask() {
+	const languagePath = path.resolve(
+		config.srcPath,
+		'./administrator/language/en-GB/plg_system_helixultimate.ini'
+	);
+
+	return src([languagePath]).pipe(
+		dest(path.resolve(config.buildPath, './plugins/system/language/'))
 	);
 }
 
@@ -95,7 +106,7 @@ exports.default = series(
 	parallel(
 		manifestStreamTask,
 		series(templateLanguageStreamTask, templateStreamTask),
-		pluginStreamTask
+		series(pluginStreamTask, templatePluginLanguageStreamTask)
 	),
 	buildPackage
 );

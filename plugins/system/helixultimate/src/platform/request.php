@@ -198,7 +198,8 @@ class Request
 		$keyOptions = [
 			'option' => 'com_ajax',
 			'helix' => 'ultimate',
-			'status' => 'draft'
+			'status' => 'draft',
+			'id' => $this->id
 		];
 
 		$key = Helper::generateKey($keyOptions);
@@ -270,7 +271,8 @@ class Request
 		$keyOptions = [
 			'option' => 'com_ajax',
 			'helix' => 'ultimate',
-			'status' => 'draft'
+			'status' => 'draft',
+			'id' => $this->id
 		];
 
 		try
@@ -304,7 +306,8 @@ class Request
 		$keyOptions = [
 			'option' => 'com_ajax',
 			'helix' => 'ultimate',
-			'status' => 'draft'
+			'status' => 'draft',
+			'id' => $this->id
 		];
 
 		try

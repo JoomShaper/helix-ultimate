@@ -95,7 +95,8 @@ class Helper
 		$keyOptions = [
 			'option' => 'com_ajax',
 			'helix' => 'ultimate',
-			'status' => 'init'
+			'status' => 'init',
+			'id' => $id
 		];
 
 		$key = static::generateKey($keyOptions);
@@ -165,10 +166,35 @@ class Helper
 	 */
 	public static function isDrafted()
 	{
+		$app = Factory::getApplication();
+		$template = $app->getTemplate(true);
+		$templateId = 0;
+
+		if ($app->isClient('site'))
+		{
+			if ($template->template === 'shaper_helixultimate')
+			{
+				$templateId = $template->id;
+			}
+		}
+		else
+		{
+			if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate')
+			{
+				$templateId = $app->input->get('id', 0, 'INT');
+			}
+		}
+
+		if (empty($templateId))
+		{
+			$templateId = self::getTemplateId('shaper_helixultimate');
+		}
+
 		$draftKeyOptions = [
 			'option' => 'com_ajax',
 			'helix' => 'ultimate',
-			'status' => 'draft'
+			'status' => 'draft',
+			'id' => $templateId
 		];
 
 		$key = static::generateKey($draftKeyOptions);
@@ -216,12 +242,42 @@ class Helper
 	 */
 	public static function loadTemplateData()
 	{
+		$templateId = 0;
+
+		$app = Factory::getApplication();
+		$currentTemplate = $app->getTemplate(true);
+
+		if ($app->isClient('site'))
+		{
+			if ($currentTemplate->template === 'shaper_helixultimate')
+			{
+				$templateId = $currentTemplate->id;
+			}
+		}
+		else
+		{
+			if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate')
+			{
+				$templateId = $app->input->get('id', 0, 'INT');
+			}
+		}
+
+		/**
+		 * If still the template ID not found then try to get the
+		 * template ID from db.
+		 */
+		if (empty($templateId))
+		{
+			$templateId = self::getTemplateId('shaper_helixultimate');
+		}
+
 		$template = [];
 
 		$draftKeyOptions = [
 			'option' => 'com_ajax',
 			'helix' => 'ultimate',
-			'status' => 'draft'
+			'status' => 'draft',
+			'id' => $templateId
 		];
 
 		$draftKey = static::generateKey($draftKeyOptions);
@@ -236,7 +292,8 @@ class Helper
 			$keyOptions = [
 				'option' => 'com_ajax',
 				'helix' => 'ultimate',
-				'status' => 'init'
+				'status' => 'init',
+				'id' => $templateId
 			];
 
 			$key = static::generateKey($keyOptions);
@@ -248,22 +305,7 @@ class Helper
 			}
 			else
 			{
-				$input = Factory::getApplication();
-
-				$option = $input->get('option', '', 'STRING');
-				$helix = $input->get('helix', '', 'STRING');
-				$template_name = $input->get('template', 'shaper_helixultimate', 'STRING');
-
-				if ($option === 'com_ajax' && $helix === 'ultimate')
-				{
-					$template_id = $input->get('id', 0, 'INT');
-				}
-				else
-				{
-					$template_id = static::getTemplateId($template_name);
-				}
-
-				$template = static::getTemplateStyle($template_id);
+				$template = static::getTemplateStyle($templateId);				
 			}
 		}
 
@@ -341,9 +383,7 @@ class Helper
 			}
 
 			// Check for a valid XML root tag.
-
 			// Extensions use 'extension' as the root tag.  Languages use 'metafile' instead
-
 			if ($xml->getName() != 'extension' && $xml->getName() != 'metafile')
 			{
 				unset($xml);

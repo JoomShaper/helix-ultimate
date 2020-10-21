@@ -2252,7 +2252,9 @@ select:focus::-ms-value {
 }
 
 .hu-edit-panel.menu-panel {
-	width: 420px;
+	width: 320px;
+	/* @TODO: After integrating megamenu builder this will be change again */
+	/* width: 420px; */
 }
 
 .hu-edit-panel .hu-groups-container {

@@ -78,14 +78,6 @@ class HelixultimateMenu
 	public $menuname = 'mainmenu';
 
 	/**
-	 * Mega menu settings from menu builder
-	 *
-	 * @var		object		$megamenu
-	 * @since	2.0.0
-	 */
-	private $menuItems = null;
-
-	/**
 	 * Constructor class.
 	 *
 	 * @param	string	$class	Classes.
@@ -114,59 +106,8 @@ class HelixultimateMenu
 			$this->menuname = $this->_params->get('menu');
 		}
 
-		$menuSettings = $this->_params->get('megamenu');
-
-		if (!empty($menuSettings) && \is_string($menuSettings))
-		{
-			$menuSettings = json_decode($menuSettings);
-			$menuType = $this->menuname;
-			$this->menuItems = $menuSettings->menu->$menuType->menuItems;
-		}
-		else
-		{
-			$defaultMenuItems = $this->getMenuItemsDefaultValue();
-			$menuType = $this->menuname;
-			$this->menuItems = $defaultMenuItems->menu->$menuType->menuItems;
-		}
-
 		$this->initMenu();
 		$this->render();
-	}
-
-	/**
-	 * Get menu item's default value in case of not value found
-	 *
-	 * @return 	object	The object containing of default value
-	 * @since	2.0.0
-	 */
-	private function getMenuItemsDefaultValue()
-	{
-		$menu = $this->app->getMenu('site');
-		$attributes 	= array('menutype');
-		$menuName     	= array($this->menuname);
-		$items = $menu->getItems($attributes, $menuName);
-		$menuType = $this->menuname;
-
-		$menuSettings = new \stdClass;
-		$menuSettings->menu = new \stdClass;
-		$menuSettings->menu->$menuType = new \stdClass;
-		$defaultItem = ['id' => null, 'title' => '', 'menu_custom_classes' => '', 'menu_icon' => '', 'menu_caption' => '', 'mega_menu' => 0, 'mega_width' => '', 'mega_custom_classes' => '', 'mega_alignment' => 'left', 'menu_badge' => '', 'menu_badge_position' => 'left', 'menu_badge_background' => '', 'menu_badge_color' => ''];
-
-		if (!empty($items))
-		{
-			$menuSettings->menu->$menuType->menuItems = new \stdClass;
-
-			foreach ($items as $item)
-			{
-				$itemId = $item->id;
-				$copyItem = $defaultItem;
-				$copyItem['id'] = $item->id;
-				$copyItem['title'] = $item->alias;
-				$menuSettings->menu->$menuType->menuItems->$itemId = (object) $copyItem;
-			}
-		}
-
-		return $menuSettings;
 	}
 
 	/**
@@ -203,7 +144,6 @@ class HelixultimateMenu
 		foreach ($items as &$item)
 		{
 			$class = '';
-			$itemParams = $item->getParams();
 
 			if ($item->id == $this->active)
 			{
@@ -216,7 +156,7 @@ class HelixultimateMenu
 			}
 			elseif ($item->type == 'alias')
 			{
-				$aliasToId = $itemParams->get('aliasoptions');
+				$aliasToId = $item->params->get('aliasoptions');
 
 				if (count($this->active_tree) > 0 && $aliasToId == $this->active_tree[count($this->active_tree) - 1])
 				{
@@ -255,7 +195,7 @@ class HelixultimateMenu
 					break;
 
 				case 'alias':
-					$item->flink = 'index.php?Itemid=' . $itemParams->get('aliasoptions');
+					$item->flink = 'index.php?Itemid=' . $item->params->get('aliasoptions');
 					break;
 
 				default:
@@ -265,7 +205,7 @@ class HelixultimateMenu
 
 			if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http'))
 			{
-				$item->flink = Route::_($item->flink, true, $itemParams->get('secure'));
+				$item->flink = Route::_($item->flink, true, $item->params->get('secure'));
 			}
 			else
 			{
@@ -273,9 +213,9 @@ class HelixultimateMenu
 			}
 
 			$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_css   = htmlspecialchars($itemParams->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_title = htmlspecialchars($itemParams->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->menu_image   = $itemParams->get('menu_image', '') ? htmlspecialchars($itemParams->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
+			$item->anchor_css   = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
+			$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
+			$item->menu_image   = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
 		}
 	}
 
@@ -286,7 +226,7 @@ class HelixultimateMenu
 	 * @since	1.0.0
 	 */
 	public function render()
-	{		
+	{
 		$this->menu = '';
 		$keys = array_keys($this->_items);
 
@@ -411,17 +351,11 @@ class HelixultimateMenu
 		$this->menu .= $this->start_el(array('item' => $item));
 		$this->menu .= $this->item($item);
 
-		$menuItem = null;
+		$menulayout = json_decode($item->params->get('helixultimatemenulayout'));
 
-		if ((int) $item->level === 1)
+		if (isset($menulayout->megamenu) && $menulayout->megamenu)
 		{
-			$itemId = $item->id;
-			$menuItem = $this->menuItems->$itemId;
-		}
-
-		if (!empty($menuItem) && !empty($menuItem->mega_menu))
-		{
-			$this->mega($menuItem);
+			$this->mega($item);
 		}
 		elseif ($item->dropdown)
 		{
@@ -450,7 +384,7 @@ class HelixultimateMenu
 		$dropdown_width = $this->_params->get('dropdown_width', 240);
 		$dropdown_alignment = 'right';
 		$dropdown_style = 'width: ' . $dropdown_width . 'px;';
-		$layout = json_decode($this->_items[$item->id]->getParams()->get('helixultimatemenulayout'));
+		$layout = json_decode($this->_items[$item->id]->params->get('helixultimatemenulayout'));
 
 		if (isset($layout->dropdown) && $layout->dropdown === 'left')
 		{
@@ -487,7 +421,7 @@ class HelixultimateMenu
 
 		foreach ($items as $menu_item)
 		{
-			if ((int) $menu_item->getParams()->get('menu_show', 1) === 1)
+			if ((int) $menu_item->params->get('menu_show', 1) === 1)
 			{
 				$show_menu ++;
 			}
@@ -499,332 +433,107 @@ class HelixultimateMenu
 	/**
 	 * Helix mega menu.
 	 *
-	 * @param	object	$menuItem	Menu Item
+	 * @param	object	$item	Menu item.
 	 *
 	 * @return 	void
 	 * @since	1.0.0
 	 */
-	private function mega($menuItem)
+	private function mega($item)
 	{
-		$containerStyle = '';
-		$containerClass = '';
-		$width = !empty($menuItem->mega_width) ? $menuItem->mega_width : '600px';
-		$width = \is_numeric($width) ? $width . 'px' : $width;
-		$widthValue = (int) $width;
+		$items     = isset($this->children[$item->id]) ? $this->children[$item->id] : array();
+		$firstitem = count($items) ? $items[0]->id : 0;
 
-		if (!empty($menuItem->mega_alignment) && $menuItem->mega_alignment !== 'justify')
+		$mega = json_decode($item->params->get('helixultimatemenulayout'));
+		$layout = $mega->layout;
+
+		$mega_style = 'width: ' . $mega->width . 'px;';
+
+		if ($mega->menualign === 'center')
 		{
-			$containerStyle .= 'width: ' . $width . '; ';
+			$mega_style .= 'left: -' . ($mega->width / 2) . 'px;';
 		}
 
-		if (!empty($menuItem->mega_alignment)
-			&& ($menuItem->mega_alignment === 'left'
-			|| $menuItem->mega_alignment === 'center'))
+		if ($mega->menualign === 'full')
 		{
-			$containerStyle .= 'left: -' . ($widthValue / 2) . 'px; ';
+			$mega_style = '';
+			$mega->menualign = $mega->menualign . ' container';
 		}
 
-		$alignment = $menuItem->mega_alignment === 'justify' ? 'full' : $menuItem->mega_alignment;
-		$containerClass .= !empty($menuItem->mega_custom_classes) ? $menuItem->mega_custom_classes : '';
-		$containerClass .= !empty($alignment) ? ' sp-menu-' . $alignment : '';
-		$containerClass .= !empty($alignment) && $alignment === 'full' ? ' container' : '';
-
-		$this->menu .= '<div class="sp-dropdown sp-dropdown-main sp-dropdown-mega ' . $containerClass . '" style="' . $containerStyle . '">';
+		$this->menu .= '<div class="sp-dropdown sp-dropdown-main sp-dropdown-mega sp-menu-' . $mega->menualign . '" style="' . $mega_style . '">';
 		$this->menu .= '<div class="sp-dropdown-inner">';
-		$rows = !empty($menuItem->mega_rows) ? $menuItem->mega_rows : [];
 
-		if (!empty($rows))
+		foreach ($layout as $row)
 		{
-			foreach ($rows as $row)
+			$this->menu .= '<div class="row">';
+
+			foreach ($row->attr as $col)
 			{
-				$this->menu .= $this->renderRow($row);
-			}
-		}
+				$this->menu .= '<div class="col-sm-' . $col->colGrid . '">';
 
-		$this->menu .= '</div>';
-		$this->menu .= '</div>';
-	}
-
-	/**
-	 * Render Row of the megamenu
-	 *
-	 * @param	object	$row	The row object
-	 *
-	 * @return	string	The HTML string
-	 * @since	2.0.0
-	 */
-	private function renderRow($row)
-	{
-		$html = [];
-
-		if (!empty($row))
-		{
-			$rowId = 'sp-megamenu-row-' . $row->itemId . '-' . $row->id;
-			$rowClass = !empty($row->settings->row_class) ? $row->settings->row_class : '';
-			$rowStyle = '';
-			$rowStyle .= !empty($row->settings->row_margin) ? 'margin: ' . $row->settings->row_margin . '; ' : '';
-			$rowStyle .= !empty($row->settings->row_padding) ? 'padding: ' . $row->settings->row_padding . '; ' : '';
-
-			$html[] = '<div id="' . $rowId . '" class="row ' . $rowClass . '" style="' . $rowStyle . '">';
-
-			if (!empty($row->settings->enable_row_title))
-			{
-				if (!empty($row->settings->row_title))
+				if (!empty($col->items))
 				{
-					$html[] = '<div class="sp-megamenu-title">' . $row->settings->row_title . '</div>';
-				}
-			}
+					$this->menu .= $this->start_lvl('sp-mega-group');
 
-			if (!empty($row->columns))
-			{
-				foreach ($row->columns as $column)
-				{
-					$html[] = $this->renderColumn($column);
-				}
-			}
-
-			$html[] = '</div>';
-		}
-
-		return implode("\n", $html);
-	}
-
-	/**
-	 * Render column of the megamenu
-	 *
-	 * @param	object	$column		The column object
-	 *
-	 * @return	string	The HTML string
-	 * @since	2.0.0
-	 */
-	private function renderColumn($column)
-	{
-		$html = [];
-
-		if (!empty($column))
-		{
-			$columnClass = 'col-' . (!empty($column->settings->col) ? $column->settings->col : 12);
-			$columnClass .= !empty($column->settings->col_class) ? ' ' . $column->settings->col_class : '';
-			$columnId = !empty($column->settings->col_id) ? $column->settings->col_id : 'sp-megamenu-column-' . $column->itemId . '-' . $column->rowId . '-' . $column->id;
-			$columnStyle = '';
-			$columnStyle .= !empty($column->settings->col_margin) ? 'margin: ' . $column->settings->col_margin . ';' : '';
-			$columnStyle .= !empty($column->settings->col_padding) ? 'padding: ' . $column->settings->col_padding . ';' : '';
-
-			$html[] = '<div class="'
-				. $columnClass . '" id="'
-				. $columnId . '" style="'
-				. $columnStyle . '">';
-
-			if (!empty($column->settings->enable_col_title))
-			{
-				if (!empty($column->settings->col_title))
-				{
-					$html[] = '<div class="sp-megamenu-title">' . $column->settings->col_title . '</div>';
-				}
-			}
-
-			$html[] = $this->renderMegamenuElement($column);
-
-			$html[] = '</div>';
-		}
-
-		return implode("\n", $html);
-	}
-
-	/**
-	 * Render megamenu element.
-	 *
-	 * @param	mixed	$element	The element array/object
-	 *
-	 * @return	string	The HTML string
-	 * @since	2.0.0
-	 */
-	private function renderMegamenuElement($element)
-	{
-		$html = [];
-
-		if (!empty($element))
-		{
-			$settings = $element->settings;
-			$type = $settings->col_type;
-
-			switch ($type)
-			{
-				case 'module':
-					$html[] = $this->renderModule($settings->module, $settings->module_style);
-				break;
-				case 'module_position':
-					$position = $settings->module_position;
-
-					if ($position === 'custom')
+					foreach ($col->items as $builder_item)
 					{
-						if (!empty($settings->custom_position))
+						$li_head = '';
+
+						if ($builder_item->type === 'menu_item')
 						{
-							$position = $settings->custom_position;
+							$li_head = 'item-header';
 						}
-						else
+
+						$item_class = array(
+							'item-' . $builder_item->item_id,
+							$builder_item->type,
+							$li_head
+						);
+
+						$this->menu .= '<li class="' . implode(' ', $item_class) . '">';
+
+						if ($builder_item->type === 'module')
 						{
-							$position = null;
+							$this->menu .= $this->load_module($builder_item->item_id);
 						}
+						elseif ($builder_item->type === 'menu_item')
+						{
+							if (!empty($this->_items[$builder_item->item_id]))
+							{
+								$item 	= $this->_items[$builder_item->item_id];
+								$items  = isset($this->children[$builder_item->item_id]) ? $this->children[$builder_item->item_id] : array();
+
+								$firstitem = count($items) ? $items[0]->id : 0;
+
+								if (isset($this->children[$item->item_id]))
+								{
+									$this->menu .= $this->item($item, 'sp-group-title');
+								}
+								else
+								{
+									$this->menu .= $this->item($item);
+								}
+
+								if ($firstitem)
+								{
+									$this->navigation(null, $firstitem, 0, 'sp-mega-group-child sp-dropdown-items');
+								}
+							}
+						}
+
+						$this->menu .= $this->end_el();
 					}
 
-					$html[] = $this->renderModulePosition($position, $settings->module_style);
-				break;
-				case 'menu_items':
-					$html[] = $this->renderMenuItems($settings->menu_items);
-				break;
-			}
-		}
+					$this->menu .= $this->end_lvl();
+				}
 
-		return implode("\n", $html);
-	}
-
-	/**
-	 * Render module by it's ID
-	 *
-	 * @param	int		$moduleId	The module ID
-	 * @param	string	$style		The module style
-	 *
-	 * @return	string	The HTML string
-	 * @since	2.0.0
-	 */
-	private function renderModule($moduleId, $style = 'default')
-	{
-		$module = '';
-
-		if (!empty($moduleId))
-		{
-			$module .= $this->loadModule($moduleId, $style);
-		}
-
-		return $module;
-	}
-
-	/**
-	 * Render module position
-	 *
-	 * @param	string	$position	The module position
-	 * @param	string	$style		The module style
-	 *
-	 * @return	string	The HTML string
-	 * @since	2.0.0
-	 */
-	private function renderModulePosition($position, $style = 'default')
-	{
-		$include = '';
-
-		if (!empty($position))
-		{
-			$include .= '<jdoc:include type="modules" name="' . $position . '" ';
-
-			if ($style !== 'default')
-			{
-				$include .= 'style="' . $style . '" />';
-			}
-			else
-			{
-				$include .= '/>';
-			}
-		}
-
-		return $include;
-	}
-
-	/**
-	 * Render menu items by item ids.
-	 *
-	 * @param	string	$itemId		JSON encoded item ids array string,
-	 *
-	 * @return	string	The HTML string
-	 * @since	2.0.0
-	 */
-	private function renderMenuItems($itemIds)
-	{
-		$html = [];
-
-		if (!empty($itemIds) && \is_string($itemIds))
-		{
-			$itemIds = json_decode($itemIds, true);
-		}
-
-		if (!empty($itemIds))
-		{
-			$html[] = '<ul class="hu-megamenu-menu-items">';
-
-			foreach ($itemIds as $id)
-			{
-				$html[] = $this->renderMenuItem($id);
+				$this->menu .= '</div>';
 			}
 
-			$html[] = '</ul>';
+			$this->menu .= '</div>';
 		}
 
-		return implode("\n", $html);
-	}
-
-	/**
-	 * Render Menu Item by an ID
-	 *
-	 * @param	int		$id		The menu ID
-	 *
-	 * @return	string	The rendered HTML string
-	 * @since	2.0.0
-	 */
-	private function renderMenuItem($id)
-	{
-		$menu = $this->app->getMenu('site');
-		$item = $menu->getItem($id);
-		$itemParams = $item->getParams();
-
-		$title = !empty($item->anchor_title) ? $item->anchor_title : '';
-		$class = !empty($item->anchor_css) ? $item->anchor_css : '';
-
-		$linkTitle = '';
-
-		if ($item->menu_image)
-		{
-			$linkTitle = $itemParams->get('menu_text', 1) ?
-				'<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :
-				'<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
-		}
-		else
-		{
-			$linkTitle = $item->title;
-		}
-
-		$flink = $item->flink;
-		$flink = str_replace('&amp;', '&', \JFilterOutput::ampReplace(htmlspecialchars($flink)));
-		$anchor = '';
-
-		if ($itemParams->get('menu_show', 1) !== 0)
-		{
-			switch ($item->browserNav)
-			{
-				default:
-				case 0:
-					$anchor .= '<a ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linkTitle . '</a>';
-					break;
-				case 1:
-					$anchor .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linkTitle . '</a>';
-					break;
-				case 2:
-					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $itemParams->get('window_open');
-					$anchor .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linkTitle . '</a>';
-					break;
-			}
-		}
-
-		$menuItem = [];
-		$menuItem[] = '<li class="sp-megamenu-menu-item">';
-
-		if (!empty($anchor))
-		{
-			$menuItem[] = $anchor;
-		}
-
-		$menuItem[] = '</li>';
-
-		return implode("\n", $menuItem);
+		$this->menu .= '</div>';
+		$this->menu .= '</div>';
 	}
 
 	/**
@@ -869,13 +578,7 @@ class HelixultimateMenu
 		// Menu show
 		$menu_show = $this->getMenuShow($args['item']->id);
 
-		$menuItem = null;
-
-		if ((int) $item->level === 1)
-		{
-			$itemId = $item->id;
-			$menuItem = $this->menuItems->$itemId;
-		}
+		$layout = json_decode($item->params->get('helixultimatemenulayout'));
 
 		$item->hasChild = 0;
 
@@ -884,18 +587,18 @@ class HelixultimateMenu
 			$class .= ' sp-has-child';
 			$item->hasChild = 1;
 		}
-		elseif (!empty($menuItem) && (int) $menuItem->mega_menu === 1)
+		elseif (isset($layout->megamenu) && ($layout->megamenu))
 		{
 			$class .= ' sp-has-child';
 			$item->hasChild = 1;
 		}
 
-		if (!empty($menuItem) && $menuItem->mega_alignment === 'justify')
+		if (isset($layout->customclass) && ($layout->customclass))
 		{
-			$class .= ' menu-justify';
+			$class .= ' ' . $layout->customclass;
 		}
 
-		$class .= ' ' . $item->class;
+		$class .= $item->class;
 
 		return '<li class="' . $class . '">';
 	}
@@ -922,56 +625,43 @@ class HelixultimateMenu
 	 */
 	private function item($item, $extra_class='')
 	{
-		$menuItem = null;
-		$itemParams = $item->getParams();
-
-		if ((int) $item->level === 1)
-		{
-			$itemId = $item->id;
-			$menuItem = $this->menuItems->$itemId;
-		}
-
 		$title = $item->anchor_title ? 'title="' . $item->anchor_title . '" ' : '';
 
 		$class = $extra_class;
-
-		if (!empty($menuItem) && !empty($menuItem->menu_custom_classes))
-		{
-			$class .= ' ' . $menuItem->menu_custom_classes;
-		}
-
-		$class .= !empty($item->anchor_css) ? ' ' . $item->anchor_css : '';
-		$class = !empty($class) ? 'class="' . $class . '"' : '';
+		$class .= ($item->anchor_css && $class) ? ' ' . $item->anchor_css : $item->anchor_css;
+		$class = ($class) ? 'class="' . $class . '"' : '';
 
 		if ($item->menu_image)
 		{
-			$itemParams->get('menu_text', 1) ?
-				$linkTitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :
-				$linkTitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
+			$item->params->get('menu_text', 1) ?
+				$linktitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :
+				$linktitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
 		}
 		else
 		{
-			$linkTitle = $item->title;
+			$linktitle = $item->title;
 		}
 
-		$showMenuTitle = true;
-		$icon = '';
+		$layout = json_decode($item->params->get('helixultimatemenulayout'));
 
-		if (!empty($menuItem) && !empty($menuItem->menu_icon))
+		$showmenutitle = (isset($layout->showtitle)) ? $layout->showtitle : 1;
+		$icon = (isset($layout->faicon)) ? $layout->faicon : '';
+
+		if (!$showmenutitle)
 		{
-			$icon = $menuItem->menu_icon;
+			$linktitle = '';
 		}
 
 		// Add Menu Icon
 		if ($icon)
 		{
-			if ($showMenuTitle)
+			if ($showmenutitle)
 			{
-				$linkTitle = '<span class="' . $icon . '"></span> ' . $linkTitle;
+				$linktitle = '<span class="fas ' . $icon . '"></span> ' . $linktitle;
 			}
 			else
 			{
-				$linkTitle = '<span class="' . $icon . '"></span>';
+				$linktitle = '<span class="fas ' . $icon . '"></span>';
 			}
 		}
 
@@ -979,76 +669,64 @@ class HelixultimateMenu
 		$flink = str_replace('&amp;', '&', \JFilterOutput::ampReplace(htmlspecialchars($flink)));
 
 		$badge_html = '';
+
+		if (isset($layout->badge) && $layout->badge)
+		{
+			$badge_style = '';
+			$badge_class = 'sp-menu-badge sp-menu-badge-right';
+
+			if (isset($layout->badge_bg_color) && $layout->badge_bg_color)
+			{
+				$badge_style .= 'background-color: ' . $layout->badge_bg_color . ';';
+			}
+
+			if (isset($layout->badge_text_color) && $layout->badge_text_color)
+			{
+				$badge_style .= 'color: ' . $layout->badge_text_color . ';';
+			}
+
+			if (isset($layout->badge_position) && $layout->badge_position === 'left')
+			{
+				$badge_class = 'sp-menu-badge sp-menu-badge-left';
+			}
+
+			$badge_html = '<span class="' . $badge_class . '" style="' . $badge_style . '">' . $layout->badge . '</span>';
+		}
+
 		$output = '';
 		$options = '';
 
-		if (!empty($menuItem))
+		if ($badge_html)
 		{
-			if (!empty($menuItem->menu_badge))
+			if (isset($layout->badge_position) && $layout->badge_position === 'left')
 			{
-				$badge_style = '';
-				$badge_class = 'sp-menu-badge sp-menu-badge-right';
-
-				if (!empty($menuItem->menu_badge_background))
-				{
-					$badge_style .= 'background-color: ' . $menuItem->menu_badge_background . ';';
-				}
-
-				if (!empty($menuItem->menu_badge_color))
-				{
-					$badge_style .= 'color: ' . $menuItem->menu_badge_color . ';';
-				}
-
-				if (!empty($menuItem->menu_badge_position) && $menuItem->menu_badge_position === 'left')
-				{
-					$badge_class = 'sp-menu-badge sp-menu-badge-left';
-				}
-
-				$badge_html = '<span class="' . $badge_class . '" style="' . $badge_style . '">' . $menuItem->menu_badge . '</span>';
+				$linktitle = $badge_html . $linktitle;
 			}
-
-			if (!empty($badge_html))
+			else
 			{
-				if (isset($menuItem->menu_badge_position) && $menuItem->menu_badge_position === 'left')
-				{
-					$linkTitle = $badge_html . $linkTitle;
-				}
-				else
-				{
-					$linkTitle = $linkTitle . $badge_html;
-				}
+				$linktitle = $linktitle . $badge_html;
 			}
 		}
 
-		$captionHtml = '';
-
-		if (!empty($menuItem))
+		if (isset($item->hasChild) && $item->hasChild)
 		{
-			if (!empty($menuItem->menu_caption))
-			{
-				$captionHtml .= '<small class="menu-item-caption">' . $menuItem->menu_caption . '</small>';
-			}
+			// $linktitle = $linktitle . ' <span class="fas fa-angle-down"></span>';
 		}
 
-		if (!empty($captionHtml))
-		{
-			$linkTitle .= $captionHtml;
-		}
-
-		if ($itemParams->get('menu_show', 1) !== 0)
+		if ($item->params->get('menu_show', 1) !== 0)
 		{
 			switch ($item->browserNav)
 			{
 				default:
 				case 0:
-					$output .= '<a ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linkTitle . '</a>';
+					$output .= '<a ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linktitle . '</a>';
 					break;
 				case 1:
-					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linkTitle . '</a>';
+					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linktitle . '</a>';
 					break;
 				case 2:
-					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $itemParams->get('window_open');
-					$output .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linkTitle . '</a>';
+					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $item->params->get('window_open');
+					$output .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linktitle . '</a>';
 					break;
 			}
 		}
@@ -1059,15 +737,14 @@ class HelixultimateMenu
 	/**
 	 * Load module to the menu
 	 *
-	 * @param	int		$moduleId	The module ID
-	 * @param	string	$style		The module style
+	 * @param	array	$mod	Modules
 	 *
-	 * @return	string	The rendered Module string
+	 * @return	string	Modules
 	 * @since	1.0.0
 	 */
-	private function loadModule($moduleId, $style = 'default')
+	private function load_module($mod)
 	{
-		if (!is_numeric($moduleId))
+		if (!is_numeric($mod))
 		{
 			return null;
 		}
@@ -1079,18 +756,18 @@ class HelixultimateMenu
 		$db	= Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('id, title, module, position, content, showtitle, params');
-		$query->from($db->quoteName('#__modules', 'm'));
-		$query->where($db->quoteName('m.published') . ' = 1');
-		$query->where($db->quoteName('m.id') . ' = ' . (int) $moduleId);
+		$query->from('#__modules AS m');
+		$query->where('m.published = 1');
+		$query->where('m.id = ' . $mod);
 
 		$date = Factory::getDate();
 		$now = $date->toSql();
 		$nullDate = $db->getNullDate();
 
-		$query->where('(m.publish_up = ' . $db->Quote($nullDate) . ' OR m.publish_up IS NULL OR m.publish_up <= ' . $db->Quote($now) . ')');
-		$query->where('(m.publish_down = ' . $db->Quote($nullDate) . ' OR m.publish_down IS NULL OR m.publish_down >= ' . $db->Quote($now) . ')');
-		$query->where($db->quoteName('m.access') . ' IN (' . $groups . ')');
-		$query->where($db->quoteName('m.client_id') . ' = ' . (int) $clientId);
+		$query->where('(m.publish_up = ' . $db->Quote($nullDate) . ' OR m.publish_up <= ' . $db->Quote($now) . ')');
+		$query->where('(m.publish_down = ' . $db->Quote($nullDate) . ' OR m.publish_down >= ' . $db->Quote($now) . ')');
+		$query->where('m.access IN (' . $groups . ')');
+		$query->where('m.client_id = ' . $clientId);
 
 		if ($this->app->isClient('site') && $this->app->getLanguageFilter())
 		{
@@ -1101,22 +778,15 @@ class HelixultimateMenu
 		$db->setQuery($query);
 		$module = $db->loadObject();
 
-		if (empty($module))
+		if (!$module)
 		{
 			return null;
 		}
 
-		$options = array('style' => '');
-
-		if ($style !== 'default')
-		{
-			$options['style'] = $style;
-		}
-
-		$output = '';
+		$options = array('style' => 'sp_xhtml');
 
 		$file				= $module->module;
-		$custom				= substr($file, 0, 4) == 'mod_' ? 0 : 1;
+		$custom				= substr($file, 0, 4) == 'mod_' ?  0 : 1;
 		$module->user		= $custom;
 		$module->name		= $custom ? $module->title : substr($file, 4);
 		$module->style		= null;

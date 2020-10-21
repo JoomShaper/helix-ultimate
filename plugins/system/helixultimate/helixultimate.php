@@ -407,6 +407,22 @@ class  PlgSystemHelixultimate extends JPlugin
 		}
 	}
 
+	public function onBeforeRender()
+	{
+		$option     = $this->app->input->get('option', '', 'STRING');
+		$helix      = $this->app->input->get('helix', '', 'STRING');
+		$id         = $this->app->input->get('id', 0, 'INT');
+
+		if ($option === 'com_ajax' && $helix === 'ultimate' && $id)
+		{
+			if ($this->app->isClient('site'))
+			{
+				$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+				$this->app->setTemplate('shaper_helixultimate', $template->params);
+			}
+		}
+	}
+
 	public function onAfterRender()
 	{
 		$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();

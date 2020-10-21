@@ -41,7 +41,7 @@ $sidebar = new Settings;
 	</div>
 	<div class="hu-container">
 		<div class="hu-preview">
-			<?php echo LayoutHelper::render('preview.iframe', ['url' => Uri::root(true) . '/index.php?template=' . $style->template, 'width' => '100%', 'height' => '100%'], HELIX_LAYOUTS_PATH); ?>
+			<?php echo LayoutHelper::render('preview.iframe', $iframe, HELIX_LAYOUTS_PATH); ?>
 		</div>
 	</div>
 </div>

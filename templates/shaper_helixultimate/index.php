@@ -58,6 +58,12 @@ if (!\is_null($this->params->get('comingsoon', null)))
 $custom_style = $this->params->get('custom_style');
 $preset = $this->params->get('preset');
 
+// echo '<xmp>';
+// // print_r(Factory::getApplication()->input->get('helix_id'));
+// print_r($template);
+// echo '</xmp>';
+// die();
+
 
 if($custom_style || !$preset)
 {

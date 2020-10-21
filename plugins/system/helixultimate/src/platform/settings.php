@@ -152,17 +152,45 @@ class Settings
 		// Store into cache before return
 		if (!empty($formData))
 		{
-			$keyOptions = [
-				'option' => 'com_ajax',
-				'helix' => 'ultimate',
-				'status' => 'init'
-			];
-
-			$key = Helper::generateKey($keyOptions);
 			$formData = new Registry($formData);
 			$templateStyle->params = $formData;
-			$cache = new HelixCache($key);
-			$cache->cleanCache()->storeCache($templateStyle);
+		
+			$draftKey = [
+				'option' => 'com_ajax',
+				'helix' => 'ultimate',
+				'status' => 'draft',
+				'id' => $this->id
+			];
+			
+			$initKey = [
+				'option' => 'com_ajax',
+				'helix' => 'ultimate',
+				'status' => 'init',
+				'id' => $this->id
+			];
+
+			$generatedDraftKey = Helper::generateKey($draftKey);
+			$generatedInitKey = Helper::generateKey($initKey);
+
+			$cache = new HelixCache($generatedDraftKey);
+
+			/**
+			 * Check if cache exists for a specific template ID then
+			 * remove the cache and store the content from DB.
+			 */
+			if ($cache->contains())
+			{
+				$cache->removeCache($generatedDraftKey);
+			}
+
+			$cache->setCacheKey($generatedInitKey);
+
+			if ($cache->contains())
+			{
+				$cache->removeCache($generatedInitKey);
+			}
+
+			$cache->storeCache($templateStyle);
 		}
 
 		return $formData;

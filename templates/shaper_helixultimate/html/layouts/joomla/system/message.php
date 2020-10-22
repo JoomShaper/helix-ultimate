@@ -11,27 +11,22 @@ defined('JPATH_BASE') or die;
 $msgList = $displayData['msgList'];
 
 $alert = [
-	'message' => 'alert-success',
+	'message' => 'alert-primary',
 	'error' => 'alert-danger',
-	'warning' => 'alert-danger'
+	'warning' => 'alert-warning',
+	'notice' => 'alert-info',
+	'info' => 'alert-info',
+	'debug' => 'alert-warning',
+	'success' => 'alert-success'
 ];
 
-// $alert = [
-// 	'error' => 'alert-danger',
-// 	JApplicationCms::MSG_ALERT     => 'alert-danger',
-// 	JApplicationCms::MSG_CRITICAL  => 'alert-danger',
-// 	JApplicationCms::MSG_ERROR     => 'alert-danger',
-// 	JApplicationCms::MSG_WARNING   => 'alert-warning',
-// 	JApplicationCms::MSG_NOTICE    => 'alert-info',
-// 	JApplicationCms::MSG_INFO      => 'alert-info',
-// 	JApplicationCms::MSG_DEBUG     => 'alert-info',
-// ];
 
 ?>
 <div id="system-message-container">
 	<?php if (is_array($msgList) && !empty($msgList)) : ?>
 		<div id="system-message">
 			<?php foreach ($msgList as $type => $msgs) : ?>
+				<?php $type = \in_array($type, array_keys($alert)) ? $type : 'message'; ?>
 				<div class="alert <?php echo isset($alert[$type]) ? $alert[$type] : 'alert-' . $type; ?>">
 					<?php // This requires JS so we should add it trough JS. Progressive enhancement and stuff. ?>
 					<a class="close" data-dismiss="alert" aria-label="<?php JText::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>">&times;</a>

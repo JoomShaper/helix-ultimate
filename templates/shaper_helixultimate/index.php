@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
 $app = Factory::getApplication();
@@ -52,17 +53,11 @@ HelixUltimate\Framework\Platform\Helper::flushSettingsDataToJs();
 // Coming Soon
 if (!\is_null($this->params->get('comingsoon', null)))
 {
-  header("Location: " . Uri::root(true) . "/index.php?template={$template->template}&tmpl=comingsoon");
+	header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
 }
 
 $custom_style = $this->params->get('custom_style');
 $preset = $this->params->get('preset');
-
-// echo '<xmp>';
-// // print_r(Factory::getApplication()->input->get('helix_id'));
-// print_r($template);
-// echo '</xmp>';
-// die();
 
 
 if($custom_style || !$preset)

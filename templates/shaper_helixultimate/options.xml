@@ -818,7 +818,7 @@
 			type="checkbox" 
 			default="0" 
 			label="HELIX_ULTIMATE_CUSTOM_STYLE" 
-			track="off"
+			track="on"
 			description="HELIX_ULTIMATE_CUSTOM_STYLE_DESC" />
 		<field name="text_color" 
 			class="preset-control" 

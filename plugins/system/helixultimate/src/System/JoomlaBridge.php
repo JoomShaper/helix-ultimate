@@ -62,13 +62,13 @@ class JoomlaBridge
 			'keepalive' 				=> ['behavior.keepalive', 'keepalive'],
 			'script.chosen' 			=> ['formbehavior.chosen', 'vendor/chosen/chosen.jquery.js', 'registered'],
 			'style.chosen' 				=> ['', 'vendor/chosen/chosen.css'],
-			'script.colorPicker' 		=> ['behavior.colorpicker', 'vendor/minicolors/jquery.minicolors.min.js', 'registered'],
-			'style.colorPicker' 		=> ['', 'vendor/minicolors/jquery.minicolors.css'],
+			'script.colorPicker' 		=> ['jui/jquery.minicolors.min.js', 'vendor/minicolors/jquery.minicolors.min.js'],
+			'style.colorPicker' 		=> ['jui/jquery.minicolors.css', 'vendor/minicolors/jquery.minicolors.css'],
 			'cms' 						=> ['jui/cms.js', 'system/showon.min.js'],
 			'script.bootstrap'			=> ['bootstrap.framework', 'vendor/bootstrap/bootstrap.min.js', 'registered'],
 	
 		];
-
+	
 		return self::$assetMap;
 	}
 

@@ -38,4 +38,12 @@ const helixHash = str => {
 	return hash;
 };
 
-Joomla.utils = { asciiToHex, getCurrentTimeString, helixHash };
+const triggerEvent = (element, eventName) => {
+	if (document.createEvent) {
+		const event = document.createEvent('HTMLEvents');
+		event.initEvent(eventName, false, false);
+		element.dispatchEvent(event);
+	}
+}
+
+Joomla.utils = { asciiToHex, getCurrentTimeString, helixHash, triggerEvent };

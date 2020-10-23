@@ -6,7 +6,7 @@ jQuery(function ($) {
 	$('.hu-menu-builder .minicolors').each(function(){
 		$(this).minicolors({
 			control: 'hue',
-			position: 'top left',
+			position: 'bottom',
 			theme: 'bootstrap'
 		});
 	});

@@ -186,6 +186,10 @@ jQuery(function ($) {
 				.find('[data-attrname="' + target + '"]')
 				.val(value)
 				.trigger('change');
+
+			const targetField = document.querySelector(`.hu-options-modal [data-attrname=${target}]`);
+			Joomla.utils.triggerEvent(targetField, 'change');
+
 			$('.hu-options-modal')
 				.find('[data-attrname="' + target + '"]')
 				.prev('.hu-image-holder')
@@ -203,6 +207,7 @@ jQuery(function ($) {
 			$('#' + target)
 				.val(value)
 				.trigger('change');
+			Joomla.utils.triggerEvent(document.querySelector(`#${target}`), 'change');
 			$('#' + target)
 				.prev('.hu-image-holder')
 				.html('<img src="' + preview + '" alt="">');
@@ -242,6 +247,7 @@ jQuery(function ($) {
 	$(document).on('click', '.hu-media-clear', function (event) {
 		event.preventDefault();
 		$(this).parent().find('input').val('').trigger('change');
+		Joomla.utils.triggerEvent(event.target.parentNode.querySelector('input'), 'change');
 		$(this).parent().find('.hu-image-holder').empty();
 		if (!$(this).hasClass('hide')) $(this).addClass('hide');
 	});

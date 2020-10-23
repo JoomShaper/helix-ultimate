@@ -59,7 +59,6 @@ if (!\is_null($this->params->get('comingsoon', null)))
 $custom_style = $this->params->get('custom_style');
 $preset = $this->params->get('preset');
 
-
 if($custom_style || !$preset)
 {
 	$scssVars = array(

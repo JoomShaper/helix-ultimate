@@ -209,7 +209,7 @@ class Platform
 		 * Set meta information.
 		 */
 		$doc->setTitle("Helix Ultimate Framework");
-		$doc->setGenerator('Joomla Framework: Helix Ultimate');
+		$doc->setGenerator('Helix Ultimate - The Best Joomla Template Framework!');
 		$doc->addFavicon($helix_plg_uri . '/assets/images/favicon.ico');
 		$doc->setMetaData('viewport', 'width=device-width, initial-scale=1.0');
 

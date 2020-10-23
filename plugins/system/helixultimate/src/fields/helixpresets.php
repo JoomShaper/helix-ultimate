@@ -66,9 +66,7 @@ class JFormFieldHelixpresets extends FormField
 
 		if (empty($templateData))
 		{
-			throw new Exception(sprintf('Something went wrong! Template data not found.'));
-
-			return;
+			throw new \Exception(sprintf('Something went wrong! Template data not found.'));
 		}
 
 		$params = $templateData->params;
@@ -90,6 +88,7 @@ class JFormFieldHelixpresets extends FormField
 		$html .= '<input id="presets-data" type="hidden" name="presets-data" class="hu-presets-data" value=\'' . $data . '\' />';
 		$html .= '<input id="' . $this->id . '" type="hidden" name="' . $this->name . '" class="hu-input-preset" value=\'' . $this->value . '\' />';
 		$html .= '</div>';
+		
 
 		return $html;
 	}
@@ -157,10 +156,10 @@ class JFormFieldHelixpresets extends FormField
 				}
 			}
 
-			$html .= '<div class="hu-preset' . $class . '" style="background-color: ' . $child->default . '" ' . $html_data_attr . '  class="hu-preset">';
-
+			$html .= '<div class="hu-preset ' . $class . '" style="background-color: ' . $child->default . '" ' . $html_data_attr . '>';
+			
 			// Edit preset
-			$html .= '<a type="button" role="button" class="hu-edit-preset" data-preset="' . $name . '" style="color: ' . $child->default . '" data-preset_data=\'' . json_encode($presetData) . '\'><span class="fas fa-pen"></span></a>';
+			$html .= '<a type="button" role="button" class="hu-edit-preset" data-preset="' . $name . '" style="color: ' . $child->default . '; border-top-right-radius: 3px;" data-preset_data=\'' . json_encode($presetData) . '\'><span class="fas fa-pen"></span></a>';
 
 			$html .= Settings::preparePresetEditForm($presetData, $name);
 

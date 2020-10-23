@@ -1207,6 +1207,8 @@ jQuery(function ($) {
 				.closest('.hu-switcher')
 				.find('input[type=hidden]');
 			$input.val(value).trigger('change');
+			const hiddenField = e.target.closest('.hu-switcher').querySelector('input[type=hidden]');
+			Joomla.utils.triggerEvent(hiddenField, 'change');
 		}
 	);
 });

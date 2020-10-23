@@ -156,7 +156,7 @@ class HelixultimateMenu
 			}
 			elseif ($item->type == 'alias')
 			{
-				$aliasToId = $item->params->get('aliasoptions');
+				$aliasToId = $item->getParams()->get('aliasoptions');
 
 				if (count($this->active_tree) > 0 && $aliasToId == $this->active_tree[count($this->active_tree) - 1])
 				{
@@ -195,7 +195,7 @@ class HelixultimateMenu
 					break;
 
 				case 'alias':
-					$item->flink = 'index.php?Itemid=' . $item->params->get('aliasoptions');
+					$item->flink = 'index.php?Itemid=' . $item->getParams()->get('aliasoptions');
 					break;
 
 				default:
@@ -205,7 +205,7 @@ class HelixultimateMenu
 
 			if ((strpos($item->flink, 'index.php?') !== false) && strcasecmp(substr($item->flink, 0, 4), 'http'))
 			{
-				$item->flink = Route::_($item->flink, true, $item->params->get('secure'));
+				$item->flink = Route::_($item->flink, true, $item->getParams()->get('secure'));
 			}
 			else
 			{
@@ -213,9 +213,9 @@ class HelixultimateMenu
 			}
 
 			$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_css   = htmlspecialchars($item->params->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_title = htmlspecialchars($item->params->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->menu_image   = $item->params->get('menu_image', '') ? htmlspecialchars($item->params->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
+			$item->anchor_css   = htmlspecialchars($item->getParams()->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
+			$item->anchor_title = htmlspecialchars($item->getParams()->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
+			$item->menu_image   = $item->getParams()->get('menu_image', '') ? htmlspecialchars($item->getParams()->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
 		}
 	}
 
@@ -351,7 +351,7 @@ class HelixultimateMenu
 		$this->menu .= $this->start_el(array('item' => $item));
 		$this->menu .= $this->item($item);
 
-		$menulayout = json_decode($item->params->get('helixultimatemenulayout'));
+		$menulayout = json_decode($item->getParams()->get('helixultimatemenulayout'));
 
 		if (isset($menulayout->megamenu) && $menulayout->megamenu)
 		{
@@ -384,7 +384,7 @@ class HelixultimateMenu
 		$dropdown_width = $this->_params->get('dropdown_width', 240);
 		$dropdown_alignment = 'right';
 		$dropdown_style = 'width: ' . $dropdown_width . 'px;';
-		$layout = json_decode($this->_items[$item->id]->params->get('helixultimatemenulayout'));
+		$layout = json_decode($this->_items[$item->id]->getParams()->get('helixultimatemenulayout'));
 
 		if (isset($layout->dropdown) && $layout->dropdown === 'left')
 		{
@@ -421,7 +421,7 @@ class HelixultimateMenu
 
 		foreach ($items as $menu_item)
 		{
-			if ((int) $menu_item->params->get('menu_show', 1) === 1)
+			if ((int) $menu_item->getParams()->get('menu_show', 1) === 1)
 			{
 				$show_menu ++;
 			}
@@ -443,7 +443,7 @@ class HelixultimateMenu
 		$items     = isset($this->children[$item->id]) ? $this->children[$item->id] : array();
 		$firstitem = count($items) ? $items[0]->id : 0;
 
-		$mega = json_decode($item->params->get('helixultimatemenulayout'));
+		$mega = json_decode($item->getParams()->get('helixultimatemenulayout'));
 		$layout = $mega->layout;
 
 		$mega_style = 'width: ' . $mega->width . 'px;';
@@ -578,7 +578,7 @@ class HelixultimateMenu
 		// Menu show
 		$menu_show = $this->getMenuShow($args['item']->id);
 
-		$layout = json_decode($item->params->get('helixultimatemenulayout'));
+		$layout = json_decode($item->getParams()->get('helixultimatemenulayout'));
 
 		$item->hasChild = 0;
 
@@ -633,7 +633,7 @@ class HelixultimateMenu
 
 		if ($item->menu_image)
 		{
-			$item->params->get('menu_text', 1) ?
+			$item->getParams()->get('menu_text', 1) ?
 				$linktitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :
 				$linktitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
 		}
@@ -642,7 +642,7 @@ class HelixultimateMenu
 			$linktitle = $item->title;
 		}
 
-		$layout = json_decode($item->params->get('helixultimatemenulayout'));
+		$layout = json_decode($item->getParams()->get('helixultimatemenulayout'));
 
 		$showmenutitle = (isset($layout->showtitle)) ? $layout->showtitle : 1;
 		$icon = (isset($layout->faicon)) ? $layout->faicon : '';
@@ -713,7 +713,7 @@ class HelixultimateMenu
 			// $linktitle = $linktitle . ' <span class="fas fa-angle-down"></span>';
 		}
 
-		if ($item->params->get('menu_show', 1) !== 0)
+		if ($item->getParams()->get('menu_show', 1) !== 0)
 		{
 			switch ($item->browserNav)
 			{
@@ -725,7 +725,7 @@ class HelixultimateMenu
 					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linktitle . '</a>';
 					break;
 				case 2:
-					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $item->params->get('window_open');
+					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $item->getParams()->get('window_open');
 					$output .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linktitle . '</a>';
 					break;
 			}

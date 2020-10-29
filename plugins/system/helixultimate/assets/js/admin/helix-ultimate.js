@@ -663,10 +663,8 @@ jQuery(function ($) {
 		$(`.hu-device[data-device=${deviceMap[device]}]`).addClass('active');
 
 		// Change the typography field device wise size field
-		$('input[class^=hu-webfont-size-input]').each(function () {
-			if ($(this).hasClass('active')) {
-				$(this).removeClass('active');
-			}
+		['', '-sm', '-xs'].forEach(size => {
+			$(`.hu-webfont-size-input${size}`).removeClass('active');
 		});
 
 		$(

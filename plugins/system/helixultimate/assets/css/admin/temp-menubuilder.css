@@ -1,0 +1,144 @@
+#hu-menu-builder-container .hu-menuitem-list {
+    list-style: none;
+	min-height: 20px;
+	padding-inline-start: 0;
+	margin-inline-start: 40px;
+	background: rgb(53 206 185 / 20%);
+	border: 1px solid #19a89b59;
+}
+
+#hu-menu-builder-container > ul.hu-menuitem-list:first-child {
+	margin-inline-start: 0;
+}
+
+
+.hu-menuitem-list li {
+    padding: 5px 0;
+}
+
+.hu-menuitem-list li .drag-handler {
+    cursor: move;
+}
+
+#hu-menu-builder-container .ui-state-highlight {
+	background: rgba(255, 255, 255, 0.6);
+	border-radius: 5px;
+	margin: 10px 10px 20px;
+	border: 1px dashed rgba(2, 11, 83, 0.2);
+}
+
+.hu-has-dropdown {
+	position: relative;
+}
+
+.hu-has-dropdown::after {
+	content: '\f078';
+    position: absolute;
+    right: 10px;
+    font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	color: #B3B6CC;
+}
+
+.text-left {
+	text-align: left !important;
+}
+
+.hu-btn.hu-btn-outline {
+    border: 1px solid #d4d5e1;
+}
+
+.hu-btn.hu-btn-block {
+	width: 100%;
+}
+
+.text-mute {
+	color: #9aa0ba !important;
+	font-size: 12px;
+}
+
+/* .hu-add-new-menuitem .hu-options-modal-inner {
+	overflow: visible;
+}
+
+.hu-add-new-menuitem .hu-modal-content {
+	overflow: visible;
+} */
+
+#menuTypeDropdown {
+    margin-top: 10px;
+}
+
+.hu-dropdown {
+	border: 1px solid #d4d5e1;
+    border-radius: 5px;
+    padding: 0;
+	list-style: none;
+	display: none;
+}
+
+.hu-dropdown .hu-submenu {
+	display: none;
+	list-style: none;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #d4d5e1;
+    z-index: 9999;
+	border-radius: 3px;
+	position: absolute;
+    right: -380px;
+    width: 100%;
+    top: 0;
+}
+
+.hu-dropdown .hu-submenu > li {
+	transition: all .3s;
+}
+
+.hu-dropdown .hu-submenu > li:hover {
+	background:  rgba(51,102,255,0.08);
+}
+
+.hu-dropdown .hu-submenu .hu-dropdown-item {
+	color: #4E5887;
+    text-decoration: none;
+    border-bottom: 2px solid #F4F7FC;
+    margin: 5px 20px;
+    padding-bottom: 10px;
+    display: block;
+}
+
+.hu-dropdown .hu-submenu .hu-dropdown-item .hu-menu-item-title {
+	font-size: 14px;
+	margin: 0;
+}
+
+.hu-dropdown > li {
+	margin-bottom: 10px;
+	padding: 5px 20px;
+	border: 1px solid transparent;
+	transition: .3s all;
+	cursor: pointer;
+}
+
+.hu-dropdown > li:hover {
+	background: rgba(51,102,255,0.1);
+	border: 1px solid rgba(51,102,255,0.14);
+}
+
+.hu-dropdown .hu-has-submenu {
+	position: relative;
+}
+
+.hu-dropdown .hu-has-submenu::after {
+	content: "\f054";
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	position: absolute;
+	right: 10px;
+	color: #B3B6CC;
+}
+
+.hu-dropdown li.hu-has-submenu:hover >.hu-submenu {
+	display: block;
+}

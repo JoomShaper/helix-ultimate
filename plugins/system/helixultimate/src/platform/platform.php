@@ -244,7 +244,8 @@ class Platform
 			->registerAndUseStyle('helix.ultimate', $helix_assets_url . '/css/admin/helix-ultimate.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('helix.modal', $helix_assets_url . '/css/admin/modal.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('helix.fontAwesome', Uri::root() . 'templates/shaper_helixultimate/css/font-awesome.min.css')
-			->registerAndUseStyle('helix.device-field', $helix_assets_url . '/css/admin/devices-field.css', ['version' => 'auto', 'relative' => true]);
+			->registerAndUseStyle('helix.device-field', $helix_assets_url . '/css/admin/devices-field.css', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('style.helix.menubuilder', $helix_assets_url . '/css/admin/temp-menubuilder.css', ['version' => 'auto', 'relative' => true]);
 			// ->registerAndUseStyle('helix.menuBuilder', $helix_assets_url . '/css/admin/menu-builder.css', ['version' => 'auto', 'relative' => true]);
 		
 		$helixDocument->registerAndUseScript('helix.jquery.ui', $helix_assets_url . '/js/admin/jquery-ui.min.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
@@ -256,7 +257,8 @@ class Platform
 			->registerAndUseScript('helix.layout', $helix_assets_url . '/js/admin/layout.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.media', $helix_assets_url . '/js/admin/media.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.device-field', $helix_assets_url . '/js/admin/devices-field.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
-			->registerAndUseScript('helix.presets', $helix_assets_url . '/js/admin/presets.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
+			->registerAndUseScript('helix.presets', $helix_assets_url . '/js/admin/presets.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.menubuilder', $helix_assets_url . '/js/admin/menubuilder.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
 			// ->registerAndUseScript('helix.menuBuilder', $helix_assets_url . '/js/admin/menu-builder.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
 
 		// Pass important data to Joomla variable for javascript

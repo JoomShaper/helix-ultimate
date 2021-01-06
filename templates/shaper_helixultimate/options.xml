@@ -967,14 +967,9 @@
 
 	<fieldset name="menu" 
 		label="HELIX_ULTIMATE_NAVIGATION" 
-		activegroup="megamenu" 
+		activegroup="menubuilder" 
 		icon="fas fa-list-ul">
-		<field name="menu" 
-			type="menu" 
-			helixgroup="megamenu" 
-			default="mainmenu"
-			track="on"
-			label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
+		
 		
 		<!-- <field name="megamenu"
 			type="helixmenubuilder"
@@ -983,6 +978,22 @@
 			track="off"
 		/> -->
 
+		<!-- menu builder group -->
+		<field name="menu" 
+			type="menu" 
+			helixgroup="menubuilder" 
+			default="mainmenu"
+			track="off"
+			label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
+
+		<field name="menu_builder"
+			helixgroup="menubuilder"
+			type="helixmenubuilder"
+			label="HELIX_ULTIMATE_MENU_BUILDER"
+			description="HELIX_ULTIMATE_MENU_BUILDER_DESC" />
+
+
+		<!-- mega menu group -->
 		<field name="menu_type" 
 			helixgroup="megamenu" 
 			type="list" 
@@ -993,6 +1004,7 @@
 			<option value="mega">HELIX_ULTIMATE_MEGAMENU</option>
 			<option value="offcanvas">HELIX_ULTIMATE_OFFCANVAS</option>
 		</field>
+
 		<field name="dropdown_width" 
 			helixgroup="megamenu" 
 			type="number" 

@@ -19,7 +19,8 @@ use Joomla\CMS\Layout\FileLayout;
 /**
  * Form field for Helix mega menu
  *
- * @since	2.0.0
+ * @since	1.0.0
+ * @TODO	Change this field name to HelixMegaMenu
  */
 class JFormFieldHelixMenuBuilder extends FormField
 {
@@ -27,7 +28,7 @@ class JFormFieldHelixMenuBuilder extends FormField
 	 * Field type
 	 *
 	 * @var		string	$type
-	 * @since	2.0.0
+	 * @since	1.0.0
 	 */
 	protected $type = "HelixMenuBuilder";
 
@@ -35,7 +36,7 @@ class JFormFieldHelixMenuBuilder extends FormField
 	 * Override getInput function form FormField
 	 *
 	 * @return	string	Field HTML string
-	 * @since	2.0.0
+	 * @since	1.0.0
 	 */
 	public function getInput()
 	{
@@ -59,14 +60,26 @@ class JFormFieldHelixMenuBuilder extends FormField
 			}
 		}
 
+		$builder = new MenuBuilder;
 		$html = [];
-		$html[] = '<div id="hu-menu-builder">';
-		$html[] = '<div id="hu-menu-builder-container"></div>';
-		$html[] = '<button class="hu-btn hu-btn-primary hu-add-menu-item">Add New Item</button>';
+		$types = $builder->getMenuTypes();
+		$typeNames = array_keys((array) $types);
+
+		$html[] = '<div class="hu-menu-builder" data-menutypes="' . (implode(',', $typeNames)) . '">';
+
+		if (!empty($types))
+		{
+			$layout = new FileLayout('fields.menuBuilder.menuTypes', HELIX_LAYOUT_PATH);
+			$html[] = $layout->render(['types' => $types, 'params' => $params, 'menuSettings' => $value, 'builder' => $builder]);
+		}
+
+		$html[] = '<input type="hidden" class="hu-megamenu-field " name="' . $this->name . '" id="' . $this->id . '" value=\'' . $value . '\' />';
+		$html[] = '<input type="hidden" class="hu-megamenu-action-tracker" value="" />';
+
+		// End menu builder
 		$html[] = '</div>';
 
 		return implode("\n", $html);
-	
 	}
 
 

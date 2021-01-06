@@ -10,6 +10,7 @@ namespace HelixUltimate\Framework\Platform;
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\HttpResponse\Response;
 use HelixUltimate\Framework\Platform\Blog;
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Media;
@@ -93,6 +94,7 @@ class Request
 		$this->action   = $input->get('action', '');
 		$this->data     = $input->get('data', array(), 'ARRAY');
 		$this->report   = array( 'status' => false, 'message' => 'Unexpected error occurs');
+
 	}
 
 	/**
@@ -166,6 +168,19 @@ class Request
 
 			case 'purge-css-file':
 				$this->purgeCssFiles();
+				break;
+
+			case 'getMenuItems':
+				$this->report = Response::getMenuItems();
+				break;
+			case 'parentAdoption':
+				$this->report = Response::parentAdoption();
+				break;
+			case 'getMenuItemModalContents':
+				$this->report = Response::getMenuItemModalContents();
+				break;
+			case 'setMenuType':
+				$this->report = Response::setMenuType();
 				break;
 		}
 

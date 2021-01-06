@@ -1266,7 +1266,7 @@ jQuery(function ($) {
 			error: err => {
 				alert(err);
 			},
-			completed: () => {
+			complete: () => {
 				Joomla.helixLoading(false);
 			},
 		});

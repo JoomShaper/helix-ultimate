@@ -6,6 +6,85 @@
  */
 
 jQuery(function ($) {
+	$.fn.extend({
+		closeModal() {
+			$('.hu-modal-overlay, .hu-modal').fadeOut().remove();
+			$('body').removeClass('hu-modal-open');
+			return this;
+		},
+	});
+
+	$.fn.helixUltimateFrameModal = function (options) {
+		options = $.extend(
+			{
+				title: 'Helix Ultimate',
+				className: '',
+				targetType: '',
+				target: '',
+				footer: '',
+				frameUrl: '',
+			},
+			options
+		);
+
+		const {
+			title,
+			target,
+			targetType,
+			body,
+			footer,
+			frameUrl,
+			className,
+		} = options;
+		console.log(options);
+
+		$('.hu-modal-overlay, .hu-modal').remove();
+
+		let mediaModal = '<div class="hu-modal-overlay"></div>';
+		mediaModal +=
+			'<div class="hu-modal ' +
+			className +
+			'" data-target_type="' +
+			targetType +
+			'" data-target="' +
+			target +
+			'">';
+
+		mediaModal += '<div class="hu-modal-header">';
+		// action-hu-modal-close
+		mediaModal +=
+			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
+
+		mediaModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
+		mediaModal += '</div>';
+
+		mediaModal += '<div class="hu-modal-inner">';
+		mediaModal += '<div class="hu-modal-content">';
+
+		if (frameUrl) {
+			mediaModal += '<div class="hu-modal-frame-container">';
+			mediaModal +=
+				'<iframe src="' +
+				frameUrl +
+				'" width="100%" height="100%"></iframe>';
+			mediaModal += '</div>';
+		}
+
+		mediaModal += '</div>';
+		mediaModal += '</div>';
+
+		mediaModal += '<div class="hu-modal-footer footer-right">';
+		mediaModal +=
+			'<button class="hu-btn hu-btn-link hu-cancel-btn">Cancel</button>';
+		mediaModal +=
+			'<button class="hu-btn hu-btn-primary hu-save-btn">Save</button>';
+		mediaModal += '</div>';
+
+		mediaModal += '</div>';
+
+		$('body').addClass('hu-modal-open').append(mediaModal);
+	};
+
 	$.fn.helixUltimateModal = function (options) {
 		var options = $.extend(
 			{

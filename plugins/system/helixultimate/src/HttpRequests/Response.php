@@ -44,7 +44,8 @@ class Response
 
 		return [
 			'status' => true,
-			'data' => self::generateMenuItemHTML($items, $items, 1)
+			'data' => self::generateMenuItemHTML($items, $items, 1),
+			'items' => $items
 		];
 	}
 

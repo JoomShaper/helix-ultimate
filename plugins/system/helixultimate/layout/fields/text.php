@@ -66,7 +66,7 @@ class HelixultimateFieldText
 		}
 		else
 		{
-			$output	.= '<input class="hu-input addon-' . $key . '" type="text" data-attrname="' . $key . '" value="" ' . $attributes . ' />';
+			$output	.= '<input class="hu-input addon-' . $key . '" type="text" name="' . $key . '" data-attrname="' . $key . '" value="" ' . $attributes . ' />';
 		}
 
 		$output .= '</div>';

@@ -176,12 +176,6 @@ class Request
 			case 'parentAdoption':
 				$this->report = Response::parentAdoption();
 				break;
-			case 'getMenuItemModalContents':
-				$this->report = Response::getMenuItemModalContents();
-				break;
-			case 'setMenuType':
-				$this->report = Response::setMenuType();
-				break;
 		}
 
 		echo json_encode($this->report);

@@ -202,8 +202,10 @@ class Response
 						. '" data-level="' . $item->level
 						. '" data-parent="' . $item->parent_id . '">';
 					
+					$html[] = '<span class="hu-menuitem-handle">';
 					$html[] = '<span class="drag-handler fas fa-grip-vertical"></span>';
-					$html[] = $item->title . "<small>({$item->id})</small>";
+					$html[] = $item->title;
+					$html[] = '<span>';
 
 					if (!empty($item->children))
 					{

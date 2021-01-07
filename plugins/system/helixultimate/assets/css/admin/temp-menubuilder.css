@@ -1,19 +1,32 @@
+#hu-menu-builder {
+	/* padding: 20px 15px;
+	background-color: #fff;
+	box-shadow: 0px 1px 1px rgba(2, 11, 83, 0.3);
+	border-radius: 5px; */
+}
+
 #hu-menu-builder-container .hu-menuitem-list {
     list-style: none;
 	min-height: 20px;
 	padding-inline-start: 0;
-	margin-inline-start: 40px;
-	background: rgb(53 206 185 / 20%);
-	border: 1px solid #19a89b59;
+	margin-inline-start: 20px;
 }
 
 #hu-menu-builder-container > ul.hu-menuitem-list:first-child {
 	margin-inline-start: 0;
 }
 
-
 .hu-menuitem-list li {
     padding: 5px 0;
+}
+
+.hu-menuitem-list li .hu-menuitem-handle {
+	display: flex;
+	width: 100%;
+	padding: 20px 15px;
+	background-color: #fff;
+	box-shadow: 0px 1px 1px rgba(2, 11, 83, 0.3);
+	border-radius: 5px;
 }
 
 .hu-menuitem-list li .drag-handler {

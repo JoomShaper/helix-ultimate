@@ -196,6 +196,14 @@ jQuery(function ($) {
 			'.hu-modal.add-new-menu-item button.hu-save-btn'
 		);
 		$itemModal.find('.hu-save-btn').prop('disabled', true);
+		handleCloseModal();
+	}
+
+	/** Close modal on clicking the cancel button. */
+	function handleCloseModal() {
+		$itemModal.find('.hu-cancel-btn').on('click', function (e) {
+			$(this).closeModal();
+		});
 	}
 
 	/** Handle Save functionality. */

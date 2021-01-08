@@ -48,27 +48,51 @@ jQuery(function ($) {
 	/** Instantiate the sortable for the menu items. */
 	function itemSorting() {
 		$('#hu-menu-builder-container')
-			.find('.hu-menuitem-list')
+			.find('ul.hu-menuitem-list, ul.hu-has-children')
 			.each(function () {
+				let itemIndex = null;
+				let itemOffset = null;
 				$(this)
 					.sortable({
-						connectWith: '.hu-menuitem-list',
-						placeholder: 'ui-state-highlight',
-						forcePlaceholderSize: true,
-						forceHelperSize: true,
-						handle: '.drag-handler',
+						connectWith: '.hu-menuitem-list, .hu-has-children',
+						placeholder: 'sortable-placeholder',
+						handle: '.hu-drag-handler',
 						cursor: 'move',
-						opacity: 0.8,
-						tolerance: 'intersect',
 						start: function (e, ui) {
-							$('.hu-menuitem-list')
-								.find('.ui-state-highlight')
-								.addClass($(ui.item).attr('class'))
-								.css('height', '40px');
+							let height = ui.helper.outerHeight();
+							height -= 2;
+
+							let width = ui.helper
+								.find('.hu-drag-handler')
+								.outerWidth();
+							width -= 2;
+
+							ui.placeholder.css({ height, width });
+
+							itemIndex = ui.item.index();
+							itemOffset = ui.helper.offset();
+							console.log(ui);
+						},
+						sort: function (e, ui) {
+							let currentOffset = ui.helper.offset();
+
+							console.log('item', itemOffset.top);
+							console.log('current', currentOffset.top);
+
+							// $('.hu-menuitem ul:empty').css('display', 'block');
+						},
+						stop: function (e, ui) {
+							$('.hu-menuitem ul').css('position', 'static');
 						},
 						update: function (e, ui) {
 							$item = $(ui.item);
 							const $container = $item.closest('ul');
+
+							console.log(
+								$container[0],
+								$container.css('display')
+							);
+
 							const containerId =
 								$container.data('container') || 1;
 							const containerLevel =

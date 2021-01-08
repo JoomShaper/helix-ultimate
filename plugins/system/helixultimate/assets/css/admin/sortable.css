@@ -1,0 +1,65 @@
+#hu-menu-builder ul {
+	list-style: none;
+}
+
+#hu-menu-builder-container {
+	position: static;
+	margin-bottom: 40px;
+}
+
+#hu-menu-builder-container > .hu-menuitem-list {
+	padding: 0.1em 0;
+	margin: 0;
+}
+
+.hu-menuitem-list > li {
+	margin-bottom: 0;
+	position: relative;
+}
+
+.hu-menuitem > .contents {
+	clear: both;
+	line-height: 1.5;
+	position: relative;
+	margin: 10px 0 0;
+}
+
+.contents .hu-drag-handler {
+	cursor: move;
+	background: #fff;
+	border: 1px solid #fff;
+	box-shadow: 0px 1px 1px rgba(2, 11, 83, 0.3);
+	border-radius: 3px;
+	position: relative;
+	padding: 10px 15px;
+	height: auto;
+	min-height: 20px;
+	max-width: 350px;
+	line-height: 2.3076923;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+.hu-drag-handler .icon {
+	color: #504e4e;
+	margin-right: 5px;
+}
+
+.hu-menuitem-list .sortable-placeholder {
+	border: 1px dashed rgb(63, 63, 63);
+	height: 35px;
+	width: 350px;
+	margin-top: 10px;
+}
+
+.hu-menuitem.ui-sortable-helper .contents {
+	margin-top: 0;
+}
+
+.hu-menuitem.ui-sortable-helper ul .contents {
+	margin-top: 10px;
+}
+
+.hu-menuitem ul:empty {
+	display: none;
+}

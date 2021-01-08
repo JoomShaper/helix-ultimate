@@ -201,11 +201,13 @@ class Response
 					$html[] = '<li class="hu-menuitem" data-itemid="' . $item->id
 						. '" data-level="' . $item->level
 						. '" data-parent="' . $item->parent_id . '">';
+					$html[] = '<div class="contents">';
+					$html[] = '<div class="hu-drag-handler">';
+					$html[] = '<span class="icon fas fa-grip-vertical"></span>';
+					$html[] = '<span class="hu-menuitem-title">' . $item->title . '</span>';
+					$html[] = '</div>'; // End of drag handler
+					$html[] = '</div>'; // End of contents
 					
-					$html[] = '<span class="hu-menuitem-handle">';
-					$html[] = '<span class="drag-handler fas fa-grip-vertical"></span>';
-					$html[] = $item->title;
-					$html[] = '<span>';
 
 					if (!empty($item->children))
 					{
@@ -213,7 +215,7 @@ class Response
 					}
 					else
 					{
-						$html[] = '<ul class="hu-menuitem-list" data-level="' . ($item->level + 1)
+						$html[] = '<ul class="hu-has-children" data-level="' . ($item->level + 1)
 							. '" data-container="' . $item->id
 							. '"></ul>';
 					}

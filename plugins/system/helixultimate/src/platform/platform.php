@@ -245,7 +245,8 @@ class Platform
 			->registerAndUseStyle('helix.modal', $helix_assets_url . '/css/admin/modal.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('helix.fontAwesome', Uri::root() . 'templates/shaper_helixultimate/css/font-awesome.min.css')
 			->registerAndUseStyle('helix.device-field', $helix_assets_url . '/css/admin/devices-field.css', ['version' => 'auto', 'relative' => true])
-			->registerAndUseStyle('style.helix.menubuilder', $helix_assets_url . '/css/admin/temp-menubuilder.css', ['version' => 'auto', 'relative' => true]);
+			->registerAndUseStyle('style.helix.menubuilder', $helix_assets_url . '/css/admin/temp-menubuilder.css', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('style.helix.sortable', $helix_assets_url . '/css/admin/sortable.css', ['version' => 'auto', 'relative' => true]);
 			// ->registerAndUseStyle('helix.menuBuilder', $helix_assets_url . '/css/admin/menu-builder.css', ['version' => 'auto', 'relative' => true]);
 		
 		$helixDocument->registerAndUseScript('helix.jquery.ui', $helix_assets_url . '/js/admin/jquery-ui.min.js', ['version' => 'auto', 'relative' => true], ['defer' => true])

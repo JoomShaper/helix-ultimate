@@ -177,12 +177,13 @@
 }
 
 .hu-media-breadcrumb-item + .hu-media-breadcrumb-item::before {
+	font-family: "Font Awesome 5 Free";
 	display: inline-block;
 	padding-right: 0.5rem;
 	padding-left: 0.5rem;
 	color: #868e96;
 	content: '\f105';
-	font-family: FontAwesome;
+	font-weight: 900;
 }
 
 .hu-media-breadcrumb-item + .hu-media-breadcrumb-item:hover::before {

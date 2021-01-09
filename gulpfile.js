@@ -11,7 +11,7 @@ const zip = require('gulp-zip');
 const config = {
 	srcPath: path.resolve(__dirname),
 	buildPath: path.resolve(__dirname, './package/'),
-	packageName: '2.0.0-alpha.2.zip',
+	packageName: '2.0.0-alpha.3.zip',
 	templateFileExtensions:
 		'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css',
 	pluginFileExtensions: function () {

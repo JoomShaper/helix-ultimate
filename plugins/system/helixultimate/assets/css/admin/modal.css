@@ -83,6 +83,7 @@
 	font-size: 14px;
 	font-weight: 500;
 	color: rgb(var(--primary));
+	margin: 0;
 }
 
 .hu-modal-frame-container {

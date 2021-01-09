@@ -29,8 +29,9 @@
 	cursor: move;
 	background: #fff;
 	border: 1px solid #fff;
-	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
-	border-radius: 3px;
+	color: rgba(var(--dark));
+	/* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15); */
+	border-radius: 4px;
 	position: relative;
 	padding: 8px 10px;
 	height: auto;
@@ -39,15 +40,23 @@
 	line-height: 1.4;
 	overflow: hidden;
 	word-wrap: break-word;
+	transition: color 400ms ease-in, border-color 400ms ease-in;
+}
+
+.hu-branch-drag-handler .hu-branch-icon {
+	margin-right: 5px;
 }
 
 .hu-menu-tree-contents .hu-branch-drag-handler svg {
 	fill: #676D98;
 }
 
-.hu-branch-drag-handler .icon {
-	color: #504e4e;
-	margin-right: 5px;
+.hu-menu-tree-contents .hu-branch-drag-handler:hover {
+	border-color: rgb(var(--primary));
+}
+
+.hu-menu-tree-contents .hu-branch-drag-handler:hover svg {
+	fill: rgb(var(--primary));
 }
 
 #hu-menu-tree .hu-sortable-placeholder {

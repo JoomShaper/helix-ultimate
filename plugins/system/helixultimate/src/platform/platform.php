@@ -259,6 +259,7 @@ class Platform
 			->registerAndUseScript('helix.media', $helix_assets_url . '/js/admin/media.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.device-field', $helix_assets_url . '/js/admin/devices-field.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.presets', $helix_assets_url . '/js/admin/presets.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.treeSortable', $helix_assets_url . '/js/admin/treeSortable.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.menubuilder', $helix_assets_url . '/js/admin/menubuilder.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
 			// ->registerAndUseScript('helix.menuBuilder', $helix_assets_url . '/js/admin/menu-builder.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
 

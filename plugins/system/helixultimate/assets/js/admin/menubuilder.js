@@ -34,116 +34,61 @@ jQuery(function ($) {
 		$.ajax({
 			type: 'GET',
 			url,
+			beforeSend() {},
 			success(response) {
 				response = response && JSON.parse(response);
-				console.log(response);
+
 				if (response.status) {
 					$('#hu-menu-builder-container').html(response.data);
-					itemSorting();
+
+					/** After successful tree generation run the sortable. */
+					Joomla.sortable.run();
+					onAfterSort();
 				}
 			},
 		});
 	}
 
-	/** Instantiate the sortable for the menu items. */
-	function itemSorting() {
-		$('#hu-menu-builder-container')
-			.find('ul.hu-menuitem-list, ul.hu-has-children')
-			.each(function () {
-				let itemIndex = null;
-				let itemOffset = null;
-				$(this)
-					.sortable({
-						connectWith: '.hu-menuitem-list, .hu-has-children',
-						placeholder: 'sortable-placeholder',
-						handle: '.hu-drag-handler',
-						cursor: 'move',
-						start: function (e, ui) {
-							let height = ui.helper.outerHeight();
-							height -= 2;
+	/**
+	 * Handle after sorting tasks. i.e. check parental changes and update
+	 * them to the database.
+	 */
+	function onAfterSort() {
+		$(document).on('sortCompleted', async function (e, ui) {
+			let itemId = ui.item.data('itemid'),
+				parentId = ui.item.data('parent'),
+				parent = ui.item.getParent(),
+				newParentId = parent.length ? parent.data('itemid') : 1;
 
-							let width = ui.helper
-								.find('.hu-drag-handler')
-								.outerWidth();
-							width -= 2;
+			if (+parentId !== +newParentId) {
+				const resp = await parentAdoption({
+					id: itemId,
+					parent: newParentId,
+				});
 
-							ui.placeholder.css({ height, width });
+				if (resp.status) {
+					ui.item
+						.data('parent', newParentId)
+						.attr('data-parent', newParentId);
+					handleBranchOrdering(parent);
+				}
+				return;
+			}
 
-							itemIndex = ui.item.index();
-							itemOffset = ui.helper.offset();
-							console.log(ui);
-						},
-						sort: function (e, ui) {
-							let currentOffset = ui.helper.offset();
-
-							console.log('item', itemOffset.top);
-							console.log('current', currentOffset.top);
-
-							// $('.hu-menuitem ul:empty').css('display', 'block');
-						},
-						stop: function (e, ui) {
-							$('.hu-menuitem ul').css('position', 'static');
-						},
-						update: function (e, ui) {
-							$item = $(ui.item);
-							const $container = $item.closest('ul');
-
-							console.log(
-								$container[0],
-								$container.css('display')
-							);
-
-							const containerId =
-								$container.data('container') || 1;
-							const containerLevel =
-								$container.data('level') || 1;
-
-							const itemId = $item.data('itemid') || false;
-							const parentId = $item.data('parent') || false;
-
-							/**
-							 * If drop container id and item's parent id is not same,
-							 * then update the parent of the drag item by the container id.
-							 */
-							if (parentId !== containerId) {
-								parentAdoption({
-									id: itemId,
-									parent: containerId,
-								}).then(function (res) {
-									res =
-										typeof res === 'string' &&
-										res.length > 0
-											? JSON.parse(res)
-											: false;
-
-									if (res && res.status) {
-										// Update the sorted item's parent id and the level.
-										$item
-											.data('parent', containerId)
-											.attr('data-parent', containerId);
-										$item
-											.data('level', containerLevel)
-											.attr('data-level', containerLevel);
-
-										// After changing the parent re-order the list
-										handleItemOrdering($container);
-									}
-								});
-							} else {
-								handleItemOrdering($container);
-							}
-						},
-					})
-					.disableSelection();
-			});
+			handleBranchOrdering(parent);
+		});
 	}
 
 	/** Handle Menu Item ordering for a container. */
-	function handleItemOrdering($container) {
-		/** Create the ordering data & perform ordering by ajax. */
-		const orderData = { cid: [], order: [] };
+	function handleBranchOrdering(parent) {
+		let children = parent.length
+			? parent.getChildren()
+			: $(document).getRootChildren();
 
-		$container.find('> li').each(function (index) {
+		if (children.length === 0) return;
+
+		const orderData = { cid: [], order: [] };
+		children.each(function (index) {
 			orderData.cid.push($(this).data('itemid'));
 			orderData.order.push(index + 1);
 		});
@@ -162,6 +107,10 @@ jQuery(function ($) {
 				url,
 				data,
 				success(response) {
+					response =
+						typeof response === 'string' && response.length > 0
+							? JSON.parse(response)
+							: response;
 					resolve(response);
 				},
 				error(err) {
@@ -170,6 +119,12 @@ jQuery(function ($) {
 			});
 		});
 	}
+
+	/**
+	 *
+	 * Add new menu section
+	 *
+	 */
 
 	/** Save Menu Item's order by ajax request. */
 	function saveOrderAjax(data) {

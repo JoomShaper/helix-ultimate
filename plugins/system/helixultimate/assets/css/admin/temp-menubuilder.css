@@ -1,3 +1,7 @@
+#hu-menu-builder-container {
+	margin-bottom: 20px;
+}
+
 .hu-has-dropdown {
 	position: relative;
 }
@@ -27,14 +31,6 @@
 	color: #9aa0ba !important;
 	font-size: 12px;
 }
-
-/* .hu-add-new-menuitem .hu-options-modal-inner {
-	overflow: visible;
-}
-
-.hu-add-new-menuitem .hu-modal-content {
-	overflow: visible;
-} */
 
 #menuTypeDropdown {
 	margin-top: 10px;

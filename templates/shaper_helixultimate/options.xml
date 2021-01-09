@@ -970,7 +970,6 @@
 		activegroup="menubuilder" 
 		icon="fas fa-list-ul">
 		
-		
 		<!-- <field name="megamenu"
 			type="helixmenubuilder"
 			helixgroup="megamenu"
@@ -984,13 +983,15 @@
 			helixgroup="menubuilder" 
 			default="mainmenu"
 			track="off"
-			label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
+			label="HELIX_ULTIMATE_MEGAMENU_SELECT"
+			hideLabel="true" />
 
 		<field name="menu_builder"
 			helixgroup="menubuilder"
 			type="helixmenubuilder"
 			label="HELIX_ULTIMATE_MENU_BUILDER"
-			description="HELIX_ULTIMATE_MENU_BUILDER_DESC" />
+			description="HELIX_ULTIMATE_MENU_BUILDER_DESC"
+			hideLabel="true" />
 
 
 		<!-- mega menu group -->

@@ -22,7 +22,7 @@
 	clear: both;
 	line-height: 1.5;
 	position: relative;
-	margin: 10px 0 0;
+	margin: 0 0 10px;
 }
 
 .hu-menu-tree-contents .hu-branch-drag-handler {
@@ -30,7 +30,6 @@
 	background: #fff;
 	border: 1px solid #fff;
 	color: rgba(var(--dark));
-	/* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15); */
 	border-radius: 4px;
 	position: relative;
 	padding: 8px 10px;
@@ -38,25 +37,94 @@
 	min-height: 20px;
 	max-width: 450px;
 	line-height: 1.4;
-	overflow: hidden;
 	word-wrap: break-word;
 	transition: color 400ms ease-in, border-color 400ms ease-in;
+}
+
+.hu-branch-drag-handler .hu-branch-tools {
+	width: 26px;
+    height: 26px;
+    position: absolute;
+    top: 50%;
+	transform: translateY(-50%);
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 400ms;
+	cursor: pointer;
+	z-index: 10;
+}
+
+.hu-branch-drag-handler .hu-branch-tools svg {
+	fill: rgba(var(--dark), 0.4);
+}
+
+.hu-branch-drag-handler .hu-branch-tools:hover svg {
+	fill: rgb(var(--primary));
+}
+
+.hu-branch-drag-handler .hu-branch-tools ul {
+	display: none;
+	list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 130px;
+    padding: 10px;
+    background: #fff;
+    position: absolute;
+    top: 100%;
+    right: -15px;
+	border: 1px solid rgba(121, 127, 167, 0.3);
+	box-shadow: 0px 4px 10px rgba(20, 50, 80, 0.12);
+	border-radius: 5px;
+	z-index: 11;
+}
+
+.hu-branch-drag-handler .hu-branch-tools:hover ul {
+	display: block;
+}
+
+.hu-branch-drag-handler .hu-branch-tools ul > li,
+.hu-branch-drag-handler .hu-branch-tools ul > li > a {
+	display: block;
+}
+
+.hu-branch-drag-handler .hu-branch-tools ul > li > a {
+	font-size: 14px;
+	color: rgb(var(--dark));
+	padding: 5px 10px;
+	margin: 0px -10px;
+	line-height: 1.2;
+	text-decoration: none;
+	transition: color 400ms, background-color 400ms;
+}
+
+.hu-branch-drag-handler .hu-branch-tools ul > li:hover > a {
+	color: rgb(var(--dark));
+	background-color: rgba(var(--primary), 0.1);
+	text-decoration: none;
 }
 
 .hu-branch-drag-handler .hu-branch-icon {
 	margin-right: 5px;
 }
 
-.hu-menu-tree-contents .hu-branch-drag-handler svg {
-	fill: #676D98;
+.hu-menu-tree-contents .hu-branch-drag-handler .hu-branch-icon svg {
+	fill: rgba(var(--dark), 0.8);
 }
 
 .hu-menu-tree-contents .hu-branch-drag-handler:hover {
 	border-color: rgb(var(--primary));
 }
 
-.hu-menu-tree-contents .hu-branch-drag-handler:hover svg {
+.hu-menu-tree-contents .hu-branch-drag-handler:hover .hu-branch-icon svg {
 	fill: rgb(var(--primary));
+}
+
+.hu-menu-tree-contents .hu-branch-drag-handler:hover .hu-branch-tools {
+	opacity: 1;
 }
 
 #hu-menu-tree .hu-sortable-placeholder {

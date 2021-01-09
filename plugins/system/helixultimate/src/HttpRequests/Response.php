@@ -144,18 +144,18 @@ class Response
 
 		if (!empty($items))
 		{
-			$html[] = '<ul id="tree">';
+			$html[] = '<ul id="hu-menu-tree">';
 
 			foreach ($items as $key => $item)
 			{
-				$html[] = '<li class="tree-branch branch-level-' . $item->level . '" data-itemid="' . $item->id . '" data-parent="' . $item->parent_id . '" >';
-				$html[] = '	<div class="contents">';
-				$html[] = '		<div class="branch-drag-handler">';
-				$html[] = '			<span class="icon fas fa-bars"></span>';
-				$html[] = '			<span class="branch-title">' . $item->title . '</span>';
+				$html[] = '<li class="hu-menu-tree-branch hu-branch-level-' . $item->level . '" data-itemid="' . $item->id . '" data-parent="' . $item->parent_id . '" >';
+				$html[] = '	<div class="hu-menu-tree-contents">';
+				$html[] = '		<div class="hu-branch-drag-handler">';
+				$html[] = '			<span class="hu-branch-icon"><svg width="6" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx=".904" cy=".904" r=".904" /><circle cx=".904" cy="4.7" r=".904" /><circle cx=".904" cy="8.496" r=".904" /><circle cx="4.7" cy=".904" r=".904" /><circle cx="4.7" cy="4.7" r=".904" /><circle cx="4.7" cy="8.496" r=".904" /></svg></span>';
+				$html[] = '			<span class="hu-branch-title">' . $item->title . '</span>';
 				$html[] = '		</div>';
 				$html[] = '	</div>';
-				$html[] = '<div class="children-bus"></div>';
+				$html[] = '<div class="hu-menu-children-bus"></div>';
 				$html[] = '</li>';
 			}
 

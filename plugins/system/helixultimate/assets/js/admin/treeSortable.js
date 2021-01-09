@@ -10,13 +10,13 @@ var $ = jQuery;
 
 var treeSortable = {
 	options: {
-		depth: 30,
-		treeSelector: '#tree',
-		branchSelector: '.tree-branch',
-		dragHandlerSelector: '.branch-drag-handler',
-		placeholderName: 'sortable-placeholder',
-		childrenBusSelector: '.children-bus',
-		levelPrefix: 'branch-level',
+		depth: 20,
+		treeSelector: '#hu-menu-tree',
+		branchSelector: '.hu-menu-tree-branch',
+		dragHandlerSelector: '.hu-branch-drag-handler',
+		placeholderName: 'hu-sortable-placeholder',
+		childrenBusSelector: '.hu-menu-children-bus',
+		levelPrefix: 'hu-branch-level',
 		maxLevel: 10,
 	},
 	run() {

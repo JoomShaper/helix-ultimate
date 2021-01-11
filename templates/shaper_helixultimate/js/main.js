@@ -65,6 +65,10 @@ jQuery(function ($) {
 		 *
 		 */
 		let $header = $('#sp-header');
+		
+		// Check if the header exists
+		if($header.length == 0) return;
+		
 		let stickyHeaderTop = $header.offset().top;
 
 		/**

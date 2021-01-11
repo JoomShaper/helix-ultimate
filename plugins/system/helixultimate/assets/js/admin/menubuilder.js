@@ -70,6 +70,7 @@ jQuery(function ($) {
 					openToolbar();
 					handleEditMenuItem();
 					handleDeleteMenuItem();
+					Joomla.reloadPreview();
 				}
 			},
 		});

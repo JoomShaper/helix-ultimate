@@ -982,7 +982,7 @@
 			type="menu" 
 			helixgroup="menubuilder" 
 			default="mainmenu"
-			track="off"
+			track="on"
 			label="HELIX_ULTIMATE_MEGAMENU_SELECT"
 			hideLabel="true" />
 

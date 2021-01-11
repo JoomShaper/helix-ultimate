@@ -20,6 +20,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -106,16 +107,10 @@ class HelixUltimate
 		$this->doc      = Factory::getDocument();
 
 		/**
-		 * Load template data from cache or database for init the template
-		 *
+		 * Load template data from cache or database
+		 * for initializing the template
 		 */
 		$this->template = Helper::loadTemplateData();
-		// echo '<xmp>';
-		// print_r($this->template);
-		// echo '</xmp>';
-		// die();
-		
-
 		$this->params   = $this->template->params;
 		$this->get_template_uri();
 	}
@@ -130,8 +125,9 @@ class HelixUltimate
 	 */
 	public function bodyClass($class = '')
 	{
-		$menu           = $this->app->getMenu()->getActive();
-		$menuParams		= $menu->getParams();
+		$menu = $this->app->getMenu()->getActive();
+		$menuParams = empty($menu) ? new Registry : $menu->getParams();
+
 
 		$stickyHeader 	= $this->params->get('sticky_header', 0) ? ' sticky-header' : '';
 		$stickyHeader 	= $this->params->get('sticky_header_md', 0) ? $stickyHeader . ' sticky-header-md' : $stickyHeader;

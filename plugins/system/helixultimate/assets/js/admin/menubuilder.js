@@ -7,20 +7,36 @@
 jQuery(function ($) {
 	const config = Joomla.getOptions('meta') || {};
 	var $itemModal = null,
-		$itemFrame = null;
+		$itemFrame = null,
+		menuType = $('select[name=menu]').val() || 'mainmenu';
 
 	(function initialize() {
-		fetchMenuItems($('select[name=menu]').val() || 'mainmenu');
+		fetchMenuItems(menuType);
 		changeMenuType();
 
 		handleAddNewMenu();
 	})();
 
+	/**
+	 * Rebuild menu items tree
+	 */
+	function rebuildMenu() {
+		const url = `${config.base}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=rebuildMenu`;
+		$.ajax({
+			method: 'GET',
+			url,
+			success(res) {},
+			error(err) {
+				alert('Rebuild menu failed with: ' + err.message);
+			},
+		});
+	}
+
 	/** User Defined functions. */
 	function changeMenuType() {
 		const $menuTypeField = $('select[name=menu]');
 		$menuTypeField.on('change', function () {
-			const menuType = $(this).val();
+			menuType = $(this).val();
 			fetchMenuItems(menuType);
 		});
 	}
@@ -34,19 +50,164 @@ jQuery(function ($) {
 		$.ajax({
 			type: 'GET',
 			url,
-			beforeSend() {},
+			beforeSend() {
+				/** Remove click event listener before a new menu item fetch request. */
+				$(document).off(
+					'click',
+					'.hu-branch-tools .hu-branch-tools-icon'
+				);
+			},
 			success(response) {
 				response = response && JSON.parse(response);
 
 				if (response.status) {
 					$('#hu-menu-builder-container').html(response.data);
+					removeEventListeners();
 
 					/** After successful tree generation run the sortable. */
 					Joomla.sortable.run();
 					onAfterSort();
+					openToolbar();
+					handleEditMenuItem();
+					handleDeleteMenuItem();
 				}
 			},
 		});
+	}
+
+	function removeEventListeners() {
+		$(document).off(
+			'click',
+			'.hu-branch-tools .hu-branch-tools-list-delete'
+		);
+		$(document).off('click', '.hu-branch-tools .hu-branch-tools-list-edit');
+	}
+
+	/** ======================= Delete Menu Item Section ================= */
+
+	/**
+	 * Handling deleting a menu item.
+	 */
+	function handleDeleteMenuItem() {
+		$(document).on(
+			'click',
+			'.hu-branch-tools .hu-branch-tools-list-delete',
+			function (e) {
+				e.preventDefault();
+				closeToolbar();
+
+				const itemId =
+					$(this).closest('.hu-menu-tree-branch').data('itemid') || 0;
+				const confirm = window.confirm(
+					'Are you sure to delete the item?'
+				);
+
+				if (confirm) {
+					deleteMenuItem(itemId);
+				}
+			}
+		);
+	}
+
+	/**
+	 * Delete / add to trash a menu item.
+	 *
+	 * @param {int} itemId
+	 */
+	function deleteMenuItem(itemId) {
+		const url = `${config.base}/administrator/index.php?option=com_menus&task=items.trash&cid[]=${itemId}`;
+		$.ajax({
+			method: 'GET',
+			url,
+			success(res) {
+				fetchMenuItems(menuType);
+			},
+			error(err) {
+				alert('Something went wrong: ' + err.message);
+			},
+			complete() {
+				rebuildMenu();
+			},
+		});
+	}
+
+	/**
+	 * Open the options menu on click the tool icon
+	 */
+	function openToolbar() {
+		$(document).on(
+			'click',
+			'.hu-branch-tools .hu-branch-tools-icon',
+			function (e) {
+				e.preventDefault();
+				let self = this;
+				$('.hu-branch-tools .hu-branch-tools-list').each(function () {
+					if (
+						$(this).hasClass('active') &&
+						$(this)[0] !== $(self).next('.hu-branch-tools-list')[0]
+					) {
+						$(this).removeClass('active');
+						$(this).slideUp();
+					}
+				});
+				$(this)
+					.next('.hu-branch-tools-list')
+					.toggleClass('active')
+					.slideToggle();
+			}
+		);
+	}
+
+	/**
+	 * CLose toolbar
+	 */
+	function closeToolbar() {
+		$('.hu-branch-tools .hu-branch-tools-list').each(function () {
+			if ($(this).hasClass('active')) {
+				$(this).removeClass('active');
+				$(this).hide();
+			}
+		});
+	}
+
+	/**
+	 * Handling editing menu item.
+	 * This will open a modal for editing the item.
+	 */
+	function handleEditMenuItem() {
+		$(document).on(
+			'click',
+			'.hu-branch-tools .hu-branch-tools-list-edit',
+			function (e) {
+				e.preventDefault();
+				closeToolbar();
+
+				const itemId =
+					$(this).closest('.hu-menu-tree-branch').data('itemid') || 0;
+				openEditMenuItemModal(itemId);
+			}
+		);
+	}
+
+	/**
+	 * Opening the modal for editing menu item.
+	 *
+	 * @param {int} itemId
+	 */
+	function openEditMenuItemModal(itemId) {
+		loadFrameModal({
+			title: 'Edit Menu Item',
+			targetType: 'id',
+			target: 'editMenuItem',
+			className: 'edit-menu-item',
+			frameUrl:
+				config.base +
+				'/administrator/index.php?option=com_menus&task=item.edit&tmpl=component&menutype=' +
+				menuType +
+				'&id=' +
+				itemId,
+		});
+		handleSaveMenuItem('edit-menu-item', 'item.save');
 	}
 
 	/**
@@ -120,11 +281,7 @@ jQuery(function ($) {
 		});
 	}
 
-	/**
-	 *
-	 * Add new menu section
-	 *
-	 */
+	/** ======================= Add new menu item section ================= */
 
 	/** Save Menu Item's order by ajax request. */
 	function saveOrderAjax(data) {
@@ -149,31 +306,41 @@ jQuery(function ($) {
 		$(document).on('click', '.hu-add-menu-item', function (e) {
 			e.preventDefault();
 
-			loadFrameModal();
-			handleSaveMenuItem();
+			loadFrameModal({
+				title: 'Add New Item',
+				targetType: 'id',
+				target: 'addNewMenuItem',
+				className: 'add-new-menu-item',
+				frameUrl:
+					config.base +
+					'/administrator/index.php?option=com_menus&task=item.add&tmpl=component&menutype=' +
+					menuType,
+			});
+			handleSaveMenuItem('add-new-menu-item', 'item.apply');
 		});
 	}
 
 	/** Create Frame modal and load the iframe on it. */
-	function loadFrameModal() {
+	function loadFrameModal({
+		title,
+		targetType,
+		target,
+		className,
+		frameUrl,
+	}) {
 		$(document).helixUltimateFrameModal({
-			title: 'Add New Menu Item',
-			targetType: 'id',
-			target: 'addNewMenuItem',
-			className: 'add-new-menu-item',
-			frameUrl:
-				config.base +
-				'/administrator/index.php?option=com_menus&task=item.add&tmpl=component&menutype=mainmenu',
+			title,
+			targetType,
+			target,
+			className,
+			frameUrl,
 		});
 
 		/** Initialize variables */
-		$itemModal = $('.hu-modal.add-new-menu-item');
+		$itemModal = $(`.hu-modal.${className}`);
 		$itemFrame = $itemModal.find('iframe');
 		$itemFrame.off('load');
-		$(document).off(
-			'click',
-			'.hu-modal.add-new-menu-item button.hu-save-btn'
-		);
+		$(document).off('click', `.hu-modal.${className} button.hu-save-btn`);
 		$itemModal.find('.hu-save-btn').prop('disabled', true);
 		handleCloseModal();
 	}
@@ -186,9 +353,8 @@ jQuery(function ($) {
 	}
 
 	/** Handle Save functionality. */
-	function handleSaveMenuItem() {
-		const saveBtnSelector =
-			'.hu-modal.add-new-menu-item button.hu-save-btn';
+	function handleSaveMenuItem(className, task = 'item.apply') {
+		const saveBtnSelector = `.hu-modal.${className} button.hu-save-btn`;
 
 		$itemFrame.on('load', function () {
 			const frameDoc = $itemFrame.contents();
@@ -198,7 +364,7 @@ jQuery(function ($) {
 				const $form = $(frameDoc).find('form');
 
 				// Set the task as `item.apply` for saving
-				$form.find('input[name=task]').val('item.apply');
+				$form.find('input[name=task]').val(task);
 				const isValidForm = frameDoc[0].formvalidator.isValid($form[0]);
 
 				// If the form is valid then refetch the menu items
@@ -207,9 +373,7 @@ jQuery(function ($) {
 					try {
 						const res = await submitItemForm($form);
 						if (res) {
-							fetchMenuItems(
-								$('select[name=menu]').val() || 'mainmenu'
-							);
+							fetchMenuItems(menuType);
 							$(this).closeModal();
 						}
 					} catch (err) {

@@ -36,7 +36,6 @@ jQuery(function ($) {
 			frameUrl,
 			className,
 		} = options;
-		console.log(options);
 
 		$('.hu-modal-overlay, .hu-modal').remove();
 
@@ -48,10 +47,10 @@ jQuery(function ($) {
 			targetType +
 			'" data-target="' +
 			target +
-			'">';
+			'" style="display:none;">';
 
 		mediaModal += '<div class="hu-modal-header">';
-		// action-hu-modal-close
+
 		mediaModal +=
 			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
 
@@ -81,8 +80,9 @@ jQuery(function ($) {
 		mediaModal += '</div>';
 
 		mediaModal += '</div>';
-
-		$('body').addClass('hu-modal-open').append(mediaModal);
+		const $modal = $('body').addClass('hu-modal-open');
+		$modal.append(mediaModal);
+		$modal.find('.hu-modal').fadeIn(300);
 	};
 
 	$.fn.helixUltimateModal = function (options) {

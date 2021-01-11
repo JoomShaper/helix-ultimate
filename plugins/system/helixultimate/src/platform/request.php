@@ -176,6 +176,9 @@ class Request
 			case 'parentAdoption':
 				$this->report = Response::parentAdoption();
 				break;
+			case 'rebuildMenu':
+				$this->report = Response::rebuildMenu();
+				break;
 		}
 
 		echo json_encode($this->report);

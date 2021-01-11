@@ -98,6 +98,42 @@ class Response
 	}
 
 	/**
+	 * Rebuild the menu tree
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public static function rebuildMenu()
+	{
+		$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/item.php';
+
+		if (!\class_exists('MenusModelItem'))
+		{
+			require_once $classUrl;
+		}
+
+		\JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_menus/tables');
+
+		try
+		{
+			$controller = new \MenusModelItem;
+			$controller->rebuild();
+		}
+		catch (\Exception $e)
+		{
+			return [
+				'status' => false,
+				'message' => $e->getMessage()
+			];
+		}
+
+		return [
+			'status' => true,
+			'message' => 'Rebuilding done'
+		];
+	}
+
+	/**
 	 * Get Menu Items for a specific menu type
 	 *
 	 * @return	string
@@ -154,14 +190,16 @@ class Response
 				$html[] = '			<span class="hu-branch-icon"><svg width="6" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx=".904" cy=".904" r=".904" /><circle cx=".904" cy="4.7" r=".904" /><circle cx=".904" cy="8.496" r=".904" /><circle cx="4.7" cy=".904" r=".904" /><circle cx="4.7" cy="4.7" r=".904" /><circle cx="4.7" cy="8.496" r=".904" /></svg></span>';
 				$html[] = '			<span class="hu-branch-title">' . $item->title . '</span>';
 
-				$html[] = '			<span class="hu-branch-tools">';
-				$html[] = '				<svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"></path></svg>';
-				$html[] = '				<ul>';
-				$html[] = '					<li><a href="#">Edit</a></li>';
-				$html[] = '					<li><a href="#">Delete</a></li>';
-				$html[] = '					<li><a href="#">Mega Menu</a></li>';
+				$html[] = '			<div class="hu-branch-tools">';
+				$html[] = '				<a href="" class="hu-branch-tools-icon">';
+				$html[] = '					<svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"></path></svg>';
+				$html[] = '				</a>';
+				$html[] = '				<ul class="hu-branch-tools-list">';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit">Edit</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete">Delete</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu">Mega Menu</a></li>';
 				$html[] = '				</ul>';
-				$html[] = '			</span>';
+				$html[] = '			</div>';
 
 				$html[] = '		</div>';
 				$html[] = '	</div>';

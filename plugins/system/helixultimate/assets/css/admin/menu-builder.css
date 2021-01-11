@@ -22,7 +22,7 @@
 	clear: both;
 	line-height: 1.5;
 	position: relative;
-	margin: 0 0 10px;
+	margin: 10px 0 0;
 }
 
 .hu-menu-tree-contents .hu-branch-drag-handler {
@@ -43,46 +43,57 @@
 
 .hu-branch-drag-handler .hu-branch-tools {
 	width: 26px;
-    height: 26px;
-    position: absolute;
-    top: 50%;
+	height: 26px;
+	position: absolute;
+	top: 50%;
 	transform: translateY(-50%);
-    right: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 400ms;
+	right: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	cursor: pointer;
-	z-index: 10;
+	z-index: 11;
 }
 
-.hu-branch-drag-handler .hu-branch-tools svg {
+.hu-branch-drag-handler .hu-branch-tools > a {
+	display: inherit;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 400ms;
+}
+
+.hu-branch-drag-handler .hu-branch-tools a > svg {
 	fill: rgba(var(--dark), 0.4);
 }
 
-.hu-branch-drag-handler .hu-branch-tools:hover svg {
+.hu-branch-drag-handler .hu-branch-tools:hover a > svg {
 	fill: rgb(var(--primary));
 }
 
 .hu-branch-drag-handler .hu-branch-tools ul {
 	display: none;
 	list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 130px;
-    padding: 10px;
-    background: #fff;
-    position: absolute;
-    top: 100%;
-    right: -15px;
+	padding: 0;
+	margin: 0;
+	width: 130px;
+	background: #fff;
+	position: absolute;
+	top: 100%;
+	right: -15px;
 	border: 1px solid rgba(121, 127, 167, 0.3);
 	box-shadow: 0px 4px 10px rgba(20, 50, 80, 0.12);
 	border-radius: 5px;
-	z-index: 11;
 }
 
-.hu-branch-drag-handler .hu-branch-tools:hover ul {
+.hu-branch-drag-handler
+	.hu-branch-tools:hover
+	.hu-branch-drag-handler
+	.hu-branch-tools
+	a
+	> svg {
 	display: block;
 }
 
@@ -95,7 +106,6 @@
 	font-size: 14px;
 	color: rgb(var(--dark));
 	padding: 5px 10px;
-	margin: 0px -10px;
 	line-height: 1.2;
 	text-decoration: none;
 	transition: color 400ms, background-color 400ms;
@@ -123,7 +133,7 @@
 	fill: rgb(var(--primary));
 }
 
-.hu-menu-tree-contents .hu-branch-drag-handler:hover .hu-branch-tools {
+.hu-menu-tree-contents .hu-branch-drag-handler:hover .hu-branch-tools > a {
 	opacity: 1;
 }
 
@@ -138,7 +148,9 @@
 	margin-top: 0;
 }
 
-.hu-menu-tree-branch.ui-sortable-helper .hu-menu-children-bus .hu-menu-tree-contents {
+.hu-menu-tree-branch.ui-sortable-helper
+	.hu-menu-children-bus
+	.hu-menu-tree-contents {
 	margin-top: 10px;
 }
 
@@ -181,29 +193,29 @@
 	margin-left: 0px;
 }
 .hu-branch-level-2 .hu-menu-children-bus {
-	margin-left: -30px;
+	margin-left: -20px;
 }
 .hu-branch-level-3 .hu-menu-children-bus {
-	margin-left: -60px;
+	margin-left: -40px;
 }
 .hu-branch-level-4 .hu-menu-children-bus {
-	margin-left: -90px;
+	margin-left: -60px;
 }
 .hu-branch-level-5 .hu-menu-children-bus {
-	margin-left: -120px;
+	margin-left: -80px;
 }
 .hu-branch-level-6 .hu-menu-children-bus {
-	margin-left: -150px;
+	margin-left: -100px;
 }
 .hu-branch-level-7 .hu-menu-children-bus {
-	margin-left: -180px;
+	margin-left: -120px;
 }
 .hu-branch-level-8 .hu-menu-children-bus {
-	margin-left: -210px;
+	margin-left: -140px;
 }
 .hu-branch-level-9 .hu-menu-children-bus {
-	margin-left: -240px;
+	margin-left: -160px;
 }
 .hu-branch-level-10 .hu-menu-children-bus {
-	margin-left: -270px;
+	margin-left: -180px;
 }

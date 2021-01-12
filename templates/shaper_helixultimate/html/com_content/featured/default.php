@@ -44,6 +44,7 @@ JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
 <?php
 	$introcount = count($this->intro_items);
 	$counter = 0;
+	$this->columns = $this->columns ?? 1;
 ?>
 <?php if (!empty($this->intro_items)) : ?>
 	<?php foreach ($this->intro_items as $key => &$item) : ?>

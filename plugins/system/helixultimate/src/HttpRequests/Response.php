@@ -8,6 +8,7 @@
 namespace HelixUltimate\Framework\HttpResponse;
 
 use HelixUltimate\Framework\Platform\Builders\MenuBuilder;
+use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
@@ -17,6 +18,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die();
@@ -68,22 +70,13 @@ class Response
 			$data->id = $itemId;
 			$data->parent_id = $parentId;
 
-			$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/item.php';
-
-			if (!\class_exists('MenusModelItem'))
-			{
-				require_once $classUrl;
-			}
-
-			\JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_menus/tables');
-
 			try
 			{
-				$controller = new \MenusModelItem;
+				$itemModel = self::getMenuItemModel();
 				$db = Factory::getDbo();
 				$db->updateObject('#__menu', $data, 'id');
 
-				$controller->rebuild();
+				$itemModel->rebuild();
 			}
 			catch (Exception $e)
 			{
@@ -98,6 +91,36 @@ class Response
 	}
 
 	/**
+	 * Get menu item model instance.
+	 *
+	 * @return	ItemModel
+	 * @since	2.0.0
+	 */
+	private static function getMenuItemModel()
+	{
+		if (JoomlaBridge::getVersion('major') < 4)
+		{
+			$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/item.php';
+			$tablePath = JPATH_ADMINISTRATOR . '/components/com_menus/tables';
+		}
+
+		if (JoomlaBridge::getVersion('major') < 4)
+		{
+			if (!\class_exists('MenusModelItem') && \file_exists($classUrl))
+			{
+				require_once $classUrl;
+			}
+
+			Table::addIncludePath($tablePath);
+		}
+
+
+		return JoomlaBridge::getVersion('major') >= 4
+			? new \Joomla\Component\Menus\Administrator\Model\ItemModel
+			: new \MenusModelItem;
+	}
+
+	/**
 	 * Rebuild the menu tree
 	 *
 	 * @return	void
@@ -105,19 +128,10 @@ class Response
 	 */
 	public static function rebuildMenu()
 	{
-		$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/item.php';
-
-		if (!\class_exists('MenusModelItem'))
-		{
-			require_once $classUrl;
-		}
-
-		\JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_menus/tables');
-
 		try
 		{
-			$controller = new \MenusModelItem;
-			$controller->rebuild();
+			$itemModel = self::getMenuItemModel();
+			$itemModel->rebuild();
 		}
 		catch (\Exception $e)
 		{
@@ -211,61 +225,5 @@ class Response
 		}
 
 		return implode("\n", $html);
-	}
-
-	
-
-	/**
-	 * Get menu items adding modal body.
-	 *
-	 * @return	string	The HTML string.
-	 * @since	2.0.0
-	 */
-	public static function getMenuItemModalContents()
-	{
-		$builder = new MenuBuilder;
-
-		$fields = [
-			'title' => [
-				'type' => 'text',
-				'title' => 'Title',
-				'data' => ['itemid' => 1],
-				'value' => '',
-				'internal' => true,
-			],
-			'alias' => [
-				'type' => 'text',
-				'title' => 'Alias',
-				'data' => ['itemid' => 1],
-				'value' => '',
-				'internal' => true,
-			],
-			'menutype' => [
-				'type' => 'menuType',
-				'title' => 'Menu Item Type',
-				'internal' => true
-			]
-		];
-
-		$html = [];
-		$html[] = '<div class="hu-modal-content">';
-		$html[] = '<div class="hu-add-item-wrapper">';
-		
-		foreach ($fields as $key => $attr)
-		{
-			$html[] = $builder->renderFieldElement($key, $attr);
-		}
-
-		$html[] = '<div class="hu-item-request"></div>';
-		$html[] = '<div class="hu-item-link"></div>';
-
-		$html[] = '</div>';
-		$html[] = '</div>';
-
-		return [
-			'status' => true,
-			'data' => implode("\n", $html),
-			'item' => \HelixultimateFieldMenuType::getMenuTypes()
-		];
 	}
 }

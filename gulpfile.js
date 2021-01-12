@@ -51,7 +51,7 @@ function manifestStreamTask() {
 function templateLanguageStreamTask() {
 	const languagePath = path.resolve(
 		config.srcPath,
-		'./language/en-GB/**tpl_shaper_helixultimate.ini'
+		'./language/en-GB/**en-GB.tpl_shaper_helixultimate.ini'
 	);
 
 	return src([languagePath]).pipe(
@@ -62,7 +62,7 @@ function templateLanguageStreamTask() {
 function templatePluginLanguageStreamTask() {
 	const languagePath = path.resolve(
 		config.srcPath,
-		'./administrator/language/en-GB/**plg_system_helixultimate.ini'
+		'./administrator/language/en-GB/**en-GB.plg_system_helixultimate.ini'
 	);
 
 	return src([languagePath]).pipe(

@@ -32,14 +32,12 @@ web.config.txt
 language/*
 !language/en-GB/
 language/en-GB/*
-!language/en-GB/tpl_shaper_helixultimate.ini
 !language/en-GB/en-GB.tpl_shaper_helixultimate.ini
 administrator/*
 !administrator/language/
 administrator/language/*
 !administrator/language/en-GB/
 administrator/language/en-GB/*
-!administrator/language/en-GB/plg_system_helixultimate.ini
 !administrator/language/en-GB/en-GB.plg_system_helixultimate.ini
 
 

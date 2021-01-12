@@ -97,7 +97,7 @@ jQuery(function ($) {
 			function (e) {
 				e.preventDefault();
 				alert(
-					'The mega menu option is under construction. Stay tuned! You are going to get something awesome.'
+					'Frontend mega menu builder will be available from alpha 4.'
 				);
 			}
 		);

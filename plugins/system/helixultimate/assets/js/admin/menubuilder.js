@@ -70,6 +70,7 @@ jQuery(function ($) {
 					openToolbar();
 					handleEditMenuItem();
 					handleDeleteMenuItem();
+					openMegaMenuModal();
 					Joomla.reloadPreview();
 				}
 			},
@@ -82,6 +83,24 @@ jQuery(function ($) {
 			'.hu-branch-tools .hu-branch-tools-list-delete'
 		);
 		$(document).off('click', '.hu-branch-tools .hu-branch-tools-list-edit');
+		$(document).off(
+			'click',
+			'.hu-branch-tools .hu-branch-tools-list-megamenu'
+		);
+	}
+
+	/** Handle open megamenu options */
+	function openMegaMenuModal() {
+		$(document).on(
+			'click',
+			'.hu-branch-tools .hu-branch-tools-list-megamenu',
+			function (e) {
+				e.preventDefault();
+				alert(
+					'The mega menu option is under construction. Stay tuned! You are going to get something awesome.'
+				);
+			}
+		);
 	}
 
 	/** ======================= Delete Menu Item Section ================= */

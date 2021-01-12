@@ -211,7 +211,7 @@ class Response
 				$html[] = '				<ul class="hu-branch-tools-list">';
 				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit">'. Text::_('HELIX_ULTIMATE_MENU_EDIT') .'</a></li>';
 				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete">'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu">'. Text::_('HELIX_ULTIMATE_MENU_MEGAMENU') .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu disabled">'. Text::_('HELIX_ULTIMATE_MENU_MEGAMENU') .'</a></li>';
 				$html[] = '				</ul>';
 				$html[] = '			</div>';
 

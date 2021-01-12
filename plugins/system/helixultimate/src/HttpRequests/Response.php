@@ -195,9 +195,9 @@ class Response
 				$html[] = '					<svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"></path></svg>';
 				$html[] = '				</a>';
 				$html[] = '				<ul class="hu-branch-tools-list">';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit">Edit</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete">Delete</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu">Mega Menu</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit">'. Text::_('HELIX_ULTIMATE_MENU_EDIT') .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete">'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu">'. Text::_('HELIX_ULTIMATE_MENU_MEGAMENU') .'</a></li>';
 				$html[] = '				</ul>';
 				$html[] = '			</div>';
 

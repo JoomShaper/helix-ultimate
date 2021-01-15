@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\System\HelixCache;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
@@ -102,7 +102,7 @@ class Settings
 		$this->app 		= Factory::getApplication();
 		$this->input 	= $this->app->input;
 
-		$this->form 	= new Form\Form('template');
+		$this->form 	= new Form('template');
 
 		$this->option 	= $this->input->get('option', '', 'STRING');
 		$this->id		= $this->input->get('id', 0, 'INT');
@@ -117,6 +117,87 @@ class Settings
 		}
 	}
 
+	protected function getFieldsByFeildset($name, $form)
+	{
+		$xml = $form->getXml();
+
+		// Make sure there is a valid JForm XML document.
+		if (!($xml instanceof \SimpleXMLElement))
+		{
+			return false;
+		}
+
+		/*
+		 * Get an array of <field /> elements that are underneath a <fieldset /> element
+		 * with the appropriate name attribute, and also any <field /> elements with
+		 * the appropriate fieldset attribute. To allow repeatable elements only fields
+		 * which are not descendants of other fields are selected.
+		 */
+		$fields = $xml->xpath('(//fieldset[@name="' . $name . '"]//field | //field[@fieldset="' . $name . '"])[not(ancestor::field)]');
+
+		return $fields;
+	}
+
+	/**
+	 * Updating the fieldset attributes according to the modern options.xml file.
+	 *
+	 * @param	Form	$original	The original legacy form i.e. the form from the file options.xml at template/ directory.
+	 * @param	Form	$updated 	The updated modern form i.e. thr form from the file options.xml at plugin's assets/ directory.
+	 *
+	 * @return	\SimpleXMLElement	The updated original form XML.
+	 * @since	2.0.0
+	 */
+	protected function updateFieldsetAttributes(Form $original, Form $updating)
+	{
+		$updatingFieldSets = $updating->getFieldsets();
+		$originalFieldSets = $original->getFieldsets();
+
+		/**
+		 * Combine the fieldset's attributes the original one with
+		 * the updated one and update the original.
+		 */
+		foreach ($updatingFieldSets as $name => $attributes)
+		{
+			if (!isset($originalFieldSets[$name]))
+			{
+				$originalFieldSets[$name] = $attributes;
+				continue;
+			}
+
+			foreach ($attributes as $key => $value)
+			{
+				$originalFieldSets[$name]->$key = $value;
+			}
+		}
+
+		/**
+		 * Get the XML from the Joomla\CMS\Form\Form instance,
+		 * update the fieldset attributes.
+		 */
+		$xml = $original->getXml();
+
+		for ($i = 0; $i < $xml->count(); $i++)
+		{
+			$attributes = $xml->fieldset[$i]->attributes();
+			$name = (string) $attributes['name'];
+			$fieldset = $originalFieldSets[$name];
+
+			foreach ($fieldset as $key => $value)
+			{
+				if (isset($attributes[$key]))
+				{
+					$attributes[$key] = $value;
+				}
+				else
+				{
+					$xml->fieldset[$i]->addAttribute($key, $value);
+				}
+			}
+		}
+		
+		return $xml->asXML();
+	}
+
 	/**
 	 * Prepare form data for the XML
 	 *
@@ -126,10 +207,45 @@ class Settings
 	protected function prepareSettingsFormData()
 	{
 		$templateStyle = Helper::getTemplateStyle($this->id);
+		$legacyPath = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.xml';
 
-		$this->form->loadFile(JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.xml');
+		if (\file_exists($legacyPath))
+		{
+			$legacyForm = new Form('legacy_options');
+			$legacyForm->loadFile($legacyPath);
+		}
 
-		$formData = array();
+		$optionsForm = new Form('options');
+		$optionsForm->loadFile(JPATH_PLUGINS . '/system/helixultimate/src/form/options.xml');
+		
+		$optionsFieldSets = $optionsForm->getFieldsets();
+
+		if (!empty($optionsFieldSets) && !empty($legacyForm))
+		{
+			$form = $this->updateFieldsetAttributes($legacyForm, $optionsForm);
+			$legacyForm->load($form);
+
+			foreach ($optionsFieldSets as $name => $fieldset)
+			{
+				/**
+				 * Get the fields by fieldset name and then,
+				 * update the legacy from with the modern xml fields.
+				 */
+				$fields = $this->getFieldsByFeildset($name, $optionsForm);
+				$legacyForm->setFields($fields, null, true, $name);
+			}
+		}
+		
+		/**
+		 * If legacy form exists then set the form as the legacy form,
+		 * otherwise set as modern options form.
+		 */
+		$this->form = isset($legacyForm)
+			&& $legacyForm instanceof \Joomla\CMS\Form\Form
+				? $legacyForm
+				: $optionsForm;
+
+		$formData = new \stdClass;
 
 		if (!empty($templateStyle->params))
 		{
@@ -138,9 +254,50 @@ class Settings
 
 		if (empty($formData))
 		{
-			$layout_file = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.json';
-			$formData = file_get_contents($layout_file);
-			$formData = json_decode($formData);
+			/**
+			 * Check if the options.json file exists in the template directory.
+			 * If so, that means this is an old template and update
+			 * the options by the modern options.json fields.
+			 */
+			$legacyPath = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.json';
+			$optionPath = JPATH_PLUGINS . '/system/helixultimate/assets/options.json';
+
+			if (\file_exists($legacyPath))
+			{
+				$legacyDefaults = \json_decode(\file_get_contents($legacyPath));
+			}
+
+			$optionDefaults = \json_decode(\file_get_contents($optionPath));
+
+			if (!empty($optionDefaults) && !empty($legacyDefaults))
+			{
+				foreach ($optionDefaults as $key => $value)
+				{
+					$legacyDefaults->$key = $value;
+				}
+			}
+
+			$formData = $legacyDefaults ?? $optionDefaults;
+		}
+		else
+		{
+			/**
+			 * If formData is in the DB already but misses the updated fields,
+			 * then handle them.
+			 */
+			$optionPath = JPATH_PLUGINS . '/system/helixultimate/assets/options.json';
+			$optionDefaults = \json_decode(\file_get_contents($optionPath));
+	
+			if (!empty($optionDefaults))
+			{
+				foreach ($optionDefaults as $key => $value)
+				{
+					if (!isset($formData->$key))
+					{
+						$formData->$key = $value;
+					}
+				}
+			}
 		}
 
 		// Set custom field data for social share button
@@ -207,7 +364,7 @@ class Settings
 	 */
 	public static function preparePresetEditForm($presetData, $presetName)
 	{
-		$presetForm = new Form\Form('preset');
+		$presetForm = new Form('preset');
 		$presetForm->loadFile(JPATH_PLUGINS . '/system/helixultimate/src/form/preset.xml');
 
 		if (!empty($presetData['data']))

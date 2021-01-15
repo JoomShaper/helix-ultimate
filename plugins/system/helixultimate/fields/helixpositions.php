@@ -13,10 +13,12 @@ use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use HelixUltimate\Framework\Platform\Helper;
 
+
 /**
  * Form field for Helix positions
  *
- * @since 	1.0.0
+ * @since 		1.0.0
+ * @deprecated	3.0		Use the Same Class from the src/fields instead.
  */
 class JFormFieldHelixpositions extends FormField
 {

@@ -10,7 +10,7 @@
     <authorUrl>http://www.joomshaper.com</authorUrl>
     <copyright>Copyright (C) 2010 - 2020 JoomShaper.com. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GPLv2 or later</license>
-    <version>2.0.0-alpha.3</version>
+    <version>2.0.0-alpha.4</version>
     <description>Helix Ultimate - Starter Template of Helix Ultimate Framework</description>
 
     <updateservers>
@@ -71,8 +71,6 @@
         <file>helper.php</file>
         <file>index.php</file>
         <file>offline.php</file>
-        <file>options.json</file>
-        <file>options.xml</file>
         <file>template_preview.png</file>
         <file>template_thumbnail.png</file>
         <file>templateDetails.xml</file>

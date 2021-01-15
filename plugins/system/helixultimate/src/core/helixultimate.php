@@ -295,7 +295,17 @@ class HelixUltimate
 			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
 		}
 
-		$this->add_js('bootstrap.bundle.min.js');
+		$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
+		$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
+
+		if (\file_exists($bsBundleJSPath))
+		{
+			$this->add_js('bootstrap.bundle.min.js');
+		}
+		elseif (\file_exists($bsJsPath))
+		{
+			$this->add_js('popper.min.js, bootstrap.min.js');
+		}
 	}
 
 	/**

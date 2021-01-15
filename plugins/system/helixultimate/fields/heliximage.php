@@ -15,10 +15,12 @@ use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 
+
 /**
  * Form field for Helix image.
  *
- * @since 	1.0.0
+ * @since 		1.0.0
+ * @deprecated	3.0		Use the Same Class from the src/fields instead.
  */
 class JFormFieldHeliximage extends FormField
 {

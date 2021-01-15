@@ -249,10 +249,7 @@ class Helper
 
 		if ($app->isClient('site'))
 		{
-			if ($currentTemplate->template === 'shaper_helixultimate')
-			{
-				$templateId = $currentTemplate->id;
-			}
+			$templateId = $currentTemplate->id;
 		}
 		else
 		{

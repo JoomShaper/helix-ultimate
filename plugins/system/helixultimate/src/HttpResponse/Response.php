@@ -7,7 +7,7 @@
  */
 namespace HelixUltimate\Framework\HttpResponse;
 
-use HelixUltimate\Framework\Platform\Builders\MenuBuilder;
+use HelixUltimate\Framework\Platform\Builders\MegaMenuBuilder;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
@@ -18,6 +18,7 @@ use Joomla\CMS\Form\Form;
 use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 
@@ -225,5 +226,26 @@ class Response
 		}
 
 		return implode("\n", $html);
+	}
+
+	/**
+	 * Generate mega menu builder body contents.
+	 *
+	 * @param	int		$itemId	The Menu Item ID.
+	 *
+	 * @return 	string	The HTML string.
+	 * @since	2.0.0
+	 */
+	public static function generateMegaMenuBody()
+	{
+		$input = Factory::getApplication()->input;
+		$itemId = $input->get('id', 0, 'INT');
+		$layout = new FileLayout('megaMenu.container', HELIX_LAYOUT_PATH);
+		$builder = new MegaMenuBuilder;
+
+		return [
+			'status' => true,
+			'data' => $layout->render(['itemId' => $itemId, 'builder' => $builder])
+		];
 	}
 }

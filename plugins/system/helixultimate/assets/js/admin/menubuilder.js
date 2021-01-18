@@ -94,13 +94,47 @@ jQuery(function ($) {
 		$(document).on(
 			'click',
 			'.hu-branch-tools .hu-branch-tools-list-megamenu',
-			function (e) {
+			async function (e) {
 				e.preventDefault();
-				alert(
-					'Frontend mega menu builder will be available from alpha 4.'
-				);
+				closeToolbar();
+
+				const $branch = $(this).closest('.hu-menu-tree-branch');
+				const itemId = $branch.data('itemid') || 0;
+
+				const response = await getMegaMenuBodyHTML(itemId);
+
+				if (response.status) {
+					$(document).helixUltimateMegamenuModal({
+						title: 'Mega Menu',
+						className: 'hu-mega-menu-builder',
+						targetType: 'id',
+						target: 'megaMenuModal',
+						body: response.data,
+					});
+				}
 			}
 		);
+	}
+
+	/** Get Mega Menu Body HTML using AJAX */
+	function getMegaMenuBodyHTML(itemId) {
+		return new Promise((resolve, reject) => {
+			const url = `${config.base}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generateMegaMenuBody&id=${itemId}`;
+			$.ajax({
+				method: 'GET',
+				url,
+				success(res) {
+					res =
+						typeof res === 'string' && res.length > 0
+							? JSON.parse(res)
+							: false;
+					resolve(res);
+				},
+				error(err) {
+					reject(err);
+				},
+			});
+		});
 	}
 
 	/** ======================= Delete Menu Item Section ================= */

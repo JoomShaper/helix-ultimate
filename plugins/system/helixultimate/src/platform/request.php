@@ -173,11 +173,17 @@ class Request
 			case 'getMenuItems':
 				$this->report = Response::getMenuItems();
 				break;
+
 			case 'parentAdoption':
 				$this->report = Response::parentAdoption();
 				break;
+
 			case 'rebuildMenu':
 				$this->report = Response::rebuildMenu();
+				break;
+
+			case 'generateMegaMenuBody':
+				$this->report = Response::generateMegaMenuBody();
 				break;
 		}
 

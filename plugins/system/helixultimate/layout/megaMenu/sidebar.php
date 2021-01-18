@@ -1,0 +1,45 @@
+<?php
+/**
+ * @package Helix_Ultimate_Framework
+ * @author JoomShaper <support@joomshaper.com>
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+ */
+
+defined('_JEXEC') or die();
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Uri\Uri;
+
+extract($displayData);
+
+if (!class_exists('MegaFields'))
+{
+    require_once __DIR__ . '/megaFields.php';
+}
+
+$megaFields = new MegaFields([]);
+$fields = $megaFields->getSidebarFields();
+
+?>
+
+<div class="hu-megamenu-sidebar">
+    <?php echo $builder->renderFieldElement('mega', $fields['mega']); ?>
+    <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
+    <?php echo $builder->renderFieldElement('show_title', $fields['show_title']); ?>
+    <div class="hu-d-flex hu-justify-content-between">
+        <?php echo $builder->renderFieldElement('alignment', $fields['alignment']); ?>
+        <?php echo $builder->renderFieldElement('icon', $fields['icon']); ?>
+    </div>
+    <?php echo $builder->renderFieldElement('custom_class', $fields['custom_class']); ?>
+    <hr />
+    <div class="hu-d-flex hu-justify-content-between">
+        <?php echo $builder->renderFieldElement('badge', $fields['badge']); ?>
+        <?php echo $builder->renderFieldElement('badge_position', $fields['badge_position']); ?>
+    </div>
+    <?php echo $builder->renderFieldElement('badge_background', $fields['badge_background']); ?>
+    <?php echo $builder->renderFieldElement('badge_color', $fields['badge_color']); ?>
+
+</div>

@@ -14,6 +14,66 @@ jQuery(function ($) {
 		},
 	});
 
+	$.fn.helixUltimateMegamenuModal = function (options) {
+		options = $.extend(
+			{
+				title: 'Mega Menu',
+				className: '',
+				targetType: 'id',
+				target: '',
+				body: '',
+				footer: '',
+			},
+			options
+		);
+
+		$('.hu-modal-overlay, .hu-modal').remove();
+
+		const { title, className, targetType, target, body, footer } = options;
+
+		let megaMenuModal = '<div class="hu-modal-overlay"></div>';
+		megaMenuModal +=
+			'<div class="hu-modal ' +
+			className +
+			'" data-target_type="' +
+			targetType +
+			'" data-target="' +
+			target +
+			'" style="display:none;">';
+
+		megaMenuModal += '<div class="hu-modal-header">';
+
+		megaMenuModal +=
+			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
+
+		megaMenuModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
+		megaMenuModal += '</div>';
+
+		megaMenuModal += '<div class="hu-modal-inner">';
+		megaMenuModal += '<div class="hu-modal-content">';
+
+		if (body) {
+			megaMenuModal += '<div class="hu-modal-megamenu-container">';
+			megaMenuModal += body;
+			megaMenuModal += '</div>';
+		}
+
+		megaMenuModal += '</div>';
+		megaMenuModal += '</div>';
+
+		megaMenuModal += '<div class="hu-modal-footer footer-right">';
+		megaMenuModal +=
+			'<button class="hu-btn hu-btn-link hu-cancel-btn">Cancel</button>';
+		megaMenuModal +=
+			'<button class="hu-btn hu-btn-primary hu-save-btn">Save</button>';
+		megaMenuModal += '</div>';
+
+		megaMenuModal += '</div>';
+		const $modal = $('body').addClass('hu-modal-open');
+		$modal.append(megaMenuModal);
+		$modal.find('.hu-modal').fadeIn(300);
+	};
+
 	$.fn.helixUltimateFrameModal = function (options) {
 		options = $.extend(
 			{
@@ -39,8 +99,8 @@ jQuery(function ($) {
 
 		$('.hu-modal-overlay, .hu-modal').remove();
 
-		let mediaModal = '<div class="hu-modal-overlay"></div>';
-		mediaModal +=
+		let frameModal = '<div class="hu-modal-overlay"></div>';
+		frameModal +=
 			'<div class="hu-modal ' +
 			className +
 			'" data-target_type="' +
@@ -49,39 +109,39 @@ jQuery(function ($) {
 			target +
 			'" style="display:none;">';
 
-		mediaModal += '<div class="hu-modal-header">';
+		frameModal += '<div class="hu-modal-header">';
 
-		mediaModal +=
+		frameModal +=
 			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
 
-		mediaModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
-		mediaModal += '</div>';
+		frameModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
+		frameModal += '</div>';
 
-		mediaModal += '<div class="hu-modal-inner">';
-		mediaModal += '<div class="hu-modal-content">';
+		frameModal += '<div class="hu-modal-inner">';
+		frameModal += '<div class="hu-modal-content">';
 
 		if (frameUrl) {
-			mediaModal += '<div class="hu-modal-frame-container">';
-			mediaModal +=
+			frameModal += '<div class="hu-modal-frame-container">';
+			frameModal +=
 				'<iframe src="' +
 				frameUrl +
 				'" width="100%" height="100%"></iframe>';
-			mediaModal += '</div>';
+			frameModal += '</div>';
 		}
 
-		mediaModal += '</div>';
-		mediaModal += '</div>';
+		frameModal += '</div>';
+		frameModal += '</div>';
 
-		mediaModal += '<div class="hu-modal-footer footer-right">';
-		mediaModal +=
+		frameModal += '<div class="hu-modal-footer footer-right">';
+		frameModal +=
 			'<button class="hu-btn hu-btn-link hu-cancel-btn">Cancel</button>';
-		mediaModal +=
+		frameModal +=
 			'<button class="hu-btn hu-btn-primary hu-save-btn">Save</button>';
-		mediaModal += '</div>';
+		frameModal += '</div>';
 
-		mediaModal += '</div>';
+		frameModal += '</div>';
 		const $modal = $('body').addClass('hu-modal-open');
-		$modal.append(mediaModal);
+		$modal.append(frameModal);
 		$modal.find('.hu-modal').fadeIn(300);
 	};
 

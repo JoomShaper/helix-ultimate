@@ -1,0 +1,20 @@
+.hu-mega-menu-builder .hu-modal-inner {
+	background: #f1f4fa;
+}
+
+.hu-megamenu-container .hu-megamenu-sidebar {
+	width: 30%;
+	background: #fff;
+	min-height: 438px;
+	border-radius: 3px;
+	box-shadow: 1px 1px 0px 0px #dee2e6;
+	margin-right: 20px;
+	padding: 10px;
+}
+
+.hu-megamenu-container .hu-megamenu-body {
+	width: 70%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

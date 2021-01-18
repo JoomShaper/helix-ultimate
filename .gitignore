@@ -14,6 +14,8 @@ web.config.txt
 .DS_Store
 /package
 
+vendor/
+
 # others
 /bin
 /cache

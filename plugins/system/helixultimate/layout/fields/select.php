@@ -62,7 +62,7 @@ class HelixultimateFieldSelect
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<select class="hu-input input-select hu-menu-builder-' . $key . $internal . '" name="' . $key . '" ' . $dataAttrs . '>';
+			$output .= '<select class="hu-input input-select hu-megamenu-builder-' . $key . $internal . '" name="' . $key . '" ' . $dataAttrs . '>';
 		}
 		else
 		{

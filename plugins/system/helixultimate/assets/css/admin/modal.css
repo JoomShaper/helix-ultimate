@@ -30,7 +30,7 @@
 .hu-modal,
 .hu-options-modal {
 	position: fixed;
-	top: 100px;
+	top: 50px;
 	left: 50%;
 	width: 820px;
 	height: 600px;
@@ -177,7 +177,7 @@
 }
 
 .hu-media-breadcrumb-item + .hu-media-breadcrumb-item::before {
-	font-family: "Font Awesome 5 Free";
+	font-family: 'Font Awesome 5 Free';
 	display: inline-block;
 	padding-right: 0.5rem;
 	padding-left: 0.5rem;

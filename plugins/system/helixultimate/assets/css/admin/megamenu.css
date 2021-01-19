@@ -12,9 +12,28 @@
 	padding: 10px;
 }
 
-.hu-megamenu-container .hu-megamenu-body {
+.hu-megamenu-container .hu-megamenu-grid {
 	width: 70%;
-	display: flex;
+	/* display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: center; */
+}
+
+.hu-row-container {
+	background: rgb(223 232 251);
+	margin-bottom: 10px;
+	border-radius: 3px;
+}
+
+.hu-row-container .hu-row-toolbar {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.hu-column-contents {
+	background: #fff;
+	padding: 10px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 0px 0px #ccc;
 }

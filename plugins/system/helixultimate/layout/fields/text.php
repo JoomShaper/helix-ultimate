@@ -62,7 +62,7 @@ class HelixultimateFieldText
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<input class="hu-input hu-menu-builder-' . $key . $internal . '" type="text" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
+			$output .= '<input class="hu-input hu-megamenu-builder-' . $key . $internal . '" type="text" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" ' . $attributes . ' />';
 		}
 		else
 		{

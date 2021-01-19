@@ -111,6 +111,8 @@ jQuery(function ($) {
 						target: 'megaMenuModal',
 						body: response.data,
 					});
+
+					Joomla.helixMegaMenu.run();
 				}
 			}
 		);

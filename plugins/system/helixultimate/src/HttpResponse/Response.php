@@ -241,7 +241,7 @@ class Response
 		$input = Factory::getApplication()->input;
 		$itemId = $input->get('id', 0, 'INT');
 		$layout = new FileLayout('megaMenu.container', HELIX_LAYOUT_PATH);
-		$builder = new MegaMenuBuilder;
+		$builder = new MegaMenuBuilder($itemId);
 
 		return [
 			'status' => true,

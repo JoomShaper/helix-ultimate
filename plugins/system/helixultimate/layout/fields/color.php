@@ -64,7 +64,7 @@ class HelixultimateFieldColor
 
 		if ($isMenuBuilder)
 		{
-			$output .= '<input type="text" class="hu-input hu-input-color hu-menu-builder-' . $key . $internal . '" placeholder="#rrggbb" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" />';
+			$output .= '<input type="text" class="hu-input hu-input-color hu-megamenu-builder-' . $key . $internal . '" placeholder="#rrggbb" ' . $dataAttrs . ' name="' . $key . '" value="' . $value . '" />';
 		}
 		else
 		{

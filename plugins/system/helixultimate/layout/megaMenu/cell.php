@@ -14,10 +14,10 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
+
 ?>
-<div class="hu-megamenu-body">
-    <a href="#" class="hu-btn hu-btn-primary">
-        <span class="fas fa-plus-circle"></span>
-        <?php echo Text::_('HELIX_ULTIMATE_MEGAMENU_ADD_NEW_ROW'); ?>
-    </a>
+
+<div class="hu-megamenu-cell">
+	<span><?php echo $cell->type; ?></span>
+	<span><?php echo $cell->item_id; ?></span>
 </div>

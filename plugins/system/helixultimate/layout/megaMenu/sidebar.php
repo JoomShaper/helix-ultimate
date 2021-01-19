@@ -15,31 +15,28 @@ use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
-if (!class_exists('MegaFields'))
-{
-    require_once __DIR__ . '/megaFields.php';
-}
-
-$megaFields = new MegaFields([]);
+$megaFields = new MegaFields($settings, $itemId);
 $fields = $megaFields->getSidebarFields();
 
 ?>
 
 <div class="hu-megamenu-sidebar">
-    <?php echo $builder->renderFieldElement('mega', $fields['mega']); ?>
-    <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
-    <?php echo $builder->renderFieldElement('show_title', $fields['show_title']); ?>
-    <div class="hu-d-flex hu-justify-content-between">
-        <?php echo $builder->renderFieldElement('alignment', $fields['alignment']); ?>
-        <?php echo $builder->renderFieldElement('icon', $fields['icon']); ?>
+    <?php echo $builder->renderFieldElement('megamenu', $fields['megamenu']); ?>
+    <div class="hu-mega-menu-settings">
+        <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
+        <?php echo $builder->renderFieldElement('showtitle', $fields['showtitle']); ?>
+        <div class="hu-d-flex hu-justify-content-between">
+            <?php echo $builder->renderFieldElement('menualign', $fields['menualign']); ?>
+            <?php echo $builder->renderFieldElement('faicon', $fields['faicon']); ?>
+        </div>
+        <?php echo $builder->renderFieldElement('customclass', $fields['customclass']); ?>
+        <hr />
+        <div class="hu-d-flex hu-justify-content-between">
+            <?php echo $builder->renderFieldElement('badge', $fields['badge']); ?>
+            <?php echo $builder->renderFieldElement('badge_position', $fields['badge_position']); ?>
+        </div>
+        <?php echo $builder->renderFieldElement('badge_bg_color', $fields['badge_bg_color']); ?>
+        <?php echo $builder->renderFieldElement('badge_text_color', $fields['badge_text_color']); ?>
     </div>
-    <?php echo $builder->renderFieldElement('custom_class', $fields['custom_class']); ?>
-    <hr />
-    <div class="hu-d-flex hu-justify-content-between">
-        <?php echo $builder->renderFieldElement('badge', $fields['badge']); ?>
-        <?php echo $builder->renderFieldElement('badge_position', $fields['badge_position']); ?>
-    </div>
-    <?php echo $builder->renderFieldElement('badge_background', $fields['badge_background']); ?>
-    <?php echo $builder->renderFieldElement('badge_color', $fields['badge_color']); ?>
-
+    
 </div>

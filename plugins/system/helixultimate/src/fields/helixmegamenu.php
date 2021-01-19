@@ -65,7 +65,7 @@ class JFormFieldHelixmegamenu extends FormField
 		$menu_item = $this->form->getData()->toObject();
 
 		ob_start();
-		include_once dirname(__DIR__) . '/core/lib/helixmenuhelper.php';
+		include_once dirname(__DIR__) . '/Core/Lib/helixmenuhelper.php';
 		$html = ob_get_clean();
 
 		return $html;

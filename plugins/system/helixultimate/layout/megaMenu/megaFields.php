@@ -23,79 +23,88 @@ class MegaFields
      * @var     array   The mega menu settings.
      * @since   2.0.0
      */
-    private $mega = [];
+    private $settings = [];
+
+    /**
+     * Menu Item Id
+     *
+     * @var     int     $itemId     The menu item id.
+     * @since   2.0.0
+     */
+    private $itemId = 0;
 
     /**
      * Constructor function for the class.
      *
-     * @param   array   $mega   The mega menu settings array.
+     * @param   array   $settings   The mega menu settings array.
      *
      * @since   2.0.0
      */
-    public function __construct($mega)
+    public function __construct($settings, $itemId)
     {
-        $this->mega = $mega;
+        $this->settings = $settings;
+        $this->itemId = $itemId;
     }
 
     public function getSidebarFields()
     {
         return [
-            'mega' => [
+            'megamenu' => [
                 'type' => 'checkbox',
                 'title' => Text::_('HELIX_ULTIMATE_ENABLE_MEGA_MENU'),
                 'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', ''),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $itemId],
-                'value' => '',
+                'data' => ['itemid' => $this->itemId],
+                'value' => $this->settings->megamenu ?? '',
                 'internal' => true,
             ],
             'width' => [
                 'type' => 'text',
                 'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $itemId],
-                'value' => '',
+                'data' => ['itemid' => $this->itemId],
+                'value' => $this->settings->width ?? '',
                 'internal' => true,
             ],
-            'show_title' => [
+            'showtitle' => [
                 'type' => 'checkbox',
                 'title' => Text::_('HELIX_ULTIMATE_SHOW_MENU_TITLE'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $itemId],
-                'value' => '',
+                'data' => ['itemid' => $this->itemId],
+                'value' => $this->settings->showtitle ?? '',
                 'internal' => true,
             ],
-            'alignment' => [
+            'menualign' => [
                 'type' => 'select',
                 'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_ALIGNMENT'),
                 'desc' => Text::_('HELIX_ULTIMATE_MEGA_MENU_ALIGNMENT_DESC'),
                 'menu-builder' => true,
-                // 'data' => ['rowid' => $rowId, 'itemid' => $item->id, 'columnid' => $id],
+                'data' => ['itemid' => $this->itemId],
                 'options' => [
                     'left' 		=> Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
                     'center' 	=> Text::_('HELIX_ULTIMATE_GLOBAL_CENTER'),
                     'right' 	=> Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
                     'full' 		=> Text::_('HELIX_ULTIMATE_GLOBAL_FULL'),
                 ],
-                // 'value' => !empty($settings->col_type) ? $settings->col_type : '',
+                'value' => $this->settings->menualign ?? '',
                 'internal' => true,
             ],
-            'icon' => [
+            'faicon' => [
                 'type' => 'text',
                 'title' => Text::_('HELIX_ULTIMATE_MENU_ICON'),
                 'placeholder' => Text::_('HELIX_ULTIMATE_MENU_ICON_PLACEHOLDER'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $item->id],
-                // 'value' => !empty($menuItemSettings->menu_icon) ? $menuItemSettings->menu_icon : '',
+                'data' => ['itemid' => $this->itemId],
+                'value' => $this->settings->faicon ?? '',
                 'internal' => true,
             ],
-            'custom_class' => [
+            'customclass' => [
                 'type' => 'text',
                 'title' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS'),
                 'placeholder' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS_PLACEHOLDER'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $item->id],
-                // 'value' => !empty($menuItemSettings->menu_custom_classes) ? $menuItemSettings->menu_custom_classes : '',
+                'data' => ['itemid' => $this->itemId],
+                'value' => $this->settings->customclass ?? '',
                 'internal' => true,
             ],
             'badge' => [
@@ -103,44 +112,44 @@ class MegaFields
                 'title' => Text::_('HELIX_ULTIMATE_MENU_BADGE_TEXT'),
                 'placeholder' => Text::_('HELIX_ULTIMATE_MENU_BADGE_TEXT'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $item->id],
-                // 'value' => !empty($menuItemSettings->menu_badge) ? $menuItemSettings->menu_badge : '',
+                'data' => ['itemid' => $this->itemId],
+                'value' => $this->settings->badge ?? '',
                 'internal' => true,
             ],
             'badge_position' => [
                 'type' => 'select',
                 'title' => Text::_('HELIX_ULTIMATE_MENU_BADGE_POSITION'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $item->id],
+                'data' => ['itemid' => $this->itemId],
                 'options' => [
                     'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
                     'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
                 ],
-                // 'value' => !empty($menuItemSettings->menu_badge_position) ? $menuItemSettings->menu_badge_position : '',
+                'value' => $this->settings->badge_position ?? '',
                 'internal' => true,
             ],
-            'badge_background' => [
+            'badge_bg_color' => [
                 'type' => 'color',
                 'title' => Text::_('HELIX_ULTIMATE_MENU_BADGE_BACKGROUND'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $item->id],
+                'data' => ['itemid' => $this->itemId],
                 'options' => [
                     'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
                     'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
                 ],
-                // 'value' => !empty($menuItemSettings->menu_badge_background) ? $menuItemSettings->menu_badge_background : '',
+                'value' => $this->settings->badge_bg_color ?? '',
                 'internal' => true,
             ],
-            'badge_color' => [
+            'badge_text_color' => [
                 'type' => 'color',
                 'title' => Text::_('HELIX_ULTIMATE_MENU_BADGE_COLOR'),
                 'menu-builder' => true,
-                // 'data' => ['itemid' => $item->id],
+                'data' => ['itemid' => $this->itemId],
                 'options' => [
                     'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
                     'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
                 ],
-                // 'value' => !empty($menuItemSettings->menu_badge_color) ? $menuItemSettings->menu_badge_color : '',
+                'value' => $this->settings->badge_text_color ?? '',
                 'internal' => true,
             ]
         ];

@@ -16,11 +16,17 @@ use Joomla\CMS\Uri\Uri;
 extract($displayData);
 
 $sidebarLayout = new FileLayout('megaMenu.sidebar', HELIX_LAYOUT_PATH);
-$bodyLayout = new FileLayout('megaMenu.body', HELIX_LAYOUT_PATH);
+$gridLayout = new FileLayout('megaMenu.grid', HELIX_LAYOUT_PATH);
+$settings = $builder->getMegaMenuSettings();
+
+if (!class_exists('MegaFields'))
+{
+    require_once __DIR__ . '/megaFields.php';
+}
 
 ?>
 
 <div class="hu-megamenu-container hu-d-flex hu-justify-content-between">
-		<?php echo $sidebarLayout->render(['itemId' => $itemId, 'builder' => $builder]); ?>
-		<?php echo $bodyLayout->render(['itemId' => $itemId, 'builder' => $builder]); ?>
+	<?php echo $sidebarLayout->render(['itemId' => $itemId, 'builder' => $builder, 'settings' => $settings]); ?>
+	<?php echo $gridLayout->render(['itemId' => $itemId, 'builder' => $builder, 'settings' => $settings]); ?>
 </div>

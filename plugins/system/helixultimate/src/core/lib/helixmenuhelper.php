@@ -9,11 +9,12 @@ namespace HelixUltimate\Framework\Core\Lib;
 
 defined('_JEXEC') or die('Restricted access');
 
-use Joomla\CMS\Language\Text;
 use HelixUltimate\Framework\Core\Lib\FontawesomeIcons;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Menu\SiteMenu;
 
 $current_menu_id = $this->form->getValue('id');
-$JMenuSite = new \JMenuSite;
+$JMenuSite = new SiteMenu;
 $module_list = $this->getModuleNameById();
 
 $fontawesome = new FontawesomeIcons;
@@ -188,6 +189,7 @@ if ($unique_menu_items)
 													{
 														foreach ($col->items as $item)
 														{
+															
 															if ($item->type === 'module')
 															{
 																$modules = $this->getModuleNameById($item->item_id);

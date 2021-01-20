@@ -52,7 +52,6 @@ class MegaFields
             'megamenu' => [
                 'type' => 'checkbox',
                 'title' => Text::_('HELIX_ULTIMATE_ENABLE_MEGA_MENU'),
-                'desc' => Text::sprintf('HELIX_ULTIMATE_ENABLE_MEGA_MENU_DESC', ''),
                 'menu-builder' => true,
                 'data' => ['itemid' => $this->itemId],
                 'value' => $this->settings->megamenu ?? '',

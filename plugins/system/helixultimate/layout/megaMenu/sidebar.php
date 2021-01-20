@@ -25,18 +25,18 @@ $fields = $megaFields->getSidebarFields();
     <div class="hu-mega-menu-settings">
         <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
         <?php echo $builder->renderFieldElement('showtitle', $fields['showtitle']); ?>
-        <div class="hu-d-flex hu-justify-content-between">
-            <?php echo $builder->renderFieldElement('menualign', $fields['menualign']); ?>
-            <?php echo $builder->renderFieldElement('faicon', $fields['faicon']); ?>
-        </div>
-        <?php echo $builder->renderFieldElement('customclass', $fields['customclass']); ?>
-        <hr />
-        <div class="hu-d-flex hu-justify-content-between">
-            <?php echo $builder->renderFieldElement('badge', $fields['badge']); ?>
-            <?php echo $builder->renderFieldElement('badge_position', $fields['badge_position']); ?>
-        </div>
-        <?php echo $builder->renderFieldElement('badge_bg_color', $fields['badge_bg_color']); ?>
-        <?php echo $builder->renderFieldElement('badge_text_color', $fields['badge_text_color']); ?>
     </div>
-    
+
+    <div class="hu-d-flex hu-justify-content-between">
+        <?php echo $builder->renderFieldElement('menualign', $fields['menualign']); ?>
+        <?php echo $builder->renderFieldElement('faicon', $fields['faicon']); ?>
+    </div>
+    <?php echo $builder->renderFieldElement('customclass', $fields['customclass']); ?>
+    <hr />
+    <div class="hu-d-flex hu-justify-content-between">
+        <?php echo $builder->renderFieldElement('badge', $fields['badge']); ?>
+        <?php echo $builder->renderFieldElement('badge_position', $fields['badge_position']); ?>
+    </div>
+    <?php echo $builder->renderFieldElement('badge_bg_color', $fields['badge_bg_color']); ?>
+    <?php echo $builder->renderFieldElement('badge_text_color', $fields['badge_text_color']); ?>
 </div>

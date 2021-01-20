@@ -17,7 +17,7 @@ extract($displayData);
 
 ?>
 
-<div class="hu-megamenu-cell">
+<div class="hu-megamenu-cell" data-rowid="<?php echo $rowId; ?>" data-columnid="<?php echo $columnId; ?>" data-cellid="<?php echo $cellId; ?>">
 	<span><?php echo $cell->type; ?></span>
-	<span><?php echo $cell->item_id; ?></span>
+	<span><?php echo $cell->item_id; ?></span>	
 </div>

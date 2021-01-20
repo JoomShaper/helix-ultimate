@@ -27,12 +27,24 @@ $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
 ?>
 <div class="hu-megamenu-grid">
     <?php if (!empty($grid)): ?>
-        <?php foreach ($grid as $row): ?>
-            <?php echo $rowLayout->render(['itemId' => $itemId, 'builder' => $builder, 'row' => $row]); ?>
+        <?php foreach ($grid as $key => $row): ?>
+            <?php
+                echo $rowLayout->render([
+                    'itemId' => $itemId,
+                    'builder' => $builder,
+                    'row' => $row,
+                    'rowId' => $key + 1
+                ]);
+            ?>
         <?php endforeach ?>
     <?php endif ?>
-    <a href="#" class="hu-btn hu-btn-primary">
-        <span class="fas fa-plus-circle"></span>
-        <?php echo Text::_('HELIX_ULTIMATE_MEGAMENU_ADD_NEW_ROW'); ?>
-    </a>
+    <div class="hu-megamenu-add-row">
+        <a href="#" class="hu-btn hu-btn-primary">
+            <span class="fas fa-plus-circle"></span>
+            <?php echo Text::_('HELIX_ULTIMATE_MEGAMENU_ADD_NEW_ROW'); ?>
+        </a>
+    </div>
+    <div class="hu-megamenu-row-slots">
+        <?php echo (new FileLayout('megaMenu.slots', HELIX_LAYOUT_PATH))->render(); ?>
+    </div>
 </div>

@@ -63,9 +63,9 @@ jQuery(function ($) {
 
 		megaMenuModal += '<div class="hu-modal-footer footer-right">';
 		megaMenuModal +=
-			'<button class="hu-btn hu-btn-link hu-cancel-btn">Cancel</button>';
+			'<button class="hu-btn hu-btn-link hu-megamenu-cancel-btn">Cancel</button>';
 		megaMenuModal +=
-			'<button class="hu-btn hu-btn-primary hu-save-btn">Save</button>';
+			'<button class="hu-btn hu-btn-primary hu-megamenu-save-btn">Save</button>';
 		megaMenuModal += '</div>';
 
 		megaMenuModal += '</div>';

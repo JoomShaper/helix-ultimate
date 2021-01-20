@@ -185,6 +185,14 @@ class Request
 			case 'generateMegaMenuBody':
 				$this->report = Response::generateMegaMenuBody();
 				break;
+			
+			case 'saveMegaMenuSettings':
+				$this->report = Response::saveMegaMenuSettings();
+				break;
+
+			case 'loadSlots':
+				$this->report = Response::loadSlots();
+				break;
 		}
 
 		echo json_encode($this->report);

@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Menu\SiteMenu;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 
@@ -233,7 +234,7 @@ class Response
 	 *
 	 * @param	int		$itemId	The Menu Item ID.
 	 *
-	 * @return 	string	The HTML string.
+	 * @return 	array	The HTML string.
 	 * @since	2.0.0
 	 */
 	public static function generateMegaMenuBody()
@@ -246,6 +247,65 @@ class Response
 		return [
 			'status' => true,
 			'data' => $layout->render(['itemId' => $itemId, 'builder' => $builder])
+		];
+	}
+
+	/**
+	 * Save mega menu settings.
+	 *
+	 * @return	array	The response array.
+	 * @since	2.0.0
+	 */
+	public static function saveMegaMenuSettings()
+	{
+		$input = Factory::getApplication()->input;
+		$settings = $input->post->get('settings', [], 'ARRAY');
+		$itemId = $input->post->get('id', 0, 'INT');
+
+		$menu = new SiteMenu;
+		$item = $menu->getItem($itemId);
+		$params = $item->getParams();
+		$params->set('helixultimatemenulayout', \json_encode($settings));
+
+		$response = self::updateMenuItem($itemId, $params);
+
+		return [
+			'status' => true,
+			'data' => $response
+		];
+	}
+
+	private static function updateMenuItem($itemId, $params)
+	{
+		try
+		{
+			$data = new \stdClass;
+			$data->id = $itemId;
+			$data->params = $params->toString();
+			$db 	= Factory::getDbo();
+			$db->updateObject('#__menu', $data, 'id', true);
+
+			return true;
+		}
+		catch (Exception $e)
+		{
+			return $e->getMessage();
+		}
+	}
+
+	/**
+	 * Load slots for the rows.
+	 *
+	 * @return	array	The response array
+	 * @since	2.0.0
+	 */
+	public static function loadSlots()
+	{
+		$layout = new FileLayout('megaMenu.slots', HELIX_LAYOUT_PATH);
+
+		return [
+			'status' => true,
+			'data' => $layout->render()
 		];
 	}
 }

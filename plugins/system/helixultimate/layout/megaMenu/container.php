@@ -29,4 +29,7 @@ if (!class_exists('MegaFields'))
 <div class="hu-megamenu-container hu-d-flex hu-justify-content-between">
 	<?php echo $sidebarLayout->render(['itemId' => $itemId, 'builder' => $builder, 'settings' => $settings]); ?>
 	<?php echo $gridLayout->render(['itemId' => $itemId, 'builder' => $builder, 'settings' => $settings]); ?>
+	<input type="hidden" id="hu-megamenu-layout-settings" value='<?php echo json_encode($settings); ?>' />
+	<input type="hidden" id="hu-base-url" value="<?php echo Uri::root(); ?>" />
+	<input type="hidden" id="hu-menu-itemid" value="<?php echo $itemId; ?>" />
 </div>

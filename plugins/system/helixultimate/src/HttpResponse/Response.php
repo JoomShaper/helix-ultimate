@@ -308,4 +308,57 @@ class Response
 			'data' => $layout->render()
 		];
 	}
+
+	/**
+	 * Generate row from the user data.
+	 *
+	 * @return	array	the response array
+	 * @since	2.0.0
+	 */
+	public static function generateRow()
+	{
+		$input = Factory::getApplication()->input;
+		$layout = $input->post->get('layout', '12', 'STRING');
+		$rowId = $input->post->get('rowId', 0, 'INT');
+		$itemId = $input->post->get('itemId', 0, 'INT');
+
+		$layout = preg_replace("@\s@", '', $layout);
+
+		$layoutArray = explode('+', $layout);
+
+		$rowData = new \stdClass;
+		$rowData->type = 'row';
+		$rowData->attr = [];
+		
+
+		if (!empty($layoutArray))
+		{
+			foreach ($layoutArray as $column)
+			{
+				$item = new \stdClass;
+				$item->type = 'column';
+				$item->colGrid = $column;
+				$item->items = [];
+				$item->menuParentId = '';
+				$item->moduleId = '';
+				$rowData->attr[] = $item;
+			}
+		}
+
+		$rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
+		$builder = new MegaMenuBuilder($itemId); 
+
+		$rowHTML = $rowLayout->render([
+			'itemId' => $itemId,
+			'builder' => $builder,
+			'row' => $rowData,
+			'rowId' => $rowId
+		]);
+
+		return [
+			'status' => true,
+			'data' => $rowHTML,
+			'row' => $rowData
+		];
+	}
 }

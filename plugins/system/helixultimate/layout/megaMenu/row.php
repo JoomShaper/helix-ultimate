@@ -22,10 +22,11 @@ if (!empty($row) && isset($row->attr))
 }
 
 $columnLayout = new FileLayout('megaMenu.column', HELIX_LAYOUT_PATH);
+$slotLayout = new FileLayout('megaMenu.slots', HELIX_LAYOUT_PATH);
 
 ?>
 
-<div class="hu-row-container" data-rowid="<?php echo $rowId; ?>">
+<div class="hu-row-wrapper" data-rowid="<?php echo $rowId; ?>">
 	<div class="hu-row-toolbar">
 		<div class="hu-row-toolbar-left hu-row-drag-handlers">
 			<svg xmlns="http://www.w3.org/2000/svg" width="15" height="8"><path fill-rule="evenodd" d="M1.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm0 5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM9 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM7.5 8a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM15 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 8a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"></path></svg>
@@ -38,6 +39,10 @@ $columnLayout = new FileLayout('megaMenu.column', HELIX_LAYOUT_PATH);
 			<a href="#" class="hu-btn hu-btn-link hu-megamenu-remove-row">
 				<svg xmlns="http://www.w3.org/2000/svg" width="12" height="13"><path d="M9.592 11.648l.433-8.748h.844a.335.335 0 00.334-.34.335.335 0 00-.334-.34H8.098V1.3c0-.773-.545-1.3-1.389-1.3h-2.22c-.844 0-1.384.527-1.384 1.3v.92H.34a.348.348 0 00-.34.34c0 .188.158.34.34.34h.844l.433 8.748c.041.75.569 1.266 1.33 1.266h5.315c.756 0 1.295-.516 1.33-1.266zM3.826 1.336c0-.38.281-.662.71-.662h2.132c.422 0 .715.281.715.662v.885H3.826v-.885zm-.82 10.898a.68.68 0 01-.68-.662L1.893 2.9h7.412l-.416 8.672a.682.682 0 01-.686.662H3.006zm4.348-1.148c.158 0 .275-.123.28-.293l.188-6.404c.006-.17-.111-.305-.275-.305-.147 0-.27.135-.27.299l-.193 6.398c0 .17.111.305.27.305zm-3.499 0c.159 0 .276-.135.27-.305l-.193-6.398c0-.164-.13-.299-.276-.299-.158 0-.275.129-.27.305l.194 6.404c.006.17.117.293.275.293zm1.752 0c.153 0 .282-.135.282-.299V4.39c0-.17-.13-.305-.282-.305-.152 0-.28.135-.28.305v6.398c0 .164.128.299.28.299z"></path></svg>
 			</a>
+
+			<div class="hu-megamenu-slots">
+				<?php echo $slotLayout->render(); ?>
+			</div>
 		</div>
 	</div>
 	<div class="row hu-columns-container">

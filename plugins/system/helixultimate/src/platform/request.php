@@ -193,6 +193,10 @@ class Request
 			case 'loadSlots':
 				$this->report = Response::loadSlots();
 				break;
+
+			case 'generateRow':
+				$this->report = Response::generateRow();
+				break;
 		}
 
 		echo json_encode($this->report);

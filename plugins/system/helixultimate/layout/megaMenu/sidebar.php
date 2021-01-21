@@ -22,7 +22,7 @@ $fields = $megaFields->getSidebarFields();
 
 <div class="hu-megamenu-sidebar">
     <?php echo $builder->renderFieldElement('megamenu', $fields['megamenu']); ?>
-    <div class="hu-mega-menu-settings">
+    <div class="hu-megamenu-settings">
         <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
         <?php echo $builder->renderFieldElement('showtitle', $fields['showtitle']); ?>
     </div>

@@ -62,22 +62,33 @@ $grids = array(
 );
 
 ?>
-<div class="row">
-    <?php foreach ($grids as $key => $grid): ?>
-        <div class="col-3">
-            <a href="#" class="hu-megamenu-column-layout" data-layout="<?php echo $grid['grid']; ?>">
-                <div class="hu-megamenu-column-layout-preview">
-                    <?php echo $grid['icon']; ?>
-                </div>
-                <span class="hu-megamenu-column-layout-name"><?php echo $grid['grid']; ?></span>
-            </a>
-        </div>
-    <?php endforeach ?>
+<div class="hu-columns-slot-container">
+	<div class="row">
+		<?php foreach ($grids as $key => $grid): ?>
+			<div class="col-3">
+				<a href="#" class="hu-megamenu-column-layout" data-layout="<?php echo $grid['grid']; ?>">
+					<div class="hu-megamenu-column-layout-preview">
+						<?php echo $grid['icon']; ?>
+					</div>
+					<span class="hu-megamenu-column-layout-name"><?php echo $grid['grid']; ?></span>
+				</a>
+			</div>
+		<?php endforeach ?>
 
-    <div class="col-3">
-        <a href="#" class="hu-megamenu-column-layout hu-megamenu-custom" data-layout="custom">
-            <div class="hu-megamenu-column-layout-preview">Custom</div>
-            <span class="hu-megamenu-column-layout-name hu-sr-only">Custom</span>
-        </a>
-    </div>
+		<div class="col-3">
+			<a href="#" class="hu-megamenu-column-layout hu-megamenu-custom" data-layout="custom">
+				<div class="hu-megamenu-column-layout-preview"><?php echo Text::_('HELIX_ULTIMATE_CUSTOM_LAYOUT_TEXT'); ?></div>
+				<span class="hu-megamenu-column-layout-name hu-sr-only"><?php echo Text::_('HELIX_ULTIMATE_CUSTOM_LAYOUT_TEXT'); ?></span>
+			</a>
+		</div>
+	</div>
+	<div class="hu-custom-layout">
+		<label><?php echo Text::_('HELIX_ULTIMATE_CUSTOM_LAYOUT_LABEL'); ?></label>
+		<div class="hu-d-flex hu-justify-content-between">
+			<input type="text" class="hu-custom-layout-field" value="6+3+3">
+			<button class="hu-btn hu-btn-primary hu-custom-layout-apply">
+				Apply
+			</button>
+		</div>
+	</div>
 </div>

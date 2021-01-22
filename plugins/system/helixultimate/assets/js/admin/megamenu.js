@@ -53,6 +53,25 @@ var megaMenu = {
 		itemId = $('#hu-menu-itemid').val();
 		settingsData = $settingsInput.val();
 		settingsData = settingsData && JSON.parse(settingsData);
+
+		// Set default value
+		if (!settingsData) {
+			settingsData = {
+				badge: '',
+				badge_bg_color: '',
+				badge_position: '',
+				badge_text_color: '',
+				customclass: '',
+				dropdown: 'right',
+				faicon: '',
+				layout: [],
+				megamenu: 0,
+				menualign: 'right',
+				showtitle: 1,
+				width: 600,
+			};
+		}
+
 		baseUrl = $('#hu-base-url').val();
 	},
 
@@ -84,15 +103,20 @@ var megaMenu = {
 		let $settings = $('.hu-megamenu-settings');
 		let $alignment = $('.hu-megamenu-alignment');
 		let $dropdown = $('.hu-menuitem-dropdown-position');
+		let $builderModal = $('.hu-mega-menu-builder');
 
 		if (status) {
 			if (!$settings.hasClass('show')) $settings.addClass('show');
 			if (!$grid.hasClass('show')) $grid.addClass('show');
+			if ($builderModal.hasClass('collapsed'))
+				$builderModal.removeClass('collapsed');
 			$alignment.show();
 			$dropdown.hide();
 		} else {
 			if ($settings.hasClass('show')) $settings.removeClass('show');
 			if ($grid.hasClass('show')) $grid.removeClass('show');
+			if (!$builderModal.hasClass('collapsed'))
+				$builderModal.addClass('collapsed');
 			$alignment.hide();
 			$dropdown.show();
 		}
@@ -509,6 +533,7 @@ var megaMenu = {
 		let prevIndex,
 			currIndex,
 			rowIndex,
+			$rowEl,
 			self = this;
 
 		$(selector).sortable({
@@ -527,11 +552,15 @@ var megaMenu = {
 					ui.item.closest('.hu-megamenu-row-wrapper').data('rowid') -
 					1;
 				prevIndex = ui.item.index();
+
+				$rowEl = ui.item.closest('.hu-megamenu-columns-container');
+				$rowEl.addClass('hu-megamenu-column-dragging');
 			},
 			stop(_, ui) {
 				currIndex = ui.item.index();
 				self.swapColumn(rowIndex, prevIndex, currIndex);
 				self.updateColumns(rowIndex);
+				$rowEl.removeClass('hu-megamenu-column-dragging');
 			},
 		});
 	},

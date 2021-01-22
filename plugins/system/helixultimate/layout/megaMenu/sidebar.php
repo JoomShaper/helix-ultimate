@@ -17,18 +17,33 @@ extract($displayData);
 
 $megaFields = new MegaFields($settings, $itemId);
 $fields = $megaFields->getSidebarFields();
+$item = $builder->getMenuItem();
 
 ?>
 
 <div class="hu-megamenu-sidebar">
-    <?php echo $builder->renderFieldElement('megamenu', $fields['megamenu']); ?>
+    <?php if ((int) $item->parent_id === 1): ?>
+        <?php echo $builder->renderFieldElement('megamenu', $fields['megamenu']); ?>
+    <?php endif ?>
+
     <div class="hu-megamenu-settings">
-        <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
+        <?php if ((int) $item->parent_id === 1): ?>
+            <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
+        <?php endif ?>
         <?php echo $builder->renderFieldElement('showtitle', $fields['showtitle']); ?>
     </div>
 
     <div class="hu-d-flex hu-justify-content-between">
-        <?php echo $builder->renderFieldElement('menualign', $fields['menualign']); ?>
+        <?php if ((int) $item->parent_id === 1): ?>
+            <div class="hu-megamenu-alignment">
+                <?php echo $builder->renderFieldElement('menualign', $fields['menualign']); ?>
+            </div>
+        <?php endif ?>
+
+        <div class="hu-menuitem-dropdown-position">
+            <?php echo $builder->renderFieldElement('dropdown', $fields['dropdown']); ?>
+        </div>
+
         <?php echo $builder->renderFieldElement('faicon', $fields['faicon']); ?>
     </div>
     <?php echo $builder->renderFieldElement('customclass', $fields['customclass']); ?>

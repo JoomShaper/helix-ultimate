@@ -62,7 +62,7 @@ $grids = array(
 );
 
 ?>
-<div class="hu-columns-slot-container">
+<div class="hu-megamenu-columns-layout">
 	<div class="row">
 		<?php foreach ($grids as $key => $grid): ?>
 			<div class="col-3">
@@ -82,12 +82,12 @@ $grids = array(
 			</a>
 		</div>
 	</div>
-	<div class="hu-custom-layout">
+	<div class="hu-megamenu-custom-layout">
 		<label><?php echo Text::_('HELIX_ULTIMATE_CUSTOM_LAYOUT_LABEL'); ?></label>
 		<div class="hu-d-flex hu-justify-content-between">
-			<input type="text" class="hu-custom-layout-field" value="6+3+3">
-			<button class="hu-btn hu-btn-primary hu-custom-layout-apply">
-				Apply
+			<input type="text" class="hu-megamenu-custom-layout-field" value="6+3+3">
+			<button class="hu-btn hu-btn-primary hu-megamenu-custom-layout-apply">
+				<?php echo Text::_('HELIX_ULTIMATE_MEGAMENU_APPLY_TEXT'); ?>
 			</button>
 		</div>
 	</div>

@@ -99,13 +99,14 @@ jQuery(function ($) {
 				closeToolbar();
 
 				const $branch = $(this).closest('.hu-menu-tree-branch');
+				const parent = $branch.data('parent') || 1;
 				const itemId = $branch.data('itemid') || 0;
 
 				const response = await getMegaMenuBodyHTML(itemId);
 
 				if (response.status) {
 					$(document).helixUltimateMegamenuModal({
-						title: 'Mega Menu',
+						title: parent == '1' ? 'Mega Menu' : 'Settings',
 						className: 'hu-mega-menu-builder',
 						targetType: 'id',
 						target: 'megaMenuModal',

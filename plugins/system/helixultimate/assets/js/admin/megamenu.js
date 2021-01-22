@@ -12,8 +12,8 @@ var megaMenu = {
 		this.handleCloseModal();
 
 		this.rowSortable('.hu-megamenu-rows-container');
-		this.columnSortable('.hu-columns-container');
-		this.itemSortable('.hu-column-contents');
+		this.columnSortable('.hu-megamenu-columns-container');
+		this.itemSortable('.hu-megamenu-column-contents');
 
 		this.handleSaveMegaMenuSettings();
 
@@ -23,6 +23,7 @@ var megaMenu = {
 
 		this.handleLayoutOptionSelection();
 		this.handleCustomLayoutSelection();
+		this.handleRowWiseColumnLayoutSelection();
 
 		this.toggleColumnsSlots();
 		console.log(settingsData);
@@ -46,7 +47,7 @@ var megaMenu = {
 		$rowsContainer = $('.hu-megamenu-rows-container');
 		$addNewRowBtn = $('.hu-megamenu-add-row > a');
 		$customLayoutBtn = $('.hu-megamenu-custom');
-		$customLayoutContainer = $('.hu-custom-layout');
+		$customLayoutContainer = $('.hu-megamenu-custom-layout');
 		$layoutItem = $('.hu-megamenu-column-layout');
 
 		itemId = $('#hu-menu-itemid').val();
@@ -81,13 +82,19 @@ var megaMenu = {
 	toggleSidebarSettings(status) {
 		let $grid = $('.hu-megamenu-grid');
 		let $settings = $('.hu-megamenu-settings');
+		let $alignment = $('.hu-megamenu-alignment');
+		let $dropdown = $('.hu-menuitem-dropdown-position');
 
 		if (status) {
 			if (!$settings.hasClass('show')) $settings.addClass('show');
 			if (!$grid.hasClass('show')) $grid.addClass('show');
+			$alignment.show();
+			$dropdown.hide();
 		} else {
 			if ($settings.hasClass('show')) $settings.removeClass('show');
 			if ($grid.hasClass('show')) $grid.removeClass('show');
+			$alignment.hide();
+			$dropdown.show();
 		}
 	},
 
@@ -98,23 +105,92 @@ var megaMenu = {
 		});
 	},
 
+	closeRowLayoutDisplay() {
+		let $slot = $('.hu-megamenu-row-slots');
+		if ($slot.hasClass('show')) $slot.removeClass('show');
+	},
+
 	closeLayoutDisplay() {
-		$('.hu-megamenu-row-slots').hide();
+		$('.hu-megamenu-add-slots').hide();
 	},
 
 	/** Remove all the event listeners */
 	removeEventListeners() {
-		$(document).off('click', '.hu-custom-layout-apply');
+		$(document).off('click', '.hu-megamenu-custom-layout-apply');
 		$(document).off('click', '.hu-megamenu-remove-row');
 		$(document).off('click', '.hu-megamenu-add-row > a');
 		$(document).off('click', '.hu-megamenu-custom');
+		$(document).off('click', '.hu-megamenu-columns');
 		$(document).off(
 			'click',
-			'.hu-megamenu-column-layout:not(.hu-megamenu-custom)'
+			'.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)'
+		);
+		$(document).off(
+			'click',
+			'.hu-megamenu-row-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)'
 		);
 		$cancelBtn.off('click');
 		$saveBtn.off('click');
 		$megamenu.off('change');
+	},
+
+	/** Handling row wise column layout selection */
+	handleRowWiseColumnLayoutSelection() {
+		const self = this;
+		$(document).on(
+			'click',
+			'.hu-megamenu-row-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)',
+			async function () {
+				const rowIndex =
+					$(this).closest('.hu-megamenu-row-wrapper').data('rowid') -
+					1;
+				const layout = $(this).data('layout') || '12';
+				const rowData = settingsData.layout[rowIndex];
+				const res = await self.updateRowLayout({
+					layout,
+					rowData: JSON.stringify(rowData),
+					rowId: rowIndex + 1,
+					itemId,
+				});
+
+				if (res.status) {
+					$(this)
+						.closest('.hu-megamenu-row-wrapper')
+						.find('.hu-megamenu-columns-container')
+						.html(res.html);
+					settingsData.layout[rowIndex] = res.data;
+					self.closeRowLayoutDisplay();
+				}
+			}
+		);
+	},
+
+	updateRowLayout({ layout, rowData, rowId, itemId }) {
+		let self = this;
+		return new Promise((resolve, reject) => {
+			const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=updateRowLayout`;
+			const data = {
+				layout,
+				data: rowData,
+				rowId,
+				itemId,
+			};
+			$.ajax({
+				method: 'POST',
+				url,
+				data,
+				success(res) {
+					res =
+						typeof res === 'string' && res.length
+							? JSON.parse(res)
+							: false;
+					resolve(res);
+				},
+				error(err) {
+					reject(err);
+				},
+			});
+		});
 	},
 
 	/** Handling layout option selection. */
@@ -122,7 +198,7 @@ var megaMenu = {
 		let self = this;
 		$(document).on(
 			'click',
-			'.hu-megamenu-column-layout:not(.hu-megamenu-custom)',
+			'.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)',
 			async function (e) {
 				e.preventDefault();
 
@@ -146,30 +222,34 @@ var megaMenu = {
 	handleCustomLayoutSelection() {
 		let self = this;
 
-		$(document).on('click', '.hu-custom-layout-apply', async function (e) {
-			e.preventDefault();
-			let $field = $('.hu-custom-layout-field'),
-				layout = $field.val(),
-				rowId = settingsData.layout.length + 1;
+		$(document).on(
+			'click',
+			'.hu-megamenu-custom-layout-apply',
+			async function (e) {
+				e.preventDefault();
+				let $field = $('.hu-megamenu-custom-layout-field'),
+					layout = $field.val(),
+					rowId = settingsData.layout.length + 1;
 
-			if (layout == '') return;
+				if (layout == '') return;
 
-			const res = await self.generateRow(layout, rowId, itemId);
+				const res = await self.generateRow(layout, rowId, itemId);
 
-			if (res.status) {
-				$rowsContainer.append(res.data);
-				self.closeLayoutDisplay();
-				settingsData.layout.push(response.row);
-				self.refreshSortable();
+				if (res.status) {
+					$rowsContainer.append(res.data);
+					self.closeLayoutDisplay();
+					settingsData.layout.push(response.row);
+					self.refreshSortable();
+				}
 			}
-		});
+		);
 	},
 
 	toggleColumnsSlots() {
 		$(document).on('click', '.hu-megamenu-columns', function () {
 			$(this)
-				.closest('.hu-row-toolbar-right')
-				.find('.hu-megamenu-slots')
+				.closest('.hu-megamenu-row-toolbar-right')
+				.find('.hu-megamenu-row-slots')
 				.toggleClass('show');
 		});
 	},
@@ -286,7 +366,7 @@ var megaMenu = {
 		$(document).on('click', '.hu-megamenu-remove-row', function (e) {
 			e.preventDefault();
 
-			let $parent = $(this).closest('.hu-row-wrapper'),
+			let $parent = $(this).closest('.hu-megamenu-row-wrapper'),
 				rowIndex = $parent.index();
 
 			$parent.slideUp(300, function () {
@@ -300,30 +380,8 @@ var megaMenu = {
 		$(document).on('click', '.hu-megamenu-add-row > a', function () {
 			$(this)
 				.closest('.hu-megamenu-grid')
-				.find('.hu-megamenu-row-slots')
+				.find('.hu-megamenu-add-slots')
 				.toggle();
-		});
-	},
-
-	/** @TODO: may be not required. */
-	loadSlots() {
-		const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=loadSlots`;
-
-		return new Promise((resolve, reject) => {
-			$.ajax({
-				method: 'GET',
-				url,
-				success(res) {
-					res =
-						typeof res === 'string' && res.length > 0
-							? JSON.parse(res)
-							: false;
-					resolve(res);
-				},
-				error(err) {
-					reject(err);
-				},
-			});
 		});
 	},
 
@@ -383,10 +441,13 @@ var megaMenu = {
 				func: 'rowSortable',
 			},
 			column: {
-				selector: '.hu-columns-container',
+				selector: '.hu-megamenu-columns-container',
 				func: 'columnSortable',
 			},
-			item: { selector: '.hu-column-contents', func: 'itemSortable' },
+			item: {
+				selector: '.hu-megamenu-column-contents',
+				func: 'itemSortable',
+			},
 		};
 
 		for (let i = 0; i < sortable.length; i++) {
@@ -398,7 +459,7 @@ var megaMenu = {
 	},
 
 	updateRows() {
-		$('.hu-row-wrapper').each(function (index) {
+		$('.hu-megamenu-row-wrapper').each(function (index) {
 			$(this)
 				.data('rowid', index + 1)
 				.attr('data-rowid', index + 1);
@@ -412,11 +473,12 @@ var megaMenu = {
 			currentIndex = null;
 		$(selector)
 			.sortable({
-				handle: '.hu-row-drag-handlers',
+				handle: '.hu-megamenu-row-drag-handlers',
 				placeholder: 'hu-row-sortable-placeholder',
-				containment: '.hu-megamenu-grid',
 				axis: 'y',
 				items: '> *',
+				tolerance: 'pointer',
+				scroll: true,
 				start(_, ui) {
 					let height = ui.helper.outerHeight();
 					height -= 2;
@@ -426,8 +488,6 @@ var megaMenu = {
 				stop(_, ui) {
 					currentIndex = ui.item.index();
 					self.swapRow(prevIndex, currentIndex);
-				},
-				deactivate(_, ui) {
 					self.updateRows();
 				},
 			})
@@ -435,7 +495,7 @@ var megaMenu = {
 	},
 
 	updateColumns(rowIndex) {
-		$(`.hu-row-wrapper[data-rowid=${rowIndex + 1}]`)
+		$(`.hu-megamenu-row-wrapper[data-rowid=${rowIndex + 1}]`)
 			.find('.hu-megamenu-col')
 			.each(function (index) {
 				$(this)
@@ -452,7 +512,7 @@ var megaMenu = {
 			self = this;
 
 		$(selector).sortable({
-			handle: '.hu-column-drag-handler',
+			handle: '.hu-megamenu-column-drag-handler',
 			placeholder: 'hu-column-sortable-placeholder',
 			containment: '.hu-megamenu-grid',
 			axis: 'x',
@@ -463,7 +523,9 @@ var megaMenu = {
 
 				ui.placeholder.css({ height, width });
 
-				rowIndex = ui.item.closest('.hu-row-wrapper').data('rowid') - 1;
+				rowIndex =
+					ui.item.closest('.hu-megamenu-row-wrapper').data('rowid') -
+					1;
 				prevIndex = ui.item.index();
 			},
 			stop(_, ui) {
@@ -485,7 +547,7 @@ var megaMenu = {
 			self = this;
 		$(selector)
 			.sortable({
-				connectWith: '.hu-column-contents',
+				connectWith: '.hu-megamenu-column-contents',
 				placeholder: 'hu-item-sortable-placeholder',
 				containment: '.hu-megamenu-grid',
 				items: '> .hu-megamenu-cell',
@@ -499,8 +561,9 @@ var megaMenu = {
 						(ui.item.closest('.hu-megamenu-col').data('columnid') ||
 							1) - 1;
 					prevRowIndex =
-						(ui.item.closest('.hu-row-wrapper').data('rowid') ||
-							1) - 1;
+						(ui.item
+							.closest('.hu-megamenu-row-wrapper')
+							.data('rowid') || 1) - 1;
 					prevItemIndex = ui.item.index();
 				},
 				stop(_, ui) {
@@ -508,8 +571,9 @@ var megaMenu = {
 						(ui.item.closest('.hu-megamenu-col').data('columnid') ||
 							1) - 1;
 					currRowIndex =
-						(ui.item.closest('.hu-row-wrapper').data('rowid') ||
-							1) - 1;
+						(ui.item
+							.closest('.hu-megamenu-row-wrapper')
+							.data('rowid') || 1) - 1;
 					currItemIndex = ui.item.index();
 					self.swapItem({
 						prevRowIndex,

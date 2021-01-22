@@ -46,7 +46,7 @@ $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
             <?php echo Text::_('HELIX_ULTIMATE_MEGAMENU_ADD_NEW_ROW'); ?>
         </a>
     </div>
-    <div class="hu-megamenu-row-slots">
+    <div class="hu-megamenu-add-slots">
         <?php echo (new FileLayout('megaMenu.slots', HELIX_LAYOUT_PATH))->render(); ?>
     </div>
 </div>

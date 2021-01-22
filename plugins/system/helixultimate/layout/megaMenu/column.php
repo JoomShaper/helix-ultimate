@@ -26,12 +26,12 @@ if (!empty($column->items))
 ?>
 
 <div class="hu-megamenu-col col-<?php echo $column->colGrid; ?>" data-rowid="<?php echo $rowId; ?>" data-columnid="<?php echo $columnId; ?>">
-	<div class="hu-column-contents-wrapper">
-		<div class="hu-column-toolbar hu-column-drag-handler">
+	<div class="hu-megamenu-column-contents-wrapper">
+		<div class="hu-megamenu-column-toolbar hu-megamenu-column-drag-handler">
 			<svg xmlns="http://www.w3.org/2000/svg" width="15" height="8"><path fill-rule="evenodd" d="M1.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm0 5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM9 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM7.5 8a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM15 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 8a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd"></path></svg>
 			<span>Column</span>
 		</div>
-		<div class="hu-column-contents">
+		<div class="hu-megamenu-column-contents">
 			<?php foreach ($cells as $key => $cell): ?>
 				<?php 
 					echo $cellLayout->render([
@@ -46,7 +46,7 @@ if (!empty($column->items))
 			<?php endforeach ?>
 		</div>
 
-		<div class="hu-add-new-item">
+		<div class="hu-megamenu-add-new-item">
 			<span class="fas fa-plus-circle"></span>
 		</div>
 	</div>

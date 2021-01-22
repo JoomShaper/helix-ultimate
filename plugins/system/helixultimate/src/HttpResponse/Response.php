@@ -213,7 +213,7 @@ class Response
 				$html[] = '				<ul class="hu-branch-tools-list">';
 				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit">'. Text::_('HELIX_ULTIMATE_MENU_EDIT') .'</a></li>';
 				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete">'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu disabled">'. Text::_('HELIX_ULTIMATE_MENU_MEGAMENU') .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu disabled">'. Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS': 'HELIX_ULTIMATE_MENU_MEGAMENU') .'</a></li>';
 				$html[] = '				</ul>';
 				$html[] = '			</div>';
 
@@ -282,7 +282,7 @@ class Response
 			$data = new \stdClass;
 			$data->id = $itemId;
 			$data->params = $params->toString();
-			$db 	= Factory::getDbo();
+			$db = Factory::getDbo();
 			$db->updateObject('#__menu', $data, 'id', true);
 
 			return true;
@@ -299,13 +299,62 @@ class Response
 	 * @return	array	The response array
 	 * @since	2.0.0
 	 */
-	public static function loadSlots()
+	public static function updateRowLayout()
 	{
-		$layout = new FileLayout('megaMenu.slots', HELIX_LAYOUT_PATH);
+		$input = Factory::getApplication()->input;
+		$layout = $input->post->get('layout', '12', 'STRING');
+		$rowData = $input->post->get('data', null, 'RAW');
+		$rowId = $input->post->get('rowId', 0, 'INT');
+		$itemId = $input->post->get('itemId', 0, 'INT');
+
+		$rowData = \json_decode($rowData);
+		$layout = \preg_replace("@\s@", '', $layout);
+		$layoutArray = explode('+', $layout);
+
+		$columns = [];
+
+		foreach ($layoutArray as $key => $col)
+		{
+			if (isset($rowData->attr[$key]))
+			{
+				$tmp = $rowData->attr[$key];
+			}
+			else
+			{
+				$tmp = new \stdClass;
+				$tmp->menuParentId = '';
+				$tmp->moduleId = '';
+				$tmp->type = 'column';
+				$tmp->items = [];
+			}
+
+			$tmp->colGrid = $col;
+
+			$columns[] = $tmp;
+		}
+
+		$rowData->attr = $columns;
+
+		$columnLayout = new FileLayout('megaMenu.column', HELIX_LAYOUT_PATH);
+		$builder = new MegaMenuBuilder($itemId);
+
+		$html = [];
+
+		foreach ($columns as $key => $column)
+		{
+			$html[] = $columnLayout->render([
+				'itemId' => $itemId,
+				'builder' => $builder,
+				'column' => $column,
+				'rowId' => $rowId,
+				'columnId' => $key + 1
+			]);
+		}
 
 		return [
 			'status' => true,
-			'data' => $layout->render()
+			'html' => implode("\n", $html),
+			'data' => $rowData
 		];
 	}
 
@@ -322,7 +371,7 @@ class Response
 		$rowId = $input->post->get('rowId', 0, 'INT');
 		$itemId = $input->post->get('itemId', 0, 'INT');
 
-		$layout = preg_replace("@\s@", '', $layout);
+		$layout = \preg_replace("@\s@", '', $layout);
 
 		$layoutArray = explode('+', $layout);
 

@@ -97,6 +97,18 @@ class MegaFields
                 'value' => $this->settings->faicon ?? '',
                 'internal' => true,
             ],
+            'dropdown' => [
+                'type' => 'select',
+                'title' => Text::_('HELIX_ULTIMATE_MENU_DROPDOWN_POSITION'),
+                'menu-builder' => true,
+                'data' => ['itemid' => $this->itemId],
+                'options' => [
+                    'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
+                    'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
+                ],
+                'value' => $this->settings->dropdown ?? '',
+                'internal' => true,
+            ],
             'customclass' => [
                 'type' => 'text',
                 'title' => Text::_('HELIX_ULTIMATE_MENU_EXTRA_CLASS'),

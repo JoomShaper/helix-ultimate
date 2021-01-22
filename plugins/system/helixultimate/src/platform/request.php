@@ -190,8 +190,8 @@ class Request
 				$this->report = Response::saveMegaMenuSettings();
 				break;
 
-			case 'loadSlots':
-				$this->report = Response::loadSlots();
+			case 'updateRowLayout':
+				$this->report = Response::updateRowLayout();
 				break;
 
 			case 'generateRow':

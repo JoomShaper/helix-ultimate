@@ -84,4 +84,18 @@ class MegaMenuBuilder extends Builder
 
 		return $megaMenu;
 	}
+
+	/**
+	 * Get menu Item by id
+	 *
+	 * @return	MenuItem	The menu item object.
+	 * @since	2.0.0
+	 */
+	public function getMenuItem()
+	{
+		$menu = new SiteMenu;
+		$item = $menu->getItem($this->itemId);
+
+		return $item;
+	}
 }

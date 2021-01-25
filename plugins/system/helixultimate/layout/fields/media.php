@@ -28,7 +28,8 @@ class HelixultimateFieldMedia
 	 */
 	public static function getInput($key, $attr)
 	{
-		$output  = '<div class="control-group">';
+		$className = $attr['class'] ?? '';
+		$output  = '<div class="control-group ' . $className . '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

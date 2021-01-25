@@ -33,6 +33,7 @@ class HelixultimateFieldSelect
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$options = !empty($attr['options']) ? $attr['options'] : (!empty($attr['values']) ? $attr['values'] : []);
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+		$className = $attr['class'] ?? '';
 		$dataAttrs = '';
 		$dataShowon = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
@@ -51,7 +52,7 @@ class HelixultimateFieldSelect
 			}
 		}
 
-		$output  = '<div class="control-group ' . $key . '" ' . $dataShowon . '>';
+		$output  = '<div class="control-group ' . $className . ' ' . $key . '" ' . $dataShowon . '>';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

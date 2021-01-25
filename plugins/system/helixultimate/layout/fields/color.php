@@ -35,6 +35,7 @@ class HelixultimateFieldColor
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+		$className = $attr['class'] ?? '';
 		$dataAttrs = '';
 		$dataShowon = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
@@ -53,7 +54,7 @@ class HelixultimateFieldColor
 			}
 		}
 
-		$output  = '<div class="control-group">';
+		$output  = '<div class="control-group ' . $className . '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

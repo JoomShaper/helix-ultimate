@@ -1,5 +1,6 @@
 <?php
 
+use HelixUltimate\Framework\Core\Lib\FontawesomeIcons;
 use Joomla\CMS\Language\Text;
 /**
  * @package Helix_Ultimate_Framework
@@ -46,6 +47,27 @@ class MegaFields
         $this->itemId = $itemId;
     }
 
+    /**
+     * Make font awesome options for the listing.
+     *
+     * @return  array   the options array.
+     * @since   2.0.0
+     */
+    private function getFontOptions()
+    {
+        $fontawesome = new FontawesomeIcons;
+        $icons = $fontawesome->getIcons();
+
+        $options = [];
+
+        foreach ($icons as $icon)
+        {
+            $options[$icon] = $icon;
+        }
+
+        return $options;
+    }
+
     public function getSidebarFields()
     {
         return [
@@ -89,10 +111,10 @@ class MegaFields
                 'internal' => true,
             ],
             'faicon' => [
-                'type' => 'text',
+                'type' => 'select',
                 'title' => Text::_('HELIX_ULTIMATE_MENU_ICON'),
-                'placeholder' => Text::_('HELIX_ULTIMATE_MENU_ICON_PLACEHOLDER'),
                 'menu-builder' => true,
+                'options' => $this->getFontOptions(),
                 'data' => ['itemid' => $this->itemId],
                 'value' => $this->settings->faicon ?? '',
                 'internal' => true,

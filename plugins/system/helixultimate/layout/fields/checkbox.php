@@ -30,6 +30,7 @@ class HelixultimateFieldCheckbox
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$dataAttrs = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
+		$className = $attr['class'] ?? '';
 
 		if (!empty($attr['data']))
 		{
@@ -39,7 +40,7 @@ class HelixultimateFieldCheckbox
 			}
 		}
 
-		$output   = '<div class="control-group hu-style-switcher">';
+		$output   = '<div class="control-group hu-style-switcher ' . $className . '">';
 		$output  .= '<div class="checkbox clearfix">';
 		$output  .= '<label class="control-label">' . $attr['title'];
 

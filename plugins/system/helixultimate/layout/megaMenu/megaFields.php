@@ -98,7 +98,6 @@ class MegaFields
             'menualign' => [
                 'type' => 'select',
                 'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_ALIGNMENT'),
-                'desc' => Text::_('HELIX_ULTIMATE_MEGA_MENU_ALIGNMENT_DESC'),
                 'menu-builder' => true,
                 'data' => ['itemid' => $this->itemId],
                 'options' => [

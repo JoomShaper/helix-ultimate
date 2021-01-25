@@ -45,9 +45,15 @@ if (!empty($column->items))
 				?>
 			<?php endforeach ?>
 		</div>
-
-		<div class="hu-megamenu-add-new-item">
-			<span class="fas fa-plus-circle"></span>
+		
+		<div class="hu-megamenu-add-item-wrapper">
+			<button class="hu-megamenu-add-new-item">
+				<span class="fas fa-plus-circle"></span>
+			</button>
+			<ul class="hu-megamenu-cell-options" style="display: none;">
+				<li><a href="#" class="hu-megamenu-cell-options-item" data-type="menu"><?php echo Text::_('Menu Item'); ?></a></li>
+				<li><a href="#" class="hu-megamenu-cell-options-item" data-type="module"><?php echo Text::_('Module'); ?></a></li>
+			</ul>
 		</div>
 	</div>
 </div>

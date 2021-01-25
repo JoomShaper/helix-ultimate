@@ -197,6 +197,10 @@ class Request
 			case 'generateRow':
 				$this->report = Response::generateRow();
 				break;
+
+			case 'generatePopoverContents':
+				$this->report = Response::generatePopoverContents();
+				break;
 		}
 
 		echo json_encode($this->report);

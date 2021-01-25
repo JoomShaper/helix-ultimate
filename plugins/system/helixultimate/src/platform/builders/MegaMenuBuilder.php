@@ -10,6 +10,7 @@ namespace HelixUltimate\Framework\Platform\Builders;
 defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Builders\Builder;
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Menu\SiteMenu;
@@ -97,5 +98,62 @@ class MegaMenuBuilder extends Builder
 		$item = $menu->getItem($this->itemId);
 
 		return $item;
+	}
+
+	/**
+	 * Get Menu child menu items for a item id.
+	 *
+	 * @return	array	The menu item id items
+	 * @since	2.0.0
+	 */
+	public function getItemChildren()
+	{
+		$children = [];
+
+		try
+		{
+			$db 	= Factory::getDbo();
+			$query 	= $db->getQuery(true);
+			$query->select('id, title, parent_id')
+				->from($db->quoteName('#__menu'))
+				->where($db->quoteName('parent_id') . ' = ' . (int) $this->itemId);
+			$db->setQuery($query);
+
+			$children = $db->loadObjectList();
+		}
+		catch (Exception $e)
+		{
+			echo $e->getMessage();
+
+			return [];
+		}
+
+		return $children;
+	}
+
+	public function getTitle($item)
+	{
+		$element = null;
+
+		if ($item->type === 'module')
+		{
+			$modules = Helper::getModules();
+
+			foreach ($modules as $mod)
+			{
+				if ((int) $mod->id === (int) $item->item_id)
+				{
+					$element = $mod;
+					break;
+				}
+			}
+		}
+		else
+		{
+			$menu = new SiteMenu;
+			$element = $menu->getItem($item->item_id);
+		}
+
+		return !empty($element) ? $element->title : '';
 	}
 }

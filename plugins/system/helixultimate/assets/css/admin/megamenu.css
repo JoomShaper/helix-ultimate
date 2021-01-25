@@ -4,7 +4,7 @@
 
 .hu-megamenu-container .hu-megamenu-sidebar {
 	width: 220px;
-	background: #FFFFFF;
+	background: #ffffff;
 	height: 492px;
 	box-shadow: 0px 2px 4px rgba(20, 50, 80, 0.2);
 	border-radius: 5px;
@@ -85,17 +85,17 @@
 	cursor: ns-resize;
 }
 .hu-megamenu-row-toolbar-left svg {
-	opacity: .4;
+	opacity: 0.4;
 }
 .hu-megamenu-row-toolbar-left span {
 	display: inline-block;
-	color: rgba(2,11,83,0.7);
+	color: rgba(2, 11, 83, 0.7);
 	font-size: 12px;
 	margin-left: 8px;
 }
 .hu-megamenu-row-toolbar-right a {
 	padding: 0;
-	opacity: .4;
+	opacity: 0.4;
 }
 .hu-megamenu-row-toolbar-right .hu-megamenu-columns {
 	margin-right: 10px;
@@ -134,6 +134,7 @@
 }
 
 .hu-megamenu-add-new-item {
+	width: 100%;
 	text-align: center;
 	margin-top: 10px;
 	border: 1px dashed #96b4f5;
@@ -159,25 +160,25 @@
 .hu-megamenu-row-slots.show {
 	display: block;
 }
-.hu-megamenu-settings .control-group  label {
+.hu-megamenu-settings .control-group label {
 	flex-basis: 100%;
 }
 .hu-mega-menu-builder .control-group select {
-  height: 30px;
-  width: 88px;
-  color: #021153;
-  font-size: 12px;
-  font-weight: 500;
-  background-position: right 3px center;
+	height: 30px;
+	width: 88px;
+	color: #021153;
+	font-size: 12px;
+	font-weight: 500;
+	background-position: right 3px center;
 	background-size: 16px 10px;
-	background-color: #FFFFFF;
-  border: 1px solid rgba(121, 127, 167, 0.3);
-  box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
-  border-radius: 5px;
+	background-color: #ffffff;
+	border: 1px solid rgba(121, 127, 167, 0.3);
+	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
+	border-radius: 5px;
 }
-.hu-mega-menu-builder .control-group input:not([type="checkbox"]) {
+.hu-mega-menu-builder .control-group input:not([type='checkbox']) {
 	padding: 5px 12px;
-	background: #FFFFFF;
+	background: #ffffff;
 	border: 1px solid rgba(121, 127, 167, 0.3);
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;
@@ -188,11 +189,11 @@
 
 .hu-mega-menu-builder .control-group input::-webkit-outer-spin-button,
 .hu-mega-menu-builder .control-group input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+	-webkit-appearance: none;
+	margin: 0;
 }
-.hu-mega-menu-builder .control-group input[type=number] {
-  -moz-appearance: textfield;
+.hu-mega-menu-builder .control-group input[type='number'] {
+	-moz-appearance: textfield;
 }
 .hu-megamenu-settings .hu-input-group input {
 	min-width: 45px;
@@ -301,23 +302,95 @@
 	color: rgb(var(--primary));
 }
 
-.hu-mega-menu-builder .minicolors-theme-bootstrap .minicolors-input[type="text"] {
-	background: #FFFFFF;
+.hu-mega-menu-builder
+	.minicolors-theme-bootstrap
+	.minicolors-input[type='text'] {
+	background: #ffffff;
 	border: 1px solid rgba(121, 127, 167, 0.3);
 	box-sizing: border-box;
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;
 	height: 30px;
-  width: 130px;
-  padding: 5px 5px 5px 65px;
-  font-size: 12px;
+	width: 130px;
+	padding: 5px 5px 5px 65px;
+	font-size: 12px;
 	font-weight: 500;
 }
 .hu-mega-menu-builder .minicolors-theme-bootstrap .minicolors-swatch {
-  width: 53px;
-  height: 18px;
-  top: 6px;
-  border-radius: 3px;
-  border: none;
-  background-position: 53px;
+	width: 53px;
+	height: 18px;
+	top: 6px;
+	border-radius: 3px;
+	border: none;
+	background-position: 53px;
+}
+.hu-megamenu-add-item-wrapper {
+	position: relative;
+}
+.hu-megamenu-cell-options {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background: #fff;
+	box-shadow: 1px 2px 6px 0px #a1a1a1;
+	margin-top: 10px;
+	border-radius: 5px;
+	position: absolute;
+	width: 100%;
+	top: 35px;
+	left: 10px;
+}
+.hu-megamenu-cell-options li {
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.hu-megamenu-cell-options li > a {
+	color: rgb(var(--dark));
+	text-decoration: none;
+	display: block;
+	padding: 5px 10px;
+}
+
+.hu-megamenu-cell-options li:hover {
+	background: #dfe8fb;
+}
+
+.hu-megamenu-popover {
+	position: absolute;
+	top: calc(50% - 100px);
+	left: calc(50% - 100px);
+	background: #fff;
+	width: 400px;
+	height: 200px;
+	border-radius: 10px;
+	box-shadow: 0px 8px 20px 20px #9e9e9ea6;
+	display: none;
+}
+
+.hu-megamenu-popover.show {
+	display: block;
+}
+
+.hu-megamenu-popover-body {
+	margin: 20px 0 50px 0;
+	padding: 0 20px;
+}
+
+.hu-megamenu-popover-footer {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.hu-megamenu-popover-heading {
+	position: relative;
+	padding: 10px 20px;
+}
+
+.hu-megamenu-popover-heading .hu-megamenu-popover-close {
+	position: absolute;
+	top: 5px;
+	right: -5px;
+	color: rgb(var(--dark));
+	outline: none;
 }

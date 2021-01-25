@@ -4,6 +4,7 @@
  * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
 /*Media Modal*/
 .hu-modal-open,
@@ -32,16 +33,16 @@
 	position: fixed;
 	top: 50px;
 	left: 50%;
-	width: 820px;
+	width: 1000px;
 	height: 600px;
 	max-width: 100%;
 	max-height: 100%;
 	z-index: 9991;
-	background: #fff;
+	background: #E5E5E5;
 	border-radius: 8px;
-	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.07);
-	transform: translateX(-50%);
 	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+	font-family: 'Roboto', sans-serif;
 }
 
 .hu-modal-small {
@@ -69,18 +70,19 @@
 	left: 0;
 	width: 100%;
 	display: flex;
-	background: #dee7fb;
-	border-bottom: 1px solid rgba(51, 102, 255, 0.14);
-	height: 60px;
+	background: #E0E7F9;
+	box-shadow: inset 0px -1px 0px #C9D4F9;
+	height: 53px;
 	border-radius: 8px 8px 0 0;
-	padding: 0 20px;
+	padding: 0 20px 0 24px;
 	z-index: 99;
 	align-items: center;
+	justify-content: space-between;
 }
 
 .hu-modal-header-title,
 .hu-options-modal-header-title {
-	font-size: 14px;
+	font-size: 18px;
 	font-weight: 500;
 	color: rgb(var(--primary));
 	margin: 0;
@@ -138,24 +140,17 @@
 
 .action-hu-modal-close,
 .action-hu-options-modal-close {
-	background-color: #f53d62;
-	border-radius: 25px;
-	color: #fff;
-	height: 30px;
+	color: #676D98;
 	line-height: 30px;
-	position: absolute;
-	right: -15px;
+	font-size: 16px;
 	text-align: center;
-	top: -15px;
-	width: 30px;
 	z-index: 3;
 	transition: color 400ms, background-color 400ms;
 }
 
 .action-hu-modal-close:hover,
 .action-hu-options-modal-close:hover {
-	background-color: #f20d3b;
-	color: #fff;
+	color: rgb(var(--primary));
 }
 
 .hu-media-breadcrumb {
@@ -204,6 +199,7 @@
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	border-radius: 8px;
 }
 
 .hu-modal-preloader {
@@ -222,10 +218,10 @@
 #hu-media-manager,
 .hu-modal-content {
 	position: absolute;
-	top: 80px;
-	left: 20px;
-	right: 20px;
-	bottom: 20px;
+	top: 68px;
+	left: 15px;
+	right: 15px;
+	bottom: 15px;
 	overflow-y: auto;
 }
 
@@ -240,7 +236,7 @@
 
 .hu-modal-content,
 .hu-options-modal-content {
-	bottom: 80px;
+	bottom: 75px;
 }
 
 .hu-options-modal-content > .control-group:first-child {

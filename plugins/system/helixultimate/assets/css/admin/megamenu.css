@@ -3,13 +3,13 @@
 }
 
 .hu-megamenu-container .hu-megamenu-sidebar {
-	width: 30%;
+	width: 220px;
 	background: #fff;
-	min-height: 438px;
+	min-height: 492px;
 	border-radius: 3px;
 	box-shadow: 1px 1px 0px 0px #dee2e6;
 	margin-right: 20px;
-	padding: 10px;
+	padding: 15px;
 }
 
 .hu-megamenu-settings {
@@ -17,6 +17,12 @@
 }
 .hu-megamenu-settings.show {
 	display: block;
+}
+
+.hu-megamenu-settings .control-group {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .hu-megamenu-grid {

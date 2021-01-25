@@ -43,10 +43,10 @@ jQuery(function ($) {
 
 		megaMenuModal += '<div class="hu-modal-header">';
 
+		
+		megaMenuModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
 		megaMenuModal +=
 			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
-
-		megaMenuModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
 		megaMenuModal += '</div>';
 
 		megaMenuModal += '<div class="hu-modal-inner">';

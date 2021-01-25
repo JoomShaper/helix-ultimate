@@ -29,6 +29,7 @@ class HelixultimateFieldAlignment
 		$value = !empty($attr['value']) ? $attr['value'] : (isset($attr['default']) ? $attr['default'] : '');
 		$dataAttrs = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
+		$className = $attr['class'] ?? '';
 
 		if (!empty($attr['data']))
 		{
@@ -38,7 +39,7 @@ class HelixultimateFieldAlignment
 			}
 		}
 
-		$output  = '<div class="control-group hu-field-alignment">';
+		$output  = '<div class="control-group hu-field-alignment ' . $className. '">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

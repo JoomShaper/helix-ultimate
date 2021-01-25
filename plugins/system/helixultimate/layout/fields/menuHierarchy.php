@@ -34,6 +34,7 @@ class HelixultimateFieldMenuHierarchy
 		$dataAttrs = '';
 		$value = isset($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+		$className = $attr['class'] ?? '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
 
 		if ($depend)
@@ -60,7 +61,7 @@ class HelixultimateFieldMenuHierarchy
 		}
 
 		$html = [];
-		$html[]  = '<div class="control-group hu-menu-hierarchy-container ' . $key . '" ' . $dataShowon . '>';
+		$html[]  = '<div class="control-group hu-menu-hierarchy-container ' . $key . ' ' . $className . '" ' . $dataShowon . '>';
 		$html[] = '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

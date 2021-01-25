@@ -101,6 +101,10 @@ var megaMenu = {
 					columnId - 1
 				] || { items: [] };
 
+				if (column.items === undefined) column.items = [];
+
+				console.log(column);
+
 				const data = {
 					type,
 					item_id,

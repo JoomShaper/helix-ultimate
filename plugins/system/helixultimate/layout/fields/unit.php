@@ -86,7 +86,7 @@ class HelixultimateFieldUnit
 		}
 
 		$output .= '<div class="hu-input-group">';
-		$output .= '<input type="number" step="0.01" class="hu-field-dimension-width form-control" value="' . $value . '" />';
+		$output .= '<input type="number" min="0" max="3000" step="0.01" class="hu-field-dimension-width form-control" value="' . $value . '" />';
 		$output .= '<select class="hu-unit">';
 		$output .= 		'<option value="px" ' . ($unit === 'px' ? 'selected' : '') . '>px</option>';
 		$output .= 		'<option value="em" ' . ($unit === 'em' ? 'selected' : '') . '>em</option>';

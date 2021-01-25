@@ -1891,15 +1891,7 @@ select {
 	-moz-appearance: none;
   appearance: none;
 }
-.hu-mega-menu-builder .control-group select {
-  height: 30px;
-  width: 88px;
-  color: #021153;
-  font-size: 12px;
-  font-weight: 500;
-  background-position: right 3px center;
-  background-size: 16px 10px;
-}
+
 select:focus,
 textarea:focus,
 input[type='text']:focus,
@@ -1950,7 +1942,6 @@ select:focus::-ms-value {
 }
 
 .control-group.hu-style-switcher label {
-	font-size: 12px;
 	font-weight: 500;
 	display: flex;
 	align-items: center;
@@ -3595,24 +3586,4 @@ input[type='color'] {
 .hu-typography-wrapper .minicolors-theme-bootstrap .minicolors-panel {
 	left: auto !important;
 	right: 0;
-}
-.minicolors.minicolors-theme-bootstrap .minicolors-input {
-	background: #FFFFFF;
-	border: 1px solid rgba(121, 127, 167, 0.3);
-	box-sizing: border-box;
-	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
-	border-radius: 5px;
-	height: 30px;
-  width: 130px;
-  padding: 5px 5px 5px 65px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.minicolors.minicolors-theme-bootstrap .minicolors-swatch {
-  width: 53px;
-  height: 18px;
-  top: 6px;
-  border-radius: 3px;
-  border: none;
-  background-position: 53px;
 }

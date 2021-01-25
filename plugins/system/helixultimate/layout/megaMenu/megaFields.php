@@ -80,7 +80,7 @@ class MegaFields
                 'internal' => true,
             ],
             'width' => [
-                'type' => 'text',
+                'type' => 'unit',
                 'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
                 'menu-builder' => true,
                 'data' => ['itemid' => $this->itemId],

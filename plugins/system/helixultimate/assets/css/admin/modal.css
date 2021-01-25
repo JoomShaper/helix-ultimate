@@ -104,9 +104,10 @@
 	left: 0;
 	width: 100%;
 	display: flex;
-	background: #dee7fb;
-	border-top: 1px solid rgba(51, 102, 255, 0.14);
-	height: 60px;
+	background: #E0E7F9;
+	box-shadow: inset 0px 1px 0px #C9D4F9;
+	border-radius: 0px 0px 8px 8px;
+	height: 62px;
 	border-radius: 0 0 8px 8px;
 	padding: 0 20px;
 	z-index: 99;
@@ -115,6 +116,20 @@
 
 .hu-modal-footer.footer-right {
 	justify-content: flex-end !important;
+}
+.hu-modal-footer .hu-btn{
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 500;
+}
+.hu-modal-footer .hu-megamenu-cancel-btn {
+	color: #676D98;
+}
+.hu-modal-footer .hu-megamenu-save-btn {
+	color: #fff;
+}
+.hu-modal-footer .hu-megamenu-cancel-btn:hover {
+	color: rgb(var(--primary));
 }
 
 .hu-modal-breadcrumbs {

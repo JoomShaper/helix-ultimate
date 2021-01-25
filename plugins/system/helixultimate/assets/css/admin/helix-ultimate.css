@@ -1885,13 +1885,21 @@ input[type='color'],
 select {
 	background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
 	background-repeat: no-repeat;
-	background-position: right 1px center;
-	background-size: 16px 10px;
+	background-position: right 10px center;
+	background-size: 16px 12px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
-	appearance: none;
+  appearance: none;
 }
-
+.hu-mega-menu-builder .control-group select {
+  height: 30px;
+  width: 88px;
+  color: #021153;
+  font-size: 12px;
+  font-weight: 500;
+  background-position: right 3px center;
+  background-size: 16px 10px;
+}
 select:focus,
 textarea:focus,
 input[type='text']:focus,
@@ -1935,8 +1943,9 @@ select:focus::-ms-value {
 }
 
 .control-group label {
-	font-size: 13px;
-	color: rgb(var(--dark));
+	display: block;
+	font-size: 12px;
+	color: rgba(var(--dark), .7);
 	margin: 0 0 5px 0;
 }
 
@@ -3586,4 +3595,24 @@ input[type='color'] {
 .hu-typography-wrapper .minicolors-theme-bootstrap .minicolors-panel {
 	left: auto !important;
 	right: 0;
+}
+.minicolors.minicolors-theme-bootstrap .minicolors-input {
+	background: #FFFFFF;
+	border: 1px solid rgba(121, 127, 167, 0.3);
+	box-sizing: border-box;
+	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
+	border-radius: 5px;
+	height: 30px;
+  width: 130px;
+  padding: 5px 5px 5px 65px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.minicolors.minicolors-theme-bootstrap .minicolors-swatch {
+  width: 53px;
+  height: 18px;
+  top: 6px;
+  border-radius: 3px;
+  border: none;
+  background-position: 53px;
 }

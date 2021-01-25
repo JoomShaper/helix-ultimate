@@ -8,6 +8,7 @@
 namespace HelixUltimate\Framework\HttpResponse;
 
 use HelixUltimate\Framework\Platform\Builders\MegaMenuBuilder;
+use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
@@ -408,6 +409,64 @@ class Response
 			'status' => true,
 			'data' => $rowHTML,
 			'row' => $rowData
+		];
+	}
+
+	/**
+	 * Generate popover for manipulating the menu item.
+	 *
+	 * @return	array	The response array.
+	 * @since	2.0.0
+	 */
+	public static function generatePopoverContents()
+	{
+		$input = Factory::getApplication()->input;
+		
+		// The menu item id
+		$itemId = $input->post->get('itemId', 0, 'INT');
+		$type = $input->post->get('type', 'module', 'STRING');
+
+		// The element_id based on the type. If the type is menuItem,
+		// then element_id is the menu item id.
+		// If the type is module then id is the module id.
+		// $elementId = $input->post->get('elementId', 0, 'INT');
+
+		$builder = new MegaMenuBuilder($itemId); 
+
+		$html = [];
+
+		if ($type === 'module')
+		{
+			$modules = Helper::getModules();
+			$html = [];
+			$html[] = '<select class="hu-input hu-megamenu-module" data-type="module">';
+		
+			foreach ($modules as $module)
+			{
+				$html[] = '<option value="' . $module->id . '">' . $module->title . '</option>';
+			}
+
+			$html[] = '</select>';
+		}
+		elseif ($type === 'menu')
+		{
+			$children = $builder->getItemChildren();
+			$html = [];
+			$html[] = '<select class="hu-input hu-megamenu-module" data-type="menu">';
+
+			foreach ($children as $child)
+			{
+				$html[] = '<option value="' . $child->id . '">' . $child->title . '</option>';
+			}
+
+			$html[] = '</select>';
+		}
+
+
+		return [
+			'status' => true,
+			'html' => implode("\n", $html),
+			// 'data' => $item_id
 		];
 	}
 }

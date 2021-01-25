@@ -49,4 +49,19 @@ $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
     <div class="hu-megamenu-add-slots">
         <?php echo (new FileLayout('megaMenu.slots', HELIX_LAYOUT_PATH))->render(); ?>
     </div>
+
+    <div class="hu-megamenu-popover">
+        <div class="hu-megamenu-popover-heading">
+            <h5 class="title">Select Module</h5>
+            <button class="hu-btn hu-btn-link hu-megamenu-popover-close">
+                <span class="fas fa-times"></span>
+            </button>
+        </div>
+        <div class="hu-megamenu-popover-body">
+            
+        </div>
+        <div class="hu-megamenu-popover-footer">
+            <button class="hu-btn hu-btn-primary">Apply</button>
+        </div>
+    </div>
 </div>

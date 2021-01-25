@@ -113,6 +113,7 @@
 }
 
 .hu-megamenu-add-new-item {
+	width: 100%;
 	text-align: center;
 	margin-top: 10px;
 	border: 1px dashed #96b4f5;
@@ -228,4 +229,74 @@
 	.hu-megamenu-column-layout.active
 	.hu-megamenu-column-layout-name {
 	color: rgb(var(--primary));
+}
+
+.hu-megamenu-add-item-wrapper {
+	position: relative;
+}
+.hu-megamenu-cell-options {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background: #fff;
+	box-shadow: 1px 2px 6px 0px #a1a1a1;
+	margin-top: 10px;
+	border-radius: 5px;
+	position: absolute;
+	width: 100%;
+	top: 35px;
+	left: 10px;
+}
+.hu-megamenu-cell-options li {
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.hu-megamenu-cell-options li > a {
+	color: rgb(var(--dark));
+	text-decoration: none;
+	display: block;
+	padding: 5px 10px;
+}
+
+.hu-megamenu-cell-options li:hover {
+	background: #dfe8fb;
+}
+
+.hu-megamenu-popover {
+	position: absolute;
+	top: calc(50% - 100px);
+	left: calc(50% - 100px);
+	background: #fff;
+	width: 400px;
+	height: 200px;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 8px 8px 10px 0px #9e9e9ea6;
+	display: none;
+}
+
+.hu-megamenu-popover.show {
+	display: block;
+}
+
+.hu-megamenu-popover-body {
+	margin: 20px 0 50px 0;
+}
+
+.hu-megamenu-popover-footer {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.hu-megamenu-popover-heading {
+	position: relative;
+}
+
+.hu-megamenu-popover-heading .hu-megamenu-popover-close {
+	position: absolute;
+	top: -20px;
+	right: -30px;
+	color: rgb(var(--dark));
+	outline: none;
 }

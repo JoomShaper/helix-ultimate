@@ -15,9 +15,13 @@ use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
+$badgeText = $cell->type === 'module' ? 'Module' : 'Menu';
 ?>
 
 <div class="hu-megamenu-cell" data-rowid="<?php echo $rowId; ?>" data-columnid="<?php echo $columnId; ?>" data-cellid="<?php echo $cellId; ?>">
-	<span><?php echo $cell->type; ?></span>
-	<span><?php echo $cell->item_id; ?></span>	
+	<span><?php echo $builder->getTitle($cell); ?></span>
+	<small class="hu-badge hu-badge-primary"><?php echo $badgeText; ?></small>
+	<button class="hu-btn hu-btn-link hu-megamenu-cell-remove">
+		<span class="fas fa-times-circle"></span>
+	</button>
 </div>

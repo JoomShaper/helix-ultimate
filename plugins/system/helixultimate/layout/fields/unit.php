@@ -11,11 +11,11 @@ defined('_JEXEC') or die();
 use HelixUltimate\Framework\Platform\Settings;
 
 /**
- * Select field
+ * Measurement unit field.
  *
- * @since	1.0.0
+ * @since	 2.0.0
  */
-class HelixultimateFieldSelect
+class HelixultimateFieldUnit
 {
 	/**
 	 * Get input for the field.
@@ -28,12 +28,11 @@ class HelixultimateFieldSelect
 	 */
 	public static function getInput($key, $attr)
 	{
-		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
+		$attributes = (isset($attr['placeholder']) && $attr['placeholder']) ? 'placeholder="' . $attr['placeholder'] . '"' : '';
+		$className = $attr['class'] ?? '';
 
 		$value = !empty($attr['value']) ? $attr['value'] : '';
-		$options = !empty($attr['options']) ? $attr['options'] : (!empty($attr['values']) ? $attr['values'] : []);
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
-		$className = $attr['class'] ?? '';
 		$dataAttrs = '';
 		$dataShowon = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
@@ -52,7 +51,7 @@ class HelixultimateFieldSelect
 			}
 		}
 
-		$output  = '<div class="control-group ' . $className . ' ' . $key . '" ' . $dataShowon . '>';
+		$output  = '<div class="control-group ' . $className . '" ' . $dataShowon . ' >';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))
@@ -61,21 +60,40 @@ class HelixultimateFieldSelect
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
 
-		if ($isMenuBuilder)
+		// By default the unit is px.
+		$unit = 'px';
+
+		if (!empty($value))
 		{
-			$output .= '<select class="hu-input input-select hu-megamenu-builder-' . $key . $internal . '" name="' . $key . '" ' . $dataAttrs . '>';
-		}
-		else
-		{
-			$output .= '<select class="hu-input input-select" data-attrname="' . $key . '">';
+			$matches = [];
+
+			if (preg_match("@(\d+)(px|em|rem|%)$@", $value, $matches))
+			{
+				if (count($matches) >= 3)
+				{
+					$value = $matches[1];
+					$unit = strtolower($matches[2]);
+				}
+				else
+				{
+					$value = (int) $value;
+				}
+			}
+			else
+			{
+				$value = (int) $value;
+			}
 		}
 
-		foreach ($options as $key => $text)
-		{
-			$output .= '<option value="' . $key . '" ' . ($key === $value ? 'selected="selected"' : '') . '>' . $text . '</option>';
-		}
-
+		$output .= '<div class="hu-input-group">';
+		$output .= '<input type="number" step="0.01" class="hu-field-dimension-width form-control" value="' . $value . '" />';
+		$output .= '<select class="hu-unit">';
+		$output .= 		'<option value="px" ' . ($unit === 'px' ? 'selected' : '') . '>px</option>';
+		$output .= 		'<option value="em" ' . ($unit === 'em' ? 'selected' : '') . '>em</option>';
+		$output .= 		'<option value="rem" ' . ($unit === 'rem' ? 'selected' : '') . '>rem</option>';
+		$output .= 		'<option value="%" ' . ($unit === '%' ? 'selected' : '') . '>%</option>';
 		$output .= '</select>';
+		$output .= '</div>';
 
 		$output .= '</div>';
 

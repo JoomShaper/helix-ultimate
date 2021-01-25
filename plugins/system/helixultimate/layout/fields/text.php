@@ -30,6 +30,7 @@ class HelixultimateFieldText
 	{
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
 		$attributes = (isset($attr['placeholder']) && $attr['placeholder']) ? 'placeholder="' . $attr['placeholder'] . '"' : '';
+		$className = $attr['class'] ?? '';
 
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
@@ -51,7 +52,7 @@ class HelixultimateFieldText
 			}
 		}
 
-		$output  = '<div class="control-group" ' . $dataShowon . ' >';
+		$output  = '<div class="control-group ' . $className . '" ' . $dataShowon . ' >';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

@@ -33,6 +33,7 @@ class HelixultimateFieldMenuType
 
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
+		$className = $attr['class'] ?? '';
 		$dataAttrs = '';
 		$dataShowon = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
@@ -51,7 +52,7 @@ class HelixultimateFieldMenuType
 			}
 		}
 
-		$output  = '<div class="control-group" ' . $dataShowon . ' >';
+		$output  = '<div class="control-group ' . $className . '" ' . $dataShowon . ' >';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))

@@ -61,7 +61,7 @@ $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
             
         </div>
         <div class="hu-megamenu-popover-footer">
-            <button class="hu-btn hu-btn-primary">Apply</button>
+            <button class="hu-btn hu-btn-primary hu-megamenu-popover-apply">Add</button>
         </div>
     </div>
 </div>

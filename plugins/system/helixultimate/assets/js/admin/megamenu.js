@@ -30,6 +30,8 @@ var megaMenu = {
 		this.handlePopover();
 		this.handleClosePopover();
 
+		this.handleAddNewCell();
+
 		this.toggleColumnsSlots();
 		console.log(settingsData);
 	},
@@ -81,12 +83,81 @@ var megaMenu = {
 		baseUrl = $('#hu-base-url').val();
 	},
 
+	handleAddNewCell() {
+		const self = this;
+		$(document).on(
+			'click',
+			'.hu-megamenu-popover-apply',
+			async function () {
+				const $select = $(this)
+					.closest('.hu-megamenu-popover')
+					.find('select');
+				const item_id = $select.val();
+				const type = $select.data('type');
+				const rowId = $select.data('rowid');
+				const columnId = $select.data('columnid');
+
+				const column = settingsData.layout[rowId - 1].attr[
+					columnId - 1
+				] || { items: [] };
+
+				const data = {
+					type,
+					item_id,
+					itemId,
+					rowId,
+					columnId,
+					cellId: column.items.length + 1,
+				};
+
+				const res = await self.addNewCell(data);
+
+				if (res.status) {
+					$(
+						`.hu-megamenu-row-wrapper[data-rowid=${rowId}] .hu-megamenu-col[data-columnid=${columnId}] .hu-megamenu-column-contents`
+					).append(res.html);
+
+					self.closePopover();
+					column.items.push({ type, item_id });
+					settingsData.layout[rowId - 1].attr[columnId - 1] = column;
+				}
+			}
+		);
+	},
+
+	addNewCell(data) {
+		let url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generateNewCell`;
+
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				method: 'POST',
+				url,
+				data,
+				success(res) {
+					res =
+						typeof res === 'string' && res.length > 0
+							? JSON.parse(res)
+							: false;
+					resolve(res);
+				},
+				error(err) {
+					reject(err);
+				},
+			});
+		});
+	},
+
 	handlePopover() {
 		const self = this;
 		$(document).on('click', '.hu-megamenu-cell-options-item', function () {
 			self.closeItemDropdown();
 			const type = $(this).data('type');
 			const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generatePopoverContents`;
+			const row =
+				$(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
+			const column =
+				$(this).closest('.hu-megamenu-col').data('columnid') || 1;
+
 			const data = {
 				itemId,
 				type,
@@ -111,6 +182,13 @@ var megaMenu = {
 						$popover
 							.find('.hu-megamenu-popover-body')
 							.html(res.html);
+
+						$popover
+							.find('select')
+							.data('rowid', row)
+							.data('columnid', column)
+							.attr('data-rowid', row)
+							.attr('data-columnid', column);
 					}
 				},
 			});
@@ -232,6 +310,7 @@ var megaMenu = {
 		$(document).off('click', '.hu-megamenu-add-new-item');
 		$(document).off('click', '.hu-megamenu-cell-options-item');
 		$(document).off('click', '.hu-megamenu-popover-close');
+		$(document).off('click', '.hu-megamenu-popover-apply');
 		$(document).off(
 			'click',
 			'.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)'

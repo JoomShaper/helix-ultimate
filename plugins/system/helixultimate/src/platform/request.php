@@ -201,6 +201,10 @@ class Request
 			case 'generatePopoverContents':
 				$this->report = Response::generatePopoverContents();
 				break;
+
+			case 'generateNewCell':
+				$this->report = Response::generateNewCell();
+				break;
 		}
 
 		echo json_encode($this->report);

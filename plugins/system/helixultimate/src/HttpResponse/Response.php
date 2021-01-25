@@ -426,11 +426,6 @@ class Response
 		$itemId = $input->post->get('itemId', 0, 'INT');
 		$type = $input->post->get('type', 'module', 'STRING');
 
-		// The element_id based on the type. If the type is menuItem,
-		// then element_id is the menu item id.
-		// If the type is module then id is the module id.
-		// $elementId = $input->post->get('elementId', 0, 'INT');
-
 		$builder = new MegaMenuBuilder($itemId); 
 
 		$html = [];
@@ -440,7 +435,7 @@ class Response
 			$modules = Helper::getModules();
 			$html = [];
 			$html[] = '<select class="hu-input hu-megamenu-module" data-type="module">';
-		
+			$html[] = '<option value="">Select Module</option>';
 			foreach ($modules as $module)
 			{
 				$html[] = '<option value="' . $module->id . '">' . $module->title . '</option>';
@@ -452,7 +447,8 @@ class Response
 		{
 			$children = $builder->getItemChildren();
 			$html = [];
-			$html[] = '<select class="hu-input hu-megamenu-module" data-type="menu">';
+			$html[] = '<select class="hu-input hu-megamenu-menuitem" data-type="menu_item">';
+			$html[] = '<option value="">Select Menu Item</option>';
 
 			foreach ($children as $child)
 			{
@@ -465,8 +461,40 @@ class Response
 
 		return [
 			'status' => true,
-			'html' => implode("\n", $html),
-			// 'data' => $item_id
+			'html' => implode("\n", $html)		
+		];
+	}
+
+	public static function generateNewCell()
+	{
+		$input = Factory::getApplication()->input;
+		
+		$itemId 	= $input->post->get('itemId', 0, 'INT');
+		$type 		= $input->post->get('type', 'module', 'STRING');
+		$elementId 	= $input->post->get('item_id', 0, 'INT');
+		$rowId 		= $input->post->get('rowId', 0, 'INT');
+		$columnId 	= $input->post->get('columnId', 0, 'INT');
+		$cellId 	= $input->post->get('cellId', 0, 'INT');
+
+		$builder = new MegaMenuBuilder($itemId);
+
+		$cell = new \stdClass;
+		$cell->type = $type;
+		$cell->item_id = $elementId;
+
+		$cellLayout = new FileLayout('megaMenu.cell', HELIX_LAYOUT_PATH);
+		$html = $cellLayout->render([
+			'itemId' => $itemId,
+			'builder' => $builder,
+			'cell' => $cell,
+			'rowId' => $rowId,
+			'columnId' => $columnId,
+			'cellId' => $cellId
+		]);
+
+		return [
+			'status' => true,
+			'html' => $html
 		];
 	}
 }

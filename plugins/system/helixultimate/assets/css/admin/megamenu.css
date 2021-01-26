@@ -336,3 +336,14 @@
   border: none;
   background-position: 53px;
 }
+
+.hu-mega-menu-builder .control-group.hu-style-switcher label {
+	font-size: 12px;
+	font-weight: 500;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.hu-mega-menu-builder .control-group.hu-style-switcher > div {
+	width: 100%;
+}

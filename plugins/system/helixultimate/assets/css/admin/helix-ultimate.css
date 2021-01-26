@@ -1936,19 +1936,9 @@ select:focus::-ms-value {
 
 .control-group label {
 	display: block;
-	font-size: 12px;
+	font-size: 13px;
 	color: rgba(var(--dark), .7);
 	margin: 0 0 5px 0;
-}
-
-.control-group.hu-style-switcher label {
-	font-weight: 500;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-.control-group.hu-style-switcher > div {
-	width: 100%;
 }
 
 .hu-field-list > div:first-child {

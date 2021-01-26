@@ -8,6 +8,7 @@
 namespace HelixUltimate\Framework\HttpResponse;
 
 use HelixUltimate\Framework\Platform\Builders\MegaMenuBuilder;
+use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
@@ -408,6 +409,92 @@ class Response
 			'status' => true,
 			'data' => $rowHTML,
 			'row' => $rowData
+		];
+	}
+
+	/**
+	 * Generate popover for manipulating the menu item.
+	 *
+	 * @return	array	The response array.
+	 * @since	2.0.0
+	 */
+	public static function generatePopoverContents()
+	{
+		$input = Factory::getApplication()->input;
+		
+		// The menu item id
+		$itemId = $input->post->get('itemId', 0, 'INT');
+		$type = $input->post->get('type', 'module', 'STRING');
+
+		$builder = new MegaMenuBuilder($itemId); 
+
+		$html = [];
+
+		if ($type === 'module')
+		{
+			$modules = Helper::getModules();
+			$html = [];
+			$html[] = '<select class="hu-input hu-megamenu-module" data-type="module">';
+			$html[] = '<option value="">Select Module</option>';
+			foreach ($modules as $module)
+			{
+				$html[] = '<option value="' . $module->id . '">' . $module->title . '</option>';
+			}
+
+			$html[] = '</select>';
+		}
+		elseif ($type === 'menu')
+		{
+			$children = $builder->getItemChildren();
+			$html = [];
+			$html[] = '<select class="hu-input hu-megamenu-menuitem" data-type="menu_item">';
+			$html[] = '<option value="">Select Menu Item</option>';
+
+			foreach ($children as $child)
+			{
+				$html[] = '<option value="' . $child->id . '">' . $child->title . '</option>';
+			}
+
+			$html[] = '</select>';
+		}
+
+
+		return [
+			'status' => true,
+			'html' => implode("\n", $html)		
+		];
+	}
+
+	public static function generateNewCell()
+	{
+		$input = Factory::getApplication()->input;
+		
+		$itemId 	= $input->post->get('itemId', 0, 'INT');
+		$type 		= $input->post->get('type', 'module', 'STRING');
+		$elementId 	= $input->post->get('item_id', 0, 'INT');
+		$rowId 		= $input->post->get('rowId', 0, 'INT');
+		$columnId 	= $input->post->get('columnId', 0, 'INT');
+		$cellId 	= $input->post->get('cellId', 0, 'INT');
+
+		$builder = new MegaMenuBuilder($itemId);
+
+		$cell = new \stdClass;
+		$cell->type = $type;
+		$cell->item_id = $elementId;
+
+		$cellLayout = new FileLayout('megaMenu.cell', HELIX_LAYOUT_PATH);
+		$html = $cellLayout->render([
+			'itemId' => $itemId,
+			'builder' => $builder,
+			'cell' => $cell,
+			'rowId' => $rowId,
+			'columnId' => $columnId,
+			'cellId' => $cellId
+		]);
+
+		return [
+			'status' => true,
+			'html' => $html
 		];
 	}
 }

@@ -44,7 +44,12 @@
 	transform: translateX(-50%);
 	font-family: 'Roboto', sans-serif;
 }
-
+.hu-mega-menu-builder.collapsed {
+	width: 250px;
+}
+.hu-modal.collapsed .hu-megamenu-container .hu-megamenu-sidebar {
+	margin-right: 0;
+}
 .hu-modal-small {
 	top: 5%;
 	width: 420px;
@@ -237,7 +242,6 @@
 	left: 15px;
 	right: 15px;
 	bottom: 15px;
-	/* overflow-y: auto; */
 }
 
 .hu-options-modal-content {

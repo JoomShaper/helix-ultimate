@@ -129,8 +129,31 @@
 	font-size: 12px;
 	color: #021153;
 	margin-top: 7px;
+	position: relative;
 }
 
+.hu-megamenu-cell .hu-btn,
+.hu-megamenu-cell .hu-badge {
+	position: absolute;
+	top: 5px;
+	right: 8px;
+	transition: 0.35s;
+}
+.hu-megamenu-cell .hu-btn {
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+}
+.hu-megamenu-cell:hover .hu-badge {
+	opacity: 0;
+	pointer-events: none;
+	visibility: hidden;
+}
+.hu-megamenu-cell:hover .hu-btn {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: all;
+}
 .hu-column-sortable-placeholder {
 	border: 1px dashed #222;
 	min-height: 100px;
@@ -419,4 +442,14 @@
 }
 .hu-mega-menu-builder .control-group.hu-style-switcher > div {
 	width: 100%;
+}
+.hu-mega-menu-builder .minicolors-theme-bootstrap.minicolors-position-bottom .minicolors-panel {
+	left: 0 !important;
+	top: -175px  !important;
+}
+.hu-mega-menu-builder .hu-megamenu-cell-remove {
+	font-size: 12px;
+	padding: 0;
+	color: #676d98;
+	outline: 0;
 }

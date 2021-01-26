@@ -158,7 +158,9 @@
 	width: 320px;
 	text-align: right;
 }
-
+.hu-modal-actions-right .action-hu-modal-close {
+	margin-left: 20px;
+}
 .action-hu-modal-close,
 .action-hu-options-modal-close {
 	color: #676d98;

@@ -131,6 +131,7 @@
 	color: #021153;
 	margin-top: 7px;
 	position: relative;
+	min-height: 26px;
 }
 
 .hu-megamenu-cell .hu-btn,
@@ -178,6 +179,12 @@
 	padding: 2px 0;
 	cursor: pointer;
 	font-size: 12px;
+	outline: 0 !important;
+	transition: 0.35s;
+}
+.hu-megamenu-add-new-item:hover,
+.hu-megamenu-add-new-item:focus {
+	border-color: rgb(var(--primary));
 }
 .hu-megamenu-add-new-item span {
 	color: rgb(var(--primary));
@@ -191,7 +198,7 @@
 	display: none;
 	z-index: 1;
 	box-shadow: 0 0 10px 0 #22222285;
-	max-width: 500px;
+	width: 500px;
 	top: 40px;
 	right: 10px;
 }
@@ -463,4 +470,26 @@
 	padding: 0;
 	color: #676d98;
 	outline: 0;
+}
+
+.hu-mega-menu-builder .chzn-container.chzn-container-active .chzn-drop {
+	left: auto;
+}
+.hu-mega-menu-builder .chzn-container.chzn-container-single .chzn-drop {
+	width: 190px;
+	right: 0;
+	top: 40px;
+	border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+.hu-mega-menu-builder .chzn-container.chzn-container-single .chzn-single {
+	background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+	background-repeat: no-repeat;
+	background-size: 16px 10px;
+	background-position: right 3px center;
+}
+.hu-mega-menu-builder .chzn-container.chzn-container-single .chzn-single div {
+	display: none;
+}
+.hu-mega-menu-builder .chzn-container.chzn-container-single.chzn-container-active.chzn-with-drop .chzn-single {
+	border-radius: 0.25rem;
 }

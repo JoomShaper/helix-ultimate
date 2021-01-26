@@ -190,7 +190,7 @@
 	display: none;
 	z-index: 1;
 	box-shadow: 0 0 10px 0 #22222285;
-	max-width: 500px;
+	width: 500px;
 	top: 40px;
 	right: 10px;
 }

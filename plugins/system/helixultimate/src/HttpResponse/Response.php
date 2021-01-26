@@ -434,7 +434,7 @@ class Response
 		{
 			$modules = Helper::getModules();
 			$html = [];
-			$html[] = '<select class="hu-input hu-megamenu-module" data-type="module">';
+			$html[] = '<select class="hu-input hu-megamenu-module" data-type="module" data-husearch="1">';
 			$html[] = '<option value="">Select Module</option>';
 			foreach ($modules as $module)
 			{

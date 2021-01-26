@@ -3,6 +3,7 @@ var megaMenu = {
 		this.declareDOMVariables();
 		this.initMiniColors();
 		this.jQueryPluginExtension();
+		this.initChosen();
 
 		this.removeEventListeners();
 
@@ -31,6 +32,7 @@ var megaMenu = {
 		this.handleClosePopover();
 
 		this.handleAddNewCell();
+		this.handleRemoveCell();
 
 		this.toggleColumnsSlots();
 		console.log(settingsData);
@@ -42,6 +44,10 @@ var megaMenu = {
 				return this.css('color', '#fff');
 			},
 		});
+	},
+
+	initChosen() {
+		$('select[data-husearch]').chosen();
 	},
 
 	declareDOMVariables() {
@@ -80,7 +86,34 @@ var megaMenu = {
 			};
 		}
 
+		if (settingsData.layout === undefined) settingsData.layout = [];
+
 		baseUrl = $('#hu-base-url').val();
+	},
+
+	handleRemoveCell() {
+		$(document).on('click', '.hu-megamenu-cell-remove', function () {
+			const cellId =
+				$(this).closest('.hu-megamenu-cell').data('cellid') || 1;
+			const columnId =
+				$(this).closest('.hu-megamenu-col').data('columnid') || 1;
+			const rowId =
+				$(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
+
+			$(this)
+				.closest('.hu-megamenu-cell')
+				.slideUp(function () {
+					$(this).remove();
+					let column =
+						settingsData.layout[rowId - 1].attr[columnId - 1];
+					let items = column.items !== undefined ? column.items : [];
+					items.length > 0 && items.splice(cellId - 1, 1);
+					settingsData.layout[rowId - 1].attr[
+						columnId - 1
+					].items = items;
+					console.log(settingsData);
+				});
+		});
 	},
 
 	handleAddNewCell() {
@@ -102,8 +135,6 @@ var megaMenu = {
 				] || { items: [] };
 
 				if (column.items === undefined) column.items = [];
-
-				console.log(column);
 
 				const data = {
 					type,
@@ -193,6 +224,7 @@ var megaMenu = {
 							.data('columnid', column)
 							.attr('data-rowid', row)
 							.attr('data-columnid', column);
+						self.initChosen();
 					}
 				},
 			});
@@ -315,6 +347,7 @@ var megaMenu = {
 		$(document).off('click', '.hu-megamenu-cell-options-item');
 		$(document).off('click', '.hu-megamenu-popover-close');
 		$(document).off('click', '.hu-megamenu-popover-apply');
+		$(document).off('click', '.hu-megamenu-cell-remove');
 		$(document).off(
 			'click',
 			'.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)'
@@ -395,7 +428,7 @@ var megaMenu = {
 			'.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)',
 			async function (e) {
 				e.preventDefault();
-
+				console.log('data', settingsData);
 				const layout = $(this).data('layout') || '12';
 				const rowId = settingsData.layout.length + 1;
 				const response = await self.generateRow(layout, rowId, itemId);
@@ -513,7 +546,6 @@ var megaMenu = {
 			item = columns.splice(prev, 1);
 		columns.splice(curr, 0, item[0]);
 		settingsData.layout[rowIndex].attr = columns;
-		console.log(settingsData);
 	},
 
 	/** Swap the item */

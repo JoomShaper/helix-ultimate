@@ -62,7 +62,11 @@ class MegaFields
 
         foreach ($icons as $icon)
         {
-            $options[$icon] = $icon;
+            $iconName = preg_replace("@^fa-@", '', $icon);
+            $iconName = array_map(function($name) {
+                return ucfirst($name);
+            }, explode('-', $iconName));
+            $options[$icon] = implode(' ', $iconName);
         }
 
         return $options;
@@ -114,7 +118,7 @@ class MegaFields
                 'title' => Text::_('HELIX_ULTIMATE_MENU_ICON'),
                 'menu-builder' => true,
                 'options' => $this->getFontOptions(),
-                'data' => ['itemid' => $this->itemId],
+                'data' => ['itemid' => $this->itemId, 'husearch' => 1],
                 'value' => $this->settings->faicon ?? '',
                 'internal' => true,
             ],

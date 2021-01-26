@@ -38,17 +38,18 @@
 	max-width: 100%;
 	max-height: 100%;
 	z-index: 9991;
-	background: #E5E5E5;
+	background: #e5e5e5;
 	border-radius: 8px;
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
 	font-family: 'Roboto', sans-serif;
 }
 .hu-mega-menu-builder.collapsed {
-	width: 250px;
+	width: 350px;
 }
 .hu-modal.collapsed .hu-megamenu-container .hu-megamenu-sidebar {
 	margin-right: 0;
+	width: 320px;
 }
 .hu-modal-small {
 	top: 5%;
@@ -75,8 +76,8 @@
 	left: 0;
 	width: 100%;
 	display: flex;
-	background: #E0E7F9;
-	box-shadow: inset 0px -1px 0px #C9D4F9;
+	background: #e0e7f9;
+	box-shadow: inset 0px -1px 0px #c9d4f9;
 	height: 53px;
 	border-radius: 8px 8px 0 0;
 	padding: 0 20px 0 24px;
@@ -109,8 +110,8 @@
 	left: 0;
 	width: 100%;
 	display: flex;
-	background: #E0E7F9;
-	box-shadow: inset 0px 1px 0px #C9D4F9;
+	background: #e0e7f9;
+	box-shadow: inset 0px 1px 0px #c9d4f9;
 	border-radius: 0px 0px 8px 8px;
 	height: 62px;
 	border-radius: 0 0 8px 8px;
@@ -122,13 +123,13 @@
 .hu-modal-footer.footer-right {
 	justify-content: flex-end !important;
 }
-.hu-modal-footer .hu-btn{
+.hu-modal-footer .hu-btn {
 	text-decoration: none;
 	font-size: 14px;
 	font-weight: 500;
 }
 .hu-modal-footer .hu-megamenu-cancel-btn {
-	color: #676D98;
+	color: #676d98;
 }
 .hu-modal-footer .hu-megamenu-save-btn {
 	color: #fff;
@@ -162,7 +163,7 @@
 }
 .action-hu-modal-close,
 .action-hu-options-modal-close {
-	color: #676D98;
+	color: #676d98;
 	line-height: 30px;
 	font-size: 16px;
 	text-align: center;

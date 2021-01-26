@@ -77,9 +77,9 @@
 	border-radius: 5px;
 }
 
-/* .hu-megamenu-column-contents {
+.hu-megamenu-column-contents {
 	min-height: 10px;
-} */
+}
 
 .hu-megamenu-row-toolbar-left {
 	cursor: ns-resize;
@@ -97,12 +97,13 @@
 }
 .hu-megamenu-row-toolbar-right a {
 	padding: 0;
+	text-decoration: none;
 }
-.hu-megamenu-row-toolbar-right a svg{
+.hu-megamenu-row-toolbar-right a svg {
 	fill: rgba(2, 11, 83, 0.4);
 	transition: 0.35s;
 }
-.hu-megamenu-row-toolbar-right a:hover svg{
+.hu-megamenu-row-toolbar-right a:hover svg {
 	fill: rgba(2, 11, 83, 1);
 }
 .hu-megamenu-row-toolbar-right .hu-megamenu-columns {
@@ -443,9 +444,11 @@
 .hu-mega-menu-builder .control-group.hu-style-switcher > div {
 	width: 100%;
 }
-.hu-mega-menu-builder .minicolors-theme-bootstrap.minicolors-position-bottom .minicolors-panel {
+.hu-mega-menu-builder
+	.minicolors-theme-bootstrap.minicolors-position-bottom
+	.minicolors-panel {
 	left: 0 !important;
-	top: -175px  !important;
+	top: -175px !important;
 }
 .hu-mega-menu-builder .hu-megamenu-cell-remove {
 	font-size: 12px;

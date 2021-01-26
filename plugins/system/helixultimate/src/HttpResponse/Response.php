@@ -49,7 +49,6 @@ class Response
 
 		return [
 			'status' => true,
-			// 'data' => self::generateMenuItemHTML($items, $items, 1),
 			'data' => self::generateMenuTree($items),
 			'items' => $items
 		];
@@ -247,7 +246,7 @@ class Response
 
 		return [
 			'status' => true,
-			'data' => $layout->render(['itemId' => $itemId, 'builder' => $builder])
+			'html' => $layout->render(['itemId' => $itemId, 'builder' => $builder])
 		];
 	}
 
@@ -379,7 +378,6 @@ class Response
 		$rowData = new \stdClass;
 		$rowData->type = 'row';
 		$rowData->attr = [];
-		
 
 		if (!empty($layoutArray))
 		{
@@ -395,8 +393,42 @@ class Response
 			}
 		}
 
+		$builder = new MegaMenuBuilder($itemId);
+		$isNew = \count($builder->getMegaMenuSettings()->layout ?? []) === 0;
+
+		/**
+		 * If no row exists before, then get the child items of the item
+		 *
+		 */
+		if ($isNew)
+		{
+			$children = $builder->getItemChildren();
+			
+			if (!empty($children))
+			{
+				$perColumn = ceil(\count($children) / \count($layoutArray));
+				$chunks = \array_chunk($children, $perColumn);
+
+				foreach ($chunks as $key => $children)
+				{
+					$cells = [];
+
+					foreach ($children as $child)
+					{
+						$tmp = new \stdClass;
+						$tmp->type = 'menu_item';
+						$tmp->item_id = $child->id;
+						$cells[] = $tmp;
+					}
+
+					$rowData->attr[$key]->items = $cells;
+				}
+
+
+			}
+		}
+
 		$rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
-		$builder = new MegaMenuBuilder($itemId); 
 
 		$rowHTML = $rowLayout->render([
 			'itemId' => $itemId,

@@ -22,6 +22,18 @@ if (!empty($settings) && isset($settings->layout))
     $grid = $settings->layout;
 }
 
+/**
+ * Get missing menu item and push them to the first row first column.
+ *
+ */
+$missingItems = $builder->getMissingItems();
+
+if (!empty($missingItems) && isset($grid[0]) && isset($grid[0]->attr[0]))
+{
+    $items = array_merge($grid[0]->attr[0]->items, $missingItems);
+    $grid[0]->attr[0]->items = $items;
+}
+
 $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
 
 ?>

@@ -111,7 +111,6 @@ var megaMenu = {
 					settingsData.layout[rowId - 1].attr[
 						columnId - 1
 					].items = items;
-					console.log(settingsData);
 				});
 		});
 	},
@@ -249,14 +248,15 @@ var megaMenu = {
 	toggleItemDropdown() {
 		const self = this;
 		$(document).on('click', '.hu-megamenu-add-new-item', function (e) {
-			const $options = $(this).parent().find('.hu-megamenu-cell-options');
-			self.closeItemDropdown(null, $options);
+			// const $options = $(this).parent().find('.hu-megamenu-cell-options');
+			// self.closeItemDropdown(null, $options);
 
-			if ($options.hasClass('active')) {
-				$options.slideUp(300).removeClass('active');
-			} else {
-				$options.slideDown(300).addClass('active');
-			}
+			// if ($options.hasClass('active')) {
+			// 	$options.slideUp(300).removeClass('active');
+			// } else {
+			// 	$options.slideDown(300).addClass('active');
+			// }
+			self.openPopover();
 		});
 	},
 

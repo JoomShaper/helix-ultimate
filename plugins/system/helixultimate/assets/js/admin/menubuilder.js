@@ -110,7 +110,7 @@ jQuery(function ($) {
 						className: 'hu-mega-menu-builder',
 						targetType: 'id',
 						target: 'megaMenuModal',
-						body: response.data,
+						body: response.html,
 					});
 
 					Joomla.helixMegaMenu.run();

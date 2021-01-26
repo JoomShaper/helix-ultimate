@@ -131,6 +131,15 @@ class MegaMenuBuilder extends Builder
 		return $children;
 	}
 
+	/**
+	 * Get item title. If the item is a module then get the module title.
+	 * If the item is a menu item then get the item title.
+	 *
+	 * @param	\stdClass	$item	The item object
+	 *
+	 * @return	string		The title string.
+	 * @since	2.0.0
+	 */
 	public function getTitle($item)
 	{
 		$element = null;
@@ -155,5 +164,71 @@ class MegaMenuBuilder extends Builder
 		}
 
 		return !empty($element) ? $element->title : '';
+	}
+
+	/**
+	 * Get missing menu items.
+	 *
+	 * @return	array	the missing items array.
+	 * @since	2.0.0
+	 */
+	public function getMissingItems()
+	{
+		$settings = $this->getMegaMenuSettings();
+		$children = $this->getItemChildren();
+
+		$rows = $settings->layout ?? [];
+
+		$items = [];
+
+		if (!empty($rows))
+		{
+			foreach ($rows as $row)
+			{
+				$columns = $row->attr ?? [];
+
+				if (!empty($columns))
+				{
+					foreach ($columns as $column)
+					{
+						$cells = $column->items ?? [];
+						$cells = array_filter($cells, function($cell) {
+							return $cell->type === 'menu_item';
+						});
+
+						$items = array_merge($items, $cells);
+					}
+				}
+			}
+		}
+
+		$missing = [];
+
+		if (!empty($children) && !empty($items))
+		{
+			foreach ($children as $child)
+			{
+				$found = false;
+
+				foreach ($items as $item)
+				{
+					if ((int) $child->id === (int) $item->item_id)
+					{
+						$found = true;
+						break;
+					}
+				}
+
+				if (!$found)
+				{
+					$tmp = new \stdClass;
+					$tmp->type = 'menu_item';
+					$tmp->item_id = $child->id;
+					$missing[] = $tmp;
+				}
+			}
+		}
+
+		return $missing;
 	}
 }

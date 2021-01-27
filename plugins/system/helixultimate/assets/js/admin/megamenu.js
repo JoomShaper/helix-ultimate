@@ -283,7 +283,8 @@ var megaMenu = {
 		$(document).off('click', '.hu-megamenu-add-new-item');
 		$(document).off('click', '.hu-megamenu-cell-options-item');
 		$(document).off('click', '.hu-megamenu-popover-close');
-		$(document).off('click', '.hu-megamenu-popover-apply');
+		$(document).off('click', '.hu-megamenu-insert-module');
+
 		$(document).off('click', '.hu-megamenu-cell-remove');
 		$(document).off(
 			'click',
@@ -532,7 +533,7 @@ var megaMenu = {
 			let $parent = $(this).closest('.hu-megamenu-row-wrapper'),
 				rowIndex = $parent.index();
 
-			$parent.slideUp(300, function () {
+			$parent.slideUp(100, function () {
 				$(this).remove();
 				settingsData.layout.splice(rowIndex, 1);
 			});

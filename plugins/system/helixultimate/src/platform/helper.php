@@ -337,7 +337,7 @@ class Helper
 		$doc->addScriptOptions('data', $data);
 	}
 
-	public static function getModules()
+	public static function getModules($keyword = '')
 	{
 		$modules = [];
 

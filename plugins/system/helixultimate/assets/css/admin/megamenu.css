@@ -363,12 +363,11 @@
 	font-weight: 500;
 }
 .hu-mega-menu-builder .minicolors-theme-bootstrap .minicolors-swatch {
+	background: url("../../images/mega-menu-color-select.jpg") repeat center / cover;
 	width: 53px;
 	height: 18px;
 	top: 6px;
 	border-radius: 3px;
-	border: none;
-	background-position: 53px;
 }
 .hu-megamenu-add-item-wrapper {
 	position: relative;
@@ -472,7 +471,7 @@
 	outline: 0;
 }
 
-.hu-mega-menu-builder .chzn-container.chzn-container-active .chzn-drop {
+.hu-mega-menu-builder .chzn-container.chzn-with-drop .chzn-drop {
 	left: auto;
 }
 .hu-mega-menu-builder .chzn-container.chzn-container-single .chzn-drop {

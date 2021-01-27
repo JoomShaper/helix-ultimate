@@ -9,9 +9,11 @@
 namespace HelixUltimate\Framework\Platform;
 
 use HelixUltimate\Framework\System\HelixCache;
+use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 
 defined('_JEXEC') or die();
@@ -343,10 +345,11 @@ class Helper
 		{
 			$db = Factory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('id, title, position, params')
-				->from($db->quoteName('#__modules'))
-				->where($db->quoteName('client_id') . ' = 0');
-			$query->order($db->quoteName('title') . ' ASC');
+			$query->select('m.id, m.title, m.module, m.position, m.params, e.manifest_cache')
+				->from($db->quoteName('#__modules', 'm'))
+				->where($db->quoteName('m.client_id') . ' = 0');
+			$query->join('LEFT', $db->quoteName('#__extensions', 'e') . ' ON (' . $db->quoteName('e.element') . ' = ' . $db->quoteName('m.module') . ')');
+			$query->order($db->quoteName('m.title') . ' ASC');
 			$db->setQuery($query);
 
 			$modules = $db->loadObjectList();
@@ -354,6 +357,36 @@ class Helper
 		catch (Exception $e)
 		{
 			return [];
+		}
+
+		$lang = Factory::getLanguage();
+		$client = ApplicationHelper::getClientInfo(0);
+
+		if (!empty($modules))
+		{
+			foreach ($modules as &$module)
+			{
+				$module->desc = Text::_('COM_MODULES_NODESCRIPTION');
+
+				if (isset($module->manifest_cache) && \is_string($module->manifest_cache))
+				{
+					$lang->load($module->module . '.sys', $client->path, null, false, true)
+						|| $lang->load($module->module . '.sys', $client->path . '/modules/' . $module->module, null, false, true);
+
+					$module->manifest_cache = \json_decode($module->manifest_cache);
+					
+					if (!empty($module->manifest_cache->description))
+					{
+						$module->desc = Text::_($module->manifest_cache->description);
+					}
+					else
+					{
+						$module->desc = Text::_('COM_MODULES_NODESCRIPTION');
+					}
+				}
+			}
+
+			unset($module);
 		}
 
 		return $modules;

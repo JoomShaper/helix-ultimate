@@ -84,7 +84,7 @@ $modules = Helper::getModules();
                             <div class="col-3">
                                 <div class="hu-megamenu-module-item">
                                     <strong class="hu-megamenu-module-title"><?php echo $module->title; ?></strong>
-                                    <p class="hu-megamenu-module-desc"><?php echo (strlen($module->desc) > 50 ? substr($module->desc, 0, 50) . '...' : $module->desc); ?></p>
+                                    <p class="hu-megamenu-module-desc"><?php echo (strlen($module->desc) > 40 ? substr($module->desc, 0, 40) . '...' : $module->desc); ?></p>
                                     <button type="button" role="button" class="hu-btn hu-btn-default hu-megamenu-insert-module" data-module="<?php echo $module->id; ?>"><?php echo Text::_('HELIX_ULTIMATE_MODULE_INSERT'); ?></button>
                                 </div>
                             </div>

@@ -529,4 +529,23 @@ class Response
 			'html' => $html
 		];
 	}
+
+	/**
+	 * Get the module list and render the list
+	 *
+	 * @return	array	The response array.
+	 * @since	2.0.0
+	 */
+	public static function getModuleList()
+	{
+		$input = Factory::getApplication()->input;
+		$keyword = $input->get('keyword', '', 'STRING');
+
+		$moduleLayout = new FileLayout('megaMenu.modules', HELIX_LAYOUT_PATH);
+
+		return [
+			'status' => true,
+			'html' => $moduleLayout->render(['keyword' => $keyword])
+		];
+	}
 }

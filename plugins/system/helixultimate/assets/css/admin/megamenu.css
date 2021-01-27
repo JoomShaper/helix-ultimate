@@ -363,7 +363,8 @@
 	font-weight: 500;
 }
 .hu-mega-menu-builder .minicolors-theme-bootstrap .minicolors-swatch {
-	background: url("../../images/mega-menu-color-select.jpg") repeat center / cover;
+	background: url('../../images/mega-menu-color-select.jpg') repeat center /
+		cover;
 	width: 53px;
 	height: 18px;
 	top: 6px;
@@ -405,10 +406,11 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	Width: 702px;
+	width: 702px;
 	height: 509px;
-	background: #F0F4FA;
-	box-shadow: 0px 24px 48px rgba(0, 0, 0, 0.14), 0px 9px 66px rgba(0, 0, 0, 0.12), 0px 11px 25px rgba(0, 0, 0, 0.2);
+	background: #f0f4fa;
+	box-shadow: 0px 24px 48px rgba(0, 0, 0, 0.14),
+		0px 9px 66px rgba(0, 0, 0, 0.12), 0px 11px 25px rgba(0, 0, 0, 0.2);
 	border-radius: 6px;
 	z-index: 999;
 	display: none;
@@ -439,7 +441,7 @@
 
 .hu-megamenu-popover-heading {
 	padding: 0 15px;
-	background: #126AEF;
+	background: #126aef;
 	border-radius: 6px 6px 0px 0px;
 	min-height: 36px;
 	display: flex;
@@ -524,7 +526,7 @@
 .hu-megamenu-search-wrapper input {
 	padding: 6px 12px 6px 30px;
 	border: 0;
-	background: #FFFFFF;
+	background: #ffffff;
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;
 }
@@ -543,15 +545,19 @@
 	margin-bottom: 12px;
 	border-radius: 5px;
 	padding: 10px 15px;
-	border: 1px solid #FFFFFF;
+	border: 1px solid #ffffff;
 }
-.hu-megamenu-module-item .hu-megamenu-module-title{
+.hu-megamenu-module-item .hu-megamenu-module-title {
 	font-weight: 500;
 	font-size: 13px;
 	line-height: 18px;
 	color: #021153;
 	margin-bottom: 5px;
 	display: block;
+	width: 140px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .hu-megamenu-module-item .hu-megamenu-module-desc {
 	font-size: 11px;

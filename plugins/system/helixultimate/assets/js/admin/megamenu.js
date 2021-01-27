@@ -34,6 +34,8 @@ var megaMenu = {
 		this.handleRemoveCell();
 
 		this.toggleColumnsSlots();
+		this.handleModuleSearch();
+
 		console.log(settingsData);
 	},
 
@@ -194,19 +196,71 @@ var megaMenu = {
 
 	openModulePopover() {
 		const self = this;
-		$(document).on('click', '.hu-megamenu-add-new-item', function (e) {
-			const columnId =
-				$(this).closest('.hu-megamenu-col').data('columnid') || 1;
-			const rowId =
-				$(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
+		$(document).on(
+			'click',
+			'.hu-megamenu-add-new-item',
+			async function (e) {
+				const columnId =
+					$(this).closest('.hu-megamenu-col').data('columnid') || 1;
+				const rowId =
+					$(this).closest('.hu-megamenu-row-wrapper').data('rowid') ||
+					1;
 
-			$('.hu-megamenu-popover')
-				.data('rowid', rowId)
-				.data('columnid', columnId)
-				.attr('data-rowid', rowId)
-				.attr('data-columnid', columnId);
+				$popover
+					.data('rowid', rowId)
+					.data('columnid', columnId)
+					.attr('data-rowid', rowId)
+					.attr('data-columnid', columnId);
 
-			self.openPopover();
+				const res = await self.getModulesContents();
+				res.status &&
+					$popover
+						.find('.hu-megamenu-modules-container')
+						.html(res.html);
+
+				self.openPopover();
+			}
+		);
+	},
+
+	handleModuleSearch() {
+		let timeout = null,
+			self = this;
+
+		$(document).on('keyup', '.hu-megamenu-module-search', function (e) {
+			e.preventDefault();
+
+			timeout && clearTimeout(timeout);
+
+			timeout = setTimeout(async () => {
+				let { value } = e.target;
+				const res = await self.getModulesContents(value);
+				res.status &&
+					$popover
+						.find('.hu-megamenu-modules-container')
+						.html(res.html);
+			}, 100);
+		});
+	},
+
+	getModulesContents(keyword = '') {
+		const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=getModuleList&keyword=${keyword}`;
+
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				method: 'GET',
+				url,
+				success(res) {
+					res =
+						typeof res === 'string' && res.length > 0
+							? JSON.parse(res)
+							: false;
+					resolve(res);
+				},
+				error(err) {
+					reject(err);
+				},
+			});
 		});
 	},
 
@@ -465,7 +519,6 @@ var megaMenu = {
 							? ($(this).prop('checked') >> 0).toString()
 							: value;
 					self.updateSettingsField(name, value);
-					console.log(settingsData);
 				});
 			});
 	},

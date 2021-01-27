@@ -341,6 +341,12 @@ class Helper
 	{
 		$modules = [];
 
+		if (!empty($keyword))
+		{
+			$keyword = preg_replace("@\s+@", ' ', trim($keyword));
+			$keyword = implode('|', explode(' ', $keyword));
+		}
+
 		try
 		{
 			$db = Factory::getDbo();
@@ -349,6 +355,12 @@ class Helper
 				->from($db->quoteName('#__modules', 'm'))
 				->where($db->quoteName('m.client_id') . ' = 0');
 			$query->join('LEFT', $db->quoteName('#__extensions', 'e') . ' ON (' . $db->quoteName('e.element') . ' = ' . $db->quoteName('m.module') . ')');
+			
+			if (!empty($keyword))
+			{
+				$query->where($db->quoteName('m.title') . ' REGEXP ' . $db->quote($keyword));
+			}
+
 			$query->order($db->quoteName('m.title') . ' ASC');
 			$db->setQuery($query);
 

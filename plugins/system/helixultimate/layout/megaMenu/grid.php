@@ -78,7 +78,7 @@ $modules = Helper::getModules();
             </div>
 
             <div class="hu-megamenu-modules-container">
-                <?php if (!empty($modules)): ?>
+                <!-- <?php if (!empty($modules)): ?>
                     <div class="row">
                         <?php foreach ($modules as $module): ?>
                             <div class="col-3">
@@ -90,7 +90,7 @@ $modules = Helper::getModules();
                             </div>
                         <?php endforeach ?>
                     </div>
-                <?php endif ?>
+                <?php endif ?> -->
             </div>
         </div>
     </div>

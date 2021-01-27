@@ -8,6 +8,7 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
@@ -35,6 +36,7 @@ if (!empty($missingItems) && isset($grid[0]) && isset($grid[0]->attr[0]))
 }
 
 $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
+$modules = Helper::getModules();
 
 ?>
 <div class="hu-megamenu-grid">
@@ -64,16 +66,32 @@ $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);
 
     <div class="hu-megamenu-popover">
         <div class="hu-megamenu-popover-heading">
-            <h5 class="title">Select Module</h5>
+            <h5 class="title"><?php echo Text::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h5>
             <button class="hu-btn hu-btn-link hu-megamenu-popover-close">
                 <span class="fas fa-times"></span>
             </button>
         </div>
         <div class="hu-megamenu-popover-body">
-            
-        </div>
-        <div class="hu-megamenu-popover-footer">
-            <button class="hu-btn hu-btn-primary hu-megamenu-popover-apply">Add</button>
+            <div class="hu-megamenu-search-wrapper">
+                <span class="fas fa-search"></span>
+                <input type="search" class="hu-input hu-megamenu-module-search" placeholder="<?php echo Text::_('HELIX_ULTIMATE_SEARCH_MODULE_HINT'); ?>" />
+            </div>
+
+            <div class="hu-megamenu-modules-container">
+                <?php if (!empty($modules)): ?>
+                    <div class="row">
+                        <?php foreach ($modules as $module): ?>
+                            <div class="col-3">
+                                <div class="hu-megamenu-module-item">
+                                    <strong class="hu-megamenu-module-title"><?php echo $module->title; ?></strong>
+                                    <p class="hu-megamenu-module-desc"><?php echo (strlen($module->desc) > 50 ? substr($module->desc, 0, 50) . '...' : $module->desc); ?></p>
+                                    <button type="button" role="button" class="hu-btn hu-btn-default hu-megamenu-insert-module" data-module="<?php echo $module->id; ?>"><?php echo Text::_('HELIX_ULTIMATE_MODULE_INSERT'); ?></button>
+                                </div>
+                            </div>
+                        <?php endforeach ?>
+                    </div>
+                <?php endif ?>
+            </div>
         </div>
     </div>
 </div>

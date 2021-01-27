@@ -26,9 +26,8 @@ var megaMenu = {
 		this.handleCustomLayoutSelection();
 		this.handleRowWiseColumnLayoutSelection();
 
-		this.toggleItemDropdown();
+		this.openModulePopover();
 
-		this.handlePopover();
 		this.handleClosePopover();
 
 		this.handleAddNewCell();
@@ -119,15 +118,12 @@ var megaMenu = {
 		const self = this;
 		$(document).on(
 			'click',
-			'.hu-megamenu-popover-apply',
+			'.hu-megamenu-insert-module',
 			async function () {
-				const $select = $(this)
-					.closest('.hu-megamenu-popover')
-					.find('select');
-				const item_id = $select.val();
-				const type = $select.data('type');
-				const rowId = $select.data('rowid');
-				const columnId = $select.data('columnid');
+				const item_id = $(this).data('module');
+				const type = 'module';
+				const rowId = $popover.data('rowid');
+				const columnId = $popover.data('columnid');
 
 				const column = settingsData.layout[rowId - 1].attr[
 					columnId - 1
@@ -181,55 +177,6 @@ var megaMenu = {
 		});
 	},
 
-	handlePopover() {
-		const self = this;
-		$(document).on('click', '.hu-megamenu-cell-options-item', function () {
-			self.closeItemDropdown();
-			const type = $(this).data('type');
-			const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generatePopoverContents`;
-			const row =
-				$(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
-			const column =
-				$(this).closest('.hu-megamenu-col').data('columnid') || 1;
-
-			const data = {
-				itemId,
-				type,
-			};
-			let title =
-				type === 'module' ? 'Select Module' : 'Select Menu Item';
-
-			$.ajax({
-				method: 'POST',
-				url,
-				data,
-				success(res) {
-					res =
-						typeof res === 'string' && res.length > 0
-							? JSON.parse(res)
-							: false;
-					if (res.status) {
-						self.openPopover();
-						$popover
-							.find('.hu-megamenu-popover-heading > .title')
-							.html(title);
-						$popover
-							.find('.hu-megamenu-popover-body')
-							.html(res.html);
-
-						$popover
-							.find('select')
-							.data('rowid', row)
-							.data('columnid', column)
-							.attr('data-rowid', row)
-							.attr('data-columnid', column);
-						self.initChosen();
-					}
-				},
-			});
-		});
-	},
-
 	handleClosePopover() {
 		const self = this;
 		$(document).on('click', '.hu-megamenu-popover-close', function () {
@@ -245,31 +192,21 @@ var megaMenu = {
 		$popover.hasClass('show') && $popover.removeClass('show');
 	},
 
-	toggleItemDropdown() {
+	openModulePopover() {
 		const self = this;
 		$(document).on('click', '.hu-megamenu-add-new-item', function (e) {
-			// const $options = $(this).parent().find('.hu-megamenu-cell-options');
-			// self.closeItemDropdown(null, $options);
+			const columnId =
+				$(this).closest('.hu-megamenu-col').data('columnid') || 1;
+			const rowId =
+				$(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
 
-			// if ($options.hasClass('active')) {
-			// 	$options.slideUp(300).removeClass('active');
-			// } else {
-			// 	$options.slideDown(300).addClass('active');
-			// }
+			$('.hu-megamenu-popover')
+				.data('rowid', rowId)
+				.data('columnid', columnId)
+				.attr('data-rowid', rowId)
+				.attr('data-columnid', columnId);
+
 			self.openPopover();
-		});
-	},
-
-	closeItemDropdown($el = null, $current = null) {
-		$el = $el !== null ? $el : $('.hu-megamenu-cell-options');
-		$el.each(function () {
-			if ($current !== null) {
-				if ($(this)[0] !== $current[0]) {
-					$(this).slideUp(300).removeClass('active');
-				}
-			} else {
-				$(this).slideUp(300).removeClass('active');
-			}
 		});
 	},
 

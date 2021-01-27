@@ -444,7 +444,8 @@ class HelixultimateMenu
 		$firstitem = count($items) ? $items[0]->id : 0;
 
 		$mega = json_decode($item->getParams()->get('helixultimatemenulayout'));
-		$layout = $mega->layout;
+
+		$layout = $mega->layout ?? [];
 
 		$mega_style = 'width: ' . $mega->width . 'px;';
 

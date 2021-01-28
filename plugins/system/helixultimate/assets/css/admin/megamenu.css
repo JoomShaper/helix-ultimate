@@ -276,11 +276,10 @@
 	background: #fff;
 	box-shadow: 0px 1px 20px 0px #22222254;
 	padding: 20px;
-	margin-bottom: 100px;
 	border-radius: 10px;
-	width: 98%;
-	margin-top: 20px;
+	width: 450px;
 	display: none;
+	margin: 20px auto 50px;
 }
 
 .hu-megamenu-container .hu-megamenu-column-layout {
@@ -579,4 +578,9 @@
 	line-height: 18px;
 	font-weight: 400;
 	width: 100%;
+}
+.hu-megamenu-module-item .hu-btn:hover,
+.hu-megamenu-module-item .hu-btn:focus {
+	border-color: rgb(var(--primary));
+	color: rgb(var(--primary));
 }

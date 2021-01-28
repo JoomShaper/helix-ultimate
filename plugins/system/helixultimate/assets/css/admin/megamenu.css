@@ -81,6 +81,10 @@
 	min-height: 10px;
 }
 
+.hu-megamenu-columns-container {
+	position: relative;
+}
+
 .hu-megamenu-row-toolbar-left {
 	cursor: ns-resize;
 }

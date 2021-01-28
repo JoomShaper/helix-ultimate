@@ -351,7 +351,7 @@ class Helper
 		{
 			$db = Factory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('m.id, m.title, m.module, m.position, m.params, e.manifest_cache')
+			$query->select('DISTINCT m.id, m.title, m.module, m.position, m.params, e.manifest_cache')
 				->from($db->quoteName('#__modules', 'm'))
 				->where($db->quoteName('m.client_id') . ' = 0');
 			$query->join('LEFT', $db->quoteName('#__extensions', 'e') . ' ON (' . $db->quoteName('e.element') . ' = ' . $db->quoteName('m.module') . ')');

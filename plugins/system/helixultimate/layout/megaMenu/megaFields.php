@@ -62,7 +62,7 @@ class MegaFields
 
         foreach ($icons as $icon)
         {
-            $iconName = preg_replace("@^fa-@", '', $icon);
+            $iconName = preg_replace("@^fa[sbr]\s+fa-@", '', $icon);
             $iconName = array_map(function($name) {
                 return ucfirst($name);
             }, explode('-', $iconName));

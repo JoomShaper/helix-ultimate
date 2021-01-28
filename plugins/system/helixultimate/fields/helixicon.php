@@ -45,7 +45,7 @@ class JFormFieldHelixicon extends FormField
 
 		foreach ($icons as $value)
 		{
-			$arr[] = HTMLHelper::_('select.option', $value, str_replace('fa-', '', $value));
+			$arr[] = HTMLHelper::_('select.option', $value, preg_replace('@^fa[sbr]\s+fa-@', '', $value));
 		}
 
 		return HTMLHelper::_('select.genericlist', $arr, $this->name, null, 'value', 'text', $this->value);

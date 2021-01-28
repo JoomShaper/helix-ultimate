@@ -505,7 +505,7 @@ class HelixultimateMenu
 
 								$firstitem = count($items) ? $items[0]->id : 0;
 
-								if (isset($this->children[$item->item_id]))
+								if (isset($this->children[$item->id]))
 								{
 									$this->menu .= $this->item($item, 'sp-group-title');
 								}
@@ -648,6 +648,12 @@ class HelixultimateMenu
 		$showmenutitle = (isset($layout->showtitle)) ? $layout->showtitle : 1;
 		$icon = (isset($layout->faicon)) ? $layout->faicon : '';
 
+		if (!preg_match("@^fa[sbr]@", $icon))
+		{
+			$icon = 'fas ' . $icon;
+		}
+		
+
 		if (!$showmenutitle)
 		{
 			$linktitle = '';
@@ -658,11 +664,11 @@ class HelixultimateMenu
 		{
 			if ($showmenutitle)
 			{
-				$linktitle = '<span class="fas ' . $icon . '"></span> ' . $linktitle;
+				$linktitle = '<span class="' . $icon . '"></span> ' . $linktitle;
 			}
 			else
 			{
-				$linktitle = '<span class="fas ' . $icon . '"></span>';
+				$linktitle = '<span class="' . $icon . '"></span>';
 			}
 		}
 
@@ -756,7 +762,7 @@ class HelixultimateMenu
 
 		$db	= Factory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('id, title, module, position, content, showtitle, params');
+		$query->select('m.id, m.title, m.module, m.position, m.content, m.showtitle, m.params');
 		$query->from('#__modules AS m');
 		$query->where('m.published = 1');
 		$query->where('m.id = ' . $mod);
@@ -765,8 +771,8 @@ class HelixultimateMenu
 		$now = $date->toSql();
 		$nullDate = $db->getNullDate();
 
-		$query->where('(m.publish_up = ' . $db->Quote($nullDate) . ' OR m.publish_up <= ' . $db->Quote($now) . ')');
-		$query->where('(m.publish_down = ' . $db->Quote($nullDate) . ' OR m.publish_down >= ' . $db->Quote($now) . ')');
+		$query->where('(m.publish_up IS NULL OR m.publish_up = ' . $db->Quote($nullDate) . ' OR m.publish_up <= ' . $db->Quote($now) . ')');
+		$query->where('(m.publish_down IS NULL OR m.publish_down = ' . $db->Quote($nullDate) . ' OR m.publish_down >= ' . $db->Quote($now) . ')');
 		$query->where('m.access IN (' . $groups . ')');
 		$query->where('m.client_id = ' . $clientId);
 

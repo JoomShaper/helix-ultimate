@@ -38,6 +38,7 @@
 	padding-right: 10px;
 	overflow-y: scroll;
 	max-height: 492px;
+	position: relative;
 }
 
 .hu-megamenu-add-row {
@@ -283,6 +284,9 @@
 	width: 500px;
 	display: none;
 	margin: 20px auto 50px;
+	position: absolute;
+	left: 0;
+	right: 0;
 }
 
 .hu-megamenu-container .hu-megamenu-column-layout {

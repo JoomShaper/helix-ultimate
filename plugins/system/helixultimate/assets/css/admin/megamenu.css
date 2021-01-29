@@ -47,7 +47,7 @@
 
 .hu-megamenu-row-wrapper {
 	background: rgba(51, 102, 255, 0.1);
-	border-radius: 2px;
+	border-radius: 5px;
 	padding: 8px 12px 12px;
 }
 
@@ -185,6 +185,7 @@
 .hu-megamenu-add-new-item:hover,
 .hu-megamenu-add-new-item:focus {
 	border-color: rgb(var(--primary));
+	background: rgba(var(--primary), 0.25);
 }
 .hu-megamenu-add-new-item span {
 	color: rgb(var(--primary));
@@ -273,7 +274,7 @@
 	box-shadow: 0px 1px 20px 0px #22222254;
 	padding: 20px;
 	border-radius: 10px;
-	width: 450px;
+	width: 500px;
 	display: none;
 	margin: 20px auto 50px;
 }
@@ -457,6 +458,9 @@
 	color: #fff;
 	padding: 0;
 }
+.hu-megamenu-popover-heading .hu-megamenu-popover-close:hover {
+	color: rgba(255, 255, 255, 0.8);
+}
 
 .hu-mega-menu-builder .control-group.hu-style-switcher label {
 	font-size: 12px;
@@ -533,30 +537,35 @@
 	overflow-y: auto;
 	padding: 0px 15px;
 }
+.hu-megamenu-modules-container .hu-megamenu-column{
+	margin-bottom: 20px;
+}
 
 .hu-megamenu-module-item {
 	background: #fff;
 	width: 100%;
-	height: 118px;
+	height: 100%;
 	box-shadow: 0px 1px 1px rgb(2 11 83 / 30%);
 	margin-bottom: 12px;
 	border-radius: 5px;
 	padding: 10px 15px;
 	border: 1px solid #FFFFFF;
+	display: flex;
+	flex-direction: column;
 }
 .hu-megamenu-module-item .hu-megamenu-module-title{
 	font-weight: 500;
-	font-size: 13px;
+	font-size: 14px;
 	line-height: 18px;
 	color: #021153;
-	margin-bottom: 5px;
+	margin-bottom: 8px;
 	display: block;
 }
 .hu-megamenu-module-item .hu-megamenu-module-desc {
-	font-size: 11px;
-	line-height: 16px;
+	font-size: 13px;
+	line-height: 20px;
 	color: rgba(2, 11, 83, 0.7);
-	margin-bottom: 13px;
+	margin-bottom: 0;
 }
 .hu-megamenu-module-item .hu-btn {
 	border: 1px solid rgba(121, 127, 167, 0.3);
@@ -568,6 +577,7 @@
 	line-height: 18px;
 	font-weight: 400;
 	width: 100%;
+	margin-top: auto;
 }
 .hu-megamenu-module-item .hu-btn:hover,
 .hu-megamenu-module-item .hu-btn:focus {

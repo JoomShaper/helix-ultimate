@@ -606,3 +606,23 @@
 	border-color: rgb(var(--primary));
 	color: rgb(var(--primary));
 }
+.hu-megamenu-branch-muted .hu-menu-tree-contents .hu-branch-drag-handler {
+	display: flex;
+	align-items: center;
+	color: #838CAE;
+	background: #D9DEEB;
+	border-color: #D9DEEB;
+}
+.hu-megamenu-branch-muted .hu-branch-unpublished {
+	margin-left: auto;
+	margin-right: 15px;
+}
+.hu-megamenu-branch-muted .hu-branch-drag-handler .hu-branch-tools > a{
+	opacity: 1;
+	transform: rotate(90deg);
+	height: 10px;
+}
+.hu-megamenu-branch-muted .hu-branch-drag-handler .hu-branch-tools {
+	width: 15px;
+	right: 3px;
+}

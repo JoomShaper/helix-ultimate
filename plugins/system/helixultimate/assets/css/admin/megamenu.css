@@ -126,8 +126,10 @@
 	flex-wrap: initial;
 }
 .hu-megamenu-cell {
-	background: rgba(51, 102, 255, 0.1);
-	border: 1px dashed rgba(2, 11, 83, 0.2);
+	/* background: rgba(51, 102, 255, 0.1); */
+	/* border: 1px dashed rgba(2, 11, 83, 0.2); */
+	background: #eaefff;
+	border: 1px dashed #bcc1dd;
 	border-radius: 2px;
 	padding: 3px 8px;
 	cursor: grab;
@@ -169,7 +171,7 @@
 
 .hu-item-sortable-placeholder {
 	border: 1px dashed #222;
-	min-height: 30px;
+	min-height: 26px;
 	margin-top: 5px;
 }
 

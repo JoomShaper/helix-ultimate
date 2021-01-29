@@ -379,6 +379,7 @@ var megaMenu = {
 						.html(res.html);
 					settingsData.layout[rowIndex] = res.data;
 					self.closeRowLayoutDisplay();
+					self.refreshSortable(['item']);
 				}
 			}
 		);
@@ -766,7 +767,8 @@ var megaMenu = {
 			prevColIndex,
 			prevItemIndex,
 			currItemIndex,
-			self = this;
+			self = this,
+			$removeBtn;
 		$(selector)
 			.sortable({
 				connectWith: '.hu-megamenu-column-contents',
@@ -787,6 +789,12 @@ var megaMenu = {
 							.closest('.hu-megamenu-row-wrapper')
 							.data('rowid') || 1) - 1;
 					prevItemIndex = ui.item.index();
+
+					/**
+					 * Hide the remove button from the right in the dragging time.
+					 */
+					$removeBtn = ui.item.find('.hu-megamenu-cell-remove');
+					$removeBtn.css({ opacity: 0 });
 				},
 				stop(_, ui) {
 					currColIndex =
@@ -805,6 +813,7 @@ var megaMenu = {
 						currColIndex,
 						currItemIndex,
 					});
+					$removeBtn.css({ opacity: 1 });
 				},
 			})
 			.disableSelection();

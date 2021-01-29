@@ -1889,7 +1889,7 @@ select {
 	background-size: 16px 12px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
-  appearance: none;
+	appearance: none;
 }
 
 select:focus,
@@ -1937,7 +1937,7 @@ select:focus::-ms-value {
 .control-group label {
 	display: block;
 	font-size: 13px;
-	color: rgba(var(--dark), .7);
+	color: rgba(var(--dark), 0.7);
 	margin: 0 0 5px 0;
 }
 
@@ -1964,7 +1964,7 @@ select:focus::-ms-value {
 .control-group:not(.control-group-checkbox) .control-label {
 	margin-bottom: 10px;
 	display: flex;
-    align-items: center;
+	align-items: center;
 }
 
 .control-group.control-group-checkbox .control-help {
@@ -3586,14 +3586,14 @@ input[type='color'] {
 }
 .hu-badge {
 	display: inline-block;
-	padding: .25em .4em 0.13em;
+	padding: 0.25em 0.4em 0.13em;
 	font-size: 75%;
 	font-weight: 700;
 	line-height: 1;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: baseline;
-	border-radius: .25rem;
+	border-radius: 0.25rem;
 }
 .hu-badge-primary {
 	color: #fff;

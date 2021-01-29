@@ -1963,6 +1963,8 @@ select:focus::-ms-value {
 
 .control-group:not(.control-group-checkbox) .control-label {
 	margin-bottom: 10px;
+	display: flex;
+    align-items: center;
 }
 
 .control-group.control-group-checkbox .control-help {

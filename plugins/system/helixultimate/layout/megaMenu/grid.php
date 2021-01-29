@@ -63,23 +63,4 @@ $modules = Helper::getModules();
     <div class="hu-megamenu-add-slots">
         <?php echo (new FileLayout('megaMenu.slots', HELIX_LAYOUT_PATH))->render(); ?>
     </div>
-
-    <div class="hu-megamenu-popover">
-        <div class="hu-megamenu-popover-heading">
-            <h5 class="title"><?php echo Text::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h5>
-            <button class="hu-btn hu-btn-link hu-megamenu-popover-close">
-                <span class="fas fa-times"></span>
-            </button>
-        </div>
-        <div class="hu-megamenu-popover-body">
-            <div class="hu-megamenu-search-wrapper">
-                <span class="fas fa-search"></span>
-                <input type="search" class="hu-input hu-megamenu-module-search" placeholder="<?php echo Text::_('HELIX_ULTIMATE_SEARCH_MODULE_HINT'); ?>" />
-            </div>
-
-            <div class="hu-megamenu-modules-container">
-               
-            </div>
-        </div>
-    </div>
 </div>

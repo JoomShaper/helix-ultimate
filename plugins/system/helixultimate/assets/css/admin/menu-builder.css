@@ -42,12 +42,12 @@
 }
 
 .hu-branch-drag-handler .hu-branch-tools {
-	width: 20px;
-	height: 26px;
+	width: 28px;
+	height: 28px;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 0;
+	right: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -62,8 +62,12 @@
 	align-items: center;
 	justify-content: center;
 	opacity: 1;
-	transition: opacity 400ms;
-	transform: rotate(90deg);
+	transition: opacity 400ms, background-color 400ms;
+	border-radius: 20px;
+}
+
+.hu-branch-drag-handler .hu-branch-tools > a:hover {
+	background-color: rgba(var(--primary), 0.14);
 }
 
 .hu-branch-drag-handler .hu-branch-tools a > svg {

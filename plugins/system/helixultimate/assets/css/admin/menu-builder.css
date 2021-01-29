@@ -42,12 +42,12 @@
 }
 
 .hu-branch-drag-handler .hu-branch-tools {
-	width: 26px;
+	width: 20px;
 	height: 26px;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%);
-	right: 8px;
+	right: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -61,8 +61,9 @@
 	height: 100%;
 	align-items: center;
 	justify-content: center;
-	opacity: 0;
+	opacity: 1;
 	transition: opacity 400ms;
+	transform: rotate(90deg);
 }
 
 .hu-branch-drag-handler .hu-branch-tools a > svg {

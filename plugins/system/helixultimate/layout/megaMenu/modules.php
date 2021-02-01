@@ -32,4 +32,8 @@ $modules = Helper::getModules($keyword);
 			</div>
 		<?php endforeach ?>
 	</div>
+<?php else: ?>
+	<div class="hu-megamenu-module-not-found">
+		<h4><?php echo Text::_('Opps! Nothing Found.'); ?></h4>
+	</div>
 <?php endif ?>

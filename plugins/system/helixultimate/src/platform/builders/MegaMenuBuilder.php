@@ -13,6 +13,7 @@ use HelixUltimate\Framework\Platform\Builders\Builder;
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\Menu\SiteMenu;
 use Joomla\Registry\Registry;
 
@@ -63,8 +64,7 @@ class MegaMenuBuilder extends Builder
 	 */
 	protected function loadMenuItemParams()
 	{
-		$menu = new SiteMenu;
-		$item = $menu->getItem($this->itemId);
+		$item = $this->getMenuItem();
 		$this->params = $item->getParams();
 	}
 
@@ -78,7 +78,7 @@ class MegaMenuBuilder extends Builder
 	{
 		$megaMenu = $this->params->get('helixultimatemenulayout', new \stdClass);
 
-		if (\is_string($megaMenu))
+		if (!empty($megaMenu) && \is_string($megaMenu))
 		{
 			$megaMenu = \json_decode($megaMenu);
 		}
@@ -94,8 +94,28 @@ class MegaMenuBuilder extends Builder
 	 */
 	public function getMenuItem()
 	{
-		$menu = new SiteMenu;
-		$item = $menu->getItem($this->itemId);
+		$item = new MenuItem;
+
+		try
+		{
+			$db 	= Factory::getDbo();
+			$query 	= $db->getQuery(true);
+			$query->select('m.id, m.menutype, m.title, m.alias, m.note, m.path AS route, m.link, m.type, m.level, m.language')
+				->select($db->quoteName('m.browserNav') . ', m.access, m.params, m.home, m.img, m.template_style_id, m.component_id, m.parent_id')
+				->select('e.element as component')
+				->from($db->quoteName('#__menu', 'm'))
+				->join('LEFT', '#__extensions AS e ON m.component_id = e.extension_id')
+				->where($db->quoteName('id') . ' = ' . (int) $this->itemId);
+
+			$db->setQuery($query);
+			$item = $db->loadObject('Joomla\\CMS\\Menu\\MenuItem');
+		}
+		catch (Exception $e)
+		{
+			echo Factory::getApplication()->enqueueMessage($e->getMessage());
+
+			return $item;
+		}
 
 		return $item;
 	}
@@ -116,7 +136,8 @@ class MegaMenuBuilder extends Builder
 			$query 	= $db->getQuery(true);
 			$query->select('id, title, parent_id')
 				->from($db->quoteName('#__menu'))
-				->where($db->quoteName('parent_id') . ' = ' . (int) $this->itemId);
+				->where($db->quoteName('parent_id') . ' = ' . (int) $this->itemId)
+				->where($db->quoteName('published') . ' = 1');
 			$db->setQuery($query);
 
 			$children = $db->loadObjectList();

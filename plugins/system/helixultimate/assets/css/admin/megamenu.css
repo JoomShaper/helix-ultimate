@@ -613,10 +613,17 @@
 .hu-megamenu-branch-muted .hu-menu-tree-contents .hu-branch-drag-handler {
 	display: flex;
 	align-items: center;
-	color: #838CAE;
-	background: #D9DEEB;
-	border-color: #D9DEEB;
+	color: #838cae;
+	background: #d9deeb;
+	border-color: #d9deeb;
 }
 .hu-megamenu-branch-muted .hu-branch-unpublished {
 	margin-left: 10px;
+}
+
+.hu-megamenu-module-not-found {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 }

@@ -910,28 +910,28 @@ class HelixUltimate
 	 */
 	public function scssInit()
 	{
-		include_once __DIR__ . '/classes/scss/Base/Range.php';
-		include_once __DIR__ . '/classes/scss/Block.php';
-		include_once __DIR__ . '/classes/scss/Colors.php';
-		include_once __DIR__ . '/classes/scss/Compiler.php';
-		include_once __DIR__ . '/classes/scss/Compiler/Environment.php';
-		include_once __DIR__ . '/classes/scss/Exception/CompilerException.php';
-		include_once __DIR__ . '/classes/scss/Exception/ParserException.php';
-		include_once __DIR__ . '/classes/scss/Exception/ServerException.php';
-		include_once __DIR__ . '/classes/scss/Formatter.php';
-		include_once __DIR__ . '/classes/scss/Formatter/Compact.php';
-		include_once __DIR__ . '/classes/scss/Formatter/Compressed.php';
-		include_once __DIR__ . '/classes/scss/Formatter/Crunched.php';
-		include_once __DIR__ . '/classes/scss/Formatter/Debug.php';
-		include_once __DIR__ . '/classes/scss/Formatter/Expanded.php';
-		include_once __DIR__ . '/classes/scss/Formatter/Nested.php';
-		include_once __DIR__ . '/classes/scss/Formatter/OutputBlock.php';
-		include_once __DIR__ . '/classes/scss/Node.php';
-		include_once __DIR__ . '/classes/scss/Node/Number.php';
-		include_once __DIR__ . '/classes/scss/Parser.php';
-		include_once __DIR__ . '/classes/scss/Type.php';
-		include_once __DIR__ . '/classes/scss/Util.php';
-		include_once __DIR__ . '/classes/scss/Version.php';
+		include_once __DIR__ . '/Classes/scss/Base/Range.php';
+		include_once __DIR__ . '/Classes/scss/Block.php';
+		include_once __DIR__ . '/Classes/scss/Colors.php';
+		include_once __DIR__ . '/Classes/scss/Compiler.php';
+		include_once __DIR__ . '/Classes/scss/Compiler/Environment.php';
+		include_once __DIR__ . '/Classes/scss/Exception/CompilerException.php';
+		include_once __DIR__ . '/Classes/scss/Exception/ParserException.php';
+		include_once __DIR__ . '/Classes/scss/Exception/ServerException.php';
+		include_once __DIR__ . '/Classes/scss/Formatter.php';
+		include_once __DIR__ . '/Classes/scss/Formatter/Compact.php';
+		include_once __DIR__ . '/Classes/scss/Formatter/Compressed.php';
+		include_once __DIR__ . '/Classes/scss/Formatter/Crunched.php';
+		include_once __DIR__ . '/Classes/scss/Formatter/Debug.php';
+		include_once __DIR__ . '/Classes/scss/Formatter/Expanded.php';
+		include_once __DIR__ . '/Classes/scss/Formatter/Nested.php';
+		include_once __DIR__ . '/Classes/scss/Formatter/OutputBlock.php';
+		include_once __DIR__ . '/Classes/scss/Node.php';
+		include_once __DIR__ . '/Classes/scss/Node/Number.php';
+		include_once __DIR__ . '/Classes/scss/Parser.php';
+		include_once __DIR__ . '/Classes/scss/Type.php';
+		include_once __DIR__ . '/Classes/scss/Util.php';
+		include_once __DIR__ . '/Classes/scss/Version.php';
 
 		return new \Leafo\ScssPhp\Compiler;
 	}

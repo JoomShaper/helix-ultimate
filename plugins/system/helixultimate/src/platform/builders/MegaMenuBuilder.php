@@ -107,8 +107,13 @@ class MegaMenuBuilder extends Builder
 				->join('LEFT', '#__extensions AS e ON m.component_id = e.extension_id')
 				->where($db->quoteName('id') . ' = ' . (int) $this->itemId);
 
-			$db->setQuery($query);
-			$item = $db->loadObject('Joomla\\CMS\\Menu\\MenuItem');
+			$item = $db->setQuery($query)->loadObject();
+
+			/**
+			 * Make items object as MenuItem object so that we can use
+			 * the MenuItem's functionalities.
+			 */
+			$item = new MenuItem((array) $item);
 		}
 		catch (Exception $e)
 		{

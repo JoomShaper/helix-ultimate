@@ -53,6 +53,10 @@ plugins/system/*
 # Templates
 templates/*
 !templates/shaper_helixultimate/
+templates/shaper_helixultimate/css/presets/**
+templates/shaper_helixultimate/css/template.css
+templates/shaper_helixultimate/css/rtl.css
+
 
 # Logs
 logs

@@ -257,14 +257,16 @@
 .hu-megamenu-settings .hu-input-group {
 	justify-content: flex-end;
 }
-.hu-megamenu-settings .hu-input-group select {
-	max-width: 35px;
-	padding-left: 5px;
+.hu-megamenu-settings .hu-input-group select,
+.hu-unit-group select {
+	max-width: 40px;
+	padding-left: 4px;
 	padding-right: 0;
 	background-position: right 0px center;
 	display: flex;
 	padding-top: 4px;
 }
+
 /* Column layout styling */
 
 .hu-megamenu-columns-layout .hu-megamenu-custom-layout {

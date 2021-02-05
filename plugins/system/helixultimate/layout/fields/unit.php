@@ -67,34 +67,32 @@ class HelixultimateFieldUnit
 		{
 			$matches = [];
 
-			if (preg_match("@(\d+)(px|em|rem|%)$@", $value, $matches))
+			if (preg_match("@^([+-]?(?:\d+|\d*\.\d+))(px|em|rem|%)$@", $value, $matches))
 			{
 				if (count($matches) >= 3)
 				{
-					$value = (int) $matches[1];
-					$unit = strtolower($matches[2]);
+					$value = $matches[1];
+
+					if (isset($matches[2]))
+					{
+						$unit = strtolower($matches[2]);
+					}
 				}
-				else
-				{
-					$value = (int) $value;
-				}
-			}
-			else
-			{
-				$value = (int) $value;
 			}
 		}
 
-		$output .= '<div class="hu-input-group">';
-		$output .= '<input type="number" name="' . $key . '" min="0" max="3000" step="0.01" class="hu-field-dimension-width form-control" value="' . $value . '" />';
-		$output .= '<select class="hu-unit">';
-		$output .= 		'<option value="px" ' . ($unit === 'px' ? 'selected' : '') . '>px</option>';
-		$output .= 		'<option value="em" ' . ($unit === 'em' ? 'selected' : '') . '>em</option>';
-		$output .= 		'<option value="rem" ' . ($unit === 'rem' ? 'selected' : '') . '>rem</option>';
-		$output .= 		'<option value="%" ' . ($unit === '%' ? 'selected' : '') . '>%</option>';
-		$output .= '</select>';
+		$output .= '<div class="hu-input-group hu-unit-group">';
+		$output .= '<input type="hidden" class="hu-unit-field-value" name="' . $key . '" value="' . $value . $unit . '"/>';
+		$output .= '	<input type="text" class="hu-field-dimension-width form-control hu-unit-field-input ' . $key . '" value="' . $value . '" />';
+		$output .= '	<select class="hu-unit-select">';
+		$output .= '		<option value="px" ' . ($unit === 'px' ? 'selected' : '') . '>px</option>';
+		$output .= '		<option value="em" ' . ($unit === 'em' ? 'selected' : '') . '>em</option>';
+		$output .= '		<option value="rem" ' . ($unit === 'rem' ? 'selected' : '') . '>rem</option>';
+		$output .= '		<option value="%" ' . ($unit === '%' ? 'selected' : '') . '>%</option>';
+		$output .= '	</select>';
 		$output .= '</div>';
 
+		// End of control group
 		$output .= '</div>';
 
 		return $output;

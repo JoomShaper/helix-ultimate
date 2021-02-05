@@ -302,9 +302,50 @@ class JFormFieldHelixfont extends FormField
 		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
 		$html .= '<div class="hu-webfont-size">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</label>';
-		$html .= '<input type="number" value="' . $fontSize . '" class="form-control hu-webfont-size-input active" min="6" max="200">';
-		$html .= '<input type="number" value="' . $fontSize_sm . '" class="form-control hu-webfont-size-input-sm" min="6" max="200">';
-		$html .= '<input type="number" value="' . $fontSize_xs . '" class="form-control hu-webfont-size-input-xs" min="6" max="200">';
+		// $html .= '<input type="number" value="' . $fontSize . '" class="form-control hu-webfont-size-input active" min="6" max="200">';
+		// $html .= '<input type="number" value="' . $fontSize_sm . '" class="form-control hu-webfont-size-input-sm" min="6" max="200">';
+		// $html .= '<input type="number" value="' . $fontSize_xs . '" class="form-control hu-webfont-size-input-xs" min="6" max="200">';
+		$html .= $this->renderUnitField('hu-webfont-size-field', $fontSize, true);
+		$html .= $this->renderUnitField('hu-webfont-size-field-sm', $fontSize_sm);
+		$html .= $this->renderUnitField('hu-webfont-size-field-xs', $fontSize_xs);
+		$html .= '</div>';
+
+		return $html;
+	}
+
+	private function renderUnitField($key, $value, $active = false)
+	{
+		// By default the unit is px.
+		$unit = 'px';
+
+		if (!empty($value))
+		{
+			$matches = [];
+
+			if (preg_match("@^([+-]?(?:\d+|\d*\.\d+))(px|em|rem|%)$@", $value, $matches))
+			{
+				if (count($matches) >= 3)
+				{
+					$value = $matches[1];
+
+					if (isset($matches[2]))
+					{
+						$unit = strtolower($matches[2]);
+					}
+				}
+			}
+		}
+
+		$html = '';
+		$html .= '<div class="hu-input-group hu-unit-group hu-webfont-unit ' . ($active ? 'active' : '') . '">';
+		$html .= '<input type="hidden" class="hu-unit-field-value" name="' . $key . '" value="' . $value . $unit . '"/>';
+		$html .= '	<input type="text" class="hu-field-dimension-width form-control hu-unit-field-input ' . $key . '" value="' . $value . '" />';
+		$html .= '	<select class="hu-unit-select">';
+		$html .= '		<option value="px" ' . ($unit === 'px' ? 'selected' : '') . '>px</option>';
+		$html .= '		<option value="em" ' . ($unit === 'em' ? 'selected' : '') . '>em</option>';
+		$html .= '		<option value="rem" ' . ($unit === 'rem' ? 'selected' : '') . '>rem</option>';
+		$html .= '		<option value="%" ' . ($unit === '%' ? 'selected' : '') . '>%</option>';
+		$html .= '	</select>';
 		$html .= '</div>';
 
 		return $html;

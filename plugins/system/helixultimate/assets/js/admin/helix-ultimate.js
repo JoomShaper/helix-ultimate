@@ -664,14 +664,18 @@ jQuery(function ($) {
 
 		// Change the typography field device wise size field
 		['', '-sm', '-xs'].forEach(size => {
-			$(`.hu-webfont-size-input${size}`).removeClass('active');
+			$(`.hu-webfont-size-field${size}`)
+				.closest('.hu-webfont-unit')
+				.removeClass('active');
 		});
 
 		$(
-			`input.hu-webfont-size-input${
+			`input.hu-webfont-size-field${
 				map[device] === 'md' ? '' : '-' + map[device]
 			}`
-		).addClass('active');
+		)
+			.closest('.hu-webfont-unit')
+			.addClass('active');
 
 		$iframe.animate(
 			{
@@ -980,9 +984,13 @@ jQuery(function ($) {
 			var $that = $(this),
 				webfont = {
 					fontFamily: $that.find('.hu-webfont-list').val(),
-					fontSize: $that.find('.hu-webfont-size-input').val(),
-					fontSize_sm: $that.find('.hu-webfont-size-input-sm').val(),
-					fontSize_xs: $that.find('.hu-webfont-size-input-xs').val(),
+					fontSize: $that.find('[name=hu-webfont-size-field]').val(),
+					fontSize_sm: $that
+						.find('[name=hu-webfont-size-field-sm]')
+						.val(),
+					fontSize_xs: $that
+						.find('[name=hu-webfont-size-field-xs]')
+						.val(),
 					fontWeight: $that.find('.hu-webfont-weight-list').val(),
 					fontStyle: $that.find('.hu-webfont-style-list').val(),
 					fontSubset: $that.find('.hu-webfont-subset-list').val(),
@@ -1205,7 +1213,9 @@ jQuery(function ($) {
 				.closest('.hu-switcher')
 				.find('input[type=hidden]');
 			$input.val(value).trigger('change');
-			const hiddenField = e.target.closest('.hu-switcher').querySelector('input[type=hidden]');
+			const hiddenField = e.target
+				.closest('.hu-switcher')
+				.querySelector('input[type=hidden]');
 			Joomla.utils.triggerEvent(hiddenField, 'change');
 		}
 	);

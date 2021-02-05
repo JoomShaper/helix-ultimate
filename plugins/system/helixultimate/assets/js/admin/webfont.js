@@ -13,7 +13,11 @@ jQuery(function ($) {
 	function renderPreview($parent) {
 		let fontFamily = $parent.find('.hu-webfont-list').val(),
 			fontWeight = $parent.find('.hu-webfont-weight-list').val(),
-			fontSize = $parent.find('.hu-webfont-size-input.active').val(),
+			// fontSize = $parent.find('.hu-webfont-size-input.active').val(),
+			fontSize = $parent
+				.find('.hu-webfont-unit.active')
+				.find('.hu-unit-field-value')
+				.val(),
 			fontColor = $parent.find('.hu-font-color-input').val(),
 			fontSubset = $parent.find('.hu-webfont-subset-list').val(),
 			fontLineHeight = $parent.find('.hu-font-line-height-input').val(),
@@ -144,10 +148,14 @@ jQuery(function ($) {
 	});
 
 	// Font Size
-	$(document).on('change', '.hu-webfont-size-input', function (event) {
-		event.preventDefault();
-		renderPreview($(this).closest('.hu-field-webfont'));
-	});
+	$(document).on(
+		'change',
+		'.hu-webfont-unit .hu-unit-field-value',
+		function (event) {
+			event.preventDefault();
+			renderPreview($(this).closest('.hu-field-webfont'));
+		}
+	);
 
 	$('.hu-font-color-input').on('input', function (event) {
 		event.preventDefault();

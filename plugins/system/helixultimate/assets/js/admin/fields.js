@@ -3,11 +3,11 @@ jQuery(function ($) {
 		$(this).addClass('minicolors');
 	});
 
-	$('.hu-menu-builder .minicolors').each(function(){
+	$('.hu-menu-builder .minicolors').each(function () {
 		$(this).minicolors({
 			control: 'hue',
 			position: 'bottom',
-			theme: 'bootstrap'
+			theme: 'bootstrap',
 		});
 	});
 
@@ -248,4 +248,56 @@ jQuery(function ($) {
 			})();
 		}
 	};
+
+	/**
+	 * Unit field change handling.
+	 * On change of the unit selector or on blur of the
+	 * input field will change the value and store to the hidden field.
+	 */
+	$(document).on('blur', '.hu-unit-field-input', function (e) {
+		e.preventDefault();
+
+		let value = $(this).val(),
+			unit = 'px',
+			$field = $(this).parent().find('input.hu-unit-field-value');
+
+		/** Remove all the spaced from the value. */
+		value = value.replace(/\s/g, '');
+		if (value === '') return;
+
+		const regex = /^([+-]?(?:\d+|\d*\.\d+))(px|em|rem|%)?$/i;
+		const match = value.match(regex);
+
+		/**
+		 * Check if the input value is valid or not.
+		 * If valid then
+		 */
+		if (match && match.length > 0) {
+			[_, value, unit] = match;
+			if (unit === undefined) {
+				unit =
+					$(this).parent().find('select.hu-unit-select').val() ||
+					'px';
+				console.log(unit);
+			}
+		} else {
+			value = parseFloat(value) || '';
+		}
+
+		$(this).val(value);
+		$(this).next('select.hu-unit-select').val(unit);
+		$field.val(`${value}${unit}`).trigger('change');
+	});
+
+	$(document).on('change', 'select.hu-unit-select', function (e) {
+		e.preventDefault();
+		let unit = $(this).val() || 'px',
+			$input = $(this).parent().find('input.hu-unit-field-input'),
+			value = $input.val(),
+			$field = $(this).parent().find('input.hu-unit-field-value');
+
+		if (!!value) {
+			$field.val(`${value}${unit}`).trigger('change');
+		}
+	});
 });

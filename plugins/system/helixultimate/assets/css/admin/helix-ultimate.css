@@ -2256,7 +2256,7 @@ select:focus::-ms-value {
 
 .hu-edit-panel {
 	background: #eff4fb;
-	width: 320px;
+	width: 420px;
 	height: 100%;
 	box-shadow: 6px 10px 40px rgba(1, 3, 18, 0.15),
 		0px 3px 6px rgba(0, 0, 0, 0.25);
@@ -3256,6 +3256,15 @@ select:focus::-ms-value {
 .hu-webfont-size {
 	position: relative;
 }
+
+.hu-webfont-unit {
+	display: none;
+}
+
+.hu-webfont-unit.active {
+	display: flex;
+}
+
 .hu-webfont-size .hu-webfont-size-input,
 .hu-webfont-size .hu-webfont-size-input-sm,
 .hu-webfont-size .hu-webfont-size-input-xs {
@@ -3626,4 +3635,13 @@ input[type='color'] {
 .hu-badge-dark {
 	color: #fff;
 	background-color: #343a40;
+}
+
+.hu-unit-group .hu-unit-field-input {
+	border-top-left-radius: 5px !important;
+	border-bottom-left-radius: 5px !important;
+}
+
+.hu-unit-group .hu-unit-select {
+	box-shadow: none !important;
 }

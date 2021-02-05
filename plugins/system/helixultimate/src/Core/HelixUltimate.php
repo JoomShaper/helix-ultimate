@@ -1100,7 +1100,7 @@ class HelixUltimate
 
 				if (isset($font->fontSize) && $font->fontSize)
 				{
-					$fontCSS .= 'font-size: ' . $font->fontSize . 'px;';
+					$fontCSS .= 'font-size: ' . $font->fontSize . (!preg_match("@(px|em|rem|%)$@", $font->fontSize) ? 'px;' : ';');
 				}
 
 				if (isset($font->fontWeight) && $font->fontWeight)
@@ -1144,7 +1144,7 @@ class HelixUltimate
 				{
 					$fontCSS .= '@media (min-width:768px) and (max-width:991px){';
 					$fontCSS .= $key . "{";
-					$fontCSS .= 'font-size: ' . $font->fontSize_sm . 'px;';
+					$fontCSS .= 'font-size: ' . $font->fontSize_sm . (!preg_match("@(px|em|rem|%)$@", $font->fontSize_sm) ? 'px;' : ';');
 					$fontCSS .= "}\n}\n";
 				}
 
@@ -1152,7 +1152,7 @@ class HelixUltimate
 				{
 					$fontCSS .= '@media (max-width:767px){';
 					$fontCSS .= $key . "{";
-					$fontCSS .= 'font-size: ' . $font->fontSize_xs . 'px;';
+					$fontCSS .= 'font-size: ' . $font->fontSize_xs . (!preg_match("@(px|em|rem|%)$@", $font->fontSize_xs) ? 'px;' : ';');
 					$fontCSS .= "}\n}\n";
 				}
 

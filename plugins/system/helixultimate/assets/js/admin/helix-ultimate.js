@@ -999,7 +999,7 @@ jQuery(function ($) {
 						.find('.hu-font-line-height-input')
 						.val(),
 					fontLetterSpacing: $that
-						.find('.hu-font-letter-spacing-input')
+						.find('[name=hu-font-letter-spacing-input]')
 						.val(),
 					textDecoration: $that.find('.hu-text-decoration').val(),
 					textAlign: $that.find('.hu-text-align').val(),

@@ -129,14 +129,14 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Start Font Size
 		 */
-		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
+		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontSize($value);
 		$html .= '</div>';
 
 		/**
 		 * Start Font Color
 		 */
-		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
+		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontColor($value);
 		$html .= '</div>';
 

@@ -13,7 +13,6 @@ jQuery(function ($) {
 	function renderPreview($parent) {
 		let fontFamily = $parent.find('.hu-webfont-list').val(),
 			fontWeight = $parent.find('.hu-webfont-weight-list').val(),
-			// fontSize = $parent.find('.hu-webfont-size-input.active').val(),
 			fontSize = $parent
 				.find('.hu-webfont-unit.active')
 				.find('.hu-unit-field-value')
@@ -21,7 +20,9 @@ jQuery(function ($) {
 			fontColor = $parent.find('.hu-font-color-input').val(),
 			fontSubset = $parent.find('.hu-webfont-subset-list').val(),
 			fontLineHeight = $parent.find('.hu-font-line-height-input').val(),
-			fontSpacing = $parent.find('.hu-font-letter-spacing-input').val(),
+			fontSpacing = $parent
+				.find('[name=hu-font-letter-spacing-input]')
+				.val(),
 			textDecoration = $parent.find('input.hu-text-decoration').val(),
 			textAlign = $parent.find('input.hu-text-align').val();
 
@@ -38,11 +39,11 @@ jQuery(function ($) {
 		}
 
 		if (!!fontSize) {
-			if (!/^\d+[^\d]+/.test(fontSize)) {
+			if (!/(em|rem|px|%)$/.test(fontSpacing)) {
 				fontSize += 'px';
 			}
-			fontSize = fontSize.replace(/\s+/, '');
 
+			fontSize = fontSize.replace(/\s+/, '');
 			$preview.css('font-size', fontSize);
 		} else {
 			$preview.css('font-size', '');
@@ -61,12 +62,11 @@ jQuery(function ($) {
 		}
 
 		if (!!fontSpacing) {
-			if (!/^\d+[^\d]+/.test(fontSpacing)) {
+			if (!/(em|rem|px|%)$/.test(fontSpacing)) {
 				fontSpacing += 'px';
 			}
 
 			fontSpacing = fontSpacing.replace(/\s+/, '');
-
 			$preview.css('letter-spacing', fontSpacing);
 		} else {
 			$preview.css('letter-spacing', '');
@@ -167,7 +167,7 @@ jQuery(function ($) {
 		renderPreview($(this).closest('.hu-field-webfont'));
 	});
 
-	$('.hu-font-letter-spacing-input').on('change', function (event) {
+	$('[name=hu-font-letter-spacing-input]').on('change', function (event) {
 		event.preventDefault();
 		renderPreview($(this).closest('.hu-field-webfont'));
 	});

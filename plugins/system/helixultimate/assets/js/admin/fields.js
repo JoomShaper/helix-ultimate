@@ -263,7 +263,11 @@ jQuery(function ($) {
 
 		/** Remove all the spaced from the value. */
 		value = value.replace(/\s/g, '');
-		if (value === '') return;
+
+		if (value === '') {
+			$field.val('');
+			return;
+		}
 
 		const regex = /^([+-]?(?:\d+|\d*\.\d+))(px|em|rem|%)?$/i;
 		const match = value.match(regex);

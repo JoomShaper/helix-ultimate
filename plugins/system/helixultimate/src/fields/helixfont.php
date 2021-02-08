@@ -128,14 +128,14 @@ class JFormFieldHelixfont extends FormField
 		/**
 		 * Start Font Size
 		 */
-		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
+		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontSize($value);
 		$html .= '</div>';
 
 		/**
 		 * Start Font Color
 		 */
-		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
+		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontColor($value);
 		$html .= '</div>';
 
@@ -302,9 +302,6 @@ class JFormFieldHelixfont extends FormField
 		$fontSize_xs = (isset($value->fontSize_xs)) ? $value->fontSize_xs : '';
 		$html .= '<div class="hu-webfont-size">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_SIZE') . '</label>';
-		// $html .= '<input type="number" value="' . $fontSize . '" class="form-control hu-webfont-size-input active" min="6" max="200">';
-		// $html .= '<input type="number" value="' . $fontSize_sm . '" class="form-control hu-webfont-size-input-sm" min="6" max="200">';
-		// $html .= '<input type="number" value="' . $fontSize_xs . '" class="form-control hu-webfont-size-input-xs" min="6" max="200">';
 		$html .= $this->renderUnitField('hu-webfont-size-field', $fontSize, true);
 		$html .= $this->renderUnitField('hu-webfont-size-field-sm', $fontSize_sm);
 		$html .= $this->renderUnitField('hu-webfont-size-field-xs', $fontSize_xs);
@@ -313,6 +310,17 @@ class JFormFieldHelixfont extends FormField
 		return $html;
 	}
 
+	/**
+	 * Render unit field which is the combination of the measurement value
+	 * and the measurement unit.
+	 *
+	 * @param	string	$key	The field key/name.
+	 * @param	string	$value	The measurement value.
+	 * @param	boolean	$active	Is the field active or not.
+	 *
+	 * @return	string	The field HTML string.
+	 * @since	2.0.0
+	 */
 	private function renderUnitField($key, $value, $active = false)
 	{
 		// By default the unit is px.
@@ -401,7 +409,7 @@ class JFormFieldHelixfont extends FormField
 		$html = '';
 		$html .= '<div class="hu-font-letter-spacing">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_LETTER_SPACING') . '</label>';
-		$html .= '<input type="number" class="form-control hu-font-letter-spacing-input" value="' . $spacing . '" step=".1" />';
+		$html .= $this->renderUnitField('hu-font-letter-spacing-input', $spacing, true);
 		$html .= '</div>';
 
 		return $html;

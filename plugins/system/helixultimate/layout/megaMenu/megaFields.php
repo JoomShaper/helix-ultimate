@@ -88,7 +88,7 @@ class MegaFields
                 'title' => Text::_('HELIX_ULTIMATE_MEGA_MENU_WIDTH'),
                 'menu-builder' => true,
                 'data' => ['itemid' => $this->itemId],
-                'value' => $this->settings->width ?? '',
+                'value' => $this->settings->width ?? '600px',
                 'internal' => true,
             ],
             'showtitle' => [
@@ -96,7 +96,7 @@ class MegaFields
                 'title' => Text::_('HELIX_ULTIMATE_SHOW_MENU_TITLE'),
                 'menu-builder' => true,
                 'data' => ['itemid' => $this->itemId],
-                'value' => $this->settings->showtitle ?? '',
+                'value' => $this->settings->showtitle ?? '0',
                 'internal' => true,
             ],
             'menualign' => [
@@ -110,7 +110,7 @@ class MegaFields
                     'right' 	=> Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
                     'full' 		=> Text::_('HELIX_ULTIMATE_GLOBAL_FULL'),
                 ],
-                'value' => $this->settings->menualign ?? '',
+                'value' => $this->settings->menualign ?? 'left',
                 'internal' => true,
             ],
             'faicon' => [
@@ -131,7 +131,7 @@ class MegaFields
                     'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
                     'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
                 ],
-                'value' => $this->settings->dropdown ?? '',
+                'value' => $this->settings->dropdown ?? 'right',
                 'internal' => true,
             ],
             'customclass' => [
@@ -161,7 +161,7 @@ class MegaFields
                     'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
                     'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
                 ],
-                'value' => $this->settings->badge_position ?? '',
+                'value' => $this->settings->badge_position ?? 'right',
                 'internal' => true,
             ],
             'badge_bg_color' => [
@@ -169,10 +169,6 @@ class MegaFields
                 'title' => Text::_('HELIX_ULTIMATE_MENU_BADGE_BACKGROUND'),
                 'menu-builder' => true,
                 'data' => ['itemid' => $this->itemId],
-                'options' => [
-                    'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
-                    'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
-                ],
                 'value' => $this->settings->badge_bg_color ?? '',
                 'internal' => true,
             ],
@@ -181,10 +177,6 @@ class MegaFields
                 'title' => Text::_('HELIX_ULTIMATE_MENU_BADGE_COLOR'),
                 'menu-builder' => true,
                 'data' => ['itemid' => $this->itemId],
-                'options' => [
-                    'left' => Text::_('HELIX_ULTIMATE_GLOBAL_LEFT'),
-                    'right' => Text::_('HELIX_ULTIMATE_GLOBAL_RIGHT'),
-                ],
                 'value' => $this->settings->badge_text_color ?? '',
                 'internal' => true,
             ]

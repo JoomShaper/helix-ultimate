@@ -71,6 +71,8 @@
         <file>helper.php</file>
         <file>index.php</file>
         <file>offline.php</file>
+        <file>options.json</file>
+        <file>options.xml</file>
         <file>template_preview.png</file>
         <file>template_thumbnail.png</file>
         <file>templateDetails.xml</file>

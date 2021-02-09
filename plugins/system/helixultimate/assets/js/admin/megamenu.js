@@ -35,8 +35,6 @@ var megaMenu = {
 
 		this.toggleColumnsSlots();
 		this.handleModuleSearch();
-
-		console.log(settingsData);
 	},
 
 	jQueryPluginExtension() {
@@ -53,41 +51,31 @@ var megaMenu = {
 
 	declareDOMVariables() {
 		$megamenu = $('.hu-megamenu-builder-megamenu');
-		$sidebarSettings = $('.hu-mega-menu-settings');
 		$settingsInput = $('#hu-megamenu-layout-settings');
 		$saveBtn = $('.hu-megamenu-save-btn');
 		$cancelBtn = $('.hu-megamenu-cancel-btn');
-		$removeRowBtn = $('.hu-megamenu-remove-row');
 		$rowsContainer = $('.hu-megamenu-rows-container');
-		$addNewRowBtn = $('.hu-megamenu-add-row > a');
-		$customLayoutBtn = $('.hu-megamenu-custom');
-		$customLayoutContainer = $('.hu-megamenu-custom-layout');
-		$layoutItem = $('.hu-megamenu-column-layout');
 		$popover = $('.hu-megamenu-popover');
+
+		const defaultSettingsData = {
+			badge: '',
+			badge_bg_color: '',
+			badge_position: '',
+			badge_text_color: '',
+			customclass: '',
+			dropdown: 'right',
+			faicon: '',
+			layout: [],
+			megamenu: 0,
+			menualign: 'full',
+			showtitle: 1,
+			width: '600px',
+		};
 
 		itemId = $('#hu-menu-itemid').val();
 		settingsData = $settingsInput.val();
 		settingsData = settingsData && JSON.parse(settingsData);
-
-		// Set default value
-		if (!settingsData) {
-			settingsData = {
-				badge: '',
-				badge_bg_color: '',
-				badge_position: '',
-				badge_text_color: '',
-				customclass: '',
-				dropdown: 'right',
-				faicon: '',
-				layout: [],
-				megamenu: 0,
-				menualign: 'right',
-				showtitle: 1,
-				width: 600,
-			};
-		}
-
-		if (settingsData.layout === undefined) settingsData.layout = [];
+		settingsData = $.extend(defaultSettingsData, settingsData);
 
 		baseUrl = $('#hu-base-url').val();
 	},
@@ -188,6 +176,9 @@ var megaMenu = {
 
 	openPopover() {
 		!$popover.hasClass('show') && $popover.addClass('show');
+
+		// Reset the search field value on popover open
+		$('.hu-megamenu-module-search').val('');
 	},
 
 	closePopover() {
@@ -314,7 +305,10 @@ var megaMenu = {
 	/** Handling custom layout panel toggling */
 	handleCustomLayoutDisplay() {
 		$(document).on('click', '.hu-megamenu-custom', function () {
-			$customLayoutContainer.slideToggle(100);
+			$(this)
+				.closest('.hu-megamenu-columns-layout')
+				.find('.hu-megamenu-custom-layout')
+				.slideToggle(100);
 		});
 	},
 
@@ -329,7 +323,10 @@ var megaMenu = {
 
 	/** Remove all the event listeners */
 	removeEventListeners() {
-		$(document).off('click', '.hu-megamenu-custom-layout-apply');
+		$(document).off(
+			'click',
+			'.hu-megamenu-add-slots .hu-megamenu-custom-layout-apply'
+		);
 		$(document).off('click', '.hu-megamenu-remove-row');
 		$(document).off('click', '.hu-megamenu-add-row > a');
 		$(document).off('click', '.hu-megamenu-custom');
@@ -348,6 +345,10 @@ var megaMenu = {
 			'click',
 			'.hu-megamenu-row-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)'
 		);
+		$(document).off(
+			'click',
+			'.hu-megamenu-row-slots .hu-megamenu-custom-layout-apply'
+		);
 		$cancelBtn.off('click');
 		$saveBtn.off('click');
 		$megamenu.off('change');
@@ -364,25 +365,53 @@ var megaMenu = {
 					$(this).closest('.hu-megamenu-row-wrapper').data('rowid') -
 					1;
 				const layout = $(this).data('layout') || '12';
-				const rowData = settingsData.layout[rowIndex];
-				const res = await self.updateRowLayout({
+				await self.changeRowsColumns({
+					rowIndex,
 					layout,
-					rowData: JSON.stringify(rowData),
-					rowId: rowIndex + 1,
-					itemId,
-				});
-
-				if (res.status) {
-					$(this)
+					$container: $(this)
 						.closest('.hu-megamenu-row-wrapper')
-						.find('.hu-megamenu-columns-container')
-						.html(res.html);
-					settingsData.layout[rowIndex] = res.data;
-					self.closeRowLayoutDisplay();
-					self.refreshSortable(['item']);
-				}
+						.find('.hu-megamenu-columns-container'),
+				});
 			}
 		);
+
+		$(document).on(
+			'click',
+			'.hu-megamenu-row-slots .hu-megamenu-custom-layout-apply',
+			async function () {
+				const rowIndex =
+					$(this).closest('.hu-megamenu-row-wrapper').data('rowid') -
+					1;
+				const layout = $(this)
+					.parent()
+					.find('.hu-megamenu-custom-layout-field')
+					.val();
+				await self.changeRowsColumns({
+					rowIndex,
+					layout,
+					$container: $(this)
+						.closest('.hu-megamenu-row-wrapper')
+						.find('.hu-megamenu-columns-container'),
+				});
+			}
+		);
+	},
+
+	async changeRowsColumns({ rowIndex, layout, $container }) {
+		const rowData = settingsData.layout[rowIndex];
+		const res = await this.updateRowLayout({
+			layout,
+			rowData: JSON.stringify(rowData),
+			rowId: rowIndex + 1,
+			itemId,
+		});
+
+		if (res.status) {
+			$container.html(res.html);
+			settingsData.layout[rowIndex] = res.data;
+			this.closeRowLayoutDisplay();
+			this.refreshSortable(['item']);
+		}
 	},
 
 	updateRowLayout({ layout, rowData, rowId, itemId }) {
@@ -421,7 +450,7 @@ var megaMenu = {
 			'.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)',
 			async function (e) {
 				e.preventDefault();
-				console.log('data', settingsData);
+
 				const layout = $(this).data('layout') || '12';
 				const rowId = settingsData.layout.length + 1;
 				const response = await self.generateRow(layout, rowId, itemId);
@@ -432,8 +461,6 @@ var megaMenu = {
 
 					settingsData.layout.push(response.row);
 					self.refreshSortable(['column', 'item']);
-
-					console.log(settingsData);
 				}
 			}
 		);
@@ -444,7 +471,7 @@ var megaMenu = {
 
 		$(document).on(
 			'click',
-			'.hu-megamenu-custom-layout-apply',
+			'.hu-megamenu-add-slots .hu-megamenu-custom-layout-apply',
 			async function (e) {
 				e.preventDefault();
 				let $field = $('.hu-megamenu-custom-layout-field'),
@@ -458,7 +485,7 @@ var megaMenu = {
 				if (res.status) {
 					$rowsContainer.append(res.data);
 					self.closeLayoutDisplay();
-					settingsData.layout.push(response.row);
+					settingsData.layout.push(res.row);
 					self.refreshSortable();
 				}
 			}
@@ -507,21 +534,32 @@ var megaMenu = {
 	/** Handling the sidebar fields settings. */
 	handleSidebarSettings() {
 		let self = this;
-		$('.hu-megamenu-sidebar')
-			.find('input, select')
-			.each(function () {
-				$(this).on('change', function (e) {
-					e.preventDefault();
-					let { name, value } = e.target;
-					const type = $(this).attr('type');
+		const selectors = [
+			'.hu-megamenu-sidebar [name=megamenu]',
+			'.hu-megamenu-sidebar [name=width]',
+			'.hu-megamenu-sidebar [name=dropdown]',
+			'.hu-megamenu-sidebar [name=showtitle]',
+			'.hu-megamenu-sidebar [name=menualign]',
+			'.hu-megamenu-sidebar [name=faicon]',
+			'.hu-megamenu-sidebar [name=customclass]',
+			'.hu-megamenu-sidebar [name=badge]',
+			'.hu-megamenu-sidebar [name=badge_position]',
+			'.hu-megamenu-sidebar [name=badge_bg_color]',
+			'.hu-megamenu-sidebar [name=badge_text_color]',
+		];
+		selectors.forEach(selector => {
+			$(selector).on('change', function (e) {
+				e.preventDefault();
+				let { name, value } = e.target;
+				const type = $(this).attr('type');
 
-					value =
-						type === 'checkbox'
-							? ($(this).prop('checked') >> 0).toString()
-							: value;
-					self.updateSettingsField(name, value);
-				});
+				value =
+					type === 'checkbox'
+						? ($(this).prop('checked') >> 0).toString()
+						: value;
+				self.updateSettingsField(name, value);
 			});
+		});
 	},
 
 	/** Swap rows using previous index and the current index. */

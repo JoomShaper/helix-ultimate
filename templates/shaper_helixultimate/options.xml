@@ -2,7 +2,7 @@
 <form>
 	<fieldset name="basic" 
 		label="HELIX_ULTIMATE_BASIC" 
-		addfieldpath="/plugins/system/helixultimate/src/fields"
+		addfieldpath="/plugins/system/helixultimate/fields"
 		activegroup="logo" 
 		icon="fas fa-cog">
 
@@ -969,13 +969,6 @@
 		label="HELIX_ULTIMATE_NAVIGATION" 
 		activegroup="menubuilder" 
 		icon="fas fa-list-ul">
-		
-		<!-- <field name="megamenu"
-			type="helixmenubuilder"
-			helixgroup="megamenu"
-			label="Menu Builder"
-			track="off"
-		/> -->
 
 		<!-- menu builder group -->
 		<field name="menu" 
@@ -986,13 +979,13 @@
 			label="HELIX_ULTIMATE_MEGAMENU_SELECT"
 			hideLabel="true" />
 
+		<!-- Helix menu builder with megamenu -->
 		<field name="menu_builder"
 			helixgroup="menubuilder"
 			type="helixmenubuilder"
 			label="HELIX_ULTIMATE_MENU_BUILDER"
 			description="HELIX_ULTIMATE_MENU_BUILDER_DESC"
 			hideLabel="true" />
-
 
 		<!-- mega menu group -->
 		<field name="menu_type" 

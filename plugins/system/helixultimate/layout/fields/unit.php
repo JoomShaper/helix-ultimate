@@ -63,7 +63,7 @@ class HelixultimateFieldUnit
 		// By default the unit is px.
 		$unit = 'px';
 
-		if (!empty($value))
+		if (isset($value))
 		{
 			$matches = [];
 
@@ -79,10 +79,21 @@ class HelixultimateFieldUnit
 					}
 				}
 			}
+			elseif (is_numeric($value))
+			{
+				$value = (float) $value;
+			}
+			else
+			{
+				$value = '';
+			}
 		}
 
+		$value = !isset($value) ? '' : $value;
+		$finalValue = $value !== '' ? $value . $unit : '';
+
 		$output .= '<div class="hu-input-group hu-unit-group">';
-		$output .= '<input type="hidden" class="hu-unit-field-value" name="' . $key . '" value="' . $value . $unit . '"/>';
+		$output .= '<input type="hidden" class="hu-unit-field-value" name="' . $key . '" value="' . $finalValue . '"/>';
 		$output .= '	<input type="text" class="hu-field-dimension-width form-control hu-unit-field-input ' . $key . '" value="' . $value . '" />';
 		$output .= '	<select class="hu-unit-select">';
 		$output .= '		<option value="px" ' . ($unit === 'px' ? 'selected' : '') . '>px</option>';

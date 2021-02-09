@@ -117,85 +117,25 @@ class Settings
 		}
 	}
 
-	protected function getFieldsByFeildset($name, $form)
-	{
-		$xml = $form->getXml();
-
-		// Make sure there is a valid JForm XML document.
-		if (!($xml instanceof \SimpleXMLElement))
-		{
-			return false;
-		}
-
-		/*
-		 * Get an array of <field /> elements that are underneath a <fieldset /> element
-		 * with the appropriate name attribute, and also any <field /> elements with
-		 * the appropriate fieldset attribute. To allow repeatable elements only fields
-		 * which are not descendants of other fields are selected.
-		 */
-		$fields = $xml->xpath('(//fieldset[@name="' . $name . '"]//field | //field[@fieldset="' . $name . '"])[not(ancestor::field)]');
-
-		return $fields;
-	}
-
 	/**
-	 * Updating the fieldset attributes according to the modern options.xml file.
+	 * If menu_builder field is not present in the options.xml file then add it.
 	 *
-	 * @param	Form	$original	The original legacy form i.e. the form from the file options.xml at template/ directory.
-	 * @param	Form	$updated 	The updated modern form i.e. thr form from the file options.xml at plugin's assets/ directory.
-	 *
-	 * @return	\SimpleXMLElement	The updated original form XML.
+	 * @return	void
 	 * @since	2.0.0
 	 */
-	protected function updateFieldsetAttributes(Form $original, Form $updating)
+	protected function loadMenubuilder(Form &$form)
 	{
-		$updatingFieldSets = $updating->getFieldsets();
-		$originalFieldSets = $original->getFieldsets();
+		$field = $form->getField('menu_builder');
 
 		/**
-		 * Combine the fieldset's attributes the original one with
-		 * the updated one and update the original.
+		 * If menu_builder field does not exist then
+		 * add the field.
 		 */
-		foreach ($updatingFieldSets as $name => $attributes)
+		if (!$field)
 		{
-			if (!isset($originalFieldSets[$name]))
-			{
-				$originalFieldSets[$name] = $attributes;
-				continue;
-			}
-
-			foreach ($attributes as $key => $value)
-			{
-				$originalFieldSets[$name]->$key = $value;
-			}
+			$fieldXml = new \SimpleXMLElement('<field name="menu_builder" helixgroup="menubuilder" type="helixmenubuilder" label="HELIX_ULTIMATE_MENU_BUILDER" description="HELIX_ULTIMATE_MENU_BUILDER_DESC" hideLabel="true" />');
+			$form->setField($fieldXml, null, false, 'menu');
 		}
-
-		/**
-		 * Get the XML from the Joomla\CMS\Form\Form instance,
-		 * update the fieldset attributes.
-		 */
-		$xml = $original->getXml();
-
-		for ($i = 0; $i < $xml->count(); $i++)
-		{
-			$attributes = $xml->fieldset[$i]->attributes();
-			$name = (string) $attributes['name'];
-			$fieldset = $originalFieldSets[$name];
-
-			foreach ($fieldset as $key => $value)
-			{
-				if (isset($attributes[$key]))
-				{
-					$attributes[$key] = $value;
-				}
-				else
-				{
-					$xml->fieldset[$i]->addAttribute($key, $value);
-				}
-			}
-		}
-		
-		return $xml->asXML();
 	}
 
 	/**
@@ -207,97 +147,51 @@ class Settings
 	protected function prepareSettingsFormData()
 	{
 		$templateStyle = Helper::getTemplateStyle($this->id);
-		$legacyPath = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.xml';
 
-		if (\file_exists($legacyPath))
+		$this->form->loadFile(JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.xml');
+
+		/**
+		 * Get the xml form of the form.
+		 * Update the addfieldpath attribute and set to `/plugins/system/helixultimate/src/fields`
+		 */
+		$formXml = $this->form->getXml();
+
+		if (!empty($formXml))
 		{
-			$legacyForm = new Form('legacy_options');
-			$legacyForm->loadFile($legacyPath);
-		}
-
-		$optionsForm = new Form('options');
-		$optionsForm->loadFile(JPATH_PLUGINS . '/system/helixultimate/src/form/options.xml');
-		
-		$optionsFieldSets = $optionsForm->getFieldsets();
-
-		if (!empty($optionsFieldSets) && !empty($legacyForm))
-		{
-			$form = $this->updateFieldsetAttributes($legacyForm, $optionsForm);
-			$legacyForm->load($form);
-
-			foreach ($optionsFieldSets as $name => $fieldset)
+			for ($i = 0; $i < $formXml->count(); ++$i)
 			{
-				/**
-				 * Get the fields by fieldset name and then,
-				 * update the legacy from with the modern xml fields.
-				 */
-				$fields = $this->getFieldsByFeildset($name, $optionsForm);
-				$legacyForm->setFields($fields, null, true, $name);
+				$fieldset = isset($formXml->fieldset[$i]) ? $formXml->fieldset[$i] : null;
+				$attributes = !\is_null($fieldset) ? $fieldset->attributes() : null;
+
+				if (!\is_null($attributes) && isset($attributes->addfieldpath))
+				{
+					$formXml->fieldset[$i]->attributes()->addfieldpath = '/plugins/system/helixultimate/src/fields';
+				}
 			}
 		}
-		
-		/**
-		 * If legacy form exists then set the form as the legacy form,
-		 * otherwise set as modern options form.
-		 */
-		$this->form = isset($legacyForm)
-			&& $legacyForm instanceof \Joomla\CMS\Form\Form
-				? $legacyForm
-				: $optionsForm;
+
+		// Load the updated xml.
+		$this->form->load($formXml->asXML());
+		$this->loadMenubuilder($this->form);
 
 		$formData = new \stdClass;
 
 		if (!empty($templateStyle->params))
 		{
-			$formData = json_decode($templateStyle->params);
+			$formData = \json_decode($templateStyle->params);
 		}
 
 		if (empty($formData))
 		{
-			/**
-			 * Check if the options.json file exists in the template directory.
-			 * If so, that means this is an old template and update
-			 * the options by the modern options.json fields.
-			 */
-			$legacyPath = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.json';
-			$optionPath = JPATH_PLUGINS . '/system/helixultimate/assets/options.json';
+			$optionsPath = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.json';
+			$optionDefaults = [];
 
-			if (\file_exists($legacyPath))
+			if (\file_exists($optionsPath))
 			{
-				$legacyDefaults = \json_decode(\file_get_contents($legacyPath));
+				$optionDefaults = \json_decode(\file_get_contents($optionsPath));
 			}
 
-			$optionDefaults = \json_decode(\file_get_contents($optionPath));
-
-			if (!empty($optionDefaults) && !empty($legacyDefaults))
-			{
-				foreach ($optionDefaults as $key => $value)
-				{
-					$legacyDefaults->$key = $value;
-				}
-			}
-
-			$formData = $legacyDefaults ?? $optionDefaults;
-		}
-		else
-		{
-			/**
-			 * If formData is in the DB already but misses the updated fields,
-			 * then handle them.
-			 */
-			$optionPath = JPATH_PLUGINS . '/system/helixultimate/assets/options.json';
-			$optionDefaults = \json_decode(\file_get_contents($optionPath));
-	
-			if (!empty($optionDefaults))
-			{
-				foreach ($optionDefaults as $key => $value)
-				{
-					if (!isset($formData->$key))
-					{
-						$formData->$key = $value;
-					}
-				}
-			}
+			$formData = $optionDefaults;
 		}
 
 		// Set custom field data for social share button

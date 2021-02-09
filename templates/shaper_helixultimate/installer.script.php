@@ -86,7 +86,7 @@ class plgSystemTmp_helixultInstallerScript
 
 			if(empty($params_array))
 			{
-				$options_default = file_get_contents($plugin_path .'/assets/options.json');
+				$options_default = file_get_contents($template_path .'/options.json');
 
 				$db = JFactory::getDBO();
 				$query = $db->getQuery(true);

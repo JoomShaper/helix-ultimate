@@ -130,6 +130,18 @@ jQuery(function ($) {
 		}
 	});
 
+	$(document).on('keyup', function (e) {
+		if (e.which === 27) {
+			if ($('.hu-megamenu-popover').hasClass('show')) {
+				$('.hu-megamenu-popover').removeClass('show');
+				return;
+			}
+			if ($('body').hasClass('hu-modal-open')) {
+				$(document).closeModal();
+			}
+		}
+	});
+
 	$('.reload-preview-iframe').on('click', function (e) {
 		e.preventDefault();
 		let that = this;

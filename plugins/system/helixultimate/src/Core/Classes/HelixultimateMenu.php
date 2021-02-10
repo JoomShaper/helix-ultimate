@@ -381,16 +381,17 @@ class HelixultimateMenu
 
 		// Menu_show
 		$menu_show = $this->getMenuShow($item->id);
-		$dropdown_width = $this->_params->get('dropdown_width', 240);
+		$dropdown_width = $this->_params->get('dropdown_width', '240px');
+		$dropdown_width = preg_match("@(px|em|rem|%)$@", $dropdown_width) ? $dropdown_width : $dropdown_width . 'px';
 		$dropdown_alignment = 'right';
-		$dropdown_style = 'width: ' . $dropdown_width . 'px;';
+		$dropdown_style = 'width: ' . $dropdown_width . ';';
 		$layout = json_decode($this->_items[$item->id]->getParams()->get('helixultimatemenulayout'));
 
 		if (isset($layout->dropdown) && $layout->dropdown === 'left')
 		{
 			if ((int) $item->parent_id !== 1)
 			{
-				$dropdown_style .= 'left: -' . $dropdown_width . 'px;';
+				$dropdown_style .= 'left: -' . $dropdown_width . ';';
 			}
 
 			$dropdown_alignment = 'left';

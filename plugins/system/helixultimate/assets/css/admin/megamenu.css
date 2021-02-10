@@ -252,7 +252,7 @@
 .hu-megamenu-settings .hu-input-group input {
 	min-width: 45px;
 	padding: 5px 0 5px 6px !important;
-	max-width: 45px;
+	max-width: 75px;
 }
 .hu-megamenu-settings .hu-input-group {
 	justify-content: flex-end;
@@ -484,6 +484,13 @@
 	align-items: center;
 	justify-content: space-between;
 }
+
+.hu-mega-menu-builder
+	.control-group:not(.control-group-checkbox)
+	.control-label {
+	margin-bottom: 0;
+}
+
 .hu-mega-menu-builder .control-group.hu-style-switcher > div {
 	width: 100%;
 }

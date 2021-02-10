@@ -53,13 +53,23 @@ class HelixultimateFieldText
 		}
 
 		$output  = '<div class="control-group ' . $className . '" ' . $dataShowon . ' >';
+		$output .= '<div class="control-group-inner">';
+		$output .= '<div class="control-label">';
 		$output .= '<label>' . $attr['title'] . '</label>';
 
 		if (!empty($attr['desc']))
 		{
 			$output .= '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>';
+		}
+
+		$output .= '</div>';
+
+		if (!empty($attr['desc']))
+		{
 			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
 		}
+
+		$output .= '</div>';
 
 		if ($isMenuBuilder)
 		{

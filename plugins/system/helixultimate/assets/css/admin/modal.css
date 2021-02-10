@@ -43,6 +43,7 @@
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
 	font-family: 'Roboto', sans-serif;
+	transition: 250ms width ease-out;
 }
 .hu-mega-menu-builder.collapsed {
 	width: 350px;

@@ -1959,6 +1959,8 @@ select:focus::-ms-value {
 .control-group.control-group-checkbox .control-label,
 .control-group.control-group-checkbox .control-label label {
 	margin-bottom: 0;
+	display: flex;
+	align-items: center;
 }
 
 .control-group:not(.control-group-checkbox) .control-label {
@@ -1967,9 +1969,24 @@ select:focus::-ms-value {
 	align-items: center;
 }
 
+.hu-inline-group {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.hu-inline-group .control-label {
+	margin-bottom: 0 !important;
+}
+
+.hu-inline-group .controls {
+	margin-left: auto;
+}
+
 .control-group.control-group-checkbox .control-help {
 	padding-top: 10px;
 	margin-bottom: 5px;
+	width: 100%;
 }
 
 .hu-help-icon {
@@ -3640,6 +3657,7 @@ input[type='color'] {
 .hu-unit-group .hu-unit-field-input {
 	border-top-left-radius: 5px !important;
 	border-bottom-left-radius: 5px !important;
+	max-width: 75px;
 }
 
 .hu-unit-group .hu-unit-select {

@@ -81,18 +81,19 @@
 			label="HELIX_ULTIMATE_SELECT_HEADER" 
 			showon="predefined_header:1" />
 
-		<field name="header_height" 
+		<!-- <field name="header_height" 
 			helixgroup="header" 
 			type="text" 
 			default="80px" 
+			label="HELIX_ULTIMATE_HEADER_HEIGHT" /> -->
+		<field name="header_height" 
+			helixgroup="header" 
+			type="helixUnit" 
+			default="80px"
+			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
 
 		<!-- sticky header options for devices -->
-		<!-- <field name="header_device" 
-			type="helixdevices" 
-			helixgroup="header" 
-			default="md" 
-			track="false" /> -->
 		<field name="sticky_header" 
 			helixgroup="header" 
 			type="checkbox" 
@@ -1001,7 +1002,8 @@
 
 		<field name="dropdown_width" 
 			helixgroup="megamenu" 
-			type="number" 
+			type="helixUnit"
+			display="inline" 
 			label="HELIX_ULTIMATE_MEGAMENU_DROPDOWN_WIDTH" 
 			hint="240" 
 			showon="menu_type!:offcanvas" />

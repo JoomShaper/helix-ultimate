@@ -9,6 +9,8 @@
 defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Settings;
+use HelixUltimate\Framework\System\JoomlaBridge;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
@@ -16,6 +18,16 @@ extract($displayData);
 
 ?>
 <?php
+
+	/**
+	 * Apply chosen for the multiple select field for J3!
+	 * @TODO: apply chosen for J4 multiple select.
+	 */
+	if (JoomlaBridge::getVersion('major') < 4)
+	{
+		HTMLHelper::_('formbehavior.chosen', 'select[multiple]');
+	}
+
 	$showon = $field->getAttribute('showon');
 	$attribs = '';
 
@@ -72,10 +84,12 @@ extract($displayData);
 	$group_class .= $separator ? ' hu-field-separator': '';
 
 	$listStyle = $field->getAttribute('style');
+	$display = $field->getAttribute('display', '');
+	
 ?>
 <div class="<?php echo $group_class; ?>" <?php echo $attribs; ?>>
 	<div class="control-group">
-		<div class="control-group-inner">
+		<div class="control-group-inner <?php echo $display === 'inline' ? 'hu-inline-group' : ''; ?>">
 			<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
 				<div class="control-label">
 					<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">

@@ -1074,10 +1074,10 @@ jQuery(function ($) {
 
 		if ($helpElement.hasClass('show')) {
 			$helpElement.removeClass('show');
-			$helpElement.slideUp(200);
+			$helpElement.slideUp(100);
 		} else {
 			$helpElement.addClass('show');
-			$helpElement.slideDown(200);
+			$helpElement.slideDown(100);
 		}
 
 		let $siblings = $(this).closest('.control-group').siblings();
@@ -1087,7 +1087,7 @@ jQuery(function ($) {
 
 			if ($help.hasClass('show')) {
 				$help.removeClass('show');
-				$help.slideUp(300);
+				$help.slideUp(100);
 			}
 		});
 	});

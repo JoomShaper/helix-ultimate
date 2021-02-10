@@ -1,0 +1,18 @@
+@media(max-width: 990px) {
+	#sp-logo{
+		&.has-border>.sp-column{
+			border-right: none;
+			padding-right: 0px;
+		}
+	}
+}
+@media(max-width: 575px) {
+	#sp-menu ul.social-icons {
+    margin: 10px 0 10px 15px;
+    border-left: 2px solid rgba(80, 80, 80, 0.2);
+    padding-left: 15px;
+	}
+	#sp-menu ul.social-icons > li:not(:last-child) {
+    margin-right: 10px;
+	}
+}

@@ -32,7 +32,11 @@ body,
 #sp-header {
 	background: $header_bg_color;
 }
-
+#sp-social{
+	a:hover, a:focus{
+		color: $link_color;
+	}
+}
 // Anchor
 a {
 	color: $link_color;

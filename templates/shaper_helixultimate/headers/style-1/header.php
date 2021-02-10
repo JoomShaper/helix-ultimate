@@ -33,13 +33,13 @@ $menu    	= new HelixUltimateFeatureMenu($data->params);
  * Logo and menu html classes
  *
  */
-$logoClass = 'col-8 col-lg-3';
-$menuClass = 'col-4 col-lg-9';
+$logoClass = 'col-auto';
+$menuClass = 'col-auto flex-auto';
 
 if($offcanvas_position === 'left')
 {
-	$logoClass = 'col-12 col-lg-3';
-	$menuClass = 'd-none d-lg-block col-lg-9';
+	$logoClass = 'col-12 col-lg-auto';
+	$menuClass = 'd-none d-lg-block col-lg-auto flex-auto';
 }
 
 ?>
@@ -78,7 +78,7 @@ if($offcanvas_position === 'left')
 <header id="sp-header">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row">
+			<div class="row flex-nowrap">
 				<!-- Show logo on header -->
 				<div id="sp-logo" class="<?php echo $logoClass; ?>">
 					<div class="sp-column">
@@ -94,7 +94,7 @@ if($offcanvas_position === 'left')
 
 				<!-- Show menu on header -->
 				<div id="sp-menu" class="<?php echo $menuClass; ?>">
-					<div class="sp-column">
+					<div class="sp-column menu-flex">
 						<?php if (isset($menu->load_pos) && $menu->load_pos === 'before') : ?>
 							<?php echo $menu->renderFeature(); ?>
 							<jdoc:include type="modules" name="menu" style="sp_xhtml" />

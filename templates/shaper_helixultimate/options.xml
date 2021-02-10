@@ -53,7 +53,7 @@
 		<field name="logo_height" 
 			helixgroup="logo" 
 			type="number" 
-			default="36" 
+			default="30" 
 			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
 			showon="logo_type:image[AND]logo_image!:" />
 

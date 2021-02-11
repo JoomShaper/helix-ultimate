@@ -215,6 +215,12 @@ ul.social-icons {
 		#offcanvas-toggler{
 			height: var(--half_header_height);
 		}
+		.sp-megamenu-wrapper{
+			#offcanvas-toggler{
+				margin-right: 20px;
+				margin-left: 0px;
+			}
+		}
 	}
 	.logo {
 		height: $header_height;

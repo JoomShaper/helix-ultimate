@@ -39,15 +39,17 @@ $contact 	= new HelixUltimateFeatureContact($data->params);
 	<div class="container">
 		<div class="container-inner">
 			<div class="top-part">
-				<div class="row flex-nowrap align-items-center justify-content-between">
+				<div class="row flex-nowrap align-items-center">
 					<!-- Social icons -->
-					<div class="col-auto">
+					<div class="col-sm-4">
 					<?php echo $contact->renderFeature(); ?>
 					</div>
 	
 					<!-- Show logo on header -->
-					<div id="sp-logo" class="col-auto">
-						<div class="sp-column">
+					<div id="sp-logo" class="col-sm-4">
+						<div class="sp-column d-flex align-items-center  justify-content-center">
+						<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-block d-lg-none" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+						
 							<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
 								<?php echo $logo->renderFeature(); ?>
 								<jdoc:include type="modules" name="logo" style="sp_xhtml" />
@@ -59,8 +61,8 @@ $contact 	= new HelixUltimateFeatureContact($data->params);
 					</div>
 	
 					<!-- Show menu on header -->
-					<div id="sp-social" class="col-auto">
-						<div class="sp-column d-flex justify-content-between">
+					<div id="sp-social" class="col-sm-4">
+						<div class="sp-column d-flex justify-content-end">
 							<!-- Social icons -->
 							<div class="social-wrap d-flex align-items-center">
 								<?php echo $social->renderFeature(); ?>
@@ -71,7 +73,7 @@ $contact 	= new HelixUltimateFeatureContact($data->params);
 			</div>
 
 			<!-- Menu -->
-			<div class="bottom-part">
+			<div class="bottom-part d-none d-lg-block ">
 				<div class="row">
 					<div class="col-12">
 						<div class="d-flex justify-content-center flex-auto">

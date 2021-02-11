@@ -1,3 +1,8 @@
+:root{
+	--header_height: $header_height;	
+	--half_header_height: calc(var(--header_height) / 2);	
+}
+
 body {
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
@@ -75,14 +80,56 @@ img {
 ul.social-icons {
 	list-style: none;
 	padding: 0;
-	margin: -5px;
 	display: inline-block;
 	> li {
 		display: inline-block;
-		margin: 5px 7px;
+		line-height: 1.5;
+		&:not(:last-child) {
+			margin-right: 20px;
+		}
 	}
 }
-
+.flex-auto{
+	flex: auto;
+}
+#sp-menu{
+	&.menu-with-social{
+		.sp-megamenu-wrapper{
+			flex: auto;
+			justify-content: space-between;
+			display: flex;
+			align-items: center;
+		}
+	}
+	ul.social-icons{
+		margin: 10px 0 10px 30px;
+		border-left: 2px solid rgba(80, 80, 80, 0.2);
+		padding-left: 30px;
+		>li:not(:last-child){
+			margin-right: 20px;
+		}
+		a{
+			color: #9C9C9C;
+		}
+	}
+	.social-wrap.no-border{
+		ul.social-icons{
+			border-left: none;
+			padding-left: 0px;
+		}
+	}
+	&.menu-center{
+		.sp-megamenu-wrapper{
+			justify-content: center;
+		}
+	}
+}
+.menu-flex{
+	.sp-megamenu-wrapper{
+		display: flex;
+    justify-content: flex-end;
+	}
+}
 // language switcher
 .sp-module-content {
 	.mod-languages {
@@ -139,6 +186,42 @@ ul.social-icons {
 	width: 100%;
 	z-index: 99;
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+	&.full-header{
+		padding-left: 45px;
+    padding-right: 45px;
+	}
+	&.lg-header{
+		a{
+			color: #909196;
+		}
+		.sp-contact-info{
+			color: #909196;
+		}
+		.top-part{
+			border-bottom: 1px solid #E5E5E5;
+		}
+		.logo{
+			height: auto;
+		}
+		.top-part>div,
+		.bottom-part>div{
+			height: var(--half_header_height);
+		}
+		.sp-megamenu-parent > li > a,
+		.sp-megamenu-parent > li > span,
+		#offcanvas-toggler{
+			line-height: var(--half_header_height);
+		}
+		#offcanvas-toggler{
+			height: var(--half_header_height);
+		}
+		.sp-megamenu-wrapper{
+			#offcanvas-toggler{
+				margin-right: 20px;
+				margin-left: 0px;
+			}
+		}
+	}
 	.logo {
 		height: $header_height;
 		display: inline-flex;
@@ -162,7 +245,27 @@ ul.social-icons {
 		width: 100%;
 	}
 }
+#sp-header + section + #sp-main-body{
+	padding-top: calc(var(--header_height) + 30px);
+}
 
+#sp-logo.has-border{
+	.sp-column{
+		display: inline-flex;
+    align-items: center;
+    border-right: 2px solid rgba(80, 80, 80, 0.2);
+    padding-right: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+	}
+	.logo {
+		height: auto;
+	}
+	#offcanvas-toggler{
+		height: auto;
+    line-height: 1.3;
+	}
+}
 // Page Title
 
 #sp-title {

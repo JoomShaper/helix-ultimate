@@ -1,0 +1,33 @@
+@media(max-width: 1200px) {
+	#sp-header.full-header {
+    padding-left: 15px;
+    padding-right: 15px;
+	}
+}
+
+@media(max-width: 992px) {
+	#sp-logo{
+		&.has-border>.sp-column{
+			border-right: none;
+			padding-right: 0px;
+		}
+	}
+}
+
+@media(max-width: 576px) {
+	#sp-menu{
+		ul.social-icons {
+			margin: 10px 0 10px 15px;
+			border-left: 2px solid rgba(80, 80, 80, 0.2);
+			padding-left: 15px;
+			> li:not(:last-child) {
+				margin-right: 10px;
+			}
+		}
+		&.menu-center{
+			#offcanvas-toggler{
+				margin-left: 0;
+			}
+		}
+	}
+}

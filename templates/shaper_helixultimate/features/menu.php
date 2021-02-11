@@ -56,14 +56,13 @@ class HelixUltimateFeatureMenu
 		if ($menu_type === 'mega_offcanvas')
 		{
 			$output .= '<nav class="sp-megamenu-wrapper">';
-
+			$menu = new HelixultimateMenu('d-none d-lg-block', '');
+			$output .= $menu->render();
+			
 			if($offcanvas_position === 'right')
 			{
 				$output .= '<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>';
 			}
-
-			$menu = new HelixultimateMenu('d-none d-lg-block', '');
-			$output .= $menu->render();
 			$output .= '</nav>';
 		}
 		elseif ($menu_type === 'mega')

@@ -15,6 +15,7 @@ $feature_folder_path = JPATH_THEMES . '/' . $data->template->template . '/featur
 
 include_once $feature_folder_path . '/logo.php';
 include_once $feature_folder_path . '/menu.php';
+include_once $feature_folder_path . '/social.php';
 
 /**
  * Helper classes for-
@@ -23,29 +24,21 @@ include_once $feature_folder_path . '/menu.php';
  */
 $logo    	= new HelixUltimateFeatureLogo($data->params);
 $menu    	= new HelixUltimateFeatureMenu($data->params);
+$social 	= new HelixUltimateFeatureSocial($data->params);
 
 
 /**
  * Logo and menu html classes
  *
  */
-$logoClass = 'col-auto';
-$menuClass = 'col-auto flex-auto';
-
-if($offcanvas_position === 'left')
-{
-	$logoClass = 'col-12 col-lg-auto';
-	$menuClass = 'd-none d-lg-block col-lg-auto flex-auto';
-}
-
 ?>
 
-<header id="sp-header">
-	<div class="container">
+<header id="sp-header" class="full-header">
+	<div class="container-fluid">
 		<div class="container-inner">
-			<div class="row flex-nowrap">
+			<div class="row flex-nowrap align-items-center">
 				<!-- Show logo on header -->
-				<div id="sp-logo" class="<?php echo $logoClass; ?>">
+				<div id="sp-logo" class="col-auto">
 					<div class="sp-column">
 						<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
 							<?php echo $logo->renderFeature(); ?>
@@ -58,17 +51,20 @@ if($offcanvas_position === 'left')
 				</div>
 
 				<!-- Show menu on header -->
-				<div id="sp-menu" class="<?php echo $menuClass; ?>">
-					<div class="sp-column menu-flex">
-						<?php if (isset($menu->load_pos) && $menu->load_pos === 'before') : ?>
+				<div id="sp-menu" class="menu-with-social menu-center col-auto flex-auto">
+					<div class="sp-column d-flex justify-content-between">
+						<div class="d-flex justify-content-between flex-auto">
 							<?php echo $menu->renderFeature(); ?>
 							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-						<?php else : ?>
-							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-							<?php echo $menu->renderFeature(); ?>
-						<?php endif ?>
+						</div>
+
+						<!-- Social icons -->
+						<div class="social-wrap no-border d-flex align-items-center">
+							<?php echo $social->renderFeature(); ?>
+						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>

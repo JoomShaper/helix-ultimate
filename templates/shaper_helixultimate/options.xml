@@ -54,7 +54,7 @@
 			helixgroup="logo" 
 			type="helixUnit"
 			display="inline" 
-			default="36" 
+			default="30" 
 			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
 			showon="logo_type:image[AND]logo_image!:" />
 

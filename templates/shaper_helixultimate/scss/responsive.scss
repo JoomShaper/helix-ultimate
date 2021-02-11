@@ -63,6 +63,9 @@
 		.container-inner>.row{
 			flex-wrap: wrap !important;
 		}
-		
+		#offcanvas-toggler{
+			height: auto;
+			line-height: 1.2;
+		}
 	}
 }

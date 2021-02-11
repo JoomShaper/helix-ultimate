@@ -47,26 +47,19 @@ if($offcanvas_position === 'left')
 				<!-- Show logo on header -->
 				<div id="sp-logo" class="<?php echo $logoClass; ?>">
 					<div class="sp-column">
-						<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
-							<?php echo $logo->renderFeature(); ?>
-							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
-						<?php else : ?>
-							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
-							<?php echo $logo->renderFeature(); ?>
-						<?php endif ?>
+						<?php echo $logo->renderFeature(); ?>
+						<jdoc:include type="modules" name="logo" style="sp_xhtml" />
 					</div>
 				</div>
 
 				<!-- Show menu on header -->
 				<div id="sp-menu" class="<?php echo $menuClass; ?>">
-					<div class="sp-column menu-flex">
-						<?php if (isset($menu->load_pos) && $menu->load_pos === 'before') : ?>
-							<?php echo $menu->renderFeature(); ?>
-							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-						<?php else : ?>
-							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-							<?php echo $menu->renderFeature(); ?>
-						<?php endif ?>
+					<div class="sp-column  d-flex justify-content-end align-items-center">
+						<?php echo $menu->renderFeature(); ?>
+						<jdoc:include type="modules" name="menu" style="sp_xhtml" />
+						<?php if($offcanvas_position === 'right') { ?>
+							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+						<?php } ?>
 					</div>
 				</div>
 			</div>

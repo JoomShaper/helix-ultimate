@@ -55,7 +55,7 @@ class HelixUltimateFeatureMenu
 
 		if ($menu_type === 'mega_offcanvas')
 		{
-			$output .= '<nav class="sp-megamenu-wrapper">';
+			$output .= '<nav class="sp-megamenu-wrapper d-flex">';
 			$menu = new HelixultimateMenu('d-none d-lg-block', '');
 			$output .= $menu->render();
 			
@@ -67,7 +67,7 @@ class HelixUltimateFeatureMenu
 		}
 		elseif ($menu_type === 'mega')
 		{
-			$output .= '<nav class="sp-megamenu-wrapper">';
+			$output .= '<nav class="sp-megamenu-wrapper d-flex">';
 
 			if ($offcanvas_position === 'right')
 			{

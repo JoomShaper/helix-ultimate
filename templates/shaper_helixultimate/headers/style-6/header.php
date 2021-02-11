@@ -76,7 +76,7 @@ $contact 	= new HelixUltimateFeatureContact($data->params);
 			<div class="bottom-part d-none d-lg-block ">
 				<div class="row">
 					<div class="col-12">
-						<div class="d-flex justify-content-center flex-auto">
+						<div class="d-flex justify-content-center align-items-center flex-auto">
 								<?php echo $menu->renderFeature(); ?>
 								<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 							</div>			

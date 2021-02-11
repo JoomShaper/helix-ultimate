@@ -3159,37 +3159,23 @@ select:focus::-ms-value {
 	max-width: 100%;
 }
 
-.hu-header-list > li::after {
-	content: '\f00c';
-	font-family: 'Font Awesome 5 Free';
-	font-weight: 900;
-	font-size: 12px;
+.hu-header-list > li:after {
+	content: '';
 	position: absolute;
-	top: 10px;
-	right: 10px;
-	height: 18px;
-	width: 18px;
-	line-height: 18px;
-	text-align: center;
-	background: #007bff;
-	color: #fff;
-	border-radius: 2px;
-	display: none;
+	top: 6px;
+	bottom: 5px;
+	left: 6px;
+	right: 6px;
+	border: 1.5px solid #3366FF;
+	box-shadow: 0px 2px 4px rgba(20, 50, 80, 0.2);
+	border-radius: 3px;
+	opacity: 0;
+	transition: .3s;
 }
 
-.hu-header-list > li.active::after {
-	display: block;
-}
-
-.hu-header-list > li:hover::before {
-	content: ' ';
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background: rgba(201, 201, 201, 30%);
-	border-radius: 1px;
+.hu-header-list > li:hover:after,
+.hu-header-list > li.active:after {
+	opacity: 1;
 }
 
 /*Presets*/

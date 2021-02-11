@@ -53,7 +53,7 @@ $social 	= new HelixUltimateFeatureSocial($data->params);
 				<!-- Show menu on header -->
 				<div id="sp-menu" class="menu-with-social menu-center col-auto flex-auto">
 					<div class="sp-column d-flex justify-content-between">
-						<div class="d-flex justify-content-between flex-auto">
+						<div class="d-flex justify-content-between align-items-center flex-auto">
 							<?php echo $menu->renderFeature(); ?>
 							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 						</div>

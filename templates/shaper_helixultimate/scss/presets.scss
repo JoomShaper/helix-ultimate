@@ -31,6 +31,14 @@ body,
 
 #sp-header {
 	background: $header_bg_color;
+	.sp-module .sp-sign-in .login-wrap > a{
+		color: $text_color;
+		&:hover,
+		&:focus,
+		&:active {
+			color: $link_color;
+		}
+	}
 }
 #sp-menu ul.social-icons{
 	a:hover, a:focus{
@@ -44,14 +52,6 @@ a {
 	&:focus,
 	&:active {
 		color: $link_hover_color;
-	}
-}
-#menu-right .sp-sign-in .login-wrap > a{
-	color: $text_color;
-	&:hover,
-	&:focus,
-	&:active {
-		color: $link_color;
 	}
 }
 .tags {

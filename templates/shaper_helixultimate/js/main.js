@@ -184,6 +184,11 @@ jQuery(function ($) {
 		event.preventDefault();
 		$('.offcanvas-init').addClass('offcanvas-active');
 	});
+	
+	$('.offcanvas-toggler-secondary').on('click', function (event) {
+		event.preventDefault();
+		$('.offcanvas-init').addClass('offcanvas-active');
+	});
 
 	$('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
 		event.preventDefault();

@@ -30,4 +30,12 @@
 			}
 		}
 	}
+	#sp-header{
+		&.lg-header{
+			.sp-contact-info{
+				text-align: center;
+				margin: 5px 0;
+			}
+		}
+	}
 }

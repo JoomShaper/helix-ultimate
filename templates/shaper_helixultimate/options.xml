@@ -52,7 +52,8 @@
 
 		<field name="logo_height" 
 			helixgroup="logo" 
-			type="number" 
+			type="helixUnit"
+			display="inline" 
 			default="36" 
 			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
 			showon="logo_type:image[AND]logo_image!:" />
@@ -81,15 +82,22 @@
 			label="HELIX_ULTIMATE_SELECT_HEADER" 
 			showon="predefined_header:1" />
 
-		<!-- <field name="header_height" 
-			helixgroup="header" 
-			type="text" 
-			default="80px" 
-			label="HELIX_ULTIMATE_HEADER_HEIGHT" /> -->
 		<field name="header_height" 
 			helixgroup="header" 
 			type="helixUnit" 
 			default="80px"
+			display="inline" 
+			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
+		<field name="header_height_sm" 
+			helixgroup="header" 
+			type="helixUnit" 
+			display="inline" 
+			class="hidden"
+			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
+		<field name="header_height_xs" 
+			helixgroup="header" 
+			type="helixUnit"
+			class="hidden"
 			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
 

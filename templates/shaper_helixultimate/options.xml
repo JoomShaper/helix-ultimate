@@ -91,13 +91,13 @@
 		<field name="header_height_sm" 
 			helixgroup="header" 
 			type="helixUnit" 
-			display="inline" 
-			class="hidden"
+			display="inline"
+			className="hidden"
 			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
 		<field name="header_height_xs" 
 			helixgroup="header" 
 			type="helixUnit"
-			class="hidden"
+			className="hidden"
 			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
 

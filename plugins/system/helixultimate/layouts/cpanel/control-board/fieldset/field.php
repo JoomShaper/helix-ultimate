@@ -12,7 +12,6 @@ use HelixUltimate\Framework\Platform\Settings;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\LayoutHelper;
 
 extract($displayData);
 
@@ -73,15 +72,18 @@ extract($displayData);
 	}
 
 	$checkboxStyle = $field->getAttribute('style', 'switch');
+	$className = $field->getAttribute('className', '');
 
 	// Group Class
 	$group_class = (($group) ? 'group-style-' . $group : '');
+
 	if ($type === 'checkbox')
 	{
 		$group_class .= ($checkboxStyle === 'plain') ? ' hu-style-checkbox': ' hu-style-switcher';
 	}
 
 	$group_class .= $separator ? ' hu-field-separator': '';
+	$group_class .= !empty($className) ? ' ' . $className : '';
 
 	$listStyle = $field->getAttribute('style');
 	$display = $field->getAttribute('display', '');

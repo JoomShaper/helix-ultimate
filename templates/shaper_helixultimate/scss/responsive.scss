@@ -32,10 +32,37 @@
 	}
 	#sp-header{
 		&.lg-header{
+			.top-part{
+				border-bottom: none;
+			}
+			#sp-contact{
+				order: 1;
+			}
+			#sp-logo{
+				order: 3;
+			}
+			#sp-social{
+				order: 2;
+				.sp-column{
+					justify-content: center !important;
+				}
+				.social-icons{
+					margin: 0;
+					> li:not(:last-child) {
+						margin-right: 10px;
+				}
+				}
+			}
 			.sp-contact-info{
 				text-align: center;
 				margin: 5px 0;
 			}
 		}
+	}
+	.header-has-modules{
+		.container-inner>.row{
+			flex-wrap: wrap !important;
+		}
+		
 	}
 }

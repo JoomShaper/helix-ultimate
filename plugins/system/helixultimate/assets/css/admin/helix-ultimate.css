@@ -3141,20 +3141,18 @@ select:focus::-ms-value {
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .hu-header-list > li {
 	margin: 0;
 	padding: 5px;
-	border: 1px solid #dee2e8;
 	border-radius: 1px;
 	display: block;
 	cursor: pointer;
 	position: relative;
-}
-
-.hu-header-list > li:not(:last-child) {
-	margin-bottom: 10px;
+	flex: 0 0 33.333%;
 }
 
 .hu-header-list > li img {
@@ -3190,7 +3188,7 @@ select:focus::-ms-value {
 	left: 0;
 	bottom: 0;
 	right: 0;
-	background: #007bffba;
+	background: rgba(201, 201, 201, 30%);
 	border-radius: 1px;
 }
 

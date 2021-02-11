@@ -46,7 +46,14 @@ a {
 		color: $link_hover_color;
 	}
 }
-
+#menu-right .sp-sign-in .login-wrap > a{
+	color: $text_color;
+	&:hover,
+	&:focus,
+	&:active {
+		color: $link_color;
+	}
+}
 .tags {
 	> li {
 		display: inline-block;

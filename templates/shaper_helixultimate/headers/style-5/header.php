@@ -24,8 +24,6 @@ include_once $feature_folder_path . '/social.php';
  */
 $logo    	= new HelixUltimateFeatureLogo($data->params);
 $menu    	= new HelixUltimateFeatureMenu($data->params);
-$social 	= new HelixUltimateFeatureSocial($data->params);
-
 
 /**
  * Logo and menu html classes
@@ -33,7 +31,7 @@ $social 	= new HelixUltimateFeatureSocial($data->params);
  */
 ?>
 
-<header id="sp-header" class="full-header">
+<header id="sp-header" class="full-header header-has-modules">
 	<div class="container-fluid">
 		<div class="container-inner">
 			<div class="row flex-nowrap align-items-center">
@@ -51,20 +49,18 @@ $social 	= new HelixUltimateFeatureSocial($data->params);
 				</div>
 
 				<!-- Show menu on header -->
-				<div id="sp-menu" class="menu-with-social col-auto flex-auto">
+				<div id="sp-menu" class="col-auto flex-auto">
 					<div class="sp-column d-flex justify-content-between">
 						<div class="d-flex justify-content-between flex-auto">
 							<?php echo $menu->renderFeature(); ?>
-							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-						</div>
-
-						<!-- Social icons -->
-						<div class="social-wrap d-flex align-items-center">
-							<?php echo $social->renderFeature(); ?>
 						</div>
 					</div>
 				</div>
-
+				
+				<!-- Menu Right position -->
+				<div id="menu-right" class="d-flex align-items-center">
+					<jdoc:include type="modules" name="menu" style="sp_xhtml" />
+				</div>
 			</div>
 		</div>
 	</div>

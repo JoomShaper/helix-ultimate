@@ -41,7 +41,7 @@ $contact 	= new HelixUltimateFeatureContact($data->params);
 			<div class="top-part">
 				<div class="row align-items-center">
 					<!-- Contact -->
-					<div class="col-12 col-sm-4">
+					<div id="sp-contact" class="col-12 col-sm-4">
 					<?php echo $contact->renderFeature(); ?>
 					</div>
 	

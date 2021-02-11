@@ -130,6 +130,55 @@ ul.social-icons {
     justify-content: flex-end;
 	}
 }
+#menu-right{
+	.sp-module{
+		&:not(:last-child){
+			margin-right: 20px;
+		}
+		&:first-child{
+			border-right: 2px solid rgba(80, 80, 80, 0.2);
+			padding-right: 30px;
+		}
+	}
+	.search{
+		position: relative;
+		form{
+			&:after {
+				content: "\f002";
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				position: absolute;
+				top: 0;
+				font-size: 12px;
+				line-height: 32px;
+				right: 10px;
+			}
+			input{
+				background: #EFEFF0;
+				border: none;
+				height: 32px;
+				font-size: 15px;
+				border-radius: 3px;
+				padding: 5px 10px;
+			}
+		}
+	}
+	.sp-sign-in{
+		.login-wrap{
+			margin: 0;
+			font-size: 15px;
+			>a{
+				&:before{
+					content: "\f007";
+					font-family: 'Font Awesome 5 Free';
+					font-size: 14px;
+					margin-right: 5px;
+				}
+			}
+		}
+	}
+}
+
 // language switcher
 .sp-module-content {
 	.mod-languages {

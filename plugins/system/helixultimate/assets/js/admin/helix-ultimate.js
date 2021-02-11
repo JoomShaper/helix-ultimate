@@ -324,11 +324,6 @@ jQuery(function ($) {
 			JSON.stringify($('.hu-preset.active').data())
 		);
 
-		// let data = $('#hu-style-form')
-		// 	.find(':not(.hu-preset-container input)')
-		// 	.not('.internal-use-only')
-		// 	.serializeArray();
-
 		let data = $('#hu-style-form')
 			.find('input, select, textarea')
 			.not('.internal-use-only')
@@ -681,19 +676,25 @@ jQuery(function ($) {
 				.removeClass('active');
 		});
 
-		$(
-			`input.hu-webfont-size-field${
-				map[device] === 'md' ? '' : '-' + map[device]
-			}`
-		)
-			.closest('.hu-webfont-unit')
-			.addClass('active');
+		$(`input.hu-webfont-size-field${map[device] === 'md' ? '' : '-' + map[device]}`).closest('.hu-webfont-unit').addClass('active');
+
+		/**
+		 * Change header height on device change
+		 *
+		 */
+		['', '_sm', '_xs'].forEach(size => {
+			const $header = $(`input[name=header_height${size}]`).closest('.group-style-header');
+			if (!$header.hasClass('hidden')) $header.addClass('hidden');
+		});
+		
+		const headerSelector = `input[name=header_height${map[device] === 'md' ? '' : '_' + map[device]}]`;
+		$(headerSelector).closest('.group-style-header').removeClass('hidden');
 
 		$iframe.animate(
 			{
 				width: widthMap[device],
 			},
-			500,
+			300,
 			'linear'
 		);
 	}

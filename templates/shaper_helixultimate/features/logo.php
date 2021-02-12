@@ -154,7 +154,7 @@ class HelixUltimateFeatureLogo
 				$html .= '</div>';
 			}
 
-			if ($logo_height = $this->params->get('logo_height'))
+			if ($logo_height = $this->params->get('logo_height', ''))
 			{
 				$logo_height = preg_match("@(px|em|rem|%)$@", $logo_height) ? $logo_height : $logo_height . 'px';
 
@@ -162,6 +162,34 @@ class HelixUltimateFeatureLogo
 				$logoStyle .= '.logo-image-phone {height:' . $logo_height . ';}';
 
 				$doc->addStyleDeclaration($logoStyle);
+			}
+
+			/**
+			 * If responsive logo height is provided then add the height
+			 * to the media query.
+			 */
+			if ($logo_height_sm = $this->params->get('logo_height_sm', ''))
+			{
+				$logo_height_sm = preg_match("@(px|em|rem|%)$@", $logo_height_sm) ? $logo_height_sm : $logo_height_sm . 'px';
+
+				$logoStyleSm = '@media(max-width: 992px) {';
+				$logoStyleSm .= '.logo-image {height: ' . $logo_height_sm . ';}';
+				$logoStyleSm .= '.logo-image-phone {height: ' . $logo_height_sm . ';}';
+				$logoStyleSm .= '}';
+
+				$doc->addStyleDeclaration($logoStyleSm);
+			}
+			
+			if ($logo_height_xs = $this->params->get('logo_height_xs', ''))
+			{
+				$logo_height_xs = preg_match("@(px|em|rem|%)$@", $logo_height_xs) ? $logo_height_xs : $logo_height_xs . 'px';
+
+				$logoStyleSm = '@media(max-width: 576px) {';
+				$logoStyleSm .= '.logo-image {height: ' . $logo_height_xs . ';}';
+				$logoStyleSm .= '.logo-image-phone {height: ' . $logo_height_xs . ';}';
+				$logoStyleSm .= '}';
+
+				$doc->addStyleDeclaration($logoStyleSm);
 			}
 		}
 		else

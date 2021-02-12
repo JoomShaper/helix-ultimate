@@ -676,19 +676,44 @@ jQuery(function ($) {
 				.removeClass('active');
 		});
 
-		$(`input.hu-webfont-size-field${map[device] === 'md' ? '' : '-' + map[device]}`).closest('.hu-webfont-unit').addClass('active');
+		$(
+			`input.hu-webfont-size-field${
+				map[device] === 'md' ? '' : '-' + map[device]
+			}`
+		)
+			.closest('.hu-webfont-unit')
+			.addClass('active');
 
 		/**
-		 * Change header height on device change
+		 * Change header height on device changed.
 		 *
 		 */
 		['', '_sm', '_xs'].forEach(size => {
-			const $header = $(`input[name=header_height${size}]`).closest('.group-style-header');
+			const $header = $(`input[name=header_height${size}]`).closest(
+				'.group-style-header'
+			);
 			if (!$header.hasClass('hidden')) $header.addClass('hidden');
 		});
-		
-		const headerSelector = `input[name=header_height${map[device] === 'md' ? '' : '_' + map[device]}]`;
+
+		const headerSelector = `input[name=header_height${
+			map[device] === 'md' ? '' : '_' + map[device]
+		}]`;
 		$(headerSelector).closest('.group-style-header').removeClass('hidden');
+
+		/**
+		 * Change logo height on device changed.
+		 */
+		['', '_sm', '_xs'].forEach(size => {
+			const $logo = $(`input[name=logo_height${size}]`).closest(
+				'.group-style-logo'
+			);
+			if (!$logo.hasClass('hidden')) $logo.addClass('hidden');
+		});
+
+		const logoSelector = `input[name=logo_height${
+			map[device] === 'md' ? '' : '_' + map[device]
+		}]`;
+		$(logoSelector).closest('.group-style-logo').removeClass('hidden');
 
 		$iframe.animate(
 			{

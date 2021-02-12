@@ -2627,7 +2627,7 @@ select:focus::-ms-value {
 
 /*Helper*/
 .hidden {
-	display: none;
+	display: none !important;
 }
 
 .master-label-group ~ .hu-subgroup .control-group {

@@ -58,6 +58,22 @@
 			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
 			showon="logo_type:image[AND]logo_image!:" />
 
+		<field name="logo_height_sm" 
+			helixgroup="logo" 
+			type="helixUnit"
+			display="inline" 
+			className="hidden"
+			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
+			showon="logo_type:image[AND]logo_image!:" />
+
+		<field name="logo_height_xs" 
+			helixgroup="logo" 
+			type="helixUnit"
+			display="inline" 
+			className="hidden"
+			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
+			showon="logo_type:image[AND]logo_image!:" />
+
 		<field name="logo_text" 
 			helixgroup="logo" 
 			type="text" 

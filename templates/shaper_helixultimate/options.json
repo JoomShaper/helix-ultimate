@@ -3,6 +3,8 @@
 	"logo_image": "",
 	"retina_logo": "",
 	"logo_height": "36",
+	"logo_height_sm": "36",
+	"logo_height_xs": "36",
 	"mobile_logo": "",
 	"logo_text": "",
 	"logo_slogan": "",

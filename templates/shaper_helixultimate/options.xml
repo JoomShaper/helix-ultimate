@@ -63,7 +63,7 @@
 			type="helixUnit"
 			display="inline" 
 			className="hidden"
-			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
+			label="HELIX_ULTIMATE_LOGO_HEIGHT_SM" 
 			showon="logo_type:image[AND]logo_image!:" />
 
 		<field name="logo_height_xs" 
@@ -71,7 +71,7 @@
 			type="helixUnit"
 			display="inline" 
 			className="hidden"
-			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
+			label="HELIX_ULTIMATE_LOGO_HEIGHT_XS" 
 			showon="logo_type:image[AND]logo_image!:" />
 
 		<field name="logo_text" 
@@ -109,13 +109,13 @@
 			type="helixUnit" 
 			display="inline"
 			className="hidden"
-			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
+			label="HELIX_ULTIMATE_HEADER_HEIGHT_SM" />
 		<field name="header_height_xs" 
 			helixgroup="header" 
 			type="helixUnit"
 			className="hidden"
 			display="inline" 
-			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
+			label="HELIX_ULTIMATE_HEADER_HEIGHT_XS" />
 
 		<field name="enable_search" 
 			type="checkbox" 
@@ -143,14 +143,14 @@
 			helixgroup="header" 
 			type="checkbox" 
 			default="0" 
-			label="HELIX_ULTIMATE_STICKY_HEADER_SM" 
-			showon="header_device:sm" />
+			className="hidden"
+			label="HELIX_ULTIMATE_STICKY_HEADER_SM" />
 		<field name="sticky_header_xs" 
 			helixgroup="header" 
 			type="checkbox" 
 			default="0" 
-			label="HELIX_ULTIMATE_STICKY_HEADER_XS" 
-			showon="header_device:xs" />
+			className="hidden"
+			label="HELIX_ULTIMATE_STICKY_HEADER_XS" />
 
 		<field name="favicon" 
 			helixgroup="header" 

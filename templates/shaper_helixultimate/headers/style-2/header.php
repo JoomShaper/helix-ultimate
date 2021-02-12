@@ -8,6 +8,7 @@
 
 defined ('_JEXEC') or die('Restricted Access');
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -40,7 +41,8 @@ $menuClass = 'col-auto flex-auto';
  * Get related modules
  * The modules are mod_search
  */
-$searchModule = ModuleHelper::getModule('mod_search');
+$searchModule = Helper::getSearchModule();
+
 ?>
 
 <header id="sp-header">

@@ -184,12 +184,12 @@ class HelixUltimateFeatureLogo
 			{
 				$logo_height_xs = preg_match("@(px|em|rem|%)$@", $logo_height_xs) ? $logo_height_xs : $logo_height_xs . 'px';
 
-				$logoStyleSm = '@media(max-width: 576px) {';
-				$logoStyleSm .= '.logo-image {height: ' . $logo_height_xs . ';}';
-				$logoStyleSm .= '.logo-image-phone {height: ' . $logo_height_xs . ';}';
-				$logoStyleSm .= '}';
+				$logoStyleXs = '@media(max-width: 576px) {';
+				$logoStyleXs .= '.logo-image {height: ' . $logo_height_xs . ';}';
+				$logoStyleXs .= '.logo-image-phone {height: ' . $logo_height_xs . ';}';
+				$logoStyleXs .= '}';
 
-				$doc->addStyleDeclaration($logoStyleSm);
+				$doc->addStyleDeclaration($logoStyleXs);
 			}
 		}
 		else

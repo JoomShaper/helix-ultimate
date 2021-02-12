@@ -9,9 +9,11 @@
 namespace HelixUltimate\Framework\Platform;
 
 use HelixUltimate\Framework\System\HelixCache;
+use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -72,7 +74,7 @@ class Helper
 
 			return (int) $db->loadResult();
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			return 0;
 		}
@@ -366,7 +368,7 @@ class Helper
 
 			$modules = $db->loadObjectList();
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			return [];
 		}
@@ -465,7 +467,7 @@ class Helper
 
 			$elements = $db->loadObjectList();
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			return [];
 		}
@@ -489,5 +491,37 @@ class Helper
 				self::getMenuItems($element->id, $menuItemList);
 			}
 		}
+	}
+
+	/**
+	 * Get the search module for the pre-defined headers.
+	 *
+	 * @return	Object	The module object.
+	 * @since	2.0.0
+	 */
+	public static function getSearchModule()
+	{
+		$version = JoomlaBridge::getVersion('major');
+
+		$module = ModuleHelper::getModule($version < 4 ? 'mod_search' : 'mod_finder');
+
+		if ($version >= 4)
+		{
+			$module->showtitle = 0;
+			$params = new \stdClass;
+
+			if (!empty($module->params))
+			{
+				$params = \json_decode($module->params);
+			}
+
+			$params->show_label = 0;
+			$params->alt_label = '';
+			$params->show_button = 0;
+
+			$module->params = \json_encode($params);
+		}
+
+		return $module;
 	}
 }

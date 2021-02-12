@@ -632,6 +632,22 @@ jQuery(function ($) {
 	});
 
 	/**
+	 * Make settings fields responsive after changing devices.
+	 *
+	 *
+	 */
+	function onDeviceChange({ name, parent, map, device }) {
+		['', '_sm', '_xs'].forEach(size => {
+			const $element = $(`input[name=${name}${size}]`).closest(parent);
+			if (!$element.hasClass('hidden')) $element.addClass('hidden');
+		});
+		const selector = `input[name=${name}${
+			map[device] === 'md' ? '' : '_' + map[device]
+		}]`;
+		$(selector).closest(parent).removeClass('hidden');
+	}
+
+	/**
 	 * Function to switch between various devices
 	 *
 	 * @param {string} device 	Device type i.e. `desktop`, `tablet`, `mobile`
@@ -684,36 +700,29 @@ jQuery(function ($) {
 			.closest('.hu-webfont-unit')
 			.addClass('active');
 
-		/**
-		 * Change header height on device changed.
-		 *
-		 */
-		['', '_sm', '_xs'].forEach(size => {
-			const $header = $(`input[name=header_height${size}]`).closest(
-				'.group-style-header'
-			);
-			if (!$header.hasClass('hidden')) $header.addClass('hidden');
+		/** Change header height on device changed. */
+		onDeviceChange({
+			name: 'header_height',
+			parent: '.group-style-header',
+			map,
+			device,
 		});
 
-		const headerSelector = `input[name=header_height${
-			map[device] === 'md' ? '' : '_' + map[device]
-		}]`;
-		$(headerSelector).closest('.group-style-header').removeClass('hidden');
-
-		/**
-		 * Change logo height on device changed.
-		 */
-		['', '_sm', '_xs'].forEach(size => {
-			const $logo = $(`input[name=logo_height${size}]`).closest(
-				'.group-style-logo'
-			);
-			if (!$logo.hasClass('hidden')) $logo.addClass('hidden');
+		/** Change logo height on device changed. */
+		onDeviceChange({
+			name: 'logo_height',
+			parent: '.group-style-logo',
+			map,
+			device,
 		});
 
-		const logoSelector = `input[name=logo_height${
-			map[device] === 'md' ? '' : '_' + map[device]
-		}]`;
-		$(logoSelector).closest('.group-style-logo').removeClass('hidden');
+		/** Change sticky header on device changed. */
+		onDeviceChange({
+			name: 'sticky_header',
+			parent: '.group-style-header',
+			map,
+			device,
+		});
 
 		$iframe.animate(
 			{

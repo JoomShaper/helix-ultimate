@@ -130,8 +130,8 @@ class HelixUltimate
 
 
 		$stickyHeader 	= $this->params->get('sticky_header', 0) ? ' sticky-header' : '';
-		$stickyHeader 	= $this->params->get('sticky_header_md', 0) ? $stickyHeader . ' sticky-header-md' : $stickyHeader;
-		$stickyHeader 	= $this->params->get('sticky_header_sm', 0) ? $stickyHeader . ' sticky-header-sm' : $stickyHeader;
+		$stickyHeader 	= $this->params->get('sticky_header_sm', 0) ? $stickyHeader . ' sticky-header-md' : $stickyHeader;
+		$stickyHeader 	= $this->params->get('sticky_header_xs', 0) ? $stickyHeader . ' sticky-header-sm' : $stickyHeader;
 
 		$bodyClass       = 'site hu ' . htmlspecialchars(str_replace('_', '-', $this->input->get('option', '', 'STRING')));
 		$bodyClass      .= ' view-' . htmlspecialchars($this->input->get('view', '', 'STRING'));

@@ -6,6 +6,34 @@
 }
 
 @media(max-width: 992px) {
+	:root{
+		--header_height: $header_height_sm;
+	}
+	.sp-megamenu-parent {
+		> li {
+			> a,
+			> span {
+				line-height: $header_height_sm;
+			}
+		}
+	}
+	#sp-header{
+		height: $header_height_sm;
+		.logo {
+			height: $header_height_sm;
+		}
+	}
+	#sp-header-topbar{
+		.container-inner{
+			>.row{
+				height: $header_height_sm;
+			}
+		}
+	}
+	#offcanvas-toggler{
+		height: $header_height_sm;
+		line-height: $header_height_sm;
+	}
 	#sp-logo{
 		&.has-border>.sp-column{
 			border-right: none;
@@ -40,6 +68,30 @@
 
 
 @media(max-width: 576px) {
+	:root{
+		--header_height: $header_height_xs;
+	}
+	.sp-megamenu-parent {
+		> li {
+			> a,
+			> span {
+				line-height: $header_height_xs;
+			}
+		}
+	}
+	#sp-header{
+		height: $header_height_xs;
+		.logo {
+			height: $header_height_xs;
+		}
+	}
+	#sp-header-topbar{
+		.container-inner{
+			>.row{
+				height: $header_height_xs;
+			}
+		}
+	}
 	#sp-header{
 		.sp-module{
 			margin-left: 10px;

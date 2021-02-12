@@ -231,7 +231,14 @@ ul.social-icons {
 			margin-right: 20px;
 			margin-left: 0px;
 		}
-			
+		.sp-column{
+			height: 100%;
+		}
+		#sp-logo{
+			#offcanvas-toggler{
+				display: none;
+			}
+		}
 	}
 	.logo {
 		height: $header_height;

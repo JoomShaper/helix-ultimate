@@ -101,6 +101,22 @@
 			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT" />
 
+		<field name="enable_search" 
+			type="checkbox" 
+			helixgroup="header" 
+			label="HELIX_ULTIMATE_ENABLE_SEARCH"
+			description="HELIX_ULTIMATE_ENABLE_SEARCH_DESC"
+			default="1"
+			showon="predefined_header:1" />
+		
+		<field name="enable_login" 
+			type="checkbox" 
+			helixgroup="header" 
+			label="HELIX_ULTIMATE_ENABLE_LOGIN"
+			description="HELIX_ULTIMATE_ENABLE_LOGIN_DESC"
+			default="1"
+			showon="predefined_header:1" />
+
 		<!-- sticky header options for devices -->
 		<field name="sticky_header" 
 			helixgroup="header" 

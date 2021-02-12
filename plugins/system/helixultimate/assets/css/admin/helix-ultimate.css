@@ -3166,11 +3166,11 @@ select:focus::-ms-value {
 	bottom: 5px;
 	left: 6px;
 	right: 6px;
-	border: 1.5px solid #3366FF;
+	border: 1.5px solid #3366ff;
 	box-shadow: 0px 2px 4px rgba(20, 50, 80, 0.2);
 	border-radius: 3px;
 	opacity: 0;
-	transition: .3s;
+	transition: 0.3s;
 }
 
 .hu-header-list > li:hover:after,

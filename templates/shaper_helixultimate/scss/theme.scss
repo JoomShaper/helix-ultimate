@@ -272,6 +272,15 @@ ul.social-icons {
 	}
 }
 #sp-header-topbar{
+	position: relative;
+	z-index: 111;
+	.sp-profile-wrapper{
+		.sp-sign-in{
+			.user-text{
+				display: none !important;
+			}
+		}
+	}
 	#sp-logo{
 		#offcanvas-toggler{
 			display: none !important;
@@ -320,14 +329,6 @@ ul.social-icons {
 			}
 		}
 	}
-	.sp-sign-in{
-		&:before{
-			content: "\f007";
-			font-family: 'Font Awesome 5 Free';
-			font-size: 14px;
-			margin-right: 5px;
-		}
-	}
 }
 #sp-logo.has-border{
 	position: relative;
@@ -345,6 +346,40 @@ ul.social-icons {
 	.sp-column{
 		display: inline-flex;
     align-items: center;
+	}
+}
+
+// profile
+.sp-profile-wrapper{
+	position: relative;
+	font-size: 14px;
+	.arrow-icon{
+		font-size: 11px;
+	}
+	.sp-profile-dropdown{
+		background: #fff;
+		border: 1px solid #e4e4e4;
+		border-radius: 3px;
+		padding: 10px 15px !important;
+		list-style: none !important;
+		font-size: 14px;
+		position: absolute;
+		min-width: 100px;
+		right: 0;
+		top: 100%;
+		display: none !important;
+		>li:not(:last-child){
+			border-bottom: 1px solid #e4e4e4;
+			padding-bottom: 5px;
+			margin-bottom: 5px;
+			line-height: 1.3;
+		}
+	}
+	&:hover{
+		.sp-profile-dropdown{
+			display: block !important;
+			animation: spFadeInDown .5s;
+		}
 	}
 }
 // Page Title

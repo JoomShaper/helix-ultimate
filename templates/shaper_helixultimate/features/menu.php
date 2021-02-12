@@ -108,11 +108,12 @@ class HelixUltimateFeatureMenu
 
 		if ($user->id === 0)
 		{
-			$html[] = '<a class="sp-sign-in" href="' . Route::_('index.php?option=com_users&view=login') . '" ><span class="far fa-user"></span><span class="d-none d-lg-inline-block">' . Text::_('HELIX_ULTIMATE_SIGN_IN_MENU') . '</span></a>';
+			$html[] = '<a class="sp-sign-in" href="' . Route::_('index.php?option=com_users&view=login') . '" ><span class="far fa-user mr-1"></span><span class="d-none d-lg-inline-block">' . Text::_('HELIX_ULTIMATE_SIGN_IN_MENU') . '</span></a>';
 		}
 		else
 		{
-			$html[] = '<a href="#" class="sp-sign-in">' . ($user->name ?? '') . '</a>';
+			$html[] = '<div class="sp-profile-wrapper">';
+			$html[] = '<a href="#" class="sp-sign-in"><i class="fas fa-user-circle"></i> <span class="user-text d-none d-xl-inline-block"> ' . ($user->name ?? '') . '</span> <i class="fas fa-chevron-down arrow-icon"></i></a>';
 			$html[] = '<ul class="sp-profile-dropdown">';
 			$html[] = '	<li class="sp-profile-dropdown-item">';
 			$html[] = '		<a href="' . Route::_('index.php?option=com_users&view=profile') . '">' . Text::_('HELIX_ULTIMATE_USER_PROFILE') . '</a>';
@@ -121,6 +122,7 @@ class HelixUltimateFeatureMenu
 			$html[] = '		<a href="' . Route::_('index.php?option=com_users&view=login&layout=logout') . '">' . Text::_('HELIX_ULTIMATE_USER_LOGOUT') . '</a>';
 			$html[] = '	</li>';
 			$html[] = '</ul>';
+			$html[] = '</div>';
 		}
 
 		$html[] = '</div>';

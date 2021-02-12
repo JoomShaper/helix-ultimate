@@ -19,6 +19,9 @@ $app = Factory::getApplication();
 
 $this->setHtml5(true);
 
+include_once JPATH_THEMES . '/' . $this->template . '/features/menu.php';
+$menu  = new HelixUltimateFeatureMenu($this->params);
+
 /**
  * Get related modules
  * The modules are mod_search
@@ -219,9 +222,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 					<?php endif ?>
 	
 					<?php if ($this->params->get('enable_login', 0)): ?>
-						<div class="sp-module">
-							<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="d-none d-lg-inline-block"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
-						</div>
+						<?php echo $menu->renderLogin(); ?>
 					<?php endif ?>
 				</div>
 

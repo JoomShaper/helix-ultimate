@@ -36,17 +36,6 @@ $menu    	= new HelixUltimateFeatureMenu($data->params);
 $logoClass = 'col-auto';
 $menuClass = 'col-auto flex-auto';
 
-if($offcanvas_position === 'left')
-{
-	$logoClass = 'col-12 col-lg-auto';
-	$menuClass = 'd-none d-lg-block col-lg-auto flex-auto';
-}
-
-/**
- * Set the header_height default values in the case of value not set yet.
- *
- */
-
 ?>
 
 <div id="sp-top-bar">
@@ -55,25 +44,15 @@ if($offcanvas_position === 'left')
 			<div class="row">
 				<div id="sp-top1" class="col-lg-6">
 					<div class="sp-column text-center text-lg-left">
-						<?php if (isset($social->load_pos) && $social->load_pos === 'before') : ?>
-							<?php echo $social->renderFeature(); ?>
-							<jdoc:include type="modules" name="top1" style="sp_xhtml" />
-						<?php else : ?>
-							<jdoc:include type="modules" name="top1" style="sp_xhtml" />
-							<?php echo $social->renderFeature(); ?>
-						<?php endif ?>
+						<?php echo $social->renderFeature(); ?>
+						<jdoc:include type="modules" name="top1" style="sp_xhtml" />
 					</div>
 				</div>
 
 				<div id="sp-top2" class="col-lg-6">
 					<div class="sp-column text-center text-lg-right">
-						<?php if (isset($contact->load_pos) && $contact->load_pos === 'before') : ?>
 							<?php echo $contact->renderFeature(); ?>
 							<jdoc:include type="modules" name="top2" style="sp_xhtml" />
-						<?php else : ?>
-							<jdoc:include type="modules" name="top2" style="sp_xhtml" />
-							<?php echo $contact->renderFeature(); ?>
-						<?php endif ?>
 					</div>
 				</div>
 			</div>
@@ -87,26 +66,19 @@ if($offcanvas_position === 'left')
 				<!-- Show logo on header -->
 				<div id="sp-logo" class="<?php echo $logoClass; ?>">
 					<div class="sp-column">
-						<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
-							<?php echo $logo->renderFeature(); ?>
-							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
-						<?php else : ?>
-							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
-							<?php echo $logo->renderFeature(); ?>
-						<?php endif ?>
+						<?php echo $logo->renderFeature(); ?>
+						<jdoc:include type="modules" name="logo" style="sp_xhtml" />
 					</div>
 				</div>
 
 				<!-- Show menu on header -->
 				<div id="sp-menu" class="<?php echo $menuClass; ?>">
-					<div class="sp-column menu-flex">
-						<?php if (isset($menu->load_pos) && $menu->load_pos === 'before') : ?>
-							<?php echo $menu->renderFeature(); ?>
-							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-						<?php else : ?>
-							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-							<?php echo $menu->renderFeature(); ?>
-						<?php endif ?>
+					<div class="sp-column d-flex justify-content-end align-items-center">
+						<?php echo $menu->renderFeature(); ?>
+						<jdoc:include type="modules" name="menu" style="sp_xhtml" />
+						<?php if($offcanvas_position === 'right') { ?>
+							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+						<?php } ?>
 					</div>
 				</div>
 			</div>

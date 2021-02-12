@@ -176,6 +176,14 @@ a {
 	background-color: $menu_dropdown_bg_color;
 	color: $menu_dropdown_text_color;
 	.offcanvas-inner {
+		a{
+			color: $text_color;
+			&:hover,
+			&:focus,
+			&:active {
+				color: $link_color;
+			}
+		}
 		.sp-module {
 			ul {
 				> li {

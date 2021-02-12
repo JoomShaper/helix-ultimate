@@ -59,27 +59,34 @@ $searchModule = Helper::getSearchModule();
 
 				<!-- Menu -->
 				<div id="sp-menu" class="menu-with-social menu-center col-auto flex-auto">
-					<div class="sp-column d-flex justify-content-between">
+					<div class="sp-column d-flex justify-content-between align-items-center">
 						<div class="d-flex justify-content-between align-items-center flex-auto">
 							<?php echo $menu->renderFeature(); ?>
 							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 						</div>
 
 						<!-- Related Modules -->
-						<?php if ($data->params->get('enable_search', 0)): ?>
-						<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-						<?php endif ?>
-
-						<?php if ($data->params->get('enable_login', 0)): ?>
-							<div class="sp-module">
-								<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="text"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
-							</div>
-						<?php endif ?>
+						<div class="d-none d-lg-flex header-modules">
+							<?php if ($data->params->get('enable_search', 0)): ?>
+								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+							<?php endif ?>
+	
+							<?php if ($data->params->get('enable_login', 0)): ?>
+								<div class="sp-module">
+									<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="d-none d-lg-inline-block"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
+								</div>
+							<?php endif ?>
+						</div>
 
 						<!-- Social icons -->
 						<div class="social-wrap no-border d-flex align-items-center">
 							<?php echo $social->renderFeature(); ?>
 						</div>
+
+						<!-- if offcanvas position right -->
+						<?php if($offcanvas_position === 'right') { ?>
+							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+						<?php } ?>
 					</div>
 				</div>
 

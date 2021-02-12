@@ -16,6 +16,7 @@ use Joomla\CMS\Router\Route;
 
 $data = $displayData;
 $offcanvas_position = $displayData->params->get('offcanvas_position', 'right');
+$menu_type = $displayData->params->get('menu_type');
 
 $feature_folder_path = JPATH_THEMES . '/' . $data->template->template . '/features';
 
@@ -42,21 +43,18 @@ $searchModule = Helper::getSearchModule();
 
 ?>
 
-<header id="sp-header" class="lg-header">
+<div id="sp-header-topbar">
 	<div class="container">
 		<div class="container-inner">
-			<div class="top-part">
-				<div class="row align-items-center">
+		<div class="row align-items-center">
 					<!-- Contact -->
-					<div id="sp-contact" class="col-12 col-sm-4">
+					<div id="sp-contact" class="col-6 col-xl-4">
 					<?php echo $contact->renderFeature(); ?>
 					</div>
 	
 					<!-- Logo -->
-					<div id="sp-logo" class="col-12 col-sm-4">
+					<div id="sp-logo" class="col-12 col-xl-4 d-none d-xl-block">
 						<div class="sp-column d-flex align-items-center  justify-content-center">
-						<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-block d-lg-none mr-3" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
-						
 							<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
 								<?php echo $logo->renderFeature(); ?>
 								<jdoc:include type="modules" name="logo" style="sp_xhtml" />
@@ -68,45 +66,65 @@ $searchModule = Helper::getSearchModule();
 					</div>
 								
 					<!-- Social -->
-					<div id="sp-social" class="col-12 col-sm-4">
+					<div id="sp-social" class="col-6 col-xl-4">
 						<div class="sp-column d-flex justify-content-end">
 							<!-- Social icons -->
 							<div class="social-wrap d-flex align-items-center">
 								<?php echo $social->renderFeature(); ?>
 							</div>
+
+							<!-- Related Modules -->
+							<div class="d-none d-lg-flex header-modules">
+								<?php if ($data->params->get('enable_search', 0)): ?>
+									<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+								<?php endif ?>
+
+								<?php if ($data->params->get('enable_login', 0)): ?>
+									<div class="sp-module">
+										<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>"></a>
+									</div>
+								<?php endif ?>
+							</div>
 						</div>
 					</div>
-
-					<!-- Related Modules -->
-					<?php if ($data->params->get('enable_search', 0)): ?>
-					<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-					<?php endif ?>
-
-					<?php if ($data->params->get('enable_login', 0)): ?>
-						<div class="sp-module">
-							<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="text"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
-						</div>
-					<?php endif ?>
 				</div>
-			</div>
+		</div>
+	</div>
+</div>
 
+<header id="sp-header" class="lg-header">
+	<div class="container">
+		<div class="container-inner">
 			<!-- Menu -->
-			<div class="bottom-part d-none d-lg-block ">
-				<div class="row">
-					<div class="col-12">
-						<div class="d-flex justify-content-center align-items-center flex-auto">
-							<?php echo $menu->renderFeature(); ?>
-							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-
-							<?php if ($data->params->get('enable_search', 0)): ?>
-								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-							<?php endif ?>
-
-							<?php if ($data->params->get('enable_login', 0)): ?>
-								<a href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></a>
-							<?php endif ?>
-						</div>			
+			<div class="row">
+				<div class="col-sm-6 d-block d-xl-none">
+					<div class="sp-column d-flex justify-content-between align-items-center">
+						<div id="sp-logo">
+							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
+							<?php echo $logo->renderFeature(); ?>
+						</div>
 					</div>
+				</div>
+
+				<div class="col-sm-6 col-xl-12">
+					<?php if ($menu_type === 'mega_offcanvas') {?>
+						<div class="d-flex justify-content-end align-items-center">
+					<?php } else { ?>
+						<div class="d-flex justify-content-center align-items-center">
+					<?php } ?>
+						<!-- if offcanvas position left -->
+						<?php if($offcanvas_position === 'left') { ?>
+							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+						<?php } ?>
+
+						<?php echo $menu->renderFeature(); ?>
+						<jdoc:include type="modules" name="menu" style="sp_xhtml" />
+
+						<!-- if offcanvas position right -->
+						<?php if($offcanvas_position === 'right') { ?>
+							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="ml-3 offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+						<?php } ?>		
+					</div>	
 				</div>
 			</div>
 		</div>

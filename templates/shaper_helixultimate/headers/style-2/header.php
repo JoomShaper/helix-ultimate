@@ -64,15 +64,17 @@ $searchModule = Helper::getSearchModule();
 						<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 
 						<!-- Related Modules -->
-						<?php if ($data->params->get('enable_search', 0)): ?>
-							<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-						<?php endif ?>
-
-						<?php if ($data->params->get('enable_login', 0)): ?>
-							<div class="sp-module">
-								<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="text"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
-							</div>
-						<?php endif ?>
+						<div class="d-none d-lg-flex header-modules">
+							<?php if ($data->params->get('enable_search', 0)): ?>
+								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+							<?php endif ?>
+	
+							<?php if ($data->params->get('enable_login', 0)): ?>
+								<div class="sp-module">
+									<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="d-none d-lg-inline-block"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
+								</div>
+							<?php endif ?>
+						</div>
 						
 						<!-- if offcanvas position right -->
 						<?php if($offcanvas_position === 'right') { ?>

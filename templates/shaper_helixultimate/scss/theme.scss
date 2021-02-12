@@ -1,7 +1,7 @@
 // Global CSS Variables
 :root{
 	--header_height: $header_height;	
-	--half_header_height: calc(var(--header_height) / 2);	
+	--header_topbar_height: calc(var(--header_height) / 2);	
 }
 
 body {
@@ -223,29 +223,9 @@ ul.social-icons {
     padding-right: 45px;
 	}
 	&.lg-header{
-		a{
-			color: #909196;
-		}
-		.sp-contact-info{
-			color: #909196;
-		}
-		.top-part{
-			border-bottom: 1px solid #E5E5E5;
-		}
+		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 		.logo{
 			height: auto;
-		}
-		.top-part>div,
-		.bottom-part>div{
-			height: var(--half_header_height);
-		}
-		.sp-megamenu-parent > li > a,
-		.sp-megamenu-parent > li > span,
-		#offcanvas-toggler{
-			line-height: var(--half_header_height);
-		}
-		#offcanvas-toggler{
-			height: var(--half_header_height);
 		}
 		#offcanvas-toggler{
 			margin-right: 20px;
@@ -277,37 +257,6 @@ ul.social-icons {
 	}
 	.sp-module{
 		margin-left: 20px;
-		.search{
-			position: relative;
-			form{
-				&:after {
-					content: "\f002";
-					font-family: 'Font Awesome 5 Free';
-					font-weight: 900;
-					position: absolute;
-					top: 0;
-					font-size: 12px;
-					line-height: 32px;
-					right: 10px;
-				}
-				input{
-					background: #EFEFF0;
-					border: none;
-					height: 32px;
-					font-size: 15px;
-					border-radius: 3px;
-					padding: 5px 10px;
-				}
-			}
-		}
-		.sp-sign-in{
-			&:before{
-				content: "\f007";
-				font-family: 'Font Awesome 5 Free';
-				font-size: 14px;
-				margin-right: 5px;
-			}
-		}
 	}
 	nav.sp-megamenu-wrapper{
 		#offcanvas-toggler{
@@ -315,10 +264,64 @@ ul.social-icons {
 		}
 	}
 }
+#sp-header-topbar{
+	#sp-logo{
+		#offcanvas-toggler{
+			display: none !important;
+		}
+	}
+	.container-inner{
+		border-bottom: 1px solid #E5E5E5;
+		>.row{
+			height: $header_height;
+		}
+	}
+	a{
+		color: #909196;
+	}
+	.sp-contact-info{
+		color: #909196;
+	}
+}
 #sp-header + section + #sp-main-body{
 	padding-top: calc(var(--header_height) + 30px);
 }
-
+.header-modules{
+	.sp-module{
+		margin-left: 20px;
+	}
+	.search{
+		position: relative;
+		form{
+			&:after {
+				content: "\f002";
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				position: absolute;
+				top: 0;
+				font-size: 12px;
+				line-height: 32px;
+				right: 10px;
+			}
+			input{
+				background: #EFEFF0;
+				border: none;
+				height: 32px;
+				font-size: 15px;
+				border-radius: 3px;
+				padding: 5px 10px;
+			}
+		}
+	}
+	.sp-sign-in{
+		&:before{
+			content: "\f007";
+			font-family: 'Font Awesome 5 Free';
+			font-size: 14px;
+			margin-right: 5px;
+		}
+	}
+}
 #sp-logo.has-border{
 	position: relative;
 	padding-right: 45px;

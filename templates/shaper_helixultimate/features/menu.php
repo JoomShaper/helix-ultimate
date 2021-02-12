@@ -9,6 +9,9 @@
 defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Core\Classes\HelixultimateMenu;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 /**
  * Helix Ultimate Menu class
@@ -88,5 +91,40 @@ class HelixUltimateFeatureMenu
 
 		return $output;
 
+	}
+
+	/**
+	 * Render login/sign in option in header
+	 *
+	 * @return	string	The login HTML string.
+	 * @since	2.0.0
+	 */
+	public function renderLogin()
+	{
+		$user = Factory::getUser();
+
+		$html = [];
+		$html[] = '<div class="sp-module">';
+
+		if ($user->id === 0)
+		{
+			$html[] = '<a class="sp-sign-in" href="' . Route::_('index.php?option=com_users&view=login') . '" ><span class="far fa-user"></span><span class="d-none d-lg-inline-block">' . Text::_('HELIX_ULTIMATE_SIGN_IN_MENU') . '</span></a>';
+		}
+		else
+		{
+			$html[] = '<a href="#" class="sp-sign-in">' . ($user->name ?? '') . '</a>';
+			$html[] = '<ul class="sp-profile-dropdown">';
+			$html[] = '	<li class="sp-profile-dropdown-item">';
+			$html[] = '		<a href="' . Route::_('index.php?option=com_users&view=profile') . '">' . Text::_('HELIX_ULTIMATE_USER_PROFILE') . '</a>';
+			$html[] = '	</li>';
+			$html[] = '	<li class="sp-profile-dropdown-item">';
+			$html[] = '		<a href="' . Route::_('index.php?option=com_users&view=login&layout=logout') . '">' . Text::_('HELIX_ULTIMATE_USER_LOGOUT') . '</a>';
+			$html[] = '	</li>';
+			$html[] = '</ul>';
+		}
+
+		$html[] = '</div>';
+
+		return implode("\n", $html);
 	}
 }

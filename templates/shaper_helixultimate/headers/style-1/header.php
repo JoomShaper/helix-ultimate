@@ -96,9 +96,7 @@ $searchModule = Helper::getSearchModule();
 							<?php endif ?>
 	
 							<?php if ($data->params->get('enable_login', 0)): ?>
-								<div class="sp-module">
-									<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="d-none d-lg-inline-block"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
-								</div>
+								<?php echo $menu->renderLogin(); ?>
 							<?php endif ?>
 						</div>
 						

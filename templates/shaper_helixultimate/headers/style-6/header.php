@@ -95,7 +95,7 @@ $searchModule = Helper::getSearchModule();
 		<div class="container-inner">
 			<!-- Menu -->
 			<div class="row">
-				<div class="col-sm-6 d-block d-xl-none">
+				<div class="col-6 d-block d-xl-none">
 					<div class="sp-column d-flex justify-content-between align-items-center">
 						<div id="sp-logo">
 							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
@@ -104,14 +104,10 @@ $searchModule = Helper::getSearchModule();
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-xl-12">
-					<?php if ($menu_type === 'mega_offcanvas') {?>
-						<div class="d-flex justify-content-end align-items-center">
-					<?php } else { ?>
-						<div class="d-flex justify-content-center align-items-center">
-					<?php } ?>
+				<div class="col-6 col-xl-12">
+					<div class="d-flex justify-content-end justify-content-xl-center align-items-center">
 						<!-- if offcanvas position left -->
-						<?php if($offcanvas_position === 'left') { ?>
+						<?php if($offcanvas_position === 'left' && $menu_type === 'mega_offcanvas') { ?>
 							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
 						<?php } ?>
 
@@ -119,7 +115,7 @@ $searchModule = Helper::getSearchModule();
 						<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 
 						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right') { ?>
+						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') { ?>
 							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="ml-3 offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
 						<?php } ?>		
 					</div>	

@@ -3166,29 +3166,16 @@ select:focus::-ms-value {
 	bottom: 5px;
 	left: 6px;
 	right: 6px;
-	border: 1.5px solid #3366FF;
+	border: 1.5px solid #3366ff;
 	box-shadow: 0px 2px 4px rgba(20, 50, 80, 0.2);
 	border-radius: 3px;
 	opacity: 0;
-	transition: .3s;
+	transition: 0.3s;
 }
 
-<<<<<<< HEAD
-
-.hu-header-list > li:hover::before {
-	content: ' ';
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background: rgba(201, 201, 201, 30%);
-	border-radius: 1px;
-=======
 .hu-header-list > li:hover:after,
 .hu-header-list > li.active:after {
 	opacity: 1;
->>>>>>> 3836734e6c5fe53406b8c54bb977f6a7054a3395
 }
 
 /*Presets*/

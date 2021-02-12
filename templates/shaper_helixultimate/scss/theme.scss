@@ -103,10 +103,24 @@ ul.social-icons {
 			align-items: center;
 		}
 	}
+	>.sp-column {
+		height: 100%;
+	}
+	.social-wrap{
+		position: relative;
+		padding-left: 60px;
+		&:after{
+			content: "";
+			margin-top: 10px;
+			margin-bottom: 10px;
+			position: absolute;
+			width: 2px;
+			height: calc(100% - 20px);
+			left: 30px;
+			background-color: rgba(80, 80, 80, 0.2);
+		}
+	}
 	ul.social-icons{
-		margin: 10px 0 10px 30px;
-		border-left: 2px solid rgba(80, 80, 80, 0.2);
-		padding-left: 30px;
 		>li:not(:last-child){
 			margin-right: 20px;
 		}
@@ -312,20 +326,21 @@ ul.social-icons {
 }
 
 #sp-logo.has-border{
+	position: relative;
+	padding-right: 45px;
+	&:after{
+		content: "";
+		margin-top: 10px;
+		margin-bottom: 10px;
+		position: absolute;
+		width: 2px;
+		height: calc(100% - 20px);
+		right: 15px;
+		background-color: rgba(80, 80, 80, 0.2);
+	}
 	.sp-column{
 		display: inline-flex;
     align-items: center;
-    border-right: 2px solid rgba(80, 80, 80, 0.2);
-    padding-right: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-	}
-	.logo {
-		height: auto;
-	}
-	#offcanvas-toggler{
-		height: auto;
-    line-height: 1.3;
 	}
 }
 // Page Title

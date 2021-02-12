@@ -32,12 +32,6 @@ $menu    	= new HelixUltimateFeatureMenu($data->params);
 $logoClass = 'col-auto';
 $menuClass = 'col-auto flex-auto';
 
-if($offcanvas_position === 'left')
-{
-	$logoClass = 'col-12 col-lg-auto';
-	$menuClass = 'd-none d-lg-block col-lg-auto flex-auto';
-}
-
 ?>
 
 <header id="sp-header">

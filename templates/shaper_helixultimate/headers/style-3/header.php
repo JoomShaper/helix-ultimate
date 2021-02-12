@@ -36,7 +36,7 @@ $social 	= new HelixUltimateFeatureSocial($data->params);
 <header id="sp-header">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row flex-nowrap align-items-center">
+			<div class="row flex-nowrap">
 				<!-- Show logo on header -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">
@@ -62,9 +62,11 @@ $social 	= new HelixUltimateFeatureSocial($data->params);
 						<div class="social-wrap d-flex align-items-center">
 							<?php echo $social->renderFeature(); ?>
 						</div>
+						<?php if($offcanvas_position === 'right') { ?>
+							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+						<?php } ?>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

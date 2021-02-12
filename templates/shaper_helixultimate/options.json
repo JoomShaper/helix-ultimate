@@ -7,6 +7,8 @@
 	"logo_text": "",
 	"logo_slogan": "",
 	"header_height": "60px",
+	"enable_search": "1",
+	"enable_login": "1",
 	"header_device": "lg",
 	"sticky_header": "1",
 	"sticky_header_md": "0",

@@ -6,7 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
+
 defined ('_JEXEC') or die('Restricted Access');
+
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
 $data = $displayData;
 $offcanvas_position = $displayData->params->get('offcanvas_position', 'right');
@@ -28,11 +33,11 @@ $menu    	= new HelixUltimateFeatureMenu($data->params);
 $social 	= new HelixUltimateFeatureSocial($data->params);
 $contact 	= new HelixUltimateFeatureContact($data->params);
 
-
 /**
- * Logo and menu html classes
- *
+ * Get related modules
+ * The modules are mod_search
  */
+$searchModule = ModuleHelper::getModule('mod_search');
 ?>
 
 <header id="sp-header" class="lg-header">
@@ -77,9 +82,17 @@ $contact 	= new HelixUltimateFeatureContact($data->params);
 				<div class="row">
 					<div class="col-12">
 						<div class="d-flex justify-content-center align-items-center flex-auto">
-								<?php echo $menu->renderFeature(); ?>
-								<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-							</div>			
+							<?php echo $menu->renderFeature(); ?>
+							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
+
+							<?php if ($data->params->get('enable_search', 0)): ?>
+								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+							<?php endif ?>
+
+							<?php if ($data->params->get('enable_login', 0)): ?>
+								<a href="<?php echo Route::_('index.php?option=com_login'); ?>" ><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></a>
+							<?php endif ?>
+						</div>			
 					</div>
 				</div>
 			</div>

@@ -41,7 +41,7 @@ $searchModule = ModuleHelper::getModule('mod_search');
 <header id="sp-header">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row flex-nowrap sp-child-rp-block">
+			<div class="row flex-nowrap sp-child-responsive-block">
 				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">

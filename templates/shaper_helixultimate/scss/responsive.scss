@@ -15,10 +15,24 @@
 }
 
 @media(max-width: 768px) {
-	.sp-child-rp-block{
-		
+	.sp-child-responsive-block{
+		flex-direction: column;
+		#sp-logo{
+			order: 2;
+		}
+		#sp-menu{
+			order: 1;
+		}
+	}
+	#sp-menu .social-wrap {
+    padding-left: 10px;
+		&:after{
+			display: none;
+		}
 	}
 }
+
+
 @media(max-width: 576px) {
 	#sp-header{
 		.sp-module{
@@ -30,9 +44,6 @@
 	}
 	#sp-menu{
 		ul.social-icons {
-			margin: 10px 0 10px 15px;
-			border-left: 2px solid rgba(80, 80, 80, 0.2);
-			padding-left: 15px;
 			> li:not(:last-child) {
 				margin-right: 10px;
 			}

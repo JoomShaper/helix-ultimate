@@ -13,10 +13,17 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Helper\ModuleHelper;
 
 $app = Factory::getApplication();
 
 $this->setHtml5(true);
+
+/**
+ * Get related modules
+ * The modules are mod_search
+ */
+$searchModule = ModuleHelper::getModule('mod_search');
 
 /**
  * Load the bootstrap file for enabling the HelixUltimate\Framework namespacing.
@@ -206,6 +213,18 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<div class="offcanvas-menu">
 			<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times"></span></a>
 			<div class="offcanvas-inner">
+				<div class="d-flex d-lg-none header-modules">
+					<?php if ($this->params->get('enable_search', 0)): ?>
+						<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+					<?php endif ?>
+	
+					<?php if ($this->params->get('enable_login', 0)): ?>
+						<div class="sp-module">
+							<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="d-none d-lg-inline-block"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
+						</div>
+					<?php endif ?>
+				</div>
+
 				<?php if ($this->countModules('offcanvas')) : ?>
 					<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
 				<?php else: ?>

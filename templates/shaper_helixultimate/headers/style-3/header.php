@@ -41,7 +41,7 @@ $searchModule = ModuleHelper::getModule('mod_search');
 <header id="sp-header">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row flex-nowrap sp-child-responsive-block">
+			<div class="row flex-nowrap">
 				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">
@@ -57,22 +57,24 @@ $searchModule = ModuleHelper::getModule('mod_search');
 
 				<!-- Menu -->
 				<div id="sp-menu" class="menu-with-social col-auto flex-auto">
-					<div class="sp-column d-flex  justify-content-between align-items-center">
-						<div class="d-flex justify-content-between align-items-center flex-auto">
+					<div class="sp-column d-flex justify-content-between align-items-center">
+						<div class="d-flex menu-wrap justify-content-between align-items-center flex-auto">
 							<?php echo $menu->renderFeature(); ?>
 							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 						</div>
 						
 						<!-- Related Modules -->
-						<?php if ($data->params->get('enable_search', 0)): ?>
-						<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-						<?php endif ?>
-
-						<?php if ($data->params->get('enable_login', 0)): ?>
-							<div class="sp-module">
-								<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="text"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
-							</div>
-						<?php endif ?>
+						<div class="d-none d-lg-flex header-modules">
+							<?php if ($data->params->get('enable_search', 0)): ?>
+								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+							<?php endif ?>
+	
+							<?php if ($data->params->get('enable_login', 0)): ?>
+								<div class="sp-module">
+									<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="d-none d-lg-inline-block"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
+								</div>
+							<?php endif ?>
+						</div>
 
 						<!-- Social icons -->
 						<div class="social-wrap d-flex align-items-center">

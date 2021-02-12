@@ -214,13 +214,12 @@ ul.social-icons {
 // Header
 #sp-header {
 	height: $header_height;
-	position: absolute;
 	width: 100%;
 	z-index: 99;
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 	&.full-header{
 		padding-left: 45px;
-    padding-right: 45px;
+		padding-right: 45px;
 	}
 	&.lg-header{
 		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
@@ -298,9 +297,6 @@ ul.social-icons {
 	.sp-contact-info{
 		color: #909196;
 	}
-}
-#sp-header + section + #sp-main-body{
-	padding-top: calc(var(--header_height) + 30px);
 }
 .header-modules{
 	.sp-module{

@@ -42,6 +42,11 @@ if($offcanvas_position === 'left')
 	$menuClass = 'd-none d-lg-block col-lg-auto flex-auto';
 }
 
+/**
+ * Set the header_height default values in the case of value not set yet.
+ *
+ */
+
 ?>
 
 <div id="sp-top-bar">

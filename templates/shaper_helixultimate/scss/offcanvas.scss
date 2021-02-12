@@ -196,6 +196,7 @@ body {
 
 			.offcanvas-menu {
 				left: -$offcanvas_width;
+				top: 0;
 			}
 
 			&.offcanvas-active {
@@ -216,6 +217,7 @@ body {
 
 			.offcanvas-menu {
 				right: -$offcanvas_width;
+				top: 0;
 			}
 
 			&.offcanvas-active {

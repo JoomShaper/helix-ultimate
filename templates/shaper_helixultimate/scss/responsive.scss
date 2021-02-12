@@ -14,7 +14,20 @@
 	}
 }
 
+@media(max-width: 768px) {
+	.sp-child-rp-block{
+		
+	}
+}
 @media(max-width: 576px) {
+	#sp-header{
+		.sp-module{
+			margin-left: 10px;
+			.sp-sign-in .text{
+				display: none;
+			}
+		}
+	}
 	#sp-menu{
 		ul.social-icons {
 			margin: 10px 0 10px 15px;

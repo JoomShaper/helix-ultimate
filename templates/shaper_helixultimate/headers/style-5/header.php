@@ -8,6 +8,10 @@
 
 defined ('_JEXEC') or die('Restricted Access');
 
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
 $data = $displayData;
 $offcanvas_position = $displayData->params->get('offcanvas_position', 'right');
 
@@ -26,16 +30,17 @@ $logo    	= new HelixUltimateFeatureLogo($data->params);
 $menu    	= new HelixUltimateFeatureMenu($data->params);
 
 /**
- * Logo and menu html classes
- *
+ * Get related modules
+ * The modules are mod_search
  */
+$searchModule = ModuleHelper::getModule('mod_search');
 ?>
 
 <header id="sp-header" class="full-header header-has-modules">
 	<div class="container-fluid">
 		<div class="container-inner">
 			<div class="row flex-nowrap align-items-center">
-				<!-- Show logo on header -->
+				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">
 						<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
@@ -48,7 +53,7 @@ $menu    	= new HelixUltimateFeatureMenu($data->params);
 					</div>
 				</div>
 
-				<!-- Show menu on header -->
+				<!-- Menu -->
 				<div id="sp-menu" class="col-auto flex-auto">
 					<div class="sp-column d-flex justify-content-between">
 						<div class="d-flex justify-content-between flex-auto">
@@ -59,6 +64,17 @@ $menu    	= new HelixUltimateFeatureMenu($data->params);
 				
 				<!-- Menu Right position -->
 				<div id="menu-right" class="d-flex align-items-center">
+					<!-- Related Modules -->
+					<?php if ($data->params->get('enable_search', 0)): ?>
+					<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+					<?php endif ?>
+
+					<?php if ($data->params->get('enable_login', 0)): ?>
+						<div class="sp-module">
+								<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="text"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
+							</div>
+					<?php endif ?>
+
 					<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 				</div>
 			</div>

@@ -31,7 +31,7 @@ body,
 
 #sp-header {
 	background: $header_bg_color;
-	.sp-module .sp-sign-in .login-wrap > a{
+	a{
 		color: $text_color;
 		&:hover,
 		&:focus,

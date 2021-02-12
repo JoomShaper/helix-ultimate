@@ -115,7 +115,7 @@ ul.social-icons {
 			margin-bottom: 10px;
 			position: absolute;
 			width: 2px;
-			height: calc(100% - 20px);
+			height: calc(var(--header_height) - 20px);
 			left: 30px;
 			background-color: rgba(80, 80, 80, 0.2);
 		}
@@ -301,17 +301,11 @@ ul.social-icons {
 			}
 		}
 		.sp-sign-in{
-			.login-wrap{
-				margin: 0;
-				font-size: 15px;
-				>a{
-					&:before{
-						content: "\f007";
-						font-family: 'Font Awesome 5 Free';
-						font-size: 14px;
-						margin-right: 5px;
-					}
-				}
+			&:before{
+				content: "\f007";
+				font-family: 'Font Awesome 5 Free';
+				font-size: 14px;
+				margin-right: 5px;
 			}
 		}
 	}
@@ -334,7 +328,7 @@ ul.social-icons {
 		margin-bottom: 10px;
 		position: absolute;
 		width: 2px;
-		height: calc(100% - 20px);
+		height: calc(var(--header_height) - 20px);
 		right: 15px;
 		background-color: rgba(80, 80, 80, 0.2);
 	}

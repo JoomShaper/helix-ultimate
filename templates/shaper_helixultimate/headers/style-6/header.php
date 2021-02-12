@@ -50,7 +50,7 @@ $searchModule = ModuleHelper::getModule('mod_search');
 					<?php echo $contact->renderFeature(); ?>
 					</div>
 	
-					<!-- Show logo on header -->
+					<!-- Logo -->
 					<div id="sp-logo" class="col-12 col-sm-4">
 						<div class="sp-column d-flex align-items-center  justify-content-center">
 						<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-block d-lg-none mr-3" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
@@ -64,7 +64,7 @@ $searchModule = ModuleHelper::getModule('mod_search');
 							<?php endif ?>
 						</div>
 					</div>
-	
+								
 					<!-- Social -->
 					<div id="sp-social" class="col-12 col-sm-4">
 						<div class="sp-column d-flex justify-content-end">
@@ -74,6 +74,17 @@ $searchModule = ModuleHelper::getModule('mod_search');
 							</div>
 						</div>
 					</div>
+
+					<!-- Related Modules -->
+					<?php if ($data->params->get('enable_search', 0)): ?>
+					<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+					<?php endif ?>
+
+					<?php if ($data->params->get('enable_login', 0)): ?>
+						<div class="sp-module">
+							<a class="sp-sign-in" href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><span class="text"><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></span></a>
+						</div>
+					<?php endif ?>
 				</div>
 			</div>
 
@@ -90,7 +101,7 @@ $searchModule = ModuleHelper::getModule('mod_search');
 							<?php endif ?>
 
 							<?php if ($data->params->get('enable_login', 0)): ?>
-								<a href="<?php echo Route::_('index.php?option=com_login'); ?>" ><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></a>
+								<a href="<?php echo Route::_('index.php?option=com_users&view=login'); ?>" ><?php echo Text::_('HELIX_ULTIMATE_SIGN_IN_MENU'); ?></a>
 							<?php endif ?>
 						</div>			
 					</div>

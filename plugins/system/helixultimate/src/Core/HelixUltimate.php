@@ -497,6 +497,7 @@ class HelixUltimate
 		$view        = $this->app->input->getCmd('view', '');
 		$pagebuilder = false;
 		$output = '';
+		$modified_row = new \stdClass;
 
 		if ($option === 'com_sppagebuilder')
 		{
@@ -564,7 +565,7 @@ class HelixUltimate
 				);
 
 				$layout_path  = JPATH_ROOT . '/plugins/system/helixultimate/layouts';
-				$getLayout = new \JLayoutFile('frontend.generate', $layout_path);
+				$getLayout = new FileLayout('frontend.generate', $layout_path);
 				$output .= $getLayout->render($data);
 			}
 		}
@@ -577,7 +578,7 @@ class HelixUltimate
 	 *
 	 * @param	\stdClass	$row	layout rows
 	 *
-	 * @return	array		Updated rows.
+	 * @return	\stdClass			Updated rows.
 	 * @since	1.0.0
 	 */
 	private function get_current_row($row)

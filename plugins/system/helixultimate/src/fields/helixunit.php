@@ -67,6 +67,7 @@ class JFormFieldHelixUnit extends FormField
 
 		$value = !isset($value) ? '' : $value;
 		$finalValue = $value !== '' ? $value . $unit : '';
+		$output = '';
 
 		$output .= '<div class="hu-input-group hu-unit-group">';
 		$output .= '	<input type="hidden" class="hu-unit-field-value" name="' . $name . '" value="' . $finalValue . '"/>';

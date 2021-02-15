@@ -19,9 +19,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\OutputStyle;
 
 /**
  * Initiator class for viewing
@@ -572,9 +575,9 @@ class HelixUltimate
 	/**
 	 * Get current row
 	 *
-	 * @param	array	$row	layout rows
+	 * @param	\stdClass	$row	layout rows
 	 *
-	 * @return	array	Updated rows.
+	 * @return	array		Updated rows.
 	 * @since	1.0.0
 	 */
 	private function get_current_row($row)
@@ -612,6 +615,7 @@ class HelixUltimate
 		{
 			$options = $column->settings;
 			$col_grid_size = $options->grid_size;
+			$className = '';
 
 			if (!$has_component && end($row->attr) === $column)
 			{
@@ -902,40 +906,6 @@ class HelixUltimate
 	}
 
 	/**
-	 * Init all the SCSS.
-	 *
-	 * @return	void
-	 * @since	1.0.0
-	 */
-	public function scssInit()
-	{
-		include_once __DIR__ . '/Classes/scss/Base/Range.php';
-		include_once __DIR__ . '/Classes/scss/Block.php';
-		include_once __DIR__ . '/Classes/scss/Colors.php';
-		include_once __DIR__ . '/Classes/scss/Compiler.php';
-		include_once __DIR__ . '/Classes/scss/Compiler/Environment.php';
-		include_once __DIR__ . '/Classes/scss/Exception/CompilerException.php';
-		include_once __DIR__ . '/Classes/scss/Exception/ParserException.php';
-		include_once __DIR__ . '/Classes/scss/Exception/ServerException.php';
-		include_once __DIR__ . '/Classes/scss/Formatter.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Compact.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Compressed.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Crunched.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Debug.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Expanded.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Nested.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/OutputBlock.php';
-		include_once __DIR__ . '/Classes/scss/Node.php';
-		include_once __DIR__ . '/Classes/scss/Node/Number.php';
-		include_once __DIR__ . '/Classes/scss/Parser.php';
-		include_once __DIR__ . '/Classes/scss/Type.php';
-		include_once __DIR__ . '/Classes/scss/Util.php';
-		include_once __DIR__ . '/Classes/scss/Version.php';
-
-		return new \Leafo\ScssPhp\Compiler;
-	}
-
-	/**
 	 * Add scss file with options.
 	 *
 	 * @param	string	$scss			The scss file name.
@@ -965,7 +935,7 @@ class HelixUltimate
 
 			if ($forceCompile || $needsCompile)
 			{
-				$scssInit = $this->scssInit();
+				$compiler = new Compiler;
 				$template = Helper::loadTemplateData()->template;
 				$scss_path = JPATH_THEMES . '/' . $template . '/scss';
 				$css_path = JPATH_THEMES . '/' . $template . '/css';
@@ -973,21 +943,22 @@ class HelixUltimate
 				if (file_exists($scss_path . '/' . $scss . '.scss'))
 				{
 					$out = $css_path . '/' . $css;
-					$scssInit->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
-					$scssInit->setImportPaths($scss_path);
+					$compiler->setOutputStyle(OutputStyle::COMPRESSED);
+					$compiler->setImportPaths($scss_path);
 
 					if (!empty($vars))
 					{
-						$scssInit->setVariables($vars);
+						$compiler->setVariables($vars);
 					}
 
-					$compiledCss = $scssInit->compile('@import "' . $scss . '.scss"');
+					$compiledCss = $compiler->compile('@import "' . $scss . '.scss"');
 					File::write($out, $compiledCss);
 
 					$cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 					$scssCache = array();
-					$scssCache['imports'] = $scssInit->getParsedFiles();
-					$scssCache['vars'] = $scssInit->getVariables();
+					$scssCache['imports'] = $compiler->getParsedFiles();
+					$scssCache['vars'] = $compiler->getVariables();
+
 					File::write($cache_path, json_encode($scssCache));
 				}
 			}
@@ -999,7 +970,7 @@ class HelixUltimate
 	/**
 	 * If it is needed to compile the scss.
 	 *
-	 * @param	string	$scss		The scss file name.
+	 * @param	string	$scss	The scss file name.
 	 * @param	array	$vars	Scss variables.
 	 *
 	 * @return	boolean
@@ -1583,7 +1554,7 @@ class HelixUltimate
 
 		if (File::exists($tmpl_file_location . '/' . $header_style . '/header.php'))
 		{
-			$getLayout = new \JLayoutFile($header_style . '.header', $tmpl_file_location);
+			$getLayout = new FileLayout($header_style . '.header', $tmpl_file_location);
 
 			return $getLayout->render($options);
 		}
@@ -1826,8 +1797,7 @@ class HelixUltimate
 	public static function getRelatedArticles($params)
 	{
 		$user   = Factory::getUser();
-		$userId = $user->get('id');
-		$guest  = $user->get('guest');
+		$userId = $user->id;
 		$groups = $user->getAuthorisedViewLevels();
 		$authorised = Access::getAuthorisedViewLevels($userId);
 
@@ -1913,7 +1883,7 @@ class HelixUltimate
 		// Language filter
 		if ($app->getLanguageFilter())
 		{
-			$query->where('a.language IN (' . $db->Quote(JFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
+			$query->where('a.language IN (' . $db->Quote(Factory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
 		}
 
 		$query->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');

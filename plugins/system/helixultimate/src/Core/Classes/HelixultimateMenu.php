@@ -448,11 +448,12 @@ class HelixultimateMenu
 
 		$layout = $mega->layout ?? [];
 
-		$mega_style = 'width: ' . $mega->width . 'px;';
+		$mega_style = 'width: ' . (preg_match("@(px|em|rem|%)$@", $mega->width) ? $mega->width : $mega->width . 'px');
+		$mega_style .= ';';
 
 		if ($mega->menualign === 'center')
 		{
-			$mega_style .= 'left: -' . ($mega->width / 2) . 'px;';
+			$mega_style .= 'left: -' . ((float) $mega->width / 2) . 'px;';
 		}
 
 		if ($mega->menualign === 'full')

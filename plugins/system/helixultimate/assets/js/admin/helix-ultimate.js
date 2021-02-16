@@ -900,6 +900,22 @@ jQuery(function ($) {
 			.trigger('change');
 	});
 
+	$('.hu-offcanvas-item').on('click', function (e) {
+		e.preventDefault();
+
+		var $parent = $(this).closest('.hu-offcanvas-list');
+
+		$parent.find('.hu-offcanvas-item').removeClass('active');
+		$(this).addClass('active');
+
+		var styleName = $(this).data('style'),
+			filedName = $parent.data('name');
+
+		$('#' + filedName)
+			.val(styleName)
+			.trigger('change');
+	});
+
 	// Preset
 	$(document).ready(function () {
 		if ($('#custom_style').attr('checked') == 'checked') {

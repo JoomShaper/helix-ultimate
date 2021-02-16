@@ -119,6 +119,33 @@ class HelixUltimate
 	}
 
 	/**
+	 * Call magic method for handling custom assets
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public function __call($method, $args)
+	{
+		$type = '';
+
+		if (\strpos($method, 'addCustom') !== false)
+		{
+			$type = \strtolower(\substr($method, 9));
+		}
+		else
+		{
+			throw new \Exception(sprintf('Method "%s" does not exists in the class "%s"', $method, __CLASS__));
+		}
+		
+		if (!\in_array($type, ['css', 'scss', 'js']))
+		{
+			throw new \Exception(sprintf('Type "%s" does not found! Only allowed types are "css", "scss", and "js"', $type));
+		}
+
+		$this->addCustomAssets($type);
+	}
+
+	/**
 	 * Generate body class.
 	 *
 	 * @param	string	$class	Body class.
@@ -164,13 +191,14 @@ class HelixUltimate
 	{
 		$code = $this->params->get('ga_code', null);
 		$method = $this->params->get('ga_tracking_method', 'gst');
+		$script = '';
 
 		if (!empty($code))
 		{
-			$code = preg_replace('#\s+#', '', $code);
+			$code = preg_replace("@\s+@", '', $code);
 		}
 
-		if ($method === 'gst')
+		if ($method === 'gst' && !empty($code))
 		{
 			$script = "
 			<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -184,7 +212,7 @@ class HelixUltimate
 			</script>
 			";
 		}
-		elseif ($method === 'ua')
+		elseif ($method === 'ua' && !empty($code))
 		{
 			$script = "
 			<script>
@@ -1920,5 +1948,58 @@ class HelixUltimate
 		}
 
 		return $items;
+	}
+
+	/**
+	 * If user put their own JS or CSS files into `templates/shaper_helixultimate/js/custom`
+	 * or `templates/shaper_helixultimate/css/custom` directory respectively then,
+	 * those files would be added automatically to the template.
+	 *
+	 * @param	string	$type	The asset type
+	 * 
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public function addCustomAssets($type)
+	{
+		$template = Helper::loadTemplateData()->template;
+		$directory = JPATH_ROOT . '/templates/' . $template . '/' . strtolower($type) . '/custom';
+		$path = Uri::root(true) . '/templates/' . $template . '/' . strtolower($type) . '/custom';
+
+		if (!\file_exists($directory) || !\is_dir($directory))
+		{
+			return;
+		}
+
+		$files = Folder::files($directory);
+		
+		if (!empty($files))
+		{
+			foreach ($files as $file)
+			{
+				if ($type === 'css')
+				{
+					if (preg_match("@\.css$@", $file))
+					{
+						$this->doc->addStylesheet($path . '/' . $file);
+					}
+				}
+				elseif ($type === 'scss')
+				{
+					if (preg_match("@\.scss$@", $file))
+					{
+						$this->add_scss('custom/' . $file);
+					}
+				}
+				elseif ($type === 'js')
+				{
+					if (preg_match("@\.js$@", $file))
+					{
+						$this->doc->addScript($path . '/' . $file, [], ['defer' => true]);
+					}
+				}
+			}
+		}
+		
 	}
 }

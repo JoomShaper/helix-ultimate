@@ -109,5 +109,7 @@
 	"blog_details_image": "default",
 	"social_share": "1",
 	"social_share_lists": ["facebook", "twitter", "linkedin"],
-	"scssoption": "1"
+	"scssoption": "1",
+	"ga_code": "",
+	"ga_tracking_method": ""
 }

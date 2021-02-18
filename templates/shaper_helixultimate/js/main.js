@@ -189,10 +189,15 @@ jQuery(function ($) {
 		event.preventDefault();
 		$('.offcanvas-init').addClass('offcanvas-active');
 	});
+	
+	$('.offcanvas-toggler-full').on('click', function (event) {
+		event.preventDefault();
+		$('.offcanvas-init').addClass('offcanvas-active full-offcanvas');
+	});
 
 	$('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
 		event.preventDefault();
-		$('.offcanvas-init').removeClass('offcanvas-active');
+		$('.offcanvas-init').removeClass('offcanvas-active full-offcanvas');
 	});
 
 	$(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {

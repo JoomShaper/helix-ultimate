@@ -12,7 +12,6 @@ defined ('_JEXEC') or die('Restricted Access');
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 
 $data = $displayData;
 $offcanvas_position = $displayData->params->get('offcanvas_position', 'right');
@@ -107,17 +106,17 @@ $searchModule = Helper::getSearchModule();
 				<div class="col-6 col-xl-12">
 					<div class="d-flex justify-content-end justify-content-xl-center align-items-center">
 						<!-- if offcanvas position left -->
-						<?php if($offcanvas_position === 'left' && $menu_type === 'mega_offcanvas') { ?>
-							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
-						<?php } ?>
+						<?php if($offcanvas_position === 'left' && $menu_type === 'mega_offcanvas') : ?>
+							<a id="offcanvas-toggler" aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"></i></a>
+						<?php endif; ?>
 
 						<?php echo $menu->renderFeature(); ?>
 						<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 
 						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') { ?>
-							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="ml-3 offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
-						<?php } ?>		
+						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
+							<a id="offcanvas-toggler" aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="ml-3 offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"></i></a>
+						<?php endif; ?>		
 					</div>	
 				</div>
 			</div>

@@ -19,9 +19,12 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
+use ScssPhp\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\OutputStyle;
 
 /**
  * Initiator class for viewing
@@ -116,6 +119,33 @@ class HelixUltimate
 	}
 
 	/**
+	 * Call magic method for handling custom assets
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public function __call($method, $args)
+	{
+		$type = '';
+
+		if (\strpos($method, 'addCustom') !== false)
+		{
+			$type = \strtolower(\substr($method, 9));
+		}
+		else
+		{
+			throw new \Exception(sprintf('Method "%s" does not exists in the class "%s"', $method, __CLASS__));
+		}
+		
+		if (!\in_array($type, ['css', 'scss', 'js']))
+		{
+			throw new \Exception(sprintf('Type "%s" does not found! Only allowed types are "css", "scss", and "js"', $type));
+		}
+
+		$this->addCustomAssets($type);
+	}
+
+	/**
 	 * Generate body class.
 	 *
 	 * @param	string	$class	Body class.
@@ -161,13 +191,14 @@ class HelixUltimate
 	{
 		$code = $this->params->get('ga_code', null);
 		$method = $this->params->get('ga_tracking_method', 'gst');
+		$script = '';
 
 		if (!empty($code))
 		{
-			$code = preg_replace('#\s+#', '', $code);
+			$code = preg_replace("@\s+@", '', $code);
 		}
 
-		if ($method === 'gst')
+		if ($method === 'gst' && !empty($code))
 		{
 			$script = "
 			<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -181,7 +212,7 @@ class HelixUltimate
 			</script>
 			";
 		}
-		elseif ($method === 'ua')
+		elseif ($method === 'ua' && !empty($code))
 		{
 			$script = "
 			<script>
@@ -494,6 +525,7 @@ class HelixUltimate
 		$view        = $this->app->input->getCmd('view', '');
 		$pagebuilder = false;
 		$output = '';
+		$modified_row = new \stdClass;
 
 		if ($option === 'com_sppagebuilder')
 		{
@@ -561,7 +593,7 @@ class HelixUltimate
 				);
 
 				$layout_path  = JPATH_ROOT . '/plugins/system/helixultimate/layouts';
-				$getLayout = new \JLayoutFile('frontend.generate', $layout_path);
+				$getLayout = new FileLayout('frontend.generate', $layout_path);
 				$output .= $getLayout->render($data);
 			}
 		}
@@ -572,9 +604,9 @@ class HelixUltimate
 	/**
 	 * Get current row
 	 *
-	 * @param	array	$row	layout rows
+	 * @param	\stdClass	$row	layout rows
 	 *
-	 * @return	array	Updated rows.
+	 * @return	\stdClass			Updated rows.
 	 * @since	1.0.0
 	 */
 	private function get_current_row($row)
@@ -612,6 +644,7 @@ class HelixUltimate
 		{
 			$options = $column->settings;
 			$col_grid_size = $options->grid_size;
+			$className = '';
 
 			if (!$has_component && end($row->attr) === $column)
 			{
@@ -902,40 +935,6 @@ class HelixUltimate
 	}
 
 	/**
-	 * Init all the SCSS.
-	 *
-	 * @return	void
-	 * @since	1.0.0
-	 */
-	public function scssInit()
-	{
-		include_once __DIR__ . '/Classes/scss/Base/Range.php';
-		include_once __DIR__ . '/Classes/scss/Block.php';
-		include_once __DIR__ . '/Classes/scss/Colors.php';
-		include_once __DIR__ . '/Classes/scss/Compiler.php';
-		include_once __DIR__ . '/Classes/scss/Compiler/Environment.php';
-		include_once __DIR__ . '/Classes/scss/Exception/CompilerException.php';
-		include_once __DIR__ . '/Classes/scss/Exception/ParserException.php';
-		include_once __DIR__ . '/Classes/scss/Exception/ServerException.php';
-		include_once __DIR__ . '/Classes/scss/Formatter.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Compact.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Compressed.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Crunched.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Debug.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Expanded.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/Nested.php';
-		include_once __DIR__ . '/Classes/scss/Formatter/OutputBlock.php';
-		include_once __DIR__ . '/Classes/scss/Node.php';
-		include_once __DIR__ . '/Classes/scss/Node/Number.php';
-		include_once __DIR__ . '/Classes/scss/Parser.php';
-		include_once __DIR__ . '/Classes/scss/Type.php';
-		include_once __DIR__ . '/Classes/scss/Util.php';
-		include_once __DIR__ . '/Classes/scss/Version.php';
-
-		return new \Leafo\ScssPhp\Compiler;
-	}
-
-	/**
 	 * Add scss file with options.
 	 *
 	 * @param	string	$scss			The scss file name.
@@ -965,7 +964,7 @@ class HelixUltimate
 
 			if ($forceCompile || $needsCompile)
 			{
-				$scssInit = $this->scssInit();
+				$compiler = new Compiler;
 				$template = Helper::loadTemplateData()->template;
 				$scss_path = JPATH_THEMES . '/' . $template . '/scss';
 				$css_path = JPATH_THEMES . '/' . $template . '/css';
@@ -973,21 +972,22 @@ class HelixUltimate
 				if (file_exists($scss_path . '/' . $scss . '.scss'))
 				{
 					$out = $css_path . '/' . $css;
-					$scssInit->setFormatter('Leafo\ScssPhp\Formatter\Expanded');
-					$scssInit->setImportPaths($scss_path);
+					$compiler->setOutputStyle(OutputStyle::COMPRESSED);
+					$compiler->setImportPaths($scss_path);
 
 					if (!empty($vars))
 					{
-						$scssInit->setVariables($vars);
+						$compiler->setVariables($vars);
 					}
 
-					$compiledCss = $scssInit->compile('@import "' . $scss . '.scss"');
+					$compiledCss = $compiler->compile('@import "' . $scss . '.scss"');
 					File::write($out, $compiledCss);
 
 					$cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 					$scssCache = array();
-					$scssCache['imports'] = $scssInit->getParsedFiles();
-					$scssCache['vars'] = $scssInit->getVariables();
+					$scssCache['imports'] = $compiler->getParsedFiles();
+					$scssCache['vars'] = $compiler->getVariables();
+
 					File::write($cache_path, json_encode($scssCache));
 				}
 			}
@@ -999,7 +999,7 @@ class HelixUltimate
 	/**
 	 * If it is needed to compile the scss.
 	 *
-	 * @param	string	$scss		The scss file name.
+	 * @param	string	$scss	The scss file name.
 	 * @param	array	$vars	Scss variables.
 	 *
 	 * @return	boolean
@@ -1583,7 +1583,7 @@ class HelixUltimate
 
 		if (File::exists($tmpl_file_location . '/' . $header_style . '/header.php'))
 		{
-			$getLayout = new \JLayoutFile($header_style . '.header', $tmpl_file_location);
+			$getLayout = new FileLayout($header_style . '.header', $tmpl_file_location);
 
 			return $getLayout->render($options);
 		}
@@ -1826,8 +1826,7 @@ class HelixUltimate
 	public static function getRelatedArticles($params)
 	{
 		$user   = Factory::getUser();
-		$userId = $user->get('id');
-		$guest  = $user->get('guest');
+		$userId = $user->id;
 		$groups = $user->getAuthorisedViewLevels();
 		$authorised = Access::getAuthorisedViewLevels($userId);
 
@@ -1913,7 +1912,7 @@ class HelixUltimate
 		// Language filter
 		if ($app->getLanguageFilter())
 		{
-			$query->where('a.language IN (' . $db->Quote(JFactory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
+			$query->where('a.language IN (' . $db->Quote(Factory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
 		}
 
 		$query->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
@@ -1949,5 +1948,58 @@ class HelixUltimate
 		}
 
 		return $items;
+	}
+
+	/**
+	 * If user put their own JS or CSS files into `templates/shaper_helixultimate/js/custom`
+	 * or `templates/shaper_helixultimate/css/custom` directory respectively then,
+	 * those files would be added automatically to the template.
+	 *
+	 * @param	string	$type	The asset type
+	 * 
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public function addCustomAssets($type)
+	{
+		$template = Helper::loadTemplateData()->template;
+		$directory = JPATH_ROOT . '/templates/' . $template . '/' . strtolower($type) . '/custom';
+		$path = Uri::root(true) . '/templates/' . $template . '/' . strtolower($type) . '/custom';
+
+		if (!\file_exists($directory) || !\is_dir($directory))
+		{
+			return;
+		}
+
+		$files = Folder::files($directory);
+		
+		if (!empty($files))
+		{
+			foreach ($files as $file)
+			{
+				if ($type === 'css')
+				{
+					if (preg_match("@\.css$@", $file))
+					{
+						$this->doc->addStylesheet($path . '/' . $file);
+					}
+				}
+				elseif ($type === 'scss')
+				{
+					if (preg_match("@\.scss$@", $file))
+					{
+						$this->add_scss('custom/' . $file);
+					}
+				}
+				elseif ($type === 'js')
+				{
+					if (preg_match("@\.js$@", $file))
+					{
+						$this->doc->addScript($path . '/' . $file, [], ['defer' => true]);
+					}
+				}
+			}
+		}
+		
 	}
 }

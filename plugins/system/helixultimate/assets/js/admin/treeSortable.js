@@ -142,8 +142,22 @@ var treeSortable = {
 			},
 		});
 	},
+	updateBranchZIndex() {
+		const $branches = $('#hu-menu-tree > li');
+		const length = $branches.length;
+
+		$branches.length &&
+			$branches.each(function (index) {
+				$(this).css('z-index', Math.max(1, length - index));
+			});
+	},
 	initSorting() {
-		const { options, pxToNumber, numberToPx } = treeSortable;
+		const {
+			options,
+			pxToNumber,
+			numberToPx,
+			updateBranchZIndex,
+		} = treeSortable;
 		const {
 			treeSelector,
 			dragHandlerSelector,
@@ -331,6 +345,9 @@ var treeSortable = {
 				) {
 					$(document).trigger('sortCompleted', [ui]);
 				}
+
+				/** Update the zIndex */
+				updateBranchZIndex();
 			},
 		});
 	},

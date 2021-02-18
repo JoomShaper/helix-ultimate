@@ -204,13 +204,15 @@ jQuery(function ($) {
 						$(this)[0] !== $(self).next('.hu-branch-tools-list')[0]
 					) {
 						$(this).removeClass('active');
-						$(this).slideUp();
+						// $(this).slideUp();
+						$(this).fadeIn();
 					}
 				});
 				$(this)
 					.next('.hu-branch-tools-list')
 					.toggleClass('active')
-					.slideToggle();
+					.fadeToggle();
+				// .slideToggle();
 			}
 		);
 	}

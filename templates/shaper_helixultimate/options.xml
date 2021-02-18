@@ -1073,6 +1073,14 @@
 			<option value="right">HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION_RIGHT</option>
 		</field>
 
+		<field name="offcanvas_style"
+			helixgroup="offcanvas"
+			type="HelixOffcanvas"
+			label="HELIX_ULTIMATE_SELECT_OFFCANVAS"
+			description="HELIX_ULTIMATE_SELECT_OFFCANVAS_DESC"
+			default="style-1"
+		/>
+
 	</fieldset>
 
 	<!--Typography-->
@@ -1637,7 +1645,8 @@
 			type="list" 
 			label="HELIX_ULTIMATE_GOOGLE_ANALYTICS_TRACKING_METHOD" 
 			description="HELIX_ULTIMATE_GOOGLE_ANALYTICS_TRACKING_METHOD_DESC" 
-			default="gst">
+			showon="ga_code!:">
+			<option value=''>HELIX_ULTIMATE_GOOGLE_ANALYTICS_SELECT_TRACKING_METHOD</option>
 			<option value='ua'>HELIX_ULTIMATE_GOOGLE_ANALYTICS_UNIVERSAL_ANALYTICS</option>
 			<option value='gst'>HELIX_ULTIMATE_GOOGLE_ANALYTICS_GOOGLE_SITE_TAGS</option>
 		</field>

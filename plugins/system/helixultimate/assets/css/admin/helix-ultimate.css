@@ -3125,19 +3125,22 @@ select:focus::-ms-value {
 	right: 15px;
 }
 
-.hu-header-list {
+.hu-header-list,
+.hu-offcanvas-list {
 	list-style: none;
 	padding: 0;
 	margin: -10px;
 }
 
-.hu-header-list > li {
+.hu-header-list > li,
+.hu-offcanvas-list > li {
 	margin: 10px;
 	display: block;
 	float: left;
 }
 
-.hu-header-list {
+.hu-header-list,
+.hu-offcanvas-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -3145,7 +3148,8 @@ select:focus::-ms-value {
 	flex-wrap: wrap;
 }
 
-.hu-header-list > li {
+.hu-header-list > li,
+.hu-offcanvas-list > li {
 	margin: 0;
 	padding: 5px;
 	border-radius: 1px;
@@ -3155,11 +3159,13 @@ select:focus::-ms-value {
 	flex: 0 0 33.333%;
 }
 
-.hu-header-list > li img {
+.hu-header-list > li img,
+.hu-offcanvas-list > li img {
 	max-width: 100%;
 }
 
-.hu-header-list > li:after {
+.hu-header-list > li:after,
+.hu-offcanvas-list > li:after {
 	content: '';
 	position: absolute;
 	top: 6px;
@@ -3175,6 +3181,11 @@ select:focus::-ms-value {
 
 .hu-header-list > li:hover:after,
 .hu-header-list > li.active:after {
+	opacity: 1;
+}
+
+.hu-offcanvas-list > li:hover:after,
+.hu-offcanvas-list > li.active:after {
 	opacity: 1;
 }
 

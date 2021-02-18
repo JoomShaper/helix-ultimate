@@ -11,7 +11,6 @@ defined ('_JEXEC') or die('Restricted Access');
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 
 $data = $displayData;
 $offcanvas_position = $displayData->params->get('offcanvas_position', 'right');
@@ -35,10 +34,7 @@ $logo    	= new HelixUltimateFeatureLogo($data->params);
 $menu    	= new HelixUltimateFeatureMenu($data->params);
 
 
-/**
- * Logo and menu html classes
- *
- */
+/** Logo and menu html classes */
 $logoClass = 'col-auto';
 $menuClass = 'col-auto flex-auto';
 
@@ -57,7 +53,7 @@ $searchModule = Helper::getSearchModule();
 				<div id="sp-top1" class="col-lg-6">
 					<div class="sp-column text-center text-lg-left">
 						<?php echo $social->renderFeature(); ?>
-						<jdoc:include type="modules" name="top1" style="sp_xhtml" />
+						<jdoc:include type="modules" name="top1" style="sp_xhtml"/>
 					</div>
 				</div>
 
@@ -95,16 +91,16 @@ $searchModule = Helper::getSearchModule();
 							<?php if ($data->params->get('enable_search', 0)): ?>
 								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
 							<?php endif ?>
-	
+
 							<?php if ($data->params->get('enable_login', 0)): ?>
 								<?php echo $menu->renderLogin(); ?>
 							<?php endif ?>
 						</div>
-						
+
 						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') { ?>
-							<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
-						<?php } ?>
+						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
+							<a id="offcanvas-toggler" aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION')?>"></i></a>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

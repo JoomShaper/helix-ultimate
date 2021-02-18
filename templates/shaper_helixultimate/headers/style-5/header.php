@@ -38,6 +38,9 @@ $searchModule = Helper::getSearchModule();
 
 ?>
 
+<?php if( $displayData->params->get('sticky_header')) { ?>
+	<div class="sticky-header-placeholder"></div>
+<?php } ?>
 <header id="sp-header" class="full-header header-has-modules">
 	<div class="container-fluid">
 		<div class="container-inner">

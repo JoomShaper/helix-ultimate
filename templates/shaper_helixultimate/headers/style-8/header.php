@@ -45,10 +45,10 @@ $searchModule = Helper::getSearchModule();
 <?php if( $displayData->params->get('sticky_header')) { ?>
 	<div class="sticky-header-placeholder"></div>
 <?php } ?>
-<header id="sp-header" class="header-with-modal-menu">
-	<div class="container">
+<header id="sp-header" class="full-header header-has-modules">
+	<div class="container-fluid">
 		<div class="container-inner">
-			<div class="row flex-nowrap align-items-center justify-content-between">
+			<div class="row flex-nowrap align-items-center">
 				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">
@@ -77,25 +77,22 @@ $searchModule = Helper::getSearchModule();
 					
 					<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 
-					<!-- Modal menu toggler -->
-					<a id="modal-menu-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="ml-3" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+					<a id="desktop-offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
 
-					<!-- Modal menu -->
-					<div id="modal-menu" class="modal-menu">
-						<div class="modal-menu-inner">
+					<!-- Modal menu for desktop -->
+					<div id="desktop-offcanvas" class="desktop-offcanvas">
+						<div class="desktop-offcanvas-inner">
 							<span id="menu-dismiss" class="menu-dismiss"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></span>
 							<div class="container">
 								<div class="row">
-									<div class="col-sm-7">
-										<?php echo $menu->renderFeature(); ?>
-									</div>
-									<div class="col-sm-5">
+									<div class="col-sm-12">
 										<div class="modules-wrapper header-modules">
 											<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
 											<?php echo $contact->renderFeature(); ?>
 											<?php echo $social->renderFeature(); ?>
 											<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 										</div>
+										<?php echo $menu->renderFeature(); ?>
 									</div>
 								</div>
 							</div>

@@ -20,15 +20,19 @@ jQuery(function ($) {
 	var deviceWiseStickyHeader = function (className, offsetTop) {
 		if ($('body').hasClass(className)) {
 			var $header = $('#sp-header');
+			var headerHeight = $header.outerHeight();
+			var $stickyHeaderPlaceholder = $('.sticky-header-placeholder');
 
 			var stickyHeader = function () {
 				var scrollTop = $(window).scrollTop();
 
-				if (scrollTop >= offsetTop) {
+				if (scrollTop >= offsetTop + 200) {
 					$header.addClass('header-sticky');
+					$stickyHeaderPlaceholder.height(headerHeight);
 				} else {
 					if ($header.hasClass('header-sticky')) {
 						$header.removeClass('header-sticky');
+						$stickyHeaderPlaceholder.height('inherit');
 					}
 				}
 			};
@@ -209,6 +213,21 @@ jQuery(function ($) {
 			.slideToggle(400);
 	});
 
+	// Modal Menu
+	if ($("#modal-menu").length > 0) {
+        $("#modal-menu-toggler").on("click", function () {
+            $("#modal-menu").addClass("active");
+        });
+        $("#modal-menu #menu-dismiss").on("click", function () {
+            $("#modal-menu").removeClass("active");
+		});
+		// modal close with escape
+		$(document).keyup(function(e) {
+			if(e.key == 'Escape') {
+				$("#modal-menu").removeClass("active");
+			}
+		});
+    }
 	//Tooltip
 	$('[data-toggle="tooltip"]').tooltip();
 

@@ -31,14 +31,6 @@ body,
 
 #sp-header {
 	background: $header_bg_color;
-	a{
-		color: $text_color;
-		&:hover,
-		&:focus,
-		&:active {
-			color: $link_color;
-		}
-	}
 }
 #sp-menu ul.social-icons{
 	a:hover, a:focus{

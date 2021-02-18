@@ -63,9 +63,9 @@ $searchModule = Helper::getSearchModule();
 				</div>
 				
 				<!-- Menu Right position -->
-				<div id="logo-right" class="d-flex align-items-center">
+				<div id="logo-right" class="col-auto d-flex align-items-center">
 					<!-- Related Modules -->
-					<div class="d-none d-lg-flex header-modules">
+					<div class="d-none d-lg-flex align-items-center header-modules">
 						<?php if ($data->params->get('enable_search', 0)): ?>
 							<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
 						<?php endif ?>
@@ -78,12 +78,18 @@ $searchModule = Helper::getSearchModule();
 					<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 
 					<!-- Modal menu toggler -->
-					<a id="modal-menu-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="ml-3" href="#"><i class="fas fa-bars" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"></i></a>
+					<a id="modal-menu-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="ml-3" href="#">
+						<div class="open-icon">
+							<?php echo JText::_('HELIX_ULTIMATE_MENU_TEXT');?> <i class="fas fa-bars" aria-hidden="true"></i>
+						</div>
+						<span class="close-icon">
+							<?php echo JText::_('HELIX_ULTIMATE_CLOSE');?> <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></i>
+						</span>
+					</a>
 
 					<!-- Modal menu -->
 					<div id="modal-menu" class="modal-menu">
 						<div class="modal-menu-inner">
-							<span id="menu-dismiss" class="menu-dismiss"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg></span>
 							<div class="container">
 								<div class="row">
 									<div class="col-sm-7">

@@ -216,11 +216,9 @@ jQuery(function ($) {
 	// Modal Menu
 	if ($("#modal-menu").length > 0) {
         $("#modal-menu-toggler").on("click", function () {
-            $("#modal-menu").addClass("active");
+            $("#modal-menu").toggleClass("active");
+            $(this).toggleClass("active");
         });
-        $("#modal-menu #menu-dismiss").on("click", function () {
-            $("#modal-menu").removeClass("active");
-		});
 		// modal close with escape
 		$(document).keyup(function(e) {
 			if(e.key == 'Escape') {

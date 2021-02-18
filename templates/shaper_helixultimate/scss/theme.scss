@@ -339,10 +339,23 @@ ul.social-icons {
 }
 
 // Modal Menu Variation
+#modal-menu-toggler{
+	.close-icon{
+		display: none;
+	}
+	&.active{
+		.close-icon{
+			display: inline-block;
+		}
+		.open-icon{
+			display: none;
+		}
+	}
+}
 #modal-menu {
-	background: #fff;
+	background: rgb(242, 242, 242);
 	position: fixed !important;
-	top: 0;
+	top: $header_height;
 	left: 0;
 	right: 0;
 	transition: .5s;

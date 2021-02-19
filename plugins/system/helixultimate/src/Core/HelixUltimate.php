@@ -1590,6 +1590,38 @@ class HelixUltimate
 	}
 
 	/**
+	 * Get offcanvas styles
+	 *
+	 * @return	string	The offcanvas layout HTML string.
+	 * @since	2.0.0
+	 */
+	public function getOffcanvasStyle()
+	{
+		$offCanvasStyle = $this->params->get('offcanvas_style', '');
+
+		if (empty($offCanvasStyle))
+		{
+			return '';
+		}
+
+		$options = new \stdClass;
+		$options->template 	= $this->template;
+		$options->params 	= $this->params;
+		$template 			= $options->template->template;
+
+		$offCanvasDirectory = JPATH_ROOT . '/templates/' . $template . '/offcanvas';
+
+		if (\file_exists($offCanvasDirectory . '/' . $offCanvasStyle . '/canvas.php'))
+		{
+			$getLayout = new FileLayout($offCanvasStyle . '.canvas', $offCanvasDirectory);
+
+			return $getLayout->render($options);
+		}
+
+		return '';
+	}
+
+	/**
 	 * Minify CSS code.
 	 *
 	 * @param	string	$css_code	The css code snippet.

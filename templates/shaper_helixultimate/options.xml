@@ -1080,6 +1080,36 @@
 			description="HELIX_ULTIMATE_SELECT_OFFCANVAS_DESC"
 			default="style-1"
 		/>
+		<field name="offcanvas_menu" 
+			type="menu" 
+			helixgroup="offcanvas" 
+			default="mainmenu"
+			track="on"
+			label="HELIX_ULTIMATE_OFFCANVAS_MENU" />
+		<field name="offcanvas_enable_search" 
+			type="checkbox" 
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SEARCH"
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SEARCH_DESC"
+			default="0"/>
+		<field name="offcanvas_enable_login" 
+			type="checkbox" 
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGIN"
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGIN_DESC"
+			default="0"/>
+		<field name="offcanvas_enable_social" 
+			type="checkbox" 
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SOCIALS"
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SOCIALS_DESC"
+			default="0"/>
+		<field name="offcanvas_enable_contact" 
+			type="checkbox" 
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_CONTACTS"
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_CONTACTS_DESC"
+			default="0"/>
 
 	</fieldset>
 
@@ -1483,6 +1513,7 @@
 			showon="related_article:1">
 			<option value="thumb">HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_THUMB</option>
 			<option value="list">HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_LIST</option>
+			<option value="large">Large</option>
 		</field>
 		<field name="comment" 
 			type="list" 

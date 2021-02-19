@@ -8,28 +8,21 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
+use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Helper\ModuleHelper;
 
 $app = Factory::getApplication();
 
 $this->setHtml5(true);
 
-include_once JPATH_THEMES . '/' . $this->template . '/features/menu.php';
-$menu  = new HelixUltimateFeatureMenu($this->params);
-
 /**
- * Get related modules
- * The modules are mod_search
- */
-$searchModule = ModuleHelper::getModule('mod_search');
-
-/**
- * Load the bootstrap file for enabling the HelixUltimate\Framework namespacing.
+ * Load the framework bootstrap file for enabling the HelixUltimate\Framework namespacing.
  *
  * @since	2.0.0
  */
@@ -225,25 +218,22 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<div class="offcanvas-overlay"></div>
 		<div class="offcanvas-menu">
 			<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times"></span></a>
-			<div class="offcanvas-inner">
-				<div class="d-flex d-lg-none header-modules">
-					<?php if ($this->params->get('enable_search', 0)): ?>
-						<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-					<?php endif ?>
-
-					<?php if ($this->params->get('enable_login', 0)): ?>
-						<?php echo $menu->renderLogin(); ?>
-					<?php endif ?>
+			<!-- Rendering the offcanvas style -->
+			<!-- If canvas style selected then render the style -->
+			<!-- otherwise (for old templates) attach the offcanvas module position -->
+			<?php if (!empty($this->params->get('offcanvas_style', ''))): ?>
+				<?php echo $theme->getOffcanvasStyle(); ?>
+			<?php else : ?>
+				<div class="offcanvas-inner">
+					<?php if ($this->countModules('offcanvas')) : ?>
+						<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
+					<?php else: ?>
+						<p class="alert alert-warning">
+							<?php echo Text::_('HELIX_ULTIMATE_NO_MODULE_OFFCANVAS'); ?>
+						</p>
+					<?php endif; ?>
 				</div>
-
-				<?php if ($this->countModules('offcanvas')) : ?>
-					<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
-				<?php else: ?>
-					<p class="alert alert-warning">
-						<?php echo Text::_('HELIX_ULTIMATE_NO_MODULE_OFFCANVAS'); ?>
-					</p>
-				<?php endif; ?>
-			</div>
+			<?php endif; ?>
 		</div>
 
 		<?php $theme->after_body(); ?>
@@ -258,7 +248,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 			<div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>
 		<?php endif; ?>
 
-		<?php if (HelixUltimate\Framework\System\JoomlaBridge::getVersion('major') >= 4): ?>
+		<?php if (JoomlaBridge::getVersion('major') >= 4): ?>
 			<jdoc:include type="scripts" />
 		<?php endif ?>
 	</body>

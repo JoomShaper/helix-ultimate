@@ -17,6 +17,7 @@ use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die();
 
@@ -502,26 +503,39 @@ class Helper
 	public static function getSearchModule()
 	{
 		$version = JoomlaBridge::getVersion('major');
+		$name = $version < 4 ? 'mod_search' : 'mod_finder';
 
-		$module = ModuleHelper::getModule($version < 4 ? 'mod_search' : 'mod_finder');
-
-		if ($version >= 4)
-		{
-			$module->showtitle = 0;
-			$params = new \stdClass;
-
-			if (!empty($module->params))
-			{
-				$params = \json_decode($module->params);
-			}
-
-			$params->show_label = 0;
-			$params->alt_label = '';
-			$params->show_button = 0;
-
-			$module->params = \json_encode($params);
-		}
+		$module = self::createModule($name, [
+			'title' => 'Search',
+			'params' => '{"label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}'
+		]);
 
 		return $module;
+	}
+
+	/**
+	 * Create a module object which is not created or published.
+	 *
+	 * @param	string	$name		The module name with mod_ prefixed.
+	 * @param	array	$options	The module options.
+	 *
+	 * @return	object	The module object.
+	 * @since	2.0.0
+	 */
+	public static function createModule($name, $options = [])
+	{
+		if (empty($name))
+		{
+			throw new \Exception(sprintf('createModule method expect the module $name as first argument!'));
+		}
+
+		if (!empty($options) && \is_object($options))
+		{
+			$options = (array) $options;
+		}
+
+		$defaultOptions = ['id' => 0, 'title' => '', 'module' => $name, 'position' => '', 'content' => '', 'showtitle' => 0, 'control' => '', 'params' => '', 'menuid' => 0, 'style' => ''];
+
+		return ArrayHelper::toObject(\array_merge($defaultOptions, $options));
 	}
 }

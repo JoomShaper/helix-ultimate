@@ -20,7 +20,6 @@ $feature_folder_path = JPATH_THEMES . '/' . $data->template->template . '/featur
 
 include_once $feature_folder_path . '/logo.php';
 include_once $feature_folder_path . '/menu.php';
-include_once $feature_folder_path . '/social.php';
 
 /**
  * Helper classes for-

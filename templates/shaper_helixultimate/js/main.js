@@ -20,15 +20,19 @@ jQuery(function ($) {
 	var deviceWiseStickyHeader = function (className, offsetTop) {
 		if ($('body').hasClass(className)) {
 			var $header = $('#sp-header');
+			var headerHeight = $header.outerHeight();
+			var $stickyHeaderPlaceholder = $('.sticky-header-placeholder');
 
 			var stickyHeader = function () {
 				var scrollTop = $(window).scrollTop();
 
-				if (scrollTop >= offsetTop) {
+				if (scrollTop >= offsetTop + 200) {
 					$header.addClass('header-sticky');
+					$stickyHeaderPlaceholder.height(headerHeight);
 				} else {
 					if ($header.hasClass('header-sticky')) {
 						$header.removeClass('header-sticky');
+						$stickyHeaderPlaceholder.height('inherit');
 					}
 				}
 			};
@@ -189,10 +193,15 @@ jQuery(function ($) {
 		event.preventDefault();
 		$('.offcanvas-init').addClass('offcanvas-active');
 	});
+	
+	$('.offcanvas-toggler-full').on('click', function (event) {
+		event.preventDefault();
+		$('.offcanvas-init').addClass('offcanvas-active full-offcanvas');
+	});
 
 	$('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
 		event.preventDefault();
-		$('.offcanvas-init').removeClass('offcanvas-active');
+		$('.offcanvas-init').removeClass('offcanvas-active full-offcanvas');
 	});
 
 	$(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
@@ -204,6 +213,19 @@ jQuery(function ($) {
 			.slideToggle(400);
 	});
 
+	// Modal Menu
+	if ($("#modal-menu").length > 0) {
+        $("#modal-menu-toggler").on("click", function () {
+            $("#modal-menu").toggleClass("active");
+            $(this).toggleClass("active");
+        });
+		// modal close with escape
+		$(document).keyup(function(e) {
+			if(e.key == 'Escape') {
+				$("#modal-menu").removeClass("active");
+			}
+		});
+    }
 	//Tooltip
 	$('[data-toggle="tooltip"]').tooltip();
 

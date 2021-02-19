@@ -30,6 +30,9 @@
 			}
 		}
 	}
+	#modal-menu{
+		top: $header_height_sm;
+	}
 	#offcanvas-toggler{
 		height: $header_height_sm;
 		line-height: $header_height_sm;
@@ -144,5 +147,8 @@
 			height: auto;
 			line-height: 1.2;
 		}
+	}
+	#modal-menu{
+		top: $header_height_xs;
 	}
 }

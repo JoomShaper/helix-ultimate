@@ -339,17 +339,36 @@ ul.social-icons {
 }
 
 // Modal Menu Variation
-#modal-menu-toggler{
-	.close-icon{
-		display: none;
+.burger-icon {
+    width : 30px;
+    cursor: pointer;
+	>span {
+		display         : block;
+		height          : 2px;
+		background-color: $text_color;
+		margin          : 6px 0;
+		transition      : background-color .3s ease-in, opacity .3s ease-in, transform .3s ease-in
 	}
+}
+
+
+#modal-menu-toggler{
 	&.active{
-		.close-icon{
-			display: inline-block;
+		.burger-icon>span {
+			background-color: $link_color;
+			&:nth-child(1) {
+				transform: translate(0, 9px) rotate(-45deg)
+			}
+			
+			&:nth-child(2) {
+				opacity: 0
+			}
+			
+			&:nth-child(3) {
+				transform: translate(0, -6px) rotate(45deg)
+			}
 		}
-		.open-icon{
-			display: none;
-		}
+		
 	}
 }
 #modal-menu {

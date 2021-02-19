@@ -217,7 +217,13 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<!-- Off Canvas Menu -->
 		<div class="offcanvas-overlay"></div>
 		<div class="offcanvas-menu">
-			<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times"></span></a>
+			<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
+				<div class="burger-icon" action-open-off-canvas="">
+					<span></span>
+					<span></span>
+					<span></span>
+				</div>
+			</a>
 			<!-- Rendering the offcanvas style -->
 			<!-- If canvas style selected then render the style -->
 			<!-- otherwise (for old templates) attach the offcanvas module position -->

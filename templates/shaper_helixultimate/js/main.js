@@ -215,14 +215,23 @@ jQuery(function ($) {
 
 	// Modal Menu
 	if ($("#modal-menu").length > 0) {
-        $("#modal-menu-toggler").on("click", function () {
-            $("#modal-menu").toggleClass("active");
+		let $modalToggler = $('#modal-menu-toggler');
+		let $modalMenu = $('#modal-menu');
+		let $body = $('body');
+
+        $modalToggler.on("click", function (e) {
+			e.preventDefault();
+            $modalMenu.toggleClass("active");
+            $body.toggleClass("modal-menu-active");
             $(this).toggleClass("active");
-        });
-		// modal close with escape
+		});
+		
+		// modal menu close with escape
 		$(document).keyup(function(e) {
 			if(e.key == 'Escape') {
-				$("#modal-menu").removeClass("active");
+				$modalMenu.removeClass("active");
+				$modalToggler.removeClass("active");
+				$body.removeClass("modal-menu-active");
 			}
 		});
     }

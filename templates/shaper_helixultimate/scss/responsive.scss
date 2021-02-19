@@ -95,6 +95,13 @@
 			}
 		}
 	}
+	#modal-menu{
+		top: $header_height_xs;
+	}
+	#offcanvas-toggler{
+		height: $header_height_xs;
+		line-height: $header_height_xs;
+	}
 	#sp-header{
 		.sp-module{
 			margin-left: 10px;
@@ -147,8 +154,5 @@
 			height: auto;
 			line-height: 1.2;
 		}
-	}
-	#modal-menu{
-		top: $header_height_xs;
 	}
 }

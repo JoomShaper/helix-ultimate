@@ -340,39 +340,45 @@ ul.social-icons {
 
 // Modal Menu Variation
 .burger-icon {
-    width : 30px;
+    width : 25px;
     cursor: pointer;
 	>span {
 		display         : block;
 		height          : 2px;
 		background-color: $text_color;
-		margin          : 6px 0;
+		margin          : 5px 0;
 		transition      : background-color .3s ease-in, opacity .3s ease-in, transform .3s ease-in
 	}
 }
 
-
-#modal-menu-toggler{
-	&.active{
-		.burger-icon>span {
-			background-color: $link_color;
-			&:nth-child(1) {
-				transform: translate(0, 9px) rotate(-45deg)
-			}
-			
-			&:nth-child(2) {
-				opacity: 0
-			}
-			
-			&:nth-child(3) {
-				transform: translate(0, -6px) rotate(45deg)
-			}
+.offcanvas-active,
+#modal-menu-toggler.active{
+	.burger-icon>span {
+		background-color: $link_color;
+		&:nth-child(1) {
+			transform: translate(0, 8px) rotate(-45deg)
 		}
 		
+		&:nth-child(2) {
+			opacity: 0
+		}
+		
+		&:nth-child(3) {
+			transform: translate(0, -5px) rotate(45deg)
+		}
+	}
+	
+}
+.offcanvas-active .close-offcanvas{
+	.burger-icon>span{
+		transition-delay: .2s;
 	}
 }
+body.modal-menu-active{
+	overflow-y: hidden;
+}
 #modal-menu {
-	background: rgb(242, 242, 242);
+	background: #f9f9f9;
 	position: fixed !important;
 	top: $header_height;
 	left: 0;
@@ -476,15 +482,21 @@ ul.social-icons {
 					float: right;
 					margin-left: 7px;
 					font-weight: 900;
-					width: 30px;
-					height: 3px;
+					width: 12px;
+					height: 2px;
 					background: #252525;
 					position: absolute;
 					top: 50%;
 					margin-left: 20px;
+					transition: .3s;
 				}
 			}
 			&:hover {
+				>a,>span{
+					&:after{
+						width: 30px;
+					}
+				}
 				>.sp-dropdown {
 					width: 130px !important;
 					animation: spFadeInDown .5s;
@@ -507,6 +519,7 @@ ul.social-icons {
 				overflow: visible !important;
 				max-height: initial;
 				padding: 0;
+				background-color: transparent;
 
 				ul>li>a {
 					font-weight: 500 !important;

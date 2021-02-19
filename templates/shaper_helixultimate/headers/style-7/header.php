@@ -78,7 +78,7 @@ $searchModule = Helper::getSearchModule();
 					<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 
 					<!-- Modal menu toggler -->
-					<a id="modal-menu-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="ml-3" href="#">
+					<a id="modal-menu-toggler" aria-label="<?php echo JText::_('HELIX_ULTIMATE_NAVIGATION'); ?>" title="<?php echo JText::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="ml-3" href="#">
 						<div class="burger-icon" action-open-off-canvas="">
 							<span></span>
 							<span></span>

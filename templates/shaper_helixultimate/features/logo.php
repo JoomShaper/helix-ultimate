@@ -77,11 +77,11 @@ class HelixUltimateFeatureLogo
 		{
 			if ($menu_type === 'mega')
 			{
-				$html .= '<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex d-lg-none" href="#" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon" action-open-off-canvas=""><span></span><span></span><span></span></div></a>';
+				$html .= '<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex d-lg-none" href="#" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
 			}
 			else
 			{
-				$html .= '<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex align-items-center" href="#" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon" action-open-off-canvas=""><span></span><span></span><span></span></div></a>';
+				$html .= '<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex align-items-center" href="#" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
 			}
 		}
 

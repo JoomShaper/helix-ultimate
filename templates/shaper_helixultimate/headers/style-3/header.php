@@ -42,7 +42,7 @@ $searchModule = Helper::getSearchModule();
 <?php if( $displayData->params->get('sticky_header')) { ?>
 	<div class="sticky-header-placeholder"></div>
 <?php } ?>
-<header id="sp-header">
+<header id="sp-header" class="header-with-social">
 	<div class="container">
 		<div class="container-inner">
 			<div class="row flex-nowrap">
@@ -62,7 +62,7 @@ $searchModule = Helper::getSearchModule();
 				<!-- Menu -->
 				<div id="sp-menu" class="menu-with-social col-auto flex-auto">
 					<div class="sp-column d-flex justify-content-between align-items-center">
-						<div class="d-flex menu-wrap justify-content-between align-items-center flex-auto">
+						<div class="d-flex menu-wrap menu-with-offcanvas justify-content-between align-items-center flex-auto">
 							<?php echo $menu->renderFeature(); ?>
 							<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 						</div>
@@ -84,8 +84,8 @@ $searchModule = Helper::getSearchModule();
 						</div>
 
 						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
-							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">
+						<?php if($offcanvas_position === 'right') : ?>
+							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">
 							<div class="burger-icon"><span></span><span></span><span></span></div>
 							</a>
 						<?php endif; ?>

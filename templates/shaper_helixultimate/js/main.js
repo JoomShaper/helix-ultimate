@@ -106,8 +106,11 @@ jQuery(function ($) {
 	}
 
 	function handleStickiness() {
-		let width = window.innerWidth;
+		deviceWiseStickyHeader('sticky-header', getHeaderOffset());
 
+		/** @TODO: uncomment it if devicewise sticky header is required. */
+
+		/* let width = window.innerWidth;
 		if (width > settings.breakpoints.tablet) {
 			deviceWiseStickyHeader('sticky-header', getHeaderOffset());
 		} else if (
@@ -117,7 +120,7 @@ jQuery(function ($) {
 			deviceWiseStickyHeader('sticky-header-md', getHeaderOffset());
 		} else {
 			deviceWiseStickyHeader('sticky-header-sm', getHeaderOffset());
-		}
+		} */
 	}
 
 	handleStickiness();
@@ -188,12 +191,12 @@ jQuery(function ($) {
 		event.preventDefault();
 		$('.offcanvas-init').addClass('offcanvas-active');
 	});
-	
+
 	$('.offcanvas-toggler-secondary').on('click', function (event) {
 		event.preventDefault();
 		$('.offcanvas-init').addClass('offcanvas-active');
 	});
-	
+
 	$('.offcanvas-toggler-full').on('click', function (event) {
 		event.preventDefault();
 		$('.offcanvas-init').addClass('offcanvas-active full-offcanvas');
@@ -214,27 +217,27 @@ jQuery(function ($) {
 	});
 
 	// Modal Menu
-	if ($("#modal-menu").length > 0) {
+	if ($('#modal-menu').length > 0) {
 		let $modalToggler = $('#modal-menu-toggler');
 		let $modalMenu = $('#modal-menu');
 		let $body = $('body');
 
-        $modalToggler.on("click", function (e) {
+		$modalToggler.on('click', function (e) {
 			e.preventDefault();
-            $modalMenu.toggleClass("active");
-            $body.toggleClass("modal-menu-active");
-            $(this).toggleClass("active");
+			$modalMenu.toggleClass('active');
+			$body.toggleClass('modal-menu-active');
+			$(this).toggleClass('active');
 		});
-		
+
 		// modal menu close with escape
-		$(document).keyup(function(e) {
-			if(e.key == 'Escape') {
-				$modalMenu.removeClass("active");
-				$modalToggler.removeClass("active");
-				$body.removeClass("modal-menu-active");
+		$(document).keyup(function (e) {
+			if (e.key == 'Escape') {
+				$modalMenu.removeClass('active');
+				$modalToggler.removeClass('active');
+				$body.removeClass('modal-menu-active');
 			}
 		});
-    }
+	}
 	//Tooltip
 	$('[data-toggle="tooltip"]').tooltip();
 

@@ -46,10 +46,7 @@ $theme = new HelixUltimate\Framework\Core\HelixUltimate;
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $this->params = $template->params;
 
-/**
- * Load needed data for javascript
- *
- */
+/** Load needed data for javascript */
 HelixUltimate\Framework\Platform\Helper::flushSettingsDataToJs();
 
 // Coming Soon

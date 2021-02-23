@@ -83,10 +83,12 @@ jQuery(function ($) {
 		}
 
 		/**
+		 * @TODO: uncomment if device wise sticky header is required.
 		 * Use MutationObserver for observing the sticky header class change.
 		 * If changes then add a margin top of `${settings.topbarHeight}px`
 		 */
-		let headerElLg = iDocument.querySelector(
+
+		/* let headerElLg = iDocument.querySelector(
 			'body.sticky-header #sp-header'
 		);
 		let headerElMd = iDocument.querySelector(
@@ -100,7 +102,9 @@ jQuery(function ($) {
 			let observer = new MutationObserver(function (mutations) {
 				mutations.forEach(function (mutation) {
 					if (mutation.target.classList.contains('header-sticky')) {
-						mutation.target.style.marginTop = `${settings.topbarHeight}px`;
+						mutation.target.style.marginTop = `${
+							settings.topbarHeight || 60
+						}px`;
 					} else {
 						mutation.target.style.marginTop = null;
 					}
@@ -127,7 +131,7 @@ jQuery(function ($) {
 					attributeOldValue: true,
 				});
 			}
-		}
+		} */
 	});
 
 	$(document).on('keyup', function (e) {
@@ -716,13 +720,16 @@ jQuery(function ($) {
 			device,
 		});
 
-		/** Change sticky header on device changed. */
-		onDeviceChange({
-			name: 'sticky_header',
-			parent: '.group-style-header',
-			map,
-			device,
-		});
+		/**
+		 * @TODO: uncomment it if responsive sticky header required.
+		 * Change sticky header on device changed.
+		 */
+		// onDeviceChange({
+		// 	name: 'sticky_header',
+		// 	parent: '.group-style-header',
+		// 	map,
+		// 	device,
+		// });
 
 		$iframe.animate(
 			{

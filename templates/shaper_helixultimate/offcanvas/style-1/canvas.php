@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2020 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -34,10 +34,10 @@ $menuModule = Helper::createModule('mod_menu', [
 $searchModule = Helper::getSearchModule();
 ?>
 <div class="offcanvas-menu">
-	<div class="d-flex">
+	<div class="d-flex align-items-center p-3">
 		<?php echo $logo->renderFeature(); ?>
 		<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
-			<div class="burger-icon" action-open-off-canvas="">
+			<div class="burger-icon">
 				<span></span>
 				<span></span>
 				<span></span>
@@ -45,7 +45,7 @@ $searchModule = Helper::getSearchModule();
 		</a>
 	</div>
 	<div class="offcanvas-inner">
-		<div class="d-flex header-modules">
+		<div class="d-flex header-modules mb-3">
 			<?php if ($params->get('offcanvas_enable_search', 0)): ?>
 				<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
 			<?php endif ?>
@@ -57,12 +57,15 @@ $searchModule = Helper::getSearchModule();
 
 		<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
 
-		<?php if ($params->get('offcanvas_enable_social')): ?>
-			<?php echo $social->renderFeature(); ?>
+		
+		<?php if ($params->get('offcanvas_enable_contact')): ?>
+			<div class="mb-4">
+				<?php echo $contact->renderFeature(); ?>
+			</div>
 		<?php endif ?>
 
-		<?php if ($params->get('offcanvas_enable_contact')): ?>
-			<?php echo $contact->renderFeature(); ?>
+		<?php if ($params->get('offcanvas_enable_social')): ?>
+			<?php echo $social->renderFeature(); ?>
 		<?php endif ?>
 	</div>
 </div>

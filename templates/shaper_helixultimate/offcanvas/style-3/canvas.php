@@ -33,7 +33,7 @@ $menuModule = Helper::createModule('mod_menu', [
 
 $searchModule = Helper::getSearchModule();
 ?>
-<div class="offcanvas-menu border-menu">
+<div class="offcanvas-menu border-menu center-alignment text-center">
 	<div class="d-flex align-items-center p-3">
 		<?php echo $logo->renderFeature(); ?>
 		<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
@@ -45,7 +45,7 @@ $searchModule = Helper::getSearchModule();
 		</a>
 	</div>
 	<div class="offcanvas-inner">
-		<div class="d-flex header-modules mb-3">
+		<div class="d-flex header-modules p-3 mb-3">
 			<?php if ($params->get('offcanvas_enable_search', 0)): ?>
 				<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
 			<?php endif ?>
@@ -54,18 +54,26 @@ $searchModule = Helper::getSearchModule();
 				<?php echo $menu->renderLogin(); ?>
 			<?php endif ?>
 		</div>
-
-		<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
+		
+		<div class="menu-wrapper">
+			<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
+		</div>
 
 		
+		<?php if ($params->get('offcanvas_enable_contact') || $params->get('offcanvas_enable_social')): ?>
+		<div class="mt-5">
 		<?php if ($params->get('offcanvas_enable_contact')): ?>
 			<div class="mb-4">
 				<?php echo $contact->renderFeature(); ?>
 			</div>
-		<?php endif ?>
-
-		<?php if ($params->get('offcanvas_enable_social')): ?>
-			<?php echo $social->renderFeature(); ?>
+			<?php endif ?>
+			
+			<?php if ($params->get('offcanvas_enable_social')): ?>
+				<div class="mb-4">
+					<?php echo $social->renderFeature(); ?>
+				</div>
+			<?php endif ?>
+		</div>
 		<?php endif ?>
 	</div>
 </div>

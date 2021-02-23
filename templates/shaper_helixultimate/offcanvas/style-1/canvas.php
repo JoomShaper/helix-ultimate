@@ -10,6 +10,7 @@ defined ('_JEXEC') or die('Restricted Access');
 
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Text;
 
 $params = $displayData->params;
 $template = $displayData->template->template;
@@ -32,24 +33,36 @@ $menuModule = Helper::createModule('mod_menu', [
 
 $searchModule = Helper::getSearchModule();
 ?>
-<div class="offcanvas-inner">
-	<div class="d-flex header-modules">
-		<?php if ($params->get('offcanvas_enable_search', 0)): ?>
-			<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+<div class="offcanvas-menu">
+	<div class="d-flex">
+		<?php echo $logo->renderFeature(); ?>
+		<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
+			<div class="burger-icon" action-open-off-canvas="">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+		</a>
+	</div>
+	<div class="offcanvas-inner">
+		<div class="d-flex header-modules">
+			<?php if ($params->get('offcanvas_enable_search', 0)): ?>
+				<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
+			<?php endif ?>
+
+			<?php if ($params->get('offcanvas_enable_login', 0)): ?>
+				<?php echo $menu->renderLogin(); ?>
+			<?php endif ?>
+		</div>
+
+		<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
+
+		<?php if ($params->get('offcanvas_enable_social')): ?>
+			<?php echo $social->renderFeature(); ?>
 		<?php endif ?>
 
-		<?php if ($params->get('offcanvas_enable_login', 0)): ?>
-			<?php echo $menu->renderLogin(); ?>
+		<?php if ($params->get('offcanvas_enable_contact')): ?>
+			<?php echo $contact->renderFeature(); ?>
 		<?php endif ?>
 	</div>
-
-	<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
-
-	<?php if ($params->get('offcanvas_enable_social')): ?>
-		<?php echo $social->renderFeature(); ?>
-	<?php endif ?>
-
-	<?php if ($params->get('offcanvas_enable_contact')): ?>
-		<?php echo $contact->renderFeature(); ?>
-	<?php endif ?>
 </div>

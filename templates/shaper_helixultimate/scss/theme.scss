@@ -470,7 +470,7 @@ ul.social-icons {
 	>span {
 		display         : block;
 		height          : 2px;
-		background-color: $text_color;
+		background-color: #000;
 		margin          : 5px 0;
 		transition      : background-color .3s ease-in, opacity .3s ease-in, transform .3s ease-in
 	}
@@ -479,7 +479,7 @@ ul.social-icons {
 .offcanvas-active,
 #modal-menu-toggler.active{
 	.burger-icon>span {
-		background-color: $link_color;
+		background-color: #000;
 		&:nth-child(1) {
 			transform: translate(0, 8px) rotate(-45deg)
 		}

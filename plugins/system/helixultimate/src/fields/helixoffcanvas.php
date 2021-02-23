@@ -50,13 +50,17 @@ class JFormFieldHelixOffcanvas extends FormField
 		if (Folder::exists($offCanvasDir))
 		{
 			$offCanvases = Folder::folders($offCanvasDir);
+			$offCanvasNames = [
+				'Offcanvas A',
+				'Offcanvas B',
+			];
 
 			if (!empty($offCanvases))
 			{
 				$html = '<div class="hu-predefined-offcanvas">';
 				$html .= '<ul class="hu-offcanvas-list clearfix" data-name="' . $this->name . '">';
 
-				foreach ($offCanvases as $canvas)
+				foreach ($offCanvases as $key => $canvas)
 				{
 					$html .= '<li class="hu-offcanvas-item' . (($this->value === $canvas) ? ' active' : '') . '" data-style="' . $canvas . '">';
 
@@ -69,6 +73,7 @@ class JFormFieldHelixOffcanvas extends FormField
 						$html .= '<span><img src="' . $thumb_url . '/' . $canvas . '/thumb.jpg" alt="' . $canvas . '"</span>';
 					}
 
+					$html .= '<span class="hu-predefined-offcanvas-title">' . (isset($offCanvasNames[$key]) ? $offCanvasNames[$key] : $canvas) . '</span>';
 					$html .= '</li>';
 				}
 

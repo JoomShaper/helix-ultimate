@@ -48,13 +48,24 @@ class JFormFieldHelixheaders extends FormField
 		if (Folder::exists($headers_src))
 		{
 			$headers = Folder::folders($headers_src);
+			$headerNames = [
+				'Header A',
+				'Header B',
+				'Header C',
+				'Header D',
+				'Header E',
+				'Header F',
+				'Header G',
+				'Header H',
+				'Header I',
+			];
 
 			if (!empty($headers))
 			{
 				$html = '<div class="hu-predefined-headers">';
 				$html .= '<ul class="hu-header-list clearfix" data-name="' . $this->name . '">';
 
-				foreach ($headers as $header)
+				foreach ($headers as $key => $header)
 				{
 					$html .= '<li class="hu-header-item' . (($this->value === $header) ? ' active' : '') . '" data-style="' . $header . '">';
 
@@ -67,6 +78,7 @@ class JFormFieldHelixheaders extends FormField
 						$html .= '<span><img src="' . $thumb_url . '/' . $header . '/thumb.jpg" alt="' . $header . '"</span>';
 					}
 
+					$html .= '<span class="hu-predefined-headers-title">' . (isset($headerNames[$key]) ? $headerNames[$key] : $header) . '</span>';
 					$html .= '</li>';
 				}
 

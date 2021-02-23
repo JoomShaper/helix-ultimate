@@ -68,6 +68,8 @@ class JFormFieldHelixheaders extends FormField
 						$html .= '<span><img src="' . $thumb_url . '/' . $header . '/thumb.jpg" alt="' . $header . '"</span>';
 					}
 
+					$html .= '<span class="hu-predefined-headers-title">' . $header . '</span>';
+
 					$html .= '</li>';
 				}
 

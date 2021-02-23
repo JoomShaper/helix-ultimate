@@ -276,29 +276,31 @@ ul.social-icons {
 				align-items: flex-start;
 				padding: 170px 0 0;
 			}
-			.search{
-				margin-bottom: 80px;
-				form{
-					&:after{
-						font-size: 16px;
-					}
-					&:hover{
+			#modal-menu{
+				.search{
+					margin-bottom: 80px;
+					form{
 						&:after{
-							display: none;
+							font-size: 16px;
 						}
-					}
-					input{
-						background: transparent;
-						border-bottom: 2px solid rgba(32, 31, 31, .1);
-						font-size: 26px;
-						padding: 7px;
-						border-radius: 0px;
-						&::placeholder{
-							color:  rgba(32, 31, 31, .4);
+						&:hover{
+							&:after{
+								display: none;
+							}
 						}
-						&:focus, &:active, &:active:focus{
-							box-shadow: none;
-							border-bottom: 2px solid rgba(32, 31, 31, .7);
+						input{
+							background: transparent;
+							border-bottom: 2px solid rgba(32, 31, 31, .1);
+							font-size: 26px;
+							padding: 7px;
+							border-radius: 0px;
+							&::placeholder{
+								color:  rgba(32, 31, 31, .4);
+							}
+							&:focus, &:active, &:active:focus{
+								box-shadow: none;
+								border-bottom: 2px solid rgba(32, 31, 31, .7);
+							}
 						}
 					}
 				}
@@ -327,7 +329,6 @@ ul.social-icons {
 							height: 30px;
 						}
 						>.sp-dropdown {
-							width: 130px !important;
 							animation: spFadeIn .5s;
 						}
 					}
@@ -339,10 +340,9 @@ ul.social-icons {
 					}
 					>.sp-dropdown.sp-dropdown-main {
 						top: 100%;
-						padding-top: 15px;
-						left: 50% !important;
-						transform: translateX(-50%);
-						text-align: center;
+						padding-top: 50px;
+						padding-left: 0;
+						left: 0px !important;
 						transition: .35s;
 						li.sp-menu-item>a,
 						li.sp-menu-item>span{
@@ -628,7 +628,6 @@ body.modal-menu-active{
 					}
 				}
 				>.sp-dropdown {
-					width: 130px !important;
 					animation: spFadeInDown .5s;
 				}
 			}
@@ -636,6 +635,7 @@ body.modal-menu-active{
 		.sp-dropdown {
 			left: 100% !important;
 			transition: .3s;
+			padding-left: 30px;
 
 			&.sp-dropdown-main {
 				top: 0px;
@@ -703,8 +703,14 @@ body.modal-menu-active{
 			}
 		}
 		.social-icons{
-			font-size: 12px;
-		}
+			font-size: 14px;
+			a{
+				opacity: 0.7;
+				&:hover, &:focus{
+					opacity: 1;
+				}
+			}
+		}	
 	}
 }
 

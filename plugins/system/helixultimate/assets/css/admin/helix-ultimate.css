@@ -3163,9 +3163,12 @@ select:focus::-ms-value {
 .hu-offcanvas-list > li img {
 	max-width: 100%;
 }
-
+.hu-offcanvas-list > li>span{
+	display: inline-block;
+	position: relative;
+}
 .hu-header-list > li:after,
-.hu-offcanvas-list > li:after {
+.hu-offcanvas-list > li>span:after {
 	content: '';
 	position: absolute;
 	top: 6px;
@@ -3178,14 +3181,20 @@ select:focus::-ms-value {
 	opacity: 0;
 	transition: 0.3s;
 }
+.hu-offcanvas-list > li>span:after {
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+}
 
 .hu-header-list > li:hover:after,
 .hu-header-list > li.active:after {
 	opacity: 1;
 }
 
-.hu-offcanvas-list > li:hover:after,
-.hu-offcanvas-list > li.active:after {
+.hu-offcanvas-list > li:hover>span:after,
+.hu-offcanvas-list > li.active>span:after {
 	opacity: 1;
 }
 

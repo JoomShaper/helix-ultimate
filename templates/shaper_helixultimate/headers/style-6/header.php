@@ -110,7 +110,7 @@ $searchModule = Helper::getSearchModule();
 					<div class="d-flex justify-content-end justify-content-xl-center align-items-center">
 						<!-- if offcanvas position left -->
 						<?php if($offcanvas_position === 'left' && $menu_type === 'mega_offcanvas') : ?>
-							<a id="offcanvas-toggler" aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"></i></a>
+							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#"><div class="burger-icon"><span></span><span></span><span></span></div></a>
 						<?php endif; ?>
 
 						<?php echo $menu->renderFeature(); ?>
@@ -118,7 +118,7 @@ $searchModule = Helper::getSearchModule();
 
 						<!-- if offcanvas position right -->
 						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
-							<a id="offcanvas-toggler" aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="ml-3 offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"></i></a>
+							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="ml-3 offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#"><div class="burger-icon"><span></span><span></span><span></span></div></a>
 						<?php endif; ?>		
 					</div>	
 				</div>

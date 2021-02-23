@@ -45,7 +45,7 @@ $searchModule = Helper::getSearchModule();
 <?php if( $displayData->params->get('sticky_header')) { ?>
 	<div class="sticky-header-placeholder"></div>
 <?php } ?>
-<header id="sp-header" class="header-with-modal-menu center-layout">
+<header id="sp-header" class="header-with-modal-menu classic-layout">
 	<div class="container">
 		<div class="container-inner">
 			<div class="row flex-nowrap align-items-center justify-content-between">
@@ -94,19 +94,11 @@ $searchModule = Helper::getSearchModule();
 					</a>
 
 					<!-- Modal menu -->
-					<div id="modal-menu" class="modal-menu">
+					<div id="modal-menu" class="modal-menu has-bg">
 						<div class="modal-menu-inner">
 							<div class="container">
-								<div class="row">
-									<div class="col-sm-12">
-										<div class="modules-wrapper header-modules">
-											<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-											<jdoc:include type="modules" name="menu" style="sp_xhtml" />
-										</div>
-										
-										<?php echo $menu->renderFeature(); ?>
-									</div>
-								</div>
+								<?php echo $menu->renderFeature(); ?>
+								<?php echo $social->renderFeature(); ?>
 							</div>
 						</div>
 					</div>

@@ -18,8 +18,11 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
 $app = Factory::getApplication();
-
 $this->setHtml5(true);
+
+// $feature_folder_path = JPATH_THEMES . '/' . $this->template . '/features';
+// include_once $feature_folder_path . '/logo.php';
+// $logo = new HelixUltimateFeatureLogo($data->params);
 
 /**
  * Load the framework bootstrap file for enabling the HelixUltimate\Framework namespacing.
@@ -217,13 +220,16 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<!-- Off Canvas Menu -->
 		<div class="offcanvas-overlay"></div>
 		<div class="offcanvas-menu">
-			<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
-				<div class="burger-icon" action-open-off-canvas="">
-					<span></span>
-					<span></span>
-					<span></span>
-				</div>
-			</a>
+			<div class="d-flex">
+				<?php //echo $logo->renderFeature(); ?>
+				<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
+					<div class="burger-icon" action-open-off-canvas="">
+						<span></span>
+						<span></span>
+						<span></span>
+					</div>
+				</a>
+			</div>
 			<!-- Rendering the offcanvas style -->
 			<!-- If canvas style selected then render the style -->
 			<!-- otherwise (for old templates) attach the offcanvas module position -->

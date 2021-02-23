@@ -43,8 +43,6 @@ $searchModule = Helper::getSearchModule();
 		<?php endif ?>
 	</div>
 
-	<div class="sp-offcanvas-desc mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, consequuntur!</div>
-
 	<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
 
 	<?php if ($params->get('offcanvas_enable_social')): ?>

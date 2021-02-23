@@ -1,5 +1,6 @@
 #offcanvas-toggler {
-	display: block;
+	display: inline-flex;
+	align-items: center;
 	height: $header_height;
 	line-height: $header_height;
 	font-size: 20px;

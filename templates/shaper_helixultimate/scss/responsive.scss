@@ -22,6 +22,14 @@
 		.logo {
 			height: $header_height_sm;
 		}
+		&.header-with-modal-menu{
+			#offcanvas-toggler {
+				display: flex !important;
+			}
+			#modal-menu-toggler{
+				display: none;
+			}
+		}
 	}
 	#sp-header-topbar{
 		.container-inner{
@@ -53,7 +61,11 @@
 		padding-right: 15px;
 	}
 	#sp-menu .social-wrap {
-    padding-left: 15px;
+    	padding-left: 15px;
+	}
+	#sp-header.header-with-modal-menu.center-layout .sp-contact-info,
+	#sp-header.header-with-modal-menu.classic-layout .sp-contact-info{
+		display: none;
 	}
 }
 

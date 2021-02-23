@@ -218,23 +218,14 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		<!-- Off Canvas Menu -->
 		<div class="offcanvas-overlay"></div>
-		<div class="offcanvas-menu">
-			<div class="d-flex">
-				<?php //echo $logo->renderFeature(); ?>
-				<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
-					<div class="burger-icon" action-open-off-canvas="">
-						<span></span>
-						<span></span>
-						<span></span>
-					</div>
-				</a>
-			</div>
-			<!-- Rendering the offcanvas style -->
-			<!-- If canvas style selected then render the style -->
-			<!-- otherwise (for old templates) attach the offcanvas module position -->
-			<?php if (!empty($this->params->get('offcanvas_style', ''))): ?>
-				<?php echo $theme->getOffcanvasStyle(); ?>
-			<?php else : ?>
+		<!-- Rendering the offcanvas style -->
+		<!-- If canvas style selected then render the style -->
+		<!-- otherwise (for old templates) attach the offcanvas module position -->
+		<?php if (!empty($this->params->get('offcanvas_style', ''))): ?>
+			<?php echo $theme->getOffcanvasStyle(); ?>
+		<?php else : ?>
+			<div class="offcanvas-menu">
+				<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times"></span></a>
 				<div class="offcanvas-inner">
 					<?php if ($this->countModules('offcanvas')) : ?>
 						<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
@@ -244,8 +235,9 @@ if ($custom_js = $this->params->get('custom_js', null))
 						</p>
 					<?php endif; ?>
 				</div>
-			<?php endif; ?>
-		</div>
+			</div>
+		<?php endif; ?>
+		
 
 		<?php $theme->after_body(); ?>
 

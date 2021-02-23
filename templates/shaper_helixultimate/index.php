@@ -20,10 +20,6 @@ use Joomla\CMS\Uri\Uri;
 $app = Factory::getApplication();
 $this->setHtml5(true);
 
-// $feature_folder_path = JPATH_THEMES . '/' . $this->template . '/features';
-// include_once $feature_folder_path . '/logo.php';
-// $logo = new HelixUltimateFeatureLogo($data->params);
-
 /**
  * Load the framework bootstrap file for enabling the HelixUltimate\Framework namespacing.
  *

@@ -146,7 +146,6 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<?php echo $theme->googleAnalytics(); ?>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="canonical" href="<?php echo Uri::getInstance()->toString(); ?>">
 		<?php
 
 		$theme->head();

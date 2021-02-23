@@ -80,6 +80,7 @@
         <folder>features/</folder>
         <folder>fonts/</folder>
         <folder>headers/</folder>
+        <folder>offcanvas/</folder>
         <folder>html/</folder>
         <folder>images/</folder>
         <folder>js/</folder>

@@ -3163,38 +3163,45 @@ select:focus::-ms-value {
 .hu-offcanvas-list > li img {
 	max-width: 100%;
 }
-.hu-offcanvas-list > li>span{
+.hu-offcanvas-list > li>span,
+.hu-header-list > li>span{
 	display: inline-block;
 	position: relative;
 }
-.hu-header-list > li:after,
-.hu-offcanvas-list > li>span:after {
+.hu-offcanvas-list > li>.hu-predefined-offcanvas-title,
+.hu-header-list > li>.hu-predefined-headers-title{
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.hu-header-list > li>.img-wrap:after,
+.hu-offcanvas-list > li>.img-wrap:after {
 	content: '';
 	position: absolute;
-	top: 6px;
-	bottom: 5px;
-	left: 6px;
-	right: 6px;
+	top: 0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
 	border: 1.5px solid #3366ff;
 	box-shadow: 0px 2px 4px rgba(20, 50, 80, 0.2);
 	border-radius: 3px;
 	opacity: 0;
 	transition: 0.3s;
 }
-.hu-offcanvas-list > li>span:after {
+.hu-offcanvas-list > li>.img-wrap:after {
 	top: 0px;
 	bottom: 0px;
 	left: 0px;
 	right: 0px;
 }
 
-.hu-header-list > li:hover:after,
-.hu-header-list > li.active:after {
+.hu-header-list > li:hover>.img-wrap:after,
+.hu-header-list > li.active>.img-wrap:after {
 	opacity: 1;
 }
 
-.hu-offcanvas-list > li:hover>span:after,
-.hu-offcanvas-list > li.active>span:after {
+.hu-offcanvas-list > li:hover>.img-wrap:after,
+.hu-offcanvas-list > li.active>.img-wrap:after {
 	opacity: 1;
 }
 

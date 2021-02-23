@@ -51,8 +51,9 @@ class JFormFieldHelixOffcanvas extends FormField
 		{
 			$offCanvases = Folder::folders($offCanvasDir);
 			$offCanvasNames = [
-				'Offcanvas A',
-				'Offcanvas B',
+				'Left Align',
+				'Border Style',
+				'Center Align',
 			];
 
 			if (!empty($offCanvases))
@@ -66,11 +67,11 @@ class JFormFieldHelixOffcanvas extends FormField
 
 					if (file_exists($offCanvasDir . '/' . $canvas . '/thumb.svg'))
 					{
-						$html .= '<span><img src="' . $thumb_url . '/' . $canvas . '/thumb.svg" alt="' . $canvas . '"</span>';
+						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $canvas . '/thumb.svg" alt="' . $canvas . '"></span>';
 					}
 					else
 					{
-						$html .= '<span><img src="' . $thumb_url . '/' . $canvas . '/thumb.jpg" alt="' . $canvas . '"</span>';
+						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $canvas . '/thumb.jpg" alt="' . $canvas . '"></span>';
 					}
 
 					$html .= '<span class="hu-predefined-offcanvas-title">' . (isset($offCanvasNames[$key]) ? $offCanvasNames[$key] : $canvas) . '</span>';

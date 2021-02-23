@@ -49,15 +49,15 @@ class JFormFieldHelixheaders extends FormField
 		{
 			$headers = Folder::folders($headers_src);
 			$headerNames = [
-				'Header A',
-				'Header B',
-				'Header C',
-				'Header D',
-				'Header E',
-				'Header F',
-				'Header G',
-				'Header H',
-				'Header I',
+				'Header & Topbar',
+				'Default Header',
+				'Header & Social',
+				'Fullwidth Center',
+				'Fullwidth Left',
+				'Large Header',
+				'Full Modal',
+				'Center Modal',
+				'Left Modal',
 			];
 
 			if (!empty($headers))
@@ -71,11 +71,11 @@ class JFormFieldHelixheaders extends FormField
 
 					if (file_exists($headers_src . '/' . $header . '/thumb.svg'))
 					{
-						$html .= '<span><img src="' . $thumb_url . '/' . $header . '/thumb.svg" alt="' . $header . '"</span>';
+						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $header . '/thumb.svg" alt="' . $header . '"></span>';
 					}
 					else
 					{
-						$html .= '<span><img src="' . $thumb_url . '/' . $header . '/thumb.jpg" alt="' . $header . '"</span>';
+						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $header . '/thumb.jpg" alt="' . $header . '"></span>';
 					}
 
 					$html .= '<span class="hu-predefined-headers-title">' . (isset($headerNames[$key]) ? $headerNames[$key] : $header) . '</span>';

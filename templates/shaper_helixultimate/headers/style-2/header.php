@@ -78,8 +78,8 @@ $searchModule = Helper::getSearchModule();
 						</div>
 						
 						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
-							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">
+						<?php if($offcanvas_position === 'right') : ?>
+							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">
 							<div class="burger-icon"><span></span><span></span><span></span></div>
 							</a>
 						<?php endif; ?>

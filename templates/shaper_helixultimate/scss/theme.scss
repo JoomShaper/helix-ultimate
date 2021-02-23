@@ -218,6 +218,22 @@ ul.social-icons {
 	z-index: 99;
 	box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 	animation: spFadeIn .5s;
+	#offcanvas-toggler.offcanvas,
+	#offcanvas-toggler.mega{
+		display: none !important;
+	}
+	&.full-header-left,
+	&.full-header-center,
+	&.header-with-modal-menu,
+	&.lg-header,
+	&.header-with-social{
+		#offcanvas-toggler.offcanvas{
+			display: flex !important;
+		}
+		.menu-with-offcanvas #offcanvas-toggler{
+			display: none !important;
+		}
+	}
 	&.full-header {
 		padding-left: 45px;
 		padding-right: 45px;
@@ -230,6 +246,9 @@ ul.social-icons {
 		#offcanvas-toggler {
 			margin-right: 20px;
 			margin-left: 0px;
+			&.offcanvas-toggler-right.offcanvas{
+				display: none !important;
+			}
 		}
 		.sp-column {
 			height: 100%;
@@ -423,7 +442,7 @@ ul.social-icons {
 	.container-inner {
 		border-bottom: 1px solid #e5e5e5;
 		> .row {
-			height: $header_height;
+			min-height: $header_height;
 		}
 	}
 	a {

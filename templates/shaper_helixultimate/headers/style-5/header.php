@@ -82,13 +82,8 @@ $searchModule = Helper::getSearchModule();
 					<jdoc:include type="modules" name="menu" style="sp_xhtml" />
 
 					<!-- if offcanvas position right -->
-<<<<<<< HEAD
-					<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
-						<a id="offcanvas-toggler" aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="offcanvas-toggler-secondary offcanvas-toggler-right" href="#"><i class="fas fa-bars" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"></i></a>
-=======
 					<?php if($offcanvas_position === 'right') : ?>
 						<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" aria-hidden="true" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#"><div class="burger-icon"><span></span><span></span><span></span></div></a>
->>>>>>> 07b1346195838114b5578d66438438338e19a0e0
 					<?php endif; ?>
 				</div>
 			</div>

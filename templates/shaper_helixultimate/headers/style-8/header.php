@@ -101,7 +101,7 @@ $searchModule = Helper::getSearchModule();
 									<div class="col-sm-12">
 										<div class="modules-wrapper header-modules">
 											<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-											<jdoc:include type="modules" name="modal" style="sp_xhtml" />
+											<jdoc:include type="modules" name="menu-modal" style="sp_xhtml" />
 										</div>
 										
 										<?php echo $menu->renderFeature(); ?>

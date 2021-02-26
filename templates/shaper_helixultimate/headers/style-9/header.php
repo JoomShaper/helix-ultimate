@@ -99,7 +99,7 @@ $searchModule = Helper::getSearchModule();
 							<div class="container align-items-stretch">
 								<?php echo $menu->renderFeature(); ?>
 								<div>
-									<jdoc:include type="modules" name="modal" style="sp_xhtml" />
+									<jdoc:include type="modules" name="menu-modal" style="sp_xhtml" />
 									<?php echo $social->renderFeature(); ?>
 								</div>
 							</div>

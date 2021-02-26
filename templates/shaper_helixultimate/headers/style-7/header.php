@@ -104,7 +104,7 @@ $searchModule = Helper::getSearchModule();
 											<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
 											<?php echo $contact->renderFeature(); ?>
 											<?php echo $social->renderFeature(); ?>
-											<jdoc:include type="modules" name="modal" style="sp_xhtml" />
+											<jdoc:include type="modules" name="menu-modal" style="sp_xhtml" />
 										</div>
 									</div>
 								</div>

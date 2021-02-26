@@ -96,9 +96,12 @@ $searchModule = Helper::getSearchModule();
 					<!-- Modal menu -->
 					<div id="modal-menu" class="modal-menu has-bg">
 						<div class="modal-menu-inner">
-							<div class="container">
+							<div class="container align-items-stretch">
 								<?php echo $menu->renderFeature(); ?>
-								<?php echo $social->renderFeature(); ?>
+								<div>
+									<jdoc:include type="modules" name="modal" style="sp_xhtml" />
+									<?php echo $social->renderFeature(); ?>
+								</div>
 							</div>
 						</div>
 					</div>

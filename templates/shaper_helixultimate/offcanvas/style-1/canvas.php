@@ -67,5 +67,7 @@ $searchModule = Helper::getSearchModule();
 		<?php if ($params->get('offcanvas_enable_social')): ?>
 			<?php echo $social->renderFeature(); ?>
 		<?php endif ?>
+
+		<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
 	</div>
 </div>

@@ -30,6 +30,7 @@
         <position>top3</position>
         <position>logo</position>
         <position>menu</position>
+        <position>menu-modal</position>
         <position>search</position>
         <position>slide</position>
         <position>user1</position>

@@ -75,5 +75,7 @@ $searchModule = Helper::getSearchModule();
 			<?php endif ?>
 		</div>
 		<?php endif ?>
+
+		<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
 	</div>
 </div>

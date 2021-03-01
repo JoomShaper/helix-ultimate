@@ -321,8 +321,16 @@ class  PlgSystemHelixultimate extends JPlugin
 
 			if ($template_style_id > 0)
 			{
-				Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-				$style = Table::getInstance('Style', 'TemplatesTable');
+				if (JoomlaBridge::getVersion('major') < 4)
+				{
+					Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+					$style = Table::getInstance('Style', 'TemplatesTable');
+				}
+				else
+				{
+					$style = new Joomla\Component\Templates\Administrator\Table\StyleTable(Factory::getContainer()->get('DatabaseDriver'));
+				}
+
 				$style->load($template_style_id);
 
 				if (!empty($style->template))

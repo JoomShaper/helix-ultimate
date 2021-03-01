@@ -254,7 +254,7 @@ class Helper
 
 		if ($app->isClient('site'))
 		{
-			$templateId = $currentTemplate->id;
+			$templateId = $currentTemplate->id ?? 0;
 		}
 		else
 		{

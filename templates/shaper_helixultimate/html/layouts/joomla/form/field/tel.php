@@ -8,6 +8,8 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 extract($displayData);
 
 /**
@@ -45,8 +47,8 @@ extract($displayData);
  */
 
 // Including fallback code for HTML5 non supported browsers.
-JHtml::_('jquery.framework');
-JHtml::_('script', 'system/html5fallback.js', false, true);
+HTMLHelper::_('jquery.framework');
+HTMLHelper::_('script', 'system/html5fallback.js', false, true);
 
 $autocomplete = !$autocomplete ? ' autocomplete="off"' : ' autocomplete="' . $autocomplete . '"';
 $autocomplete = $autocomplete == ' autocomplete="on"' ? '' : $autocomplete;

@@ -7,12 +7,15 @@
 */
 
 defined ('_JEXEC') or die();
+
+use Joomla\CMS\Router\Route;
+
 ?>
 
 <ul class="list-group">
 	<?php foreach ($this->link_items as &$item) : ?>
 		<li class="list-group-item">
-			<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
+			<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
 				<?php echo $item->title; ?></a>
 		</li>
 	<?php endforeach; ?>

@@ -8,24 +8,28 @@
 
 defined ('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-$helix_path = JPATH_PLUGINS . '/system/helixultimate/core/helixultimate.php';
-// template params for social template
+use Joomla\CMS\Language\Associations;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $tmpl_params = $template->params;
 
 $relatedArticles = [];
-if (file_exists($helix_path) && $tmpl_params->get('related_article')) {
-
-	require_once $helix_path;
-
+if ($tmpl_params->get('related_article'))
+{
 	$args['catId'] =  $this->item->catid;
 	$args['maximum'] = $tmpl_params->get('related_article_limit');
 	$args['itemTags'] = $this->item->tags->itemTags;
 	$args['item_id'] = $this->item->id;
-	$relatedArticles = HelixUltimate::getRelatedArticles($args);
+	$relatedArticles = HelixUltimate\Framework\Core\HelixUltimate::getRelatedArticles($args);
 }
 
 // Create shortcuts to some parameters.
@@ -33,7 +37,7 @@ $params  = $this->item->params;
 $images  = json_decode($this->item->images);
 $urls    = json_decode($this->item->urls);
 $canEdit = $params->get('access-edit');
-$user    = JFactory::getUser();
+$user    = Factory::getUser();
 $info    = $params->get('info_block_position', 0);
 $page_header_tag = 'h1';
 $attribs = json_decode($this->item->attribs);
@@ -41,11 +45,11 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 
 
 // Check if associations are implemented. If they are, define the parameter.
-$assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associations'));
-// JHtml::_('behavior.caption');
+$assocParam = (Associations::isEnabled() && $params->get('show_associations'));
+// HTMLHelper::_('behavior.caption');
 ?>
 <div class="article-details <?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
-	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? JFactory::getConfig()->get('language') : $this->item->language; ?>">
+	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? Factory::getConfig()->get('language') : $this->item->language; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 	<div class="page-header">
 		<h1><?php echo $this->escape($this->params->get('page_heading')); ?></h1>
@@ -59,13 +63,13 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 	?>
 
 	<?php if($article_format == 'gallery') : ?>
-		<?php echo JLayoutHelper::render('joomla.content.blog.gallery', array('attribs' => $attribs, 'id'=>$this->item->id)); ?>
+		<?php echo LayoutHelper::render('joomla.content.blog.gallery', array('attribs' => $attribs, 'id'=>$this->item->id)); ?>
 	<?php elseif($article_format == 'video') : ?>
-		<?php echo JLayoutHelper::render('joomla.content.blog.video', array('attribs' => $attribs)); ?>
+		<?php echo LayoutHelper::render('joomla.content.blog.video', array('attribs' => $attribs)); ?>
 	<?php elseif($article_format == 'audio') : ?>
-		<?php echo JLayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
+		<?php echo LayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
 	<?php else: ?>
-		<?php echo JLayoutHelper::render('joomla.content.full_image', $this->item); ?>
+		<?php echo LayoutHelper::render('joomla.content.full_image', $this->item); ?>
 	<?php endif; ?>
 
 	<?php // Todo Not that elegant would be nice to group the params ?>
@@ -80,13 +84,13 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 			</<?php echo $page_header_tag; ?>>
 		<?php endif; ?>
 		<?php if ($this->item->state == 0) : ?>
-			<span class="label label-warning"><?php echo JText::_('JUNPUBLISHED'); ?></span>
+			<span class="label label-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 		<?php endif; ?>
-		<?php if (strtotime($this->item->publish_up) > strtotime(JFactory::getDate())) : ?>
-			<span class="label label-warning"><?php echo JText::_('JNOTPUBLISHEDYET'); ?></span>
+		<?php if (strtotime($this->item->publish_up) > strtotime(Factory::getDate())) : ?>
+			<span class="label label-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
-		<?php if ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate()) : ?>
-			<span class="label label-warning"><?php echo JText::_('JEXPIRED'); ?></span>
+		<?php if ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()) : ?>
+			<span class="label label-warning"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
 
 		
@@ -100,7 +104,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 	<?php endif; ?>
 	</div>
 	<?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
-		<?php echo JLayoutHelper::render('joomla.content.info_block.block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
+		<?php echo LayoutHelper::render('joomla.content.info_block.block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
 	<?php endif; ?>
 
 	<?php // Content is generated by content plugin event "onContentBeforeDisplay" ?>
@@ -127,12 +131,12 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 		<div class="article-ratings-social-share d-flex justify-content-end">
 			<div class="mr-auto align-self-center">
 				<?php if($params->get('show_vote')): ?>
-					<?php JHtml::_('jquery.token'); ?>
-					<?php echo JLayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>
+					<?php HTMLHelper::_('jquery.token'); ?>
+					<?php echo LayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>
 				<?php endif; ?>
 			</div>
 			<div>
-				<?php echo JLayoutHelper::render('joomla.content.social_share', $this->item); ?>
+				<?php echo LayoutHelper::render('joomla.content.social_share', $this->item); ?>
 			</div>
 		</div>
 	<?php endif; ?>
@@ -143,12 +147,12 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 
 	<?php if ($info == 1 || $info == 2) : ?>
 		<?php if ($useDefList) : ?>
-			<?php echo JLayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
+			<?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below')); ?>
 		<?php endif; ?>
 	<?php endif; ?>
 
 	<?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
-		<?php $this->item->tagLayout = new JLayoutFile('joomla.content.tags'); ?>
+		<?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
 		<?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>
 	<?php endif; ?>
 
@@ -168,7 +172,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 	<?php else : ?>
 		<?php if ($useDefList) : ?>
 			<div id="pop-print">
-				<?php echo JHtml::_('icon.print_screen', $this->item, $params); ?>
+				<?php echo HTMLHelper::_('icon.print_screen', $this->item, $params); ?>
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>
@@ -178,31 +182,31 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 	<?php endif; ?>
 	<?php // Optional teaser intro text for guests ?>
 	<?php elseif ($params->get('show_noauth') == true && $user->get('guest')) : ?>
-	<?php echo JLayoutHelper::render('joomla.content.intro_image', $this->item); ?>
-	<?php echo JHtml::_('content.prepare', $this->item->introtext); ?>
+	<?php echo LayoutHelper::render('joomla.content.intro_image', $this->item); ?>
+	<?php echo HTMLHelper::_('content.prepare', $this->item->introtext); ?>
 	<?php // Optional link to let them register to see the whole article. ?>
 	<?php if ($params->get('show_readmore') && $this->item->fulltext != null) : ?>
-	<?php $menu = JFactory::getApplication()->getMenu(); ?>
+	<?php $menu = Factory::getApplication()->getMenu(); ?>
 	<?php $active = $menu->getActive(); ?>
 	<?php $itemId = $active->id; ?>
-	<?php $link = new JUri(JRoute::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false)); ?>
+	<?php $link = new Uri(Route::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false)); ?>
 	<?php $link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language))); ?>
 	<p class="readmore">
 		<a href="<?php echo $link; ?>" class="register">
 		<?php $attribs = json_decode($this->item->attribs); ?>
 		<?php
 		if ($attribs->alternative_readmore == null) :
-			echo JText::_('COM_CONTENT_REGISTER_TO_READ_MORE');
+			echo Text::_('COM_CONTENT_REGISTER_TO_READ_MORE');
 		elseif ($readmore = $attribs->alternative_readmore) :
 			echo $readmore;
 			if ($params->get('show_readmore_title', 0) != 0) :
-				echo JHtml::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
+				echo HTMLHelper::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
 			endif;
 		elseif ($params->get('show_readmore_title', 0) == 0) :
-			echo JText::sprintf('COM_CONTENT_READ_MORE_TITLE');
+			echo Text::sprintf('COM_CONTENT_READ_MORE_TITLE');
 		else :
-			echo JText::_('COM_CONTENT_READ_MORE');
-			echo JHtml::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
+			echo Text::_('COM_CONTENT_READ_MORE');
+			echo HTMLHelper::_('string.truncate', $this->item->title, $params->get('readmore_limit'));
 		endif; ?>
 		</a>
 	</p>
@@ -212,7 +216,7 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 	<?php // Content is generated by content plugin event "onContentAfterDisplay" ?>
 	<?php echo $this->item->event->afterDisplayContent; ?>
 
-	<?php echo \JLayoutHelper::render('joomla.content.blog.author_info', $this->item); ?>
+	<?php echo LayoutHelper::render('joomla.content.blog.author_info', $this->item); ?>
 
 	<?php
 	if (!empty($this->item->pagination) && $this->item->pagination && $this->item->paginationposition) :
@@ -221,12 +225,12 @@ $assocParam = (JLanguageAssociations::isEnabled() && $params->get('show_associat
 	<?php endif; ?>
 
 	<?php if (!$this->print) : ?>
-		<?php echo \JLayoutHelper::render('joomla.content.blog.comments.comments', $this->item); ?>
+		<?php echo LayoutHelper::render('joomla.content.blog.comments.comments', $this->item); ?>
 	<?php endif; ?>
 </div>
 
 <?php if($tmpl_params->get('related_article') && count($relatedArticles) > 0 ): ?>
 <?php 
-	echo \JLayoutHelper::render('joomla.content.related_articles', ['articles'=>$relatedArticles, 'item'=>$this->item]); 
+	echo LayoutHelper::render('joomla.content.related_articles', ['articles'=>$relatedArticles, 'item'=>$this->item]); 
 ?>
 <?php endif; ?>

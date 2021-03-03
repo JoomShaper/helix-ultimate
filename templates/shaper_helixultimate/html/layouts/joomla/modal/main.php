@@ -9,10 +9,13 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\Utilities\ArrayHelper;
 
 // Load bootstrap-tooltip-extended plugin for additional tooltip positions in modal
-JHtml::_('bootstrap.tooltipExtended');
+HTMLHelper::_('bootstrap.tooltipExtended');
 
 extract($displayData);
 
@@ -92,7 +95,7 @@ $script[] = "       $('body').addClass('modal-open');";
 
 if (isset($params['url']))
 {
-	$iframeHtml = JLayoutHelper::render('joomla.modal.iframe', $displayData);
+	$iframeHtml = LayoutHelper::render('joomla.modal.iframe', $displayData);
 
 	// Script for destroying and reloading the iframe
 	$script[] = "       var modalBody = $(this).find('.modal-body');";
@@ -158,7 +161,7 @@ $script[] = "       $('.modalTooltip').tooltip('destroy');";
 $script[] = "   });";
 $script[] = "});";
 
-JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
+Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 ?>
 <div id="<?php echo $selector; ?>" <?php echo ArrayHelper::toString($modalAttributes); ?>>
 	<div class="modal-dialog" role="document" style="max-width: <?php echo $params['width']; ?>; max-height: <?php echo $params['height']; ?>;">
@@ -167,16 +170,16 @@ JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 				// Header
 				if (!isset($params['closeButton']) || isset($params['title']) || $params['closeButton'])
 				{
-					echo JLayoutHelper::render('joomla.modal.header', $displayData);
+					echo LayoutHelper::render('joomla.modal.header', $displayData);
 				}
 
 				// Body
-				echo JLayoutHelper::render('joomla.modal.body', $displayData);
+				echo LayoutHelper::render('joomla.modal.body', $displayData);
 
 				// Footer
 				if (isset($params['footer']))
 				{
-					echo JLayoutHelper::render('joomla.modal.footer', $displayData);
+					echo LayoutHelper::render('joomla.modal.footer', $displayData);
 				}
 			?>
 		</div>

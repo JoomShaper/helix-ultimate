@@ -8,12 +8,15 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 extract($displayData);
 
 if ($meter)
 {
-	JHtml::_('behavior.formvalidator');
-	JHtml::_('script', 'system/fields/passwordstrength.min.js', array('version' => 'auto', 'relative' => true));
+	HTMLHelper::_('behavior.formvalidator');
+	HTMLHelper::_('script', 'system/fields/passwordstrength.min.js', array('version' => 'auto', 'relative' => true));
 
 	$class = 'js-password-strength ' . $class;
 
@@ -23,12 +26,12 @@ if ($meter)
 	}
 }
 
-JHtml::_('script', 'system/fields/passwordview.min.js', array('version' => 'auto', 'relative' => true));
+HTMLHelper::_('script', 'system/fields/passwordview.min.js', array('version' => 'auto', 'relative' => true));
 
-JText::script('JFIELD_PASSWORD_INDICATE_INCOMPLETE');
-JText::script('JFIELD_PASSWORD_INDICATE_COMPLETE');
-JText::script('JSHOW');
-JText::script('JHIDE');
+Text::script('JFIELD_PASSWORD_INDICATE_INCOMPLETE');
+Text::script('JFIELD_PASSWORD_INDICATE_COMPLETE');
+Text::script('JSHOW');
+Text::script('JHIDE');
 
 $attributes = array(
 	strlen($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : '',
@@ -54,7 +57,7 @@ $attributes = array(
 		<span class="input-group-prepend">
 			<span class="input-group-text">
 				<span class="fas fa-key" aria-hidden="true"></span>
-				<span class="sr-only"><?php echo JText::_('JSHOW'); ?></span>
+				<span class="sr-only"><?php echo Text::_('JSHOW'); ?></span>
 			</span>
 		</span>
 		<input

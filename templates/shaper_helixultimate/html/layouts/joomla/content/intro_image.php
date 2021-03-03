@@ -8,6 +8,10 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+
 $params = $displayData->params;
 $attribs = json_decode($displayData->attribs);
 
@@ -36,16 +40,16 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 	{
 		$intro_image = $attribs->helix_ultimate_image;
 		$basename = basename($intro_image);
-		$list_image = JPATH_ROOT . '/' . dirname($intro_image) . '/' . JFile::stripExt($basename) . '_'. $blog_list_image .'.' . JFile::getExt($basename);
-		if(JFile::exists($list_image)) {
-			$intro_image = JURI::root(true) . '/' . dirname($intro_image) . '/' . JFile::stripExt($basename) . '_'. $blog_list_image .'.' . JFile::getExt($basename);
+		$list_image = JPATH_ROOT . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_'. $blog_list_image .'.' . File::getExt($basename);
+		if(File::exists($list_image)) {
+			$intro_image = Uri::root(true) . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_'. $blog_list_image .'.' . File::getExt($basename);
 		}
 	}
 }
 ?>
 <?php if($intro_image) : ?>
 	<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
-		<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
+		<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
 		<?php endif; ?>
 			<div class="article-intro-image">
 				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>">
@@ -60,7 +64,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 		<?php $imgfloat = empty($images->float_intro) ? $params->get('float_intro') : $images->float_intro; ?>
 		<div class="article-intro-image float-<?php echo htmlspecialchars($imgfloat, ENT_COMPAT, 'UTF-8'); ?>">
 			<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
-				<a href="<?php echo JRoute::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>"><img
+				<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>"><img
 					<?php if ($images->image_intro_caption) : ?>
 						<?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?>
 					<?php endif; ?>

@@ -8,6 +8,8 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Language\Text;
+
 $msgList = $displayData['msgList'];
 
 $alert = [
@@ -29,10 +31,10 @@ $alert = [
 				<?php $type = \in_array($type, array_keys($alert)) ? $type : 'message'; ?>
 				<div class="alert <?php echo isset($alert[$type]) ? $alert[$type] : 'alert-' . $type; ?>">
 					<?php // This requires JS so we should add it trough JS. Progressive enhancement and stuff. ?>
-					<a class="close" data-dismiss="alert" aria-label="<?php JText::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>">&times;</a>
+					<a class="close" data-dismiss="alert" aria-label="<?php Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>">&times;</a>
 
 					<?php if (!empty($msgs)) : ?>
-						<h4 class="alert-heading"><?php echo JText::_($type); ?></h4>
+						<h4 class="alert-heading"><?php echo Text::_($type); ?></h4>
 						<div>
 							<?php foreach ($msgs as $msg) : ?>
 								<div><?php echo $msg; ?></div>

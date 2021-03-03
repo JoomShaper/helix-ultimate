@@ -8,7 +8,9 @@
 
 defined ('JPATH_BASE') or die();
 
-$app = JFactory::getApplication();
+use Joomla\CMS\Factory;
+
+$app = Factory::getApplication();
 $form = $displayData->getForm();
 
 $name = $displayData->get('fieldset');

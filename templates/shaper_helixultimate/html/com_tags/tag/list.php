@@ -8,9 +8,10 @@
 
 defined ('_JEXEC') or die();
 
-// Note that there are certain parts of this layout used only when there is exactly one tag.
+use Joomla\CMS\HTML\HTMLHelper;
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+// Note that there are certain parts of this layout used only when there is exactly one tag.
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 $n = count($this->items);
 
 ?>
@@ -25,7 +26,7 @@ $n = count($this->items);
 
 	<?php if ($this->params->get('show_tag_title', 1)) : ?>
 		<h2>
-			<?php echo JHtml::_('content.prepare', $this->tags_title, '', 'com_tag.tag'); ?>
+			<?php echo HTMLHelper::_('content.prepare', $this->tags_title, '', 'com_tag.tag'); ?>
 		</h2>
 	<?php endif; ?>
 
@@ -37,7 +38,7 @@ $n = count($this->items);
 				<img src="<?php echo htmlspecialchars($images->image_fulltext, ENT_COMPAT, 'UTF-8'); ?>">
 			<?php endif; ?>
 			<?php if ($this->params->get('tag_list_show_tag_description') == 1 && $this->item[0]->description) : ?>
-				<?php echo JHtml::_('content.prepare', $this->item[0]->description, '', 'com_tags.tag'); ?>
+				<?php echo HTMLHelper::_('content.prepare', $this->item[0]->description, '', 'com_tags.tag'); ?>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
@@ -48,7 +49,7 @@ $n = count($this->items);
 			<img src="<?php echo $this->params->get('tag_list_image'); ?>">
 		<?php endif; ?>
 		<?php if ($this->params->get('tag_list_description', '') > '') : ?>
-			<?php echo JHtml::_('content.prepare', $this->params->get('tag_list_description'), '', 'com_tags.tag'); ?>
+			<?php echo HTMLHelper::_('content.prepare', $this->params->get('tag_list_description'), '', 'com_tags.tag'); ?>
 		<?php endif; ?>
 	<?php endif; ?>
 	<?php echo $this->loadTemplate('items'); ?>

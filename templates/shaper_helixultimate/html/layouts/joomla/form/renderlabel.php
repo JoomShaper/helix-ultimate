@@ -8,6 +8,9 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 extract($displayData);
 
 $classes = array_filter((array) $classes);
@@ -19,12 +22,12 @@ if (!empty($description))
 {
 	if ($text && $text !== $description)
 	{
-		JHtml::_('bootstrap.popover');
+		HTMLHelper::_('bootstrap.popover');
 		$classes[] = 'hasPopover';
 		$title     = ' title="' . htmlspecialchars(trim($text, ':')) . '"'
 			. ' data-content="'. htmlspecialchars($description) . '"';
 
-		if (!$position && JFactory::getLanguage()->isRtl())
+		if (!$position && Factory::getLanguage()->isRtl())
 		{
 			$position = ' data-placement="left" ';
 		}
@@ -32,7 +35,7 @@ if (!empty($description))
 	else
 	{
 		$classes[] = 'hasTooltip';
-		$title     = ' title="' . JHtml::_('tooltipText', trim($text, ':'), $description, 0) . '"';
+		$title     = ' title="' . HTMLHelper::_('tooltipText', trim($text, ':'), $description, 0) . '"';
 	}
 }
 

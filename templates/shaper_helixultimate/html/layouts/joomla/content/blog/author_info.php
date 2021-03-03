@@ -7,6 +7,11 @@
 */
 
 defined ('JPATH_BASE') or die();
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\User\UserHelper;
+
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $params = $template->params;
 ?>
@@ -14,8 +19,8 @@ $params = $template->params;
 <?php if($params->get('author_info', 0)) : ?>
 	<div class="article-author-information">
 		<?php 
-			$author = \JFactory::getUser( (int) $displayData->created_by );
-			$profile = \JUserHelper::getProfile( (int) $displayData->created_by );
+			$author = Factory::getUser( (int) $displayData->created_by );
+			$profile = UserHelper::getProfile( (int) $displayData->created_by );
 		?>
 		<div class="media">
 			<img class="mr-3" src="https://www.gravatar.com/avatar/<?php echo md5($author->get('email')); ?>?s=64&d=identicon&r=PG" alt="<?php echo $author->name; ?>">
@@ -26,7 +31,7 @@ $params = $template->params;
 						<?php echo $profile->profile['aboutme']; ?>
 						<?php if(isset($profile->profile['website']) && $profile->profile['website']) : ?>
 							<div class="author-website mt-2">
-								<strong><?php echo \Jtext::_('HELIX_ULTIMATE_BLOG_AUTHOR_WEBSITE'); ?>:</strong> <a target="_blank" rel="noopener noreferrer" href="<?php echo strip_tags($profile->profile['website'], ''); ?>"><?php echo strip_tags($profile->profile['website'], ''); ?></a>
+								<strong><?php echo Text::_('HELIX_ULTIMATE_BLOG_AUTHOR_WEBSITE'); ?>:</strong> <a target="_blank" rel="noopener noreferrer" href="<?php echo strip_tags($profile->profile['website'], ''); ?>"><?php echo strip_tags($profile->profile['website'], ''); ?></a>
 							</div>
 						<?php endif; ?>
 					</div>

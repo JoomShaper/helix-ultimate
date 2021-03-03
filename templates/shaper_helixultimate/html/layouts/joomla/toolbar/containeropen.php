@@ -7,5 +7,8 @@
 */
 
 defined('JPATH_BASE') or die;
+
+use Joomla\CMS\Language\Text;
+
 ?>
-<div class="btn-toolbar d-flex" role="toolbar" aria-label="<?php echo JText::_('JTOOLBAR'); ?>" id="<?php echo $displayData['id']; ?>">
+<div class="btn-toolbar d-flex" role="toolbar" aria-label="<?php echo Text::_('JTOOLBAR'); ?>" id="<?php echo $displayData['id']; ?>">

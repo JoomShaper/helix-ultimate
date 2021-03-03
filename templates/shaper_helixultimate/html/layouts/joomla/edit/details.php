@@ -8,7 +8,11 @@
 
 defined ('JPATH_BASE') or die();
 
-$app = JFactory::getApplication();
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Language\Text;
+
+$app = Factory::getApplication();
 
 // JLayout for standard handling of the details sidebar in administrator edit screens.
 $title = $displayData->getForm()->getValue('title');
@@ -16,7 +20,7 @@ $published = $displayData->getForm()->getField('published');
 $saveHistory = $displayData->get('state')->get('params')->get('save_history', 0);
 ?>
 <div class="col-md-2">
-	<h4><?php echo JText::_('JDETAILS'); ?></h4>
+	<h4><?php echo Text::_('JDETAILS'); ?></h4>
 	<hr>
 	<fieldset class="form-vertical">
 		<?php if (empty($title)) : ?>
@@ -41,7 +45,7 @@ $saveHistory = $displayData->get('state')->get('params')->get('save_history', 0)
 
 		<?php echo $displayData->getForm()->renderField('access'); ?>
 		<?php echo $displayData->getForm()->renderField('featured'); ?>
-		<?php if (JLanguageMultilang::isEnabled()) : ?>
+		<?php if (Multilanguage::isEnabled()) : ?>
 			<?php echo $displayData->getForm()->renderField('language'); ?>
 		<?php else : ?>
 			<input type="hidden" id="jform_language" name="jform[language]" value="<?php echo $displayData->getForm()->getValue('language'); ?>">

@@ -8,12 +8,15 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 extract($displayData);
 
 if (!empty($options['showonEnabled']))
 {
-	JHtml::_('jquery.framework');
-	JHtml::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
+	HTMLHelper::_('jquery.framework');
+	HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 }
 
 $class = empty($options['class']) ? '' : ' ' . $options['class'];
@@ -39,7 +42,7 @@ $typeOfSpacer  = (strpos($label, 'spacer-lbl') !== false);
 	<?php if (empty($options['hiddenLabel'])) : ?>
 		<?php echo $label; ?>
 		<?php if (!$required && !$typeOfSpacer) : ?>
-			<span class="optional"><?php echo JText::_('COM_CONTACT_OPTIONAL'); ?></span>
+			<span class="optional"><?php echo Text::_('COM_CONTACT_OPTIONAL'); ?></span>
 		<?php endif; ?>
 	<?php endif; ?>
 	<?php echo $input; ?>

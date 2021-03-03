@@ -8,6 +8,10 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Uri\Uri;
+
 $params = $displayData->params;
 $attribs = json_decode($displayData->attribs);
 
@@ -28,9 +32,11 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 	{
 		$full_image = $attribs->helix_ultimate_image;
 		$basename = basename($full_image);
-		$details_image = JPATH_ROOT . '/' . dirname($full_image) . '/' . JFile::stripExt($basename) . '_'. $blog_image .'.' . JFile::getExt($basename);
-		if(JFile::exists($details_image)) {
-			$full_image = JURI::root(true) . '/' . dirname($full_image) . '/' . JFile::stripExt($basename) . '_'. $blog_image .'.' . JFile::getExt($basename);
+		$details_image = JPATH_ROOT . '/' . dirname($full_image) . '/' . File::stripExt($basename) . '_'. $blog_image .'.' . File::getExt($basename);
+
+		if(File::exists($details_image))
+		{
+			$full_image = Uri::root(true) . '/' . dirname($full_image) . '/' . File::stripExt($basename) . '_'. $blog_image .'.' . File::getExt($basename);
 		}
 	}
 }
@@ -53,5 +59,5 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 <?php endif; ?>
 
 <?php if($og) : ?>
-	<?php echo JLayoutHelper::render('joomla.content.open_graph', array('image'=>$full_image, 'title'=>$displayData->title, 'fb_app_id'=>$tplParams->get('og_fb_id'), 'twitter_site'=>$tplParams->get('og_twitter_site'), 'content'=>$displayData->introtext)); ?>
+	<?php echo LayoutHelper::render('joomla.content.open_graph', array('image'=>$full_image, 'title'=>$displayData->title, 'fb_app_id'=>$tplParams->get('og_fb_id'), 'twitter_site'=>$tplParams->get('og_twitter_site'), 'content'=>$displayData->introtext)); ?>
 <?php endif; ?>

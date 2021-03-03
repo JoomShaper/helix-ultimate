@@ -7,13 +7,15 @@
 */
 
 defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
 ?>
 <ul class="latestnews<?php echo $moduleclass_sfx; ?>">
 <?php foreach ($list as $item) : ?>
 	<li>
 		<a href="<?php echo $item->link; ?>">
 			<?php echo $item->title; ?>
-			<span><?php echo \JHtml::_('date', $item->created, 'DATE_FORMAT_LC3'); ?></span>
+			<span><?php echo HTMLHelper::_('date', $item->created, 'DATE_FORMAT_LC3'); ?></span>
 		</a>
 	</li>
 <?php endforeach; ?>

@@ -8,10 +8,14 @@
 
 defined ('_JEXEC') or die();
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
-// JHtml::_('behavior.caption');
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Layout\LayoutHelper;
 
-JFactory::getDocument()->addScriptDeclaration("
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
+// HTMLHelper::_('behavior.caption');
+
+Factory::getDocument()->addScriptDeclaration("
 jQuery(function($) {
 	$('.categories-list').find('[id^=category-btn-]').each(function(index, btn) {
 		var btn = $(btn);
@@ -24,7 +28,7 @@ jQuery(function($) {
 ?>
 <div class="categories-list<?php echo $this->pageclass_sfx; ?>">
 	<?php
-		echo JLayoutHelper::render('joomla.content.categories_default', $this);
+		echo LayoutHelper::render('joomla.content.categories_default', $this);
 		echo $this->loadTemplate('items');
 	?>
 </div>

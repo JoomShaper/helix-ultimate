@@ -8,7 +8,10 @@
 
 defined('JPATH_BASE') or die;
 
-JHtml::_('behavior.core');
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelper::_('behavior.core');
 
 if (preg_match('/Joomla.submitbutton/', $displayData['doTask']))
 {
@@ -17,7 +20,7 @@ if (preg_match('/Joomla.submitbutton/', $displayData['doTask']))
 	$ctrls = str_replace(";", '', $ctrls);
 
 	$options = array('task' => $ctrls);
-	JFactory::getDocument()->addScriptOptions('keySave', $options);
+	Factory::getDocument()->addScriptOptions('keySave', $options);
 }
 
 $id       = isset($displayData['id']) ? $displayData['id'] : '';

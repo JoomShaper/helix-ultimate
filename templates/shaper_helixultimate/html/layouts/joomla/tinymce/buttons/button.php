@@ -8,4 +8,6 @@
 
 defined('JPATH_BASE') or die;
 
-echo JLayoutHelper::render('joomla.editors.buttons.button', $displayData);
+use Joomla\CMS\Layout\LayoutHelper;
+
+echo LayoutHelper::render('joomla.editors.buttons.button', $displayData);

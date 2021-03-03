@@ -6,14 +6,18 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+
 defined('JPATH_BASE') or die;
 
-JHtml::_('behavior.core');
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
+HTMLHelper::_('behavior.core');
 
 $id    = isset($displayData['id']) ? $displayData['id'] : '';
 $title = $displayData['title'];
-JText::script('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
-JText::script('ERROR');
+Text::script('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
+Text::script('ERROR');
 $message = "{'error': [Joomla.JText._('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST')]}";
 $alert = "Joomla.renderMessages(" . $message . ")";
 ?>

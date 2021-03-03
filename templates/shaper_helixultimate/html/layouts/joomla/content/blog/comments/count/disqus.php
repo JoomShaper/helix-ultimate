@@ -8,9 +8,11 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\Factory;
+
 if( $displayData['params']->get('comment_disqus_subdomain') != '' )
 {
-	$doc = JFactory::getDocument();
+	$doc = Factory::getDocument();
 
 	if(!defined('HELIX_ULTIMATE_COMMENTS_DISQUS_COUNT'))
 	{

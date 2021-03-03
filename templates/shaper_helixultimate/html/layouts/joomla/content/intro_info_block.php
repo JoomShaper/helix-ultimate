@@ -8,8 +8,6 @@
 
 defined ('JPATH_BASE') or die();
 
-use Joomla\CMS\Language\Text;
-
 $blockPosition = $displayData['params']->get('info_block_position', 0);
 
 ?>

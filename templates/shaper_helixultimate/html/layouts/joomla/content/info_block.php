@@ -8,7 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
 
 $intro = (isset($displayData['intro']) && $displayData['intro']) ? $displayData['intro'] : false;
 $displayData['articleView'] = ($intro) ? 'intro' : 'details';
@@ -42,7 +42,7 @@ $blockPosition = $displayData['params']->get('info_block_position', 0);
 		<?php endif; ?>
 		
 		<?php if ($intro) : ?>
-			<?php echo JLayoutHelper::render('joomla.content.blog.comments.count', $displayData); ?>
+			<?php echo LayoutHelper::render('joomla.content.blog.comments.count', $displayData); ?>
 		<?php endif; ?>
 
 	<?php endif; ?>

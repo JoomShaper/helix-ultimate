@@ -8,8 +8,12 @@
 
 defined ('_JEXEC') or die();
 
-JHtml::_('behavior.keepalive');
-JHtml::_('behavior.formvalidator');
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('behavior.formvalidator');
 ?>
 <div class="remind<?php echo $this->pageclass_sfx; ?>">
 	<div class="row justify-content-center">
@@ -22,10 +26,10 @@ JHtml::_('behavior.formvalidator');
 				</div>
 			<?php endif; ?>
 
-			<form id="user-registration" action="<?php echo JRoute::_('index.php?option=com_users&task=remind.remind'); ?>" method="post" class="form-validate">
+			<form id="user-registration" action="<?php echo Route::_('index.php?option=com_users&task=remind.remind'); ?>" method="post" class="form-validate">
 				<?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
 					<fieldset>
-						<p><?php echo JText::_($fieldset->label); ?></p>
+						<p><?php echo Text::_($fieldset->label); ?></p>
 						<?php foreach ($this->form->getFieldset($fieldset->name) as $name => $field) : ?>
 							<div class="form-group">
 								<?php echo $field->label; ?>
@@ -35,9 +39,9 @@ JHtml::_('behavior.formvalidator');
 					</fieldset>
 				<?php endforeach; ?>
 				<div>
-					<button type="submit" class="btn btn-primary validate"><?php echo JText::_('JSUBMIT'); ?></button>
+					<button type="submit" class="btn btn-primary validate"><?php echo Text::_('JSUBMIT'); ?></button>
 				</div>
-				<?php echo JHtml::_('form.token'); ?>
+				<?php echo HTMLHelper::_('form.token'); ?>
 			</form>
 		</div>
 	</div>

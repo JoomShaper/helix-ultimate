@@ -8,10 +8,13 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+
 $data = $displayData;
 
-$doc = \JFactory::getDocument();
-$doc->addStylesheet(JURI::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
+$doc = Factory::getDocument();
+$doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
 
 ?>
 <textarea

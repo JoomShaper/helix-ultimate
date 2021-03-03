@@ -8,6 +8,10 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $params = $template->params;
 
@@ -19,13 +23,13 @@ if( ( $params->get('comment') != 'disabled' ) && ( $params->get('comments_count'
 	{
 		if(in_array($displayData['item']->catid, $comment_categories))
 		{
-			$url = \JRoute::_(ContentHelperRoute::getArticleRoute($displayData['item']->id . ':' . $displayData['item']->alias, $displayData['item']->catid, $displayData['item']->language));
-			$root = \JURI::base();
-			$root = new \JURI($root);
+			$url = Route::_(ContentHelperRoute::getArticleRoute($displayData['item']->id . ':' . $displayData['item']->alias, $displayData['item']->catid, $displayData['item']->language));
+			$root = Uri::base();
+			$root = new Uri($root);
 			$url = $root->getScheme() . '://' . $root->getHost() . $url;
 			?>
 			<span class="comments-count">
-				<?php echo \JLayoutHelper::render( 'joomla.content.blog.comments.count.' . $params->get('comment'), array( 'item'=>$displayData, 'params'=>$params, 'url'=>$url ) ); ?>
+				<?php echo LayoutHelper::render('joomla.content.blog.comments.count.' . $params->get('comment'), array( 'item' => $displayData, 'params' => $params, 'url' => $url)); ?>
 			</span>
 			<?php
 		}

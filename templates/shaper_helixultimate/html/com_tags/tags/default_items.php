@@ -8,12 +8,18 @@
 
 defined ('_JEXEC') or die();
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 
-JHtml::_('behavior.core');
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
+
+HTMLHelper::_('behavior.core');
 
 // Get the user object.
-$user = JFactory::getUser();
+$user = Factory::getUser();
 
 // Check if user is allowed to add/edit based on tags permissions.
 $canEdit      = $user->authorise('core.edit', 'com_tags');
@@ -38,7 +44,7 @@ if ($bsspans < 1)
 $bscolumns = min($columns, floor(12 / $bsspans));
 $n         = count($this->items);
 
-JFactory::getDocument()->addScriptDeclaration("
+Factory::getDocument()->addScriptDeclaration("
 		var resetFilter = function() {
 		document.getElementById('filter-search').value = '';
 	}
@@ -46,20 +52,20 @@ JFactory::getDocument()->addScriptDeclaration("
 
 ?>
 
-<form action="<?php echo htmlspecialchars(JUri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
 	<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
 		<fieldset class="filters d-flex justify-content-between mb-3">
 			<?php if ($this->params->get('filter_field')) : ?>
 				<div class="input-group">
 					<label class="filter-search-lbl sr-only" for="filter-search">
-						<?php echo JText::_('COM_TAGS_TITLE_FILTER_LABEL') . '&#160;'; ?>
+						<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL') . '&#160;'; ?>
 					</label>
-					<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo JText::_('COM_TAGS_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo JText::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>">
+					<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo Text::_('COM_TAGS_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>">
 					<span class="input-group-btn">
-						<button type="button" name="filter-search-button" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>" onclick="document.adminForm.submit();" class="btn btn-secondary">
+						<button type="button" name="filter-search-button" title="<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>" onclick="document.adminForm.submit();" class="btn btn-secondary">
 							<span class="fas fa-search" aria-hidden="true"></span>
 						</button>
-						<button type="reset" name="filter-clear-button" title="<?php echo JText::_('JSEARCH_FILTER_CLEAR'); ?>" class="btn btn-secondary" onclick="resetFilter(); document.adminForm.submit();">
+						<button type="reset" name="filter-clear-button" title="<?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?>" class="btn btn-secondary" onclick="resetFilter(); document.adminForm.submit();">
 							<span class="fas fa-times" aria-hidden="true"></span>
 						</button>
 					</span>
@@ -68,7 +74,7 @@ JFactory::getDocument()->addScriptDeclaration("
 			<?php if ($this->params->get('show_pagination_limit')) : ?>
 				<div class="btn-group float-right">
 					<label for="limit" class="sr-only">
-						<?php echo JText::_('JGLOBAL_DISPLAY_NUM'); ?>
+						<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
 					</label>
 					<?php echo $this->pagination->getLimitBox(); ?>
 				</div>
@@ -82,7 +88,7 @@ JFactory::getDocument()->addScriptDeclaration("
 	<?php endif; ?>
 
 	<?php if ($this->items == false || $n === 0) : ?>
-		<p><?php echo JText::_('COM_TAGS_NO_TAGS'); ?></p>
+		<p><?php echo Text::_('COM_TAGS_NO_TAGS'); ?></p>
 	<?php else : ?>
 		<?php foreach ($this->items as $i => $item) : ?>
 
@@ -93,7 +99,7 @@ JFactory::getDocument()->addScriptDeclaration("
 			<li class="list-group-item list-group-item-action">
 				<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
 					<h3 class="mb-0">
-						<a href="<?php echo JRoute::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
+						<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
 							<?php echo $this->escape($item->title); ?>
 						</a>
 					</h3>
@@ -119,12 +125,12 @@ JFactory::getDocument()->addScriptDeclaration("
 				<div class="caption">
 					<?php if ($this->params->get('all_tags_show_tag_description', 1)) : ?>
 						<span class="tag-body">
-							<?php echo JHtml::_('string.truncate', $item->description, $this->params->get('all_tags_tag_maximum_characters')); ?>
+							<?php echo HTMLHelper::_('string.truncate', $item->description, $this->params->get('all_tags_tag_maximum_characters')); ?>
 						</span>
 					<?php endif; ?>
 					<?php if ($this->params->get('all_tags_show_tag_hits')) : ?>
 						<span class="list-hits badge badge-info">
-							<?php echo JText::sprintf('JGLOBAL_HITS_COUNT', $item->hits); ?>
+							<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $item->hits); ?>
 						</span>
 					<?php endif; ?>
 				</div>

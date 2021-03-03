@@ -6,9 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+
 defined('JPATH_BASE') or die;
 
-JHtml::_('behavior.core');
+use Joomla\CMS\HTML\HTMLHelper;
+
+HTMLHelper::_('behavior.core');
 
 $id     = isset($displayData['id']) ? $displayData['id'] : '';
 $doTask = $displayData['doTask'];

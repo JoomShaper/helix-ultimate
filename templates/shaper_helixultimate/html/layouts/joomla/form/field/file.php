@@ -6,7 +6,11 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+
 defined ('JPATH_BASE') or die();
+
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Utility\Utility;
 
 extract($displayData);
 
@@ -44,7 +48,7 @@ extract($displayData);
  * @var   string   $accept          File types that are accepted.
  */
 
-$maxSize = JHtml::_('number.bytes', JUtility::getMaxUploadSize());
+$maxSize = HTMLHelper::_('number.bytes', Utility::getMaxUploadSize());
 ?>
 <input type="file"
 	name="<?php echo $name; ?>"

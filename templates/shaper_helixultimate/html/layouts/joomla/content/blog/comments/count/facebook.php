@@ -8,10 +8,13 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 if( $displayData['params']->get('comment_facebook_app_id') != '' )
 {
 
-	$doc = \JFactory::getDocument();
+	$doc = Factory::getDocument();
 
 	if(!defined('HELIX_ULTIMATE_COMMENTS_FACEBOOK_COUNT'))
 	{
@@ -21,7 +24,7 @@ if( $displayData['params']->get('comment_facebook_app_id') != '' )
 	?>
 
 	<a href="<?php echo $displayData['url']; ?>#comments">
-		<?php echo JText::_('HELIX_ULTIMATE_COMMENTS'); ?> (<span class="fb-comments-count" data-href="<?php echo $displayData['url']; ?>"></span>)
+		<?php echo Text::_('HELIX_ULTIMATE_COMMENTS'); ?> (<span class="fb-comments-count" data-href="<?php echo $displayData['url']; ?>"></span>)
 	</a>
 
 	<?php

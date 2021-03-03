@@ -8,9 +8,10 @@
 
 defined ('_JEXEC') or die();
 
-// Note that there are certain parts of this layout used only when there is exactly one tag.
+use Joomla\CMS\HTML\HTMLHelper;
 
-JHtml::addIncludePath(JPATH_COMPONENT . '/helpers');
+// Note that there are certain parts of this layout used only when there is exactly one tag.
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 $description      = $this->params->get('all_tags_description');
 $descriptionImage = $this->params->get('all_tags_description_image');
 

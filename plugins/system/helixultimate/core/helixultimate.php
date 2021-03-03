@@ -16,9 +16,8 @@ use Joomla\CMS\Log\Log;
  * Extends the Helix Ultimate for legacy support.
  *
  * @since		2.0.0
- * @deprecated 	3.0		Instead of using this class by requiring directly from index.php or other files,
- *						use from the BaseHelixUltimate directly.
- *						@see templates/shaper_helixultimate/index.php file for reference.
+ * @deprecated 	3.0		Instead of using HelixUltimate from helixultimate/core/helixultimate.php
+ * 						Use from HelixUltimate\Framework\Core\HelixUltimate namespace.
  */
 class HelixUltimate extends BaseHelixUltimate
 {

@@ -8,6 +8,8 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\String\PunycodeHelper;
+
 extract($displayData);
 
 /**
@@ -64,5 +66,5 @@ $attributes = array(
 	name="<?php echo $name; ?>"
 	<?php echo !empty($class) ? ' class="form-control ' . $class . '"' : 'class="form-control"'; ?>
 	id="<?php echo $id; ?>"
-	value="<?php echo htmlspecialchars(JStringPunycode::urlToUTF8($value), ENT_COMPAT, 'UTF-8'); ?>"
+	value="<?php echo htmlspecialchars(PunycodeHelper::urlToUTF8($value), ENT_COMPAT, 'UTF-8'); ?>"
 	<?php echo implode(' ', $attributes); ?>>

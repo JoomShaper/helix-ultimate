@@ -8,6 +8,8 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\Language\Text;
+
 $rating = (int) $displayData['item']->rating;
 $rating_count = $displayData['item']->rating_count;
 if($rating_count == '') {
@@ -16,7 +18,7 @@ if($rating_count == '') {
 
 ?>
 <div class="article-ratings" data-id="<?php echo (int) $displayData['item']->id; ?>">
-	<span class="ratings-label"><?php echo JText::_('HELIX_ULTIMATE_ARTICLE_RATINGS'); ?></span>
+	<span class="ratings-label"><?php echo Text::_('HELIX_ULTIMATE_ARTICLE_RATINGS'); ?></span>
 	<div class="rating-symbol">
 		<?php
 		$j = 0;

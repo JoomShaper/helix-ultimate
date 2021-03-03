@@ -8,6 +8,12 @@
 
 defined('JPATH_BASE') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+
 $button = $displayData;
 
 if (!$button->get('modal'))
@@ -15,7 +21,7 @@ if (!$button->get('modal'))
 	return;
 }
 
-$doc = JFactory::getDocument();
+$doc = Factory::getDocument();
 $doc->addScriptDeclaration(
 	<<<JS
 	jQuery(function($) {
@@ -35,7 +41,7 @@ $doc->addScriptDeclaration(
 );
 
 $fontAwesomePath = JPATH_THEMES . '/shaper_helixultimate/css/font-awesome.min.css';
-JFactory::getDocument()->addStylesheet(JUri::root(true) . '/templates/shaper_helixultimate/css/font-awesome.min.css');
+Factory::getDocument()->addStylesheet(Uri::root(true) . '/templates/shaper_helixultimate/css/font-awesome.min.css');
 
 $class 		= $button->get('class', '');
 $class 		.= $button->get('modal', '');
@@ -47,17 +53,17 @@ $selector   = str_replace(' ', '', $button->get('text')) . 'Modal';
 $options 	= is_array($options) ? $options : array();
 
 // Create the modal
-echo JHtml::_(
+echo HTMLHelper::_(
 	'bootstrap.renderModal',
 	$selector,
 	array(
-		'url'    => JRoute::_($link),
+		'url'    => Route::_($link),
 		'title'  => $title,
 		'height' => array_key_exists('height', $options) ? $options['height'] : '400px',
 		'width'  => array_key_exists('width', $options) ? $options['width'] : '800px',
 		'bodyHeight'  => array_key_exists('bodyHeight', $options) ? $options['bodyHeight'] : '70',
 		'modalWidth'  => array_key_exists('modalWidth', $options) ? $options['modalWidth'] : '80',
 		'footer' => '<button type="button" role="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">'
-			. JText::_("JLIB_HTML_BEHAVIOR_CLOSE") . '</button>'
+			. Text::_("JLIB_HTML_BEHAVIOR_CLOSE") . '</button>'
 	)
 );

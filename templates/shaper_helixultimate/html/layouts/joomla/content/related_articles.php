@@ -25,8 +25,8 @@ $tmpl_params = $template->params;
         <ul class="article-list related-article-list">
         <?php foreach( $articles as $item ): ?> 
             <li class="related-article-list-item">     
-                <?php echo JLayoutHelper::render('joomla.content.blog_style_default_item_title', $item); ?>
-                <?php echo JLayoutHelper::render('joomla.content.info_block.publish_date', array('item' => $item, 'params' => $item->params,'articleView'=>'intro')); ?>
+                <?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $item); ?>
+                <?php echo LayoutHelper::render('joomla.content.info_block.publish_date', array('item' => $item, 'params' => $item->params,'articleView'=>'intro')); ?>
             </li>
         <?php endforeach; ?>
         </ul>

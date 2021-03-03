@@ -10,7 +10,7 @@ This is a major version of **Helix Ultimate** introduces a lot of improvements.
 4. Run `git remote add origin git@github.com:JoomShaper/helix-ultimate.git`
 5. (optional) If you are not using **SSH** then run `git remote add origin https://github.com/JoomShaper/helix-ultimate.git`
 6. Run the command `git fetch`
-7. Run `git checkout 2.0.0-alpha.5`
+7. Run `git checkout 2.0.0-alpha.6`
 8. Run `cd plugins/system/helixultimate`
 9. Run `composer install`
 10. Run `composer dump-autoload -o`

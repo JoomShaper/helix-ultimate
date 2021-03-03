@@ -18,7 +18,7 @@ jQuery(function ($) {
 	 * @param {string} className the header className
 	 */
 	var deviceWiseStickyHeader = function (className, offsetTop) {
-		if ($('body').hasClass(className)) {
+		if ($('body:not(.layout-edit-iframe)').hasClass(className)) {
 			var $header = $('#sp-header');
 			var headerHeight = $header.outerHeight();
 			var $stickyHeaderPlaceholder = $('.sticky-header-placeholder');

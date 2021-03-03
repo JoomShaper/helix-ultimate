@@ -161,7 +161,7 @@ class Settings
 			for ($i = 0; $i < $formXml->count(); ++$i)
 			{
 				$fieldset = isset($formXml->fieldset[$i]) ? $formXml->fieldset[$i] : null;
-				$attributes = !\is_null($fieldset) ? $fieldset->attributes() : null;
+				$attributes = !\is_null($fieldset) ? $fieldset->attributes() : null;				
 
 				if (!\is_null($attributes) && isset($attributes->addfieldpath))
 				{

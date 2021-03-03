@@ -242,7 +242,7 @@ jQuery(function ($) {
 	);
 
 	//Update Fonts list
-	$('.btn-update-hu-fonts').on('click', function (event) {
+	$(document).on('click', '#update_fonts', function (event) {
 		event.preventDefault();
 
 		var $that = $(this);
@@ -265,18 +265,22 @@ jQuery(function ($) {
 				var data = $.parseJSON(response);
 				if (data.status) {
 					$that.after(data.message);
-					$that.find('.fa-spinner').remove();
-					$that
-						.next()
-						.delay(1000)
-						.fadeOut(300, function () {
-							$(this).remove();
-						});
 				} else {
 					$that.after(
 						"<p class='font-update-failed'>Unexpected error occurs. Please make sure that, you have inserted Google Font API key.</p>"
 					);
-					$that.find('.fa-spinner').remove();
+					$that.find('.fa-circle-notch').remove();
+				}
+			},
+			complete(response) {
+				if (response.status === 200) {
+					$that.find('.fa-circle-notch').remove();
+					$that
+						.next()
+						.delay(2000)
+						.fadeOut(300, function () {
+							$(this).remove();
+						});
 				}
 			},
 		});

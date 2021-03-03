@@ -12,13 +12,11 @@ defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Request;
-use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\HelixDocument;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
-use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
 /**
@@ -247,7 +245,6 @@ class Platform
 			->registerAndUseStyle('helix.device-field', $helix_assets_url . '/css/admin/devices-field.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('style.helix.menuBuilder', $helix_assets_url . '/css/admin/menu-builder.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('style.helix.megaMenu', $helix_assets_url . '/css/admin/megamenu.css', ['version' => 'auto', 'relative' => true]);
-			// ->registerAndUseStyle('helix.menuBuilder', $helix_assets_url . '/css/admin/menu-builder.css', ['version' => 'auto', 'relative' => true]);
 		
 		$helixDocument->registerAndUseScript('helix.jquery.ui', $helix_assets_url . '/js/admin/jquery-ui.min.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.utils', $helix_assets_url . '/js/admin/utils.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
@@ -262,7 +259,6 @@ class Platform
 			->registerAndUseScript('helix.treeSortable', $helix_assets_url . '/js/admin/treeSortable.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.menubuilder', $helix_assets_url . '/js/admin/menubuilder.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.megamenu', $helix_assets_url . '/js/admin/megamenu.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
-			// ->registerAndUseScript('helix.menuBuilder', $helix_assets_url . '/js/admin/menu-builder.js', ['version' => 'auto', 'relative' => true], ['defer' => true]);
 
 		// Pass important data to Joomla variable for javascript
 		$meta = array(

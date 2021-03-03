@@ -47,12 +47,10 @@ class JFormFieldHelixfont extends FormField
 
 		if (file_exists($template_path))
 		{
-			// $json = File::read($template_path);
 			$json = file_get_contents($template_path);
 		}
 		else
 		{
-			// $json = File::read($plugin_path);
 			$json = file_get_contents($plugin_path);
 		}
 
@@ -62,7 +60,7 @@ class JFormFieldHelixfont extends FormField
 
 		if (isset($value->fontFamily))
 		{
-			$font = self::filterArray($items, $value->fontFamily);
+			$font = $this->filterArray($items, $value->fontFamily);
 		}
 
 		$html  = '';
@@ -96,94 +94,68 @@ class JFormFieldHelixfont extends FormField
 			'oblique' => 'Oblique'
 		);
 
-		// Font Family
+		/** Font family */
 		$html .= '<div class="hu-field-webfont ' . $classes . '">';
 
-		/**
-		 * Preview Row
-		 */
+		/** Preview Row */
 		$html .= '<div class="hu-webfont-preview-wrapper">';
 		$html .= '<div class="hu-webfont-preview">1 2 3 4 5 6 7 8 9 0 Grumpy wizards make toxic brew for the evil Queen and Jack.</div>';
 		$html .= '</div>';
 
-		/**
-		 * Start Fonts List row
-		 */
+		/** Start Fonts List row */
 		$html .= '<div class="hu-webfont-family hu-mb-3">';
 		$html .= $this->renderFontsList($systemFonts, $value, $items);
 		$html .= '</div>';
 
-		/**
-		 * Font size, weight, color row
-		 */
+		/** Font size, weight, color row */
 		$html .= '<div class="row">';
 
-		/**
-		 * Start Font Weight
-		 */
+		/** Start Font Weight */
 		$html .= '<div class="col-5 hu-mb-3">';
 		$html .= $this->renderFontWeight($fontWeights, $value);
 		$html .= '</div>';
 
-		/**
-		 * Start Font Size
-		 */
+		/** Start Font Size */
 		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontSize($value);
 		$html .= '</div>';
 
-		/**
-		 * Start Font Color
-		 */
+		/** Start Font Color */
 		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderFontColor($value);
 		$html .= '</div>';
 
 		$html .= '</div>';
 
-		/**
-		 * Font subset, letter spacing, line height row
-		 */
+		/** Font subset, letter spacing, line height row */
 		$html .= '<div class="row spacing-row">';
 
-		/**
-		 * Font subset section
-		 */
+		/** Font subset section */
 		$html .= '<div class="col-5 hu-mb-3">';
 		$html .= $this->renderFontSubset($systemFonts, $font, $value);
 		$html .= '</div>';
 
-		/**
-		 * Set line height
-		 */
+		/** Set line height */
 		$html .= '<div class="col-3 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderLineHeight($value);
 		$html .= '</div>';
 
-		/**
-		 * Set Letter Spacing
-		 */
+		/** Set Letter Spacing */
 		$html .= '<div class="col-4 hu-mb-3 hu-narrow-input">';
 		$html .= $this->renderLetterSpacing($value);
 		$html .= '</div>';
 
 		$html .= '</div>';
 
-		/**
-		 * Font style, alignment row
-		 */
+		/** Font style, alignment row */
 		$html .= '<div class="row style-alignment">';
 
-		/**
-		 * Text Decoration
-		 */
+		/** Text Decoration */
 		$html .= '<div class="col-6 hu-mb-3">';
 		$html .= $this->renderTextDecoration($value);
 		$html .= '</div>';
 
-		/**
-		 * Font Alignment
-		 */
+		/** Font Alignment */
 		$html .= '<div class="col-6 hu-mb-3">';
 		$html .= $this->renderFontAlignment($value);
 		$html .= '</div>';
@@ -226,7 +198,7 @@ class JFormFieldHelixfont extends FormField
 	 * @return 	mixed
 	 * @since	1.0.0
 	 */
-	private static function filterArray($items, $key)
+	private function filterArray($items, $key)
 	{
 		foreach ($items as $item)
 		{

@@ -947,52 +947,51 @@ jQuery(function ($) {
 		window.purgeCss(self);
 	});
 
-	// Import
+	// Import helix settings.
 	$('#btn-hu-import-settings').on('click', function (event) {
 		event.preventDefault();
+		$('#helix-import-file').click();
+	});
 
-		var $that = $(this),
-			temp_settings = $.trim($('#input-hu-settings').val());
+	$('#helix-import-file').on('change', function (e) {
+		const reader = new FileReader();
+		reader.onload = function (event) {
+			const settings = JSON.parse(event.target.result);
 
-		if (temp_settings == '') {
+			if (settings.template === undefined || settings.template !== 'shaper_helixultimate')
+			{
+				alert('The settings JSON file seems invalid! Please import a valid helix ultimate settings JSON.');
+				return false;
+			}
+
+			var data = { settings: event.target.result };
+
+			var request = {
+				action: 'import-tmpl-style',
+				option: 'com_ajax',
+				helix: 'ultimate',
+				request: 'task',
+				data: data,
+				format: 'json',
+			};
+
+			$.ajax({
+				type: 'POST',
+				data: request,
+				success: function (response) {
+					var data = $.parseJSON(response);
+					if (data.status) {
+						window.location.reload();
+					}
+				},
+				error: function () {
+					alert('Somethings wrong, Try again');
+				},
+			});
 			return false;
-		}
-
-		if (
-			confirm(
-				'Warning: It will change all current settings of this Template.'
-			) != true
-		) {
-			return false;
-		}
-
-		var data = {
-			settings: temp_settings,
 		};
 
-		var request = {
-			action: 'import-tmpl-style',
-			option: 'com_ajax',
-			helix: 'ultimate',
-			request: 'task',
-			data: data,
-			format: 'json',
-		};
-
-		$.ajax({
-			type: 'POST',
-			data: request,
-			success: function (response) {
-				var data = $.parseJSON(response);
-				if (data.status) {
-					window.location.reload();
-				}
-			},
-			error: function () {
-				alert('Somethings wrong, Try again');
-			},
-		});
-		return false;
+		reader.readAsText(e.target.files[0]);
 	});
 
 	function webfontData() {

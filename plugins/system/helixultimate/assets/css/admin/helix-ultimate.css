@@ -3524,10 +3524,16 @@ select:focus::-ms-value {
 }
 
 /*Export Import*/
-#btn-hu-export-settings,
-#input-hu-settings {
-	margin-bottom: 20px;
+.hu-importer-wrapper {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 }
+
+.hu-importer-wrapper #btn-hu-import-settings {
+	margin-left: 20px;
+}
+
 
 .btn-purge-hu-css span {
 	margin-left: 10px;

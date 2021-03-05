@@ -40,9 +40,11 @@ class JFormFieldHelixexportimport extends FormField
 
 		$export_url = 'index.php?option=com_ajax&helix=ultimate&task=export&id=' . $template_id;
 
-		$output  = '<a class="hu-btn hu-btn-primary" id="btn-hu-export-settings" rel="noopener noreferrer" target="_blank" href="' . $export_url . '">' . Text::_("HELIX_ULTIMATE_SETTINGS_EXPORT") . '</a>';
-		$output .= '<textarea id="input-hu-settings" rows="5"></textarea>';
-		$output .= '<a id="btn-hu-import-settings" class="hu-btn hu-btn-primary" rel="noopener noreferrer" data-template_id="' . $template_id . '" target="_blank" href="#">' . Text::_("HELIX_ULTIMATE_SETTINGS_IMPORT") . '</a>';
+		$output  = '<div class="hu-importer-wrapper">';
+		$output .= '<a class="hu-btn hu-btn-primary" id="btn-hu-export-settings" rel="noopener noreferrer" target="_blank" href="' . $export_url . '"><span class="fas fa-download"></span> ' . Text::_("HELIX_ULTIMATE_SETTINGS_EXPORT") . '</a>';
+		$output .= '<input type="file" id="helix-import-file" accept="application/JSON" style="display: none;"/>';
+		$output .= '<a id="btn-hu-import-settings" class="hu-btn hu-btn-primary" rel="noopener noreferrer" data-template_id="' . $template_id . '" target="_blank" href="#"><span class="fas fa-upload"></span> ' . Text::_("HELIX_ULTIMATE_SETTINGS_IMPORT") . '</a>';
+		$output .= '</div>';
 
 		return $output;
 	}

@@ -180,6 +180,7 @@ class  PlgSystemHelixultimate extends JPlugin
 		$action     = $this->app->input->get('action', '', 'STRING');
 		$id         = $this->app->input->get('id', 0, 'INT');
 		$tmpl		= $this->app->input->get('tmpl', '', 'STRING');
+		$helixReturn= $this->app->input->get('helixreturn', '', 'STRING');
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
 		{
@@ -195,7 +196,14 @@ class  PlgSystemHelixultimate extends JPlugin
 			&& $helix === 'ultimate' && !Factory::getUser()->id)
 		{
 			// Redirect to the login page
-			$this->app->redirect(Route::_('index.php', false));
+			$return = urlencode(base64_encode('index.php?option=com_ajax&helix=ultimate&id=' . $id));
+			$this->app->redirect(Route::_('index.php?helixreturn=' . $return, false));
+		}
+
+		/** If `helixreturn` query exists in the url then redirect to the return url. */
+		if (Factory::getUser()->id && !empty($helixReturn))
+		{
+			$this->app->redirect(base64_decode($helixReturn));
 		}
 
 		if ($this->app->isClient('administrator'))

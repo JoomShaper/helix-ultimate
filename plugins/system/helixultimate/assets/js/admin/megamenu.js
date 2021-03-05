@@ -671,7 +671,7 @@ var megaMenu = {
 					typeof res === 'string' && res.length > 0
 						? JSON.parse(res)
 						: false;
-				res.status && Joomla.reloadPreview();
+				if (res.status) Joomla.reloadPreview();
 			},
 			error(err) {
 				alert('Something went wrong!');

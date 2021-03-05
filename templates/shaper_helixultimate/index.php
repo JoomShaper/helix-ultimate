@@ -6,13 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
-defined('_JEXEC') or die();
+defined('_JEXEC') or die('Restricted Direct Access!');
 
+use HelixUltimate\Framework\Core\HelixUltimate;
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Helper\ModuleHelper;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -42,12 +41,12 @@ else
  * @var		$theme		The theme object from the class HelixUltimate.
  * @since	1.0.0
  */
-$theme = new HelixUltimate\Framework\Core\HelixUltimate;
-$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+$theme = new HelixUltimate;
+$template = Helper::loadTemplateData();
 $this->params = $template->params;
 
 /** Load needed data for javascript */
-HelixUltimate\Framework\Platform\Helper::flushSettingsDataToJs();
+Helper::flushSettingsDataToJs();
 
 // Coming Soon
 if (!\is_null($this->params->get('comingsoon', null)))

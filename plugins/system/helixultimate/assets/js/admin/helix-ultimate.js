@@ -57,9 +57,7 @@ jQuery(function ($) {
 
 	let $previewFrame = document.getElementById('hu-template-preview');
 
-	/**
-	 * Reload the preview Iframe
-	 */
+	/** Reload the preview Iframe */
 	function reloadPreview() {
 		$previewFrame.contentWindow.location.reload();
 	}
@@ -81,57 +79,6 @@ jQuery(function ($) {
 		if (innerWrapper) {
 			innerWrapper.style.marginTop = `${settings.topbarHeight}px`;
 		}
-
-		/**
-		 * @TODO: uncomment if device wise sticky header is required.
-		 * Use MutationObserver for observing the sticky header class change.
-		 * If changes then add a margin top of `${settings.topbarHeight}px`
-		 */
-
-		/* let headerElLg = iDocument.querySelector(
-			'body.sticky-header #sp-header'
-		);
-		let headerElMd = iDocument.querySelector(
-			'body.sticky-header-md #sp-header'
-		);
-		let headerElSm = iDocument.querySelector(
-			'body.sticky-header-sm #sp-header'
-		);
-
-		if (headerElLg || headerElMd || headerElSm) {
-			let observer = new MutationObserver(function (mutations) {
-				mutations.forEach(function (mutation) {
-					if (mutation.target.classList.contains('header-sticky')) {
-						mutation.target.style.marginTop = `${
-							settings.topbarHeight || 60
-						}px`;
-					} else {
-						mutation.target.style.marginTop = null;
-					}
-				});
-			});
-
-			if (headerElLg) {
-				observer.observe(headerElLg, {
-					attributes: true,
-					attributeOldValue: true,
-				});
-			}
-
-			if (headerElMd) {
-				observer.observe(headerElMd, {
-					attributes: true,
-					attributeOldValue: true,
-				});
-			}
-
-			if (headerElSm) {
-				observer.observe(headerElSm, {
-					attributes: true,
-					attributeOldValue: true,
-				});
-			}
-		} */
 	});
 
 	$(document).on('keyup', function (e) {
@@ -184,7 +131,6 @@ jQuery(function ($) {
 
 	Joomla.helixLoading = function (status) {
 		const loader = document.querySelector('.reload-preview-iframe');
-
 		if (loader) {
 			if (status) {
 				loader.classList.add('spin');

@@ -9,6 +9,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
 
 /**
@@ -59,29 +60,17 @@ class HelixUltimateFeatureLogo
 		$presetVars = (array) json_decode($this->params->get('preset'));
 		$preset = (isset($presetVars['preset']) && $presetVars['preset']) ? $presetVars['preset'] : 'default';
 
-		if ($this->params->get('logo_type') === 'image')
-		{
-			if ($this->params->get('logo_image'))
-			{
-				$path = \JPATH_ROOT . '/' . $this->params->get('logo_image');
-			}
-			else
-			{
-				$path = \JPATH_ROOT . '/templates/' . $template_name . '/images/presets/' . $preset . '/logo.svg';
-			}
-		}
-
 		$html = '';
 
 		if ($offcanvas_position === 'left')
 		{
 			if ($menu_type === 'mega')
 			{
-				$html .= '<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex d-lg-none" href="#" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
+				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex d-lg-none" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
 			}
 			else
 			{
-				$html .= '<a id="offcanvas-toggler" aria-label="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex align-items-center" href="#" aria-hidden="true" title="' . JText::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
+				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-left d-flex align-items-center" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
 			}
 		}
 
@@ -142,7 +131,7 @@ class HelixUltimateFeatureLogo
 				$html .= '<a href="' . Uri::base(true) . '/">';
 
 				$html .= '<img class="logo-image' . $custom_logo_class .
-					'" src="' . Uri::base(true) . '/templates/' .
+					'" src="' . Uri::base() . 'templates/' .
 					$template_name . '/images/presets/' . $preset . '/logo.svg" alt="' . $altText . '" />';
 
 				if ($this->params->get('mobile_logo'))

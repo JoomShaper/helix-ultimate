@@ -446,8 +446,8 @@ class  PlgSystemHelixultimate extends JPlugin
 
 		if ($this->app->isClient('site') && $params->get('image_lazy_loading', 0))
 		{
-			$srcRegex = "#<img[^>]*src=[\"\']([^\"\']*)[\"\'][^>]*>#";
-			$classRegex = "#<img[^>]*class=[\"\']([^\"\']*)[\"\'][^>]*>#";
+			$srcRegex = "@<img[^>]*src=[\"\']([^\"\']*)[\"\'][^>]*>@";
+			$classRegex = "@<img[^>]*class=[\"\']([^\"\']*)[\"\'][^>]*>@";
 
 			$body = $content = $this->app->getBody();
 
@@ -456,6 +456,20 @@ class  PlgSystemHelixultimate extends JPlugin
 
 			if (!empty($matches))
 			{
+				/**
+				 * Update the relative path (starts with (/)images/../)
+				 * by absolute path i.e. path `images/headers/raindrops.jpg`
+				 * with `/path/to/the/project/images/headers/raindrops.jpg`
+				 */
+				foreach ($matches[1] as $key => $match)
+				{
+					if (preg_match("@(^images\/|^\/+images\/).*$@", $match))
+					{
+						$update = Uri::root(true) . '/' . $match;
+						$matches[0][$key] = preg_replace("@" . $match . "@", $update, $matches[0][$key]);
+					}
+				}
+
 				/**
 				 * Loop through the full matches
 				 */
@@ -467,9 +481,9 @@ class  PlgSystemHelixultimate extends JPlugin
 					 * If there has a src attributes
 					 * then replace them with data-src.
 					 */
-					if (preg_match("#src=[\"\']([^\"\']*)[\"\']#", $imageElement))
+					if (preg_match("@src=[\"\']([^\"\']*)[\"\']@", $imageElement))
 					{
-						$imageElement = preg_replace("#src(?=\=[\"\']([^\"\']*)[\"\'])#", "data-src", $imageElement);
+						$imageElement = preg_replace("@src(?=\=[\"\']([^\"\']*)[\"\'])@", "data-src", $imageElement);
 					}
 
 					/**
@@ -477,11 +491,11 @@ class  PlgSystemHelixultimate extends JPlugin
 					 * replace the srcset with the data-srcset and add a new
 					 * data-size='auto' attribute value for maintaining size
 					 */
-					if (preg_match("#srcset=[\"\']([^\"\']*)[\"\']#", $imageElement))
+					if (preg_match("@srcset=[\"\']([^\"\']*)[\"\']@", $imageElement))
 					{
-						$imageElement = preg_replace("#srcset(?=\=[\"\']([^\"\']*)[\"\'])#", "data-srcset", $imageElement);
+						$imageElement = preg_replace("@srcset(?=\=[\"\']([^\"\']*)[\"\'])@", "data-srcset", $imageElement);
 						$dataSize = 'data-size="auto" />';
-						$imageElement = preg_replace("#(^<img[^>]*)(\/?>)#", "$1 " . $dataSize, $imageElement);
+						$imageElement = preg_replace("@(<img[^>]*?)(\/?>)@", "$1 " . $dataSize, $imageElement);
 					}
 
 					/**
@@ -498,7 +512,7 @@ class  PlgSystemHelixultimate extends JPlugin
 						if (!empty($classMatches))
 						{
 							$newClass = 'class="' . $classMatches[1] . ' lazyload"';
-							$imageElement = preg_replace("#class=[\"\']([^\"\']*)[\"\']#", $newClass, $imageElement);
+							$imageElement = preg_replace("@class=[\"\']([^\"\']*)[\"\']@", $newClass, $imageElement);
 						}
 					}
 					else
@@ -507,14 +521,8 @@ class  PlgSystemHelixultimate extends JPlugin
 						 * If no class attribute exists then add a class attribute
 						 */
 						$newClass = 'class="lazyload" />';
-						$imageElement = preg_replace("#(^<img[^>]*)(\/?>)#", "$1 " . $newClass, $imageElement);
+						$imageElement = preg_replace("@(<img[^>]*?)(\/?>)@", "$1 " . $newClass, $imageElement);
 					}
-
-					/**
-					 * Attach a noscript fallback incase of disabled JavaScript.
-					 */
-					$noScriptImage = "<noscript>" . $match . "</noscript>";
-					$imageElement = $noScriptImage . "\n" . $imageElement;
 
 					/**
 					 * Update the content with updated images
@@ -540,7 +548,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	private function getTemplateName($id = 0)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__template_styles'));
@@ -596,7 +604,7 @@ class  PlgSystemHelixultimate extends JPlugin
 		{
 			$app->setHeader('status', 500, true);
 			$app->sendHeaders();
-			echo new JsonResponse('task is not in a proper format. Use "className.method" or only "method" format withoud quote.');
+			echo new JsonResponse('task is not in a proper format. Use "className.method" or only "method" format without quote.');
 			$app->close();
 		}
 

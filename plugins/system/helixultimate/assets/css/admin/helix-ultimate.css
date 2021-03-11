@@ -2051,7 +2051,7 @@ select:focus::-ms-value {
 
 .reload-preview-iframe.spin {
 	animation: spin 2s infinite cubic-bezier(0.66, 0.15, 0.57, 1.08);
-	transform-origin: 50% 50%;
+	transform-origin: 50% 48%;
 }
 
 @keyframes spin {

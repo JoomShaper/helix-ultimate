@@ -73,14 +73,8 @@ jQuery(function ($) {
 					openMegaMenuModal();
 				}
 			},
-			complete(response) {
-				response =
-					response &&
-					typeof response === 'string' &&
-					JSON.parse(response);
-				if (response.status) {
-					Joomla.reloadPreview();
-				}
+			complete() {
+				Joomla.reloadPreview();
 			},
 		});
 	}

@@ -1017,8 +1017,7 @@
 			helixgroup="menubuilder" 
 			default="mainmenu"
 			track="on"
-			label="HELIX_ULTIMATE_MEGAMENU_SELECT"
-			hideLabel="true" />
+			label="HELIX_ULTIMATE_MEGAMENU_SELECT" />
 
 		<!-- Helix menu builder with megamenu -->
 		<field name="menu_builder"

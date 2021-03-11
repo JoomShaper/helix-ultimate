@@ -16,6 +16,7 @@ use HelixUltimate\Framework\System\HelixDocument;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Uri\Uri;
 
@@ -202,10 +203,9 @@ class Platform
 		$helix_assets_url = Uri::root() . 'plugins/system/helixultimate/assets';
 
 		Factory::getLanguage()->load('tpl_' . $template->template, JPATH_SITE, null, true);
+		self::registerLanguageScripts();
 
-		/**
-		 * Set meta information.
-		 */
+		/** Set meta information. */
 		$doc->setTitle("Helix Ultimate Framework");
 		$doc->setGenerator('Helix Ultimate - The Best Joomla Template Framework!');
 		$doc->addFavicon($helix_plg_uri . '/assets/images/favicon.ico');
@@ -213,9 +213,7 @@ class Platform
 
 		$helixDocument->addInlineScript('var helixUltimateStyleId = ' . $style_id . ';');
 
-		/**
-		 * System defined assets
-		 */
+		/** System defined assets */
 		$helixDocument->useScript('jquery')
 			->useScript('jquery-noconflict')
 			->useScript('jquery-migrate')
@@ -233,9 +231,7 @@ class Platform
 		}
 
 		
-		/**
-		 * Framework defined assets
-		 */
+		/** Framework defined assets */
 		$helixDocument->registerAndUseStyle('style.chosen', '', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('style.colorPicker', '', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('helix.jquery.ui', $helix_assets_url . '/css/admin/jquery-ui.min.css', ['version' => 'auto', 'relative' => true])
@@ -268,5 +264,17 @@ class Platform
 
 		$doc->addScriptOptions('meta', $meta);
 		$doc->setBuffer((new self)->initialize(), 'component');
+	}
+
+	/**
+	 * Register the framework language strings for JavaScript.
+	 * i.e by Joomla.Text._()
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	private static function registerLanguageScripts()
+	{
+		Text::script('HELIX_ULTIMATE_SELECT_ICON_LABEL');
 	}
 }

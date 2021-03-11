@@ -1,7 +1,4 @@
 <?php
-
-use HelixUltimate\Framework\Core\Lib\FontawesomeIcons;
-use Joomla\CMS\Language\Text;
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
@@ -10,6 +7,9 @@ use Joomla\CMS\Language\Text;
  */
 
 defined('_JEXEC') or die();
+
+use HelixUltimate\Framework\Core\Lib\FontawesomeIcons;
+use Joomla\CMS\Language\Text;
 
 /**
  * Fields definition for the mega menu fields.
@@ -21,10 +21,10 @@ class MegaFields
     /**
      * Mega menu settings array.
      *
-     * @var     array   The mega menu settings.
+     * @var     object   The mega menu settings.
      * @since   2.0.0
      */
-    private $settings = [];
+    private $settings = null;
 
     /**
      * Menu Item Id
@@ -59,6 +59,9 @@ class MegaFields
         $icons = $fontawesome->getIcons();
 
         $options = [];
+
+        /** Set an empty option for working the chosen deselect functionality. */
+        $options[''] = '';
 
         foreach ($icons as $icon)
         {

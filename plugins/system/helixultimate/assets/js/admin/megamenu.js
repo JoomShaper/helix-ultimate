@@ -46,7 +46,10 @@ var megaMenu = {
 	},
 
 	initChosen() {
-		$('select[data-husearch]').chosen();
+		$('select[data-husearch]').chosen({
+			allow_single_deselect: true,
+			placeholder_text_single: Joomla.Text._('HELIX_ULTIMATE_SELECT_ICON_LABEL')
+		});
 	},
 
 	declareDOMVariables() {

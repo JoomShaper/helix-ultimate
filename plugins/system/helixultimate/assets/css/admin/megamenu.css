@@ -1,3 +1,14 @@
+.hu-mega-menu-builder.collapsed {
+	width: 350px;
+}
+
+.hu-mega-menu-builder.collapsed .hu-megamenu-builder-dropdown,
+.hu-mega-menu-builder.collapsed .hu-megamenu-builder-badge_position,
+.hu-mega-menu-builder.collapsed .chzn-container {
+	width: 140px !important;
+}
+
+
 .hu-mega-menu-builder .hu-modal-inner {
 	background: #f1f4fa;
 }
@@ -237,8 +248,13 @@
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;
 }
+
 .hu-mega-menu-builder .control-group input.hu-megamenu-builder-badge {
 	max-width: 88px;
+}
+
+.hu-mega-menu-builder.collapsed .control-group input.hu-megamenu-builder-badge {
+	max-width: 140px !important;
 }
 
 .hu-mega-menu-builder .control-group input::-webkit-outer-spin-button,

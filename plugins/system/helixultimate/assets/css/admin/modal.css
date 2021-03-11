@@ -45,9 +45,7 @@
 	font-family: 'Roboto', sans-serif;
 	transition: 250ms width ease-out;
 }
-.hu-mega-menu-builder.collapsed {
-	width: 350px;
-}
+
 .hu-modal.collapsed .hu-megamenu-container .hu-megamenu-sidebar {
 	margin-right: 0;
 	width: 320px;

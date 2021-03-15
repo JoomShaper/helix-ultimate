@@ -1649,6 +1649,16 @@ small,
 	background-color: rgba(var(--dark), 0.1);
 }
 
+.hu-btn-reset {
+	color: rgb(var(--dark));
+	background: rgba(var(--dark), 0.1) !important;
+}
+
+.hu-btn-reset:hover {
+	color: rgb(var(--dark));
+	background-color: rgba(var(--dark), 0.3);
+}
+
 .hu-btn-link {
 	color: rgb(var(--primary));
 	background-color: transparent;
@@ -2063,6 +2073,12 @@ select:focus::-ms-value {
 	}
 }
 
+.hu-loading-msg,
+.hu-done-msg,
+.action-reset-drafts {
+	display: none;
+}
+
 .action-reset-drafts {
 	background: transparent;
 	opacity: 1;
@@ -2158,6 +2174,11 @@ select:focus::-ms-value {
 	text-align: center;
 	justify-content: center;
 	transition: all 0.3s ease;
+}
+
+.hu-topbar .hu-response {
+    margin: 0 10px;
+    color: #333;
 }
 
 .hu-devices {

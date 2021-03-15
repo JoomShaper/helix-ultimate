@@ -240,10 +240,12 @@ class Platform
 			->registerAndUseStyle('helix.fontAwesome', Uri::root() . 'templates/shaper_helixultimate/css/font-awesome.min.css')
 			->registerAndUseStyle('helix.device-field', $helix_assets_url . '/css/admin/devices-field.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('style.helix.menuBuilder', $helix_assets_url . '/css/admin/menu-builder.css', ['version' => 'auto', 'relative' => true])
-			->registerAndUseStyle('style.helix.megaMenu', $helix_assets_url . '/css/admin/megamenu.css', ['version' => 'auto', 'relative' => true]);
-		
+			->registerAndUseStyle('style.helix.megaMenu', $helix_assets_url . '/css/admin/megamenu.css', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('style.helix.toaster', $helix_assets_url . '/css/admin/toaster.css', ['version' => 'auto', 'relative' => false]);
+
 		$helixDocument->registerAndUseScript('helix.jquery.ui', $helix_assets_url . '/js/admin/jquery-ui.min.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
-			->registerAndUseScript('helix.utils', $helix_assets_url . '/js/admin/utils.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
+			->registerAndUseScript('helix.toaster', $helix_assets_url . '/js/admin/toaster.js', ['version' => 'auto', 'relative' => false], ['defer' => false])
+			->registerAndUseScript('helix.utils', $helix_assets_url . '/js/admin/utils.js', ['version' => 'auto', 'relative' => true], ['defer' => false])
 			->registerAndUseScript('helix.fields', $helix_assets_url . '/js/admin/fields.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.ultimate', $helix_assets_url . '/js/admin/helix-ultimate.js', ['version' => 'auto', 'relative' => true], ['defer' => true])
 			->registerAndUseScript('helix.webFont', $helix_assets_url . '/js/admin/webfont.js', ['version' => 'auto', 'relative' => true], ['defer' => true])

@@ -182,10 +182,11 @@ jQuery(function ($) {
 				fetchMenuItems(menuType);
 			},
 			error(err) {
-				alert('Something went wrong: ' + err.message);
+				Joomla.HelixToaster.error('Something went wrong!', 'Error');
 			},
 			complete() {
 				rebuildMenu();
+				Joomla.HelixToaster.error('Menu item has been successfully removed!', 'Remove');
 			},
 		});
 	}
@@ -297,12 +298,13 @@ jQuery(function ($) {
 				return;
 			}
 
-			handleBranchOrdering(parent);
+			handleBranchOrdering(parent, true);
+			
 		});
 	}
 
 	/** Handle Menu Item ordering for a container. */
-	function handleBranchOrdering(parent) {
+	function handleBranchOrdering(parent, onlyOrder = false) {
 		let children = parent.length
 			? parent.getChildren()
 			: $(document).getRootChildren();
@@ -328,12 +330,18 @@ jQuery(function ($) {
 				method: 'POST',
 				url,
 				data,
+				beforeSend() {
+					Joomla.helixLoading({status: true, msg: {loading: 'Changing...'}, draft: false});
+				},
 				success(response) {
 					response =
 						typeof response === 'string' && response.length > 0
 							? JSON.parse(response)
 							: response;
 					resolve(response);
+				},
+				complete() {
+					Joomla.helixLoading({status: false, msg: {done: 'Changed'}, draft: false});
 				},
 				error(err) {
 					reject(err);
@@ -436,9 +444,15 @@ jQuery(function ($) {
 						if (res) {
 							fetchMenuItems(menuType);
 							$(this).closeModal();
+
+							if (task === 'item.apply') {
+								Joomla.HelixToaster.success('Menu item has been successfully added!', 'New');
+							} else if (task === 'item.save') {
+								Joomla.HelixToaster.success('Changes have been successfully saved!', 'Saved');
+							}
 						}
 					} catch (err) {
-						alert('Something went wrong!');
+						Joomla.HelixToaster.error('Something went wrong!', 'Error');
 					}
 				}
 			});

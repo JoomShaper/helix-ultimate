@@ -186,7 +186,7 @@ jQuery(function ($) {
 			},
 			complete() {
 				rebuildMenu();
-				Joomla.HelixToaster.error('Menu item has been successfully removed!', 'Remove');
+				Joomla.HelixToaster.error('Menu item has been successfully removed!', 'Removed');
 			},
 		});
 	}
@@ -330,18 +330,12 @@ jQuery(function ($) {
 				method: 'POST',
 				url,
 				data,
-				beforeSend() {
-					Joomla.helixLoading({status: true, msg: {loading: 'Changing...'}, draft: false});
-				},
 				success(response) {
 					response =
 						typeof response === 'string' && response.length > 0
 							? JSON.parse(response)
 							: response;
 					resolve(response);
-				},
-				complete() {
-					Joomla.helixLoading({status: false, msg: {done: 'Changed'}, draft: false});
 				},
 				error(err) {
 					reject(err);
@@ -446,9 +440,9 @@ jQuery(function ($) {
 							$(this).closeModal();
 
 							if (task === 'item.apply') {
-								Joomla.HelixToaster.success('Menu item has been successfully added!', 'New');
+								Joomla.HelixToaster.success('Menu item has been successfully added!', 'Saved');
 							} else if (task === 'item.save') {
-								Joomla.HelixToaster.success('Changes have been successfully saved!', 'Saved');
+								Joomla.HelixToaster.success('Changes have been successfully saved!', 'Updated');
 							}
 						}
 					} catch (err) {

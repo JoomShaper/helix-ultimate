@@ -68,7 +68,7 @@ $sidebar = new Settings;
 
 
 			<button type="button" role="button" class="hu-btn hu-btn-reset action-reset-drafts">
-				<span class="fas fa-undo"></span> Reset Draft
+				<span class="fas fa-undo-alt"></span> Reset Draft
 			</button>
 		</div>
 

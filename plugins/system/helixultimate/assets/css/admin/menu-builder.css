@@ -45,15 +45,15 @@
 	position: absolute;
 	top: 50%;
     right: 10px;
-    transform: translateY(-50%);
+    transform: translate3d(0, -50%, 0);
     z-index: 11;
 	background: #fff;
     padding-left: 10px;
-	opacity: 0;
-	transition: opacity .3s;
+	display: none;
 }
 .hu-branch-drag-handler:hover .hu-branch-tools{
-	opacity: 1;
+	display: block;
+	animation: fadeInRight .5s;
 }
 .hu-branch-drag-handler .hu-branch-tools .hu-branch-tools-list{
 	padding: 0;
@@ -177,4 +177,34 @@
 }
 .hu-branch-level-10 .hu-menu-children-bus {
 	margin-left: -180px;
+}
+@-webkit-keyframes fadeInRight {
+	from {
+	  opacity: 0;
+	  -webkit-transform: translate3d(10px, -50%, 0);
+	  transform: translate3d(10px, -50%, 0);
+	}
+  
+	to {
+	  opacity: 1;
+	  -webkit-transform: translate3d(0, -50%, 0);
+	  transform: translate3d(0, -50%, 0);
+	}
+}
+@keyframes fadeInRight {
+	from {
+	  opacity: 0;
+	  -webkit-transform: translate3d(10px, -50%, 0);
+	  transform: translate3d(10px, -50%, 0);
+	}
+  
+	to {
+	  opacity: 1;
+	  -webkit-transform: translate3d(0, -50%, 0);
+	  transform: translate3d(0, -50%, 0);
+	}
+}
+.animate__fadeInRight {
+	-webkit-animation-name: fadeInRight;
+	animation-name: fadeInRight;
 }

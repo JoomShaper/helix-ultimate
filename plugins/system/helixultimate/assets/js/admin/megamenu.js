@@ -681,6 +681,7 @@ var megaMenu = {
 			},
 			complete() {
 				$(document).closeModal();
+				Joomla.HelixToaster.success('Saved mega menu settings!', 'Success');
 			},
 		});
 	},

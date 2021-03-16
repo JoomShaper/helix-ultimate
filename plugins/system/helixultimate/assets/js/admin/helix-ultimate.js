@@ -11,6 +11,7 @@ jQuery(function ($) {
 	var settings = Joomla.getOptions('data') || {};
 	let meta = Joomla.getOptions('meta') || {};
 	const storage = localStorage || window.localStorage;
+	let delayTimeout = null;
 
 	/**
 	 * Positioning the toolbar of its previous location.
@@ -65,7 +66,6 @@ jQuery(function ($) {
 	Joomla.reloadPreview = reloadPreview;
 
 	$previewFrame.addEventListener('load', function () {
-		// Joomla.helixLoading({status: false, draft: false, msg: {loading: '', done: ''}});
 		let iDocument = $previewFrame.contentWindow.document;
 		let innerWrapper = iDocument.querySelector('.body-innerwrapper');
 
@@ -129,38 +129,41 @@ jQuery(function ($) {
 		});
 	})();
 
-	Joomla.helixLoading = function ({status, msg, draft = false}) {
+	Joomla.helixLoading = function (status, draft) {
 		const $loadingEl = $('.hu-loading-msg');
 		const $doneEl = $('.hu-done-msg');
 		const $resetBtn = $('.action-reset-drafts');
 
-		msg = msg || {};
-
-		if (msg.loading === undefined) msg.loading = 'Drafting...';
-		if (msg.done === undefined) msg.done = 'Drafted';
+		$loadingEl.hide();
+		$doneEl.hide();
+		$resetBtn.hide();
 
 		if (status) {
-			$loadingEl.show();
-			if (msg.loading !== undefined) $loadingEl.find('.hu-msg').text(msg.loading);
-			$doneEl.hide();
 			$resetBtn.hide();
+			$doneEl.hide();
+			$loadingEl.show();
 		} else {
 			$loadingEl.hide();
-			$doneEl.show();
 			$resetBtn.hide();
-			if (msg.done !== undefined) $doneEl.find('.hu-msg').text(msg.done);
+			$doneEl.show();
 		}
 
+		/** If timeout exists then clear it first. */
+		if (delayTimeout) clearTimeout(delayTimeout);
+
 		(async() => {
-			await delay(1500);
+			if (!status) await delay(2000);
 			$doneEl.hide();
+
 			if (draft) $resetBtn.show();
 			else $resetBtn.hide();
 		})();
 	};
-
+	
 	function delay(ms = 500) {
-		return new Promise((resolve) => setTimeout(resolve, ms));
+		return new Promise((resolve) => {
+			delayTimeout = setTimeout(resolve, ms);
+		});
 	}
 
 	function updateSetvalue() {
@@ -301,6 +304,7 @@ jQuery(function ($) {
 			.find('input, select, textarea')
 			.not('.internal-use-only')
 			.serializeArray();
+		let flag = false;
 
 		$.ajax({
 			type: 'POST',
@@ -310,29 +314,22 @@ jQuery(function ($) {
 				'&action=draft-tmpl-style&format=json',
 			data: data,
 			beforeSend: function () {
-				Joomla.helixLoading({status: true, draft: false});
+				Joomla.helixLoading(true, false);
+				flag = true;
 			},
 			success: function (response) {
 				var data = $.parseJSON(response);
 
 				if (data.status) {
-					let $previewFrame = document.getElementById(
-						'hu-template-preview'
-					);
+					let $previewFrame = document.getElementById('hu-template-preview');
 
 					reloadPreview();
 
 					$previewFrame.addEventListener('load', function () {
-						Joomla.helixLoading({ status: false, draft: data.isDrafted });
+						flag && Joomla.helixLoading(false, data.isDrafted);
+						flag = false;
 					});
 				}
-
-				// if (data.isDrafted) {
-				// 	$('.hu-drafting-msg').hide();
-				// 	$('.hu-drafted-msg').show();
-				// } else {
-				// 	$('.action-reset-drafts').hide();
-				// }
 			},
 			error: function (err) {
 				console.error('error: Something went wrong!', err);
@@ -460,9 +457,6 @@ jQuery(function ($) {
 					'index.php?option=com_ajax&request=task&helix=ultimate&id=' +
 					helixUltimateStyleId +
 					'&action=reset-drafted-settings&format=json',
-				beforeSend: function () {
-					Joomla.helixLoading({status: true, draft: false});
-				},
 				success: function (response) {
 					var data = $.parseJSON(response);
 
@@ -472,10 +466,6 @@ jQuery(function ($) {
 						);
 
 						reloadPreview();
-
-						$previewFrame.addEventListener('load', function () {
-							Joomla.helixLoading({status: false, draft: data.isDrafted});
-						});
 					}
 				},
 				error: function (err) {
@@ -483,7 +473,10 @@ jQuery(function ($) {
 				},
 				complete: function () {
 					resetBySafepointValue();
-					Joomla.HelixToaster.success('Successfully rolled back to the previous state!', 'Rollback');
+					Joomla.HelixToaster.success('Successfully rolled back to the previous state!', 'Success');
+					$('.hu-loading-msg').hide();
+					$('.hu-done-msg').hide();
+					$('.action-reset-drafts').hide();
 				},
 			});
 		}
@@ -516,9 +509,6 @@ jQuery(function ($) {
 				helixUltimateStyleId +
 				'&action=save-tmpl-style&format=json',
 			data: data,
-			beforeSend: function () {
-				Joomla.helixLoading({status: true, msg: {loading: 'Saving...'}, draft: false});
-			},
 			success: function (response) {
 				var data = $.parseJSON(response);
 
@@ -527,16 +517,16 @@ jQuery(function ($) {
 						'hu-template-preview'
 					);
 					$previewFrame.contentWindow.location.reload(true);
-					$previewFrame.addEventListener('load', function () {
-						Joomla.helixLoading({status: false, msg: {done: 'Saved'}, draft: data.isDrafted});
-					});
 				}
 
 				// Update the setvalues.
 				updateSetvalue();
 			},
 			complete() {
-				Joomla.HelixToaster.success('Changes have been successfully saved!', 'Saved');
+				Joomla.HelixToaster.success('Changes have been successfully saved!', 'Success');
+				$('.hu-loading-msg').hide();
+				$('.hu-done-msg').hide();
+				$('.action-reset-drafts').hide();
 			},
 			error: function (err) {
 				console.error('error', err);

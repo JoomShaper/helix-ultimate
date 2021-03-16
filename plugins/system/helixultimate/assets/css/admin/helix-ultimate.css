@@ -2166,6 +2166,7 @@ select:focus::-ms-value {
 .hu-topbar .topbar-left {
 	display: flex;
 	align-items: center;
+	min-width: 400px;
 }
 
 .hu-topbar .topbar-middle {
@@ -2173,6 +2174,7 @@ select:focus::-ms-value {
 	align-items: center;
 	text-align: center;
 	justify-content: center;
+	min-width: 400px;
 	transition: all 0.3s ease;
 }
 
@@ -2225,10 +2227,11 @@ select:focus::-ms-value {
 	display: flex;
 	align-items: center;
 	position: relative;
-	justify-content: center;
+	justify-content: flex-end;
 	max-width: 450px;
 	border-left: 1px solid #f1f1f1;
 	margin-right: 20px;
+	min-width: 400px;
 }
 
 .hu-topbar .topbar-right .hu-btn:not(:last-child) {

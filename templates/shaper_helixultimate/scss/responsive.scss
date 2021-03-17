@@ -45,6 +45,9 @@
 			}
 		}
 		&.lg-header{
+			#offcanvas-toggler.mega{
+				display: none !important;
+			}
 			.offcanvas-toggler-left.offcanvas{
 				display: flex !important;
 			}

@@ -14,9 +14,16 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
-HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
-
-HTMLHelper::_('behavior.core');
+if (JVERSION < 4)
+{
+	HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
+	HTMLHelper::_('behavior.core');
+}
+else
+{
+	$wa = $this->document->getWebAssetManager();
+	$wa->useScript('com_tags.tag-default');
+}
 
 // Get the user object.
 $user = Factory::getUser();
@@ -99,9 +106,15 @@ Factory::getDocument()->addScriptDeclaration("
 			<li class="list-group-item list-group-item-action">
 				<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
 					<h3 class="mb-0">
-						<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
-							<?php echo $this->escape($item->title); ?>
-						</a>
+						<?php if (JVERSION < 4): ?>
+							<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
+								<?php echo $this->escape($item->title); ?>
+							</a>
+						<?php else: ?>
+							<a href="<?php echo Route::_(Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
+								<?php echo $this->escape($item->title); ?>
+							</a>
+						<?php endif ?>
 					</h3>
 				<?php endif; ?>
 

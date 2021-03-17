@@ -1,7 +1,6 @@
 #hu-toaster-container {
 	position: fixed;
 	z-index: 99999;
-	pointer-events: none;
 }
 
 @keyframes huFadeInDown {

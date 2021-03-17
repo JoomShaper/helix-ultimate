@@ -3,22 +3,15 @@ const HelixToaster = {
 		timeout: 5000,
 		containerId: 'hu-toaster-container',
 		prefix: 'hu-toaster',
-		icons: {
-			success: '',
-			error: '',
-			warning: '',
-			info: ''
-		},
 		position: 'hu-toaster-bottom-right',
 		titleClass: '',
 		messageClass: '',
-		target: 'body',
-		closeBtn: '<button type="button" role="button">&times;</button>',
+		target: 'body'
 	},
 
 	toasts: [],
 	toastIndex: 0,
-	timeoutId: null,
+	elementTimeout: null,
 
 	success(message, title, options) {
 		this.createToaster({type: 'success', message, title, options});
@@ -53,9 +46,12 @@ const HelixToaster = {
 		const toasterElement = document.createElement('div');
 		toasterElement.setAttribute('class', this.options.prefix + ' ' + this.getTypeClass(type));
 
+		let titleClass = `${this.options.prefix}-title ${this.options.titleClass}`,
+			messageClass = `${this.options.prefix}-message ${this.options.messageClass}`
+
 		let html = `
-			<div class="${this.options.prefix}-title">${title}</div>
-			<div class="${this.options.prefix}-message">${message}</div>
+			<div class="${titleClass}">${title}</div>
+			<div class="${messageClass}">${message}</div>
 		`;
 
 		toasterElement.innerHTML = html;
@@ -67,7 +63,7 @@ const HelixToaster = {
 
 		this.getContainer().appendChild(toasterElement);
 
-		setTimeout(() => {
+		this.elementTimeout = setTimeout(() => {
 			toasterElement.style.animationName = 'huFadeInDown';
 			toasterElement.style.animationDuration = '.35s';
 			toasterElement.style.opacity = 0;
@@ -75,6 +71,19 @@ const HelixToaster = {
 				toasterElement.parentNode.removeChild(toasterElement);
 			}, 450);
 		}, this.options.timeout);
+
+		/** Remove the toaster on clicking to the toaster and clear the timeout. */
+		toasterElement.addEventListener('click', (e) => {
+			e.preventDefault();
+
+			if (this.elementTimeout) clearTimeout(this.elementTimeout);
+			toasterElement.style.animationName = 'huFadeInDown';
+			toasterElement.style.animationDuration = '.35s';
+			toasterElement.style.opacity = 0;
+			setTimeout(() => {
+				toasterElement.parentNode.removeChild(toasterElement);
+			}, 450);
+		});
 	},
 
 	getContainer() {

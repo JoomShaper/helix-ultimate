@@ -1642,7 +1642,7 @@
 			default="0" 
 			label="HELIX_ULTIMATE_CSS_COMPRESS" 
 			description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
-		<field name="purge_css" 
+		<!-- <field name="purge_css" 
 			type="helixbutton" 
 			helixgroup="compression" 
 			url="#" 
@@ -1650,7 +1650,7 @@
 			hideLabel="true" 
 			description="HELIX_ULTIMATE_PURGE_CSS_DESC" 
 			class="btn-primary btn-purge-helix-ultimate-css" 
-			showon="compress_css:1" />
+			showon="compress_css:1" /> -->
 		<field name="compress_js" 
 			helixgroup="compression" 
 			type="checkbox" 

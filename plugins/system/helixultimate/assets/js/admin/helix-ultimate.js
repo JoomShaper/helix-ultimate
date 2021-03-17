@@ -958,7 +958,8 @@ jQuery(function ($) {
 
 			if (settings.template === undefined || settings.template !== 'shaper_helixultimate')
 			{
-				alert('The settings JSON file seems invalid! Please import a valid helix ultimate settings JSON.');
+				Joomla.HelixToaster.error('The settings JSON file seems invalid! Please import a valid helix ultimate settings JSON.', 'Error');
+				$('#helix-import-file').val('');
 				return false;
 			}
 
@@ -982,8 +983,11 @@ jQuery(function ($) {
 						window.location.reload();
 					}
 				},
+				complete() {
+					Joomla.HelixToaster.success('Settings have been successfully imported!', 'Success');
+				},
 				error: function () {
-					alert('Somethings wrong, Try again');
+					Joomla.HelixToaster.error('Something went wrong importing settings!', 'Error');
 				},
 			});
 			return false;

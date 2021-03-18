@@ -222,9 +222,9 @@ class Response
 
 				$html[] = '			<div class="hu-branch-tools">';
 				$html[] = '				<ul class="hu-branch-tools-list">';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit" title="' . Text::_('HELIX_ULTIMATE_MENU_EDIT') .'">'. $editSvg .'</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete" title="'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'">'. $deleteSvg .'</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu disabled" title="'. Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS': 'HELIX_ULTIMATE_MENU_MEGAMENU') .'"> ' . ($item->parent_id > 1 ? $settingsSvg  : $megaSvg ) .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit" aria-label="' . Text::_('HELIX_ULTIMATE_MENU_EDIT') .'" title="' . Text::_('HELIX_ULTIMATE_MENU_EDIT') .'">'. $editSvg .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete" aira-label="'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'" title="'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'">'. $deleteSvg .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu disabled" aria-label="'. Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS': 'HELIX_ULTIMATE_MENU_MEGAMENU') .'" title="'. Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS': 'HELIX_ULTIMATE_MENU_MEGAMENU') .'"> ' . ($item->parent_id > 1 ? $settingsSvg  : $megaSvg ) .'</a></li>';
 				$html[] = '				</ul>';
 				$html[] = '			</div>';
 

@@ -25,6 +25,7 @@ use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -34,6 +35,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use JShrink\Minifier;
 
 // Constant definition
 define('HELIX_LAYOUTS_PATH', JPATH_PLUGINS . '/system/helixultimate/layouts');
@@ -61,6 +63,8 @@ class  PlgSystemHelixultimate extends JPlugin
 	 * @since	1.0.0
 	 */
 	protected $app;
+
+	private $cachedHeadData = [];
 
 	/**
 	 * The form event. Load additional parameters when available into the field form.
@@ -359,6 +363,13 @@ class  PlgSystemHelixultimate extends JPlugin
 		}
 	}
 
+	/**
+	 * Sanitize the assets i.e. scripts and stylesheets before adding to the head.
+	 * This function is applicable for Joomla 3.
+	 *
+	 * @return 	void
+	 * @since	2.0.0
+	 */
 	private function sanitizeAssetsForJ3()
 	{
 		$headData = Factory::getDocument()->getHeadData();
@@ -397,6 +408,13 @@ class  PlgSystemHelixultimate extends JPlugin
 		Factory::getDocument()->setHeadData($headData);
 	}
 
+	/**
+	 * Sanitize the assets i.e. scripts and stylesheets before adding to the head.
+	 * This function is applicable for Joomla 4.
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
 	private function sanitizeAssetsForJ4()
 	{
 		$doc = Factory::getDocument();

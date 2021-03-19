@@ -3154,6 +3154,7 @@ select:focus::-ms-value {
 	list-style: none;
 	padding: 0;
 	margin: -10px;
+	text-align: center;
 }
 
 .hu-header-list > li,

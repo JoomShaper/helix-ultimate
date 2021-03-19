@@ -46,15 +46,17 @@ class JFormFieldHelixOffcanvas extends FormField
 		$thumb_url = Uri::root() . 'templates/' . $templateName . '/offcanvas';
 
 		$html = '';
+		$fallbackRegex = "@^style-(\d+)@i";
 
 		if (Folder::exists($offCanvasDir))
 		{
 			$offCanvases = Folder::folders($offCanvasDir);
-			$offCanvasNames = [
-				'Left Align',
-				'Border Style',
-				'Center Align',
-			];
+			
+			if (preg_match($fallbackRegex, $this->value, $matches))
+			{
+				$index = isset($matches[1]) ? $matches[1] - 1 : 0;
+				$this->value = isset($offCanvases[$index]) ? $offCanvases[$index] : $offCanvases[0];
+			}
 
 			if (!empty($offCanvases))
 			{
@@ -63,6 +65,10 @@ class JFormFieldHelixOffcanvas extends FormField
 
 				foreach ($offCanvases as $key => $canvas)
 				{
+					$canvasName = preg_replace("@(^\d+-)(.+)@", "$2", $canvas);
+					$canvasName = preg_split("@(?=[A-Z])@", $canvasName);
+					$canvasName = implode(' ', $canvasName);
+
 					$html .= '<li class="hu-offcanvas-item' . (($this->value === $canvas) ? ' active' : '') . '" data-style="' . $canvas . '">';
 
 					if (file_exists($offCanvasDir . '/' . $canvas . '/thumb.svg'))
@@ -74,7 +80,7 @@ class JFormFieldHelixOffcanvas extends FormField
 						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $canvas . '/thumb.jpg" alt="' . $canvas . '"></span>';
 					}
 
-					$html .= '<span class="hu-predefined-offcanvas-title">' . (isset($offCanvasNames[$key]) ? $offCanvasNames[$key] : $canvas) . '</span>';
+					$html .= '<span class="hu-predefined-offcanvas-title">' . $canvasName . '</span>';
 					$html .= '</li>';
 				}
 

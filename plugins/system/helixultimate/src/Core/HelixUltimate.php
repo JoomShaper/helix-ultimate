@@ -1568,6 +1568,7 @@ class HelixUltimate
 	{
 		$pre_header 	= $this->params->get('predefined_header');
 		$header_style 	= $this->params->get('header_style');
+		$fallbackRegex = "@^style-(\d+)@i";
 
 		if (!$pre_header || !$header_style)
 		{
@@ -1580,6 +1581,14 @@ class HelixUltimate
 		$template 			= $options->template->template;
 
 		$tmpl_file_location = JPATH_ROOT . '/templates/' . $template . '/headers';
+		$headers = Folder::folders($tmpl_file_location);
+
+		/** In the case of the header_style contains the old style-1 type value. */
+		if (preg_match($fallbackRegex, $header_style, $matches))
+		{
+			$index = isset($matches[1]) ? $matches[1] - 1 : 0;
+			$header_style = isset($headers[$index]) ? $headers[$index] : $headers[0];
+		}
 
 		if (File::exists($tmpl_file_location . '/' . $header_style . '/header.php'))
 		{
@@ -1598,6 +1607,7 @@ class HelixUltimate
 	public function getOffcanvasStyle()
 	{
 		$offCanvasStyle = $this->params->get('offcanvas_style', '');
+		$fallbackRegex = "@^style-(\d+)@i";
 
 		if (empty($offCanvasStyle))
 		{
@@ -1610,6 +1620,14 @@ class HelixUltimate
 		$template 			= $options->template->template;
 
 		$offCanvasDirectory = JPATH_ROOT . '/templates/' . $template . '/offcanvas';
+		$canvases = Folder::folders($offCanvasDirectory);
+
+		/** In the case of the offCanvasStyle contains the old style-1 type value. */
+		if (preg_match($fallbackRegex, $offCanvasStyle, $matches))
+		{
+			$index = isset($matches[1]) ? $matches[1] - 1 : 0;
+			$offCanvasStyle = isset($canvases[$index]) ? $canvases[$index] : $canvases[0];
+		}
 
 		if (\file_exists($offCanvasDirectory . '/' . $offCanvasStyle . '/canvas.php'))
 		{

@@ -44,29 +44,29 @@ class JFormFieldHelixheaders extends FormField
 		$thumb_url = Uri::root() . 'templates/' . $template . '/headers';
 
 		$html = '';
+		$fallbackStyleRegex = "@^style-(\d+)@i";
 
 		if (Folder::exists($headers_src))
 		{
 			$headers = Folder::folders($headers_src);
-			$headerNames = [
-				'Header & Topbar',
-				'Default Header',
-				'Header & Social',
-				'Fullwidth Center',
-				'Fullwidth Left',
-				'Large Header',
-				'Full Modal',
-				'Center Modal',
-				'Left Modal',
-			];
+
+			if (preg_match($fallbackStyleRegex, $this->value, $fallbackMatches))
+			{
+				$index = isset($fallbackMatches[1]) ? $fallbackMatches[1] - 1 : 0;
+				$this->value = isset($headers[$index]) ? $headers[$index] : $headers[0];
+			}
 
 			if (!empty($headers))
 			{
 				$html = '<div class="hu-predefined-headers">';
 				$html .= '<ul class="hu-header-list clearfix" data-name="' . $this->name . '">';
 
-				foreach ($headers as $key => $header)
+				foreach ($headers as $header)
 				{
+					$headerName = preg_replace("@(^\d+-)(.+)@", "$2", $header);
+					$headerName = preg_split("@(?=[A-Z])@", $headerName);
+					$headerName = implode(' ', $headerName);
+
 					$html .= '<li class="hu-header-item' . (($this->value === $header) ? ' active' : '') . '" data-style="' . $header . '">';
 
 					if (file_exists($headers_src . '/' . $header . '/thumb.svg'))
@@ -78,7 +78,7 @@ class JFormFieldHelixheaders extends FormField
 						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $header . '/thumb.jpg" alt="' . $header . '"></span>';
 					}
 
-					$html .= '<span class="hu-predefined-headers-title">' . (isset($headerNames[$key]) ? $headerNames[$key] : $header) . '</span>';
+					$html .= '<span class="hu-predefined-headers-title">' . $headerName . '</span>';
 					$html .= '</li>';
 				}
 

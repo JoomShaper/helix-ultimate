@@ -30,8 +30,9 @@ $item = $builder->getMenuItem();
         <?php if ((int) $item->parent_id === 1): ?>
             <?php echo $builder->renderFieldElement('width', $fields['width']); ?>
         <?php endif ?>
-        <?php echo $builder->renderFieldElement('showtitle', $fields['showtitle']); ?>
     </div>
+
+    <?php echo $builder->renderFieldElement('showtitle', $fields['showtitle']); ?>
 
     <div class="hu-d-flex hu-justify-content-between">
         <?php if ((int) $item->parent_id === 1): ?>

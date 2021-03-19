@@ -1256,7 +1256,7 @@ class HelixUltimate
 		$md5sum       = '';
 		$criticalCode = '';
 		$criticalHash = '';
-		$criticalRegex = "#(jquery.*)\.js$#";
+		$criticalRegex = "@(jquery.*)\.js$@";
 
 		/**
 		 * Version hashes are used here for maintaining

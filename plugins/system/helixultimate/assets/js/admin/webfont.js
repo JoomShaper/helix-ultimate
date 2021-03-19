@@ -6,6 +6,9 @@
  */
 
 jQuery(function ($) {
+	/** Enable chosen for the font family of the typography panel. */
+	$('.hu-webfont-list').chosen();
+
 	//Web Fonts
 	let $parentId = $('.hu-field-webfont').data('id');
 	let $parentEl = $('#' + $parentId);

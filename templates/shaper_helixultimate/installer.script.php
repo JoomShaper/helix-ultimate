@@ -15,7 +15,6 @@ defined ('_JEXEC') or die();
  */
 class plgSystemTmp_helixultInstallerScript
 {
-
 	/**
 	 * Post Flight hook
 	 *
@@ -44,6 +43,7 @@ class plgSystemTmp_helixultInstallerScript
 			}
 
 			$plugin_info = $this->getPluginInfoByName($name, $group);
+
 			if($plugin_info)
 			{
 				$manifest_cache = json_decode($plugin_info->manifest_cache);
@@ -59,6 +59,7 @@ class plgSystemTmp_helixultInstallerScript
 			}
 
 			$result = $installer->install($path);
+
 			if ($result)
 			{
 				$this->activeInstalledPlugin($name, $group);

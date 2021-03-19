@@ -10,6 +10,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Language\Text;
 
 defined('_JEXEC') or die();
 
@@ -44,17 +45,11 @@ class JFormFieldHelixheaders extends FormField
 		$thumb_url = Uri::root() . 'templates/' . $template . '/headers';
 
 		$html = '';
-		$fallbackStyleRegex = "@^style-(\d+)@i";
+		$fallbackRegex = "@^style-(\d+)@i";
 
 		if (Folder::exists($headers_src))
 		{
 			$headers = Folder::folders($headers_src);
-
-			if (preg_match($fallbackStyleRegex, $this->value, $fallbackMatches))
-			{
-				$index = isset($fallbackMatches[1]) ? $fallbackMatches[1] - 1 : 0;
-				$this->value = isset($headers[$index]) ? $headers[$index] : $headers[0];
-			}
 
 			if (!empty($headers))
 			{
@@ -66,6 +61,14 @@ class JFormFieldHelixheaders extends FormField
 					$headerName = preg_replace("@(^\d+-)(.+)@", "$2", $header);
 					$headerName = preg_split("@(?=[A-Z])@", $headerName);
 					$headerName = implode(' ', $headerName);
+
+					if (preg_match($fallbackRegex, $header, $matches))
+					{
+						$styleNumber = isset($matches[1]) ? (int) $matches[1] : 1;
+						$headerName = $styleNumber <= 2
+							? Text::_('HELIX_ULTIMATE_HEADER_STYLE_' . $styleNumber)
+							: ucfirst(str_replace("-", ' ', $header));
+					}
 
 					$html .= '<li class="hu-header-item' . (($this->value === $header) ? ' active' : '') . '" data-style="' . $header . '">';
 

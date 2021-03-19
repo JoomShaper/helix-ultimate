@@ -46,17 +46,10 @@ class JFormFieldHelixOffcanvas extends FormField
 		$thumb_url = Uri::root() . 'templates/' . $templateName . '/offcanvas';
 
 		$html = '';
-		$fallbackRegex = "@^style-(\d+)@i";
 
 		if (Folder::exists($offCanvasDir))
 		{
 			$offCanvases = Folder::folders($offCanvasDir);
-			
-			if (preg_match($fallbackRegex, $this->value, $matches))
-			{
-				$index = isset($matches[1]) ? $matches[1] - 1 : 0;
-				$this->value = isset($offCanvases[$index]) ? $offCanvases[$index] : $offCanvases[0];
-			}
 
 			if (!empty($offCanvases))
 			{

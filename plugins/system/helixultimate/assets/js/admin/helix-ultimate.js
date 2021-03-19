@@ -60,7 +60,7 @@ jQuery(function ($) {
 
 	/** Reload the preview Iframe */
 	function reloadPreview() {
-		$previewFrame.contentWindow.location.reload();
+		$previewFrame.src = $previewFrame.getAttribute('src');
 	}
 
 	Joomla.reloadPreview = reloadPreview;

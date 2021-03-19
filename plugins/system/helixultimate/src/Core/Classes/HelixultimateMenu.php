@@ -144,10 +144,12 @@ class HelixultimateMenu
 		foreach ($items as &$item)
 		{
 			$class = '';
+			$ariaLabelOpen = '';
 
 			if ($item->id == $this->active)
 			{
 				$class .= ' current-item';
+				$ariaLabelOpen .= 'aria-current="page"';
 			}
 
 			if (in_array($item->id, $this->active_tree))
@@ -169,6 +171,7 @@ class HelixultimateMenu
 			}
 
 			$item->class   = $class;
+			$item->ariaLabelOpen   = $ariaLabelOpen;
 			$item->dropdown = 0;
 			$item->flink = $item->link;
 
@@ -675,6 +678,7 @@ class HelixultimateMenu
 		}
 
 		$flink = $item->flink;
+		$ariaLabelOpen = $item->ariaLabelOpen;
 		$flink = str_replace('&amp;', '&', \JFilterOutput::ampReplace(htmlspecialchars($flink)));
 
 		$badge_html = '';
@@ -728,7 +732,7 @@ class HelixultimateMenu
 			{
 				default:
 				case 0:
-					$output .= '<a ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linktitle . '</a>';
+					$output .= '<a ' . $ariaLabelOpen .  ' ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linktitle . '</a>';
 					break;
 				case 1:
 					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linktitle . '</a>';

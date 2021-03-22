@@ -282,7 +282,6 @@ jQuery(function ($) {
 				unit =
 					$(this).parent().find('select.hu-unit-select').val() ||
 					'px';
-				console.log(unit);
 			}
 		} else {
 			value = parseFloat(value) || '';

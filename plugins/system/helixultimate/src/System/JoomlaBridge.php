@@ -66,7 +66,6 @@ class JoomlaBridge
 			'style.colorPicker' 		=> ['jui/jquery.minicolors.css', 'vendor/minicolors/jquery.minicolors.css'],
 			'cms' 						=> ['jui/cms.js', 'system/showon.min.js'],
 			'script.bootstrap'			=> ['bootstrap.framework', 'vendor/bootstrap/bootstrap.min.js', 'registered'],
-	
 		];
 	
 		return self::$assetMap;

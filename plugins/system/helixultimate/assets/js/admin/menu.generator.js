@@ -185,7 +185,7 @@ jQuery(function ($) {
 		var initData = $('#hu-megamenu-layout').data();
 
 		var menumData = {
-			width: initData.width,
+			width: initData.width || '0',
 			menuitem: initData.menuitem,
 			menualign: initData.menualign,
 			megamenu: initData.megamenu,

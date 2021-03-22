@@ -262,7 +262,7 @@ jQuery(function ($) {
 			type: 'POST',
 			data: request,
 			beforeSend: function () {
-				$that.prepend('<i class="fas fa-circle-notch fa-spin"></i> ');
+				$that.find('span').addClass('fa-spin');
 			},
 			success: function (response) {
 				var data = $.parseJSON(response);
@@ -272,12 +272,13 @@ jQuery(function ($) {
 					$that.after(
 						"<p class='font-update-failed'>Unexpected error occurs. Please make sure that, you have inserted Google Font API key.</p>"
 					);
-					$that.find('.fa-circle-notch').remove();
+
+					$that.find('span').removeClass('fa-spin');
 				}
 			},
 			complete(response) {
 				if (response.status === 200) {
-					$that.find('.fa-circle-notch').remove();
+					$that.find('span').removeClass('fa-spin');
 					$that
 						.next()
 						.delay(2000)

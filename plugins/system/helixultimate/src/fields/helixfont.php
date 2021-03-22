@@ -49,9 +49,16 @@ class JFormFieldHelixfont extends FormField
 		{
 			$json = file_get_contents($template_path);
 		}
-		else
+		elseif (file_exists($plugin_path))
 		{
 			$json = file_get_contents($plugin_path);
+		}
+
+		if (empty($json))
+		{
+			Factory::getApplication()->enqueueMessage('Missing <code>webfonts.json</code> file. Please go to <code>advanced > Font Settings</code> and add Google Font Api and update.', 'error');
+
+			return;
 		}
 
 		$webfonts   = json_decode($json);

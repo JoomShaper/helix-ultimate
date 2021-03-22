@@ -92,9 +92,9 @@ class  PlgSystemHelixultimate extends JPlugin
 
 			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
 			$doc->addStyleSheet($plg_path . '/assets/css/admin/modal.css');
-			$doc->addStyleSheet($plg_path . '/assets/css/admin/menu.generator.css');
+			// $doc->addStyleSheet($plg_path . '/assets/css/admin/menu.generator.css');
 			$doc->addScript($plg_path . '/assets/js/admin/modal.js');
-			$doc->addScript($plg_path . '/assets/js/admin/menu.generator.js');
+			// $doc->addScript($plg_path . '/assets/js/admin/menu.generator.js');
 
 			$form->loadFile('megamenu', false);
 		}

@@ -14,8 +14,9 @@ use Joomla\CMS\Router\Route;
 <div class="search">
 	<form action="<?php echo Route::_('index.php'); ?>" method="post">
 		<?php
+			$output = '<label for="mod-search-searchword' . $module->id . '" class="hide-label">' . $label . '</label> ';
 			$input  = '<input name="searchword" id="mod-search-searchword' . $module->id . '" class="form-control" type="search" placeholder="' . $text . '">';
-			$output = '';
+			$output .= '';
 
 			if ($button) :
 				if ($imagebutton) :

@@ -15,8 +15,13 @@ jQuery(function ($) {
 		changeMenuType();
 
 		handleAddNewMenu();
+		removeEventListeners();
 	})();
 
+
+	function removeEventListeners() {
+		$(document).off('click', '.hu-add-menu-item');
+	}
 	/**
 	 * Rebuild menu items tree
 	 */
@@ -186,7 +191,7 @@ jQuery(function ($) {
 			},
 			complete() {
 				rebuildMenu();
-				Joomla.HelixToaster.error('Menu item has been successfully removed!', 'Removed');
+				Joomla.HelixToaster.success('Menu item has been successfully removed!', 'Success');
 			},
 		});
 	}
@@ -207,7 +212,6 @@ jQuery(function ($) {
 						$(this)[0] !== $(self).next('.hu-branch-tools-list')[0]
 					) {
 						$(this).removeClass('active');
-						// $(this).slideUp();
 						$(this).fadeIn();
 					}
 				});
@@ -215,7 +219,6 @@ jQuery(function ($) {
 					.next('.hu-branch-tools-list')
 					.toggleClass('active')
 					.fadeToggle();
-				// .slideToggle();
 			}
 		);
 	}
@@ -423,6 +426,10 @@ jQuery(function ($) {
 			const frameDoc = $itemFrame.contents();
 			$(saveBtnSelector).prop('disabled', false);
 
+			/** If already the event attached then remove it first. */
+			$(document).off('click', saveBtnSelector);
+
+			/** Handle the click event. */
 			$(document).on('click', saveBtnSelector, async function () {
 				const $form = $(frameDoc).find('form');
 

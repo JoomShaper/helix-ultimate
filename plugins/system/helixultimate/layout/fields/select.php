@@ -70,9 +70,9 @@ class HelixultimateFieldSelect
 			$output .= '<select class="hu-input input-select" data-attrname="' . $key . '">';
 		}
 
-		foreach ($options as $key => $text)
+		foreach ($options as $optKey => $text)
 		{
-			$output .= '<option value="' . $key . '" ' . ($key === $value ? 'selected="selected"' : '') . '>' . $text . '</option>';
+			$output .= '<option value="' . $optKey . '" ' . ($optKey === $value ? 'selected="selected"' : '') . '>' . $text . '</option>';
 		}
 
 		$output .= '</select>';

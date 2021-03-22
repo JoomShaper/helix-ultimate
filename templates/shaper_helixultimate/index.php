@@ -142,7 +142,13 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		$theme->head();
 
-		$theme->add_css('font-awesome.min.css');
+		/** Check if it is enabled font-awesome or not. */
+		if ($this->params->get('enable_fontawesome'))
+		{
+			$theme->add_css('font-awesome.min.css');
+			$theme->add_css('v4-shims.min.css');
+		}
+
 		$theme->add_js('main.js');
 
 		if ($this->params->get('image_lazy_loading', 0))

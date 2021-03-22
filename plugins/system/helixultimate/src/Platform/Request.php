@@ -555,7 +555,7 @@ class Request
 	 */
 	private function updateGoogleFontList()
 	{
-		$tmpl_style = Helper::getTemplateStyle($this->id);
+		$tmpl_style = Helper::loadTemplateData();
 		$template   = $tmpl_style->template;
 
 		$template_path = JPATH_SITE . '/templates/' . $template . '/webfonts';
@@ -565,10 +565,13 @@ class Request
 			Folder::create($template_path, 0755);
 		}
 
-		$tmpl_decode = json_decode($tmpl_style->params);
-		$gfont_api = (isset($tmpl_decode) && $tmpl_decode) ? $tmpl_decode->gfont_api : 'AIzaSyBVybAjpiMHzNyEm3ncA_RZ4WETKsLElDg';
+		$params = is_string($tmpl_style->params)
+			? new Registry($tmpl_style->params)
+			: $tmpl_style->params;
 
-		$url  = 'https://www.googleapis.com/webfonts/v1/webfonts?key=' . $gfont_api;
+		$apiKey = $params->get('gfont_api', '');
+
+		$url  = 'https://www.googleapis.com/webfonts/v1/webfonts?key=' . $apiKey;
 		$http = new Http;
 		$str  = $http->get($url);
 

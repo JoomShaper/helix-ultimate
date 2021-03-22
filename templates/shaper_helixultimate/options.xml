@@ -1248,7 +1248,7 @@
 			label="HELIX_ULTIMATE_GROUP_CUSTOM_FONT" />
 		<field name="custom_font"
 			helixsubgroup="font_custom"
-			subclasses="col-12r"
+			subclasses="col-12"
 			type="helixfont" 
 			hideLabel="true" 
 			showon="enable_custom_font:1" />
@@ -1259,23 +1259,6 @@
 			label="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS" 
 			description="HELIX_ULTIMATE_FONT_CUSTOM_SELECTORS_DESC" 
 			showon="enable_custom_font:1" />
-
-		<field name="gfont_api"
-			type="text"
-			class="parent"
-			helixgroup="update_font"
-			track="off"
-			label="HELIX_ULTIMATE_GFONT_API"
-			description="HELIX_ULTIMATE_GFONT_API_DESC" />
-
-		<field name="update_fonts"
-			type="helixbutton"
-			helixgroup="update_font"
-			url="#"
-			text="HELIX_ULTIMATE_UPDATE_FONTS_CLICK"
-			hideLabel="true"
-			description="HELIX_ULTIMATE_UPDATE_FONT_LIST_DESC"
-			class="btn-primary btn-update-hu-fonts" />
 	</fieldset>
 
 	<!--Blog-->
@@ -1642,15 +1625,6 @@
 			default="0" 
 			label="HELIX_ULTIMATE_CSS_COMPRESS" 
 			description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
-		<!-- <field name="purge_css" 
-			type="helixbutton" 
-			helixgroup="compression" 
-			url="#" 
-			text="HELIX_ULTIMATE_PURGE_CSS_TEXT" 
-			hideLabel="true" 
-			description="HELIX_ULTIMATE_PURGE_CSS_DESC" 
-			class="btn-primary btn-purge-helix-ultimate-css" 
-			showon="compress_css:1" /> -->
 		<field name="compress_js" 
 			helixgroup="compression" 
 			type="checkbox" 
@@ -1669,6 +1643,30 @@
 			default="0" 
 			label="HELIX_ULTIMATE_ENABLE_SCSS" 
 			description="HELIX_ULTIMATE_ENABLE_SCSS_DESC" />
+
+		<field name="enable_fontawesome"
+			helixgroup="fonts"
+			type="checkbox"
+			default="1"
+			label="HELIX_ULTIMATE_ENABLE_FONT_AWESOME"
+			description="HELIX_ULTIMATE_ENABLE_FONT_AWESOME_DESC"
+		/>
+		
+		<field name="gfont_api"
+			type="text"
+			class="parent"
+			helixgroup="fonts"
+			label="HELIX_ULTIMATE_GFONT_API"
+			description="HELIX_ULTIMATE_GFONT_API_DESC" />
+
+		<field name="update_fonts"
+			type="helixbutton"
+			helixgroup="fonts"
+			url="#"
+			text="HELIX_ULTIMATE_UPDATE_FONTS_CLICK"
+			hideLabel="true"
+			description="HELIX_ULTIMATE_UPDATE_FONT_LIST_DESC"
+			class="btn-primary btn-update-hu-fonts" />
 
 		<field name="image_lazy_loading" 
 			helixgroup="image" 

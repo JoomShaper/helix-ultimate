@@ -219,6 +219,7 @@ class Platform
 			->useScript('jquery-migrate')
 			->registerAndUseScript('cms', '', ['version' => 'auto', 'relative' => true])
 			->registerAndUseScript('script.bootstrap', '', ['version' => 'auto', 'relative' => true])
+			->registerAndUseStyle('style.bootstrap', $helix_assets_url . '/css/bootstrap.min.css', ['version' => 'auto', 'relative' => true])
 			->useScript('keepalive')
 			->registerAndUseScript('script.chosen', '', ['version' => 'auto', 'relative' => true])
 			->registerAndUseScript('script.colorPicker', '', ['version' => 'auto', 'relative' => true]);

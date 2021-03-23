@@ -21,21 +21,16 @@ use HelixUltimate\Framework\Platform\Blog;
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Media;
 use HelixUltimate\Framework\Platform\Platform;
-use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Session\Session;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
-use JShrink\Minifier;
 
 // Constant definition
 define('HELIX_LAYOUTS_PATH', JPATH_PLUGINS . '/system/helixultimate/layouts');
@@ -64,7 +59,27 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	protected $app;
 
-	private $cachedHeadData = [];
+	/**
+	 * Handle the event hook onAfterInitialise.
+	 * Here we can override the HTML functions.
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public function onAfterInitialise()
+	{
+		$bootstrapPath = JPATH_THEMES . '/shaper_helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
+
+		if ($this->app->isClient('site') && file_exists($bootstrapPath))
+		{
+			if (!class_exists('HelixBootstrap'))
+			{
+				require_once $bootstrapPath;
+			}
+
+			HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
+		}
+	}
 
 	/**
 	 * The form event. Load additional parameters when available into the field form.

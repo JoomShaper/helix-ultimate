@@ -43,7 +43,6 @@ $page_header_tag = 'h1';
 $attribs = json_decode($this->item->attribs);
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';
 
-
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 // HTMLHelper::_('behavior.caption');
@@ -92,8 +91,6 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 		<?php if ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()) : ?>
 			<span class="label label-warning"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
-
-		
 	</div>
 	<?php endif; ?>
 	<div class="article-can-edit d-flex flex-wrap justify-content-between">

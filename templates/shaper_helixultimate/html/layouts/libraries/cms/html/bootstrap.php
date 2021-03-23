@@ -18,7 +18,7 @@ use Joomla\CMS\Layout\LayoutHelper;
  *
  * @since  3.0
  */
-abstract class JHtmlBootstrap
+abstract class HelixBootstrap
 {
 	/**
 	 * @var    array  Array containing information for loaded files
@@ -330,39 +330,56 @@ abstract class JHtmlBootstrap
 	 */
 	public static function tooltip($selector = '.hasTooltip', $params = array())
 	{
-		// Only load once
-		if (isset(static::$loaded[__METHOD__][$selector]))
+		if (!isset(static::$loaded[__METHOD__][$selector]))
 		{
-			return;
+			// Include Bootstrap framework
+			HTMLHelper::_('bootstrap.framework');
+
+			// Setup options object
+			$opt['animation'] = isset($params['animation']) ? (boolean) $params['animation'] : null;
+			$opt['html']      = isset($params['html']) ? (boolean) $params['html'] : true;
+			$opt['placement'] = isset($params['placement']) ? (string) $params['placement'] : null;
+			$opt['selector']  = isset($params['selector']) ? (string) $params['selector'] : null;
+			$opt['title']     = isset($params['title']) ? (string) $params['title'] : null;
+			$opt['trigger']   = isset($params['trigger']) ? (string) $params['trigger'] : null;
+			$opt['delay']     = isset($params['delay']) ? (is_array($params['delay']) ? $params['delay'] : (int) $params['delay']) : null;
+			$opt['container'] = isset($params['container']) ? $params['container'] : 'body';
+			$opt['template']  = isset($params['template']) ? (string) $params['template'] : null;
+			$onShow           = isset($params['onShow']) ? (string) $params['onShow'] : null;
+			$onShown          = isset($params['onShown']) ? (string) $params['onShown'] : null;
+			$onHide           = isset($params['onHide']) ? (string) $params['onHide'] : null;
+			$onHidden         = isset($params['onHidden']) ? (string) $params['onHidden'] : null;
+
+			$options = HTMLHelper::getJSObject($opt);
+
+			// Build the script.
+			$script = array('$(container).find(' . json_encode($selector) . ').tooltip(' . $options . ')');
+
+			if ($onShow)
+			{
+				$script[] = 'on("show.bs.tooltip", ' . $onShow . ')';
+			}
+
+			if ($onShown)
+			{
+				$script[] = 'on("shown.bs.tooltip", ' . $onShown . ')';
+			}
+
+			if ($onHide)
+			{
+				$script[] = 'on("hide.bs.tooltip", ' . $onHide . ')';
+			}
+
+			if ($onHidden)
+			{
+				$script[] = 'on("hidden.bs.tooltip", ' . $onHidden . ')';
+			}
+
+			// Set static array
+			static::$loaded[__METHOD__][$selector] = true;
 		}
 
-		// Include Bootstrap framework
-		HTMLHelper::_('bootstrap.framework');
-
-		// Setup options object
-		$opt['animation']   = isset($params['animation']) ? $params['animation'] : null;
-		$opt['container']   = isset($params['container']) ? $params['container'] : 'body';
-		$opt['delay']       = isset($params['delay']) ? $params['delay'] : null;
-		$opt['html']        = isset($params['html']) ? $params['html'] : true;
-		$opt['placement']   = isset($params['placement']) ? $params['placement'] : null;
-		$opt['selector']    = isset($params['selector']) ? $params['selector'] : null;
-		$opt['template']    = isset($params['template']) ? $params['template'] : null;
-		$opt['title']       = isset($params['title']) ? $params['title'] : null;
-		$opt['trigger']     = isset($params['trigger']) ? $params['trigger'] : 'hover focus';
-		$opt['constraints'] = isset($params['constraints']) ? $params['constraints'] : ['to' => 'scrollParent', 'attachment' => 'together', 'pin' => true];
-		$opt['offset']      = isset($params['offset']) ? $params['offset'] : '0 0';
-		$onShow             = isset($params['onShow']) ? (string) $params['onShow'] : null;
-		$onShown            = isset($params['onShown']) ? (string) $params['onShown'] : null;
-		$onHide             = isset($params['onHide']) ? (string) $params['onHide'] : null;
-		$onHidden           = isset($params['onHidden']) ? (string) $params['onHidden'] : null;
-
-
-		$opt     = (object) array_filter((array) $opt);
-
-		Factory::getDocument()->addScriptOptions('bootstrap.tooltip', array($selector => $opt));
-
-		// Set static array
-		static::$loaded[__METHOD__][$selector] = true;
+		return;
 	}
 
 	/**
@@ -550,7 +567,7 @@ abstract class JHtmlBootstrap
 		$tabScriptLayout = $tabScriptLayout === null ? new FileLayout('libraries.cms.html.bootstrap.addtabscript') : $tabScriptLayout;
 		$tabLayout = $tabLayout === null ? new FileLayout('libraries.cms.html.bootstrap.addtab') : $tabLayout;
 
-		$active = (static::$loaded['JHtmlBootstrap::startTabSet'][$selector]['active'] == $id) ? ' active' : '';
+		$active = (static::$loaded['HTMLHelperBootstrap::startTabSet'][$selector]['active'] == $id) ? ' active' : '';
 
 		// Inject tab into UL
 		Factory::getDocument()

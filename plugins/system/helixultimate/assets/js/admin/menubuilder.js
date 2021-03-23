@@ -442,7 +442,15 @@ jQuery(function ($) {
 				if (isValidForm) {
 					try {
 						const res = await submitItemForm($form);
-						if (res) {
+						const $responseElement = $('<div class="hu-menuitem-resp"></div>')
+							.hide()
+							.html(res);
+						const $alertHeading = $responseElement.find('.alert-heading');
+						const $alertMessage = $responseElement.find('.alert-message');
+						const respType = $alertHeading.length > 0 ? $alertHeading.text() : '';
+						const message = $alertMessage.length > 0 ? $alertMessage.text() : '';
+
+						if (res && respType !== 'Error') {
 							fetchMenuItems(menuType);
 							$(this).closeModal();
 
@@ -451,6 +459,8 @@ jQuery(function ($) {
 							} else if (task === 'item.save') {
 								Joomla.HelixToaster.success('Changes have been successfully saved!', 'Updated');
 							}
+						} else {
+							Joomla.HelixToaster.error(message, 'Error');
 						}
 					} catch (err) {
 						Joomla.HelixToaster.error('Something went wrong!', 'Error');

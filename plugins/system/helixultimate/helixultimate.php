@@ -64,8 +64,6 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	protected $app;
 
-	private $cachedHeadData = [];
-
 	/**
 	 * The form event. Load additional parameters when available into the field form.
 	 * Only when the type of the form is of interest.

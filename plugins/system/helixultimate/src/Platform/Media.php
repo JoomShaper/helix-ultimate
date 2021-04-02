@@ -41,7 +41,7 @@ class Media
 		$input 	= Factory::getApplication()->input;
 		$path 	= $input->post->get('path', '/images', 'PATH');
 
-		$images 	= Folder::files(JPATH_ROOT . $path, '.png|.jpg|.gif|.svg|.ico', false, true);
+		$images 	= Folder::files(JPATH_ROOT . $path, '.png|.jpg|.jpeg|.gif|.svg|.ico', false, true);
 		$folders 	= Folder::folders(JPATH_ROOT . $path, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs'));
 
 		$crumbs = explode('/', ltrim($path, '/'));

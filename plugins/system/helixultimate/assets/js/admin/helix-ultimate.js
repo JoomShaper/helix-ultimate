@@ -60,7 +60,13 @@ jQuery(function ($) {
 
 	/** Reload the preview Iframe */
 	function reloadPreview() {
-		$previewFrame.src = $previewFrame.getAttribute('src');
+		const url = $previewFrame.contentWindow.location.href;
+
+		/** Check if the iframe url is not `about:blank` then reload. */
+		if (url.length && url !== 'about:blank')
+		{
+			$previewFrame.src = $previewFrame.getAttribute('src');
+		}
 	}
 
 	Joomla.reloadPreview = reloadPreview;

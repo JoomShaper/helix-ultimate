@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -485,8 +485,8 @@ class HelixUltimate
 	 */
 	public function render_layout()
 	{
-		$this->add_css('custom.css');
-		$this->add_js('custom.js');
+		// $this->add_css('custom.css');
+		// $this->add_js('custom.js');
 		$this->include_features();
 
 		$layout = ($this->params->get('layout')) ? $this->params->get('layout') : [];
@@ -522,6 +522,7 @@ class HelixUltimate
 
 		$option      = $this->app->input->getCmd('option', '');
 		$view        = $this->app->input->getCmd('view', '');
+
 		$pagebuilder = false;
 		$output = '';
 		$modified_row = new \stdClass;

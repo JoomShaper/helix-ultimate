@@ -13,9 +13,8 @@ use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Path;
-use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
@@ -70,6 +69,11 @@ class Helper
 			$query->select('id')
 				->from($db->quoteName('#__template_styles'))
 				->where($db->quoteName('template') . ' = ' . $db->quote($template));
+
+			if (Multilanguage::isEnabled())
+			{
+				$query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', 1)');
+			}
 
 			$db->setQuery($query);
 

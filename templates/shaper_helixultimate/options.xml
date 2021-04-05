@@ -1494,7 +1494,8 @@
 			type="text" 
 			helixgroup="blog_details" 
 			default="Related Articles" 
-			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE" 
+			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE"
+			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE_DESC"
 			showon="related_article:1" />
 		<field name="related_article_limit" 
 			type="number" 

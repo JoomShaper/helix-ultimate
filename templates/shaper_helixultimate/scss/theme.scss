@@ -1099,6 +1099,42 @@ body.modal-menu-active{
 	}
 }
 
+.related-article-large {
+	.article-image {
+		width: 350px;
+		min-width: 350px;
+	}
+
+	.article-information {
+		border-left: 1px solid #f1f1f1;
+		padding-left: 20px;
+		margin-left: 20px;
+	
+		> span {
+			font-size: 0.813rem;
+	
+			+ span::before {
+				display: inline-block;
+				padding-right: 0.5rem;
+				padding-left: 0.5rem;
+				content: '/';
+			}
+	
+			a {
+				color: $text_color;
+				&:hover {
+					color: $link_hover_color;
+				}
+			}
+		}
+
+		.intro-text {
+			margin-top: 20px;
+		}
+	}
+}
+
+
 .article-info {
 	display: -webkit-box;
 	display: -ms-flexbox;

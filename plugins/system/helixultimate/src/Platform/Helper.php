@@ -250,10 +250,10 @@ class Helper
 		$templateId = 0;
 
 		$app = Factory::getApplication();
-		$currentTemplate = $app->getTemplate(true);
 
 		if ($app->isClient('site'))
 		{
+			$currentTemplate = $app->getTemplate(true);
 			$templateId = $currentTemplate->id ?? 0;
 		}
 		else
@@ -285,7 +285,7 @@ class Helper
 		$draftKey = static::generateKey($draftKeyOptions);
 		$cache = new HelixCache($draftKey);
 
-		if ($cache->contains())
+		if ($cache->contains() && $app->input->get('helixMode', '') === 'edit')
 		{
 			$template = $cache->loadData();
 		}

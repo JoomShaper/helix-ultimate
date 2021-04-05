@@ -11,7 +11,6 @@ defined('_JEXEC') or die();
 use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
-use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 

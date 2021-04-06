@@ -27,12 +27,10 @@ HTMLHelper::_('bootstrap.tooltip');
 		</div>
 	<?php endif; ?>
 
-	<div id="form-login-username" class="form-group">
+	<div id="form-login-username" class="mb-3">
 		<?php if (!$params->get('usetext')) : ?>
 			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text" aria-label="<?php echo Text::_('MOD_LOGIN_VALUE_USERNAME'); ?>"><span class="fas fa-user"></span></span>
-				</div>
+				<span class="input-group-text" aria-label="<?php echo Text::_('MOD_LOGIN_VALUE_USERNAME'); ?>"><span class="fas fa-user"></span></span>
 				<input id="modlgn-username" type="text" name="username" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('MOD_LOGIN_VALUE_USERNAME'); ?>" />
 			</div>
 		<?php else : ?>
@@ -41,12 +39,10 @@ HTMLHelper::_('bootstrap.tooltip');
 		<?php endif; ?>
 	</div>
 
-	<div id="form-login-password" class="form-group">
+	<div id="form-login-password" class="mb-3">
 		<?php if (!$params->get('usetext')) : ?>
 			<div class="input-group">
-				<div class="input-group-prepend">
 					<span class="input-group-text" aria-label="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>"><span class="fas fa-lock"></span></span>
-				</div>
 				<input id="modlgn-passwd" type="password" name="password" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" />
 			</div>
 		<?php else : ?>
@@ -56,18 +52,14 @@ HTMLHelper::_('bootstrap.tooltip');
 	</div>
 
 	<?php if (count($twofactormethods) > 1) : ?>
-		<div id="form-login-secretkey" class="form-group">
+		<div id="form-login-secretkey" class="mb-3">
 			<?php if (!$params->get('usetext')) : ?>
 				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text" aria-label="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>"><span class="fas fa-star"></span></span>
-					</div>
+					<span class="input-group-text" aria-label="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>"><span class="fas fa-star"></span></span>
 					<input id="modlgn-secretkey" autocomplete="off" type="text" name="secretkey" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>" />
-					<div class="input-group-append">
-						<button class="btn btn-secondary hasTooltip" type="button" title="<?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?>">
-							<span class="fas fa-headset"></span>
-						</button>
-					</div>
+					<button class="btn btn-secondary hasTooltip" type="button" title="<?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?>">
+						<span class="fas fa-headset"></span>
+					</button>
 				</div>
 			<?php else : ?>
 				<label for="modlgn-secretkey"><?php echo Text::_('JGLOBAL_SECRETKEY'); ?></label>
@@ -78,13 +70,13 @@ HTMLHelper::_('bootstrap.tooltip');
 	<?php endif; ?>
 
 	<?php if (PluginHelper::isEnabled('system', 'remember')) : ?>
-		<div id="form-login-remember" class="form-group form-check">
+		<div id="form-login-remember" class="mb-3 form-check">
 			<input id="modlgn-remember" type="checkbox" name="remember" class="form-check-input" value="yes"/>
 			<label for="modlgn-remember" class="control-label"><?php echo Text::_('MOD_LOGIN_REMEMBER_ME'); ?></label>
 		</div>
 	<?php endif; ?>
 
-	<div id="form-login-submit" class="form-group">
+	<div id="form-login-submit" class="mb-3">
 		<button type="submit" tabindex="0" name="Submit" class="btn btn-primary login-button"><?php echo Text::_('JLOGIN'); ?></button>
 	</div>
 

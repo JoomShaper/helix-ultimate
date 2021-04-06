@@ -108,7 +108,7 @@ class HelixUltimateFeatureMenu
 
 		if ($user->id === 0)
 		{
-			$html[] = '<a class="sp-sign-in" href="' . Route::_('index.php?option=com_users&view=login') . '" ><span class="far fa-user mr-1"></span><span class="signin-text d-none d-lg-inline-block">' . Text::_('HELIX_ULTIMATE_SIGN_IN_MENU') . '</span></a>';
+			$html[] = '<a class="sp-sign-in" href="' . Route::_('index.php?option=com_users&view=login') . '" ><span class="far fa-user me-1"></span><span class="signin-text d-none d-lg-inline-block">' . Text::_('HELIX_ULTIMATE_SIGN_IN_MENU') . '</span></a>';
 		}
 		else
 		{

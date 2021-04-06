@@ -10,90 +10,90 @@ body.rtl {
 		float: left;
 	}
 	
-	.float-left {
+	.float-start {
 		float: right !important;
 	}
 	
-	.float-right {
+	.float-end {
 		float: left !important;
 	}
 	
 	@media (min-width: 576px) {
-		.float-sm-left {
+		.float-sm-start {
 			float: right !important;
 		}
-		.float-sm-right {
+		.float-sm-end {
 			float: left !important;
 		}
 	}
 	
 	@media (min-width: 768px) {
-		.float-md-left {
+		.float-md-start {
 			float: right !important;
 		}
-		.float-md-right {
+		.float-md-end {
 			float: left !important;
 		}
 	}
 	
 	@media (min-width: 992px) {
-		.float-lg-left {
+		.float-lg-start {
 			float: right !important;
 		}
-		.float-lg-right {
+		.float-lg-end {
 			float: left !important;
 		}
 	}
 	
 	@media (min-width: 1200px) {
-		.float-xl-left {
+		.float-xl-start {
 			float: right !important;
 		}
-		.float-xl-right {
+		.float-xl-end {
 			float: left !important;
 		}
 	}
 	
-	.text-left {
+	.text-start {
 		text-align: right !important;
 	}
 	
-	.text-right {
+	.text-end {
 		text-align: left !important;
 	}
 	
 	@media (min-width: 576px) {
-		.text-sm-left {
+		.text-sm-start {
 			text-align: right !important;
 		}
-		.text-sm-right {
+		.text-sm-end {
 			text-align: left !important;
 		}
 	}
 	
 	@media (min-width: 768px) {
-		.text-md-left {
+		.text-md-start {
 			text-align: right !important;
 		}
-		.text-md-right {
+		.text-md-end {
 			text-align: left !important;
 		}
 	}
 	
 	@media (min-width: 992px) {
-		.text-lg-left {
+		.text-lg-start {
 			text-align: right !important;
 		}
-		.text-lg-right {
+		.text-lg-end {
 			text-align: left !important;
 		}
 	}
 	
 	@media (min-width: 1200px) {
-		.text-xl-left {
+		.text-xl-start {
 			text-align: right !important;
 		}
-		.text-xl-right {
+		.text-xl-end {
 			text-align: left !important;
 		}
 	}
@@ -106,7 +106,7 @@ body.rtl {
 		unicode-bidi: bidi-override;
 	}
 
-	.mr-auto,
+	.me-auto,
 	.mx-auto {
 		margin-right: initial!important;
 		margin-left: auto!important;

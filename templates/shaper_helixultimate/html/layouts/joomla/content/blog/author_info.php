@@ -23,7 +23,7 @@ $params = $template->params;
 			$profile = UserHelper::getProfile( (int) $displayData->created_by );
 		?>
 		<div class="media">
-			<img class="mr-3" src="https://www.gravatar.com/avatar/<?php echo md5($author->get('email')); ?>?s=64&d=identicon&r=PG" alt="<?php echo $author->name; ?>">
+			<img class="me-3" src="https://www.gravatar.com/avatar/<?php echo md5($author->get('email')); ?>?s=64&d=identicon&r=PG" alt="<?php echo $author->name; ?>">
 			<div class="media-body">
 				<h5 class="mt-0"><?php echo $author->name; ?></h5>
 				<?php if(isset($profile->profile['aboutme']) && $profile->profile['aboutme']) : ?>

@@ -31,7 +31,7 @@ HTMLHelper::_('behavior.formvalidator');
 					<div>
 						<p><?php echo Text::_($fieldset->label); ?></p>
 						<?php foreach ($this->form->getFieldset($fieldset->name) as $name => $field) : ?>
-							<div class="form-group">
+							<div class="mb-3">
 								<?php echo $field->label; ?>
 								<?php echo $field->input; ?>
 							</div>

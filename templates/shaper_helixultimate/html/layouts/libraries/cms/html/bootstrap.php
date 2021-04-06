@@ -483,7 +483,7 @@ abstract class HelixBootstrap
 		$class     = (!empty($class)) ? ' ' . $class : '';
 
 		$html = '<div class="card mb-2' . $class . '">'
-			. '<a href="#' . $id . '" data-toggle="collapse"' . $parent . ' class="card-header' . $collapsed . '" role="tab">'
+			. '<a href="#' . $id . '" data-bs-toggle="collapse"' . $parent . ' class="card-header' . $collapsed . '" role="tab">'
 			. $text
 			. '</a>'
 			. '<div class="collapse' . $in . '" id="' . $id . '" role="tabpanel">'

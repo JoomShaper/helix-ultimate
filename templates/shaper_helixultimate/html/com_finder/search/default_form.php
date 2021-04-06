@@ -76,7 +76,7 @@ if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosugge
 	<?php endif; ?>
 	<fieldset class="word mb-3">
 		<div class="form-inline">
-			<label for="q" class="mr-2">
+			<label for="q" class="me-2">
 				<?php echo Text::_('COM_FINDER_SEARCH_TERMS'); ?>
 			</label>
 			<div class="input-group">
@@ -94,7 +94,7 @@ if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosugge
                     </button>
 				<?php endif; ?>
 				<?php if ($this->params->get('show_advanced', 1)) : ?>
-					<a href="#advancedSearch" data-toggle="collapse" class="btn btn-secondary" aria-hidden="true">
+					<a href="#advancedSearch" data-bs-toggle="collapse" class="btn btn-secondary" aria-hidden="true">
 						<span class="fas fa-search-plus" aria-hidden="true"></span>
                         <?php echo Text::_('COM_FINDER_ADVANCED_SEARCH_TOGGLE'); ?></a>
 				<?php endif; ?>

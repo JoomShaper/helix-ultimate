@@ -46,7 +46,7 @@ extract($displayData);
  * @var   array    $control         Is this field checked?
  */
 
-$class    = ' class="custom-select ' . trim('simplecolors chzn-done ' . $class) . '"';
+$class    = ' class="form-select ' . trim('simplecolors chzn-done ' . $class) . '"';
 $disabled = $disabled ? ' disabled' : '';
 $readonly = $readonly ? ' readonly' : '';
 

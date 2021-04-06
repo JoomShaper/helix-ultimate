@@ -126,7 +126,7 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 	<?php
 	 if( ($tmpl_params->get('social_share') || $params->get('show_vote')) && !$this->print) : ?>
 		<div class="article-ratings-social-share d-flex justify-content-end">
-			<div class="mr-auto align-self-center">
+			<div class="me-auto align-self-center">
 				<?php if($params->get('show_vote')): ?>
 					<?php HTMLHelper::_('jquery.token'); ?>
 					<?php echo LayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>

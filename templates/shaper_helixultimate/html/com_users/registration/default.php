@@ -43,7 +43,7 @@ HTMLHelper::_('behavior.formvalidator');
 										<?php else: ?>
 											<div class="col-lg-12">
 										<?php endif; ?>
-										<div class="form-group">
+										<div class="mb-3">
 											<?php echo $field->label; ?>
 											<?php if (!$field->required && $field->type !== 'Spacer') : ?>
 												<span class="optional"><?php echo Text::_('COM_USERS_OPTIONAL'); ?></span>

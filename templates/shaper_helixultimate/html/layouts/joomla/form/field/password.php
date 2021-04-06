@@ -54,11 +54,9 @@ $attributes = array(
 ?>
 <div class="password-group">
 	<div class="input-group">
-		<span class="input-group-prepend">
-			<span class="input-group-text">
-				<span class="fas fa-key" aria-hidden="true"></span>
-				<span class="sr-only"><?php echo Text::_('JSHOW'); ?></span>
-			</span>
+		<span class="input-group-text">
+			<span class="fas fa-key" aria-hidden="true"></span>
+			<span class="visually-hidden"><?php echo Text::_('JSHOW'); ?></span>
 		</span>
 		<input
 			type="password"

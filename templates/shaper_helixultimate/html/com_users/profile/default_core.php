@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 
 <div id="users-profile-core">
 	<div class="d-flex mb-3">
-		<div class="mr-auto">
+		<div class="me-auto">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_CORE_LEGEND'); ?></strong>
 		</div>
 		<div>

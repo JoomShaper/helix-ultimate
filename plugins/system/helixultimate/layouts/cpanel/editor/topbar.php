@@ -59,15 +59,18 @@ $sidebar = new Settings;
 
 		<div class="hu-response">
 			<div class="hu-loading-msg">
-				<span class="fas fa-sync"></span> <span class="hu-response-msg"><span class="hu-msg">Drafting...</span></span>
+				<div class="spinner-border spinner-border-sm" role="status">
+					<span class="visually-hidden">Drafting...</span>
+				</div>
+				<span class="hu-response-msg"><?php echo Text::_('HELIX_ULTIMATE_TOPBAR_MSG_DRAFTING'); ?></span>
 			</div>
 
 			<div class="hu-done-msg">
-				<span class="fas fa-check-circle hu-text-success"></span> <span class="hu-response-msg"><span class="hu-msg">Drafted</span></span>
+				<span class="fas fa-check-circle" style="color: green;"></span> <span class="hu-response-msg"><span class="hu-msg"><?php echo Text::_('HELIX_ULTIMATE_TOPBAR_MSG_DRAFTED'); ?></span></span>
 			</div>
 
 			<button type="button" role="button" class="hu-btn hu-btn-reset action-reset-drafts">
-				<span class="fas fa-undo-alt"></span> Reset Draft
+				<span class="fas fa-history"></span> <?php echo Text::_('HELIX_ULTIMATE_TOPBAR_MSG_RESET_DRAFT'); ?>
 			</button>
 		</div>
 

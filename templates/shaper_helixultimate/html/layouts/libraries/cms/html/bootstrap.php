@@ -266,7 +266,7 @@ abstract class HelixBootstrap
 
 		$opt     = (object) array_filter((array) $opt);
 
-		Factory::getDocument()->addScriptOptions('bootstrap.popover', array($selector => $opt));
+		// Factory::getDocument()->addScriptOptions('bootstrap.popover', array($selector => $opt));
 
 		static::$loaded[__METHOD__][$selector] = true;
 	}

@@ -79,6 +79,7 @@ class  PlgSystemHelixultimate extends JPlugin
 			}
 
 			HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
+			HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
 		}
 	}
 
@@ -116,7 +117,7 @@ class  PlgSystemHelixultimate extends JPlugin
 		// Article Post format
 		if ($form->getName() === 'com_content.article')
 		{
-			$doc->addStyleSheet($plg_path . '/assets/css/font-awesome.min.css');
+			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
 			$tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName()->template;
 
 			HTMLHelper::_('jquery.framework');

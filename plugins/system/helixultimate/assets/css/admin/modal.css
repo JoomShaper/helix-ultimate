@@ -1,7 +1,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
@@ -270,6 +270,8 @@
 	list-style: none;
 	padding: 0;
 	margin: -10px;
+    height: 100%;
+	overflow-y: auto;
 }
 
 .hu-media:empty {

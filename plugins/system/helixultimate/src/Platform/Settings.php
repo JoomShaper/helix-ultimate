@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -118,12 +118,12 @@ class Settings
 	}
 
 	/**
-	 * If menu_builder field is not present in the options.xml file then add it.
+	 * Inject the menu_builder field if it is not present in the `options.xml` file.
 	 *
 	 * @return	void
 	 * @since	2.0.0
 	 */
-	protected function loadMenubuilder(Form &$form)
+	protected function injectMenuBuilderField(Form &$form)
 	{
 		$field = $form->getField('menu_builder');
 
@@ -135,6 +135,21 @@ class Settings
 		{
 			$fieldXml = new \SimpleXMLElement('<field name="menu_builder" helixgroup="menubuilder" type="helixmenubuilder" label="HELIX_ULTIMATE_MENU_BUILDER" description="HELIX_ULTIMATE_MENU_BUILDER_DESC" hideLabel="true" />');
 			$form->setField($fieldXml, null, false, 'menu');
+		}
+	}
+
+	protected function positioningMenuField(Form &$form)
+	{
+		$field = $form->getFieldXml('menu');
+
+		/**
+		 * If the menu field's `helixgroup` attribute is not `menubuilder`,
+		 * i.e. for old templates update the group name.
+		 */
+		if ($field->attributes()->helixgroup !== 'menubuilder')
+		{
+			$field->attributes()->helixgroup = 'menubuilder';
+			$form->setField($field, null, false, 'menu');
 		}
 	}
 
@@ -172,7 +187,8 @@ class Settings
 
 		// Load the updated xml.
 		$this->form->load($formXml->asXML());
-		$this->loadMenubuilder($this->form);
+		$this->injectMenuBuilderField($this->form);
+		$this->positioningMenuField($this->form);
 
 		$formData = new \stdClass;
 

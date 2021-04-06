@@ -17,6 +17,7 @@ defined('_JEXEC') or die();
 require_once __DIR__ . '/bootstrap.php';
 
 
+use HelixUltimate\Framework\Core\HelixUltimate;
 use HelixUltimate\Framework\Platform\Blog;
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Media;
@@ -85,9 +86,7 @@ class  PlgSystemHelixultimate extends JPlugin
 
 			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
 			$doc->addStyleSheet($plg_path . '/assets/css/admin/modal.css');
-			// $doc->addStyleSheet($plg_path . '/assets/css/admin/menu.generator.css');
 			$doc->addScript($plg_path . '/assets/js/admin/modal.js');
-			// $doc->addScript($plg_path . '/assets/js/admin/menu.generator.js');
 
 			$form->loadFile('megamenu', false);
 		}
@@ -348,11 +347,29 @@ class  PlgSystemHelixultimate extends JPlugin
 
 	public function onBeforeCompileHead()
 	{
+		$template = Helper::loadTemplateData();
+		$params = $template->params;
+
 		if ($this->app->isClient('administrator') && $this->app->input->get('option') === 'com_ajax' && $this->app->input->get('helix') === 'ultimate')
 		{
 			// Generating method `sanitizeAssetsForJ3` or `sanitizeAssetsForJ4` according to the Joomla major version.
 			$sanitizeMethod = 'sanitizeAssetsForJ' . JoomlaBridge::getVersion('major');
 			$this->$sanitizeMethod();
+		}
+
+		if ($this->app->isClient('site'))
+		{
+			$theme = new HelixUltimate;
+
+			if ($params->get('compress_css'))
+			{
+				$theme->compress_css();
+			}
+
+			if ($params->get('compress_js'))
+			{
+				$theme->compress_js($params->get('exclude_js'));
+			}
 		}
 	}
 
@@ -444,7 +461,7 @@ class  PlgSystemHelixultimate extends JPlugin
 		{
 			if ($this->app->isClient('site'))
 			{
-				$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+				$template = Helper::loadTemplateData();
 				$this->app->setTemplate('shaper_helixultimate', $template->params);
 			}
 		}
@@ -452,7 +469,7 @@ class  PlgSystemHelixultimate extends JPlugin
 
 	public function onAfterRender()
 	{
-		$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+		$template = Helper::loadTemplateData();
 		$params = $template->params;
 
 		if ($this->app->isClient('site') && $params->get('image_lazy_loading', 0))

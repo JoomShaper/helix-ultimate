@@ -1,7 +1,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -60,7 +60,13 @@ jQuery(function ($) {
 
 	/** Reload the preview Iframe */
 	function reloadPreview() {
-		$previewFrame.src = $previewFrame.getAttribute('src');
+		const url = $previewFrame.contentWindow.location.href;
+
+		/** Check if the iframe url is not `about:blank` then reload. */
+		if (url.length && url !== 'about:blank')
+		{
+			$previewFrame.src = $previewFrame.getAttribute('src');
+		}
 	}
 
 	Joomla.reloadPreview = reloadPreview;
@@ -1148,13 +1154,14 @@ jQuery(function ($) {
 	(function handleDimensionData() {
 		let $width = $('.hu-field-dimension-width');
 		let $height = $('.hu-field-dimension-height');
-		let $input = $('.hu-field-dimension-input');
 
 		$width.on('keyup', function (e) {
 			e.preventDefault();
-			let fieldValue = $input.val() || '0x0';
-			let value = $(this).val();
-			let [width, height] = fieldValue.toLowerCase().split('x');
+
+			let $input = $(this).closest('.controls').find('.hu-field-dimension-input'),
+				fieldValue = $input.val() || '0x0',
+				value = $(this).val(),
+				[width, height] = fieldValue.toLowerCase().split('x');
 
 			if (value === '') {
 				value = '0';
@@ -1167,9 +1174,10 @@ jQuery(function ($) {
 
 		$height.on('keyup', function (e) {
 			e.preventDefault();
-			let fieldValue = $input.val() || '0x0';
-			let value = $(this).val();
-			let [width, height] = fieldValue.toLowerCase().split('x');
+			let $input = $(this).closest('.controls').find('.hu-field-dimension-input'),
+				fieldValue = $input.val() || '0x0',
+				value = $(this).val(),
+				[width, height] = fieldValue.toLowerCase().split('x');
 
 			if (value === '') {
 				value = '0';

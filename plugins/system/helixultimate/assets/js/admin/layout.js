@@ -1,7 +1,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -231,6 +231,8 @@ jQuery(function ($) {
 				.removeClass('hu-column-component');
 			$parent.children('.control-group.name').slideDown('400');
 		}
+
+		updateLayoutField();
 	});
 
 	// Save Row Column Settings
@@ -311,6 +313,9 @@ jQuery(function ($) {
 			default:
 				alert('You are doing somethings wrongs. Try again');
 		}
+
+		updateLayoutField();
+		Joomla.HelixToaster.success('Changes applied successfully!', 'Layout Settings');
 	});
 
 	// Cancel Modal
@@ -440,6 +445,9 @@ jQuery(function ($) {
 
 		$old_column.remove();
 		jqueryUiLayout();
+
+		Joomla.HelixToaster.success('Grid pattern updated to <strong>' + newLayout.join('+') + '</strong>', 'Layout Settings');
+		updateLayoutField();
 	});
 
 	// add row
@@ -453,6 +461,8 @@ jQuery(function ($) {
 		$($rowClone).insertAfter($parent);
 
 		jqueryUiLayout();
+		Joomla.HelixToaster.success('New row added!', 'Layout Settings');
+		updateLayoutField();
 	});
 
 	// Remove Row
@@ -466,6 +476,8 @@ jQuery(function ($) {
 				.closest('.hu-layout-section')
 				.slideUp(500, function () {
 					$(this).remove();
+					Joomla.HelixToaster.error('Row is removed!', 'Layout Settings');
+					updateLayoutField();
 				});
 		}
 	});
@@ -479,6 +491,7 @@ jQuery(function ($) {
 			$(this).attr('src', '');
 			$(this).closest('.image-preview').css('display', 'none');
 		});
+		updateLayoutField();
 	});
 
 	// Generate Layout JSON
@@ -492,7 +505,7 @@ jQuery(function ($) {
 					rowObj = $row.data();
 				delete rowObj.sortableItem;
 
-				var activeLayout = $row.find('.column-layout.active'),
+				var activeLayout = $row.find('.hu-column-layout.active'),
 					layoutArray = activeLayout.data('layout'),
 					layout = 12;
 
@@ -511,18 +524,20 @@ jQuery(function ($) {
 				$row.find('.hu-layout-column').each(function (index) {
 					var $column = $(this),
 						colIndex = index,
-						className = $column.attr('class'),
 						colObj = $column.data();
 					delete colObj.sortableItem;
 
 					item[rowIndex].attr[colIndex] = {
 						type: 'sp_col',
-						className: className,
 						settings: colObj,
 					};
 				});
 			});
 
 		return item;
+	}
+
+	function updateLayoutField() {
+		$('#layout').val(JSON.stringify(getGeneratedLayout())).trigger('change');
 	}
 });

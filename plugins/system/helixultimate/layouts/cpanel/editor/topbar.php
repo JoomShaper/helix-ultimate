@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -62,10 +62,9 @@ $sidebar = new Settings;
 				<span class="fas fa-sync"></span> <span class="hu-response-msg"><span class="hu-msg">Drafting...</span></span>
 			</div>
 
-			<div class="hu-done-msg" style="color: green;">
+			<div class="hu-done-msg">
 				<span class="fas fa-check-circle hu-text-success"></span> <span class="hu-response-msg"><span class="hu-msg">Drafted</span></span>
 			</div>
-
 
 			<button type="button" role="button" class="hu-btn hu-btn-reset action-reset-drafts">
 				<span class="fas fa-undo-alt"></span> Reset Draft

@@ -2,15 +2,16 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 namespace HelixUltimate\Framework\Core\Classes;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Helper\ModuleHelper;
 use HelixUltimate\Framework\Platform\Helper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\OutputFilter;
+use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\CMS\Router\Route;
 
 defined('_JEXEC') or die();
 
@@ -119,14 +120,16 @@ class HelixultimateMenu
 	public function initMenu()
 	{
 		$menu  	= $this->app->getMenu('site');
-
 		$attributes 	= array('menutype');
 		$menu_name     	= array($this->menuname);
 		$items 			= $menu->getItems($attributes, $menu_name);
-		$active_item 	= ($menu->getActive()) ? $menu->getActive() : $menu->getDefault();
+		$active_item 	= ($menu->getActive())
+			? $menu->getActive()
+			: $menu->getDefault();
 
 		$this->active   	= $active_item ? $active_item->id : 0;
 		$this->active_tree 	= $active_item->tree;
+		
 
 		foreach ($items as &$item)
 		{
@@ -183,10 +186,7 @@ class HelixultimateMenu
 			switch ($item->type)
 			{
 				case 'separator':
-				break;
-
 				case 'heading':
-					// No further action needed.
 					break;
 
 				case 'url':
@@ -195,6 +195,7 @@ class HelixultimateMenu
 						// If this is an internal Joomla link, ensure the Itemid is set.
 						$item->flink = $item->link . '&Itemid=' . $item->id;
 					}
+
 					break;
 
 				case 'alias':
@@ -635,7 +636,18 @@ class HelixultimateMenu
 
 		$class = $extra_class;
 		$class .= ($item->anchor_css && $class) ? ' ' . $item->anchor_css : $item->anchor_css;
-		$class = ($class) ? 'class="' . $class . '"' : '';
+
+		if ($item->type === 'separator')
+		{
+			$class .= ' sp-menu-separator';
+		}
+		elseif ($item->type === 'heading')
+		{
+			$class .= ' sp-menu-heading';
+		}
+		
+
+		$class = !empty($class) ? 'class="' . $class . '"' : '';
 
 		if ($item->menu_image)
 		{
@@ -653,7 +665,7 @@ class HelixultimateMenu
 		$showmenutitle = (isset($layout->showtitle)) ? $layout->showtitle : 1;
 		$icon = (isset($layout->faicon)) ? $layout->faicon : '';
 
-		if (!preg_match("@^fa[sbr]@", $icon))
+		if (!empty($icon) && !preg_match("@^fa[sbr]@", $icon))
 		{
 			$icon = 'fas ' . $icon;
 		}
@@ -679,7 +691,7 @@ class HelixultimateMenu
 
 		$flink = $item->flink;
 		$ariaLabelOpen = $item->ariaLabelOpen;
-		$flink = str_replace('&amp;', '&', \JFilterOutput::ampReplace(htmlspecialchars($flink)));
+		$flink = str_replace('&amp;', '&', OutputFilter::ampReplace(htmlspecialchars($flink)));
 
 		$badge_html = '';
 
@@ -732,11 +744,21 @@ class HelixultimateMenu
 			{
 				default:
 				case 0:
-					$output .= '<a ' . $ariaLabelOpen .  ' ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linktitle . '</a>';
+					if ($item->type === 'separator' || $item->type === 'heading')
+					{
+						$output .= '<span ' . $ariaLabelOpen . ' ' . $class . ' ' . $title . '>' . $linktitle . '</span>';
+					}
+					else
+					{
+						$output .= '<a ' . $ariaLabelOpen .  ' ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linktitle . '</a>';
+					}
+
 					break;
+
 				case 1:
 					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linktitle . '</a>';
 					break;
+
 				case 2:
 					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $item->getParams()->get('window_open');
 					$output .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linktitle . '</a>';

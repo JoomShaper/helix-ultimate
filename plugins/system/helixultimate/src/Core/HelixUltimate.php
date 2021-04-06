@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -11,7 +11,6 @@ Namespace HelixUltimate\Framework\Core;
 defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Helper;
-use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
@@ -486,8 +485,8 @@ class HelixUltimate
 	 */
 	public function render_layout()
 	{
-		$this->add_css('custom.css');
-		$this->add_js('custom.js');
+		// $this->add_css('custom.css');
+		// $this->add_js('custom.js');
 		$this->include_features();
 
 		$layout = ($this->params->get('layout')) ? $this->params->get('layout') : [];
@@ -523,6 +522,7 @@ class HelixUltimate
 
 		$option      = $this->app->input->getCmd('option', '');
 		$view        = $this->app->input->getCmd('view', '');
+
 		$pagebuilder = false;
 		$output = '';
 		$modified_row = new \stdClass;
@@ -918,15 +918,15 @@ class HelixUltimate
 	 */
 	public function after_body()
 	{
-		if ($this->params->get('compress_css'))
-		{
-			$this->compress_css();
-		}
+		// if ($this->params->get('compress_css'))
+		// {
+		// 	$this->compress_css();
+		// }
 
-		if ($this->params->get('compress_js'))
-		{
-			$this->compress_js($this->params->get('exclude_js'));
-		}
+		// if ($this->params->get('compress_js'))
+		// {
+		// 	$this->compress_js($this->params->get('exclude_js'));
+		// }
 
 		if ($before_body = $this->params->get('before_body'))
 		{
@@ -1179,7 +1179,7 @@ class HelixUltimate
 
 			foreach ($excludes as $exclude)
 			{
-				if (File::getName($key) == trim($exclude))
+				if (basename($key) == trim($exclude))
 				{
 					$match = true;
 				}
@@ -1329,11 +1329,11 @@ class HelixUltimate
 					// Add file name to compressed JS
 					if (preg_match($criticalRegex, $key))
 					{
-						$criticalCode .= "/*------ " . File::getName($js_file) . " ------*/\n" . $compressed . "\n\n";
+						$criticalCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n";
 					}
 					else
 					{
-						$minifiedCode .= "/*------ " . File::getName($js_file) . " ------*/\n" . $compressed . "\n\n";
+						$minifiedCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n";
 					}
 
 					// Remove scripts
@@ -1666,7 +1666,7 @@ class HelixUltimate
 		$minifiedCode    = '';
 		$md5sum          = '';
 
-		$criticalCssRegex = "#(preset.*|font-awesome.*)\.css#";
+		$criticalCssRegex = "@(preset.*|font-awesome.*)\.css@";
 		$criticalCssHash = '';
 		$criticalCssCode = '';
 
@@ -1724,7 +1724,7 @@ class HelixUltimate
 
 						$url = str_replace(array('"', '\''), '', $matches[1]);
 
-						if (preg_match('/\.(jpg|png|jpeg|mp4|gif|JPEG|JPG|PNG|GIF)$/', $url))
+						if (preg_match('/\.(jpg|png|jpeg|mp4|gif)$/i', $url))
 						{
 							return "url('$url')";
 						}

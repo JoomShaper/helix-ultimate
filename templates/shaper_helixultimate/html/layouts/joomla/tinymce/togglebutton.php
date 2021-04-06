@@ -13,7 +13,7 @@ use Joomla\CMS\Language\Text;
 $name = $displayData;
 
 ?>
-<div class="toggle-editor btn-toolbar float-right clearfix mt-3">
+<div class="toggle-editor btn-toolbar float-end clearfix mt-3">
 	<div class="btn-group">
 		<a class="btn btn-secondary" href="#"
 			onclick="tinyMCE.execCommand('mceToggleEditor', false, '<?php echo $name; ?>');return false;"

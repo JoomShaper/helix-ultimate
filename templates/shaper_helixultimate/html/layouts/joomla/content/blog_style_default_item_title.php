@@ -35,17 +35,17 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 		<?php endif; ?>
 
 		<?php if ($displayData->state == 0) : ?>
-			<span class="badge badge-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
+			<span class="badge bg-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 		<?php endif; ?>
 
 		<?php if (strtotime($displayData->publish_up) > strtotime(Factory::getDate())) : ?>
-			<span class="badge badge-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
+			<span class="badge bg-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
 
 		<?php if ($displayData->publish_down != Factory::getDbo()->getNullDate()
 			&& (strtotime($displayData->publish_down) < strtotime(Factory::getDate()))
 		) : ?>
-			<span class="badge badge-warning"><?php echo Text::_('JEXPIRED'); ?></span>
+			<span class="badge bg-warning"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
 	</div>
 <?php endif; ?>

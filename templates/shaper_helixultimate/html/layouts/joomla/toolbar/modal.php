@@ -29,7 +29,7 @@ echo HTMLHelper::_('bootstrap.renderModal',
 		'modalWidth'  => 80,
 		'bodyHeight'  => 60,
 		'closeButton' => true,
-		'footer'      => '<a class="btn btn-secondary" data-dismiss="modal" type="button"'
+		'footer'      => '<a class="btn btn-secondary" data-bs-dismiss="modal" type="button"'
 						. ' onclick="window.parent.jQuery(\'#modal_downloadModal\').modal(\'hide\');">'
 						. Text::_("COM_BANNERS_CANCEL") . '</a>'
 						. '<button class="btn btn-success" type="button"'
@@ -38,6 +38,6 @@ echo HTMLHelper::_('bootstrap.renderModal',
 	)
 );
 ?>
-<button<?php echo $id; ?> onclick="jQuery('#modal_<?php echo $selector; ?>').modal('show')" class="<?php echo $class; ?>" data-toggle="modal" title="<?php echo $text; ?>">
+<button<?php echo $id; ?> onclick="jQuery('#modal_<?php echo $selector; ?>').modal('show')" class="<?php echo $class; ?>" data-bs-toggle="modal" title="<?php echo $text; ?>">
 	<span class="icon-<?php echo $icon; ?>" aria-hidden="true"></span><?php echo $text; ?>
 </button>

@@ -57,7 +57,7 @@ Factory::getDocument()->addScriptDeclaration("
 
 			<?php if ($this->params->get('show_pagination_limit')) : ?>
 				<div class="limit-box mt-3">
-					<?php echo $this->pagination->getLimitBox('custom-select'); ?>
+					<?php echo $this->pagination->getLimitBox('form-select'); ?>
 				</div>
 			<?php endif; ?>			
 

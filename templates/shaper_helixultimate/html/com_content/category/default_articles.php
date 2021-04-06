@@ -42,16 +42,16 @@ if (!empty($this->items))
 
 <?php if ($this->params->get('filter_field') !== 'hide' || $this->params->get('show_pagination_limit')) : ?>
 	<div class="d-flex justify-content-between align-items-centerd-flex mb-4">
-		<div class="mr-auto align-self-center">
+		<div class="me-auto align-self-center">
 			<strong><?php echo Text::_('COM_CONTENT_FORM_FILTER_LEGEND'); ?></strong>
 		</div>
 		
 		<div>
-			<div class="filters form-row">
+			<div class="filters row gx-3">
 				<?php if ($this->params->get('filter_field') !== 'hide') : ?>			
 					<?php if ($this->params->get('filter_field') !== 'tag') : ?>
 						<div class="col">
-							<label class="filter-search-lbl sr-only" for="filter-search">
+							<label class="filter-search-lbl visually-hidden" for="filter-search">
 								<?php echo Text::_('COM_CONTENT_' . $this->params->get('filter_field') . '_FILTER_LABEL') . '&#160;'; ?>
 							</label>
 							<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo Text::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo Text::_('COM_CONTENT_' . $this->params->get('filter_field') . '_FILTER_LABEL'); ?>">
@@ -67,7 +67,7 @@ if (!empty($this->items))
 				<?php endif; ?>
 				<?php if ($this->params->get('show_pagination_limit')) : ?>
 					<div class="col">
-						<label for="limit" class="sr-only">
+						<label for="limit" class="visually-hidden">
 							<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
 						</label>
 						<?php echo $this->pagination->getLimitBox(); ?>
@@ -240,21 +240,21 @@ if (!empty($this->items))
 			<?php endif; ?>
 			<?php if ($this->params->get('list_show_hits', 1)) : ?>
 				<td headers="categorylist_header_hits" class="list-hits">
-					<span class="badge badge-info">
+					<span class="badge bg-info">
 						<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $article->hits); ?>
 					</span>
 				</td>
 			<?php endif; ?>
 			<?php if ($this->params->get('list_show_votes', 0) && $this->vote) : ?>
 				<td headers="categorylist_header_votes" class="list-votes">
-					<span class="badge badge-success">
+					<span class="badge bg-success">
 						<?php echo Text::sprintf('COM_CONTENT_VOTES_COUNT', $article->rating_count); ?>
 					</span>
 				</td>
 			<?php endif; ?>
 			<?php if ($this->params->get('list_show_ratings', 0) && $this->vote) : ?>
 				<td headers="categorylist_header_ratings" class="list-ratings">
-					<span class="badge badge-warning">
+					<span class="badge bg-warning">
 						<?php echo Text::sprintf('COM_CONTENT_RATINGS_COUNT', $article->rating); ?>
 					</span>
 				</td>
@@ -276,7 +276,7 @@ if (!empty($this->items))
 	<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
 		<nav class="d-flex pagination-wrapper">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-				<div class="mr-auto">
+				<div class="me-auto">
 					<?php echo $this->pagination->getPagesLinks(); ?>
 				</div>
 				<div class="pagination-counter">

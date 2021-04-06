@@ -37,7 +37,7 @@ if ($params->get('dropdown', 1) && !$params->get('dropdownimage', 0))
 	<div class="btn-group">
 		<?php foreach ($list as $language) : ?>
 			<?php if ($language->active) : ?>
-				<a href="#" data-toggle="dropdown" class="btn dropdown-toggle">
+				<a href="#" data-bs-toggle="dropdown" class="btn dropdown-toggle">
 					<span class="caret"></span>
 					<?php if ($language->image) : ?>
 						&nbsp;<?php echo HTMLHelper::_('image', 'mod_languages/' . $language->image . '.gif', '', null, true); ?>

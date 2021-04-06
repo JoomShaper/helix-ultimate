@@ -35,38 +35,36 @@ Factory::getDocument()->addScriptDeclaration("
 ?>
 
 <div id="mailto-window" class="p-2">
-	<a href="javascript: void window.close()" title="<?php echo Text::_('COM_MAILTO_CLOSE_WINDOW'); ?>" class="close" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</a>
+	<a href="javascript: void window.close()" title="<?php echo Text::_('COM_MAILTO_CLOSE_WINDOW'); ?>" class="btn-close" aria-label="Close"></a>
 
 	<h4 class="mt-0"><?php echo Text::_('COM_MAILTO_EMAIL_TO_A_FRIEND'); ?></h4>
 
 	<form action="<?php echo Uri::base() ?>index.php" id="mailtoForm" method="post">
-		<div class="form-group">
+		<div class="mb-3">
 			<label for="mailto_field">
 				<?php echo Text::_('COM_MAILTO_EMAIL_TO'); ?>
 			</label>
 			<input type="text" id="mailto_field" name="mailto" class="form-control" value="<?php echo $this->escape($data->mailto); ?>">
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<label for="sender_field">
 				<?php echo Text::_('COM_MAILTO_SENDER'); ?>
 			</label>
 			<input type="text" id="sender_field" name="sender" class="form-control" value="<?php echo $this->escape($data->sender); ?>">
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<label for="from_field">
 				<?php echo Text::_('COM_MAILTO_YOUR_EMAIL'); ?>
 			</label>
 			<input type="text" id="from_field" name="from" class="form-control" value="<?php echo $this->escape($data->from); ?>">
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<label for="subject_field">
                 <?php echo Text::_('COM_MAILTO_SUBJECT'); ?>
             </label>
 			<input type="text" id="subject_field" name="subject" class="form-control" value="<?php echo $this->escape($data->subject); ?>">
 		</div>
-		<div class="form-group">
+		<div class="mb-3">
 			<button class="btn btn-secondary" onclick="window.close();return false;">
 				<?php echo Text::_('COM_MAILTO_CANCEL'); ?>
 			</button>

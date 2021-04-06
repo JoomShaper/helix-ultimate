@@ -12,7 +12,7 @@ $id     = isset($displayData['id']) ? $displayData['id'] : '';
 $doTask = $displayData['doTask'];
 $class  = $displayData['class'];
 $text   = $displayData['text'];
-$margin = (strpos($doTask, 'index.php?option=com_config') === false) ? '' : ' ml-auto';
+$margin = (strpos($doTask, 'index.php?option=com_config') === false) ? '' : ' ms-auto';
 ?>
 <button<?php echo $id; ?> class="btn btn-outline-danger btn-sm<?php echo $margin; ?>" onclick="location.href='<?php echo $doTask; ?>';">
 	<span class="<?php echo $class; ?>" aria-hidden="true"></span>

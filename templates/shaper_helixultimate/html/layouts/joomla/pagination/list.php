@@ -16,7 +16,7 @@ $nextDisabled  = $list['next']['active'] ? '' : ' disabled';
 $endDisabled   = $list['end']['active'] ? '' : ' disabled'; 
 
 ?>
-<ul class="pagination ml-0 mb-4">
+<ul class="pagination ms-0 mb-4">
 	<li class="pagination-start<?php echo $startDisabled; ?> page-item"><?php echo $list['start']['data']; ?></li>
 	<li class="pagination-prev<?php echo $prevDisabled; ?> page-item"><?php echo $list['previous']['data']; ?></li>
 	<?php foreach ($list['pages'] as $page) : ?>

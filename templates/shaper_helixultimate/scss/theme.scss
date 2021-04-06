@@ -66,6 +66,15 @@ img {
 	height: auto;
 }
 
+//Bootstrap 5 customize
+.row{
+	--bs-gutter-x: 1.875rem;
+}
+.container{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
 //Topbar
 
 #sp-top-bar {

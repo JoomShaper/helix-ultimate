@@ -28,12 +28,12 @@ extract($displayData);
 
 				<a class="carousel-control-prev" href="#article-feature-gallery-<?php echo $id; ?>" role="button" data-slide="prev">
 					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
+					<span class="visually-hidden">Previous</span>
 				</a>
 
 				<a class="carousel-control-next" href="#article-feature-gallery-<?php echo $id; ?>" role="button" data-slide="next">
 					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
+					<span class="visually-hidden">Next</span>
 				</a>
 			</div>
 		</div>

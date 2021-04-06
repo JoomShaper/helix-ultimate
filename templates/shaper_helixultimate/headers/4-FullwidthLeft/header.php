@@ -58,7 +58,7 @@ $searchModule = Helper::getSearchModule();
 				</div>
 
 				<!-- Menu -->
-				<div id="sp-menu" class="col-auto flex-auto">
+				<div id="sp-menu" class="col-auto">
 					<div class="sp-column d-flex justify-content-between">
 						<div class="menu-with-offcanvas d-flex justify-content-between flex-auto">
 							<?php echo $menu->renderFeature(); ?>

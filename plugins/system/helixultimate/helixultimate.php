@@ -61,6 +61,28 @@ class  PlgSystemHelixultimate extends JPlugin
 	protected $app;
 
 	/**
+	 * Handle the event hook onAfterInitialize.
+	 * Here we can override the HTML functions.
+	 *
+	 * @return	void
+	 * @since	2.0.0
+	 */
+	public function onAfterInitialise()
+	{
+		$bootstrapPath = JPATH_THEMES . '/shaper_helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
+
+		if ($this->app->isClient('site') && file_exists($bootstrapPath))
+		{
+			if (!class_exists('HelixBootstrap'))
+			{
+				require_once $bootstrapPath;
+			}
+
+			HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
+		}
+	}
+
+	/**
 	 * The form event. Load additional parameters when available into the field form.
 	 * Only when the type of the form is of interest.
 	 *

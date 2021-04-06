@@ -191,7 +191,7 @@ jQuery(function ($) {
 			},
 			complete() {
 				rebuildMenu();
-				Joomla.HelixToaster.success('Menu item has been successfully removed!', 'Success');
+				Joomla.HelixToaster.error('Menu item has been successfully removed!', 'Success');
 			},
 		});
 	}

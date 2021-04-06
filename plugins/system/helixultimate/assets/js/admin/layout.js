@@ -15,7 +15,6 @@ jQuery(function ($) {
 				axis: 'x',
 				opacity: 1,
 				tolerance: 'pointer',
-
 				start: function (event, ui) {
 					$('.hu-layout-section [data-hu-layout-row]')
 						.find('.ui-state-highlight')
@@ -24,6 +23,10 @@ jQuery(function ($) {
 						.find('.ui-state-highlight')
 						.css('height', $(ui.item).outerHeight());
 				},
+				stop: function(_, ui) {
+					updateLayoutField();
+					Joomla.HelixToaster.success('Columns position changed!', 'Layout Settings');
+				}
 			})
 			.disableSelection();
 	};
@@ -38,6 +41,10 @@ jQuery(function ($) {
 				axis: 'y',
 				opacity: 1,
 				tolerance: 'pointer',
+				stop: function (event, ui) {
+					updateLayoutField();
+					Joomla.HelixToaster.success('Rows position changed!', 'Layout Settings');
+				}
 			})
 			.disableSelection();
 

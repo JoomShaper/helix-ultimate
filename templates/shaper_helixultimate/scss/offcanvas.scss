@@ -101,10 +101,9 @@
 			&:not(:last-child) {
 				margin-bottom: 20px;
 			}
-			.menu>li{
-				margin: 0 0 15px 0;
-			}	
-			ul {
+		}
+		ul.menu {
+			&,ul{
 				display: -webkit-box;
 				display: -ms-flexbox;
 				display: flex;
@@ -114,90 +113,91 @@
 				flex-direction: column;
 				padding: 0;
 				margin: 0;
+				margin: 0 0 15px 0;
 				list-style: none;
-				> li {
-					border: 0;
-					padding: 0;
-					margin: 0;
-					position: relative;
-					overflow: hidden;
+			}
+			> li {
+				border: 0;
+				padding: 0;
+				margin: 0;
+				position: relative;
+				overflow: hidden;
+				display: block;
+				font-weight: 600;
+				>a,
+				>span {
 					display: block;
-					font-weight: 600;
-					>a,
-					>span {
-						display: block;
-						font-size: 18px;
-						padding: 0.125rem 0;
-						position: relative;
-						opacity: .7;
-						transition: .3s;
-						&:hover{
-							opacity: 1;
+					font-size: 18px;
+					padding: 0.125rem 0;
+					position: relative;
+					opacity: .7;
+					transition: .3s;
+					&:hover{
+						opacity: 1;
+					}
+				}
+
+				&.menu-parent {
+					> a,
+					> .menu-separator {
+						> .menu-toggler {
+							display: block;
+							position: absolute;
+							top: 50%;
+							cursor: pointer;
+							transform: translateY(-50%);
+							-webkit-transform: translateY(-50%);
+							&:after {
+								font-family: 'Font Awesome 5 Free';
+								content: '\f105';
+								font-weight: 900;
+							}
 						}
 					}
 
-					&.menu-parent {
+					&.menu-parent-open {
 						> a,
 						> .menu-separator {
 							> .menu-toggler {
-								display: block;
-								position: absolute;
-								top: 50%;
-								cursor: pointer;
-								transform: translateY(-50%);
-								-webkit-transform: translateY(-50%);
 								&:after {
 									font-family: 'Font Awesome 5 Free';
-									content: '\f105';
+									content: '\f107';
 									font-weight: 900;
-								}
-							}
-						}
-
-						&.menu-parent-open {
-							> a,
-							> .menu-separator {
-								> .menu-toggler {
-									&:after {
-										font-family: 'Font Awesome 5 Free';
-										content: '\f107';
-										font-weight: 900;
-									}
-								}
-							}
-							> .nav-header {
-								> .menu-toggler {
-									&:after {
-										font-family: 'Font Awesome 5 Free';
-										content: '\f107';
-										font-weight: 900;
-									}
 								}
 							}
 						}
 						> .nav-header {
 							> .menu-toggler {
-								display: block;
-								position: absolute;
-								top: 50%;
-								cursor: pointer;
-								transform: translateY(-50%);
-								-webkit-transform: translateY(-50%);
 								&:after {
 									font-family: 'Font Awesome 5 Free';
-									content: '\f105';
+									content: '\f107';
 									font-weight: 900;
 								}
 							}
 						}
 					}
-
-					ul {
-						display: none;
-						li {
-							a {
-								font-size: 0.875rem;
+					> .nav-header {
+						> .menu-toggler {
+							display: block;
+							position: absolute;
+							top: 50%;
+							cursor: pointer;
+							transform: translateY(-50%);
+							-webkit-transform: translateY(-50%);
+							&:after {
+								font-family: 'Font Awesome 5 Free';
+								content: '\f105';
+								font-weight: 900;
 							}
+						}
+					}
+				}
+
+				ul {
+					display: none;
+					li {
+						a {
+							font-size: 0.875rem;
 						}
 					}
 				}
@@ -206,7 +206,7 @@
 	}
 	// border-menu
 	&.border-menu{
-		.offcanvas-inner .sp-module ul.menu{
+		.offcanvas-inner ul.menu{
 			>li{
 				border-bottom: 1px solid rgba(32, 31, 31, 0.1);
 				margin-bottom: 0;
@@ -283,26 +283,24 @@ body {
 
 		.offcanvas-menu {
 			.offcanvas-inner {
-				.sp-module {
-					ul {
-						> li {
-							&.menu-parent {
-								> a,
-								> .menu-separator {
-									> .menu-toggler {
-										right: 0;
-									}
-								}
-								> .nav-header {
-									> .menu-toggler {
-										right: 0;
-									}
+				ul.menu {
+					> li {
+						&.menu-parent {
+							> a,
+							> .menu-separator {
+								> .menu-toggler {
+									right: 0;
 								}
 							}
+							> .nav-header {
+								> .menu-toggler {
+									right: 0;
+								}
+							}
+						}
 
-							ul {
-								margin-left: 10px;
-							}
+						ul {
+							margin-left: 10px;
 						}
 					}
 				}

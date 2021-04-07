@@ -13,17 +13,21 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $article = $displayData['article'];
-$overlib = $displayData['overlib'];
+$tooltip = JVERSION < 4 ? $displayData['overlib'] : $displayData['tooltip'];
 
-$icon = $article->state ? 'edit' : 'eye-slash';
+$icon 			= $article->state ? 'edit' : 'eye-slash';
+$currentDate   	= Factory::getDate()->format('Y-m-d H:i:s');
+$isUnpublished 	= JVERSION < 4
+	? strtotime($article->publish_up) > strtotime(Factory::getDate()) || ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate())
+	: ($article->publish_up > $currentDate) || !is_null($article->publish_down) && ($article->publish_down < $currentDate);
 
-if (strtotime($article->publish_up) > strtotime(Factory::getDate()) || ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate()))
+if ($isUnpublished)
 {
 	$icon = 'eye-slash';
 }
 
 ?>
 <SPAN class="link-edit-article">
-	<span class="hasTooltip fas fa-<?php echo $icon; ?>" title="<?php echo HTMLHelper::tooltipText(Text::_('COM_CONTENT_EDIT_ITEM'), $overlib, 0, 0); ?>"></span>
+	<span class="hasTooltip fas fa-<?php echo $icon; ?>" title="<?php echo HTMLHelper::tooltipText(Text::_('COM_CONTENT_EDIT_ITEM'), $tooltip, 0, 0); ?>"></span>
 	<?php echo Text::_('JGLOBAL_EDIT'); ?>
 </SPAN>

@@ -45,7 +45,9 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
-// HTMLHelper::_('behavior.caption');
+$isExpired  = JVERSION < 4
+	? (strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()
+	: !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
 ?>
 <div class="article-details <?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? Factory::getConfig()->get('language') : $this->item->language; ?>">
@@ -83,13 +85,13 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 			</<?php echo $page_header_tag; ?>>
 		<?php endif; ?>
 		<?php if ($this->item->state == 0) : ?>
-			<span class="label label-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
+			<span class="badge bg-warning text-dark"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 		<?php endif; ?>
 		<?php if (strtotime($this->item->publish_up) > strtotime(Factory::getDate())) : ?>
-			<span class="label label-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
+			<span class="badge bg-warning text-dark"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
-		<?php if ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()) : ?>
-			<span class="label label-warning"><?php echo Text::_('JEXPIRED'); ?></span>
+		<?php if ($isExpired) : ?>
+			<span class="badge bg-warning text-dark"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
 	</div>
 	<?php endif; ?>

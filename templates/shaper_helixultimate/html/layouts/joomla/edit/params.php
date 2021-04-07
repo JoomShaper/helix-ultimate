@@ -115,7 +115,7 @@ foreach ($fieldSets as $name => $fieldSet)
 	}
 
 	// Start the tab
-	echo HTMLHelper::_('bootstrap.addTab', $tabName, 'attrib-' . $name, $label);
+	echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.addTab', $tabName, 'attrib-' . $name, $label);
 
 	// Include the description when available
 	if (isset($fieldSet->description) && trim($fieldSet->description))
@@ -133,5 +133,5 @@ foreach ($fieldSets as $name => $fieldSet)
 	echo LayoutHelper::render('joomla.edit.fieldset', $displayData);
 
 	// End the tab
-	echo HTMLHelper::_('bootstrap.endTab');
+	echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab');
 }

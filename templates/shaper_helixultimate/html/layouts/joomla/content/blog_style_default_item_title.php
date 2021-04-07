@@ -42,10 +42,16 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 			<span class="badge bg-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
 
-		<?php if ($displayData->publish_down != Factory::getDbo()->getNullDate()
-			&& (strtotime($displayData->publish_down) < strtotime(Factory::getDate()))
-		) : ?>
-			<span class="badge bg-warning"><?php echo Text::_('JEXPIRED'); ?></span>
-		<?php endif; ?>
+		<?php if (JVERSION < 4): ?>
+			<?php if ($displayData->publish_down != Factory::getDbo()->getNullDate()
+				&& (strtotime($displayData->publish_down) < strtotime(Factory::getDate()))) : ?>
+				<span class="badge bg-warning"><?php echo Text::_('JEXPIRED'); ?></span>
+			<?php endif; ?>
+		<?php else : ?>
+			<?php if ($displayData->publish_down !== null && $displayData->publish_down < $currentDate) : ?>
+				<span class="badge bg-warning"><?php echo Text::_('JEXPIRED'); ?></span>
+			<?php endif; ?>
+		<?php endif ?>
+
 	</div>
 <?php endif; ?>

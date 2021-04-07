@@ -11,6 +11,12 @@ defined ('JPATH_BASE') or die();
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 $title = $this->escape($displayData['item']->category_title);
+
+if (!isset($displayData['item']->catslug))
+{
+	$displayData['item']->catslug = $displayData['item']->catid . ':' . $displayData['item']->category_alias;
+}
+
 ?>
 <span class="category-name" title="<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $title); ?>">
 	<?php if ($displayData['params']->get('link_category') && $displayData['item']->catslug) : ?>

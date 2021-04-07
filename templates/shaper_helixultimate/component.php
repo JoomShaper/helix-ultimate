@@ -8,12 +8,44 @@
 
 defined ('_JEXEC') or die();
 
+use HelixUltimate\Framework\Core\HelixUltimate;
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
-$theme_url = URI::base(true) . '/templates/'. $this->template;
 $app = Factory::getApplication();
+$this->setHtml5(true);
+
+
+/**
+ * Load the framework bootstrap file for enabling the HelixUltimate\Framework namespacing.
+ *
+ * @since	2.0.0
+ */
+$bootstrap_path = JPATH_PLUGINS . '/system/helixultimate/bootstrap.php';
+
+if (file_exists($bootstrap_path))
+{
+	require_once $bootstrap_path;
+}
+else
+{
+	die('Install and activate <a target="_blank" rel="noopener noreferrer" href="https://www.joomshaper.com/helix">Helix Ultimate Framework</a>.');
+}
+
+/**
+ * Get the theme instance from Helix framework.
+ *
+ * @var		$theme		The theme object from the class HelixUltimate.
+ * @since	1.0.0
+ */
+$theme = new HelixUltimate;
+$template = Helper::loadTemplateData();
+$this->params = $template->params;
+
+$theme_url = URI::base(true) . '/templates/'. $this->template;
 $option = $app->input->get('option', '', 'STRING');
+
 
 $body_class = htmlspecialchars(str_replace('_', '-', $option));
 $body_class .= ' view-' . htmlspecialchars($app->input->get('view', '', 'STRING'));
@@ -37,16 +69,31 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
 		<jdoc:include type="head" />
 
 		<?php if($option != 'com_sppagebuilder') : ?>
-			<?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
-			<link href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" rel="stylesheet">
+			<?php if(file_exists(\JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
+				<link href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" rel="stylesheet">
 			<?php else: ?>
-			<link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
+				<link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
 			<?php endif; ?>
+
 			<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
 		<?php endif; ?>
+
+		<!-- Add font awesome in the component tmpl -->
+		<?php if ($this->params->get('enable_fontawesome', '1')): ?>
+			<?php if (file_exists(\JPATH_THEMES . '/' . $this->template . '/css/font-awesome.min.css')): ?>
+				<link rel="stylesheet" href="<?php echo Uri::root(true) . '/templates/' . $this->template . '/css/font-awesome.min.css'; ?>" />
+			<?php endif ?>
+		<?php endif ?>
 	</head>
 
 	<body class="contentpane <?php echo $body_class; ?>">
 		<jdoc:include type="component" />
+
+		<!-- Add lazy loading in the component tmpl -->
+		<?php if ($this->params->get('image_lazy_loading', '0')): ?>
+			<?php if (file_exists(\JPATH_THEMES . '/' . $this->template . '/js/lazysizes.min.js')): ?>
+				<script src="<?php echo Uri::root(true) . '/templates/' . $this->template . '/js/lazysizes.min.js'; ?>"></script>
+			<?php endif ?>
+		<?php endif ?>
 	</body>
 </html>

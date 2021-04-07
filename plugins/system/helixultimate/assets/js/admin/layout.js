@@ -8,6 +8,8 @@
 jQuery(function ($) {
 	// Sortable
 	$.fn.rowSortable = function () {
+		let originalIndex = -1,
+			currentIndex = -1;
 		$(this)
 			.sortable({
 				placeholder: 'ui-state-highlight',
@@ -15,17 +17,22 @@ jQuery(function ($) {
 				axis: 'x',
 				opacity: 1,
 				tolerance: 'pointer',
-				start: function (event, ui) {
+				start(_, ui) {
 					$('.hu-layout-section [data-hu-layout-row]')
 						.find('.ui-state-highlight')
 						.addClass($(ui.item).attr('class'));
 					$('.hu-layout-section [data-hu-layout-row]')
 						.find('.ui-state-highlight')
 						.css('height', $(ui.item).outerHeight());
+					originalIndex = ui.item.index();
 				},
-				stop: function(_, ui) {
-					updateLayoutField();
-					Joomla.HelixToaster.success('Columns position changed!', 'Layout Settings');
+				stop(_, ui) {
+					currentIndex = ui.item.index();
+
+					if (originalIndex !== currentIndex) {
+						updateLayoutField();
+						Joomla.HelixToaster.success('Columns position changed!', 'Layout Settings');
+					}
 				}
 			})
 			.disableSelection();
@@ -34,6 +41,8 @@ jQuery(function ($) {
 	jqueryUiLayout();
 
 	function jqueryUiLayout() {
+		let originalIndex = -1,
+			currentIndex = -1;
 		$('#hu-layout-builder')
 			.sortable({
 				placeholder: 'ui-state-highlight',
@@ -41,10 +50,16 @@ jQuery(function ($) {
 				axis: 'y',
 				opacity: 1,
 				tolerance: 'pointer',
-				stop: function (event, ui) {
-					updateLayoutField();
-					Joomla.HelixToaster.success('Rows position changed!', 'Layout Settings');
-				}
+				start(_, ui) {
+					originalIndex = ui.item.index();
+				},
+				stop(_, ui) {
+					currentIndex = ui.item.index();
+					if (originalIndex !== currentIndex) {
+						updateLayoutField();
+						Joomla.HelixToaster.success('Rows position changed!', 'Layout Settings');
+					}
+				},
 			})
 			.disableSelection();
 

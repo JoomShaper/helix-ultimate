@@ -1815,7 +1815,8 @@ select {
 					font: normal normal normal 14px/1 FontAwesome;
 					&:after {
 						content: '\f0dc';
-						font-family: FontAwesome;
+						font-family: 'Font Awesome 5 Free';
+						font-weight: 900;
 						font-size: 0.875rem;
 						position: absolute;
 						top: 50%;

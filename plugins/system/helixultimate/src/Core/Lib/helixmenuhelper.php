@@ -49,62 +49,62 @@ $unique_menu_item_count = 0;
 
 if (isset($menu_data->megamenu))
 {
-	 $enable_megamenu = $menu_data->megamenu;
+	$enable_megamenu = $menu_data->megamenu;
 }
 
 if (isset($menu_data->width))
 {
-	 $menu_width = $menu_data->width;
+	$menu_width = $menu_data->width;
 }
 
 if (isset($menu_data->menualign))
 {
-	 $align = $menu_data->menualign;
+	$align = $menu_data->menualign;
 }
 
 if (isset($menu_data->layout))
 {
-	 $layout = $menu_data->layout;
+	$layout = $menu_data->layout;
 }
 
 if (isset($menu_data->showtitle))
 {
-	 $show_title = $menu_data->showtitle;
+	$show_title = $menu_data->showtitle;
 }
 
 if (isset($menu_data->customclass))
 {
-	 $custom_class = $menu_data->customclass;
+	$custom_class = $menu_data->customclass;
 }
 
 if (isset($menu_data->faicon) && $menu_data->faicon)
 {
-	 $faicon = $menu_data->faicon;
+	$faicon = $menu_data->faicon;
 }
 
 if (isset($menu_data->dropdown))
 {
-	 $dropdown = $menu_data->dropdown;
+	$dropdown = $menu_data->dropdown;
 }
 
 if (isset($menu_data->badge))
 {
-	 $badge = $menu_data->badge;
+	$badge = $menu_data->badge;
 }
 
 if (isset($menu_data->badge_position))
 {
-	 $badge_position = $menu_data->badge_position;
+	$badge_position = $menu_data->badge_position;
 }
 
 if (isset($menu_data->badge_bg_color))
 {
-	 $badge_bg_color = $menu_data->badge_bg_color;
+	$badge_bg_color = $menu_data->badge_bg_color;
 }
 
 if (isset($menu_data->badge_text_color))
 {
-	 $badge_text_color = $menu_data->badge_text_color;
+	$badge_text_color = $menu_data->badge_text_color;
 }
 
 

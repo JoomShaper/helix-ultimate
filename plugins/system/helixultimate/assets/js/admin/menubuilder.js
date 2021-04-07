@@ -436,7 +436,6 @@ jQuery(function ($) {
 				// Set the task as `item.apply` for saving
 				$form.find('input[name=task]').val(task);
 				const isValidForm = frameDoc[0].formvalidator.isValid($form[0]);
-
 				// If the form is valid then refetch the menu items
 				// & close the modal.
 				if (isValidForm) {

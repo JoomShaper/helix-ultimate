@@ -23,7 +23,7 @@ if (!$button->get('modal'))
 
 $doc = Factory::getDocument();
 $doc->addScriptDeclaration(
-	<<<JS
+	"
 	jQuery(function($) {
 		let openedModal = $('.modal.show');
 		if (openedModal.length) {
@@ -37,7 +37,7 @@ $doc->addScriptDeclaration(
 			}
 		}
 	});
-	JS
+	"
 );
 
 $fontAwesomePath = JPATH_THEMES . '/shaper_helixultimate/css/font-awesome.min.css';

@@ -142,7 +142,7 @@ class Platform
 				'version' 	=> $this->version,
 				'view' 		=> $this->view,
 				'iframe'	=> [
-					'url' => Uri::root(true) . '/index.php?templateStyle=' . $style->id . '&helixMode=edit',
+					'url' => Uri::root(true) . '/index.php?templateStyle=' . $style->id,
 					'width' => '100%',
 					'height' => '100%'
 				]

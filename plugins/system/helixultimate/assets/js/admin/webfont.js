@@ -7,7 +7,7 @@
 
 jQuery(function ($) {
 	/** Enable chosen for the font family of the typography panel. */
-	$('.hu-webfont-list').chosen();
+	$('.hu-webfont-list').chosen({width: '100%'});
 
 	//Web Fonts
 	let $parentId = $('.hu-field-webfont').data('id');

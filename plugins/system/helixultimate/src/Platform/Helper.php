@@ -290,7 +290,15 @@ class Helper
 		$draftKey = static::generateKey($draftKeyOptions);
 		$cache = new HelixCache($draftKey);
 
-		if ($cache->contains() && $app->input->get('helixMode', '') === 'edit')
+		/**
+		 * Check the fetch destination. If it is iframe then load the settings
+		 * from draft, otherwise if it is document that means this request
+		 * comes from the original site visit. So load from saved cache.
+		 */
+		$requestFromIframe = isset($_SERVER['HTTP_SEC_FETCH_DEST'])
+			&& $_SERVER['HTTP_SEC_FETCH_DEST'] === 'iframe';
+
+		if ($cache->contains() && $requestFromIframe)
 		{
 			$template = $cache->loadData();
 		}

@@ -1947,7 +1947,7 @@ class HelixUltimate
 			$query->where('a.language IN (' . $db->Quote(Factory::getLanguage()->getTag()) . ',' . $db->Quote('*') . ')');
 		}
 
-		$query->where('(a.publish_down = ' . $nullDate . ' OR a.publish_down >= ' . $nowDate . ')');
+		$query->where('(a.publish_down IS NULL OR a.publish_down >= ' . $nowDate . ')');
 		$query->where($db->quoteName('a.state') . ' = ' . $db->quote(1));
 		$query->order($db->quoteName('a.created') . ' DESC')
 			->setLimit($maximum);

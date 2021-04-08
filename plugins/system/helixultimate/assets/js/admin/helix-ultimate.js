@@ -76,6 +76,27 @@ jQuery(function ($) {
 		let innerWrapper = iDocument.querySelector('.body-innerwrapper');
 
 		/**
+		 * Update all the anchor tags inside the iframe.
+		 * Append a query string `helixMode=edit` which
+		 * will uniquely identify the iframe and the document.
+		 */
+		let anchors = iDocument.querySelectorAll('a');
+		anchors.forEach(anchor => {
+			let href = anchor.getAttribute('href') || '';
+			if (href === '#' || href === '') return;
+
+			let url = new URLSearchParams(new URL(anchor.href).search);
+
+			if (url.has('helixMode')) return;
+			url.append('helixMode', 'edit');
+
+			let urlArr = anchor.href.split('?');
+			urlArr[1] = url.toString();
+
+			anchor.setAttribute('href', urlArr.join('?'));
+		});
+
+		/**
 		 * Set a class into preview iframe body
 		 * as we can distinguish the original preview
 		 * and the backend iframe preview.

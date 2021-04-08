@@ -9,7 +9,6 @@
 defined ('_JEXEC') or die('Restricted Access');
 
 use HelixUltimate\Framework\Platform\Helper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\CMS\Language\Text;
 

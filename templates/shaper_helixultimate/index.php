@@ -19,6 +19,9 @@ use Joomla\CMS\Uri\Uri;
 $app = Factory::getApplication();
 $this->setHtml5(true);
 
+Factory::getApplication()->setHeader('Helix-Client', 'site', false);
+Factory::getApplication()->sendHeaders();
+
 /**
  * Load the framework bootstrap file for enabling the HelixUltimate\Framework namespacing.
  *

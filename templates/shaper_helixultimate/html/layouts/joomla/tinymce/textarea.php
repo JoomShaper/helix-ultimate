@@ -13,8 +13,11 @@ use Joomla\CMS\Uri\Uri;
 
 $data = $displayData;
 
-// $doc = Factory::getDocument();
-// $doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
+if (JVERSION < 4)
+{
+	$doc = Factory::getDocument();
+	$doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
+}
 
 ?>
 <textarea

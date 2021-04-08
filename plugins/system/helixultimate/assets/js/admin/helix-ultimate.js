@@ -74,7 +74,6 @@ jQuery(function ($) {
 	$previewFrame.addEventListener('load', function () {
 		let iDocument = $previewFrame.contentWindow.document;
 		let innerWrapper = iDocument.querySelector('.body-innerwrapper');
-		console.log('loaded iframe');
 
 		/**
 		 * Set a class into preview iframe body

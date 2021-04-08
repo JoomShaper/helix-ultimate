@@ -26,4 +26,5 @@ $style .= "width: {$width}; height: {$height}; box-shadow: rgba(139, 139, 143, 0
 
 ?>
 
-<iframe id="hu-template-preview" src="<?php echo $url; ?>" frameborder="0" style="<?php echo $style; ?>"></iframe>
+<iframe id="hu-template-preview" src="<?php echo $url; ?>" frameborder="0" style="<?php echo $style; ?>">
+</iframe>

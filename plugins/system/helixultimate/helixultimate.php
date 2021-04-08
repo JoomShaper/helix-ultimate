@@ -204,9 +204,6 @@ class  PlgSystemHelixultimate extends JPlugin
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
 		{
-			Factory::getApplication()->setHeader('Helix-Client', 'admin', false);
-			Factory::getApplication()->sendHeaders();
-
 			$this->app->input->set('tmpl', 'component');
 
 			if ($this->app->input->get('format', '', 'STRING') !== 'html')

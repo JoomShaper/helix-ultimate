@@ -418,6 +418,21 @@ jQuery(function ($) {
 		});
 	}
 
+	/** Show or hide the spinner */
+	function showSpinner(status) {
+		const $spinner = $('.hu-spinner');
+
+		if (status) {
+			if ($spinner.hasClass('hidden')) {
+				$spinner.removeClass('hidden');
+			}
+		} else {
+			if (!$spinner.hasClass('hidden')) {
+				$spinner.addClass('hidden');
+			}
+		}
+	}
+
 	/** Handle Save functionality. */
 	function handleSaveMenuItem(className, task = 'item.apply') {
 		const saveBtnSelector = `.hu-modal.${className} button.hu-save-btn`;
@@ -433,9 +448,13 @@ jQuery(function ($) {
 			$(document).on('click', saveBtnSelector, async function () {
 				const $form = $(frameDoc).find('form');
 
+
 				// Set the task as `item.apply` for saving
 				$form.find('input[name=task]').val(task);
 				const isValidForm = frameDoc[0].formvalidator.isValid($form[0]);
+
+				showSpinner(true);
+
 				// If the form is valid then refetch the menu items
 				// & close the modal.
 				if (isValidForm) {
@@ -461,8 +480,11 @@ jQuery(function ($) {
 						} else {
 							Joomla.HelixToaster.error(message, 'Error');
 						}
+
+						showSpinner(false);
 					} catch (err) {
 						Joomla.HelixToaster.error('Something went wrong!', 'Error');
+						showSpinner(false);
 					}
 				}
 			});

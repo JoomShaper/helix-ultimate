@@ -109,7 +109,7 @@ class Helper
 			'id' => $id
 		];
 
-		$key = static::generateKey($keyOptions);
+		$key = self::generateKey($keyOptions);
 		$cache = new HelixCache($key);
 
 		// If cache contains for the $key generated before
@@ -207,7 +207,7 @@ class Helper
 			'id' => $templateId
 		];
 
-		$key = static::generateKey($draftKeyOptions);
+		$key = self::generateKey($draftKeyOptions);
 		$cache = new HelixCache($key);
 
 		return $cache->contains();
@@ -287,7 +287,7 @@ class Helper
 			'id' => $templateId
 		];
 
-		$draftKey = static::generateKey($draftKeyOptions);
+		$draftKey = self::generateKey($draftKeyOptions);
 		$cache = new HelixCache($draftKey);
 
 		/**
@@ -311,7 +311,7 @@ class Helper
 				'id' => $templateId
 			];
 
-			$key = static::generateKey($keyOptions);
+			$key = self::generateKey($keyOptions);
 			$cache->setCacheKey($key);
 
 			if ($cache->contains())
@@ -320,7 +320,7 @@ class Helper
 			}
 			else
 			{
-				$template = static::getTemplateStyle($templateId);				
+				$template = self::getTemplateStyle($templateId);				
 			}
 		}
 

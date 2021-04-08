@@ -36,6 +36,7 @@ if (!empty($this->items))
 		}
 	}
 }
+$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 ?>
 
 <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
@@ -200,21 +201,48 @@ if (!empty($this->items))
 						<?php endforeach; ?>
 					<?php endif; ?>
 				<?php endif; ?>
-				<?php if ($article->state == 0) : ?>
-					<span class="list-published label label-warning">
-						<?php echo Text::_('JUNPUBLISHED'); ?>
-					</span>
-				<?php endif; ?>
-				<?php if (strtotime($article->publish_up) > strtotime(Factory::getDate())) : ?>
-					<span class="list-published label label-warning">
-						<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
-					</span>
-				<?php endif; ?>
-				<?php if ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate()) : ?>
-					<span class="list-published label label-warning">
-						<?php echo Text::_('JEXPIRED'); ?>
-					</span>
-				<?php endif; ?>
+
+				<!-- check for the Joomla version  -->
+				<?php if (JVERSION < 4): ?>
+					<?php if ($article->state == 0) : ?>
+						<span class="list-published badge bg-warning text-dark">
+							<?php echo Text::_('JUNPUBLISHED'); ?>
+						</span>
+					<?php endif; ?>
+					<?php if (strtotime($article->publish_up) > strtotime(Factory::getDate())) : ?>
+						<span class="list-published badge bg-warning text-dark">
+							<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
+						</span>
+					<?php endif; ?>
+					<?php if ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate()) : ?>
+						<span class="list-published badge bg-warning text-dark">
+							<?php echo Text::_('JEXPIRED'); ?>
+						</span>
+					<?php endif; ?>
+				<?php else: ?>
+					<?php if ($article->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED) : ?>
+						<div>
+							<span class="list-published badge bg-warning text-dark">
+								<?php echo Text::_('JUNPUBLISHED'); ?>
+							</span>
+						</div>
+					<?php endif; ?>
+					<?php if ($article->publish_up > $currentDate) : ?>
+						<div>
+							<span class="list-published badge bg-warning text-dark">
+								<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
+							</span>
+						</div>
+					<?php endif; ?>
+					<?php if (!is_null($article->publish_down) && $article->publish_down < $currentDate) : ?>
+						<div>
+							<span class="list-published badge bg-warning text-dark">
+								<?php echo Text::_('JEXPIRED'); ?>
+							</span>
+						</div>
+					<?php endif; ?>
+				<?php endif ?>
+
 			</td>
 			<?php if ($this->params->get('list_show_date')) : ?>
 				<td headers="categorylist_header_date" class="list-date small">

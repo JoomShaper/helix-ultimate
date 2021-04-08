@@ -46,4 +46,34 @@ const triggerEvent = (element, eventName) => {
 	}
 }
 
-Joomla.utils = { asciiToHex, getCurrentTimeString, helixHash, triggerEvent };
+const setCookie = (name, value = '', days = 1) => {
+	let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+
+    document.cookie = name + "=" + value  + expires + "; path=/";
+}
+
+const getCookie = name => {
+    name = name + "=";
+    let cookieArray = document.cookie.split(';');
+
+    for(let i = 0; i < cookieArray.length; i++) {
+        let c = cookieArray[i];
+
+        while (c.charAt(0)==' ') c = c.substring(1, c.length);
+
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+
+    return undefined;
+}
+
+const deleteCookie = name => {
+	document.cookie = name+'=; Max-Age=-99999999;';
+}
+
+Joomla.utils = { asciiToHex, getCurrentTimeString, helixHash, triggerEvent, setCookie, getCookie, deleteCookie };

@@ -132,10 +132,12 @@ jQuery(function ($) {
 		frameModal += '</div>';
 
 		frameModal += '<div class="hu-modal-footer footer-right">';
-		frameModal +=
-			'<button class="hu-btn hu-btn-link hu-cancel-btn">Cancel</button>';
-		frameModal +=
-			'<button class="hu-btn hu-btn-primary hu-save-btn">Save</button>';
+		frameModal += '<button class="hu-btn hu-btn-link hu-cancel-btn">Cancel</button>';
+		frameModal += '<button class="hu-btn hu-btn-primary hu-save-btn">';
+		frameModal += '<div class="hu-spinner hidden spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div>';
+		frameModal += ' Save';
+		frameModal += '</button>';
+		frameModal += '</div>';
 		frameModal += '</div>';
 
 		frameModal += '</div>';

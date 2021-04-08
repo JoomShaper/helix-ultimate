@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -46,7 +46,7 @@ extract($displayData);
  * @var   array    $control         Is this field checked?
  */
 
-$class    = ' class="form-select ' . trim('simplecolors chzn-done ' . $class) . '"';
+$class    = ' class="custom-select ' . trim('simplecolors chzn-done ' . $class) . '"';
 $disabled = $disabled ? ' disabled' : '';
 $readonly = $readonly ? ' readonly' : '';
 

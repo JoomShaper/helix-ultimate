@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -31,7 +31,7 @@ use Joomla\CMS\Router\Route;
 		<?php endif; ?>
 
 		<?php if ($this->params->get('logout_image') != '') : ?>
-			<img src="<?php echo $this->escape($this->params->get('logout_image')); ?>" class="thumbnail float-end logout-image" alt="<?php echo Text::_('COM_USER_LOGOUT_IMAGE_ALT'); ?>">
+			<img src="<?php echo $this->escape($this->params->get('logout_image')); ?>" class="thumbnail float-right logout-image" alt="<?php echo Text::_('COM_USER_LOGOUT_IMAGE_ALT'); ?>">
 		<?php endif; ?>
 
 	<?php if (($this->params->get('logoutdescription_show') == 1 && str_replace(' ', '', $this->params->get('logout_description')) != '')|| $this->params->get('logout_image') != '') : ?>

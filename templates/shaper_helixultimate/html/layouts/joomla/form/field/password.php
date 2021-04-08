@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -54,9 +54,11 @@ $attributes = array(
 ?>
 <div class="password-group">
 	<div class="input-group">
-		<span class="input-group-text">
-			<span class="fas fa-key" aria-hidden="true"></span>
-			<span class="visually-hidden"><?php echo Text::_('JSHOW'); ?></span>
+		<span class="input-group-prepend">
+			<span class="input-group-text">
+				<span class="fas fa-key" aria-hidden="true"></span>
+				<span class="sr-only"><?php echo Text::_('JSHOW'); ?></span>
+			</span>
 		</span>
 		<input
 			type="password"

@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -51,7 +51,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
 
 				<?php foreach ($this->form->getFieldset('credentials') as $field) : ?>
 					<?php if (!$field->hidden) : ?>
-						<div class="mb-3">
+						<div class="form-group">
 							<?php echo $field->label; ?>
 							<?php echo $field->input; ?>
 						</div>
@@ -59,14 +59,14 @@ $usersConfig = ComponentHelper::getParams('com_users');
 				<?php endforeach; ?>
 
 				<?php if ($this->tfa) : ?>
-					<div class="mb-3">
+					<div class="form-group">
 						<?php echo $this->form->getField('secretkey')->label; ?>
 						<?php echo $this->form->getField('secretkey')->input; ?>
 					</div>
 				<?php endif; ?>
 
 				<?php if (PluginHelper::isEnabled('system', 'remember')) : ?>
-					<div class="form-check mb-3">
+					<div class="form-check form-group">
 						<label class="form-check-label">
 							<input class="form-check-input" type="checkbox" name="remember" id="remember" class="inputbox" value="yes">
 							<?php echo Text::_('COM_USERS_LOGIN_REMEMBER_ME') ?>
@@ -74,8 +74,8 @@ $usersConfig = ComponentHelper::getParams('com_users');
 					</div>
 				<?php endif; ?>
 
-				<div class="mb-3">
-					<button type="submit" class="btn btn-primary btn-lg w-100">
+				<div class="form-group">
+					<button type="submit" class="btn btn-primary btn-lg btn-block">
 						<?php echo Text::_('JLOGIN'); ?>
 					</button>
 				</div>

@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -43,7 +43,7 @@ HTMLHelper::_('behavior.formvalidator');
 										<?php else: ?>
 											<div class="col-lg-12">
 										<?php endif; ?>
-										<div class="mb-3">
+										<div class="form-group">
 											<?php echo $field->label; ?>
 											<?php if (!$field->required && $field->type !== 'Spacer') : ?>
 												<span class="optional"><?php echo Text::_('COM_USERS_OPTIONAL'); ?></span>

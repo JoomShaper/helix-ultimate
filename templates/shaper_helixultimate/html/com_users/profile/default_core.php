@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 
 <div id="users-profile-core">
 	<div class="d-flex mb-3">
-		<div class="me-auto">
+		<div class="mr-auto">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_CORE_LEGEND'); ?></strong>
 		</div>
 		<div>

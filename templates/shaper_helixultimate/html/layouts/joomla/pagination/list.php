@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -16,7 +16,7 @@ $nextDisabled  = $list['next']['active'] ? '' : ' disabled';
 $endDisabled   = $list['end']['active'] ? '' : ' disabled'; 
 
 ?>
-<ul class="pagination ms-0 mb-4">
+<ul class="pagination ml-0 mb-4">
 	<li class="pagination-start<?php echo $startDisabled; ?> page-item"><?php echo $list['start']['data']; ?></li>
 	<li class="pagination-prev<?php echo $prevDisabled; ?> page-item"><?php echo $list['previous']['data']; ?></li>
 	<?php foreach ($list['pages'] as $page) : ?>

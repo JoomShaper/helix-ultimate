@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -13,7 +13,7 @@ use Joomla\CMS\Language\Text;
 $name = $displayData;
 
 ?>
-<div class="toggle-editor btn-toolbar float-end clearfix mt-3">
+<div class="toggle-editor btn-toolbar float-right clearfix mt-3">
 	<div class="btn-group">
 		<a class="btn btn-secondary" href="#"
 			onclick="tinyMCE.execCommand('mceToggleEditor', false, '<?php echo $name; ?>');return false;"

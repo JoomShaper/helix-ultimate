@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -64,7 +64,7 @@ Factory::getDocument()->addScriptDeclaration("
 		<fieldset class="filters d-flex justify-content-between mb-3">
 			<?php if ($this->params->get('filter_field')) : ?>
 				<div class="input-group">
-					<label class="filter-search-lbl visually-hidden" for="filter-search">
+					<label class="filter-search-lbl sr-only" for="filter-search">
 						<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL') . '&#160;'; ?>
 					</label>
 					<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo Text::_('COM_TAGS_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>">
@@ -79,8 +79,8 @@ Factory::getDocument()->addScriptDeclaration("
 				</div>
 			<?php endif; ?>
 			<?php if ($this->params->get('show_pagination_limit')) : ?>
-				<div class="btn-group float-end">
-					<label for="limit" class="visually-hidden">
+				<div class="btn-group float-right">
+					<label for="limit" class="sr-only">
 						<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
 					</label>
 					<?php echo $this->pagination->getLimitBox(); ?>
@@ -142,7 +142,7 @@ Factory::getDocument()->addScriptDeclaration("
 						</span>
 					<?php endif; ?>
 					<?php if ($this->params->get('all_tags_show_tag_hits')) : ?>
-						<span class="list-hits badge bg-info">
+						<span class="list-hits badge badge-info">
 							<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $item->hits); ?>
 						</span>
 					<?php endif; ?>
@@ -161,7 +161,7 @@ Factory::getDocument()->addScriptDeclaration("
 		<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
 			<div class="w-100">
 				<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-					<p class="counter float-end pt-3 pe-2">
+					<p class="counter float-right pt-3 pr-2">
 						<?php echo $this->pagination->getPagesCounter(); ?>
 					</p>
 				<?php endif; ?>

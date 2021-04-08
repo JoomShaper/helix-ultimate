@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -31,7 +31,7 @@ $alert = [
 				<?php $type = \in_array($type, array_keys($alert)) ? $type : 'message'; ?>
 				<div class="alert <?php echo isset($alert[$type]) ? $alert[$type] : 'alert-' . $type; ?>">
 					<?php // This requires JS so we should add it trough JS. Progressive enhancement and stuff. ?>
-					<a class="btn-close" data-bs-dismiss="alert" aria-label="<?php Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>"></a>
+					<a class="close" data-dismiss="alert" aria-label="<?php Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>">&times;</a>
 
 					<?php if (!empty($msgs)) : ?>
 						<h4 class="alert-heading"><?php echo Text::_($type); ?></h4>

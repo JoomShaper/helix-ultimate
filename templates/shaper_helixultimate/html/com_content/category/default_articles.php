@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -36,23 +36,22 @@ if (!empty($this->items))
 		}
 	}
 }
-$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 ?>
 
 <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
 
 <?php if ($this->params->get('filter_field') !== 'hide' || $this->params->get('show_pagination_limit')) : ?>
 	<div class="d-flex justify-content-between align-items-centerd-flex mb-4">
-		<div class="me-auto align-self-center">
+		<div class="mr-auto align-self-center">
 			<strong><?php echo Text::_('COM_CONTENT_FORM_FILTER_LEGEND'); ?></strong>
 		</div>
 		
 		<div>
-			<div class="filters row gx-3">
+			<div class="filters form-row">
 				<?php if ($this->params->get('filter_field') !== 'hide') : ?>			
 					<?php if ($this->params->get('filter_field') !== 'tag') : ?>
 						<div class="col">
-							<label class="filter-search-lbl visually-hidden" for="filter-search">
+							<label class="filter-search-lbl sr-only" for="filter-search">
 								<?php echo Text::_('COM_CONTENT_' . $this->params->get('filter_field') . '_FILTER_LABEL') . '&#160;'; ?>
 							</label>
 							<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo Text::_('COM_CONTENT_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo Text::_('COM_CONTENT_' . $this->params->get('filter_field') . '_FILTER_LABEL'); ?>">
@@ -68,7 +67,7 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 				<?php endif; ?>
 				<?php if ($this->params->get('show_pagination_limit')) : ?>
 					<div class="col">
-						<label for="limit" class="visually-hidden">
+						<label for="limit" class="sr-only">
 							<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
 						</label>
 						<?php echo $this->pagination->getLimitBox(); ?>
@@ -201,48 +200,21 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 						<?php endforeach; ?>
 					<?php endif; ?>
 				<?php endif; ?>
-
-				<!-- check for the Joomla version  -->
-				<?php if (JVERSION < 4): ?>
-					<?php if ($article->state == 0) : ?>
-						<span class="list-published badge bg-warning text-dark">
-							<?php echo Text::_('JUNPUBLISHED'); ?>
-						</span>
-					<?php endif; ?>
-					<?php if (strtotime($article->publish_up) > strtotime(Factory::getDate())) : ?>
-						<span class="list-published badge bg-warning text-dark">
-							<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
-						</span>
-					<?php endif; ?>
-					<?php if ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate()) : ?>
-						<span class="list-published badge bg-warning text-dark">
-							<?php echo Text::_('JEXPIRED'); ?>
-						</span>
-					<?php endif; ?>
-				<?php else: ?>
-					<?php if ($article->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED) : ?>
-						<div>
-							<span class="list-published badge bg-warning text-dark">
-								<?php echo Text::_('JUNPUBLISHED'); ?>
-							</span>
-						</div>
-					<?php endif; ?>
-					<?php if ($article->publish_up > $currentDate) : ?>
-						<div>
-							<span class="list-published badge bg-warning text-dark">
-								<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
-							</span>
-						</div>
-					<?php endif; ?>
-					<?php if (!is_null($article->publish_down) && $article->publish_down < $currentDate) : ?>
-						<div>
-							<span class="list-published badge bg-warning text-dark">
-								<?php echo Text::_('JEXPIRED'); ?>
-							</span>
-						</div>
-					<?php endif; ?>
-				<?php endif ?>
-
+				<?php if ($article->state == 0) : ?>
+					<span class="list-published label label-warning">
+						<?php echo Text::_('JUNPUBLISHED'); ?>
+					</span>
+				<?php endif; ?>
+				<?php if (strtotime($article->publish_up) > strtotime(Factory::getDate())) : ?>
+					<span class="list-published label label-warning">
+						<?php echo Text::_('JNOTPUBLISHEDYET'); ?>
+					</span>
+				<?php endif; ?>
+				<?php if ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate()) : ?>
+					<span class="list-published label label-warning">
+						<?php echo Text::_('JEXPIRED'); ?>
+					</span>
+				<?php endif; ?>
 			</td>
 			<?php if ($this->params->get('list_show_date')) : ?>
 				<td headers="categorylist_header_date" class="list-date small">
@@ -268,21 +240,21 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 			<?php endif; ?>
 			<?php if ($this->params->get('list_show_hits', 1)) : ?>
 				<td headers="categorylist_header_hits" class="list-hits">
-					<span class="badge bg-info">
+					<span class="badge badge-info">
 						<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $article->hits); ?>
 					</span>
 				</td>
 			<?php endif; ?>
 			<?php if ($this->params->get('list_show_votes', 0) && $this->vote) : ?>
 				<td headers="categorylist_header_votes" class="list-votes">
-					<span class="badge bg-success">
+					<span class="badge badge-success">
 						<?php echo Text::sprintf('COM_CONTENT_VOTES_COUNT', $article->rating_count); ?>
 					</span>
 				</td>
 			<?php endif; ?>
 			<?php if ($this->params->get('list_show_ratings', 0) && $this->vote) : ?>
 				<td headers="categorylist_header_ratings" class="list-ratings">
-					<span class="badge bg-warning">
+					<span class="badge badge-warning">
 						<?php echo Text::sprintf('COM_CONTENT_RATINGS_COUNT', $article->rating); ?>
 					</span>
 				</td>
@@ -304,7 +276,7 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 	<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
 		<nav class="d-flex pagination-wrapper">
 			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-				<div class="me-auto">
+				<div class="mr-auto">
 					<?php echo $this->pagination->getPagesLinks(); ?>
 				</div>
 				<div class="pagination-counter">

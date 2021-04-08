@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -75,7 +75,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 											<?php else: ?>
 												<div class="col-md-6">
 												<?php endif; ?>
-												<div class="mb-3">
+												<div class="form-group">
 													<?php echo $field->label; ?>
 													<?php if ($field->fieldname === 'password1') : ?>
 														<input type="password" style="display:none">
@@ -94,7 +94,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 						<fieldset>
 							<legend><?php echo Text::_('COM_USERS_PROFILE_TWO_FACTOR_AUTH'); ?></legend>
 
-							<div class="mb-3">
+							<div class="form-group">
 								<label id="jform_twofactor_method-lbl" for="jform_twofactor_method" class="hasTooltip"
 								title="<?php echo '<strong>' . Text::_('COM_USERS_PROFILE_TWOFACTOR_LABEL') . '</strong><br>' . Text::_('COM_USERS_PROFILE_TWOFACTOR_DESC'); ?>">
 								<?php echo Text::_('COM_USERS_PROFILE_TWOFACTOR_LABEL'); ?>
@@ -133,7 +133,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 					</fieldset>
 				<?php endif; ?>
 
-				<div class="mb-3">
+				<div class="form-group">
 					<button type="submit" class="btn btn-primary validate"><span><?php echo Text::_('JSUBMIT'); ?></span></button>
 					<a class="btn btn-secondary" href="<?php echo Route::_('index.php?option=com_users&view=profile'); ?>" title="<?php echo Text::_('JCANCEL'); ?>"><?php echo Text::_('JCANCEL'); ?></a>
 					<input type="hidden" name="option" value="com_users">

@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -57,7 +57,7 @@ Factory::getDocument()->addScriptDeclaration("
 
 			<?php if ($this->params->get('show_pagination_limit')) : ?>
 				<div class="limit-box mt-3">
-					<?php echo $this->pagination->getLimitBox('form-select'); ?>
+					<?php echo $this->pagination->getLimitBox('custom-select'); ?>
 				</div>
 			<?php endif; ?>			
 

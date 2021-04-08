@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -53,7 +53,7 @@ if ($currentPage >= $step)
 <div class="pagination pagination-toolbar clearfix" style="text-align: center;">
 
 	<?php if ($showLimitBox) : ?>
-		<div class="limit float-end">
+		<div class="limit float-right">
 			<?php echo Text::_('JGLOBAL_DISPLAY_NUM') . $list['limitfield']; ?>
 		</div>
 	<?php endif; ?>

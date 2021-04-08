@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -35,23 +35,17 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 		<?php endif; ?>
 
 		<?php if ($displayData->state == 0) : ?>
-			<span class="badge bg-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
+			<span class="badge badge-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 		<?php endif; ?>
 
 		<?php if (strtotime($displayData->publish_up) > strtotime(Factory::getDate())) : ?>
-			<span class="badge bg-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
+			<span class="badge badge-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
 
-		<?php if (JVERSION < 4): ?>
-			<?php if ($displayData->publish_down != Factory::getDbo()->getNullDate()
-				&& (strtotime($displayData->publish_down) < strtotime(Factory::getDate()))) : ?>
-				<span class="badge bg-warning"><?php echo Text::_('JEXPIRED'); ?></span>
-			<?php endif; ?>
-		<?php else : ?>
-			<?php if ($displayData->publish_down !== null && $displayData->publish_down < $currentDate) : ?>
-				<span class="badge bg-warning"><?php echo Text::_('JEXPIRED'); ?></span>
-			<?php endif; ?>
-		<?php endif ?>
-
+		<?php if ($displayData->publish_down != Factory::getDbo()->getNullDate()
+			&& (strtotime($displayData->publish_down) < strtotime(Factory::getDate()))
+		) : ?>
+			<span class="badge badge-warning"><?php echo Text::_('JEXPIRED'); ?></span>
+		<?php endif; ?>
 	</div>
 <?php endif; ?>

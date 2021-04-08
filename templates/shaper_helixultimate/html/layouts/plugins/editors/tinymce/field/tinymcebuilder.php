@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -151,7 +151,7 @@ Factory::getDocument()->addScriptOptions('plg_editors_tinymce_builder',
 			$valBar2 = empty($value['toolbars'][$num]['toolbar2']) ? array() : $value['toolbars'][$num]['toolbar2'];
 		?>
 			<div class="tab-pane <?php echo $num === $setsAmount - 1 ? 'active' : ''; ?>" id="set-<?php echo $num; ?>">
-				<div class="btn-toolbar float-end">
+				<div class="btn-toolbar float-right">
 					<div class="btn-group btn-group-sm">
 
 					<?php foreach(array_keys($toolbarPreset) as $presetName) :

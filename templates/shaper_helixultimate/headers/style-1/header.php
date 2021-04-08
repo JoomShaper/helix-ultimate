@@ -33,6 +33,7 @@ $contact 	= new HelixUltimateFeatureContact($data->params);
 $logo    	= new HelixUltimateFeatureLogo($data->params);
 $menu    	= new HelixUltimateFeatureMenu($data->params);
 
+
 /** Logo and menu html classes */
 $logoClass = 'col-auto';
 $menuClass = 'col-auto flex-auto';
@@ -45,7 +46,7 @@ $searchModule = Helper::getSearchModule();
 
 ?>
 
-<?php if($displayData->params->get('sticky_header')) { ?>
+<?php if( $displayData->params->get('sticky_header')) { ?>
 	<div class="sticky-header-placeholder"></div>
 <?php } ?>
 <div id="sp-top-bar">

@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -43,11 +43,10 @@ $page_header_tag = 'h1';
 $attribs = json_decode($this->item->attribs);
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';
 
+
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
-$isExpired  = JVERSION < 4
-	? (strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()
-	: !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
+// HTMLHelper::_('behavior.caption');
 ?>
 <div class="article-details <?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? Factory::getConfig()->get('language') : $this->item->language; ?>">
@@ -85,14 +84,16 @@ $isExpired  = JVERSION < 4
 			</<?php echo $page_header_tag; ?>>
 		<?php endif; ?>
 		<?php if ($this->item->state == 0) : ?>
-			<span class="badge bg-warning text-dark"><?php echo Text::_('JUNPUBLISHED'); ?></span>
+			<span class="label label-warning"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 		<?php endif; ?>
 		<?php if (strtotime($this->item->publish_up) > strtotime(Factory::getDate())) : ?>
-			<span class="badge bg-warning text-dark"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
+			<span class="label label-warning"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
-		<?php if ($isExpired) : ?>
-			<span class="badge bg-warning text-dark"><?php echo Text::_('JEXPIRED'); ?></span>
+		<?php if ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()) : ?>
+			<span class="label label-warning"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
+
+		
 	</div>
 	<?php endif; ?>
 	<div class="article-can-edit d-flex flex-wrap justify-content-between">
@@ -128,7 +129,7 @@ $isExpired  = JVERSION < 4
 	<?php
 	 if( ($tmpl_params->get('social_share') || $params->get('show_vote')) && !$this->print) : ?>
 		<div class="article-ratings-social-share d-flex justify-content-end">
-			<div class="me-auto align-self-center">
+			<div class="mr-auto align-self-center">
 				<?php if($params->get('show_vote')): ?>
 					<?php HTMLHelper::_('jquery.token'); ?>
 					<?php echo LayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>

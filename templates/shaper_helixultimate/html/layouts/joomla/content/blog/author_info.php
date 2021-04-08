@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -23,7 +23,7 @@ $params = $template->params;
 			$profile = UserHelper::getProfile( (int) $displayData->created_by );
 		?>
 		<div class="media">
-			<img class="me-3" src="https://www.gravatar.com/avatar/<?php echo md5($author->get('email')); ?>?s=64&d=identicon&r=PG" alt="<?php echo $author->name; ?>">
+			<img class="mr-3" src="https://www.gravatar.com/avatar/<?php echo md5($author->get('email')); ?>?s=64&d=identicon&r=PG" alt="<?php echo $author->name; ?>">
 			<div class="media-body">
 				<h5 class="mt-0"><?php echo $author->name; ?></h5>
 				<?php if(isset($profile->profile['aboutme']) && $profile->profile['aboutme']) : ?>

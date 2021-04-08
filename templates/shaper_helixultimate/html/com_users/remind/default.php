@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -31,7 +31,7 @@ HTMLHelper::_('behavior.formvalidator');
 					<fieldset>
 						<p><?php echo Text::_($fieldset->label); ?></p>
 						<?php foreach ($this->form->getFieldset($fieldset->name) as $name => $field) : ?>
-							<div class="mb-3">
+							<div class="form-group">
 								<?php echo $field->label; ?>
 								<?php echo $field->input; ?>
 							</div>

@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -34,6 +34,6 @@ echo HTMLHelper::_(
 $id = isset($displayData['id']) ? $displayData['id'] : '';
 
 ?>
-<button<?php echo $id; ?> onclick="jQuery('#versionsModal').modal('show')" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" title="<?php echo $displayData['title']; ?>">
+<button<?php echo $id; ?> onclick="jQuery('#versionsModal').modal('show')" class="btn btn-sm btn-outline-primary" data-toggle="modal" title="<?php echo $displayData['title']; ?>">
 	<span class="icon-archive" aria-hidden="true"></span><?php echo $displayData['title']; ?>
 </button>

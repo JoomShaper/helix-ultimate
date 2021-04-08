@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -13,21 +13,17 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $article = $displayData['article'];
-$tooltip = JVERSION < 4 ? $displayData['overlib'] : $displayData['tooltip'];
+$overlib = $displayData['overlib'];
 
-$icon 			= $article->state ? 'edit' : 'eye-slash';
-$currentDate   	= Factory::getDate()->format('Y-m-d H:i:s');
-$isUnpublished 	= JVERSION < 4
-	? strtotime($article->publish_up) > strtotime(Factory::getDate()) || ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate())
-	: ($article->publish_up > $currentDate) || !is_null($article->publish_down) && ($article->publish_down < $currentDate);
+$icon = $article->state ? 'edit' : 'eye-slash';
 
-if ($isUnpublished)
+if (strtotime($article->publish_up) > strtotime(Factory::getDate()) || ((strtotime($article->publish_down) < strtotime(Factory::getDate())) && $article->publish_down != Factory::getDbo()->getNullDate()))
 {
 	$icon = 'eye-slash';
 }
 
 ?>
 <SPAN class="link-edit-article">
-	<span class="hasTooltip fas fa-<?php echo $icon; ?>" title="<?php echo HTMLHelper::tooltipText(Text::_('COM_CONTENT_EDIT_ITEM'), $tooltip, 0, 0); ?>"></span>
+	<span class="hasTooltip fas fa-<?php echo $icon; ?>" title="<?php echo HTMLHelper::tooltipText(Text::_('COM_CONTENT_EDIT_ITEM'), $overlib, 0, 0); ?>"></span>
 	<?php echo Text::_('JGLOBAL_EDIT'); ?>
 </SPAN>

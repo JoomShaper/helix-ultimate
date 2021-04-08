@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -13,11 +13,8 @@ use Joomla\CMS\Uri\Uri;
 
 $data = $displayData;
 
-if (JVERSION < 4)
-{
-	$doc = Factory::getDocument();
-	$doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
-}
+$doc = Factory::getDocument();
+$doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
 
 ?>
 <textarea

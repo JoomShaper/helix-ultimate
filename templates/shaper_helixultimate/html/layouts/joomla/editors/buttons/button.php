@@ -22,7 +22,7 @@ if ($button->get('name')) :
 
 	if ($button->get('modal', 0))
 	{
-		$toggle = ' data-bs-toggle="modal"';
+		$toggle = ' data-toggle="modal"';
 		$href = ' href="' . $target . 'Modal"';
 	}
 ?>

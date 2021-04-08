@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2018 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -24,11 +24,11 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 </h1>
 </div>
 <?php endif; ?>
-<form id="adminForm" action="<?php echo Route::_('index.php'); ?>" method="post" class="d-flex">
+<form id="adminForm" action="<?php echo Route::_('index.php'); ?>" method="post" class="form-inline">
 	<fieldset class="filters">
 	<div class="filter-search">
 		<?php if ($this->params->get('filter_field') !== 'hide') : ?>
-		<label class="filter-search-lbl visually-hidden" for="filter-search"><?php echo Text::_('COM_CONTENT_TITLE_FILTER_LABEL') . '&#160;'; ?></label>
+		<label class="filter-search-lbl sr-only" for="filter-search"><?php echo Text::_('COM_CONTENT_TITLE_FILTER_LABEL') . '&#160;'; ?></label>
 		<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->filter); ?>" class="inputbox col-md-2" onchange="document.getElementById('adminForm').submit();" placeholder="<?php echo Text::_('COM_CONTENT_TITLE_FILTER_LABEL'); ?>">
 		<?php endif; ?>
 

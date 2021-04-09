@@ -8,8 +8,8 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
@@ -153,10 +153,20 @@ if (!$editoroptions)
 					</div>
 				<?php endif; ?>
 			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab'); ?>
-
-			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.addTab', $this->tab_name, 'language', Text::_('JFIELD_LANGUAGE_LABEL')); ?>
-				<?php echo $this->form->renderField('language'); ?>
-			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab'); ?>
+			
+			<?php if (JVERSION < 4): ?>
+				<?php echo HTMLHelper::_('bootstrap.addTab', $this->tab_name, 'language', Text::_('JFIELD_LANGUAGE_LABEL')); ?>
+					<?php echo $this->form->renderField('language'); ?>
+				<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+			<?php else: ?>
+				<?php if (Multilanguage::isEnabled()) : ?>
+					<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'language', Text::_('JFIELD_LANGUAGE_LABEL')); ?>
+						<?php echo $this->form->renderField('language'); ?>
+					<?php echo HTMLHelper::_('uitab.endTab'); ?>
+				<?php else: ?>
+					<?php echo $this->form->renderField('language'); ?>
+				<?php endif; ?>
+			<?php endif ?>
 
 			<?php if ($params->get('show_publishing_options', 1) == 1) : ?>
 				<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.addTab', $this->tab_name, 'metadata', Text::_('COM_CONTENT_METADATA')); ?>

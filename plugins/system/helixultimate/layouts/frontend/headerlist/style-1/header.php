@@ -25,14 +25,14 @@ $output .= '<div class="container-inner">';
 $output .= '<div class="row">';
 
 $output .= '<div id="sp-top1" class="col-lg-6">';
-$output .= '<div class="sp-column text-center text-lg-left">';
+$output .= '<div class="sp-column text-center text-lg-start">';
 $social = new HelixUltimateFeatureSocial($data->params);
 $output .= $social->renderFeature();
 $output .= '</div>';
 $output .= '</div>';
 
 $output .= '<div id="sp-top2" class="col-lg-6">';
-$output .= '<div class="sp-column text-center text-lg-right">';
+$output .= '<div class="sp-column text-center text-lg-end">';
 $contact = new HelixUltimateFeatureContact($data->params);
 $output .= $contact->renderFeature();
 $output .= '</div>';

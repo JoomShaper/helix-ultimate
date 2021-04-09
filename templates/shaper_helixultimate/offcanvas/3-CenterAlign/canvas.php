@@ -25,6 +25,8 @@ $social = new HelixUltimateFeatureSocial($params);
 $contact = new HelixUltimateFeatureContact($params);
 $logo = new HelixUltimateFeatureLogo($params);
 
+$hasModMenu = array_search('mod_menu', array_column(ModuleHelper::getModules('offcanvas'), 'module'));
+
 $menuModule = Helper::createModule('mod_menu', [
 	'title' => 'Main Menu',
 	'params' => '{"menutype":"' . $params->get('offcanvas_menu', 'mainmenu') . '","base":"","startLevel":"1","endLevel":"0","showAllChildren":"1","tag_id":"","class_sfx":" nav-pills","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}',
@@ -55,9 +57,13 @@ $searchModule = Helper::getSearchModule();
 			<?php endif ?>
 		</div>
 		
-		<div class="menu-wrapper">
-			<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
-		</div>
+		<?php if ($hasModMenu === false): ?>
+			<div class="menu-wrapper">
+				<?php echo ModuleHelper::renderModule($menuModule, ['style' => 'sp_xhtml']); ?>
+			</div>
+		<?php else: ?>
+			<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
+		<?php endif ?>
 
 		
 		<?php if ($params->get('offcanvas_enable_contact') || $params->get('offcanvas_enable_social')): ?>
@@ -75,7 +81,9 @@ $searchModule = Helper::getSearchModule();
 			<?php endif ?>
 		</div>
 		<?php endif ?>
-
-		<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
+		
+		<?php if ($hasModMenu === false): ?>
+			<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
+		<?php endif ?>
 	</div>
 </div>

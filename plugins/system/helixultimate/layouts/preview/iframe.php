@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
+use Joomla\CMS\Factory;
+
 defined('_JEXEC') or die();
 
 extract($displayData);
@@ -26,4 +28,5 @@ $style .= "width: {$width}; height: {$height}; box-shadow: rgba(139, 139, 143, 0
 
 ?>
 
-<iframe id="hu-template-preview" src="<?php echo $url; ?>" frameborder="0" style="<?php echo $style; ?>"></iframe>
+<iframe id="hu-template-preview" src="<?php echo $url; ?>" frameborder="0" style="<?php echo $style; ?>">
+</iframe>

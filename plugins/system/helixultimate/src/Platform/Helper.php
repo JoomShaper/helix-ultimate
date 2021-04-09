@@ -9,6 +9,7 @@
 namespace HelixUltimate\Framework\Platform;
 
 use DateTime;
+use HelixUltimate\Framework\Platform\Provider;
 use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
@@ -295,8 +296,9 @@ class Helper
 		 * from draft, otherwise if it is document that means this request
 		 * comes from the original site visit. So load from saved cache.
 		 */
-		$requestFromIframe = isset($_SERVER['HTTP_SEC_FETCH_DEST'])
-			&& $_SERVER['HTTP_SEC_FETCH_DEST'] === 'iframe';
+		// $requestFromIframe = isset($_SERVER['HTTP_SEC_FETCH_DEST'])
+		// 	&& $_SERVER['HTTP_SEC_FETCH_DEST'] === 'iframe';
+		$requestFromIframe = $app->input->get('helixMode', '') === 'edit';
 
 		if ($cache->contains() && $requestFromIframe)
 		{

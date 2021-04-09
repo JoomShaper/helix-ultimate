@@ -48,7 +48,7 @@ $searchModule = Helper::getSearchModule();
 <header id="sp-header" class="header-with-modal-menu center-layout">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row flex-nowrap align-items-center justify-content-between">
+			<div class="row align-items-center justify-content-between">
 				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">

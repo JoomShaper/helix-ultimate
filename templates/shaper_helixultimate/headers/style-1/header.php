@@ -53,14 +53,14 @@ $searchModule = Helper::getSearchModule();
 		<div class="container-inner">
 			<div class="row">
 				<div id="sp-top1" class="col-lg-6">
-					<div class="sp-column text-center text-lg-left">
+					<div class="sp-column text-center text-lg-start">
 						<?php echo $social->renderFeature(); ?>
 						<jdoc:include type="modules" name="top1" style="sp_xhtml"/>
 					</div>
 				</div>
 
 				<div id="sp-top2" class="col-lg-6">
-					<div class="sp-column text-center text-lg-right">
+					<div class="sp-column text-center text-lg-end">
 							<?php echo $contact->renderFeature(); ?>
 							<jdoc:include type="modules" name="top2" style="sp_xhtml" />
 					</div>
@@ -73,7 +73,7 @@ $searchModule = Helper::getSearchModule();
 <header id="sp-header">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row flex-nowrap">
+			<div class="row">
 				<!-- Logo -->
 				<div id="sp-logo" class="<?php echo $logoClass; ?>">
 					<div class="sp-column">

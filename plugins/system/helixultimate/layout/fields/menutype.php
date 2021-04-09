@@ -79,7 +79,7 @@ class HelixultimateFieldMenuType
 		$tmpl = "'" . \json_encode($tmpl, \JSON_NUMERIC_CHECK) . "'";
 		$dropdownText = 'Select Menu Type';
 
-		$html[] = '<a href="javascript:" class="hu-btn hu-btn-outline text-left hu-btn-block hu-has-dropdown hu-dropdown-toggle" data-target="#menuTypeDropdown">' . $dropdownText . '</a>';
+		$html[] = '<a href="javascript:" class="hu-btn hu-btn-outline text-start hu-btn-block hu-has-dropdown hu-dropdown-toggle" data-target="#menuTypeDropdown">' . $dropdownText . '</a>';
 
 		if (!empty($types))
 		{

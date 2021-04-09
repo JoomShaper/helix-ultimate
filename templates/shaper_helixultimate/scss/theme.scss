@@ -2138,3 +2138,94 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
 .no-js img.lazyload {
 	display: none;
 }
+
+//article frontend editing
+body.helix-ultimate.hu.view-form.layout-edit{
+	.edit.item-page{
+		#adminForm{
+			>.btn-toolbar{
+				
+			}
+		}
+		fieldset{
+			#editor{
+				label#jform_title-lbl{
+					margin-bottom: 15px;
+					font-weight: 700;
+				}
+			}
+			#publishing,
+			#metadata,
+			#attrib-helix_ultimate_blog_options{
+				>.control-group{
+					display: flex;
+					flex-direction: column;
+					>label{
+						margin-bottom: 5px;
+						font-weight: 700;
+					}
+					textarea{
+						width: 100%;
+					}
+					.calendar-container .time td{
+						select{
+							padding: 4px;
+							font-size: 13px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+body.contentpane.com-media.view-images{
+	.container-popup{
+		#imageForm{
+			>#messages+.well{
+				.row-fluid{
+					display: flex;
+					max-width: 100%;
+					.span8{
+						flex: auto;
+						>.controls{
+							margin-left: 10px;
+							display: flex;
+							max-width: 500px;
+							#folderlist_chzn,
+							#folderlist{
+								flex: auto;
+							}
+						}
+						#upbutton{
+							background: var(--bs-primary);
+							color: #fff;
+							margin: 0 5px;
+						}
+					}
+				}
+			}
+			.well{
+				>.row-fluid:not(:last-child) {
+					margin-bottom: 5px;
+					>.control-group:not(:last-child){
+						margin-bottom: 5px;
+					}
+				}
+			}
+			.btn.button-cancel{
+				background: var(--bs-danger);	
+				color: #fff;
+				&:hover, &:focus{
+					border-color:var(--bs-danger);
+				}
+			}
+		}
+	}
+}
+body.contentpane.com-menus.view-items{
+	#adminForm{
+		.js-stools-container-bar{
+			display: flex;
+		}
+	}
+}

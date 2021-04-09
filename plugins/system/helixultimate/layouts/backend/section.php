@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
 use Joomla\Utilities\ArrayHelper;
 
 $grids = array(
@@ -65,7 +67,7 @@ if(isset($row->settings))
 	$rowSettings = RowColumnSettings::getSettings($row->settings);
 }
 
-$name = JText::_('HELIX_ULTIMATE_SECTION_TITLE');
+$name = Text::_('HELIX_ULTIMATE_SECTION_TITLE');
 
 if (isset($row->settings->name))
 {
@@ -73,7 +75,7 @@ if (isset($row->settings->name))
 }
 
 $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
-$layout_column = new JLayoutFile('backend.column', $layout_path );
+$layout_column = new FileLayout('backend.column', $layout_path );
 
 $output = '';
 $output .= '<div '.((isset($row->sectionID) && $row->sectionID)?'id="hu-layout-section"':'').' class="hu-layout-section" ' . $rowSettings .'>';
@@ -112,13 +114,22 @@ foreach ($grids as $grid)
 }
 
 $output .= '<div class="col-3">';
-$output .= '<a href="#" class="hu-column-layout hu-custom ' . ((isset($row->layout) && $custom) ? 'active' : '' ) .'" data-layout="'. $grid[0] .'" data-layout="'. $row->layout .'" data-type="custom" title="Custom Layout">';
+$output .= '<a href="#" class="hu-column-layout hu-layout-custom-btn ' . ((isset($row->layout) && $custom) ? 'active' : '' ) .'" data-layout="'. $grid[0] .'" data-layout="'. $row->layout .'" data-type="custom" title="Custom Layout">';
 $output .= '<div class="hu-column-layout-preview">Custom</div>';
 $output .= '<span class="hu-column-layout-name hu-sr-only">Custom</span>';
 $output .= '</a>';
 $output .= '</div>';
 
 $output .= '</div>';
+
+$output .= '<div class="hu-layout-custom mb-2" style="display: none;">';
+$output .= '	<label>' . Text::_('HELIX_ULTIMATE_CUSTOM_LAYOUT_LABEL') . '</label>';
+$output .= '	<div class="hu-d-flex hu-justify-content-between">';
+$output .= '		<input type="text" class="hu-layout-custom-field me-2" value="6+3+3">';
+$output .= '		<button class="hu-btn hu-btn-primary hu-layout-custom-apply">' . Text::_('HELIX_ULTIMATE_MEGAMENU_APPLY_TEXT') . '</button>';
+$output .= '	</div>';
+$output .= '</div>';
+
 $output .= '</div>';
 $output .= '</li>';
 $output .= '<li class="hu-mr-1"><a class="hu-row-options hu-layout-builder-action" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" fill="none"><path d="M9.786 3.224c.731 0 1.347-.487 1.548-1.16h2.428c.23 0 .43-.194.43-.438 0-.25-.2-.444-.43-.444h-2.428A1.614 1.614 0 009.786 0c-.738 0-1.36.501-1.554 1.182H.444A.437.437 0 000 1.626c0 .244.193.437.444.437H8.24a1.61 1.61 0 001.547 1.16zm0-.73a.876.876 0 01-.88-.882c0-.502.386-.881.88-.881.495 0 .882.38.882.88a.876.876 0 01-.882.882zm-5.2 5.129c.737 0 1.36-.502 1.554-1.175h7.608c.244 0 .444-.2.444-.444 0-.251-.2-.445-.444-.445H6.133A1.618 1.618 0 004.585 4.4c-.73 0-1.354.494-1.547 1.16H.423A.433.433 0 000 6.004c0 .243.193.444.423.444h2.615a1.622 1.622 0 001.547 1.175zm0-.738a.872.872 0 01-.882-.881c0-.495.387-.882.881-.882s.881.387.881.882a.872.872 0 01-.88.88zM9.785 12c.731 0 1.354-.502 1.548-1.175h2.428c.23 0 .43-.193.43-.444 0-.244-.2-.437-.43-.437h-2.428a1.616 1.616 0 00-1.548-1.168c-.73 0-1.354.494-1.547 1.168H.444A.436.436 0 000 10.38c0 .25.193.444.444.444h7.788A1.625 1.625 0 009.786 12zm0-.73a.878.878 0 01-.88-.89c0-.493.386-.873.88-.873.495 0 .882.38.882.874a.878.878 0 01-.882.888z"/></svg></a></li>';

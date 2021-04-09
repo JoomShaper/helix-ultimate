@@ -7,8 +7,17 @@
 
 jQuery(function ($) {
 	/** Show/hide the column layout */
-	$(document).on('click', '.hu-row-option-list > li', function() {
+	$(document).on('click', '.hu-add-columns', function(event) {
+		event.preventDefault();
+		event.stopPropagation();
 
+		$(this).closest('li').find('.hu-column-list').slideToggle(300);
+		console.log('click fired');
+	});
+
+	/** Close the hu-column-list on select. */
+	$(document).on('click', '.hu-column-layout:not(.hu-layout-custom-btn)', function() {
+		$(this).closest('.hu-column-list').slideUp(300);
 	});
 
 
@@ -361,7 +370,6 @@ jQuery(function ($) {
 	// Column Layout Arrange
 	$(document).on('click', '.hu-column-layout', function (event) {
 		event.preventDefault();
-
 		var $that = $(this),
 			colType = $that.data('type'),
 			column;
@@ -370,11 +378,8 @@ jQuery(function ($) {
 			return;
 		}
 
-		if (colType == 'custom') {
-			column = prompt(
-				'Enter your custom layout like 4+2+2+2+2 as total 12 grid',
-				'4+2+2+2+2'
-			);
+		if (colType === 'custom') {
+			return;
 		}
 
 		var $parent = $that.closest('.hu-column-list'),
@@ -390,31 +395,6 @@ jQuery(function ($) {
 
 		if (layoutData != 12) {
 			newLayout = layoutData.split('+');
-		}
-
-		if (colType == 'custom') {
-			var error = true;
-
-			if (column != null) {
-				var colArray = column.split('+');
-
-				var colSum = colArray.reduce(function (a, b) {
-					return Number(a) + Number(b);
-				});
-
-				if (colSum == 12) {
-					newLayout = colArray;
-					$(this).data('layout', column);
-					error = false;
-				}
-			}
-
-			if (error) {
-				alert(
-					'Error generated. Please correct your column arrangement and try again.'
-				);
-				return false;
-			}
 		}
 
 		var col = [],
@@ -477,6 +457,110 @@ jQuery(function ($) {
 
 		Joomla.HelixToaster.success('Grid pattern updated to <strong>' + newLayout.join('+') + '</strong>', 'Layout Settings');
 		updateLayoutField();
+	});
+
+	$(document).on('click', '.hu-layout-custom-btn', function(event) {
+		event.preventDefault();
+		const $custom = $(this).closest('.hu-column-list').find('.hu-layout-custom');
+		$custom.slideToggle(300);
+	});
+
+	$(document).on('click', '.hu-layout-custom-apply', function(event) {
+		event.preventDefault();
+
+		let $that = $(this).closest('.hu-column-list').find('.hu-layout-custom-btn');
+
+		var $parent = $that.closest('.hu-column-list'),
+			$gparent = $that.closest('.hu-layout-section'),
+			oldLayoutData = $parent.find('.active').data('layout'),
+			oldLayout = ['12'],
+			layoutData = column = $(this).closest('div').find('input').val() || '12',
+			newLayout = ['12'];
+
+		if (oldLayoutData != 12) {
+			oldLayout = oldLayoutData.split('+');
+		}
+
+		if (layoutData != 12) {
+			newLayout = layoutData.split('+');
+		}
+
+		var colArray = column.split('+');
+
+		var colSum = colArray.reduce(function (a, b) {
+			return Number(a) + Number(b);
+		});
+
+		if (colSum == 12) {
+			newLayout = colArray;
+			$that.data('layout', column).attr('data-layout', column);
+		} else {
+			alert('Invalid grid pattern!');
+			return;
+		}
+
+		var col = [],
+			colAttr = [];
+
+		$gparent.find('.hu-layout-column').each(function (i, val) {
+			col[i] = $(this).html();
+			var colData = $(this).data();
+
+			if (typeof colData == 'object') {
+				colAttr[i] = $(this).data();
+			} else {
+				colAttr[i] = '';
+			}
+		});
+
+		$parent.find('.active').removeClass('active');
+		$that.addClass('active');
+
+		var new_item = '';
+
+		for (var i = 0; i < newLayout.length; i++) {
+			var dataAttr = '';
+			if (typeof colAttr[i] != 'object') {
+				colAttr[i] = {
+					grid_size: newLayout[i].trim(),
+					column_type: 0,
+					name: 'none',
+				};
+			} else {
+				colAttr[i].grid_size = newLayout[i].trim();
+			}
+			$.each(colAttr[i], function (index, value) {
+				dataAttr += ' data-' + index + '="' + value + '"';
+			});
+
+			new_item +=
+				'<div class="hu-layout-column col-' +
+				newLayout[i].trim() +
+				'" ' +
+				dataAttr +
+				'>';
+			if (col[i]) {
+				new_item += col[i];
+			} else {
+				new_item += '<div class="hu-column">';
+				new_item += '<span class="hu-column-title">none</span>';
+				new_item +=
+					'<a class="hu-column-options" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="3" fill="none"><path fill="#020B53" fill-rule="evenodd" d="M3 1.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm6 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM13.5 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" clip-rule="evenodd" opacity=".4"/></svg></a>';
+				new_item += '</div>';
+			}
+			new_item += '</div>';
+		}
+
+		$old_column = $gparent.find('.hu-layout-column');
+		$gparent.find('[data-hu-layout-row]').append(new_item);
+
+		$old_column.remove();
+		jqueryUiLayout();
+
+		Joomla.HelixToaster.success('Grid pattern updated to <strong>' + newLayout.join('+') + '</strong>', 'Layout Settings');
+		updateLayoutField();
+
+		$that.closest('.hu-column-list').slideUp(300);
 	});
 
 	// add row

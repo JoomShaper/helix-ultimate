@@ -14,6 +14,15 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\Utilities\ArrayHelper;
 
+/**
+ * This modal/main.php file is not exists at Joomla 4.
+ * So for Joomla 4 don't proceed.
+ */
+if (JVERSION >= 4)
+{
+	return;
+}
+
 // Load bootstrap-tooltip-extended plugin for additional tooltip positions in modal
 HTMLHelper::_('bootstrap.tooltipExtended');
 

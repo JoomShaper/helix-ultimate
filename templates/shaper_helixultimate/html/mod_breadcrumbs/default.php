@@ -14,11 +14,11 @@ use Joomla\CMS\Language\Text;
 
 <ol itemscope itemtype="https://schema.org/BreadcrumbList" class="breadcrumb">
 	<?php if ($params->get('showHere', 1)) : ?>
-		<li class="float-left">
+		<li class="float-start">
 			<?php echo Text::_('MOD_BREADCRUMBS_HERE'); ?>&#160;
 		</li>
 	<?php else : ?>
-		<li class="float-left">
+		<li class="float-start">
 			<span class="divider fas fa-map-marker-alt" aria-hidden="true"></span>
 		</li>
 	<?php endif; ?>

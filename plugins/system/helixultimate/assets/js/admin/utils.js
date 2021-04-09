@@ -76,4 +76,18 @@ const deleteCookie = name => {
 	document.cookie = name+'=; Max-Age=-99999999;';
 }
 
-Joomla.utils = { asciiToHex, getCurrentTimeString, helixHash, triggerEvent, setCookie, getCookie, deleteCookie };
+const debounce = (func, interval) => {
+	let timeout;
+	return function () {
+		let context = this, args = arguments;
+		let later = function () {
+			timeout = null;
+			func.apply(context, args);
+		};
+
+		clearTimeout(timeout);
+		timeout = setTimeout(later, interval || 200);
+	}
+}
+
+Joomla.utils = { asciiToHex, getCurrentTimeString, helixHash, triggerEvent, setCookie, getCookie, deleteCookie, debounce };

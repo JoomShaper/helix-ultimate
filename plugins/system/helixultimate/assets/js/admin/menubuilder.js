@@ -444,8 +444,8 @@ jQuery(function ($) {
 			/** If already the event attached then remove it first. */
 			$(document).off('click', saveBtnSelector);
 
-			/** Handle the click event. */
-			$(document).on('click', saveBtnSelector, async function () {
+			/** Handle the click event. Use debounce for preventing multiple click. */
+			$(document).on('click', saveBtnSelector, Joomla.utils.debounce(async function () {
 				const $form = $(frameDoc).find('form');
 
 
@@ -487,7 +487,7 @@ jQuery(function ($) {
 						showSpinner(false);
 					}
 				}
-			});
+			}, 500));
 		});
 	}
 

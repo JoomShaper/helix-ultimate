@@ -509,10 +509,35 @@ jQuery(function ($) {
 		}
 	});
 
-	// Save settings
-	$('.action-save-template').on('click', function (e) {
+	function showSaveLoader(status) {
+		const $loader = $('.hu-topbar-save-spinner');
+
+		if (status) {
+			if ($loader.hasClass('hidden')) {
+				$loader.removeClass('hidden');
+				$loader.closest('.action-save-template').find('svg').hide();
+			}
+		} else {
+			if (!$loader.hasClass('hidden')) {
+				$loader.addClass('hidden');
+				$loader.closest('.action-save-template').find('svg').show();
+			}
+		}
+	}
+
+	// Save settings. Add debounce for preventing multiple click.
+	$('.action-save-template').on('click', Joomla.utils.debounce(function (e) {
 		e.preventDefault();
+
 		var self = this;
+
+		showSaveLoader(true);
+
+		/**
+		 * Clear the delay timeout created by draft changes
+		 * for prevent showing reset button if already been saved.
+		 */
+		if (delayTimeout) clearTimeout(delayTimeout);
 
 		$('#layout').val(JSON.stringify(getGeneratedLayout()));
 		webfontData();
@@ -554,13 +579,15 @@ jQuery(function ($) {
 				$('.hu-loading-msg').hide();
 				$('.hu-done-msg').hide();
 				$('.action-reset-drafts').hide();
+				showSaveLoader(false);
 			},
 			error: function (err) {
 				console.error('error', err);
 				Joomla.HelixToaster.error('Error: ' + err.message, 'Error');
+				showSaveLoader(false);
 			},
 		});
-	});
+	}, 500));
 
 	/**
 	 * Trigger draft changing based on how the data is changed.

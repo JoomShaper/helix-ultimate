@@ -84,6 +84,10 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
 				<link rel="stylesheet" href="<?php echo Uri::root(true) . '/templates/' . $this->template . '/css/font-awesome.min.css'; ?>" />
 			<?php endif ?>
 		<?php endif ?>
+
+		<?php if (JVERSION < 4): ?>
+			<link rel="stylesheet" href="<?php echo Uri::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css'; ?>" />
+		<?php endif ?>
 	</head>
 
 	<body class="contentpane <?php echo $body_class; ?>">

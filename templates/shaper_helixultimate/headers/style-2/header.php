@@ -45,7 +45,7 @@ $searchModule = Helper::getSearchModule();
 <header id="sp-header" class="header-with-social">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row flex-nowrap">
+			<div class="row">
 				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">

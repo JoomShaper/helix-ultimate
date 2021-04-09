@@ -73,7 +73,7 @@ $searchModule = Helper::getSearchModule();
 <header id="sp-header">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row flex-nowrap">
+			<div class="row">
 				<!-- Logo -->
 				<div id="sp-logo" class="<?php echo $logoClass; ?>">
 					<div class="sp-column">

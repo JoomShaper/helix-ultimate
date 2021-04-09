@@ -43,7 +43,7 @@ $searchModule = Helper::getSearchModule();
 <header id="sp-header" class="full-header full-header-left header-has-modules">
 	<div class="container-fluid">
 		<div class="container-inner">
-			<div class="row flex-nowrap align-items-center">
+			<div class="row align-items-center">
 				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">
@@ -67,7 +67,7 @@ $searchModule = Helper::getSearchModule();
 				</div>
 				
 				<!-- Menu Right position -->
-				<div id="menu-right" class="d-flex align-items-center">
+				<div id="menu-right" class="col-auto d-flex align-items-center ms-auto">
 					<!-- Related Modules -->
 					<div class="d-none d-lg-flex header-modules">
 							<?php if ($data->params->get('enable_search', 0)): ?>

@@ -6,6 +6,13 @@
  */
 
 jQuery(function ($) {
+	/** Show/hide the column layout */
+	$(document).on('click', '.hu-row-option-list > li', function() {
+
+	});
+
+
+
 	// Sortable
 	$.fn.rowSortable = function () {
 		let originalIndex = -1,

@@ -3052,7 +3052,7 @@ select:focus::-ms-value {
 }
 
 .hu-row-option-list > li:hover > .hu-column-list {
-	display: block;
+	/* display: block; */
 }
 
 /*Options*/

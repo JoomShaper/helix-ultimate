@@ -200,6 +200,7 @@ class HelixUltimate
 		if ($method === 'gst' && !empty($code))
 		{
 			$script = "
+			<!-- add google analytics -->
 			<!-- Global site tag (gtag.js) - Google Analytics -->
 			<script async src='https://www.googletagmanager.com/gtag/js?id={$code}'></script>
 			<script>

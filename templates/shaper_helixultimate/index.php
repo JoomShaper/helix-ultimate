@@ -134,7 +134,6 @@ if ($custom_js = $this->params->get('custom_js', null))
 <!doctype html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
-		<!-- add google analytics -->
 		<?php echo $theme->googleAnalytics(); ?>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

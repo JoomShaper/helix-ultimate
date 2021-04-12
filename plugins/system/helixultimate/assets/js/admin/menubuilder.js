@@ -67,7 +67,7 @@ jQuery(function ($) {
 
 				if (response.status) {
 					$('#hu-menu-builder-container').html(response.data);
-					removeEventListeners();
+					removeEventListeners()					
 
 					/** After successful tree generation run the sortable. */
 					Joomla.sortable.run();
@@ -80,6 +80,7 @@ jQuery(function ($) {
 			},
 			complete() {
 				Joomla.reloadPreview();
+				Joomla.utils.calculateSiblingDistances();
 			},
 		});
 	}

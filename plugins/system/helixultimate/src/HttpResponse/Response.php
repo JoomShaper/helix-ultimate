@@ -211,6 +211,7 @@ class Response
 			{
 				$html[] = '<li class="hu-menu-tree-branch hu-branch-level-' . $item->level . ' ' . ((int) $item->published === 0 ? 'hu-megamenu-branch-muted' : '') . '" data-alias="' .  $item->alias . '" data-itemid="' . $item->id . '" data-parent="' . $item->parent_id . '" style="z-index: ' . (max(1, $count - $key)) . '" >';
 				$html[] = '	<div class="hu-menu-tree-contents">';
+				$html[] = '		<span class="hu-menu-branch-path"></span>';
 				$html[] = '		<div class="hu-branch-drag-handler">';
 				$html[] = '			<span class="hu-branch-icon"><svg width="6" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx=".904" cy=".904" r=".904" /><circle cx=".904" cy="4.7" r=".904" /><circle cx=".904" cy="8.496" r=".904" /><circle cx="4.7" cy=".904" r=".904" /><circle cx="4.7" cy="4.7" r=".904" /><circle cx="4.7" cy="8.496" r=".904" /></svg></span>';
 				$html[] = '			<span class="hu-branch-title">' . $item->title . '</span>';

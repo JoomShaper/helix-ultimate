@@ -180,7 +180,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		if (file_exists(JPATH_THEMES . '/' . $template->template . '/css/custom.css'))
 		{
-			$theme->add_css('custom');
+			$theme->add_css('custom.css');
 		}
 
 		/**

@@ -90,4 +90,56 @@ const debounce = (func, interval) => {
 	}
 }
 
-Joomla.utils = { asciiToHex, getCurrentTimeString, helixHash, triggerEvent, setCookie, getCookie, deleteCookie, debounce };
+
+const getCenterPosition = element => {
+	const {top, left, width, height} = element.getBoundingClientRect();
+
+	return {
+		x: left + width / 2,
+		y: top + height / 2
+	};
+}
+
+const getDistance = (elementA, elementB) => {
+	const positionA = getCenterPosition(elementA);
+	const positionB = getCenterPosition(elementB);
+
+	const distanceX = Math.floor(Math.abs(positionA.x - positionB.x));
+	const distanceY = Math.floor(Math.abs(positionA.y - positionB.y));
+
+	return {distanceX, distanceY};
+}
+
+function calculateSiblingDistances() {
+	const branchSelector = '.hu-menu-tree-branch';
+
+	$(document).find(branchSelector).each(function() {
+		const level = $(this).getBranchLevel() || 1;
+		$(this).find('.hu-menu-branch-path').show();
+
+		if ($(this).nextSibling === undefined) return;
+
+		if (level > 1) {
+			const $sibling = $(this).nextSibling();
+			if ($sibling.length) {
+				const distance = Joomla.utils.getDistance($(this).get(0), $sibling.get(0));
+				$sibling.find('.hu-menu-branch-path').css('height', `${Math.max(distance.distanceY, 47)}px`);
+			}
+		} else {
+			$(this).find('.hu-menu-branch-path').hide();
+		}
+	});
+}
+
+Joomla.utils = {
+	asciiToHex,
+	getCurrentTimeString,
+	helixHash,
+	triggerEvent,
+	setCookie,
+	getCookie,
+	deleteCookie,
+	debounce,
+	getDistance,
+	calculateSiblingDistances
+};

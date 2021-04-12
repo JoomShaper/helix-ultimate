@@ -829,6 +829,7 @@ jQuery(function ($) {
 		$(this).addClass('active');
 
 		panelPositioning();
+		Joomla.utils.calculateSiblingDistances();
 	});
 
 	/**

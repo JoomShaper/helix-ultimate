@@ -21,7 +21,7 @@ var treeSortable = {
 	},
 	run() {
 		this.jQuerySupplements();
-		this.initSorting();
+		this.initSorting();	
 	},
 	getTreeEdge() {
 		return $(treeSortable.options.treeSelector).offset().left;
@@ -123,7 +123,7 @@ var treeSortable = {
 					nextLevel = $next.getBranchLevel();
 				}
 
-				return nextLevel === level ? $next : $();
+				return +nextLevel === +level ? $next : $();
 			},
 			prevSibling() {
 				const {
@@ -254,6 +254,8 @@ var treeSortable = {
 
 				// Set the current level by the initial item's level.
 				currentLevel = level;
+				$('.hu-menu-tree-branch:not(.hu-branch-level-1) .hu-menu-branch-path').hide();
+				
 			},
 			sort(_, ui) {
 				const { options, getTreeEdge } = treeSortable;
@@ -358,7 +360,8 @@ var treeSortable = {
 				}
 			},
 			stop(_, ui) {
-				
+				$('.hu-menu-tree-branch:not(.hu-branch-level-1) .hu-menu-branch-path').show();
+
 				/**
 				 * If the changing item's alias exits to the newly updating
 				 * level then shows error message for the users.
@@ -396,8 +399,7 @@ var treeSortable = {
 					$(document).trigger('sortCompleted', [ui]);
 				}
 
-				/** Update the zIndex */
-				updateBranchZIndex();
+				Joomla.utils.calculateSiblingDistances();
 			},
 		});
 	},

@@ -25,6 +25,24 @@
 	margin: 10px 0 0;
 }
 
+.hu-menu-tree-branch.hu-branch-level-1 .hu-menu-tree-contents .hu-menu-branch-path {
+	display: none;
+}
+
+.hu-menu-tree-contents .hu-menu-branch-path {
+	display: block;
+    position: absolute;
+    width: 11px;
+    height: 47px;
+    bottom: 50%;
+    left: -12px;
+    border: 1px solid #a2beda;
+    border-top: 0;
+    border-right: 0;
+    padding: 4px 0 0;
+    padding-top: 3px;
+}
+
 .hu-menu-tree-contents .hu-branch-drag-handler {
 	cursor: move;
 	background: #fff;

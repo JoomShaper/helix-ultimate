@@ -41,6 +41,7 @@
     border-right: 0;
     padding: 4px 0 0;
     padding-top: 3px;
+	border-bottom-left-radius: 6px;
 }
 
 .hu-menu-tree-contents .hu-branch-drag-handler {

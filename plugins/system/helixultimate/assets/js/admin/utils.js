@@ -104,6 +104,8 @@ const getDistance = (elementA, elementB) => {
 	const positionA = getCenterPosition(elementA);
 	const positionB = getCenterPosition(elementB);
 
+	// console.log(elementA, elementB);
+
 	const distanceX = Math.floor(Math.abs(positionA.x - positionB.x));
 	const distanceY = Math.floor(Math.abs(positionA.y - positionB.y));
 
@@ -117,14 +119,23 @@ function calculateSiblingDistances() {
 		const level = $(this).getBranchLevel() || 1;
 		$(this).find('.hu-menu-branch-path').show();
 
-		if ($(this).nextSibling === undefined) return;
+		if (typeof $(this).nextSibling !== 'function') return;
 
 		if (level > 1) {
 			const $sibling = $(this).nextSibling();
+
 			if ($sibling.length) {
-				const distance = Joomla.utils.getDistance($(this).get(0), $sibling.get(0));
-				$sibling.find('.hu-menu-branch-path').css('height', `${Math.max(distance.distanceY, 47)}px`);
+				const distance = getDistance($(this).get(0), $sibling.get(0));
+				$sibling.find('.hu-menu-branch-path').css('height', `${Math.max(distance.distanceY + 8, 55)}px`);
+			} else {
+				const $child = $(this).next(branchSelector);
+				const childLevel = $child.getBranchLevel() || 1;
+
+				if ($child.length > 0 && childLevel > level) {
+					$child.find('.hu-menu-branch-path').css('height', '55px');
+				}
 			}
+
 		} else {
 			$(this).find('.hu-menu-branch-path').hide();
 		}

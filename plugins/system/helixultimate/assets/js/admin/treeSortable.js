@@ -21,7 +21,7 @@ var treeSortable = {
 	},
 	run() {
 		this.jQuerySupplements();
-		this.initSorting();	
+		this.initSorting();
 	},
 	getTreeEdge() {
 		return $(treeSortable.options.treeSelector).offset().left;
@@ -160,6 +160,7 @@ var treeSortable = {
 			}
 		});
 	},
+
 	updateBranchZIndex() {
 		const { options: { treeSelector, branchSelector }} = treeSortable;
 		const $branches = $(`${treeSelector} > ${branchSelector}`);

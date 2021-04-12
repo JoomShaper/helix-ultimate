@@ -200,6 +200,11 @@ if ($custom_js = $this->params->get('custom_js', null))
 		?>
 	</head>
 	<body class="<?php echo $theme->bodyClass(); ?>">
+
+		<?php if ($this->params->get('after_body', '')): ?>
+			<?php echo $this->params->get('after_body') . "\n"; ?>
+		<?php endif ?>
+
 		<?php if($this->params->get('preloader')) : ?>
 			<div class="sp-pre-loader">
 				<?php echo $theme->getPreloader($this->params->get('loader_type', '')); ?>

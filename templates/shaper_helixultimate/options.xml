@@ -1595,6 +1595,15 @@
 			description="HELIX_ULTIMATE_BEFORE_HEAD_DESC"
 			separator="true"
 			filter="raw" />
+		
+		<field name="after_body" 
+			type="textarea" 
+			rows="5" 
+			label="HELIX_ULTIMATE_AFTER_BODY" 
+			description="HELIX_ULTIMATE_AFTER_BODY_DESC"
+			separator="true"
+			filter="raw" />
+
 		<field name="before_body" 
 			type="textarea" 
 			rows="5" 

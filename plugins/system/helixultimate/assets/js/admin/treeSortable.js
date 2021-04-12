@@ -254,7 +254,7 @@ var treeSortable = {
 
 				// Set the current level by the initial item's level.
 				currentLevel = level;
-				$('.hu-menu-tree-branch:not(.hu-branch-level-1) .hu-menu-branch-path').hide();
+				$('.hu-menu-tree-branch .hu-menu-branch-path').hide();
 				
 			},
 			sort(_, ui) {

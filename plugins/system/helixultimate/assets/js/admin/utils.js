@@ -115,7 +115,7 @@ const getDistance = (elementA, elementB) => {
 function calculateSiblingDistances() {
 	const branchSelector = '.hu-menu-tree-branch';
 
-	$(document).find(branchSelector).each(function() {
+	$(branchSelector).each(function() {
 		const level = $(this).getBranchLevel() || 1;
 		$(this).find('.hu-menu-branch-path').show();
 
@@ -124,15 +124,28 @@ function calculateSiblingDistances() {
 		if (level > 1) {
 			const $sibling = $(this).nextSibling();
 
+			/**
+			 * If next sibling (siblings with same branch level) exists then
+			 * calculate the distance between two siblings and set the path
+			 * height according to the distance.
+			 */
 			if ($sibling.length) {
 				const distance = getDistance($(this).get(0), $sibling.get(0));
 				$sibling.find('.hu-menu-branch-path').css('height', `${Math.max(distance.distanceY + 8, 55)}px`);
 			} else {
-				const $child = $(this).next(branchSelector);
-				const childLevel = $child.getBranchLevel() || 1;
 
-				if ($child.length > 0 && childLevel > level) {
-					$child.find('.hu-menu-branch-path').css('height', '55px');
+				/**
+				 * If no sibling exists to a branch then find the child.
+				 * If child exists then set the child height as the default 55px.
+				 */
+				const $nextBranch = $(this).next(branchSelector);
+				const nextBranchLevel = $nextBranch.getBranchLevel() || 1;
+
+				const isChild = $nextBranch.length > 0
+					&& nextBranchLevel > level;
+
+				if (isChild) {
+					$nextBranch.find('.hu-menu-branch-path').css('height', '55px');
 				}
 			}
 

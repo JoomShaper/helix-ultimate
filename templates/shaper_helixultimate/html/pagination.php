@@ -18,12 +18,10 @@ function pagination_list_render($list) {
 	foreach ($list['pages'] as $page) {
 		$html .= $page['data'];
 	}
-
 	if ($list['next']['active']==1) $html .= $list['next']['data'];
 	if ($list['end']['active']==1)  $html .= $list['end']['data'];
 
 	$html .= '</ul>';
-
 	return $html;
 }
 

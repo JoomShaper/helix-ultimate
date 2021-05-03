@@ -25,7 +25,6 @@ jQuery(function ($) {
 
 			var stickyHeader = function () {
 				var scrollTop = $(window).scrollTop();
-
 				if (scrollTop >= offsetTop + 200) {
 					$header.addClass('header-sticky');
 					$stickyHeaderPlaceholder.height(headerHeight);
@@ -38,7 +37,6 @@ jQuery(function ($) {
 			};
 
 			stickyHeader();
-
 			$(window).scroll(function () {
 				stickyHeader();
 			});
@@ -49,7 +47,6 @@ jQuery(function ($) {
 			}
 		} else {
 			var $header = $('#sp-header');
-
 			if ($header.hasClass('header-sticky')) {
 				$header.removeClass('header-sticky');
 			}

@@ -41,6 +41,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 	}
 }
 
+
 ?>
 <?php if($full_image) : ?>
 	<div class="article-full-image">

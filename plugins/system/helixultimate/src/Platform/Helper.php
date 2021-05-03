@@ -17,6 +17,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
@@ -296,8 +297,6 @@ class Helper
 		 * from draft, otherwise if it is document that means this request
 		 * comes from the original site visit. So load from saved cache.
 		 */
-		// $requestFromIframe = isset($_SERVER['HTTP_SEC_FETCH_DEST'])
-		// 	&& $_SERVER['HTTP_SEC_FETCH_DEST'] === 'iframe';
 		$requestFromIframe = $app->input->get('helixMode', '') === 'edit';
 
 		if ($cache->contains() && $requestFromIframe)
@@ -329,6 +328,25 @@ class Helper
 		if (!empty($template->params) && \is_string($template->params))
 		{
 			$template->params = new Registry($template->params);
+		}
+		/**
+		 * If params field is found empty in the database or cache then
+		 * read the default options.json file from the template and assign
+		 * the options as template params.
+		 */
+		elseif (empty($template->params))
+		{
+			$filePath = JPATH_ROOT  . '/templates/' . $template->template . '/' . 'options.json';
+
+			if (\file_exists($filePath))
+			{
+				$defaultParams = \file_get_contents($filePath);
+				$template->params = new Registry($defaultParams);
+			}
+			else
+			{
+				$template->params = new Registry;
+			}
 		}
 
 		return $template;

@@ -2341,3 +2341,118 @@ body.contentpane.com-contact.view-contacts.layout-modal{
 		}	
 	}
 }
+// For Joomla4
+body.helix-ultimate.hu.view-form.layout-edit {
+	.edit.item-page.joomla4 {
+		iframe {
+			width: 100%;
+		}
+		.jviewport-height70 {
+			height: 70vh;
+		}
+		[class*=jviewport-height] iframe {
+			height: 100%;
+		}
+	}
+}
+body.contentpane.joomla4.layout-modal{
+	div[role="tooltip"] {
+		display: none;
+	}
+	.js-stools-container-bar {
+		> .btn-toolbar {
+			align-items: center;
+			justify-content: space-between;
+			width: 100%;
+			> .ordering-select {
+				display: flex;
+			}
+		}
+	}
+	.custom-select,
+	.form-select {
+		display: block;
+		width: 100%;
+		padding: .6rem 4rem .6rem 1rem;
+		font-size: 13px;
+		font-weight: 400;
+		line-height: 1.25;
+		color: #22262a;
+		vertical-align: middle;
+		background-image: url(../images/select-bg.svg);
+		background-repeat: no-repeat;
+		background-position: right 1rem center;
+		background-size: 116rem;
+		border-radius: .25rem;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none
+	}
+	
+	.custom-select:focus,
+	.form-select:focus {
+		border-color: #8894aa;
+		outline: 0;
+		box-shadow: 0 0 0 .25rem rgba(var(#000),
+		.25)
+	}
+	
+	.form-select[multiple],
+	.form-select[size]:not([size="1"]),
+	[multiple].custom-select,
+	[size].custom-select:not([size="1"]) {
+		padding-right: 1rem;
+		background-image: none
+	}
+	
+	.custom-select:disabled,
+	.form-select:disabled {
+		color: #6d757e;
+		background-color: #eaedf0
+	}
+	
+	.custom-select:-moz-focusring,
+	.form-select:-moz-focusring {
+		color: transparent;
+		text-shadow: 0 0 0 #22262a
+	}
+	.js-stools-container-bar {
+		padding: 10px 20px;
+	}
+	.js-stools-container-bar .btn-toolbar {
+		justify-content: flex-end;
+	}
+	.js-stools-container-bar .btn-toolbar > * {
+		margin: 4px 0;
+		-webkit-margin-end: 8px;
+		margin-inline-end: 8px;
+	}
+	.js-stools-container-bar .btn-toolbar .js-stools-btn-clear {
+		background-color: #30638d;
+		border: 0;
+	}
+	.js-stools-container-bar .ordering-select {
+		display: flex;
+	}
+	.js-stools-container-filters {
+		display: none;
+		padding: 0 20px;
+		margin-bottom: 20px;
+	}
+	.js-stools-container-filters-visible {
+		display: grid;
+		grid-gap: 8px;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		padding: 10px;
+		background-color: #fff;
+	}
+	.js-stools-container-filters > * {
+		margin: 4px 0;
+		-webkit-margin-end: 8px;
+		margin-inline-end: 8px;
+	}
+	.js-stools-field-list + .js-stools-field-list {
+		-webkit-margin-start: 8px;
+		margin-inline-start: 8px;
+	}
+}

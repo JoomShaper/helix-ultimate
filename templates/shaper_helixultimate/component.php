@@ -93,7 +93,13 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
 		<?php endif ?>
 	</head>
 
-	<body class="contentpane <?php echo $body_class; ?>">
+	<?php 
+	$joomlaVersion;
+	if (JVERSION >= 4){
+		$joomlaVersion = "joomla4";
+	} ?>
+
+	<body class="contentpane <?php echo $joomlaVersion . ' ' . $body_class; ?>">
 		<jdoc:include type="component" />
 
 		<!-- Add lazy loading in the component tmpl -->

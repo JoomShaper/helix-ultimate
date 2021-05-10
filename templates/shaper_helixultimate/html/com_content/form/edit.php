@@ -40,9 +40,8 @@ if (!$editoroptions)
 {
 	$params->show_urls_images_frontend = '0';
 }
-$jversion = "aa";
-?>
-<?php if (JVERSION < 4) {
+$jversion = "";
+if (JVERSION >= 4) {
 	$jversion = 'joomla4';
 }?>
 <div class="edit item-page<?php echo $this->pageclass_sfx . ' ' . $jversion ; ?>">

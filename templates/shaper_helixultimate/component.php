@@ -79,6 +79,9 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
 		<?php endif; ?>
 
 		<!-- Add font awesome in the component tmpl -->
+		<?php if (JVERSION >= 4): ?>
+		<link rel="stylesheet" href="<?php echo Uri::root(true) . '/templates/' . $this->template . '/css/vendor/fontawesome-free/fontawesome.min.css'; ?>" />
+		<?php endif ?>
 		<?php if ($this->params->get('enable_fontawesome', '1')): ?>
 			<?php if (file_exists(\JPATH_THEMES . '/' . $this->template . '/css/font-awesome.min.css')): ?>
 				<link rel="stylesheet" href="<?php echo Uri::root(true) . '/templates/' . $this->template . '/css/font-awesome.min.css'; ?>" />

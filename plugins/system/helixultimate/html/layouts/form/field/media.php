@@ -107,7 +107,7 @@ if ($showPreview)
 
 	if ($showAsTooltip)
 	{
-		echo '<div class="media-preview input-group-prepend">';
+		echo '<div class="media-preview input-group-text">';
 		$tooltip = $previewImgEmpty . $previewImg;
 		$options = array(
 			'title' => JText::_('JLIB_FORM_MEDIA_PREVIEW_SELECTED_IMAGE'),
@@ -120,7 +120,7 @@ if ($showPreview)
 	}
 	else
 	{
-		echo '<div class="media-preview input-group-prepend" style="height:auto">';
+		echo '<div class="media-preview input-group-text" style="height:auto">';
 		echo ' ' . $previewImgEmpty;
 		echo ' ' . $previewImg;
 		echo '</div>';
@@ -187,7 +187,7 @@ JFactory::getDocument()->addScriptDeclaration(
 );
 ?>
 
-	<div class="input-group-append">
+	<div class="input-group-text">
 		<a class="modal modal-btn btn btn-primary" title="<?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?>" href="<?php echo $modalLink; ?>" rel="{handler: 'iframe', size: {x: 800, y: 500}}">
 			<?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?>
 		</a>

@@ -43,7 +43,7 @@ Factory::getDocument()->addScriptDeclaration("
 				<?php if ($this->params->get('filter_field')) : ?>
 					<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo Text::_('COM_TAGS_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>">
 
-					<div class="input-group-append">
+					<div class="input-group-text">
 						<button type="button" name="filter-search-button" title="<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>" onclick="document.adminForm.submit();" class="btn btn-secondary">
 							<span class="fas fa-search" aria-hidden="true"></span>
 						</button>

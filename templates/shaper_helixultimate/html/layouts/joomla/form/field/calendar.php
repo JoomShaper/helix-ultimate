@@ -69,7 +69,7 @@ HTMLHelper::_('stylesheet', 'system/fields/calendar' . $cssFileExt, array(), tru
 			<?php echo $attributes; ?>
 			<?php echo !empty($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : ''; ?>
 			data-alt-value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>" autocomplete="off">
-		<span class="input-group-append">
+		<span class="input-group-text">
 				<button type="button" class="<?php echo ($readonly || $disabled) ? 'hidden ' : ''; ?>btn btn-secondary"
 					id="<?php echo $id; ?>_btn"
 					data-inputfield="<?php echo $id; ?>"

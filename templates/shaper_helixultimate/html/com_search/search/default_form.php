@@ -20,7 +20,7 @@ $upper_limit = $lang->getUpperLimitSearchWord();
 	<div class="mb-3">
 		<div class="input-group">
 			<input type="text" name="searchword" placeholder="<?php echo Text::_('COM_SEARCH_SEARCH_KEYWORD'); ?>" id="search-searchword" maxlength="<?php echo $upper_limit; ?>" value="<?php echo $this->escape($this->origkeyword); ?>" class="form-control">
-			<div class="input-group-append">
+			<div class="input-group-text">
 				<button name="Search" onclick="this.form.submit()" class="btn btn-secondary">
 					<span class="fas fa-search" aria-hidden="true"></span>
 					<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>
@@ -72,7 +72,7 @@ $upper_limit = $lang->getUpperLimitSearchWord();
 	<?php endif; ?>
 	<?php if ($this->total > 0) : ?>
 		<div class="mb-3">
-			<div class="form-inline">
+			<div class="d-flex">
 				<label for="limit" class="me-2">
 					<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
 				</label>

@@ -75,13 +75,13 @@ if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosugge
 		<input type="hidden" name="o" value="<?php echo $this->escape($this->state->get('list.ordering')); ?>">
 	<?php endif; ?>
 	<fieldset class="word mb-3">
-		<div class="form-inline">
+		<div class="d-flex">
 			<label for="q" class="me-2">
 				<?php echo Text::_('COM_FINDER_SEARCH_TERMS'); ?>
 			</label>
 			<div class="input-group">
 				<input type="text" id="q" name="q" class="js-finder-search-query form-control" value="<?php echo $this->escape($this->query->input); ?>">
-				<span class="input-group-append">
+				<span class="input-group-text">
 				<?php if ($this->escape($this->query->input) != '' || $this->params->get('allow_empty_query')) : ?>
 					<button name="Search" type="submit" class="btn btn-primary">
                         <span class="fas fa-search icon-white" aria-hidden="true"></span>

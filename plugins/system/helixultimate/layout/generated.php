@@ -24,7 +24,7 @@ $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 
 <div class="hidden">
     <div class="save-box">
-        <div class="form-group">
+        <div class="mb-3">
             <label><?php echo JText::_('HELIX_ENTER_LAYOUT_NAME'); ?></label>
             <input class="form-control addon-input addon-name" type="text" data-attrname="layout_name" value="" placeholder="">
         </div>

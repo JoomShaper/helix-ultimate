@@ -64,7 +64,7 @@ HTMLHelper::_('bootstrap.tooltip');
 			<?php else : ?>
 				<label for="modlgn-secretkey"><?php echo Text::_('JGLOBAL_SECRETKEY'); ?></label>
 				<input id="modlgn-secretkey" autocomplete="off" type="text" name="secretkey" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>" />
-				<small class="form-text text-muted"><span class="fas fa-asterisk"></span> <?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?></small>
+				<small class="d-block text-muted"><span class="fas fa-asterisk"></span> <?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?></small>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>

@@ -22,9 +22,11 @@ $params = $template->params;
 			$author = Factory::getUser( (int) $displayData->created_by );
 			$profile = UserHelper::getProfile( (int) $displayData->created_by );
 		?>
-		<div class="media">
-			<img class="me-3" src="https://www.gravatar.com/avatar/<?php echo md5($author->get('email')); ?>?s=64&d=identicon&r=PG" alt="<?php echo $author->name; ?>">
-			<div class="media-body">
+		<div class="d-flex">
+			<div class="flex-shrink-0">
+				<img class="me-3" src="https://www.gravatar.com/avatar/<?php echo md5($author->get('email')); ?>?s=64&d=identicon&r=PG" alt="<?php echo $author->name; ?>">
+			</div>
+			<div class="flex-grow-1 ms-3">
 				<h5 class="mt-0"><?php echo $author->name; ?></h5>
 				<?php if(isset($profile->profile['aboutme']) && $profile->profile['aboutme']) : ?>
 					<div class="author-bio">

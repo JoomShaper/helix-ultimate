@@ -59,7 +59,7 @@ if ($currentPage >= $step)
 	<?php endif; ?>
 
 	<?php if ($showPagesLinks && (!empty($pages))) : ?>
-		<ul class="pagination-list">
+		<ul class="pagination-list d-flex list-unstyled ms-2">
 			<?php
 				echo LayoutHelper::render('joomla.pagination.link', $pages['start']);
 				echo LayoutHelper::render('joomla.pagination.link', $pages['previous']); ?>

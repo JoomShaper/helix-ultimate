@@ -40,8 +40,12 @@ if (!$editoroptions)
 {
 	$params->show_urls_images_frontend = '0';
 }
+$jversion = "aa";
 ?>
-<div class="edit item-page<?php echo $this->pageclass_sfx; ?>">
+<?php if (JVERSION < 4) {
+	$jversion = 'joomla4';
+}?>
+<div class="edit item-page<?php echo $this->pageclass_sfx . ' ' . $jversion ; ?>">
 	<?php if ($params->get('show_page_heading')): ?>
 		<div class="page-header">
 			<h1>

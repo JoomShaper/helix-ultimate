@@ -171,6 +171,7 @@ class HelixUltimate
 		$bodyClass      .= ($this->doc->direction) ? ' ' . $this->doc->direction : '';
 		$bodyClass 		.= $stickyHeader;
 		$bodyClass      .= ($this->params->get('boxed_layout', 0)) ? ' layout-boxed' : ' layout-fluid';
+		$bodyClass		.= ($this->params->get('blog_details_remove_container', 0)) ? ' remove-container' : "";
 		$bodyClass      .= ' offcanvas-init offcanvs-position-' . $this->params->get('offcanvas_position', 'right');
 
 		if (isset($menu) && $menu)

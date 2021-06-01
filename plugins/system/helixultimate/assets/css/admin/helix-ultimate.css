@@ -1958,11 +1958,15 @@ select:focus::-ms-value {
 }
 
 .control-help {
-	font-size: 13px;
-	line-height: 1.6;
+	font-size: 12px;
+	line-height: 1.4;
 	font-weight: 400;
 	color: rgba(var(--dark), 0.7);
+	background: #e0e5ec;
 	margin-bottom: 15px;
+	padding: 5px 10px !important;
+    margin-top: 5px;
+    border-radius: 5px;
 	display: none;
 }
 

@@ -854,7 +854,16 @@ body.modal-menu-active{
 #sp-main-body {
 	padding: 100px 0;
 }
-
+body.view-article.remove-container{
+	.body-innerwrapper{
+		>#sp-main-body, >.sp-main-body{
+			>.container{
+				max-width: 100%;
+				padding: 0;				
+			}
+		}
+	}
+}
 .com-sppagebuilder #sp-main-body {
 	padding: 0;
 }

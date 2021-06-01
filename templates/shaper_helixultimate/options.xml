@@ -1515,6 +1515,11 @@
 			<option value="list">HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE_LIST</option>
 			<option value="large">Large</option>
 		</field>
+		<field name="blog_details_remove_container" 
+			helixgroup="blog_details" 
+			type="checkbox" 
+			default="0" 
+			label="HELIX_ULTIMATE_BLOG_DETAILS_REMOVE_CONTAINER" />
 		<field name="comment" 
 			type="list" 
 			helixgroup="comments" 

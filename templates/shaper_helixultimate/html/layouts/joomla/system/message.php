@@ -8,23 +8,89 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Application\CMSApplication;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
-$msgList = $displayData['msgList'];
+if(JVERSION >= 4) {
+	/* @var $displayData array */
+	$msgList   = $displayData['msgList'];
+	$document  = Factory::getDocument();
+	$msgOutput = '';
+	$alert     = [
+		CMSApplication::MSG_EMERGENCY => 'danger',
+		CMSApplication::MSG_ALERT     => 'danger',
+		CMSApplication::MSG_CRITICAL  => 'danger',
+		CMSApplication::MSG_ERROR     => 'danger',
+		CMSApplication::MSG_WARNING   => 'warning',
+		CMSApplication::MSG_NOTICE    => 'info',
+		CMSApplication::MSG_INFO      => 'info',
+		CMSApplication::MSG_DEBUG     => 'info',
+		'message'                     => 'success'
+	];
 
-$alert = [
-	'message' => 'alert-primary',
-	'error' => 'alert-danger',
-	'warning' => 'alert-warning',
-	'notice' => 'alert-info',
-	'info' => 'alert-info',
-	'debug' => 'alert-warning',
-	'success' => 'alert-success'
-];
+	// Load JavaScript message titles
+	Text::script('ERROR');
+	Text::script('MESSAGE');
+	Text::script('NOTICE');
+	Text::script('WARNING');
+
+	// Load other Javascript message strings
+	Text::script('JCLOSE');
+	Text::script('JOK');
+	Text::script('JOPEN');
+
+	// Alerts progressive enhancement
+	$document->getWebAssetManager()
+		->useStyle('webcomponent.joomla-alert')
+		->useScript('messages');
+
+	if (is_array($msgList) && !empty($msgList))
+	{
+		$messages = [];
+
+		foreach ($msgList as $type => $msgs)
+		{
+			// JS loaded messages
+			$messages[] = [$alert[$type] ?? $type => $msgs];
+			// Noscript fallback
+			if (!empty($msgs)) {
+				$msgOutput .= '<div class="alert alert-' . ($alert[$type] ?? $type) . '">';
+				foreach ($msgs as $msg) :
+					$msgOutput .= $msg;
+				endforeach;
+				$msgOutput .= '</div>';
+			}
+		}
+
+		if ($msgOutput !== '')
+		{
+			$msgOutput = '<noscript>' . $msgOutput . '</noscript>';
+		}
+
+		$document->addScriptOptions('joomla.messages', $messages);
+	}
+} else {
+	$msgList = $displayData['msgList'];
+	
+	$alert = [
+		'message' => 'alert-primary',
+		'error' => 'alert-danger',
+		'warning' => 'alert-warning',
+		'notice' => 'alert-info',
+		'info' => 'alert-info',
+		'debug' => 'alert-warning',
+		'success' => 'alert-success'
+	];
+}
 
 
 ?>
-<div id="system-message-container">
+<div id="system-message-container" aria-live="polite">
+	<?php 
+	if (JVERSION >= 4){
+		echo $msgOutput; 
+	} else { ?>
 	<?php if (is_array($msgList) && !empty($msgList)) : ?>
 		<div id="system-message">
 			<?php foreach ($msgList as $type => $msgs) : ?>
@@ -45,4 +111,5 @@ $alert = [
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>
+	<?php } ?>
 </div>

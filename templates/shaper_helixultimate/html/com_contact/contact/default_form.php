@@ -37,7 +37,12 @@ HTMLHelper::_('behavior.formvalidator');
 				<input type="hidden" name="option" value="com_contact">
 				<input type="hidden" name="task" value="contact.submit">
 				<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
-				<input type="hidden" name="id" value="<?php echo $this->contact->slug; ?>">
+				<!-- if joomla4 -->
+				<?php if(JVERSION >= 4) { ?>
+					<input type="hidden" name="id" value="<?php echo $this->item->slug; ?>">
+				<?php } else { ?>
+					<input type="hidden" name="id" value="<?php echo $this->contact->slug; ?>">
+				<?php } ?>
 				<?php echo HTMLHelper::_('form.token'); ?>
 			</div>
 		</div>

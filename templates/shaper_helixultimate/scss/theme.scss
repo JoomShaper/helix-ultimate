@@ -2154,6 +2154,25 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
 	display: none;
 }
 
+#system-message-container{
+	position: fixed;
+    bottom: 0px;
+    right: 15px;
+	.alert{
+		font-size: 13px;
+		line-height: 1.5;
+		>.btn-close{
+			position: absolute;
+			right: 5px;
+			top: 5px;
+			cursor: pointer;
+		}
+	}
+	// for joomla4
+	joomla-alert{
+		font-size: 13px;
+	}
+}
 //article frontend editing
 body.helix-ultimate.hu.view-form.layout-edit{
 	.edit.item-page{

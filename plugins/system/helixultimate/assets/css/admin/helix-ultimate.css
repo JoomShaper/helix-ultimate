@@ -2009,11 +2009,6 @@ select:focus::-ms-value {
 	transition: color 400ms;
 }
 
-.hu-help-icon:not(.active) {
-	opacity: 0;
-	transition: opacity 400ms;
-}
-
 .hu-help-icon:hover,
 .hu-help-icon.active {
 	color: rgb(var(--primary));

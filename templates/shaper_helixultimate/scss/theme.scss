@@ -2050,11 +2050,6 @@ select {
 		position: relative;
 	}
 }
-.form-check-inline {
-	input[type='radio'] {
-		display: none;
-	}
-}
 #attrib-helix_ultimate_blog_options {
 	#jform_attribs_helix_ultimate_article_format {
 		position: relative;
@@ -2158,6 +2153,7 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
 	position: fixed;
     bottom: 0px;
     right: 15px;
+	max-width: 350px;
 	.alert{
 		font-size: 13px;
 		line-height: 1.5;
@@ -2171,6 +2167,32 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
 	// for joomla4
 	joomla-alert{
 		font-size: 13px;
+	}
+}
+
+//privacy
+.registration{
+	#member-registration{
+		#jform_privacyconsent_privacy-lbl{
+			display: inline-flex;
+			>a{
+				position: initial;
+				display: block;
+				color: $text_color;
+				&:hover, &:focus{
+					color: $link_hover_color;
+				}
+			}
+		}
+	}
+}
+body.com-users.view-registration{
+	>#sbox-window{
+		overflow: hidden;
+		>#sbox-btn-close{
+			top: 5px;
+			right: 5px;
+		}
 	}
 }
 //article frontend editing

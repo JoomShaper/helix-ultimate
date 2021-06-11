@@ -189,4 +189,21 @@
 			line-height: 1.2;
 		}
 	}
+	html.coming-soon #coming-soon-countdown{
+		.coming-soon-days,
+		.coming-soon-hours,
+		.coming-soon-minutes,
+		.coming-soon-seconds {
+			width: 50%;
+			margin-bottom: 15px;
+
+			.coming-soon-number {
+				font-size: 2.5rem;
+			}
+
+			.coming-soon-string {
+				font-size: 14px;
+			}
+		}
+	}
 }

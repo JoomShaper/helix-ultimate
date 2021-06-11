@@ -8,6 +8,13 @@ $menu_font_size: 14px;
 	display: block;
 	float: right;
 	position: relative;
+	.sp-menu-item{
+		>a,>span{
+			img{
+				display: inline-block;
+			}
+		}
+	}
 
 	> li {
 		display: inline-block;

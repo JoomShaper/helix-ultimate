@@ -350,7 +350,7 @@ abstract class HelixBootstrap
 			$onHide           = isset($params['onHide']) ? (string) $params['onHide'] : null;
 			$onHidden         = isset($params['onHidden']) ? (string) $params['onHidden'] : null;
 
-			$options = HTMLHelper::getJSObject($opt);
+			$options = json_encode($opt);
 
 			// Build the script.
 			$script = array('$(container).find(' . json_encode($selector) . ').tooltip(' . $options . ')');

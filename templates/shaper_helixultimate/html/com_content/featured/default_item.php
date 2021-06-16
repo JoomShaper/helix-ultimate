@@ -64,8 +64,11 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 	|| $params->get('show_hits') || $params->get('show_category') || $params->get('show_parent_category') || $params->get('show_author') || $assocParam); ?>
 
 <?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
-	<?php // Todo: for Joomla4 joomla.content.info_block.block can be changed to joomla.content.info_block ?>
+	<?php if(JVERSION >= 4 ) : ?>
+	<?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
+	<?php else : ?>
 	<?php echo LayoutHelper::render('joomla.content.info_block.block', array('item' => $this->item, 'params' => $params, 'position' => 'above')); ?>
+	<?php endif; ?>
 	<?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
 		<?php echo LayoutHelper::render('joomla.content.tags', $this->item->tags->itemTags); ?>
 	<?php endif; ?>

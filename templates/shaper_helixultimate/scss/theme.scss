@@ -2177,6 +2177,15 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
 		font-size: 13px;
 	}
 }
+.com-users.view-profile{
+	#member-profile{
+		.modal-dialog{
+			display: flex;
+			align-items: center;
+			min-height: calc(100% - 1rem);
+		}
+	}
+}
 
 //privacy
 .registration{

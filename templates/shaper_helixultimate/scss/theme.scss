@@ -2532,3 +2532,8 @@ body.contentpane.joomla4.layout-modal{
 		margin-inline-start: 8px;
 	}
 }
+.field-calendar{
+	>.js-calendar.hidden{
+		display: none;
+	}
+}

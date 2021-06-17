@@ -56,6 +56,14 @@ HTMLHelper::_('script', $localesPath, false, true, false, false, true);
 HTMLHelper::_('script', $helperPath, false, true, false, false, true);
 HTMLHelper::_('script', 'system/fields/calendar.min.js', false, true, false, false, true);
 HTMLHelper::_('stylesheet', 'system/fields/calendar' . $cssFileExt, array(), true);
+
+// Redefine locale/helper assets to use correct path, and load calendar assets
+$document->getWebAssetManager()
+	->registerAndUseScript('field.calendar.locale', $localesPath, [], ['defer' => true])
+	->registerAndUseScript('field.calendar.helper', $helperPath, [], ['defer' => true])
+	->useStyle('field.calendar' . ($direction === 'rtl' ? '-rtl' : ''))
+	->useScript('field.calendar');
+
 ?>
 <div class="field-calendar">
 	<?php if (!$readonly && !$disabled) : ?>

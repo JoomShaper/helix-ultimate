@@ -155,6 +155,9 @@ ul.social-icons {
 			justify-content: center;
 		}
 	}
+	.mod-finder.js-finder-searchform{
+		label{display: none;}
+	}
 }
 .menu-flex {
 	.sp-megamenu-wrapper {
@@ -2177,7 +2180,9 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
 		font-size: 13px;
 	}
 }
+.com-users.view-registration,
 .com-users.view-profile{
+	#member-registration,
 	#member-profile{
 		.modal-dialog{
 			display: flex;

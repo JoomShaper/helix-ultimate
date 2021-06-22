@@ -167,7 +167,7 @@ $isExpired  = JVERSION < 4
 		<?php if ($params->get('show_print_icon') || $params->get('show_email_icon')) : ?>
 			<hr>
 			<div class="article-print-email mt-3">
-				<?php if ($params->get('show_print_icon')) : ?>
+				<?php if ($params->get('show_print_icon') && JVERSION >= 4 ) : ?>
 					<?php echo HTMLHelper::_('icon.print_popup', $this->item, $params); ?>&nbsp;
 				<?php endif; ?>
 			

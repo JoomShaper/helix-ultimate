@@ -3308,7 +3308,22 @@ select:focus::-ms-value {
 .hu-webfont-size {
 	position: relative;
 }
-
+#header_height-lbl:after,
+#logo_height-lbl:after,
+.hu-webfont-size>label{
+	display: flex;
+	align-items: center;
+}
+#header_height-lbl:after,
+#logo_height-lbl:after,
+.hu-webfont-size>label:after{
+	content: "";
+	background-image: url("../../images/icon-res.svg");
+	width: 16px;
+    height: 16px;
+    display: inline-block;
+	margin-left: 10px;
+}
 .hu-webfont-unit {
 	display: none;
 }

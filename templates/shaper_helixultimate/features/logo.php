@@ -105,10 +105,11 @@ class HelixUltimateFeatureLogo
 					$srcset .= Uri::root() . $retinaLogo . ' 2x';
 				}
 
+				$logoWithUrl = Uri::root() . $defaultLogo;
 				$siteLogo = "
 				<img class='logo-image {$custom_logo_class}'
 					srcset='{$srcset}'
-					src='{$defaultLogo}'
+					src='{$logoWithUrl}'
 					alt='{$altText}'
 				/>
 				";
@@ -118,7 +119,7 @@ class HelixUltimateFeatureLogo
 				if ($this->params->get('mobile_logo'))
 				{
 					$html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' .
-						$this->params->get('mobile_logo') . '" alt="' . $altText . '" />';
+						Uri::root() .$this->params->get('mobile_logo') . '" alt="' . $altText . '" />';
 				}
 
 				$html .= '</a>';

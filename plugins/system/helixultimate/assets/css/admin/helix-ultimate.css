@@ -3308,8 +3308,8 @@ select:focus::-ms-value {
 .hu-webfont-size {
 	position: relative;
 }
-#header_height-lbl:after,
-#logo_height-lbl:after,
+#header_height-lbl,
+#logo_height-lbl,
 .hu-webfont-size>label{
 	display: flex;
 	align-items: center;

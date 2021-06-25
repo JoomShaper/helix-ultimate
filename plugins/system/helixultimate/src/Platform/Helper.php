@@ -361,12 +361,18 @@ class Helper
 	public static function flushSettingsDataToJs()
 	{
 		$doc = Factory::getDocument();
+		
+		$loadTemplateData = self::loadTemplateData();
+		$stickyOffset	= $loadTemplateData->params->get('sticky_offset');
 
 		$data = array(
 			'breakpoints' => array(
 				'tablet' => 991,
 				'mobile' => 480
 			),
+			'header' => array(
+				'stickyOffset' => $stickyOffset 
+			)
 			// 'topbarHeight' => 40
 		);
 

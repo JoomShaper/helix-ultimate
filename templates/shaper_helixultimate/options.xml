@@ -151,6 +151,13 @@
 			default="0" 
 			className="hidden"
 			label="HELIX_ULTIMATE_STICKY_HEADER_XS" /> -->
+		<field name="sticky_offset" 
+			helixgroup="header" 
+			type="number" 
+			default=""
+			display="inline" 
+			label="HELIX_ULTIMATE_HEADER_STICKY_OFFSET" 
+			showon="sticky_header:1" />
 
 		<field name="favicon" 
 			helixgroup="header" 

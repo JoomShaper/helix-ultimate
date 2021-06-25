@@ -11,7 +11,7 @@ jQuery(function ($) {
 	 *
 	 */
 	var settings = Joomla.getOptions('data') || {};
-
+	
 	/**
 	 * Device wise sticky header
 	 *
@@ -22,10 +22,11 @@ jQuery(function ($) {
 			var $header = $('#sp-header');
 			var headerHeight = $header.outerHeight();
 			var $stickyHeaderPlaceholder = $('.sticky-header-placeholder');
+			let $stickyOffset =  settings.header.stickyOffset
 
 			var stickyHeader = function () {
 				var scrollTop = $(window).scrollTop();
-				if (scrollTop >= offsetTop + 200) {
+				if (scrollTop >= offsetTop + Number($stickyOffset)) {
 					$header.addClass('header-sticky');
 					$stickyHeaderPlaceholder.height(headerHeight);
 				} else {

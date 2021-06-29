@@ -371,7 +371,7 @@ class Helper
 				'mobile' => 480
 			),
 			'header' => array(
-				'stickyOffset' => $stickyOffset 
+				'stickyOffset' => $stickyOffset
 			)
 			// 'topbarHeight' => 40
 		);

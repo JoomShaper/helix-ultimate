@@ -653,12 +653,7 @@ class HelixUltimate
 				$col_grid_size = $col_grid_size + $inactive_col;
 			}
 
-			if ($options->column_type)
-			{
-				$col_grid_size = $col_grid_size + $inactive_col;
-				$className = 'col-lg-' . $col_grid_size;
-			}
-			else
+			if (isset($options->lg_col) && $options->lg_col)
 			{
 				if (isset($options->lg_col) && $options->lg_col)
 				{
@@ -668,6 +663,11 @@ class HelixUltimate
 				{
 					$className = 'col-lg-' . $col_grid_size;
 				}
+			}
+			else
+			{
+				$col_grid_size = $col_grid_size + $inactive_col;
+				$className = 'col-lg-' . $col_grid_size;
 			}
 
 			if (isset($options->xl_col) && $options->xl_col)

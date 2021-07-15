@@ -238,7 +238,7 @@ class Platform
 			->registerAndUseStyle('helix.jquery.ui', $helix_assets_url . '/css/admin/jquery-ui.min.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('helix.ultimate', $helix_assets_url . '/css/admin/helix-ultimate.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('helix.modal', $helix_assets_url . '/css/admin/modal.css', ['version' => 'auto', 'relative' => true])
-			->registerAndUseStyle('helix.fontAwesome', Uri::root() . 'templates/shaper_helixultimate/css/font-awesome.min.css')
+			->registerAndUseStyle('helix.fontAwesome', Uri::root() . 'templates/' . $template->template . '/css/font-awesome.min.css')
 			->registerAndUseStyle('helix.device-field', $helix_assets_url . '/css/admin/devices-field.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('style.helix.menuBuilder', $helix_assets_url . '/css/admin/menu-builder.css', ['version' => 'auto', 'relative' => true])
 			->registerAndUseStyle('style.helix.megaMenu', $helix_assets_url . '/css/admin/megamenu.css', ['version' => 'auto', 'relative' => true])

@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die;
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -46,8 +47,10 @@ else
 	$id = str_replace(' ', '', $button->get('text')) . 'Modal';
 }
 
-$fontAwesomePath = JPATH_THEMES . '/shaper_helixultimate/css/font-awesome.min.css';
-Factory::getDocument()->addStylesheet(Uri::root(true) . '/templates/shaper_helixultimate/css/font-awesome.min.css');
+$template = Helper::loadTemplateData();
+
+$fontAwesomePath = JPATH_THEMES . '/' . $template->template . '/css/font-awesome.min.css';
+Factory::getDocument()->addStylesheet(Uri::root(true) . '/templates/' . $template->template . '/css/font-awesome.min.css');
 
 // Create the modal
 echo HTMLHelper::_(

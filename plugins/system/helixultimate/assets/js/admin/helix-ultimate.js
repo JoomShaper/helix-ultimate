@@ -18,10 +18,7 @@ jQuery(function ($) {
 	 */
 	const initialToolbarPosition = () => {
 		let position = storage.getItem('toolbarPosition') || {};
-		position =
-			typeof position === 'string' && position.length > 0
-				? JSON.parse(position)
-				: false;
+		position = typeof position === 'string' && position.length > 0 ? JSON.parse(position) : false;
 
 		let $huContainer = $('.hu-container'),
 			$huSidebar = $('#hu-options-panel'),
@@ -51,10 +48,7 @@ jQuery(function ($) {
 	initialToolbarPosition();
 	window.addEventListener('resize', initialToolbarPosition);
 
-	var MutationObserver =
-		window.MutationObserver ||
-		window.WebKitMutationObserver ||
-		window.MozMutationObserver;
+	var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
 	let $previewFrame = document.getElementById('hu-template-preview');
 
@@ -63,8 +57,7 @@ jQuery(function ($) {
 		const url = $previewFrame.contentWindow.location.href;
 
 		/** Check if the iframe url is not `about:blank` then reload. */
-		if (url.length && url !== 'about:blank')
-		{
+		if (url.length && url !== 'about:blank') {
 			$previewFrame.src = $previewFrame.getAttribute('src');
 		}
 	}
@@ -178,7 +171,7 @@ jQuery(function ($) {
 		/** If timeout exists then clear it first. */
 		if (delayTimeout) clearTimeout(delayTimeout);
 
-		(async() => {
+		(async () => {
 			if (!status) await delay(2000);
 			$doneEl.hide();
 
@@ -186,17 +179,15 @@ jQuery(function ($) {
 			else $resetBtn.hide();
 		})();
 	};
-	
+
 	function delay(ms = 500) {
-		return new Promise((resolve) => {
+		return new Promise(resolve => {
 			delayTimeout = setTimeout(resolve, ms);
 		});
 	}
 
 	function updateSetvalue() {
-		let $controls = $('form#hu-style-form').find(
-			'.controls.helix-input-touched'
-		);
+		let $controls = $('form#hu-style-form').find('.controls.helix-input-touched');
 		if ($controls.length > 0) {
 			$controls.each(function (index, control) {
 				let $controlEl = $(control);
@@ -225,9 +216,7 @@ jQuery(function ($) {
 	 * @return void
 	 */
 	function resetBySafepointValue() {
-		let $controls = $('form#hu-style-form').find(
-			'.controls.helix-input-touched.field-reset'
-		);
+		let $controls = $('form#hu-style-form').find('.controls.helix-input-touched.field-reset');
 
 		if ($controls.length > 0) {
 			$controls.each(function (index, control) {
@@ -241,18 +230,14 @@ jQuery(function ($) {
 					// Reset by the setvalue.
 					if ($inputEl.length > 0) {
 						let type =
-							typeof $inputEl.attr('type') != 'undefined'
-								? $inputEl.attr('type').toLowerCase()
-								: false;
+							typeof $inputEl.attr('type') != 'undefined' ? $inputEl.attr('type').toLowerCase() : false;
 						if (type && type === 'checkbox') {
 							let checked = safepoint == 1 ? true : false;
 							$inputEl.prop('checked', checked);
 						}
 
 						if ($inputEl.attr('name') === 'megamenu') {
-							$('.hu-megamenu-action-tracker')
-								.val('restore')
-								.trigger('change');
+							$('.hu-megamenu-action-tracker').val('restore').trigger('change');
 						}
 
 						if ($inputEl.attr('name') !== 'megamenu') {
@@ -269,8 +254,7 @@ jQuery(function ($) {
 
 						// Update chosen select values.
 						if (
-							$inputEl.prop('tagName').toLowerCase() ===
-								'select' &&
+							$inputEl.prop('tagName').toLowerCase() === 'select' &&
 							$controlEl.find(inputSelector + '_chzn').length > 0
 						) {
 							$inputEl.trigger('liszt:updated');
@@ -323,14 +307,9 @@ jQuery(function ($) {
 		$('#layout').val(JSON.stringify(getGeneratedLayout()));
 		webfontData();
 
-		$('.hu-input-preset').val(
-			JSON.stringify($('.hu-preset.active').data())
-		);
+		$('.hu-input-preset').val(JSON.stringify($('.hu-preset.active').data()));
 
-		let data = $('#hu-style-form')
-			.find('input, select, textarea')
-			.not('.internal-use-only')
-			.serializeArray();
+		let data = $('#hu-style-form').find('input, select, textarea').not('.internal-use-only').serializeArray();
 		let flag = false;
 
 		$.ajax({
@@ -338,7 +317,8 @@ jQuery(function ($) {
 			url:
 				'index.php?option=com_ajax&request=task&helix=ultimate&id=' +
 				helixUltimateStyleId +
-				'&action=draft-tmpl-style&format=json',
+				'&action=draft-tmpl-style&format=json&helix_id=' +
+				helixUltimateStyleId,
 			data: data,
 			beforeSend: function () {
 				Joomla.helixLoading(true, false);
@@ -373,23 +353,14 @@ jQuery(function ($) {
 	 */
 	(function trackChanges() {
 		$('form#hu-style-form')
-			.find(
-				'input[type="text"], input[type="email"], input[type="number"], textarea'
-			)
+			.find('input[type="text"], input[type="email"], input[type="number"], textarea')
 			.on('blur', function (e) {
 				e.preventDefault();
 
 				let $control = $(this).closest('.controls');
-				if (
-					!$control.hasClass('field-reset') &&
-					$control.hasClass('trackable')
-				) {
-					let safePoint = $(this)
-						.closest('.controls')
-						.data('safepoint');
-					let currPoint = $(this)
-						.closest('.controls')
-						.data('currpoint');
+				if (!$control.hasClass('field-reset') && $control.hasClass('trackable')) {
+					let safePoint = $(this).closest('.controls').data('safepoint');
+					let currPoint = $(this).closest('.controls').data('currpoint');
 					let value = $(this).val();
 
 					triggerDraftChange($(this), safePoint, currPoint, value);
@@ -402,16 +373,9 @@ jQuery(function ($) {
 				e.preventDefault();
 
 				let $control = $(this).closest('.controls');
-				if (
-					!$control.hasClass('field-reset') &&
-					$control.hasClass('trackable')
-				) {
-					let safePoint = $(this)
-						.closest('.controls')
-						.data('safepoint');
-					let currPoint = $(this)
-						.closest('.controls')
-						.data('currpoint');
+				if (!$control.hasClass('field-reset') && $control.hasClass('trackable')) {
+					let safePoint = $(this).closest('.controls').data('safepoint');
+					let currPoint = $(this).closest('.controls').data('currpoint');
 					let value = $(this).prop('checked') ? 1 : 0;
 
 					triggerDraftChange($(this), safePoint, currPoint, value);
@@ -424,16 +388,9 @@ jQuery(function ($) {
 				e.preventDefault();
 
 				let $control = $(this).closest('.controls');
-				if (
-					!$control.hasClass('field-reset') &&
-					$control.hasClass('trackable')
-				) {
-					let safePoint = $(this)
-						.closest('.controls')
-						.data('safepoint');
-					let currPoint = $(this)
-						.closest('.controls')
-						.data('currpoint');
+				if (!$control.hasClass('field-reset') && $control.hasClass('trackable')) {
+					let safePoint = $(this).closest('.controls').data('safepoint');
+					let currPoint = $(this).closest('.controls').data('currpoint');
 					let value = $(this).val();
 
 					triggerDraftChange($(this), safePoint, currPoint, value);
@@ -442,9 +399,7 @@ jQuery(function ($) {
 	})();
 
 	function prepareResetFields() {
-		let $controls = $('form#hu-style-form').find(
-			'.controls.helix-input-touched'
-		);
+		let $controls = $('form#hu-style-form').find('.controls.helix-input-touched');
 
 		if ($controls.length > 0) {
 			$controls.each((i, el) => {
@@ -466,31 +421,26 @@ jQuery(function ($) {
 
 		prepareResetFields();
 
-		let confirm = window.confirm(
-			'Do you really want to reset your settings?'
-		);
+		let confirm = window.confirm('Do you really want to reset your settings?');
 
 		if (confirm) {
 			$('#layout').val(JSON.stringify(getGeneratedLayout()));
 			webfontData();
 
-			$('.hu-input-preset').val(
-				JSON.stringify($('.hu-preset.active').data())
-			);
+			$('.hu-input-preset').val(JSON.stringify($('.hu-preset.active').data()));
 
 			$.ajax({
 				type: 'GET',
 				url:
 					'index.php?option=com_ajax&request=task&helix=ultimate&id=' +
 					helixUltimateStyleId +
-					'&action=reset-drafted-settings&format=json',
+					'&action=reset-drafted-settings&format=json&helix_id=' +
+					helixUltimateStyleId,
 				success: function (response) {
 					var data = $.parseJSON(response);
 
 					if (data.status) {
-						let $previewFrame = document.getElementById(
-							'hu-template-preview'
-						);
+						let $previewFrame = document.getElementById('hu-template-preview');
 
 						reloadPreview();
 					}
@@ -526,68 +476,65 @@ jQuery(function ($) {
 	}
 
 	// Save settings. Add debounce for preventing multiple click.
-	$('.action-save-template').on('click', Joomla.utils.debounce(function (e) {
-		e.preventDefault();
+	$('.action-save-template').on(
+		'click',
+		Joomla.utils.debounce(function (e) {
+			e.preventDefault();
 
-		var self = this;
+			var self = this;
 
-		showSaveLoader(true);
+			showSaveLoader(true);
 
-		/**
-		 * Clear the delay timeout created by draft changes
-		 * for prevent showing reset button if already been saved.
-		 */
-		if (delayTimeout) clearTimeout(delayTimeout);
+			/**
+			 * Clear the delay timeout created by draft changes
+			 * for prevent showing reset button if already been saved.
+			 */
+			if (delayTimeout) clearTimeout(delayTimeout);
 
-		$('#layout').val(JSON.stringify(getGeneratedLayout()));
-		webfontData();
+			$('#layout').val(JSON.stringify(getGeneratedLayout()));
+			webfontData();
 
-		$('.hu-input-preset').val(
-			JSON.stringify($('.hu-preset.active').data())
-		);
+			$('.hu-input-preset').val(JSON.stringify($('.hu-preset.active').data()));
 
-		var tmplID = $(this).data('id'),
-			tmplView = $(this).data('view');
+			var tmplID = $(this).data('id'),
+				tmplView = $(this).data('view');
 
-		const data = $('#hu-style-form')
-			.find('input, select, textarea')
-			.not('.internal-use-only')
-			.serializeArray();
+			const data = $('#hu-style-form').find('input, select, textarea').not('.internal-use-only').serializeArray();
 
-		$.ajax({
-			type: 'POST',
-			url:
-				'index.php?option=com_ajax&request=task&helix=ultimate&id=' +
-				helixUltimateStyleId +
-				'&action=save-tmpl-style&format=json',
-			data: data,
-			success: function (response) {
-				var data = $.parseJSON(response);
+			$.ajax({
+				type: 'POST',
+				url:
+					'index.php?option=com_ajax&request=task&helix=ultimate&id=' +
+					helixUltimateStyleId +
+					'&action=save-tmpl-style&format=json&helix_id=' +
+					helixUltimateStyleId,
+				data: data,
+				success: function (response) {
+					var data = $.parseJSON(response);
 
-				if (data.status) {
-					let $previewFrame = document.getElementById(
-						'hu-template-preview'
-					);
-					$previewFrame.contentWindow.location.reload(true);
-				}
+					if (data.status) {
+						let $previewFrame = document.getElementById('hu-template-preview');
+						$previewFrame.contentWindow.location.reload(true);
+					}
 
-				// Update the setvalues.
-				updateSetvalue();
-			},
-			complete() {
-				Joomla.HelixToaster.success('Changes have been successfully saved!', 'Success');
-				$('.hu-loading-msg').hide();
-				$('.hu-done-msg').hide();
-				$('.action-reset-drafts').hide();
-				showSaveLoader(false);
-			},
-			error: function (err) {
-				console.error('error', err);
-				Joomla.HelixToaster.error('Error: ' + err.message, 'Error');
-				showSaveLoader(false);
-			},
-		});
-	}, 500));
+					// Update the setvalues.
+					updateSetvalue();
+				},
+				complete() {
+					Joomla.HelixToaster.success('Changes have been successfully saved!', 'Success');
+					$('.hu-loading-msg').hide();
+					$('.hu-done-msg').hide();
+					$('.action-reset-drafts').hide();
+					showSaveLoader(false);
+				},
+				error: function (err) {
+					console.error('error', err);
+					Joomla.HelixToaster.error('Error: ' + err.message, 'Error');
+					showSaveLoader(false);
+				},
+			});
+		}, 500)
+	);
 
 	/**
 	 * Trigger draft changing based on how the data is changed.
@@ -643,9 +590,7 @@ jQuery(function ($) {
 			const $element = $(`input[name=${name}${size}]`).closest(parent);
 			if (!$element.hasClass('hidden')) $element.addClass('hidden');
 		});
-		const selector = `input[name=${name}${
-			map[device] === 'md' ? '' : '_' + map[device]
-		}]`;
+		const selector = `input[name=${name}${map[device] === 'md' ? '' : '_' + map[device]}]`;
 		$(selector).closest(parent).removeClass('hidden');
 	}
 
@@ -681,24 +626,15 @@ jQuery(function ($) {
 
 		const $iframe = $('#hu-template-preview');
 
-		$(`.hu-device[data-device=${deviceMap[device]}]`)
-			.parent()
-			.find('.active')
-			.removeClass('active');
+		$(`.hu-device[data-device=${deviceMap[device]}]`).parent().find('.active').removeClass('active');
 		$(`.hu-device[data-device=${deviceMap[device]}]`).addClass('active');
 
 		// Change the typography field device wise size field
 		['', '-sm', '-xs'].forEach(size => {
-			$(`.hu-webfont-size-field${size}`)
-				.closest('.hu-webfont-unit')
-				.removeClass('active');
+			$(`.hu-webfont-size-field${size}`).closest('.hu-webfont-unit').removeClass('active');
 		});
 
-		$(
-			`input.hu-webfont-size-field${
-				map[device] === 'md' ? '' : '-' + map[device]
-			}`
-		)
+		$(`input.hu-webfont-size-field${map[device] === 'md' ? '' : '-' + map[device]}`)
 			.closest('.hu-webfont-unit')
 			.addClass('active');
 
@@ -814,16 +750,8 @@ jQuery(function ($) {
 		$('.' + fieldset + '-panel').addClass('active-panel');
 
 		// Make active sidebar icon
-		if (
-			$(this)
-				.parents('#hu-options')
-				.find('.hu-fieldset .hu-fieldset-header')
-				.hasClass('active')
-		) {
-			$(this)
-				.parents('#hu-options')
-				.find('.hu-fieldset .hu-fieldset-header')
-				.removeClass('active');
+		if ($(this).parents('#hu-options').find('.hu-fieldset .hu-fieldset-header').hasClass('active')) {
+			$(this).parents('#hu-options').find('.hu-fieldset .hu-fieldset-header').removeClass('active');
 		}
 
 		$(this).addClass('active');
@@ -842,9 +770,7 @@ jQuery(function ($) {
 			$(this).closest('.hu-edit-panel').removeClass('active-panel');
 		}
 
-		let $sidebarItem = $(
-			`.${$(this).data('sidebarclass')} .hu-fieldset-header`
-		);
+		let $sidebarItem = $(`.${$(this).data('sidebarclass')} .hu-fieldset-header`);
 
 		if ($sidebarItem.hasClass('active')) {
 			$sidebarItem.removeClass('active');
@@ -968,13 +894,11 @@ jQuery(function ($) {
 			url:
 				'index.php?option=com_ajax&request=task&helix=ultimate&id=' +
 				helixUltimateStyleId +
-				'&action=purge-css-file&format=json',
+				'&action=purge-css-file&format=json&helix_id=' +
+				helixUltimateStyleId,
 			data: {},
 			beforeSend: function () {
-				self &&
-					self.append(
-						'<span class="fas fa-circle-notch fa-spin"></span>'
-					);
+				self && self.append('<span class="fas fa-circle-notch fa-spin"></span>');
 			},
 			success: function (response) {
 				var data = $.parseJSON(response);
@@ -1011,9 +935,11 @@ jQuery(function ($) {
 		reader.onload = function (event) {
 			const settings = JSON.parse(event.target.result);
 
-			if (settings.template === undefined || settings.template !== 'shaper_helixultimate')
-			{
-				Joomla.HelixToaster.error('The settings JSON file seems invalid! Please import a valid helix ultimate settings JSON.', 'Error');
+			if (settings.template === undefined || settings.template !== 'shaper_helixultimate') {
+				Joomla.HelixToaster.error(
+					'The settings JSON file seems invalid! Please import a valid helix ultimate settings JSON.',
+					'Error'
+				);
 				$('#helix-import-file').val('');
 				return false;
 			}
@@ -1057,22 +983,14 @@ jQuery(function ($) {
 				webfont = {
 					fontFamily: $that.find('.hu-webfont-list').val(),
 					fontSize: $that.find('[name=hu-webfont-size-field]').val(),
-					fontSize_sm: $that
-						.find('[name=hu-webfont-size-field-sm]')
-						.val(),
-					fontSize_xs: $that
-						.find('[name=hu-webfont-size-field-xs]')
-						.val(),
+					fontSize_sm: $that.find('[name=hu-webfont-size-field-sm]').val(),
+					fontSize_xs: $that.find('[name=hu-webfont-size-field-xs]').val(),
 					fontWeight: $that.find('.hu-webfont-weight-list').val(),
 					fontStyle: $that.find('.hu-webfont-style-list').val(),
 					fontSubset: $that.find('.hu-webfont-subset-list').val(),
 					fontColor: $that.find('.hu-font-color-input').val(),
-					fontLineHeight: $that
-						.find('.hu-font-line-height-input')
-						.val(),
-					fontLetterSpacing: $that
-						.find('[name=hu-font-letter-spacing-input]')
-						.val(),
+					fontLineHeight: $that.find('.hu-font-line-height-input').val(),
+					fontLetterSpacing: $that.find('[name=hu-font-letter-spacing-input]').val(),
 					textDecoration: $that.find('.hu-text-decoration').val(),
 					textAlign: $that.find('.hu-text-align').val(),
 				};
@@ -1126,9 +1044,7 @@ jQuery(function ($) {
 	/* Helix Help Control functionalities */
 	$('.hu-help-icon').on('click', function (e) {
 		e.preventDefault();
-		let $helpElement = $(this)
-			.closest('.control-group')
-			.find('.control-help');
+		let $helpElement = $(this).closest('.control-group').find('.control-help');
 
 		$(this).toggleClass('active');
 
@@ -1155,11 +1071,7 @@ jQuery(function ($) {
 	/*Option Group*/
 	$(document).on('click', '.hu-option-group-title', function (event) {
 		event.preventDefault();
-		$(this)
-			.closest('.hu-option-group')
-			.toggleClass('active')
-			.siblings()
-			.removeClass('active');
+		$(this).closest('.hu-option-group').toggleClass('active').siblings().removeClass('active');
 	});
 
 	/* Helix Group Depend On functionalities */
@@ -1258,12 +1170,10 @@ jQuery(function ($) {
 
 			if (parentValue == value) {
 				$(this).find('input, select, textarea').prop('readonly', false);
-				if ($(this).hasClass('uneditable'))
-					$(this).removeClass('uneditable');
+				if ($(this).hasClass('uneditable')) $(this).removeClass('uneditable');
 			} else {
 				$(this).find('input, select, textarea').prop('readonly', true);
-				if (!$(this).hasClass('uneditable'))
-					$(this).addClass('uneditable');
+				if (!$(this).hasClass('uneditable')) $(this).addClass('uneditable');
 			}
 		});
 	}
@@ -1277,20 +1187,13 @@ jQuery(function ($) {
 	});
 
 	/* Switcher action */
-	$('.hu-switcher .hu-action-group [hu-switcher-action]').on(
-		'click',
-		function (e) {
-			let value = $(this).data('value');
-			$(this).siblings().removeClass('active');
-			$(this).addClass('active');
-			let $input = $(this)
-				.closest('.hu-switcher')
-				.find('input[type=hidden]');
-			$input.val(value).trigger('change');
-			const hiddenField = e.target
-				.closest('.hu-switcher')
-				.querySelector('input[type=hidden]');
-			Joomla.utils.triggerEvent(hiddenField, 'change');
-		}
-	);
+	$('.hu-switcher .hu-action-group [hu-switcher-action]').on('click', function (e) {
+		let value = $(this).data('value');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		let $input = $(this).closest('.hu-switcher').find('input[type=hidden]');
+		$input.val(value).trigger('change');
+		const hiddenField = e.target.closest('.hu-switcher').querySelector('input[type=hidden]');
+		Joomla.utils.triggerEvent(hiddenField, 'change');
+	});
 });

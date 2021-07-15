@@ -40,10 +40,14 @@ if (!$editoroptions)
 {
 	$params->show_urls_images_frontend = '0';
 }
+
 $jversion = "";
+
 if (JVERSION >= 4) {
 	$jversion = 'joomla4';
-}?>
+}
+
+?>
 <div class="edit item-page<?php echo $this->pageclass_sfx . ' ' . $jversion ; ?>">
 	<?php if ($params->get('show_page_heading')): ?>
 		<div class="page-header">
@@ -69,10 +73,10 @@ if (JVERSION >= 4) {
 					<?php echo $this->form->renderField('captcha'); ?>
 				<?php endif; ?>
 			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab'); ?>
-
+			
 			<?php if ($params->get('show_urls_images_frontend')) : ?>
 			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.addTab', $this->tab_name, 'images', Text::_('COM_CONTENT_IMAGES_AND_URLS')); ?>
-				
+			
 				<div class="row">
 					<div class="col-sm-6 mb-3">
 						<?php echo $this->form->renderField('image_intro', 'images'); ?>
@@ -134,9 +138,11 @@ if (JVERSION >= 4) {
 				<?php if ($params->get('save_history', 0)) : ?>
 					<?php echo $this->form->renderField('version_note'); ?>
 				<?php endif; ?>
+				
 				<?php if ($params->get('show_publishing_options', 1) == 1) : ?>
 					<?php echo $this->form->renderField('created_by_alias'); ?>
 				<?php endif; ?>
+				
 				<?php if ($this->item->params->get('access-change')) : ?>
 					<?php echo $this->form->renderField('state'); ?>
 					<?php echo $this->form->renderField('featured'); ?>
@@ -145,6 +151,7 @@ if (JVERSION >= 4) {
 						<?php echo $this->form->renderField('publish_down'); ?>
 					<?php endif; ?>
 				<?php endif; ?>
+				
 				<?php echo $this->form->renderField('access'); ?>
 				<?php if (is_null($this->item->id)) : ?>
 					<div class="control-group">

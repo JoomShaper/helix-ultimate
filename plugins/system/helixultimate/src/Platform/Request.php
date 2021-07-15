@@ -205,7 +205,7 @@ class Request
 			case 'generateNewCell':
 				$this->report = Response::generateNewCell();
 				break;
-			
+
 			case 'getModuleList':
 				$this->report = Response::getModuleList();
 				break;

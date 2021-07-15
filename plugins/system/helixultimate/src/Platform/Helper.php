@@ -184,10 +184,7 @@ class Helper
 
 		if ($app->isClient('site'))
 		{
-			if ($template->template === 'shaper_helixultimate')
-			{
-				$templateId = $template->id;
-			}
+			$templateId = $template->id;
 		}
 		else
 		{
@@ -195,11 +192,6 @@ class Helper
 			{
 				$templateId = $app->input->get('id', 0, 'INT');
 			}
-		}
-
-		if (empty($templateId))
-		{
-			$templateId = self::getTemplateId('shaper_helixultimate');
 		}
 
 		$draftKeyOptions = [
@@ -277,7 +269,12 @@ class Helper
 		 */
 		if (empty($templateId))
 		{
-			$templateId = self::getTemplateId('shaper_helixultimate');
+			$templateId = $app->input->get('helix_id', 0, 'INT');
+		}
+
+		if (empty($templateId))
+		{
+			return $app->getTemplate(true);
 		}
 
 		$template = [];

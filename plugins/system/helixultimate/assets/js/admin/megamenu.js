@@ -49,7 +49,7 @@ var megaMenu = {
 		$('select[data-husearch]').chosen({
 			width: '100%',
 			allow_single_deselect: true,
-			placeholder_text_single: Joomla.Text._('HELIX_ULTIMATE_SELECT_ICON_LABEL')
+			placeholder_text_single: Joomla.Text._('HELIX_ULTIMATE_SELECT_ICON_LABEL'),
 		});
 	},
 
@@ -86,71 +86,59 @@ var megaMenu = {
 
 	handleRemoveCell() {
 		$(document).on('click', '.hu-megamenu-cell-remove', function () {
-			const cellId =
-				$(this).closest('.hu-megamenu-cell').data('cellid') || 1;
-			const columnId =
-				$(this).closest('.hu-megamenu-col').data('columnid') || 1;
-			const rowId =
-				$(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
+			const cellId = $(this).closest('.hu-megamenu-cell').data('cellid') || 1;
+			const columnId = $(this).closest('.hu-megamenu-col').data('columnid') || 1;
+			const rowId = $(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
 
 			$(this)
 				.closest('.hu-megamenu-cell')
 				.slideUp(function () {
 					$(this).remove();
-					let column =
-						settingsData.layout[rowId - 1].attr[columnId - 1];
+					let column = settingsData.layout[rowId - 1].attr[columnId - 1];
 					let items = column.items !== undefined ? column.items : [];
 					items.length > 0 && items.splice(cellId - 1, 1);
-					settingsData.layout[rowId - 1].attr[
-						columnId - 1
-					].items = items;
+					settingsData.layout[rowId - 1].attr[columnId - 1].items = items;
 				});
 		});
 	},
 
 	handleAddNewCell() {
 		const self = this;
-		$(document).on(
-			'click',
-			'.hu-megamenu-insert-module',
-			async function () {
-				const item_id = $(this).data('module');
-				const type = 'module';
-				const rowId = $popover.data('rowid');
-				const columnId = $popover.data('columnid');
+		$(document).on('click', '.hu-megamenu-insert-module', async function () {
+			const item_id = $(this).data('module');
+			const type = 'module';
+			const rowId = $popover.data('rowid');
+			const columnId = $popover.data('columnid');
 
-				const column = settingsData.layout[rowId - 1].attr[
-					columnId - 1
-				] || { items: [] };
+			const column = settingsData.layout[rowId - 1].attr[columnId - 1] || { items: [] };
 
-				if (column.items === undefined) column.items = [];
+			if (column.items === undefined) column.items = [];
 
-				const data = {
-					type,
-					item_id,
-					itemId,
-					rowId,
-					columnId,
-					cellId: column.items.length + 1,
-				};
+			const data = {
+				type,
+				item_id,
+				itemId,
+				rowId,
+				columnId,
+				cellId: column.items.length + 1,
+			};
 
-				const res = await self.addNewCell(data);
+			const res = await self.addNewCell(data);
 
-				if (res.status) {
-					$(
-						`.hu-megamenu-row-wrapper[data-rowid=${rowId}] .hu-megamenu-col[data-columnid=${columnId}] .hu-megamenu-column-contents`
-					).append(res.html);
+			if (res.status) {
+				$(
+					`.hu-megamenu-row-wrapper[data-rowid=${rowId}] .hu-megamenu-col[data-columnid=${columnId}] .hu-megamenu-column-contents`
+				).append(res.html);
 
-					self.closePopover();
-					column.items.push({ type, item_id });
-					settingsData.layout[rowId - 1].attr[columnId - 1] = column;
-				}
+				self.closePopover();
+				column.items.push({ type, item_id });
+				settingsData.layout[rowId - 1].attr[columnId - 1] = column;
 			}
-		);
+		});
 	},
 
 	addNewCell(data) {
-		let url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generateNewCell`;
+		let url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generateNewCell&helix_id=${helixUltimateStyleId}`;
 
 		return new Promise((resolve, reject) => {
 			$.ajax({
@@ -158,10 +146,7 @@ var megaMenu = {
 				url,
 				data,
 				success(res) {
-					res =
-						typeof res === 'string' && res.length > 0
-							? JSON.parse(res)
-							: false;
+					res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
 					resolve(res);
 				},
 				error(err) {
@@ -191,31 +176,21 @@ var megaMenu = {
 
 	openModulePopover() {
 		const self = this;
-		$(document).on(
-			'click',
-			'.hu-megamenu-add-new-item',
-			async function (e) {
-				const columnId =
-					$(this).closest('.hu-megamenu-col').data('columnid') || 1;
-				const rowId =
-					$(this).closest('.hu-megamenu-row-wrapper').data('rowid') ||
-					1;
+		$(document).on('click', '.hu-megamenu-add-new-item', async function (e) {
+			const columnId = $(this).closest('.hu-megamenu-col').data('columnid') || 1;
+			const rowId = $(this).closest('.hu-megamenu-row-wrapper').data('rowid') || 1;
 
-				$popover
-					.data('rowid', rowId)
-					.data('columnid', columnId)
-					.attr('data-rowid', rowId)
-					.attr('data-columnid', columnId);
+			$popover
+				.data('rowid', rowId)
+				.data('columnid', columnId)
+				.attr('data-rowid', rowId)
+				.attr('data-columnid', columnId);
 
-				const res = await self.getModulesContents();
-				res.status &&
-					$popover
-						.find('.hu-megamenu-modules-container')
-						.html(res.html);
+			const res = await self.getModulesContents();
+			res.status && $popover.find('.hu-megamenu-modules-container').html(res.html);
 
-				self.openPopover();
-			}
-		);
+			self.openPopover();
+		});
 	},
 
 	handleModuleSearch() {
@@ -230,26 +205,20 @@ var megaMenu = {
 			timeout = setTimeout(async () => {
 				let { value } = e.target;
 				const res = await self.getModulesContents(value);
-				res.status &&
-					$popover
-						.find('.hu-megamenu-modules-container')
-						.html(res.html);
+				res.status && $popover.find('.hu-megamenu-modules-container').html(res.html);
 			}, 100);
 		});
 	},
 
 	getModulesContents(keyword = '') {
-		const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=getModuleList&keyword=${keyword}`;
+		const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=getModuleList&keyword=${keyword}&helix_id=${helixUltimateStyleId}`;
 
 		return new Promise((resolve, reject) => {
 			$.ajax({
 				method: 'GET',
 				url,
 				success(res) {
-					res =
-						typeof res === 'string' && res.length > 0
-							? JSON.parse(res)
-							: false;
+					res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
 					resolve(res);
 				},
 				error(err) {
@@ -292,15 +261,13 @@ var megaMenu = {
 		if (status) {
 			if (!$settings.hasClass('show')) $settings.addClass('show');
 			if (!$grid.hasClass('show')) $grid.addClass('show');
-			if ($builderModal.hasClass('collapsed'))
-				$builderModal.removeClass('collapsed');
+			if ($builderModal.hasClass('collapsed')) $builderModal.removeClass('collapsed');
 			$alignment.show();
 			$dropdown.hide();
 		} else {
 			if ($settings.hasClass('show')) $settings.removeClass('show');
 			if ($grid.hasClass('show')) $grid.removeClass('show');
-			if (!$builderModal.hasClass('collapsed'))
-				$builderModal.addClass('collapsed');
+			if (!$builderModal.hasClass('collapsed')) $builderModal.addClass('collapsed');
 			$alignment.hide();
 			$dropdown.show();
 		}
@@ -309,10 +276,7 @@ var megaMenu = {
 	/** Handling custom layout panel toggling */
 	handleCustomLayoutDisplay() {
 		$(document).on('click', '.hu-megamenu-custom', function () {
-			$(this)
-				.closest('.hu-megamenu-columns-layout')
-				.find('.hu-megamenu-custom-layout')
-				.slideToggle(100);
+			$(this).closest('.hu-megamenu-columns-layout').find('.hu-megamenu-custom-layout').slideToggle(100);
 		});
 	},
 
@@ -327,10 +291,7 @@ var megaMenu = {
 
 	/** Remove all the event listeners */
 	removeEventListeners() {
-		$(document).off(
-			'click',
-			'.hu-megamenu-add-slots .hu-megamenu-custom-layout-apply'
-		);
+		$(document).off('click', '.hu-megamenu-add-slots .hu-megamenu-custom-layout-apply');
 		$(document).off('click', '.hu-megamenu-remove-row');
 		$(document).off('click', '.hu-megamenu-add-row > a');
 		$(document).off('click', '.hu-megamenu-custom');
@@ -341,18 +302,9 @@ var megaMenu = {
 		$(document).off('click', '.hu-megamenu-insert-module');
 
 		$(document).off('click', '.hu-megamenu-cell-remove');
-		$(document).off(
-			'click',
-			'.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)'
-		);
-		$(document).off(
-			'click',
-			'.hu-megamenu-row-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)'
-		);
-		$(document).off(
-			'click',
-			'.hu-megamenu-row-slots .hu-megamenu-custom-layout-apply'
-		);
+		$(document).off('click', '.hu-megamenu-add-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)');
+		$(document).off('click', '.hu-megamenu-row-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)');
+		$(document).off('click', '.hu-megamenu-row-slots .hu-megamenu-custom-layout-apply');
 		$cancelBtn.off('click');
 		$saveBtn.off('click');
 		$megamenu.off('change');
@@ -365,40 +317,25 @@ var megaMenu = {
 			'click',
 			'.hu-megamenu-row-slots .hu-megamenu-column-layout:not(.hu-megamenu-custom)',
 			async function () {
-				const rowIndex =
-					$(this).closest('.hu-megamenu-row-wrapper').data('rowid') -
-					1;
+				const rowIndex = $(this).closest('.hu-megamenu-row-wrapper').data('rowid') - 1;
 				const layout = $(this).data('layout') || '12';
 				await self.changeRowsColumns({
 					rowIndex,
 					layout,
-					$container: $(this)
-						.closest('.hu-megamenu-row-wrapper')
-						.find('.hu-megamenu-columns-container'),
+					$container: $(this).closest('.hu-megamenu-row-wrapper').find('.hu-megamenu-columns-container'),
 				});
 			}
 		);
 
-		$(document).on(
-			'click',
-			'.hu-megamenu-row-slots .hu-megamenu-custom-layout-apply',
-			async function () {
-				const rowIndex =
-					$(this).closest('.hu-megamenu-row-wrapper').data('rowid') -
-					1;
-				const layout = $(this)
-					.parent()
-					.find('.hu-megamenu-custom-layout-field')
-					.val();
-				await self.changeRowsColumns({
-					rowIndex,
-					layout,
-					$container: $(this)
-						.closest('.hu-megamenu-row-wrapper')
-						.find('.hu-megamenu-columns-container'),
-				});
-			}
-		);
+		$(document).on('click', '.hu-megamenu-row-slots .hu-megamenu-custom-layout-apply', async function () {
+			const rowIndex = $(this).closest('.hu-megamenu-row-wrapper').data('rowid') - 1;
+			const layout = $(this).parent().find('.hu-megamenu-custom-layout-field').val();
+			await self.changeRowsColumns({
+				rowIndex,
+				layout,
+				$container: $(this).closest('.hu-megamenu-row-wrapper').find('.hu-megamenu-columns-container'),
+			});
+		});
 	},
 
 	async changeRowsColumns({ rowIndex, layout, $container }) {
@@ -421,7 +358,7 @@ var megaMenu = {
 	updateRowLayout({ layout, rowData, rowId, itemId }) {
 		let self = this;
 		return new Promise((resolve, reject) => {
-			const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=updateRowLayout`;
+			const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=updateRowLayout&helix_id=${helixUltimateStyleId}`;
 			const data = {
 				layout,
 				data: rowData,
@@ -433,10 +370,7 @@ var megaMenu = {
 				url,
 				data,
 				success(res) {
-					res =
-						typeof res === 'string' && res.length
-							? JSON.parse(res)
-							: false;
+					res = typeof res === 'string' && res.length ? JSON.parse(res) : false;
 					resolve(res);
 				},
 				error(err) {
@@ -473,35 +407,28 @@ var megaMenu = {
 	handleCustomLayoutSelection() {
 		let self = this;
 
-		$(document).on(
-			'click',
-			'.hu-megamenu-add-slots .hu-megamenu-custom-layout-apply',
-			async function (e) {
-				e.preventDefault();
-				let $field = $('.hu-megamenu-custom-layout-field'),
-					layout = $field.val(),
-					rowId = settingsData.layout.length + 1;
+		$(document).on('click', '.hu-megamenu-add-slots .hu-megamenu-custom-layout-apply', async function (e) {
+			e.preventDefault();
+			let $field = $('.hu-megamenu-custom-layout-field'),
+				layout = $field.val(),
+				rowId = settingsData.layout.length + 1;
 
-				if (layout == '') return;
+			if (layout == '') return;
 
-				const res = await self.generateRow(layout, rowId, itemId);
+			const res = await self.generateRow(layout, rowId, itemId);
 
-				if (res.status) {
-					$rowsContainer.append(res.data);
-					self.closeLayoutDisplay();
-					settingsData.layout.push(res.row);
-					self.refreshSortable();
-				}
+			if (res.status) {
+				$rowsContainer.append(res.data);
+				self.closeLayoutDisplay();
+				settingsData.layout.push(res.row);
+				self.refreshSortable();
 			}
-		);
+		});
 	},
 
 	toggleColumnsSlots() {
 		$(document).on('click', '.hu-megamenu-columns', function () {
-			$(this)
-				.closest('.hu-megamenu-row-toolbar-right')
-				.find('.hu-megamenu-row-slots')
-				.toggleClass('show');
+			$(this).closest('.hu-megamenu-row-toolbar-right').find('.hu-megamenu-row-slots').toggleClass('show');
 		});
 	},
 
@@ -511,7 +438,7 @@ var megaMenu = {
 	generateRow(layout, rowId, itemId) {
 		let self = this;
 		return new Promise((resolve, reject) => {
-			const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generateRow`;
+			const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=generateRow&helix_id=${helixUltimateStyleId}`;
 			const data = {
 				layout,
 				rowId,
@@ -522,10 +449,7 @@ var megaMenu = {
 				url,
 				data,
 				success(res) {
-					res =
-						typeof res === 'string' && res.length
-							? JSON.parse(res)
-							: false;
+					res = typeof res === 'string' && res.length ? JSON.parse(res) : false;
 					resolve(res);
 				},
 				error(err) {
@@ -557,10 +481,7 @@ var megaMenu = {
 				let { name, value } = e.target;
 				const type = $(this).attr('type');
 
-				value =
-					type === 'checkbox'
-						? ($(this).prop('checked') >> 0).toString()
-						: value;
+				value = type === 'checkbox' ? ($(this).prop('checked') >> 0).toString() : value;
 				self.updateSettingsField(name, value);
 			});
 		});
@@ -583,17 +504,8 @@ var megaMenu = {
 	},
 
 	/** Swap the item */
-	swapItem({
-		prevRowIndex,
-		prevColIndex,
-		prevItemIndex,
-		currRowIndex,
-		currColIndex,
-		currItemIndex,
-	}) {
-		let items = [
-				...settingsData.layout[prevRowIndex].attr[prevColIndex].items,
-			],
+	swapItem({ prevRowIndex, prevColIndex, prevItemIndex, currRowIndex, currColIndex, currItemIndex }) {
+		let items = [...settingsData.layout[prevRowIndex].attr[prevColIndex].items],
 			item = items.splice(prevItemIndex, 1);
 		settingsData.layout[prevRowIndex].attr[prevColIndex].items = items;
 		let currColumn = settingsData.layout[currRowIndex].attr[currColIndex];
@@ -638,10 +550,7 @@ var megaMenu = {
 
 	handleLoadSlots() {
 		$(document).on('click', '.hu-megamenu-add-row > a', function () {
-			$(this)
-				.closest('.hu-megamenu-grid')
-				.find('.hu-megamenu-add-slots')
-				.toggle();
+			$(this).closest('.hu-megamenu-grid').find('.hu-megamenu-add-slots').toggle();
 		});
 	},
 
@@ -660,7 +569,7 @@ var megaMenu = {
 
 	/** Save the mega menu settings. */
 	saveMegaMenuSettings() {
-		const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=saveMegaMenuSettings`;
+		const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=saveMegaMenuSettings&helix_id=${helixUltimateStyleId}`;
 		const data = {
 			settings: settingsData,
 			id: itemId,
@@ -671,10 +580,7 @@ var megaMenu = {
 			url,
 			data,
 			success(res) {
-				res =
-					typeof res === 'string' && res.length > 0
-						? JSON.parse(res)
-						: false;
+				res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
 				if (res.status) Joomla.reloadPreview();
 			},
 			error(err) {
@@ -785,9 +691,7 @@ var megaMenu = {
 
 				ui.placeholder.css({ height, width });
 
-				rowIndex =
-					ui.item.closest('.hu-megamenu-row-wrapper').data('rowid') -
-					1;
+				rowIndex = ui.item.closest('.hu-megamenu-row-wrapper').data('rowid') - 1;
 				prevIndex = ui.item.index();
 
 				$rowEl = ui.item.closest('.hu-megamenu-columns-container');
@@ -824,13 +728,8 @@ var megaMenu = {
 
 					ui.placeholder.css({ height, width });
 
-					prevColIndex =
-						(ui.item.closest('.hu-megamenu-col').data('columnid') ||
-							1) - 1;
-					prevRowIndex =
-						(ui.item
-							.closest('.hu-megamenu-row-wrapper')
-							.data('rowid') || 1) - 1;
+					prevColIndex = (ui.item.closest('.hu-megamenu-col').data('columnid') || 1) - 1;
+					prevRowIndex = (ui.item.closest('.hu-megamenu-row-wrapper').data('rowid') || 1) - 1;
 					prevItemIndex = ui.item.index();
 
 					/**
@@ -840,13 +739,8 @@ var megaMenu = {
 					$removeBtn.css({ opacity: 0 });
 				},
 				stop(_, ui) {
-					currColIndex =
-						(ui.item.closest('.hu-megamenu-col').data('columnid') ||
-							1) - 1;
-					currRowIndex =
-						(ui.item
-							.closest('.hu-megamenu-row-wrapper')
-							.data('rowid') || 1) - 1;
+					currColIndex = (ui.item.closest('.hu-megamenu-col').data('columnid') || 1) - 1;
+					currRowIndex = (ui.item.closest('.hu-megamenu-row-wrapper').data('rowid') || 1) - 1;
 					currItemIndex = ui.item.index();
 					self.swapItem({
 						prevRowIndex,

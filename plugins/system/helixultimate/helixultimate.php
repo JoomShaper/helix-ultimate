@@ -69,9 +69,10 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	public function onAfterInitialise()
 	{
-		$bootstrapPath = JPATH_THEMES . '/shaper_helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
+		$template = Helper::loadTemplateData();
+		$bootstrapPath = JPATH_ROOT . '/templates/' . $template->template . '/html/layouts/libraries/cms/html/bootstrap.php';
 
-		if ($this->app->isClient('site') && file_exists($bootstrapPath))
+		if ($this->app->isClient('site') && \file_exists($bootstrapPath))
 		{
 			if (!class_exists('HelixBootstrap'))
 			{
@@ -96,8 +97,10 @@ class  PlgSystemHelixultimate extends JPlugin
 	public function onContentPrepareForm(Form $form, $data)
 	{
 		$doc = Factory::getDocument();
+		$template = Helper::loadTemplateData();
+
 		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
-		$tmpl_path = Uri::root(true) . '/templates/shaper_helixultimate';
+		$tmpl_path = Uri::root(true) . '/templates/' . $template->template;
 
 		Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
 
@@ -200,7 +203,8 @@ class  PlgSystemHelixultimate extends JPlugin
 		$id         = $this->app->input->get('id', 0, 'INT');
 		$tmpl		= $this->app->input->get('tmpl', '', 'STRING');
 		$helixReturn= $this->app->input->get('helixreturn', '', 'STRING');
-		
+
+		$this->app->input->set('helix_id', 9);
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
 		{
@@ -400,6 +404,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	/**
 	 * Sanitize the assets i.e. scripts and stylesheets before adding to the head.
 	 * This function is applicable for Joomla 3.
+	 * @note This method is using dynamically.
 	 *
 	 * @return 	void
 	 * @since	2.0.0
@@ -445,6 +450,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	/**
 	 * Sanitize the assets i.e. scripts and stylesheets before adding to the head.
 	 * This function is applicable for Joomla 4.
+	 * @note This method is using dynamically.
 	 *
 	 * @return	void
 	 * @since	2.0.0
@@ -486,7 +492,7 @@ class  PlgSystemHelixultimate extends JPlugin
 			if ($this->app->isClient('site'))
 			{
 				$template = Helper::loadTemplateData();
-				$this->app->setTemplate('shaper_helixultimate', $template->params);
+				$this->app->setTemplate($template->template, $template->params);
 			}
 		}
 	}

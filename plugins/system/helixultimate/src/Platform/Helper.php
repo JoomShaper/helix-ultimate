@@ -245,109 +245,99 @@ class Helper
 	 * @since	2.0.0
 	 */
 	public static function loadTemplateData()
-	{
-		$templateId = 0;
-
-		$app = Factory::getApplication();
-
-		if ($app->isClient('site'))
-		{
-			$currentTemplate = $app->getTemplate(true);
-			$templateId = $currentTemplate->id ?? 0;
-		}
-		else
-		{
-			if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate')
-			{
-				$templateId = $app->input->get('id', 0, 'INT');
-			}
-		}
-
-		/**
-		 * If still the template ID not found then try to get the
-		 * template ID from db.
-		 */
-		if (empty($templateId))
-		{
-			$templateId = $app->input->get('helix_id', 0, 'INT');
-		}
-
-		if (empty($templateId))
-		{
-			return $app->getTemplate(true);
-		}
-
-		$template = [];
-
-		$draftKeyOptions = [
-			'option' => 'com_ajax',
-			'helix' => 'ultimate',
-			'status' => 'draft',
-			'id' => $templateId
-		];
-
-		$draftKey = self::generateKey($draftKeyOptions);
-		$cache = new HelixCache($draftKey);
-
-		/**
-		 * Check the fetch destination. If it is iframe then load the settings
-		 * from draft, otherwise if it is document that means this request
-		 * comes from the original site visit. So load from saved cache.
-		 */
-		$requestFromIframe = $app->input->get('helixMode', '') === 'edit';
-
-		if ($cache->contains() && $requestFromIframe)
-		{
-			$template = $cache->loadData();
-		}
-		else
-		{
-			$keyOptions = [
-				'option' => 'com_ajax',
-				'helix' => 'ultimate',
-				'status' => 'init',
-				'id' => $templateId
-			];
-
-			$key = self::generateKey($keyOptions);
-			$cache->setCacheKey($key);
-
-			if ($cache->contains())
-			{
-				$template = $cache->loadData();
-			}
-			else
-			{
-				$template = self::getTemplateStyle($templateId);				
-			}
-		}
-
-		if (!empty($template->params) && \is_string($template->params))
-		{
-			$template->params = new Registry($template->params);
-		}
-		/**
-		 * If params field is found empty in the database or cache then
-		 * read the default options.json file from the template and assign
-		 * the options as template params.
-		 */
-		elseif (empty($template->params))
-		{
-			$filePath = JPATH_ROOT  . '/templates/' . $template->template . '/' . 'options.json';
-
-			if (\file_exists($filePath))
-			{
-				$defaultParams = \file_get_contents($filePath);
-				$template->params = new Registry($defaultParams);
-			}
-			else
-			{
-				$template->params = new Registry;
-			}
-		}
-
-		return $template;
-	}
+    {
+        $templateId = 0;
+        $app = Factory::getApplication();
+        if ($app->isClient('site'))
+        {
+            $currentTemplate = $app->getTemplate(true);
+            $templateId = $currentTemplate->id ?? 0;
+        }
+        else
+        {
+            if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate')
+            {
+                $templateId = $app->input->get('id', 0, 'INT');
+            }
+        }
+        if($templateId)
+        {
+            $template = [];
+    
+            $draftKeyOptions = [
+                'option' => 'com_ajax',
+                'helix' => 'ultimate',
+                'status' => 'draft',
+                'id' => $templateId
+            ];
+    
+            $draftKey = self::generateKey($draftKeyOptions);
+            $cache = new HelixCache($draftKey);
+    
+            /**
+             * Check the fetch destination. If it is iframe then load the settings
+             * from draft, otherwise if it is document that means this request
+             * comes from the original site visit. So load from saved cache.
+             */
+            $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
+    
+            if ($cache->contains() && $requestFromIframe)
+            {
+                $template = $cache->loadData();
+            }
+            else
+            {
+                $keyOptions = [
+                    'option' => 'com_ajax',
+                    'helix' => 'ultimate',
+                    'status' => 'init',
+                    'id' => $templateId
+                ];
+    
+                $key = self::generateKey($keyOptions);
+                $cache->setCacheKey($key);
+    
+                if ($cache->contains())
+                {
+                    $template = $cache->loadData();
+                }
+                else
+                {
+                    $template = self::getTemplateStyle($templateId);        
+                }
+            }
+    
+            if (!empty($template->params) && \is_string($template->params))
+            {
+                $template->params = new Registry($template->params);
+            }
+            /**
+             * If params field is found empty in the database or cache then
+             * read the default options.json file from the template and assign
+             * the options as template params.
+             */
+            elseif (empty($template->params))
+            {
+                $filePath = JPATH_ROOT  . '/templates/' . $template->template . '/' . 'options.json';
+    
+                if (\file_exists($filePath))
+                {
+                    $defaultParams = \file_get_contents($filePath);
+                    $template->params = new Registry($defaultParams);
+                }
+                else
+                {
+                    $template->params = new Registry;
+                }
+            }
+    
+            return $template;
+        }
+        $template = new \stdClass();
+        $template->template = '';
+        $template->params = new Registry;
+        return $template;
+    }
 
 	/**
 	 * Flush settings data towards the javascript using addScriptOptions

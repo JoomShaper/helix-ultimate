@@ -11,15 +11,13 @@ const zip = require('gulp-zip');
 const config = {
 	srcPath: path.resolve(__dirname),
 	buildPath: path.resolve(__dirname, './package/'),
-	packageName: '2.0.0-rc.1.zip',
-	templateFileExtensions:
-		'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css',
+	packageName: '2.0.0-rc.2.zip',
+	templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css',
 	pluginFileExtensions: function () {
 		return this.templateFileExtensions + ', ini';
 	},
 	toArray: function (key) {
-		if (typeof this[key] === 'string')
-			return this[key].split(',').map(v => v.trim());
+		if (typeof this[key] === 'string') return this[key].split(',').map(v => v.trim());
 		else if (typeof this[key] === 'function')
 			return this[key]()
 				.split(',')
@@ -27,8 +25,7 @@ const config = {
 	},
 	parseExtensions: function (key) {
 		if (typeof this[key] === 'string') return this[key].replace(/\s+/g, '');
-		else if (typeof this[key] === 'function')
-			return this[key]().replace(/\s+/g, '');
+		else if (typeof this[key] === 'function') return this[key]().replace(/\s+/g, '');
 	},
 };
 
@@ -37,26 +34,17 @@ function clean() {
 }
 
 function manifestStreamTask() {
-	const templatePath = path.resolve(
-		config.srcPath,
-		'./templates/shaper_helixultimate'
-	);
+	const templatePath = path.resolve(config.srcPath, './templates/shaper_helixultimate');
 
-	return src([
-		templatePath + '/installer.script.php',
-		templatePath + '/installer.xml',
-	]).pipe(dest(path.resolve(config.buildPath)));
+	return src([templatePath + '/installer.script.php', templatePath + '/installer.xml']).pipe(
+		dest(path.resolve(config.buildPath))
+	);
 }
 
 function templateLanguageStreamTask() {
-	const languagePath = path.resolve(
-		config.srcPath,
-		'./language/en-GB/**en-GB.tpl_shaper_helixultimate.ini'
-	);
+	const languagePath = path.resolve(config.srcPath, './language/en-GB/**en-GB.tpl_shaper_helixultimate.ini');
 
-	return src([languagePath]).pipe(
-		dest(path.resolve(config.buildPath, './template/'))
-	);
+	return src([languagePath]).pipe(dest(path.resolve(config.buildPath, './template/')));
 }
 
 function templatePluginLanguageStreamTask() {
@@ -65,22 +53,14 @@ function templatePluginLanguageStreamTask() {
 		'./administrator/language/en-GB/**en-GB.plg_system_helixultimate.ini'
 	);
 
-	return src([languagePath]).pipe(
-		dest(path.resolve(config.buildPath, './plugins/system/language/'))
-	);
+	return src([languagePath]).pipe(dest(path.resolve(config.buildPath, './plugins/system/language/')));
 }
 
 function templateStreamTask() {
-	const templatePath = path.resolve(
-		config.srcPath,
-		'./templates/shaper_helixultimate'
-	);
+	const templatePath = path.resolve(config.srcPath, './templates/shaper_helixultimate');
 
 	return src([
-		templatePath +
-			'/**/*.{' +
-			config.parseExtensions('templateFileExtensions') +
-			'}',
+		templatePath + '/**/*.{' + config.parseExtensions('templateFileExtensions') + '}',
 		'!' + templatePath + '/installer.script.php',
 		'!' + templatePath + '/installer.xml',
 	]).pipe(dest(path.resolve(config.buildPath, './template/')));

@@ -70,17 +70,21 @@ class  PlgSystemHelixultimate extends JPlugin
 	public function onAfterInitialise()
 	{
 		$template = Helper::loadTemplateData();
-		$bootstrapPath = JPATH_ROOT . '/templates/' . $template->template . '/html/layouts/libraries/cms/html/bootstrap.php';
 
-		if ($this->app->isClient('site') && \file_exists($bootstrapPath))
+		if (isset($template->template) && !empty($template->template))
 		{
-			if (!class_exists('HelixBootstrap'))
-			{
-				require_once $bootstrapPath;
-			}
+			$bootstrapPath = JPATH_ROOT . '/templates/' . $template->template . '/html/layouts/libraries/cms/html/bootstrap.php';
 
-			HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
-			HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
+			if ($this->app->isClient('site') && \file_exists($bootstrapPath))
+			{
+				if (!class_exists('HelixBootstrap'))
+				{
+					require_once $bootstrapPath;
+				}
+
+				HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
+				HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
+			}
 		}
 	}
 

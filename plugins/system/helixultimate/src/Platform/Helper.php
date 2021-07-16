@@ -248,10 +248,22 @@ class Helper
     {
         $templateId = 0;
         $app = Factory::getApplication();
+
         if ($app->isClient('site'))
         {
             $currentTemplate = $app->getTemplate(true);
             $templateId = $currentTemplate->id ?? 0;
+
+			/**
+			 * If a page/menu is assigned to a specific template
+			 * then get the template ID.
+			 */
+			$activeMenu = $app->getMenu()->getActive();
+
+			if (!empty($activeMenu))
+			{
+				$templateId = $activeMenu->template_style_id;
+			}
         }
         else
         {
@@ -260,20 +272,26 @@ class Helper
                 $templateId = $app->input->get('id', 0, 'INT');
             }
         }
+
+		if (empty($templateId))
+		{
+			$templateId = $app->input->get('helix_id', 0, 'INT');
+		}
+
         if($templateId)
         {
             $template = [];
-    
+
             $draftKeyOptions = [
                 'option' => 'com_ajax',
                 'helix' => 'ultimate',
                 'status' => 'draft',
                 'id' => $templateId
             ];
-    
+
             $draftKey = self::generateKey($draftKeyOptions);
             $cache = new HelixCache($draftKey);
-    
+
             /**
              * Check the fetch destination. If it is iframe then load the settings
              * from draft, otherwise if it is document that means this request
@@ -306,36 +324,45 @@ class Helper
                     $template = self::getTemplateStyle($templateId);        
                 }
             }
-    
-            if (!empty($template->params) && \is_string($template->params))
-            {
-                $template->params = new Registry($template->params);
-            }
-            /**
-             * If params field is found empty in the database or cache then
-             * read the default options.json file from the template and assign
-             * the options as template params.
-             */
-            elseif (empty($template->params))
-            {
-                $filePath = JPATH_ROOT  . '/templates/' . $template->template . '/' . 'options.json';
-    
-                if (\file_exists($filePath))
-                {
-                    $defaultParams = \file_get_contents($filePath);
-                    $template->params = new Registry($defaultParams);
-                }
-                else
-                {
-                    $template->params = new Registry;
-                }
-            }
-    
-            return $template;
+
+			// echo '<xmp>';
+			// print_r($template);
+			// echo '</xmp>';
+
+			if (isset($template->template) && !empty($template->template))
+			{
+				if (!empty($template->params) && \is_string($template->params))
+				{
+					$template->params = new Registry($template->params);
+				}
+				/**
+				 * If params field is found empty in the database or cache then
+				 * read the default options.json file from the template and assign
+				 * the options as template params.
+				 */
+				elseif (empty($template->params))
+				{
+					$filePath = JPATH_ROOT  . '/templates/' . $template->template . '/' . 'options.json';
+
+					if (\file_exists($filePath))
+					{
+						$defaultParams = \file_get_contents($filePath);
+						$template->params = new Registry($defaultParams);
+					}
+					else
+					{
+						$template->params = new Registry;
+					}
+				}
+
+				return $template;
+			}
         }
-        $template = new \stdClass();
-        $template->template = '';
+
+        $template = new \stdClass;
+        $template->template = 'system';
         $template->params = new Registry;
+
         return $template;
     }
 

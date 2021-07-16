@@ -260,7 +260,7 @@ class Helper
 			 */
 			$activeMenu = $app->getMenu()->getActive();
 
-			if (!empty($activeMenu))
+			if (!empty($activeMenu) && !empty($activeMenu->template_style_id))
 			{
 				$templateId = $activeMenu->template_style_id;
 			}

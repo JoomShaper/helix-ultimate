@@ -73,7 +73,7 @@ class  PlgSystemHelixultimate extends JPlugin
 
 		if (isset($template->template) && !empty($template->template))
 		{
-			$bootstrapPath = JPATH_ROOT . '/templates/' . $template->template . '/html/layouts/libraries/cms/html/bootstrap.php';
+			$bootstrapPath = JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
 
 			if ($this->app->isClient('site') && \file_exists($bootstrapPath))
 			{

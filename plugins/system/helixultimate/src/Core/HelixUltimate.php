@@ -648,25 +648,27 @@ class HelixUltimate
 			$col_grid_size = $options->grid_size;
 			$className = '';
 
-			if (!$has_component && end($row->attr) === $column)
+			if (!$has_component)
 			{
-				$col_grid_size = $col_grid_size + $inactive_col;
-			}
-
-			if (isset($options->lg_col) && $options->lg_col)
-			{
-				if (isset($options->lg_col) && $options->lg_col)
+				if (end($row->attr) === $column)
 				{
-					$className = $className . ' col-lg-' . $options->lg_col;
-				}
-				else
-				{
-					$className = 'col-lg-' . $col_grid_size;
+					$col_grid_size += $inactive_col;
 				}
 			}
 			else
 			{
-				$col_grid_size = $col_grid_size + $inactive_col;
+				if (!empty($column->settings->column_type))
+				{
+					$col_grid_size += $inactive_col;
+				}
+			}
+
+			if (isset($options->lg_col) && $options->lg_col)
+			{
+				$className = $className . ' col-lg-' . $options->lg_col;
+			}
+			else
+			{
 				$className = 'col-lg-' . $col_grid_size;
 			}
 

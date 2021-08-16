@@ -657,7 +657,7 @@ class HelixUltimate
 			}
 			else
 			{
-				if (!empty($column->settings->column_type))
+				if (!empty($options->column_type))
 				{
 					$col_grid_size += $inactive_col;
 				}

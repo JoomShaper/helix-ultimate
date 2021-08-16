@@ -1,0 +1,586 @@
+#attrib-helix_ultimate_blog_options #jform_attribs_helix_ultimate_article_format {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+#attrib-helix_ultimate_blog_options #jform_attribs_helix_ultimate_article_format .form-check-inline {
+	margin: 0;
+	margin-right: -5px;
+	padding-left: 0px;
+}
+#attrib-helix_ultimate_blog_options #jform_attribs_helix_ultimate_article_format .form-check-inline label {
+	display: inline-block;
+	padding: 4px 12px;
+	margin-bottom: 0;
+	font-size: 13px;
+	line-height: 18px;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	background-color: #f3f3f3;
+	color: #333;
+	border-top: 1px solid #b3b3b3;
+	border-right: 1px solid #b3b3b3;
+	border-bottom: 1px solid #b3b3b3;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+	border-radius: 0;
+}
+#attrib-helix_ultimate_blog_options #jform_attribs_helix_ultimate_article_format .form-check-inline label.btn-success {
+	background: #46a546;
+	color: #fff;
+}
+#attrib-helix_ultimate_blog_options
+	#jform_attribs_helix_ultimate_article_format
+	.form-check-inline
+	label
+	input[type='radio'] {
+	display: none !important;
+}
+#attrib-helix_ultimate_blog_options #jform_attribs_helix_ultimate_article_format .form-check-inline:last-child label {
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+#attrib-helix_ultimate_blog_options #jform_attribs_helix_ultimate_article_format .form-check-inline:first-child label {
+	border-left: 1px solid #b3b3b3;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+.com-contenthistory .btn-group {
+	display: flex;
+	justify-content: flex-end;
+}
+.com-contenthistory .btn-group button {
+	display: inline-block;
+	padding: 4px 12px;
+	margin-bottom: 0;
+	font-size: 13px;
+	line-height: 18px;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	color: #333;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	background-color: #f5f5f5;
+	background-repeat: repeat-x;
+	border: 1px solid #bbb;
+	border-bottom-color: #a2a2a2;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.com-contenthistory .btn-group button:hover {
+	color: #333;
+	background-color: #e9e9e9;
+}
+#versionsModal {
+	top: 10%;
+}
+#versionsModal .modal-dialog {
+	max-width: 80%;
+}
+#versionsModal iframe {
+	min-height: 300px;
+}
+body.com-content.view-form.layout-edit .nav-tabs .nav-link {
+	display: block !important;
+}
+.no-js img.lazyload {
+	display: none;
+}
+#system-message-container {
+	position: fixed;
+	bottom: 0px;
+	right: 15px;
+	max-width: 350px;
+}
+#system-message-container .alert {
+	font-size: 13px;
+	line-height: 1.5;
+}
+#system-message-container .alert > .btn-close {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+}
+#system-message-container joomla-alert {
+	font-size: 13px;
+}
+.com-users.view-registration #member-registration .modal-dialog,
+.com-users.view-profile #member-registration .modal-dialog,
+.com-users.view-registration #member-profile .modal-dialog,
+.com-users.view-profile #member-profile .modal-dialog {
+	display: flex;
+	align-items: center;
+	min-height: calc(100% - 1rem);
+}
+body.com-users.view-registration > #sbox-window {
+	overflow: hidden;
+}
+body.com-users.view-registration > #sbox-window > #sbox-btn-close {
+	top: 5px;
+	right: 5px;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page > #adminForm > fieldset > .joomla-tabs {
+	display: flex;
+	padding: 0;
+	margin: 0 !important;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+	list-style: outside none none;
+	background-color: #f5f5f5;
+	border-color: #ccc #ccc currentcolor;
+	border-style: solid solid none;
+	border-width: 1px 1px 0;
+	border-radius: 0.25rem 0.25rem 0 0;
+	border-image: none;
+	box-shadow: 0 1px #fff inset, 0 2px 3px -3px #000, 0 -4px 0 #000 inset, 0 0 3px #000;
+}
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	> .joomla-tabs
+	.nav-item
+	> .nav-link {
+	color: var(--text-color);
+}
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	> .joomla-tabs
+	.nav-item
+	> .nav-link.active {
+	background-color: rgba(0, 0, 0, 0.03);
+	background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.05) 100%);
+	border-right: 0 none;
+	border-left: 0 none;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	box-shadow: 2px 0 1px -1px #000 inset, -2px 0 1px -1px #000 inset, 0 1px 0 #000 inset;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page > #adminForm > fieldset > .tab-content {
+	padding: 15px;
+	background-color: #fefefe;
+	border: 1px solid #ccc;
+	border-radius: 0 0 0.25rem 0.25rem;
+	box-shadow: 0 0 3px #000;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page > #adminForm > fieldset #editor label#jform_title-lbl {
+	margin-bottom: 15px;
+	font-weight: 700;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page > #adminForm > fieldset #editor .js-editor-tinymce {
+	display: flex;
+	flex-direction: column;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page > #adminForm > fieldset #publishing > .control-group,
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page > #adminForm > fieldset #metadata > .control-group,
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#attrib-helix_ultimate_blog_options
+	> .control-group {
+	display: flex;
+	flex-direction: column;
+}
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#publishing
+	> .control-group
+	> label,
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page > #adminForm > fieldset #metadata > .control-group > label,
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#attrib-helix_ultimate_blog_options
+	> .control-group
+	> label {
+	margin-bottom: 5px;
+	font-weight: 700;
+}
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#publishing
+	> .control-group
+	textarea,
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#metadata
+	> .control-group
+	textarea,
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#attrib-helix_ultimate_blog_options
+	> .control-group
+	textarea {
+	width: 100%;
+}
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#publishing
+	> .control-group
+	.calendar-container
+	.time
+	td
+	select,
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#metadata
+	> .control-group
+	.calendar-container
+	.time
+	td
+	select,
+body.helix-ultimate.hu.view-form.layout-edit
+	.edit.item-page
+	> #adminForm
+	> fieldset
+	#attrib-helix_ultimate_blog_options
+	> .control-group
+	.calendar-container
+	.time
+	td
+	select {
+	padding: 4px;
+	font-size: 13px;
+}
+body.contentpane.com-media.view-images .container-popup #imageForm > #messages + .well .row-fluid {
+	display: flex;
+	max-width: 100%;
+}
+body.contentpane.com-media.view-images .container-popup #imageForm > #messages + .well .row-fluid .span8 {
+	flex: auto;
+}
+body.contentpane.com-media.view-images .container-popup #imageForm > #messages + .well .row-fluid .span8 > .controls {
+	margin-left: 10px;
+	display: flex;
+	max-width: 500px;
+}
+body.contentpane.com-media.view-images
+	.container-popup
+	#imageForm
+	> #messages
+	+ .well
+	.row-fluid
+	.span8
+	> .controls
+	#folderlist_chzn,
+body.contentpane.com-media.view-images
+	.container-popup
+	#imageForm
+	> #messages
+	+ .well
+	.row-fluid
+	.span8
+	> .controls
+	#folderlist {
+	flex: auto;
+}
+body.contentpane.com-media.view-images .container-popup #imageForm > #messages + .well .row-fluid .span8 #upbutton {
+	background: var(--bs-primary);
+	color: #fff;
+	margin: 0 5px;
+}
+body.contentpane.com-media.view-images .container-popup #imageForm .well > .row-fluid:not(:last-child) {
+	margin-bottom: 5px;
+}
+body.contentpane.com-media.view-images
+	.container-popup
+	#imageForm
+	.well
+	> .row-fluid:not(:last-child)
+	> .control-group:not(:last-child) {
+	margin-bottom: 5px;
+}
+body.contentpane.com-media.view-images .container-popup #imageForm .btn.button-cancel {
+	background: var(--bs-danger);
+	color: #fff;
+}
+body.contentpane.com-media.view-images .container-popup #imageForm .btn.button-cancel:hover,
+body.contentpane.com-media.view-images .container-popup #imageForm .btn.button-cancel:focus {
+	border-color: var(--bs-danger);
+}
+body.contentpane.com-menus.view-items.layout-modal #adminForm .js-stools-container-bar {
+	display: flex;
+}
+body.contentpane.com-modules.view-modules.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar {
+	display: flex;
+	align-items: center;
+	padding: 10px 0px;
+}
+body.contentpane.com-modules.view-modules.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> label {
+	margin-right: 10px;
+}
+body.contentpane.com-modules.view-modules.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append {
+	display: flex;
+}
+body.contentpane.com-modules.view-modules.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append
+	> button[type='submit'] {
+	background: var(--bs-primary);
+	color: #fff;
+	margin-left: 5px;
+}
+body.contentpane.com-modules.view-modules.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper
+	> button[type='button'] {
+	background: var(--bs-primary);
+	color: #fff;
+}
+body.contentpane.com-content.view-articles.layout-modal .container-popup #adminForm > .js-stools,
+body.contentpane.com-menus.view-items.layout-modal .container-popup #adminForm > .js-stools,
+body.contentpane.com-contact.view-contacts.layout-modal .container-popup #adminForm > .js-stools {
+	padding-top: 15px;
+}
+body.contentpane.com-content.view-articles.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar,
+body.contentpane.com-menus.view-items.layout-modal .container-popup #adminForm > .js-stools .js-stools-container-bar,
+body.contentpane.com-contact.view-contacts.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar {
+	margin-bottom: 10px;
+}
+body.contentpane.com-content.view-articles.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> label,
+body.contentpane.com-menus.view-items.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> label,
+body.contentpane.com-contact.view-contacts.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> label {
+	margin-right: 10px;
+}
+body.contentpane.com-content.view-articles.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append,
+body.contentpane.com-menus.view-items.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append,
+body.contentpane.com-contact.view-contacts.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append {
+	display: flex;
+}
+body.contentpane.com-content.view-articles.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append
+	> button[type='submit'],
+body.contentpane.com-menus.view-items.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append
+	> button[type='submit'],
+body.contentpane.com-contact.view-contacts.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper.input-append
+	> button[type='submit'] {
+	background: var(--bs-primary);
+	color: #fff;
+	margin-left: 5px;
+}
+body.contentpane.com-content.view-articles.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper
+	> button[type='button'],
+body.contentpane.com-menus.view-items.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper
+	> button[type='button'],
+body.contentpane.com-contact.view-contacts.layout-modal
+	.container-popup
+	#adminForm
+	> .js-stools
+	.js-stools-container-bar
+	> .btn-wrapper
+	> button[type='button'] {
+	background: var(--bs-primary);
+	color: #fff;
+}
+body.contentpane.com-content.view-articles.layout-modal .container-popup #adminForm .js-stools-container-bar,
+body.contentpane.com-contact.view-contacts.layout-modal .container-popup #adminForm .js-stools-container-bar {
+	display: flex;
+	align-items: center;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page.joomla4 iframe {
+	width: 100%;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page.joomla4 .jviewport-height70 {
+	height: 70vh;
+}
+body.helix-ultimate.hu.view-form.layout-edit .edit.item-page.joomla4 [class*='jviewport-height'] iframe {
+	height: 100%;
+}
+body.contentpane.joomla4.layout-modal div[role='tooltip'] {
+	display: none;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-bar > .btn-toolbar {
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-bar > .btn-toolbar > .ordering-select {
+	display: flex;
+}
+body.contentpane.joomla4.layout-modal .custom-select,
+body.contentpane.joomla4.layout-modal .form-select {
+	display: block;
+	width: 100%;
+	padding: 0.6rem 4rem 0.6rem 1rem;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.25;
+	color: #22262a;
+	vertical-align: middle;
+	background-image: url(../images/select-bg.svg);
+	background-repeat: no-repeat;
+	background-position: right 1rem center;
+	background-size: 116rem;
+	border-radius: 0.25rem;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+body.contentpane.joomla4.layout-modal .custom-select:focus,
+body.contentpane.joomla4.layout-modal .form-select:focus {
+	border-color: #8894aa;
+	outline: 0;
+	box-shadow: 0 0 0 0.25rem rgba(0, 0, 0);
+}
+body.contentpane.joomla4.layout-modal .form-select[multiple],
+body.contentpane.joomla4.layout-modal .form-select[size]:not([size='1']),
+body.contentpane.joomla4.layout-modal [multiple].custom-select,
+body.contentpane.joomla4.layout-modal [size].custom-select:not([size='1']) {
+	padding-right: 1rem;
+	background-image: none;
+}
+body.contentpane.joomla4.layout-modal .custom-select:disabled,
+body.contentpane.joomla4.layout-modal .form-select:disabled {
+	color: #6d757e;
+	background-color: #eaedf0;
+}
+body.contentpane.joomla4.layout-modal .custom-select:-moz-focusring,
+body.contentpane.joomla4.layout-modal .form-select:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #22262a;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-bar {
+	padding: 10px 20px;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-bar .btn-toolbar {
+	justify-content: flex-end;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-bar .btn-toolbar > * {
+	margin: 4px 0;
+	-webkit-margin-end: 8px;
+	margin-inline-end: 8px;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-bar .btn-toolbar .js-stools-btn-clear {
+	background-color: #30638d;
+	border: 0;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-bar .ordering-select {
+	display: flex;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-filters {
+	display: none;
+	padding: 0 20px;
+	margin-bottom: 20px;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-filters-visible {
+	display: grid;
+	grid-gap: 8px;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	padding: 10px;
+	background-color: #fff;
+}
+body.contentpane.joomla4.layout-modal .js-stools-container-filters > * {
+	margin: 4px 0;
+	-webkit-margin-end: 8px;
+	margin-inline-end: 8px;
+}
+body.contentpane.joomla4.layout-modal .js-stools-field-list + .js-stools-field-list {
+	-webkit-margin-start: 8px;
+	margin-inline-start: 8px;
+}
+.field-calendar > .js-calendar.hidden {
+	display: none;
+}

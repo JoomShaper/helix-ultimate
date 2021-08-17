@@ -109,19 +109,18 @@ extract($displayData);
 				</div>
 			<?php else: ?>
 				<?php if (!$field->getAttribute('hideLabel', false)): ?>
-					<div class="control-label">
-						<?php echo $field->label; ?>
+					<label class="control-label">
+						<?php echo Text::_($field->getAttribute('label')); ?>
 		
 						<!-- if description exists then show the help icon -->
 						<?php if (!empty($description)): ?>
 							<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
 						<?php endif ?>
-		
-					</div>
+					</label>
 		
 					<!-- if description exists and type is not the checkbox then show the help text above of the input field. -->
 					<?php if (!empty($description) && $type !== 'checkbox'): ?>
-						<div class="control-help"><?php echo $description; ?></div>
+						<div class="hu-control-help"><?php echo $description; ?></div>
 					<?php endif; ?>
 				<?php endif; ?>
 		
@@ -131,7 +130,7 @@ extract($displayData);
 		
 				<!-- if description exists and type is checkbox then show the help text next to the input field. -->
 				<?php if (!empty($description) && $type === 'checkbox'): ?>
-					<div class="control-help"><?php echo $description; ?></div>
+					<div class="hu-control-help"><?php echo $description; ?></div>
 				<?php endif; ?>
 			<?php endif ?>
 		</div>

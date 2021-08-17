@@ -55,19 +55,12 @@ class HelixultimateFieldText
 		$output  = '<div class="control-group ' . $className . '" ' . $dataShowon . ' >';
 		$output .= '<div class="control-group-inner">';
 		$output .= '<div class="control-label">';
-		$output .= '<label>' . $attr['title'] . '</label>';
-
-		if (!empty($attr['desc']))
-		{
-			$output .= '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>';
-		}
+		$output .= '<label>' . $attr['title'];
+		$output .= !empty($attr['desc']) ? '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>' : '';
+		$output .= '</label>';
 
 		$output .= '</div>';
-
-		if (!empty($attr['desc']))
-		{
-			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
-		}
+		$output .= !empty($attr['desc']) ? '<p class="hu-control-help">' . $attr['desc'] . '</p>' : '';
 
 		$output .= '</div>';
 

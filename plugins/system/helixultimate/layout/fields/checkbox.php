@@ -64,7 +64,7 @@ class HelixultimateFieldCheckbox
 
 		if (!empty($attr['desc']))
 		{
-			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
+			$output .= '<p class="hu-control-help">' . $attr['desc'] . '</p>';
 		}
 
 		$output  .= '</div>';

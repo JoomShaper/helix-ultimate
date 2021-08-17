@@ -53,13 +53,11 @@ class HelixultimateFieldSelect
 		}
 
 		$output  = '<div class="control-group ' . $className . ' ' . $key . '" ' . $dataShowon . '>';
-		$output .= '<label>' . $attr['title'] . '</label>';
+		$output .= '<label>' . $attr['title'];
 
-		if (!empty($attr['desc']))
-		{
-			$output .= '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>';
-			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
-		}
+		$output .= !empty($attr['desc']) ? '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>' : '';
+		$output .= '</label>';
+		$output .= !empty($attr['desc']) ? '<p class="hu-control-help">' . $attr['desc'] . '</p>' : '';
 
 		if ($isMenuBuilder)
 		{

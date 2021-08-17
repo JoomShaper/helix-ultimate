@@ -1044,7 +1044,7 @@ jQuery(function ($) {
 	/* Helix Help Control functionalities */
 	$('.hu-help-icon').on('click', function (e) {
 		e.preventDefault();
-		let $helpElement = $(this).closest('.control-group').find('.control-help');
+		let $helpElement = $(this).closest('.control-group').find('.hu-control-help');
 
 		$(this).toggleClass('active');
 
@@ -1059,7 +1059,7 @@ jQuery(function ($) {
 		let $siblings = $(this).closest('.control-group').siblings();
 
 		$siblings.each(function () {
-			let $help = $(this).find('.control-help');
+			let $help = $(this).find('.hu-control-help');
 
 			if ($help.hasClass('show')) {
 				$help.removeClass('show');

@@ -58,7 +58,7 @@ class HelixultimateFieldMenuType
 		if (!empty($attr['desc']))
 		{
 			$output .= '<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>';
-			$output .= '<p class="control-help">' . $attr['desc'] . '</p>';
+			$output .= '<p class="hu-control-help">' . $attr['desc'] . '</p>';
 		}
 
 		$output .= self::menuTypesField();

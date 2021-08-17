@@ -40,7 +40,7 @@ extract($displayData);
 					<label for=""><?php echo $masterLabel; ?></label>
 					<?php if (!empty($masterDescription)): ?>
 						<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
-						<p class="control-help"><?php echo $masterDescription; ?></p>
+						<p class="hu-control-help"><?php echo $masterDescription; ?></p>
 					<?php endif ?>
 				</div>
 			</div>

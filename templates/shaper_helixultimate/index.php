@@ -52,6 +52,7 @@ Helper::flushSettingsDataToJs();
 if (!\is_null($this->params->get('comingsoon', null)))
 {
 	header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
+	exit();
 }
 
 $custom_style = $this->params->get('custom_style');

@@ -38,7 +38,6 @@ jQuery(function ($) {
 	 *
 	 */
 	var settings = Joomla.getOptions('data') || {};
-	console.log({settings});
 
 	/**
 	 * Device wise sticky header

@@ -38,6 +38,7 @@ jQuery(function ($) {
 	 *
 	 */
 	var settings = Joomla.getOptions('data') || {};
+	console.log({settings});
 
 	/**
 	 * Device wise sticky header
@@ -49,7 +50,11 @@ jQuery(function ($) {
 			var $header = $('#sp-header');
 			var headerHeight = $header.outerHeight();
 			var $stickyHeaderPlaceholder = $('.sticky-header-placeholder');
-			let $stickyOffset = settings.header.stickyOffset;
+			let $stickyOffset = '100';
+
+			if (settings.header !== undefined && settings.header.stickyOffset !== undefined) {
+				$stickyOffset = settings.header .stickyOffset || '100';
+			}
 
 			var stickyHeader = function () {
 				var scrollTop = $(window).scrollTop();

@@ -94,7 +94,7 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
 	</head>
 
 	<?php 
-	$joomlaVersion;
+	$joomlaVersion = 'joomla3';
 	if (JVERSION >= 4){
 		$joomlaVersion = "joomla4";
 	} ?>

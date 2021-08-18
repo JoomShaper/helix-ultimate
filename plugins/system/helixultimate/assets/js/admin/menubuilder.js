@@ -401,6 +401,7 @@ jQuery(function ($) {
 
 					// Set the task as `item.apply` for saving
 					$form.find('input[name=task]').val(task);
+					$form.find('input[name=task]').attr('value', task);
 					const isValidForm = frameDoc[0].formvalidator.isValid($form[0]);
 
 					showSpinner(true);
@@ -415,6 +416,21 @@ jQuery(function ($) {
 							const $alertMessage = $responseElement.find('.alert-message');
 							const respType = $alertHeading.length > 0 ? $alertHeading.text() : '';
 							const message = $alertMessage.length > 0 ? $alertMessage.text() : '';
+
+							/**
+							 * For Joomla!4 detect the system-message-container and inside the <noscript>
+							 * tag find if there any `.alert-danger` class.
+							 * If so then show the error.
+							 */
+							const $messageContainer = $responseElement.find('#system-message-container noscript');
+							const $element = $('<div></div>').hide().html($messageContainer.text());
+							const $errorAlert = $element.find('.alert-danger');
+
+							if ($errorAlert.length > 0) {
+								Joomla.HelixToaster.error($messageContainer.html(), 'Error');
+								showSpinner(false);
+								return;
+							}
 
 							if (res && respType !== 'Error') {
 								fetchMenuItems(menuType);
@@ -434,6 +450,8 @@ jQuery(function ($) {
 							Joomla.HelixToaster.error('Something went wrong!', 'Error');
 							showSpinner(false);
 						}
+					} else {
+						showSpinner(false);
 					}
 				}, 500)
 			);

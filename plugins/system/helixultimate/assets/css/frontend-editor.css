@@ -584,3 +584,23 @@ body.contentpane.joomla4.layout-modal .js-stools-field-list + .js-stools-field-l
 .field-calendar > .js-calendar.hidden {
 	display: none;
 }
+
+.hu-content-edit .choices__button_joomla {
+	position: relative;
+	text-indent: -9999px;
+	overflow: hidden;
+	background-color: transparent;
+	outline: none;
+	border: none;
+}
+
+.hu-content-edit .choices__button_joomla::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	display: block;
+	text-align: center;
+	text-indent: 0;
+	content: '×';
+}

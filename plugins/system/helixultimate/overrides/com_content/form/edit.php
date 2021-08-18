@@ -18,7 +18,7 @@ use Joomla\CMS\Uri\Uri;
 
 $doc = Factory::getDocument();
 
-$cssPath = Uri::base() . '/plugins/system/helixultimate/assets/css/frontend-editing.css';
+$cssPath = Uri::base() . '/plugins/system/helixultimate/assets/css/frontend-editor.css';
 $doc->addStylesheet($cssPath);
 
 HTMLHelper::_('behavior.keepalive');
@@ -55,7 +55,7 @@ if (JVERSION >= 4) {
 }
 
 ?>
-<div class="edit item-page<?php echo $this->pageclass_sfx . ' ' . $jversion ; ?>">
+<div class="hu-content-edit edit item-page<?php echo $this->pageclass_sfx . ' ' . $jversion ; ?>">
 	<?php if ($params->get('show_page_heading')): ?>
 		<div class="page-header">
 			<h1>

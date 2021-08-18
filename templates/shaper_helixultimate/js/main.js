@@ -5,13 +5,40 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
+// Preloader
+jQuery(window).on('load', function () {
+	if (jQuery('.sp-loader-with-logo').length > 0) {
+		move();
+	}
+	jQuery('.sp-pre-loader').fadeOut(500, function () {
+		jQuery(this).remove();
+	});
+});
+
+/**
+ * Move the progress bar
+ */
+function move() {
+	var elem = document.getElementById('line-load');
+	var width = 1;
+	var id = setInterval(frame, 10);
+	function frame() {
+		if (width >= 100) {
+			clearInterval(id);
+		} else {
+			width++;
+			elem.style.width = width + '%';
+		}
+	}
+}
+
 jQuery(function ($) {
 	/**
 	 * Helix settings data
 	 *
 	 */
 	var settings = Joomla.getOptions('data') || {};
-	
+
 	/**
 	 * Device wise sticky header
 	 *
@@ -22,7 +49,7 @@ jQuery(function ($) {
 			var $header = $('#sp-header');
 			var headerHeight = $header.outerHeight();
 			var $stickyHeaderPlaceholder = $('.sticky-header-placeholder');
-			let $stickyOffset =  settings.header.stickyOffset
+			let $stickyOffset = settings.header.stickyOffset;
 
 			var stickyHeader = function () {
 				var scrollTop = $(window).scrollTop();
@@ -146,40 +173,8 @@ jQuery(function ($) {
 		return false;
 	});
 
-	// Preloader
-	$(window).on('load', function () {
-		if ($('.sp-loader-with-logo').length > 0) {
-			move();
-		}
-		$('.sp-pre-loader').fadeOut(500, function () {
-			$(this).remove();
-		});
-	});
-
-	/**
-	 * Move the progress bar
-	 */
-	function move() {
-		var elem = document.getElementById('line-load');
-		var width = 1;
-		var id = setInterval(frame, 10);
-		function frame() {
-			if (width >= 100) {
-				clearInterval(id);
-			} else {
-				width++;
-				elem.style.width = width + '%';
-			}
-		}
-	}
-
 	//mega menu
-	$('.sp-megamenu-wrapper')
-		.parent()
-		.parent()
-		.css('position', 'static')
-		.parent()
-		.css('position', 'relative');
+	$('.sp-megamenu-wrapper').parent().parent().css('position', 'static').parent().css('position', 'relative');
 	$('.sp-menu-full').each(function () {
 		$(this).parent().addClass('menu-justify');
 	});
@@ -207,11 +202,7 @@ jQuery(function ($) {
 
 	$(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
 		event.preventDefault();
-		$(this)
-			.closest('.menu-parent')
-			.toggleClass('menu-parent-open')
-			.find('>.menu-child')
-			.slideToggle(400);
+		$(this).closest('.menu-parent').toggleClass('menu-parent-open').find('>.menu-child').slideToggle(400);
 	});
 
 	// Modal Menu
@@ -240,13 +231,13 @@ jQuery(function ($) {
 	// Tooltip
 	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-		return new bootstrap.Tooltip(tooltipTriggerEl)
+		return new bootstrap.Tooltip(tooltipTriggerEl);
 	});
 
 	// Popover
-	var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+	var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
 	var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-		return new bootstrap.Popover(popoverTriggerEl)
+		return new bootstrap.Popover(popoverTriggerEl);
 	});
 
 	// Article Ajax voting
@@ -279,9 +270,7 @@ jQuery(function ($) {
 				}
 
 				setTimeout(function () {
-					$parent
-						.find('.ratings-count')
-						.text('(' + data.rating_count + ')');
+					$parent.find('.ratings-count').text('(' + data.rating_count + ')');
 				}, 3000);
 			},
 		});
@@ -304,10 +293,7 @@ jQuery(function ($) {
 		var input = $('#' + label.attr('for'));
 
 		if (!input.prop('checked')) {
-			label
-				.closest('.btn-group')
-				.find('label')
-				.removeClass('active btn-success btn-danger btn-primary');
+			label.closest('.btn-group').find('label').removeClass('active btn-success btn-danger btn-primary');
 			if (input.val() === '') {
 				label.addClass('active btn-primary');
 			} else if (input.val() == 0) {
@@ -325,17 +311,11 @@ jQuery(function ($) {
 	});
 	$('.btn-group input[checked=checked]').each(function () {
 		if ($(this).val() == '') {
-			$('label[for=' + $(this).attr('id') + ']').addClass(
-				'active btn btn-primary'
-			);
+			$('label[for=' + $(this).attr('id') + ']').addClass('active btn btn-primary');
 		} else if ($(this).val() == 0) {
-			$('label[for=' + $(this).attr('id') + ']').addClass(
-				'active btn btn-danger'
-			);
+			$('label[for=' + $(this).attr('id') + ']').addClass('active btn btn-danger');
 		} else {
-			$('label[for=' + $(this).attr('id') + ']').addClass(
-				'active btn btn-success'
-			);
+			$('label[for=' + $(this).attr('id') + ']').addClass('active btn btn-success');
 		}
 		var parent = $(this).parents('#attrib-helix_ultimate_blog_options');
 		if (parent) {
@@ -352,10 +332,7 @@ jQuery(function ($) {
 			var data = $(this).attr('data-showon');
 			data = typeof data !== 'undefined' ? JSON.parse(data) : [];
 			if (data.length > 0) {
-				if (
-					typeof data[0].values !== 'undefined' &&
-					data[0].values.includes(value)
-				) {
+				if (typeof data[0].values !== 'undefined' && data[0].values.includes(value)) {
 					$(this).slideDown();
 				} else {
 					$(this).hide();

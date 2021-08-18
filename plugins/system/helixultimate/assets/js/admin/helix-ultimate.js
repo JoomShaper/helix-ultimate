@@ -13,6 +13,9 @@ jQuery(function ($) {
 	const storage = localStorage || window.localStorage;
 	let delayTimeout = null;
 
+	/** In case of chosen multi-select not working.  */
+	$('.form-select[multiple]').chosen({ width: '100%' });
+
 	/**
 	 * Positioning the toolbar of its previous location.
 	 */

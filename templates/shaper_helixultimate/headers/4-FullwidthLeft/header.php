@@ -69,7 +69,7 @@ $searchModule = Helper::getSearchModule();
 				<!-- Menu Right position -->
 				<div id="menu-right" class="col-auto d-flex align-items-center ms-auto">
 					<!-- Related Modules -->
-					<div class="d-none d-lg-flex header-modules">
+					<div class="d-none d-lg-flex header-modules align-items-center">
 							<?php if ($data->params->get('enable_search', 0)): ?>
 								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
 							<?php endif ?>

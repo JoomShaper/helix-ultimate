@@ -325,16 +325,13 @@ class Helper
                 }
             }
 
-			// echo '<xmp>';
-			// print_r($template);
-			// echo '</xmp>';
-
 			if (isset($template->template) && !empty($template->template))
 			{
 				if (!empty($template->params) && \is_string($template->params))
 				{
 					$template->params = new Registry($template->params);
 				}
+
 				/**
 				 * If params field is found empty in the database or cache then
 				 * read the default options.json file from the template and assign
@@ -377,7 +374,7 @@ class Helper
 		$doc = Factory::getDocument();
 		
 		$loadTemplateData = self::loadTemplateData();
-		$stickyOffset	= $loadTemplateData->params->get('sticky_offset');
+		$stickyOffset	= $loadTemplateData->params->get('sticky_offset', '100');
 
 		$data = array(
 			'breakpoints' => array(

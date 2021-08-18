@@ -87,52 +87,56 @@ extract($displayData);
 
 	$listStyle = $field->getAttribute('style');
 	$display = $field->getAttribute('display', '');
-	
 ?>
+
+<?php 
+
+
+ ?>
 <div class="<?php echo $group_class; ?>" <?php echo $attribs; ?>>
 	<div class="control-group">
-		<div class="control-group-inner <?php echo $display === 'inline' ? 'hu-inline-group' : ''; ?>">
+		<div class="control-group-inner<?php echo $display === 'inline' ? ' hu-inline-group' : ''; ?>">
 			<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
-				<div class="control-label">
+				<label class="control-label">
 					<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">
 						<?php echo $field->input; ?>
 					</div>
 
 					<?php if (!$field->getAttribute('hideLabel', false)): ?>
-						<?php echo $field->label; ?>
+						<?php echo Text::_($field->getAttribute('label')); ?>
 
 						<!-- if description exists then show the help icon -->
 						<?php if (!empty($description)): ?>
 							<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
 						<?php endif ?>
 					<?php endif; ?>
-				</div>
+				</label>
 			<?php else: ?>
 				<?php if (!$field->getAttribute('hideLabel', false)): ?>
 					<label class="control-label">
 						<?php echo Text::_($field->getAttribute('label')); ?>
-		
+
 						<!-- if description exists then show the help icon -->
 						<?php if (!empty($description)): ?>
 							<span class="hu-help-icon hu-ml-2 fas fa-info-circle"></span>
 						<?php endif ?>
 					</label>
-		
+
 					<!-- if description exists and type is not the checkbox then show the help text above of the input field. -->
-					<?php if (!empty($description) && $type !== 'checkbox'): ?>
+					<?php if (!empty($description) && $type !== 'checkbox' && $display !== 'inline'): ?>
 						<div class="hu-control-help"><?php echo $description; ?></div>
 					<?php endif; ?>
 				<?php endif; ?>
-		
+
 				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">
 					<?php echo $field->input; ?>
 				</div>
-		
-				<!-- if description exists and type is checkbox then show the help text next to the input field. -->
-				<?php if (!empty($description) && $type === 'checkbox'): ?>
-					<div class="hu-control-help"><?php echo $description; ?></div>
+
 				<?php endif; ?>
-			<?php endif ?>
-		</div>
+			</div>
+		<!-- if description exists and type is checkbox then show the help text next to the input field. -->
+		<?php if (!empty($description) && ($type === 'checkbox' || $display === 'inline')): ?>
+			<p class="hu-control-help"><?php echo $description; ?></p>
+		<?php endif; ?>
 	</div>
 </div>

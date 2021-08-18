@@ -125,6 +125,7 @@
 			default="1"
 			showon="predefined_header:1" />
 		
+
 		<field name="enable_login" 
 			type="checkbox" 
 			helixgroup="header" 
@@ -138,7 +139,8 @@
 			helixgroup="header" 
 			type="checkbox" 
 			default="1" 
-			label="HELIX_ULTIMATE_STICKY_HEADER_MD" />
+			label="HELIX_ULTIMATE_STICKY_HEADER_MD"
+		/>
 		<!-- <field name="sticky_header_sm" 
 			helixgroup="header" 
 			type="checkbox" 
@@ -157,6 +159,7 @@
 			default=""
 			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_STICKY_OFFSET" 
+			description="HELIX_ULTIMATE_HEADER_STICKY_OFFSET_DESC"
 			showon="sticky_header:1" />
 
 		<field name="favicon" 

@@ -1943,10 +1943,8 @@ select:focus::-ms-value {
 	font-size: 12px;
 	line-height: 1.4;
 	font-weight: 400;
-	color: rgba(var(--dark), 0.7);
-	/* background: #e0e5ec; */
+	color: rgba(var(--dark), 0.6);
 	margin-bottom: 15px;
-	/* padding: 5px 10px !important; */
 	margin-top: 5px;
 	border-radius: 5px;
 	display: none;
@@ -3036,10 +3034,14 @@ select:focus::-ms-value {
 	margin-top: 0;
 }
 
+.hu-option-group {
+	background: #fff;
+}
+
 .hu-option-group-title {
 	padding: 0 20px;
-	height: 60px;
-	line-height: 60px;
+	height: 40px;
+	line-height: 40px;
 	color: #6f737a;
 	font-size: 14px;
 	display: block;

@@ -50,6 +50,8 @@ if (is_array($attributes))
 }
 
 $cssFileExt = ($direction === 'rtl') ? '-rtl.css' : '.css';
+$localesPath = $localesPath ?? '';
+$helperPath = $helperPath ?? '';
 
 // The static assets for the calendar
 HTMLHelper::_('script', $localesPath, false, true, false, false, true);
@@ -58,7 +60,6 @@ HTMLHelper::_('script', 'system/fields/calendar.min.js', false, true, false, fal
 HTMLHelper::_('stylesheet', 'system/fields/calendar' . $cssFileExt, array(), true);
 
 // Redefine locale/helper assets to use correct path, and load calendar assets
-
 if (JVERSION >= 4)
 {
 	$document->getWebAssetManager()

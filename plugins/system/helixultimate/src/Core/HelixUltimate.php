@@ -568,6 +568,8 @@ class HelixUltimate
 				$this->add_row_styles($modified_row->settings, $id);
 				$sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
 
+				
+
 				switch ($sematic)
 				{
 					case "header":
@@ -596,7 +598,24 @@ class HelixUltimate
 
 				$layout_path  = JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 				$getLayout = new FileLayout('frontend.generate', $layout_path);
-				$output .= $getLayout->render($data);
+
+				/**
+				 * If a section is named as `header` that means the section is for
+				 * the page header or site menu header.
+				 * But if the predefined_header option is enabled then
+				 * render the predefined header instead of the header section.
+				 */
+				if ($sematic === 'header')
+				{
+					if (!$this->params->get('predefined_header'))
+					{
+						$output .= $getLayout->render($data);
+					}
+				}
+				else
+				{
+					$output .= $getLayout->render($data);
+				}
 			}
 		}
 
@@ -932,6 +951,7 @@ class HelixUltimate
 		// 	$this->compress_js($this->params->get('exclude_js'));
 		// }
 
+
 		if ($before_body = $this->params->get('before_body'))
 		{
 			echo $before_body . "\n";
@@ -987,7 +1007,7 @@ class HelixUltimate
 					$compiledCss = $compiler->compile('@import "' . $scss . '.scss"');
 					File::write($out, $compiledCss);
 
-					$cache_path = \JPATH_CACHE . '/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
+					$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 					$scssCache = array();
 					$scssCache['imports'] = $compiler->getParsedFiles();
 					$scssCache['vars'] = $compiler->getVariables();
@@ -1011,7 +1031,7 @@ class HelixUltimate
 	 */
 	public function needScssCompile($scss, $vars = array())
 	{
-		$cache_path = \JPATH_CACHE . '/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
+		$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
 
 		if (file_exists($cache_path))
 		{
@@ -1253,7 +1273,7 @@ class HelixUltimate
 
 		$all_scripts  = $this->doc->_scripts;
 		$all_declared_scripts = $this->doc->_script;
-		$cache_path   = JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
+		$cache_path   = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
 		$scripts      = array();
 		$root_url     = Uri::root(true);
 		$minifiedCode = '';
@@ -1664,7 +1684,7 @@ class HelixUltimate
 		$app             = Factory::getApplication();
 		$cachetime       = $app->get('cachetime', 15);
 		$all_stylesheets = $this->doc->_styleSheets;
-		$cache_path      = JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
+		$cache_path      = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
 		$stylesheets     = array();
 		$root_url        = Uri::root(true);
 		$minifiedCode    = '';
@@ -1840,11 +1860,7 @@ class HelixUltimate
 			 */
 			$this->doc->addStylesheet(
 				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css',
-				['version' => $versionHashes['lazy']],
-				[
-					'media' => 'none',
-					'onload' => "media='all'"
-				]
+				['version' => $versionHashes['lazy']]
 			);
 		}
 

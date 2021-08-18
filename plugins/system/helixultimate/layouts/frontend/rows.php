@@ -14,6 +14,7 @@ $layout_path_carea  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 $layout_path_module = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 
 $data = $displayData;
+$section_sematic = $data['sematic'];
 
 extract($displayData);
 ?>
@@ -32,6 +33,7 @@ extract($displayData);
 			}
 
 			$column->hasFeature = $loadFeature;
+			$column->section_sematic = $section_sematic;
 
 			if ($column->settings->column_type)
 			{

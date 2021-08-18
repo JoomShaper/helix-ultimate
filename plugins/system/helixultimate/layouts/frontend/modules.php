@@ -19,7 +19,9 @@ $params = Helper::loadTemplateData()->params;
 $isHeader = !empty($data->section_sematic) && $data->section_sematic === 'header';
 $hasOffcanvas = in_array($params->get('menu_type', ''), ['mega_offcanvas', 'offcanvas']);
 $offcanvasPosition = $params->get('offcanvas_position', 'right');
-$columnClass = $isHeader ? ' d-flex justify-content-end align-items-center' : '';
+$columnClass = $isHeader ? ' d-flex align-items-center' : '';
+
+$columnClass .= $isHeader && $options->name === 'menu' ? ' justify-content-end' : '';
 
 $output ='';
 $output .= '<'.$data->sematic.' id="sp-' . OutputFilter::stringURLSafe($options->name) . '" class="'. $options->className .'">';

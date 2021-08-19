@@ -17,6 +17,7 @@ web.config.txt
 vendor/
 
 # others
+/api
 /bin
 /cache
 /cli

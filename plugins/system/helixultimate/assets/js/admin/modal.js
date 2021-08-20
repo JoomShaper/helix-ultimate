@@ -46,7 +46,7 @@ jQuery(function ($) {
 		
 		megaMenuModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
 		megaMenuModal +=
-			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
+			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times" aria-hidden="true"></span></a>';
 		megaMenuModal += '</div>';
 
 		megaMenuModal += '<div class="hu-modal-inner">';
@@ -113,7 +113,7 @@ jQuery(function ($) {
 
 		frameModal += '<h4 class="hu-modal-header-title">' + title + '</h4>';
 		frameModal +=
-			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
+			'<a href="#" class="action-hu-modal-close"><span class="fas fa-times" aria-hidden="true"></span></a>';
 		frameModal += '</div>';
 
 		frameModal += '<div class="hu-modal-inner">';
@@ -173,26 +173,26 @@ jQuery(function ($) {
 
 		mediaModal += '<div class="hu-modal-actions-left">';
 		mediaModal +=
-			'<a href="#" class="hu-btn hu-btn-primary hu-modal-action-select hu-mr-2"><span class="fas fa-check"></span> Select</a>';
+			'<a href="#" class="hu-btn hu-btn-primary hu-modal-action-select hu-mr-2"><span class="fas fa-check" aria-hidden="true"></span> Select</a>';
 		mediaModal +=
-			'<a href="#" class="hu-btn hu-btn-secondary hu-modal-action-cancel hu-mr-2"><span class="fas fa-times"></span> Cancel</a>';
+			'<a href="#" class="hu-btn hu-btn-secondary hu-modal-action-cancel hu-mr-2"><span class="fas fa-times" aria-hidden="true"></span> Cancel</a>';
 		mediaModal +=
-			'<a href="#" class="hu-btn hu-btn-danger hu-btn-last hu-modal-action-delete"><span class="fas fa-minus-circle"></span> Delete</a>';
+			'<a href="#" class="hu-btn hu-btn-danger hu-btn-last hu-modal-action-delete"><span class="fas fa-minus-circle" aria-hidden="true"></span> Delete</a>';
 		mediaModal += '</div>';
 
 		mediaModal += '<div class="hu-modal-actions-right">';
 		mediaModal +=
-			'<a href="#" class="hu-btn hu-btn-primary hu-modal-action-upload hu-mr-2"><span class="fas fa-upload"></span> Upload</a>';
+			'<a href="#" class="hu-btn hu-btn-primary hu-modal-action-upload hu-mr-2"><span class="fas fa-upload" aria-hidden="true"></span> Upload</a>';
 		mediaModal +=
-			'<a href="#" class="hu-btn hu-btn-secondary hu-btn-last hu-modal-action-new-folder"><span class="fas fa-plus"></span> New Folder</a>';
+			'<a href="#" class="hu-btn hu-btn-secondary hu-btn-last hu-modal-action-new-folder"><span class="fas fa-plus" aria-hidden="true"></span> New Folder</a>';
 		mediaModal +=
-		'<a href="#" class="action-hu-modal-close"><span class="fas fa-times"></span></a>';
+		'<a href="#" class="action-hu-modal-close"><span class="fas fa-times" aria-hidden="true"></span></a>';
 		mediaModal += '</div>';
 		mediaModal += '</div>';
 
 		mediaModal += '<div class="hu-modal-inner">';
 		mediaModal +=
-			'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw"></span></div>';
+			'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw" aria-hidden="true"></span></div>';
 		mediaModal += '</div>';
 		mediaModal += '</div>';
 
@@ -228,7 +228,7 @@ jQuery(function ($) {
 			options.title +
 			'</span>';
 		optionsModal +=
-			'<a href="#" class="action-hu-options-modal-close"><span class="fas fa-times"></span></a>';
+			'<a href="#" class="action-hu-options-modal-close"><span class="fas fa-times" aria-hidden="true"></span></a>';
 		optionsModal += '</div>';
 
 		optionsModal += '<div class="hu-options-modal-inner">';

@@ -735,7 +735,7 @@ class HelixultimateMenu
 
 		if (isset($item->hasChild) && $item->hasChild)
 		{
-			// $linktitle = $linktitle . ' <span class="fas fa-angle-down"></span>';
+			// $linktitle = $linktitle . ' <span class="fas fa-angle-down" aria-hidden="true"></span>';
 		}
 
 		if ($item->getParams()->get('menu_show', 1) !== 0)

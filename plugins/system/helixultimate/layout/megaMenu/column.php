@@ -48,7 +48,7 @@ if (!empty($column->items))
 		
 		<div class="hu-megamenu-add-item-wrapper">
 			<button class="hu-megamenu-add-new-item" title="Add Module">
-				<span class="fas fa-plus-circle"></span>
+				<span class="fas fa-plus-circle" aria-hidden="true"></span>
 			</button>
 			<ul class="hu-megamenu-cell-options" style="display: none;">
 				<li><a href="#" class="hu-megamenu-cell-options-item" data-type="menu"><?php echo Text::_('Menu Item'); ?></a></li>

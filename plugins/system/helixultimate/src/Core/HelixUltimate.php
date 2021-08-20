@@ -1001,15 +1001,15 @@ class HelixUltimate
 
 					if (!empty($vars))
 					{
-						$compiler->setVariables($vars);
+						$compiler->addVariables($vars);
 					}
 
-					$compiledCss = $compiler->compile('@import "' . $scss . '.scss"');
-					File::write($out, $compiledCss);
+					$compiledCss = $compiler->compileString('@import "' . $scss . '.scss"');
+					File::write($out, $compiledCss->getCss());
 
 					$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 					$scssCache = array();
-					$scssCache['imports'] = $compiler->getParsedFiles();
+					$scssCache['imports'] = $compiledCss->getIncludedFiles();
 					$scssCache['vars'] = $compiler->getVariables();
 
 					File::write($cache_path, json_encode($scssCache));

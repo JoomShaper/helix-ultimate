@@ -28,7 +28,7 @@ ob_start();
 			<div class="col-auto">
 				<label class="visually-hidden" for="username"><?php echo Text::_('JGLOBAL_USERNAME'); ?></label>
 				<div class="input-group mb-2">
-					<div class="input-group-text"><span class="fas fa-user"></span></div>
+					<div class="input-group-text"><span class="fas fa-user" aria-hidden="true"></span></div>
 					<input name="username" type="text" class="form-control" id="username" placeholder="<?php echo Text::_('JGLOBAL_USERNAME'); ?>">
 				</div>
 			</div>
@@ -36,7 +36,7 @@ ob_start();
 			<div class="col-auto">
 				<label class="visually-hidden" for="password"><?php echo Text::_('JGLOBAL_PASSWORD'); ?></label>
 				<div class="input-group mb-2">
-					<div class="input-group-text"><span class="fas fa-key"></span></div>
+					<div class="input-group-text"><span class="fas fa-key" aria-hidden="true"></span></div>
 					<input name="password" type="password" class="form-control" id="password" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>">
 				</div>
 			</div>
@@ -45,7 +45,7 @@ ob_start();
 				<div class="col-auto">
 					<label class="visually-hidden" for="secretkey"><?php echo Text::_('JGLOBAL_SECRETKEY'); ?></label>
 					<div class="input-group mb-2">
-						<div class="input-group-text"><span class="fas fa-user-secret"></span></div>
+						<div class="input-group-text"><span class="fas fa-user-secret" aria-hidden="true"></span></div>
 						<input name="secretkey" type="text" class="form-control" id="secretkey" placeholder="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>">
 					</div>
 				</div>

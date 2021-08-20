@@ -79,7 +79,7 @@ jQuery(function ($) {
 				$('.hu-modal-actions-left').hide();
 				$('.hu-modal-actions-right').show();
 				$('.hu-modal-inner').html(
-					'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw"></span></div>'
+					'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw" aria-hidden="true"></span></div>'
 				);
 			},
 			success: function (response) {
@@ -115,7 +115,7 @@ jQuery(function ($) {
 			data: request,
 			beforeSend: function () {
 				$('.hu-modal-inner').html(
-					'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw"></span></div>'
+					'<div class="hu-modal-preloader"><span class="fas fa-circle-notch fa-pulse fa-spin fa-3x fa-fw" aria-hidden="true"></span></div>'
 				);
 			},
 			success: function (response) {
@@ -325,7 +325,7 @@ jQuery(function ($) {
 				progress += '<div class="hu-progress"><div class="hu-progress-bar"></div></div>';
 				progress += '</div>';
 				progress +=
-					'<div class="hu-media-label"><span class="fas fa-circle-notch fa-spin"></span> <span class="hu-media-upload-percentage"></span>Uploading...</div>';
+					'<div class="hu-media-label"><span class="fas fa-circle-notch fa-spin" aria-hidden="true"></span> <span class="hu-media-upload-percentage"></span>Uploading...</div>';
 				progress += '</li>';
 
 				$('#hu-media-manager').animate(

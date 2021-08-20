@@ -56,7 +56,7 @@ $modules = Helper::getModules();
     </div>
     <div class="hu-megamenu-add-row">
         <a href="#" class="hu-btn hu-btn-primary">
-            <span class="fas fa-plus-circle"></span>
+            <span class="fas fa-plus-circle" aria-hidden="true"></span>
             <?php echo Text::_('HELIX_ULTIMATE_MEGAMENU_ADD_NEW_ROW'); ?>
         </a>
     </div>

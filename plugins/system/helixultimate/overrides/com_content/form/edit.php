@@ -200,10 +200,10 @@ if (JVERSION >= 4) {
 		</fieldset>
 		<div class="btn-toolbar mt-2">
 				<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('article.save')">
-					<span class="fas fa-check"></span> <?php echo Text::_('JSAVE') ?>
+					<span class="fas fa-check" aria-hidden="true"></span> <?php echo Text::_('JSAVE') ?>
 				</button>
 				<button type="button" class="btn btn-secondary ms-2" onclick="Joomla.submitbutton('article.cancel')">
-					<span class="fas fa-times"></span> <?php echo Text::_('JCANCEL') ?>
+					<span class="fas fa-times" aria-hidden="true"></span> <?php echo Text::_('JCANCEL') ?>
 				</button>
 			<?php if ($params->get('save_history', 0) && $this->item->id) : ?>
 				<?php echo $this->form->getInput('contenthistory'); ?>

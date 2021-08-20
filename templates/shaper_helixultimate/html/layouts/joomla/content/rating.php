@@ -33,6 +33,6 @@ if($rating_count == '') {
 		}
 		?>
 	</div>
-	<span class="fas fa-circle-notch fa-spin" style="display: none;"></span>
+	<span class="fas fa-circle-notch fa-spin" aria-hidden="true" style="display: none;"></span>
 	<span class="ratings-count">(<?php echo $rating_count; ?>)</span>
 </div>

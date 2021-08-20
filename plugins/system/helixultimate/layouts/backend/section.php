@@ -155,7 +155,7 @@ else
 
 $output .= '</div>';
 $output .= '</div>';
-$output .= '<a class="hu-add-row hu-btn hu-btn-primary" href="#"><i class="fas fa-plus"></i></a>';
+$output .= '<a class="hu-add-row hu-btn hu-btn-primary" href="#"><i class="fas fa-plus" aria-hidden="true"></i></a>';
 $output .= '</div>';
 $output .= '</div>';
 

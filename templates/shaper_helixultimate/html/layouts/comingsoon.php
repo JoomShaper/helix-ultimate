@@ -144,43 +144,43 @@ $site_title = $app->get('sitename');
 
 					if( $facebook )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $facebook .'"><i class="fab fa-facebook"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $facebook .'"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>';
 					}
 					if( $twitter )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $twitter .'"><i class="fab fa-twitter"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $twitter .'"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>';
 					}
 					if( $pinterest )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $pinterest .'"><i class="fab fa-pinterest"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $pinterest .'"><i class="fab fa-pinterest" aria-hidden="true"></i></a></li>';
 					}
 					if( $youtube )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $youtube .'"><i class="fab fa-youtube"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $youtube .'"><i class="fab fa-youtube" aria-hidden="true"></i></a></li>';
 					}
 					if( $linkedin )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $linkedin .'"><i class="fab fa-linkedin"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $linkedin .'"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>';
 					}
 					if( $dribbble )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $dribbble .'"><i class="fab fa-dribbble"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $dribbble .'"><i class="fab fa-dribbble" aria-hidden="true"></i></a></li>';
 					}
 					if( $behance )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $behance .'"><i class="fab fa-behance"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $behance .'"><i class="fab fa-behance" aria-hidden="true"></i></a></li>';
 					}
 					if( $flickr )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $flickr .'"><i class="fab fa-flickr"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $flickr .'"><i class="fab fa-flickr" aria-hidden="true"></i></a></li>';
 					}
 					if( $vk )
 					{
-						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $vk .'"><i class="fab fa-vk"></i></a></li>';
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $vk .'"><i class="fab fa-vk" aria-hidden="true"></i></a></li>';
 					}
 					if( $skype )
 					{
-						$social_output .= '<li><a href="skype:'. $skype .'?chat"><i class="fab fa-skype"></i></a></li>';
+						$social_output .= '<li><a href="skype:'. $skype .'?chat"><i class="fab fa-skype" aria-hidden="true"></i></a></li>';
 					}
 
 					$social_output .= '</ul>';

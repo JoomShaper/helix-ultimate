@@ -3,6 +3,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 
 $item = $displayData;
+$item->enableOpenGraph = false;
 $params = $item->params;
 $info = $params->get('info_block_position', 0);
 $attribs = json_decode($item->attribs);

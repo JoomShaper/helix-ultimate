@@ -17,8 +17,7 @@ $attribs = json_decode($displayData->attribs);
 
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $tplParams = $template->params;
-
-$og = $tplParams->get('og', 0, 'INT');
+$og = isset($displayData->enableOpenGraph) ? $displayData->enableOpenGraph : $tplParams->get('og', 0);
 $blog_image = $tplParams->get('blog_details_image', 'large');
 $full_image = '';
 

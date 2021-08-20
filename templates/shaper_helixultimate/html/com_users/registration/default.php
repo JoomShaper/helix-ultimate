@@ -17,7 +17,7 @@ HTMLHelper::_('behavior.formvalidator');
 ?>
 <div class="registration<?php echo $this->pageclass_sfx; ?>">
 	<div class="row justify-content-center">
-		<div class="col-md-9 col-lg-6">
+		<div class="col-lg-9 col-xl-6">
 			<?php if ($this->params->get('show_page_heading')) : ?>
 				<div class="page-header">
 					<h1><?php echo $this->escape($this->params->get('page_heading')); ?></h1>
@@ -39,9 +39,9 @@ HTMLHelper::_('behavior.formvalidator');
 									<?php else : ?>
 										<?php $fieldName = $field->getAttribute('name'); ?>
 										<?php if(($fieldName == 'password1') || ($fieldName == 'password2') || ($fieldName == 'email1') || ($fieldName == 'email2')) : ?>
-											<div class="col-md-6">
+											<div class="col-lg-6">
 										<?php else: ?>
-											<div class="col-lg-12">
+											<div class="col-xl-12">
 										<?php endif; ?>
 										<div class="mb-3">
 											<?php echo $field->label; ?>

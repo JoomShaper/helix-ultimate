@@ -13,7 +13,7 @@ extract($displayData);
 
 <?php if(isset($attribs->helix_ultimate_audio) && $attribs->helix_ultimate_audio) : ?>
 	<div class="article-featured-audio">
-		<div class="embed-responsive embed-responsive-16by9">
+		<div class="ratio ratio-16x9">
 			<?php echo $attribs->helix_ultimate_audio; ?>
 		</div>
 	</div>

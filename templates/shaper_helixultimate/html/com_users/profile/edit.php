@@ -24,7 +24,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 ?>
 <div class="profile-edit<?php echo $this->pageclass_sfx; ?>">
 	<div class="row justify-content-center">
-		<div class="col-md-10 col-lg-7">
+		<div class="col-lg-10 col-xl-7">
 			<?php if ($this->params->get('show_page_heading')) : ?>
 				<div class="page-header">
 					<h1><?php echo $this->escape($this->params->get('page_heading')); ?></h1>
@@ -71,9 +71,9 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 										<?php echo $field->input; ?>
 									<?php else : ?>
 										<?php if(($field->fieldname == 'name') || ($field->fieldname == 'username')) : ?>
-											<div class="col-md-12">
+											<div class="col-lg-12">
 											<?php else: ?>
-												<div class="col-md-6">
+												<div class="col-lg-6">
 												<?php endif; ?>
 												<div class="mb-3">
 													<?php echo $field->label; ?>
@@ -124,7 +124,7 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 							</div>
 						<?php else : ?>
 							<?php foreach ($this->otpConfig->otep as $otep) : ?>
-								<span class="col-md-3">
+								<span class="col-lg-3">
 									<?php echo substr($otep, 0, 4); ?>-<?php echo substr($otep, 4, 4); ?>-<?php echo substr($otep, 8, 4); ?>-<?php echo substr($otep, 12, 4); ?>
 								</span>
 							<?php endforeach; ?>

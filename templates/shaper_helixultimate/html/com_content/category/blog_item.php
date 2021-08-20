@@ -15,6 +15,8 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Component\Content\Administrator\Extension\ContentComponent;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 // Create a shortcut for params.
 $params = $this->item->params;
@@ -30,6 +32,10 @@ $tmpl_params = $template->params;
 // Check if associations are implemented. If they are, define the parameter.
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 
+$currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
+$isUnpublished = ($this->item->state == ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
+	|| ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
+
 ?>
 
 <?php if($article_format == 'gallery') : ?>
@@ -42,9 +48,17 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 	<?php echo LayoutHelper::render('joomla.content.intro_image', $this->item); ?>
 <?php endif; ?>
 
+<?php
+	$bodyClass = '';
+	if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(Factory::getDate())
+		|| ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()))
+	{
+		$bodyClass = '';
+	}
+?>
+
 <div class="article-body">
-	<?php if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(Factory::getDate())
-		|| ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate())) : ?>
+	<?php if ($isUnpublished) : ?>
 		<div class="system-unpublished">
 	<?php endif; ?>
 
@@ -92,9 +106,8 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 
 	<?php endif; ?>
 
-	<?php if ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(Factory::getDate())
-		|| ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate())) : ?>
-	</div>
+	<?php if ($isUnpublished) : ?>
+		</div>
 	<?php endif; ?>
 </div>
 

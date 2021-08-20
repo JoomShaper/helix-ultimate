@@ -15,7 +15,7 @@ $tmpl_params = $template->params;
 		<div class="article-list related-article-list">
 			<div class="row">
 				<?php foreach( $articles as $item ): ?> 
-					<div class="col-md-<?php echo round(12 / $mainItem->params->get('num_columns')); ?>">            
+					<div class="col-lg-<?php echo round(12 / $mainItem->params->get('num_columns')); ?>">            
 						<?php echo LayoutHelper::render('joomla.content.related_article', $item); ?>
 					</div>
 				<?php endforeach; ?>

@@ -35,8 +35,8 @@ if(isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video)
 	if($video_src) {
 		?>
 		<div class="article-featured-video">
-			<div class="embed-responsive embed-responsive-16by9">
-				<iframe class="embed-responsive-item" src="<?php echo $video_src; ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			<div class="ratio ratio-16x9">
+				<iframe src="<?php echo $video_src; ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 			</div>
 		</div>
 		<?php

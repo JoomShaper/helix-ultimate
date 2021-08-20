@@ -17,7 +17,7 @@ HTMLHelper::_('behavior.formvalidator');
 ?>
 <div class="remind<?php echo $this->pageclass_sfx; ?>">
 	<div class="row justify-content-center">
-		<div class="col-md-4">
+		<div class="col-lg-4">
 			<?php if ($this->params->get('show_page_heading')) : ?>
 				<div class="page-header">
 					<h1>

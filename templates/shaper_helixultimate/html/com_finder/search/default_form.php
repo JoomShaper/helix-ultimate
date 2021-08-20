@@ -96,7 +96,8 @@ if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosugge
 				<?php if ($this->params->get('show_advanced', 1)) : ?>
 					<a href="#advancedSearch" data-bs-toggle="collapse" class="btn btn-secondary" aria-hidden="true">
 						<span class="fas fa-search-plus" aria-hidden="true"></span>
-                        <?php echo Text::_('COM_FINDER_ADVANCED_SEARCH_TOGGLE'); ?></a>
+                        <?php echo Text::_('COM_FINDER_ADVANCED_SEARCH_TOGGLE'); ?>
+					</a>
 				<?php endif; ?>
 				</span>
 			</div>

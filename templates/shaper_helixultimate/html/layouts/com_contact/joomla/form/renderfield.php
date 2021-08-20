@@ -41,9 +41,6 @@ $typeOfSpacer  = (strpos($label, 'spacer-lbl') !== false);
 <div class="mb-3<?php echo $class; ?>"<?php echo $rel; ?>>
 	<?php if (empty($options['hiddenLabel'])) : ?>
 		<?php echo $label; ?>
-		<?php if (!$required && !$typeOfSpacer) : ?>
-			<span class="optional"><?php echo Text::_('COM_CONTACT_OPTIONAL'); ?></span>
-		<?php endif; ?>
 	<?php endif; ?>
 	<?php echo $input; ?>
 </div>

@@ -84,14 +84,14 @@ class JFormFieldHelixgallery extends FormField
 					$src = Uri::root(true) . '/' . dirname($value) . '/' . File::stripExt($basename) . '_small.' . File::getExt($basename);
 				}
 
-				$output .= '<li class="hu-gallery-item" data-src="' . $data_src . '"><a href="#" class="btn btn-mini btn-danger btn-hu-remove-gallery-image"><span class="fas fa-times"></span></a><img src="' . $src . '" alt=""></li>';
+				$output .= '<li class="hu-gallery-item" data-src="' . $data_src . '"><a href="#" class="btn btn-mini btn-danger btn-hu-remove-gallery-image"><span class="fas fa-times" aria-hidden="true"></span></a><img src="' . $src . '" alt=""></li>';
 			}
 		}
 
 		$output .= '</ul>';
 
 		$output .= '<input type="file" id="hu-gallery-item-upload" accept="image/*" multiple="multiple" style="display:none;">';
-		$output .= '<a class="btn btn-default btn-secondary btn-hu-gallery-item-upload" href="#"><i class="fas fa-plus"></i> ' . Text::_('HELIX_ULTIMATE_UPLOAD_IMAGES') . '</a>';
+		$output .= '<a class="btn btn-default btn-secondary btn-hu-gallery-item-upload" href="#"><i class="fas fa-plus" aria-hidden="true"></i> ' . Text::_('HELIX_ULTIMATE_UPLOAD_IMAGES') . '</a>';
 
 		$output .= '<input type="hidden" name="' . $this->name . '" data-name="' . $this->element['name'] . '_images" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8')
 				. '"  class="form-field-hu-gallery">';

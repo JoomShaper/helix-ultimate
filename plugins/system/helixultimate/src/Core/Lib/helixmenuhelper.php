@@ -167,8 +167,8 @@ if ($unique_menu_items)
 					<?php foreach ($layout as $key => $row) { ?>
 						<div class="hu-megamenu-row">
 							<div class="hu-megamenu-row-actions clearfix">
-								<div class="hu-action-move-row"> <span class="fas fa-sort"></span> Row</div>
-								<a href="#" class="hu-action-detele-row"><span class="fas fa-trash"></span></a>
+								<div class="hu-action-move-row"> <span class="fas fa-sort" aria-hidden="true"></span> Row</div>
+								<a href="#" class="hu-action-detele-row"><span class="fas fa-trash" aria-hidden="true"></span></a>
 							</div>
 
 							<div class="hu-row">
@@ -180,7 +180,7 @@ if ($unique_menu_items)
 											<div class="hu-megamenu-column">
 
 												<div class="hu-megamenu-column-actions">
-													<span class="hu-action-move-column"><span class="fas fa-arrows-alt"></span> Column</span>
+													<span class="hu-action-move-column"><span class="fas fa-arrows-alt" aria-hidden="true"></span> Column</span>
 												</div>
 
 												<?php
@@ -193,7 +193,7 @@ if ($unique_menu_items)
 															if ($item->type === 'module')
 															{
 																$modules = $this->getModuleNameById($item->item_id);
-																$title = $modules->title . '<a href="javascript:;" class="hu-megamenu-remove-module"><span class="fas fa-times"></span></a>';
+																$title = $modules->title . '<a href="javascript:;" class="hu-megamenu-remove-module"><span class="fas fa-times" aria-hidden="true"></span></a>';
 															}
 															elseif ($item->type === 'menu_item')
 															{
@@ -243,7 +243,7 @@ if ($unique_menu_items)
 		</div>
 
 		<div class="hu-megamenu-add-row hu-megamenu-field-control clearfix<?php echo ($enable_megamenu != 1)?' hide-menu-builder':''?>">
-			<button id="hu-choose-megamenu-layout" class="hu-choose-megamenu-layout"><span class="fas fa-plus-circle"></span> Add New Row</button>
+			<button id="hu-choose-megamenu-layout" class="hu-choose-megamenu-layout"><span class="fas fa-plus-circle" aria-hidden="true"></span> Add New Row</button>
 			<div class="hu-megamenu-modal" id="hu-megamenu-layout-modal" style="display: none;" >
 				<div class="hu-row">
 
@@ -271,10 +271,10 @@ if ($unique_menu_items)
 	<?php if ((int) $menu_item->parent_id === 1 && $module_list) : ?>
 		<div class="hu-col-sm-3">
 			<div class="hu-megamenu-sidebar <?php echo ($enable_megamenu != 1) ? ' hide-menu-builder' : ''; ?>">
-				<h3><span class="fas fa-bars"></span> <?php echo Text::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h3>
+				<h3><span class="fas fa-bars" aria-hidden="true"></span> <?php echo Text::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h3>
 				<div class="hu-megamenu-module-list">
 					<?php foreach ($module_list as $module) : ?>
-						<div class="hu-megamenu-draggable-module" data-mod_id="<?php echo $module->id; ?>" data-type="module"><span class="fas fa-arrows-alt"></span> <?php echo $module->title; ?></div>
+						<div class="hu-megamenu-draggable-module" data-mod_id="<?php echo $module->id; ?>" data-type="module"><span class="fas fa-arrows-alt" aria-hidden="true"></span> <?php echo $module->title; ?></div>
 					<?php endforeach; ?>
 				</div>
 			</div>

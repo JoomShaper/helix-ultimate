@@ -98,7 +98,7 @@ if (JVERSION >= 4)
 					data-only-months-nav="<?php echo $singleheader; ?>"
 					<?php echo !empty($minYear) ? 'data-min-year="' . $minYear . '"' : ''; ?>
 					<?php echo !empty($maxYear) ? 'data-max-year="' . $maxYear . '"' : ''; ?>
-				><span class="fas fa-calendar"></span></button>
+				><span class="fas fa-calendar" aria-hidden="true"></span></button>
 		</span>
 		<?php if (!$readonly && !$disabled) : ?>
 	</div>

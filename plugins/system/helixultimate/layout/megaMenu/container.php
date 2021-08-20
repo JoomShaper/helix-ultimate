@@ -33,12 +33,12 @@ if (!class_exists('MegaFields'))
         <div class="hu-megamenu-popover-heading">
             <h5 class="title"><?php echo Text::_('HELIX_ULTIMATE_MENU_MODULE_LIST'); ?></h5>
             <button class="hu-btn hu-btn-link hu-megamenu-popover-close">
-                <span class="fas fa-times"></span>
+                <span class="fas fa-times" aria-hidden="true"></span>
             </button>
         </div>
         <div class="hu-megamenu-popover-body">
             <div class="hu-megamenu-search-wrapper">
-                <span class="fas fa-search"></span>
+                <span class="fas fa-search" aria-hidden="true"></span>
                 <input type="search" class="hu-input hu-megamenu-module-search" placeholder="<?php echo Text::_('HELIX_ULTIMATE_SEARCH_MODULE_HINT'); ?>" />
             </div>
 

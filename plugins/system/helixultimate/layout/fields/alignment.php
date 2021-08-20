@@ -51,10 +51,10 @@ class HelixultimateFieldAlignment
 		$output .= '<div class="controls">';
 		$output .= '<div class="hu-switcher hu-switcher-inline hu-switcher-style-tab hu-switcher-style-tab-sm">';
 		$output 	.= '<div class="hu-action-group">';
-		$output 		.= '<span data-value="left" class="hu-switcher-action ' . ($value === 'left' ? 'active' : '') . '" role="button"><span class="fas fa-align-left"></span></span>';
-		$output 		.= '<span data-value="center" class="hu-switcher-action ' . ($value === 'center' ? 'active' : '') . '" role="button"><span class="fas fa-align-center"></span></span>';
-		$output 		.= '<span data-value="right" class="hu-switcher-action ' . ($value === 'right' ? 'active' : '') . '" role="button"><span class="fas fa-align-right"></span></span>';
-		$output 		.= '<span data-value="justify" class="hu-switcher-action ' . ($value === 'justify' ? 'active' : '') . '" role="button"><span class="fas fa-align-justify"></span></span>';
+		$output 		.= '<span data-value="left" class="hu-switcher-action ' . ($value === 'left' ? 'active' : '') . '" role="button"><span class="fas fa-align-left" aria-hidden="true"></span></span>';
+		$output 		.= '<span data-value="center" class="hu-switcher-action ' . ($value === 'center' ? 'active' : '') . '" role="button"><span class="fas fa-align-center" aria-hidden="true"></span></span>';
+		$output 		.= '<span data-value="right" class="hu-switcher-action ' . ($value === 'right' ? 'active' : '') . '" role="button"><span class="fas fa-align-right" aria-hidden="true"></span></span>';
+		$output 		.= '<span data-value="justify" class="hu-switcher-action ' . ($value === 'justify' ? 'active' : '') . '" role="button"><span class="fas fa-align-justify" aria-hidden="true"></span></span>';
 		$output 	.= '</div>';
 		$output .= '</div>';
 		$output .= '</div>';

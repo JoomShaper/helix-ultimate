@@ -220,10 +220,10 @@ jQuery(function ($) {
 		layout_row_tpl +=
 			'<div class="hu-megamenu-row-actions clearfix">';
 		layout_row_tpl += '<div class="hu-action-move-row">';
-		layout_row_tpl += '<span class="fas fa-sort"></span> Row';
+		layout_row_tpl += '<span class="fas fa-sort" aria-hidden="true"></span> Row';
 		layout_row_tpl += '</div>';
 		layout_row_tpl +=
-			'<a href="#" class="hu-action-detele-row"><span class="far fa-trash-alt"></span></a>';
+			'<a href="#" class="hu-action-detele-row"><span class="far fa-trash-alt" aria-hidden="true"></span></a>';
 		layout_row_tpl += '</div>';
 		layout_row_tpl += '<div class="hu-row">';
 
@@ -233,7 +233,7 @@ jQuery(function ($) {
 		layout_col_tpl +=
 			'<div class="hu-megamenu-column-actions">';
 		layout_col_tpl +=
-			'<span class="hu-action-move-column"><span class="fas fa-arrows-alt"></span> Column</span>';
+			'<span class="hu-action-move-column"><span class="fas fa-arrows-alt" aria-hidden="true"></span> Column</span>';
 		layout_col_tpl += '</div>';
 		layout_col_tpl +=
 			'<div class="hu-megamenu-item-list"></div>';
@@ -292,7 +292,7 @@ jQuery(function ($) {
 				update: function (e, ui) {
 					var module_title = ui.item.text();
 					var mod_delete_button =
-						'<a href="javascript:;" class="hu-megamenu-remove-module"><span class="fas fa-times"></span></a>';
+						'<a href="javascript:;" class="hu-megamenu-remove-module"><span class="fas fa-times" aria-hidden="true"></span></a>';
 					var module_inner =
 						'<div class="hu-megamenu-item-module"><div class="hu-megamenu-item-module-title">' +
 						mod_delete_button +
@@ -307,7 +307,7 @@ jQuery(function ($) {
 					ui.item.clone().insertAfter(
 						ui.item
 							.html(
-								'<span class="fas fa-arrows-alt"></span> ' +
+								'<span class="fas fa-arrows-alt" aria-hidden="true"></span> ' +
 									module_title
 							)
 							.removeAttr('class')

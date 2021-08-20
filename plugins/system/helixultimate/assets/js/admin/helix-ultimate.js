@@ -901,7 +901,7 @@ jQuery(function ($) {
 				helixUltimateStyleId,
 			data: {},
 			beforeSend: function () {
-				self && self.append('<span class="fas fa-circle-notch fa-spin"></span>');
+				self && self.append('<span class="fas fa-circle-notch fa-spin" aria-hidden="true"></span>');
 			},
 			success: function (response) {
 				var data = $.parseJSON(response);

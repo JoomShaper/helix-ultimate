@@ -86,6 +86,16 @@ class  PlgSystemHelixultimate extends JPlugin
 				HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
 			}
 		}
+
+		$input = $this->app->input;
+
+		if ($this->app->isClient('administrator') && $input->get('helix') === 'ultimate')
+		{
+			if (empty($template->params->get('enable_fontawesome')))
+			{
+				$this->app->enqueueMessage('We\'ve detected that, the fontawesome');
+			}
+		}
 	}
 
 	/**

@@ -22,6 +22,6 @@ $badgeText = $cell->type === 'module' ? 'Module' : 'Menu';
 	<span><?php echo $builder->getTitle($cell); ?></span>
 	<small class="hu-badge hu-badge-info hu-megamenu-badge"><?php echo $badgeText; ?></small>
 	<button class="hu-btn hu-btn-link hu-megamenu-cell-remove">
-		<span class="fas fa-times-circle"></span>
+		<span class="fas fa-times-circle" aria-hidden="true"></span>
 	</button>
 </div>

@@ -66,11 +66,11 @@ $sidebar = new Settings;
 			</div>
 
 			<div class="hu-done-msg">
-				<span class="fas fa-check-circle" style="color: green;"></span> <span class="hu-response-msg"><span class="hu-msg"><?php echo Text::_('HELIX_ULTIMATE_TOPBAR_MSG_DRAFTED'); ?></span></span>
+				<span class="fas fa-check-circle" aria-hidden="true" style="color: green;"></span> <span class="hu-response-msg"><span class="hu-msg"><?php echo Text::_('HELIX_ULTIMATE_TOPBAR_MSG_DRAFTED'); ?></span></span>
 			</div>
 
 			<button type="button" role="button" class="hu-btn hu-btn-reset action-reset-drafts">
-				<span class="fas fa-history"></span> <?php echo Text::_('HELIX_ULTIMATE_TOPBAR_MSG_RESET_DRAFT'); ?>
+				<span class="fas fa-history" aria-hidden="true"></span> <?php echo Text::_('HELIX_ULTIMATE_TOPBAR_MSG_RESET_DRAFT'); ?>
 			</button>
 		</div>
 

@@ -131,7 +131,7 @@ jQuery(function ($) {
 			class: `hu-modal-small edit-preset-modal modal-${name}`,
 			applyBtnClass: 'hu-save-preset',
 			footerButtons: [
-				`<a href="#" class="hu-btn hu-btn-secondary helix-preset-reset hu-ml-auto"><span class="fas fa-sync-alt"></span> Reset to Default</a>`,
+				`<a href="#" class="hu-btn hu-btn-secondary helix-preset-reset hu-ml-auto"><span class="fas fa-sync-alt" aria-hidden="true"></span> Reset to Default</a>`,
 			],
 		});
 

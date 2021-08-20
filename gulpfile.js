@@ -11,7 +11,7 @@ const zip = require('gulp-zip');
 const config = {
 	srcPath: path.resolve(__dirname),
 	buildPath: path.resolve(__dirname, './package/'),
-	packageName: 'Helix_Ultimate_2.0.0.zip',
+	packageName: 'Helix_Ultimate_2.0.1.zip',
 	templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css',
 	pluginFileExtensions: function () {
 		return this.templateFileExtensions + ', ini';

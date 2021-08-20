@@ -239,6 +239,7 @@ class HelixUltimate
 	 */
 	public function head()
 	{
+		$option = $this->input->get('option', '', 'STRING');
 		$view 	= $this->input->get('view', '', 'STRING');
 		$layout = $this->input->get('layout', 'default', 'STRING');
 

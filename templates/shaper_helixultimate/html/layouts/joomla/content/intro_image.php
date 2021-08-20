@@ -50,11 +50,11 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 <?php if($intro_image) : ?>
 	<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
 		<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
-		<?php endif; ?>
-			<div class="article-intro-image">
-				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>">
-			</div>
-		<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
+	<?php endif; ?>
+		<div class="article-intro-image">
+			<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>">
+		</div>
+	<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
 		</a>
 	<?php endif; ?>
 <?php else: ?>

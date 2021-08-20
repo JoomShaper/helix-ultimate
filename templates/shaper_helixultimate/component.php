@@ -72,7 +72,7 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
 			<?php if(file_exists(\JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
 				<link href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" rel="stylesheet">
 			<?php else: ?>
-				<link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
+				<link href="<?php echo URI::root(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
 			<?php endif; ?>
 
 			<link rel="stylesheet" href="<?php echo $this->baseurl; ?>/templates/<?php echo $this->template; ?>/css/template.css" type="text/css" />
@@ -91,9 +91,11 @@ $body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STR
 
 	<?php 
 	$joomlaVersion = 'joomla3';
-	if (JVERSION >= 4){
+	if (JVERSION >= 4)
+	{
 		$joomlaVersion = "joomla4";
-	} ?>
+	}
+	?>
 
 	<body class="contentpane <?php echo $joomlaVersion . ' ' . $body_class; ?>">
 		<jdoc:include type="component" />

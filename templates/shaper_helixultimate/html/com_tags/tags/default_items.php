@@ -58,115 +58,118 @@ Factory::getDocument()->addScriptDeclaration("
 ");
 
 ?>
-
-<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
-	<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
-		<fieldset class="filters d-flex justify-content-between mb-3">
-			<?php if ($this->params->get('filter_field')) : ?>
-				<div class="input-group">
-					<label class="filter-search-lbl visually-hidden" for="filter-search">
-						<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL') . '&#160;'; ?>
-					</label>
-					<input type="text" name="filter-search" id="filter-search" value="<?php echo $this->escape($this->state->get('list.filter')); ?>" class="form-control" onchange="document.adminForm.submit();" title="<?php echo Text::_('COM_TAGS_FILTER_SEARCH_DESC'); ?>" placeholder="<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>">
-					<span class="input-group-btn">
-						<button type="button" name="filter-search-button" title="<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>" onclick="document.adminForm.submit();" class="btn btn-secondary">
-							<span class="fas fa-search" aria-hidden="true"></span>
-						</button>
-						<button type="reset" name="filter-clear-button" title="<?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?>" class="btn btn-secondary" onclick="resetFilter(); document.adminForm.submit();">
-							<span class="fas fa-times" aria-hidden="true"></span>
-						</button>
-					</span>
-				</div>
-			<?php endif; ?>
-			<?php if ($this->params->get('show_pagination_limit')) : ?>
-				<div class="btn-group float-end">
-					<label for="limit" class="visually-hidden">
-						<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
-					</label>
-					<?php echo $this->pagination->getLimitBox(); ?>
-				</div>
-			<?php endif; ?>
-
-			<input type="hidden" name="filter_order" value="">
-			<input type="hidden" name="filter_order_Dir" value="">
-			<input type="hidden" name="limitstart" value="">
-			<input type="hidden" name="task" value="">
-		</fieldset>
-	<?php endif; ?>
-
-	<?php if ($this->items == false || $n === 0) : ?>
-		<p><?php echo Text::_('COM_TAGS_NO_TAGS'); ?></p>
-	<?php else : ?>
-		<?php foreach ($this->items as $i => $item) : ?>
-
-			<?php if ($n === 1 || $i === 0 || $bscolumns === 1 || $i % $bscolumns === 0) : ?>
-				<ul class="category list-group">
-			<?php endif; ?>
-
-			<li class="list-group-item list-group-item-action">
-				<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
-					<h3 class="mb-0">
-						<?php if (JVERSION < 4): ?>
-							<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
-								<?php echo $this->escape($item->title); ?>
-							</a>
-						<?php else: ?>
-							<a href="<?php echo Route::_(Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
-								<?php echo $this->escape($item->title); ?>
-							</a>
-						<?php endif ?>
-					</h3>
+<div class="mb-4">
+	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
+		<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
+			<fieldset class="filters d-flex justify-content-between mb-3">
+				<?php if ($this->params->get('filter_field')) : ?>
+					<div class="btn-group">
+						<label class="filter-search-lbl visually-hidden" for="filter-search">
+							<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>
+						</label>
+						<input
+							type="text"
+							name="filter-search"
+							id="filter-search"
+							value="<?php echo $this->escape($this->state->get('list.filter')); ?>"
+							class="inputbox" onchange="document.adminForm.submit();"
+							placeholder="<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>"
+						>
+						<button type="submit" name="filter-search-button" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button>
+						<button type="reset" name="filter-clear-button" class="btn btn-secondary"><?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>
+					</div>
 				<?php endif; ?>
 
-				<?php if ($this->params->get('all_tags_show_tag_image') && !empty($item->images)) : ?>
-					<?php $images  = json_decode($item->images); ?>
-					<span class="tag-body">
-						<?php if (!empty($images->image_intro)) : ?>
-							<?php $imgfloat = empty($images->float_intro) ? $this->params->get('float_intro') : $images->float_intro; ?>
-							<div class="float-<?php echo htmlspecialchars($imgfloat); ?> item-image">
-								<img
-									<?php if ($images->image_intro_caption) : ?>
-										<?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?>
-									<?php endif; ?>
-									src="<?php echo $images->image_intro; ?>"
-									alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>">
-							</div>
-						<?php endif; ?>
-					</span>
+				<?php if ($this->params->get('show_pagination_limit')) : ?>
+					<div class="btn-group float-end">
+						<label for="limit" class="visually-hidden">
+							<?php echo Text::_('JGLOBAL_DISPLAY_NUM'); ?>
+						</label>
+						<?php echo $this->pagination->getLimitBox(); ?>
+					</div>
 				<?php endif; ?>
 
-				<div class="caption">
-					<?php if ($this->params->get('all_tags_show_tag_description', 1)) : ?>
-						<span class="tag-body">
-							<?php echo HTMLHelper::_('string.truncate', $item->description, $this->params->get('all_tags_tag_maximum_characters')); ?>
-						</span>
-					<?php endif; ?>
-					<?php if ($this->params->get('all_tags_show_tag_hits')) : ?>
-						<span class="list-hits badge bg-info">
-							<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $item->hits); ?>
-						</span>
-					<?php endif; ?>
-				</div>
-			</li>
-
-			<?php if (($i === 0 && $n === 1) || $i === $n - 1 || $bscolumns === 1 || (($i + 1) % $bscolumns === 0)) : ?>
-				</ul>
-			<?php endif; ?>
-
-		<?php endforeach; ?>
-	<?php endif; ?>
-
-	<?php // Add pagination links ?>
-	<?php if (!empty($this->items)) : ?>
-		<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-			<div class="w-100">
-				<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-					<p class="counter float-end pt-3 pe-2">
-						<?php echo $this->pagination->getPagesCounter(); ?>
-					</p>
-				<?php endif; ?>
-				<?php echo $this->pagination->getPagesLinks(); ?>
-			</div>
+				<input type="hidden" name="filter_order" value="">
+				<input type="hidden" name="filter_order_Dir" value="">
+				<input type="hidden" name="limitstart" value="">
+				<input type="hidden" name="task" value="">
+			</fieldset>
 		<?php endif; ?>
+	</form>
+</div>
+
+<?php if ($this->items == false || $n === 0) : ?>
+	<p><?php echo Text::_('COM_TAGS_NO_TAGS'); ?></p>
+<?php else : ?>
+	<?php foreach ($this->items as $i => $item) : ?>
+
+		<?php if ($n === 1 || $i === 0 || $bscolumns === 1 || $i % $bscolumns === 0) : ?>
+			<ul class="category list-group">
+		<?php endif; ?>
+
+		<li class="list-group-item list-group-item-action">
+			<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
+				<h3 class="mb-0">
+					<?php if (JVERSION < 4): ?>
+						<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
+							<?php echo $this->escape($item->title); ?>
+						</a>
+					<?php else: ?>
+						<a href="<?php echo Route::_(Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
+							<?php echo $this->escape($item->title); ?>
+						</a>
+					<?php endif ?>
+				</h3>
+			<?php endif; ?>
+
+			<?php if ($this->params->get('all_tags_show_tag_image') && !empty($item->images)) : ?>
+				<?php $images  = json_decode($item->images); ?>
+				<span class="tag-body">
+					<?php if (!empty($images->image_intro)) : ?>
+						<?php $imgfloat = empty($images->float_intro) ? $this->params->get('float_intro') : $images->float_intro; ?>
+						<div class="float-<?php echo htmlspecialchars($imgfloat); ?> item-image">
+							<img
+								<?php if ($images->image_intro_caption) : ?>
+									<?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?>
+								<?php endif; ?>
+								src="<?php echo $images->image_intro; ?>"
+								alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>">
+						</div>
+					<?php endif; ?>
+				</span>
+			<?php endif; ?>
+
+			<div class="caption">
+				<?php if ($this->params->get('all_tags_show_tag_description', 1)) : ?>
+					<span class="tag-body">
+						<?php echo HTMLHelper::_('string.truncate', $item->description, $this->params->get('all_tags_tag_maximum_characters')); ?>
+					</span>
+				<?php endif; ?>
+				<?php if ($this->params->get('all_tags_show_tag_hits')) : ?>
+					<span class="list-hits badge bg-info">
+						<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $item->hits); ?>
+					</span>
+				<?php endif; ?>
+			</div>
+		</li>
+
+		<?php if (($i === 0 && $n === 1) || $i === $n - 1 || $bscolumns === 1 || (($i + 1) % $bscolumns === 0)) : ?>
+			</ul>
+		<?php endif; ?>
+
+	<?php endforeach; ?>
+<?php endif; ?>
+
+<?php // Add pagination links ?>
+<?php if (!empty($this->items)) : ?>
+	<?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
+		<nav class="pagination-wrapper d-lg-flex justify-content-between w-100">
+			<?php echo $this->pagination->getPagesLinks(); ?>
+			<?php if ($this->params->def('show_pagination_results', 1)) : ?>
+				<div class="pagination-counter text-muted mb-4">
+					<?php echo $this->pagination->getPagesCounter(); ?>
+				</div>
+			<?php endif; ?>
+		</nav>
 	<?php endif; ?>
-</form>
+<?php endif; ?>

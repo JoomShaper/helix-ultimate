@@ -338,6 +338,7 @@ jQuery(function ($) {
 	// Column Layout Arrange
 	$(document).on('click', '.hu-column-layout', function (event) {
 		event.preventDefault();
+		
 		var $that = $(this),
 			colType = $that.data('type'),
 			column;
@@ -482,10 +483,10 @@ jQuery(function ($) {
 		$parent.find('.active').removeClass('active');
 		$that.addClass('active');
 
-		var new_item = '';
+		let new_item = '';
 
-		for (var i = 0; i < newLayout.length; i++) {
-			var dataAttr = '';
+		for (let i = 0; i < newLayout.length; i++) {
+			let dataAttr = '';
 			if (typeof colAttr[i] != 'object') {
 				colAttr[i] = {
 					grid_size: newLayout[i].trim(),

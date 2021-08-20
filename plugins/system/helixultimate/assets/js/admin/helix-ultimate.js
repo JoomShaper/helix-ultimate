@@ -116,6 +116,8 @@ jQuery(function ($) {
 		}
 	});
 
+	$(document).off('keyup');
+
 	$('.reload-preview-iframe').on('click', function (e) {
 		e.preventDefault();
 		let that = this;
@@ -191,6 +193,7 @@ jQuery(function ($) {
 
 	function updateSetvalue() {
 		let $controls = $('form#hu-style-form').find('.controls.helix-input-touched');
+
 		if ($controls.length > 0) {
 			$controls.each(function (index, control) {
 				let $controlEl = $(control);
@@ -294,6 +297,7 @@ jQuery(function ($) {
 
 	(function handleMenuBuilderChanges() {
 		const $builderField = $('.hu-menu-builder input[name=megamenu]');
+
 		$builderField.on('change', function (e) {
 			e.preventDefault();
 
@@ -355,6 +359,15 @@ jQuery(function ($) {
 	 *
 	 */
 	(function trackChanges() {
+		$('form#hu-style-form')
+			.find('input[type="text"], input[type="email"], input[type="number"], textarea')
+			.on('keydown', function (e) {
+				if (e.keyCode === 13) {
+					e.preventDefault();
+					return;
+				}
+			});
+
 		$('form#hu-style-form')
 			.find('input[type="text"], input[type="email"], input[type="number"], textarea')
 			.on('blur', function (e) {

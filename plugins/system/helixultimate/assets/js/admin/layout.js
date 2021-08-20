@@ -437,7 +437,7 @@ jQuery(function ($) {
 
 		let $that = $(this).closest('.hu-column-list').find('.hu-layout-custom-btn');
 
-		var $parent = $that.closest('.hu-column-list'),
+		let $parent = $that.closest('.hu-column-list'),
 			$gparent = $that.closest('.hu-layout-section'),
 			oldLayoutData = $parent.find('.active').data('layout'),
 			oldLayout = ['12'],

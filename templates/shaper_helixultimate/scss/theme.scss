@@ -2428,3 +2428,9 @@ body.contentpane.com-contact.view-contacts.layout-modal {
 		}
 	}
 }
+
+// misc
+.modal-dialog.jviewport-width80 {
+    width: 80vw;
+    max-width: none;
+}

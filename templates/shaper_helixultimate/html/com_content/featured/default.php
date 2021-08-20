@@ -34,6 +34,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 						$this->item = &$item;
+						$this->item->leading = true;
 						echo $this->loadTemplate('item');
 					?>
 				</div>

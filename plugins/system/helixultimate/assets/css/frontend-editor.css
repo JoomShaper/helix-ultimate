@@ -602,3 +602,43 @@ body.contentpane.joomla4.layout-modal .js-stools-field-list + .js-stools-field-l
 	text-indent: 0;
 	content: '×';
 }
+
+/* Media Manager */
+.subhead {
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    width: auto;
+    min-height: 43px;
+    padding: 10px 0;
+    color: #495057;
+    background: white;
+    box-shadow: -3px -2px 22px #ddd;
+}
+
+.subhead.noshadow {
+    box-shadow: none;
+}
+
+.subhead .btn {
+    /* --subhead-btn-accent: #495057; */
+    padding: 0 1rem;
+    margin: 5px 0;
+    font-size: 1rem;
+    line-height: 2.45rem;
+    color: #495057;
+    background: white;
+    border-color: #adb5bd;
+}
+
+.subhead joomla-toolbar-button, .subhead .btn-group {
+    -webkit-margin-start: 0.75rem;
+    margin-inline-start: 0.75rem;
+}
+
+.subhead joomla-toolbar-button:first-child, .subhead .btn-group:first-child {
+    -webkit-margin-start: 0;
+    margin-inline-start: 0;
+}

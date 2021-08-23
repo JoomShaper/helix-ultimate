@@ -557,7 +557,7 @@ class Helper
 
 		$module = self::createModule($name, [
 			'title' => 'Search',
-			'params' => '{"label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}'
+			'params' => '{"show_label": 0, "label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}'
 		]);
 
 		return $module;
@@ -576,7 +576,7 @@ class Helper
 	{
 		if (empty($name))
 		{
-			throw new \Exception(sprintf('createModule method expect the module $name as first argument!'));
+			throw new \Exception(\sprintf('%s method expect the module $name as first argument!', __METHOD__));
 		}
 
 		if (!empty($options) && \is_object($options))

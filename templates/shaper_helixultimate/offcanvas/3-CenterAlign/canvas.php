@@ -36,7 +36,7 @@ $menuModule = Helper::createModule('mod_menu', [
 $searchModule = Helper::getSearchModule();
 ?>
 <div class="offcanvas-menu border-menu center-alignment text-center">
-	<div class="d-flex align-items-center p-3">
+	<div class="d-flex align-items-center p-3 pt-4">
 		<?php echo $logo->renderFeature(); ?>
 		<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
 			<div class="burger-icon">

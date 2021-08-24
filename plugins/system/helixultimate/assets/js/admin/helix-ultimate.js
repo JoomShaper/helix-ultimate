@@ -962,8 +962,15 @@ jQuery(function ($) {
 		const reader = new FileReader();
 		reader.onload = function (event) {
 			const settings = JSON.parse(event.target.result);
+			console.log({ settings });
 
-			if (settings.template === undefined || settings.template !== 'shaper_helixultimate') {
+			const fields = ['after_body', 'before_body', 'copyright', 'h1_font', 'menu'];
+			const isValid = fields.reduce((validity, prop) => {
+				validity &&= settings.hasOwnProperty(prop);
+				return validity;
+			}, true);
+
+			if (!isValid) {
 				Joomla.HelixToaster.error(
 					'The settings JSON file seems invalid! Please import a valid helix ultimate settings JSON.',
 					'Error'

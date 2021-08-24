@@ -13,6 +13,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
+
 /** This segment of code sets up the autoCompleter.*/
 if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosuggest', 1))
 {
@@ -75,8 +76,8 @@ if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosugge
 		<input type="hidden" name="o" value="<?php echo $this->escape($this->state->get('list.ordering')); ?>">
 	<?php endif; ?>
 	<fieldset class="word mb-3">
-		<div class="d-flex">
-			<label for="q" class="me-2">
+		<div class="d-flex flex-wrap">
+			<label for="q" class="me-2 mt-2">
 				<?php echo Text::_('COM_FINDER_SEARCH_TERMS'); ?>
 			</label>
 			<div class="btn-group">

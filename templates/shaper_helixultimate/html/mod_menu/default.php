@@ -17,6 +17,7 @@ if ($tagId = $params->get('tag_id', ''))
 	$id = ' id="' . $tagId . '"';
 }
 
+
 // The menu class is deprecated. Use nav instead
 ?>
 <ul class="menu<?php echo $class_sfx; ?>"<?php echo $id; ?>>

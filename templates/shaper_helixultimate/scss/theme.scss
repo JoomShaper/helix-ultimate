@@ -155,11 +155,6 @@ ul.social-icons {
       justify-content: center;
     }
   }
-  .mod-finder.js-finder-searchform {
-    label {
-      display: none;
-    }
-  }
 }
 .menu-flex {
   .sp-megamenu-wrapper {
@@ -220,10 +215,10 @@ ul.social-icons {
 .sp-contact-info {
   list-style: none;
   padding: 0;
-  margin: 0 -10px;
+  margin: 0px;
   li {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0px 10px 0px 0px;
     font-size: 90%;
     white-space: nowrap;
     i {
@@ -284,7 +279,7 @@ ul.social-icons {
   &.header-with-modal-menu {
     color: $menu_text_color;
     a {
-      color: $menu_text_color;
+      color: rgba($menu_text_color, 0.6);
       &:hover,
       &:focus {
         color: $menu_text_hover_color;
@@ -405,7 +400,7 @@ ul.social-icons {
         padding: 40px 0;
         .sp-megamenu-wrapper {
           height: 100%;
-          align-items: flex-start;
+          align-items: center;
         }
         .social-icons {
           margin-top: auto;
@@ -474,6 +469,9 @@ ul.social-icons {
   }
   a {
     color: #909196;
+    &:hover {
+      color: $link_color;
+    }
   }
   .sp-contact-info {
     color: #909196;
@@ -576,7 +574,6 @@ body.modal-menu-active {
       display: block;
 
       &:after {
-        opacity: 0.3;
         transition: 0.3s;
       }
     }
@@ -654,24 +651,18 @@ body.modal-menu-active {
       > span {
         position: relative;
         &:after {
-          content: "";
+          content: "\f105";
+          font-family: "Font Awesome 5 Free";
           float: right;
-          margin-left: 7px;
-          font-weight: 900;
-          width: 12px;
-          height: 2px;
-          background: #252525;
           position: absolute;
-          top: 50%;
-          margin-left: 20px;
-          transition: 0.3s;
+          top: 2px;
         }
       }
       &:hover {
         > a,
         > span {
           &:after {
-            width: 30px;
+            transform: translateX(5px);
           }
         }
         > .sp-dropdown {
@@ -682,10 +673,15 @@ body.modal-menu-active {
     .sp-dropdown {
       left: 100% !important;
       transition: 0.3s;
-      padding-left: 30px;
+      padding-left: 20px;
 
       &.sp-dropdown-main {
         top: 0px;
+      }
+
+      &.sp-dropdown-mega {
+        top: auto;
+        bottom: 0px;
       }
 
       .sp-dropdown-inner {
@@ -694,8 +690,8 @@ body.modal-menu-active {
         position: relative;
         overflow: visible !important;
         max-height: initial;
-        padding: 0;
-        background-color: transparent;
+        background-color: #fff;
+        padding: 20px;
 
         ul > li > a {
           font-weight: 500 !important;
@@ -1785,6 +1781,13 @@ select:not([multiple]) {
   height: calc(2.25rem + 2px);
 }
 
+//remove bootstrap input focus outline
+input[type="text"],
+textarea {
+  outline: none;
+  box-shadow: none !important;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="url"],
@@ -1814,6 +1817,13 @@ select {
       border-color: #80bdff;
       outline: 0;
     }
+  }
+}
+
+// password group meter
+.password-group {
+  meter {
+    width: 100%;
   }
 }
 
@@ -2441,4 +2451,9 @@ body.contentpane.com-contact.view-contacts.layout-modal {
 .modal-dialog.jviewport-width80 {
   width: 80vw;
   max-width: none;
+}
+
+// remove button box-shadow on focus
+.btn:focus {
+  box-shadow: none !important;
 }

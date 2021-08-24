@@ -1468,8 +1468,22 @@ class HelixUltimate
 
 			foreach ($all_declared_scripts as $key => $script)
 			{
+				$scriptString = '';
+
+				if (\is_array($script))
+				{
+					foreach ($script as $value)
+					{
+						$scriptString .= $value . "\r\n";
+					}
+				}
+				else
+				{
+					$scriptString = $script;
+				}
+
 				$declaredScriptHash .= md5($key);
-				$scriptContent .= \JShrink\Minifier::minify($script, array('flaggedComments' => false));
+				$scriptContent .= \JShrink\Minifier::minify($scriptString, array('flaggedComments' => false));
 				unset($this->doc->_script[$key]);
 			}
 

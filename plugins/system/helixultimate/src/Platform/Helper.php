@@ -532,12 +532,13 @@ class Helper
 					$menuItemList->$parentId->children[] = $element->id;
 				}
 
+				$elementId = $element->id;
 				$temp = new \stdClass;
 				$temp->id = $element->id;
 				$temp->title = $element->title;
 				$temp->level = $element->level;
 				$temp->children = [];
-				$menuItemList->{$element->id} = $temp;
+				$menuItemList->$elementId = $temp;
 
 				self::getMenuItems($element->id, $menuItemList);
 			}

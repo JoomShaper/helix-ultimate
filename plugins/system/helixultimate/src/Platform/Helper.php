@@ -463,9 +463,10 @@ class Helper
 	public static function getTemplatePositions()
 	{
 		$positions = array();
+		$template = self::loadTemplateData();
 
 		$templateBaseDir = JPATH_SITE;
-		$filePath = Path::clean($templateBaseDir . '/templates/shaper_helixultimate/templateDetails.xml');
+		$filePath = Path::clean($templateBaseDir . '/templates/' . $template->template . '/templateDetails.xml');
 
 		if (is_file($filePath))
 		{

@@ -62,7 +62,7 @@
 			helixgroup="logo" 
 			type="helixUnit"
 			display="inline" 
-			className="hidden"
+			className="field-hidden"
 			label="HELIX_ULTIMATE_LOGO_HEIGHT_SM" 
 			showon="logo_type:image[AND]logo_image!:" />
 
@@ -70,7 +70,7 @@
 			helixgroup="logo" 
 			type="helixUnit"
 			display="inline" 
-			className="hidden"
+			className="field-hidden"
 			label="HELIX_ULTIMATE_LOGO_HEIGHT_XS" 
 			showon="logo_type:image[AND]logo_image!:" />
 
@@ -108,12 +108,12 @@
 			helixgroup="header" 
 			type="helixUnit" 
 			display="inline"
-			className="hidden"
+			className="field-hidden"
 			label="HELIX_ULTIMATE_HEADER_HEIGHT_SM" />
 		<field name="header_height_xs" 
 			helixgroup="header" 
 			type="helixUnit"
-			className="hidden"
+			className="field-hidden"
 			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT_XS" />
 
@@ -863,6 +863,7 @@
 				<color name="footer_link_hover_color" 
 					value="#FFFFFF" />
 			</preset>
+
 		</field>
 
 		<field name="custom_style" 
@@ -903,7 +904,7 @@
 			class="preset-control" 
 			helixgroup="preset_header" 
 			type="color" 
-			default="#0345BF" 
+			default="#FFFFFF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_HEADER_BACKGROUND_COLOR"
 			separator="true"

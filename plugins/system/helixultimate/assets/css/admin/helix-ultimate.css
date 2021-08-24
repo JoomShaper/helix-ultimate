@@ -3664,3 +3664,7 @@ input[type='color'] {
 	background-size: 8px 12px !important;
 	background-position: right 3px center !important;
 }
+
+.field-hidden {
+	display: none !important;
+}

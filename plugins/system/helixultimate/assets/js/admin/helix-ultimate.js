@@ -360,7 +360,7 @@ jQuery(function ($) {
 	 */
 	(function trackChanges() {
 		$('form#hu-style-form')
-			.find('input[type="text"], input[type="email"], input[type="number"], textarea')
+			.find('input[type="text"], input[type="email"], input[type="number"]')
 			.on('keydown', function (e) {
 				if (e.keyCode === 13) {
 					e.preventDefault();
@@ -604,11 +604,23 @@ jQuery(function ($) {
 	function onDeviceChange({ name, parent, map, device }) {
 		['', '_sm', '_xs'].forEach(size => {
 			const $element = $(`input[name=${name}${size}]`).closest(parent);
-			if (!$element.hasClass('hidden')) $element.addClass('hidden');
+			if (!$element.hasClass('field-hidden')) $element.addClass('field-hidden');
 		});
 		const selector = `input[name=${name}${map[device] === 'md' ? '' : '_' + map[device]}]`;
-		$(selector).closest(parent).removeClass('hidden');
+		$(selector).closest(parent).removeClass('field-hidden');
 	}
+
+	/** Change logo height on device changed. */
+	onDeviceChange({
+		name: 'logo_height',
+		parent: '.group-style-logo',
+		map: {
+			desktop: 'md',
+			tablet: 'sm',
+			mobile: 'xs',
+		},
+		device: 'desktop',
+	});
 
 	/**
 	 * Function to switch between various devices

@@ -590,4 +590,48 @@ class Helper
 
 		return ArrayHelper::toObject(\array_merge($defaultOptions, $options));
 	}
+
+	/**
+	 * Check a string ends with a needle or not.
+	 *
+	 * @param	string	$haystack	The main string.
+	 * @param	string	$needle		The needle to search at the end.
+	 *
+	 * @return	bool	True if find at the end, false otherwise.
+	 * @since 	2.0.2
+	 */
+	public static function endsWith(string $haystack, string $needle): bool
+	{
+		$isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
+		$length = strlen($needle);
+
+		if ($isEight)
+		{
+			return \str_ends_with($haystack, $needle);
+		}
+
+		return !$length ? true : substr($haystack, -$length) === $needle;
+	}
+
+	/**
+	 * Check a string starts with a needle or not.
+	 *
+	 * @param	string	$haystack	The main string.
+	 * @param	string	$needle		The needle to search at the beginning.
+	 *
+	 * @return	bool	True if find at the starting position, false otherwise.
+	 * @since 	2.0.2
+	 */
+	public static function startsWith(string $haystack, string $needle): bool
+	{
+		$isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
+		$length = strlen($needle);
+
+		if ($isEight)
+		{
+			return \str_starts_with($haystack, $needle);
+		}
+
+		return substr($haystack, 0, $length) === $needle;
+	}
 }

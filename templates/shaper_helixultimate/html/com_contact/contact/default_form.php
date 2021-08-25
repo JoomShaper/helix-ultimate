@@ -37,7 +37,6 @@ HTMLHelper::_('behavior.formvalidator');
 				<input type="hidden" name="option" value="com_contact">
 				<input type="hidden" name="task" value="contact.submit">
 				<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
-				<!-- Joomla 4 -->
 				<?php if(JVERSION >= 4) { ?>
 					<input type="hidden" name="id" value="<?php echo $this->item->slug; ?>">
 				<?php } else { ?>

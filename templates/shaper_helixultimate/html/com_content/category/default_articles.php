@@ -268,7 +268,7 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 			<?php endif; ?>
 			<?php if ($this->params->get('list_show_hits', 1)) : ?>
 				<td headers="categorylist_header_hits" class="list-hits">
-					<span class="badge bg-info">
+					<span class="badge bg-primary">
 						<?php echo Text::sprintf('JGLOBAL_HITS_COUNT', $article->hits); ?>
 					</span>
 				</td>

@@ -49,83 +49,61 @@ $params = $this->params;
 		<?php $useDefList = ($params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')
 			|| $params->get('show_hits') || $params->get('show_category') || $params->get('show_parent_category')); ?>
 		<?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
-			<div class="article-info text-muted">
-				<dl class="article-info">
-				<dt class="article-info-term">
-					<?php echo Text::_('COM_CONTENT_ARTICLE_INFO'); ?>
-				</dt>
-
+			<div class="article-info">
 				<?php if ($params->get('show_parent_category') && !empty($item->parent_slug)) : ?>
-					<dd>
-						<div class="parent-category-name">
-							<?php $title = $this->escape($item->parent_title); ?>
-							<?php if ($params->get('link_parent_category') && !empty($item->parent_slug)) : ?>
-								<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->parent_slug)) . '" itemprop="genre">' . $title . '</a>'; ?>
-								<?php echo Text::sprintf('COM_CONTENT_PARENT', $url); ?>
-							<?php else : ?>
-								<?php echo Text::sprintf('COM_CONTENT_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
-							<?php endif; ?>
-						</div>
-					</dd>
+					<span class="parent-category-name">
+						<?php $title = $this->escape($item->parent_title); ?>
+						<?php if ($params->get('link_parent_category') && !empty($item->parent_slug)) : ?>
+							<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->parent_slug)) . '" itemprop="genre">' . $title . '</a>'; ?>
+							<?php echo Text::sprintf('COM_CONTENT_PARENT', $url); ?>
+						<?php else : ?>
+							<?php echo Text::sprintf('COM_CONTENT_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
+						<?php endif; ?>
+					</span>
 				<?php endif; ?>
 				<?php if ($params->get('show_category')) : ?>
-					<dd>
-						<div class="category-name">
-							<?php $title = $this->escape($item->category_title); ?>
-							<?php if ($params->get('link_category') && $item->catslug) : ?>
-								<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->catslug)) . '" itemprop="genre">' . $title . '</a>'; ?>
-								<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
-							<?php else : ?>
-								<?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
-							<?php endif; ?>
-						</div>
-					</dd>
+					<span class="category-name">
+						<?php $title = $this->escape($item->category_title); ?>
+						<?php if ($params->get('link_category') && $item->catslug) : ?>
+							<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->catslug)) . '" itemprop="genre">' . $title . '</a>'; ?>
+							<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
+						<?php else : ?>
+							<?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
+						<?php endif; ?>
+					</span>
 				<?php endif; ?>
 
 				<?php if ($params->get('show_publish_date')) : ?>
-					<dd>
-						<div class="published">
-							<span class="icon-calendar" aria-hidden="true"></span>
-							<time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
-								<?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
-							</time>
-						</div>
-					</dd>
+					<span class="published">
+						<time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
+							<?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
+						</time>
+					</span>
 				<?php endif; ?>
 
 				<?php if ($info == 0) : ?>
 					<?php if ($params->get('show_modify_date')) : ?>
-						<dd>
-							<div class="modified">
-								<span class="icon-calendar" aria-hidden="true"></span>
-								<time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
-									<?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
-								</time>
-							</div>
-						</dd>
+						<span class="modified">
+							<time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
+								<?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
+							</time>
+						</span>
 					<?php endif; ?>
 					<?php if ($params->get('show_create_date')) : ?>
-						<dd>
-							<div class="create">
-								<span class="icon-calendar" aria-hidden="true"></span>
-								<time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
-									<?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC3'))); ?>
-								</time>
-							</div>
-						</dd>
+						<span class="create">
+							<time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
+								<?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC3'))); ?>
+							</time>
+						</span>
 					<?php endif; ?>
 
 					<?php if ($params->get('show_hits')) : ?>
-						<dd>
-							<div class="hits">
-								<span class="icon-eye-open"></span>
-								<meta itemprop="interactionCount" content="UserPageVisits:<?php echo $item->hits; ?>">
-								<?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', $item->hits); ?>
-							</div>
-						</dd>
+						<span class="hits">
+							<meta itemprop="interactionCount" content="UserPageVisits:<?php echo $item->hits; ?>">
+							<?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', $item->hits); ?>
+						</span>
 					<?php endif; ?>
 				<?php endif; ?>
-				</dl>
 			</div>
 		<?php endif; ?>
 
@@ -136,92 +114,74 @@ $params = $this->params;
 		<?php endif; ?>
 
 		<?php if ($useDefList && ($info == 1 || $info == 2)) : ?>
-			<div class="article-info text-muted">
-				<dl class="article-info">
-				<dt class="article-info-term"><?php echo Text::_('COM_CONTENT_ARTICLE_INFO'); ?></dt>
-
+			<div class="article-info">
 				<?php if ($info == 1) : ?>
 					<?php if ($params->get('show_parent_category') && !empty($item->parent_slug)) : ?>
-						<dd>
-							<div class="parent-category-name">
-								<?php $title = $this->escape($item->parent_title); ?>
-								<?php if ($params->get('link_parent_category') && $item->parent_slug) : ?>
-									<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->parent_slug)) . '" itemprop="genre">' . $title . '</a>'; ?>
-									<?php echo Text::sprintf('COM_CONTENT_PARENT', $url); ?>
-								<?php else : ?>
-									<?php echo Text::sprintf('COM_CONTENT_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
-								<?php endif; ?>
-							</div>
-						</dd>
+						<span class="parent-category-name">
+							<?php $title = $this->escape($item->parent_title); ?>
+							<?php if ($params->get('link_parent_category') && $item->parent_slug) : ?>
+								<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->parent_slug)) . '" itemprop="genre">' . $title . '</a>'; ?>
+								<?php echo Text::sprintf('COM_CONTENT_PARENT', $url); ?>
+							<?php else : ?>
+								<?php echo Text::sprintf('COM_CONTENT_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
+							<?php endif; ?>
+						</span>
 					<?php endif; ?>
 					<?php if ($params->get('show_category')) : ?>
-						<dd>
-							<div class="category-name">
-								<?php $title = $this->escape($item->category_title); ?>
-								<?php if ($params->get('link_category') && $item->catslug) : ?>
-									<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->catslug)) . '" itemprop="genre">' . $title . '</a>'; ?>
-									<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
-								<?php else : ?>
-									<?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
-								<?php endif; ?>
-							</div>
-						</dd>
+						<span class="category-name">
+							<?php $title = $this->escape($item->category_title); ?>
+							<?php if ($params->get('link_category') && $item->catslug) : ?>
+								<?php $url = '<a href="' . Route::_(ContentHelperRoute::getCategoryRoute($item->catslug)) . '" itemprop="genre">' . $title . '</a>'; ?>
+								<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
+							<?php else : ?>
+								<?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
+							<?php endif; ?>
+						</span>
 					<?php endif; ?>
 					<?php if ($params->get('show_publish_date')) : ?>
-						<dd>
-							<div class="published">
-								<span class="icon-calendar" aria-hidden="true"></span>
-								<time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
-									<?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
-								</time>
-							</div>
-						</dd>
+						<span class="published">
+							<time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
+								<?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
+							</time>
+						</span>
 					<?php endif; ?>
 				<?php endif; ?>
 
 				<?php if ($params->get('show_create_date')) : ?>
-					<dd>
-						<div class="create">
-							<span class="icon-calendar" aria-hidden="true"></span>
-							<time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
-								<?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
-							</time>
-						</div>
-					</dd>
+					<span class="create">
+						<time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
+							<?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
+						</time>
+					</span>
 				<?php endif; ?>
 				<?php if ($params->get('show_modify_date')) : ?>
-					<dd>
-						<div class="modified">
-							<span class="icon-calendar" aria-hidden="true"></span>
-							<time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
-								<?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
-							</time>
-						</div>
-					</dd>
+					<span class="modified">
+						<time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
+							<?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
+						</time>
+					</span>
 				<?php endif; ?>
 				<?php if ($params->get('show_hits')) : ?>
-					<dd>
-						<div class="hits">
-							<span class="icon-eye-open"></span>
-							<meta content="UserPageVisits:<?php echo $item->hits; ?>" itemprop="interactionCount">
-							<?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', $item->hits); ?>
-						</div>
-					</dd>
+					<span class="hits">
+						<meta content="UserPageVisits:<?php echo $item->hits; ?>" itemprop="interactionCount">
+						<?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', $item->hits); ?>
+					</span>
 				<?php endif; ?>
-			</dl>
-		</div>
+			</div>
 		<?php endif; ?>
 		<?php // Content is generated by content plugin event "onContentAfterDisplay" ?>
 		<?php echo $item->event->afterDisplayContent; ?>
 	</div>
 	<?php endforeach; ?>
 </div>
-<div class="w-100">
-	<?php if ($this->params->def('show_pagination_results', 1)) : ?>
-		<p class="counter float-end pt-3 pe-2">
-			<?php echo $this->pagination->getPagesCounter(); ?>
-		</p>
-	<?php endif; ?>
 
-	<?php echo $this->pagination->getPagesLinks(); ?>
-</div>
+<?php if (($this->params->def('show_pagination', 1) == 1 || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
+	<nav class="pagination-wrapper d-lg-flex justify-content-between w-100">
+		<?php echo $this->pagination->getPagesLinks(); ?>
+		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
+			<div class="pagination-counter text-muted mb-4">
+				<?php echo $this->pagination->getPagesCounter(); ?>
+			</div>
+		<?php endif; ?>
+	</nav>
+<?php endif; ?>

@@ -1,17 +1,19 @@
 <?php
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  com_contact
+ *
+ * @copyright   (C) 2010 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\Component\Contact\Site\Helper\RouteHelper;
 
 $lang  = Factory::getLanguage();
 
@@ -23,7 +25,7 @@ if ($this->maxLevelcat != 0 && count($this->items[$this->parent->id]) > 0) :
 				<div style="padding-<?php echo $lang->isRtl() ? 'right' : 'left' ?>: <?php echo (int) $this->level * 16; ?>px">
 					<div class="d-flex justify-content-between align-items-center">
 						<h5 class="m-0">
-							<a href="<?php echo Route::_(ContentHelperRoute::getCategoryRoute($item->id, $item->language)); ?>">
+							<a href="<?php echo Route::_(RouteHelper::getCategoryRoute($item->id, $item->language)); ?>">
 								<?php echo $this->escape($item->title); ?>
 							</a>
 						</h5>
@@ -39,7 +41,7 @@ if ($this->maxLevelcat != 0 && count($this->items[$this->parent->id]) > 0) :
 					<?php if ($this->params->get('show_subcat_desc_cat') == 1) : ?>
 						<?php if ($item->description) : ?>
 							<div class="mt-2">
-								<?php echo HTMLHelper::_('content.prepare', $item->description, '', 'com_content.categories'); ?>
+								<?php echo HTMLHelper::_('content.prepare', $item->description, '', 'com_contact.categories'); ?>
 							</div>
 						<?php endif; ?>
 					<?php endif; ?>

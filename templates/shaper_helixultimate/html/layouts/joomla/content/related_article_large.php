@@ -45,5 +45,4 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 
 		<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>" class="btn btn-outline-secondary btn-sm"><?php echo Text::_('HELIX_ULTIMATE_READ_MORE') ?></a>
 	</div>
-
 </div>

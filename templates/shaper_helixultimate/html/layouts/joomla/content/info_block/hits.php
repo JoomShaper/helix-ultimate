@@ -12,7 +12,6 @@ use Joomla\CMS\Language\Text;
 
 ?>
 <span class="hits">
-	<span class="far fa-eye" aria-hidden="true"></span>
 	<meta itemprop="interactionCount" content="UserPageVisits:<?php echo $displayData['item']->hits; ?>">
 	<?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', $displayData['item']->hits); ?>
 </span>

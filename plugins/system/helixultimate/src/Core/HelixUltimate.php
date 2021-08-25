@@ -404,16 +404,22 @@ class HelixUltimate
 				continue;
 			}
 
+			
 			$file = trim($file);
 			$file_path = $asset_path . $file;
+			
+			if (!Helper::endsWith($file_path, $folder))
+			{
+				$file_path .= '.' . $folder;
+			}
 
 			if (File::exists($file_path))
 			{
-				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . $file;
+				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
 			}
 			elseif (File::exists($file))
 			{
-				$file_url = $file;
+				$file_url = Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder;
 			}
 			else
 			{

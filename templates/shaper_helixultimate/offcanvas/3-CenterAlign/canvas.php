@@ -27,9 +27,14 @@ $logo = new HelixUltimateFeatureLogo($params);
 
 $hasModMenu = array_search('mod_menu', array_column(ModuleHelper::getModules('offcanvas'), 'module'));
 
+$menuType = $params->get('offcanvas_menu', 'mainmenu', 'STRING');
+$showChildren = $params->get('offcanvas_show_submenu', 0, 'INT');
+$startLevel = $params->get('offcanvas_start_level', 1, 'INT');
+$endLevel = $params->get('offcanvas_end_level', 0, 'INT');
+
 $menuModule = Helper::createModule('mod_menu', [
 	'title' => 'Main Menu',
-	'params' => '{"menutype":"' . $params->get('offcanvas_menu', 'mainmenu') . '","base":"","startLevel":"1","endLevel":"0","showAllChildren":"1","tag_id":"","class_sfx":" nav-pills","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}',
+	'params' => '{"menutype":"' . $menuType . '","base":"","startLevel":' . $startLevel . ',"endLevel":' . $endLevel . ',"showAllChildren":' . $showChildren . ',"tag_id":"","class_sfx":" nav-pills","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}',
 	'name' => 'menu'
 ]);
 

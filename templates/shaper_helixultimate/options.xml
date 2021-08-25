@@ -1096,6 +1096,51 @@
 			default="mainmenu"
 			track="on"
 			label="HELIX_ULTIMATE_OFFCANVAS_MENU" />
+		
+		<field name="offcanvas_show_submenu" 
+			type="checkbox" 
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_SHOW_SUBMENU"
+			description="HELIX_ULTIMATE_SHOW_SUBMENU_DESC"
+			default="1"/>
+		<field name="offcanvas_start_level" 
+			type="list" 
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_OFFCANVAS_LEVEL_START"
+			display="inline"
+			default="1">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+		</field>
+		<field name="offcanvas_end_level" 
+			type="list"
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_OFFCANVAS_LEVEL_END"
+			display="inline"
+			separator="true"
+			default="0">
+			<option value="0">JALL</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+		</field>
+		
+
 		<field name="offcanvas_enable_search" 
 			type="checkbox" 
 			helixgroup="offcanvas" 

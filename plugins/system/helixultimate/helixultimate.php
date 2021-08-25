@@ -402,6 +402,16 @@ class  PlgSystemHelixultimate extends JPlugin
 			{
 				$theme->compress_js($params->get('exclude_js'));
 			}
+
+			/**
+			 * Adding custom directory for the assets.
+			 * If anyone put any file inside the `templates/shaper_helixultimate/css/custom`
+			 * or `templates/shaper_helixultimate/js/custom` directory then the files
+			 * would be added to the site.
+			 */
+			$theme->addCustomCSS();
+			$theme->addCustomSCSS();
+			$theme->addCustomJS();
 		}
 	}
 

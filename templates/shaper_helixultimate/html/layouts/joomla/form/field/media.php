@@ -8,11 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-if (JVERSION < 4)
-{
-    require \JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/form/field/media_j3.php';
-}
-else
-{
-    require \JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/form/field/media.php';
-}
+require_once HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

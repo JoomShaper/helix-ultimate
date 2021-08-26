@@ -8,14 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-$items = $displayData;
-
-if (!empty($items)) : ?>
-	<ul class="item-associations">
-		<?php foreach ($items as $id => $item) : ?>
-			<li>
-				<?php echo is_array($item) ? $item['link'] : $item->link; ?>
-			</li>
-		<?php endforeach; ?>
-	</ul>
-<?php endif; ?>
+require_once HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

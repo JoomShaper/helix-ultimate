@@ -6,7 +6,6 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined('JPATH_BASE') or die;
+defined ('JPATH_BASE') or die();
 
-?>
-<?php echo $displayData['action']; ?>
+require_once HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

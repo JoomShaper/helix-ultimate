@@ -8,15 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-$title = $displayData->getForm()->getValue('title');
-$name = $displayData->getForm()->getValue('name');
-
-?>
-
-<?php if ($title) : ?>
-	<h4><?php echo $title; ?></h4>
-<?php endif; ?>
-
-<?php if ($name) : ?>
-	<h4><?php echo $name; ?></h4>
-<?php endif;
+require_once HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

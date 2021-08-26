@@ -6,9 +6,6 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined('JPATH_BASE') or die;
+defined ('JPATH_BASE') or die();
 
-use Joomla\CMS\Language\Text;
-
-?>
-<div class="btn-toolbar d-flex" role="toolbar" aria-label="<?php echo Text::_('JTOOLBAR'); ?>" id="<?php echo $displayData['id']; ?>">
+require_once HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

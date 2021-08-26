@@ -405,8 +405,7 @@ $htag    = $tparams->get('show_page_heading') ? 'h2' : 'h1';
 
 	<?php if ($this->item->misc && $tparams->get('show_misc')) : ?>
 		<?php echo '<h3>' . Text::_('COM_CONTACT_OTHER_INFORMATION') . '</h3>'; ?>
-
-		<div class="com-contact__miscinfo contact-miscinfo">
+		<div class="contact-miscinfo">
 			<dl class="dl-horizontal">
 				<dt>
 					<?php if (!$this->params->get('marker_misc')) : ?>

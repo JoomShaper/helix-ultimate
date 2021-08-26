@@ -1796,7 +1796,7 @@ input[type="password"],
 input[type="search"],
 input[type="tel"],
 input[type="number"],
-select {
+select:not(.form-select) {
   &:not(.form-control) {
     display: block;
     width: 100%;

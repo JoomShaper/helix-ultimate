@@ -8,7 +8,8 @@
 
 defined ('_JEXEC') or die();
 
-function pagination_list_render($list) {
+function pagination_list_render($list)
+{
 	// Initialize variables
 	$html = '<ul class="pagination">';
 
@@ -25,7 +26,8 @@ function pagination_list_render($list) {
 	return $html;
 }
 
-function pagination_item_active(&$item) {
+function pagination_item_active(&$item)
+{
 
 	$cls = '';
 
@@ -38,7 +40,8 @@ function pagination_item_active(&$item) {
     return '<li class="page-item"><a class="page-link ' . $cls . '" href="' . $item->link . '" title="' . $item->text . '">' . $item->text . '</a></li>';
 }
 
-function pagination_item_inactive( &$item ) {
+function pagination_item_inactive( &$item )
+{
 	$cls = (int)$item->text > 0 ? 'active': 'disabled';
 	return '<li class="page-item ' . $cls . '"><a class="page-link">' . $item->text . '</a></li>';
 }

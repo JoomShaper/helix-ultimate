@@ -22,16 +22,6 @@ if (!empty($options['showonEnabled']))
 $class = empty($options['class']) ? '' : ' ' . $options['class'];
 $rel   = empty($options['rel']) ? '' : ' ' . $options['rel'];
 
-/**
-* @TODO:
-*
-* As mentioned in #8473 (https://github.com/joomla/joomla-cms/pull/8473), ...
-* as long as we cannot access the field properties properly, this seems to
-* be the way to go for now.
-*
-* On a side note: Parsing html is seldom a good idea.
-* https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454
-*/
 preg_match('/class=\"([^\"]+)\"/i', $input, $match);
 
 $required      = (strpos($input, 'aria-required="true"') !== false || (!empty($match[1]) && strpos($match[1], 'required') !== false));

@@ -16,11 +16,8 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
 ?>
 <div class="category-list<?php echo $this->pageclass_sfx; ?>">
-
-<?php
-
-$this->subtemplatename = 'articles';
-echo LayoutHelper::render('joomla.content.category_default', $this);
-?>
-
+    <?php
+        $this->subtemplatename = 'articles';
+        echo LayoutHelper::render('joomla.content.category_default', $this);
+    ?>
 </div>

@@ -48,10 +48,6 @@ if ($item->menu_image)
 	}
 }
 
-// echo '<xmp>';
-// var_dump($item->parent);
-// echo '</xmp>';
-
 
 if ($item->parent)
 {

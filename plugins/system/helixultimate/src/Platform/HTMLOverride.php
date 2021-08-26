@@ -48,6 +48,52 @@ final class HTMLOverride
 		return $path;
 	}
 
+	private static function extractPath(string $path): array
+	{
+		return explode('/', trim($path, '/'));
+	}
+
+	private static function generateComponentPath(string $path) : string
+	{
+		if (empty($path))
+		{
+			return '';
+		}
+
+		$path = self::extractPath($path);
+
+		$version = JVERSION;
+		$extension = $path[0];
+
+		/** If the path is for component- */
+		if (\strpos($extension, 'com_') === 0)
+		{
+			if ($version < 4)
+			{
+				\array_splice($path, 1, 0, ['views']);
+				\array_splice($path, 3, 0, ['tmpl']);
+			}
+			else
+			{
+				\array_splice($path, 1, 0, ['tmpl']);
+			}
+
+			return JPATH_ROOT . '/components/' . \implode('/', $path);
+		}
+		elseif (\strpos($extension, 'mod_') === 0)
+		{
+			\array_splice($path, 1, 0, ['tmpl']);
+
+			return JPATH_ROOT . '/modules/' . \implode('/', $path);
+		}
+		elseif ($extension === 'layouts')
+		{
+			return JPATH_ROOT . '/' . \implode('/', $path);
+		}
+
+		return \implode('/', $path);
+	}
+
 	/**
 	 * load the template HTML from the plugin.
 	 *
@@ -62,7 +108,7 @@ final class HTMLOverride
 		$staticOverridePath = self::parsePath(self::$overridePath);
 		$relativePath = '';
 		$overridePath = '';
-		
+
 		/**
 		 * If the callee file is in the template's html directory.
 		 */
@@ -81,6 +127,6 @@ final class HTMLOverride
 			return $overridePath;
 		}
 
-		return '';
+		return self::generateComponentPath($relativePath);
 	}
 }

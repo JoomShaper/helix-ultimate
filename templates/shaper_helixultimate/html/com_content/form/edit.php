@@ -8,9 +8,4 @@
 
 defined('_JEXEC') or die();
 
-$templatePath = JPATH_BASE . '/plugins/system/helixultimate/overrides/com_content/form/edit.php';
-
-if (\file_exists($templatePath))
-{
-	require_once $templatePath;
-}
+require_once HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

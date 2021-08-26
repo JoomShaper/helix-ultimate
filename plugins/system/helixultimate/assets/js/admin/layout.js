@@ -123,13 +123,17 @@ jQuery(function ($) {
 
 	// color picker initialize
 	$.fn.initColorPicker = function () {
-		this.find('.minicolors').each(function () {
-			$(this).minicolors({
-				control: 'hue',
-				position: 'bottom',
-				theme: 'bootstrap',
-			});
-		});
+		Joomla.initColorPicker(this.find('.minicolors'));
+		// this.find('.minicolors').each(function () {
+		// 	$(this).minicolors({
+		// 		control: 'hue',
+		// 		position: 'bottom',
+		// 		theme: 'bootstrap',
+		// 		keywords: 'transparent, initial, inherit',
+		// 		letterCase: 'uppercase',
+		// 		opacity: true,
+		// 	});
+		// });
 	};
 
 	// Open Row settings Modal
@@ -338,7 +342,7 @@ jQuery(function ($) {
 	// Column Layout Arrange
 	$(document).on('click', '.hu-column-layout', function (event) {
 		event.preventDefault();
-		
+
 		var $that = $(this),
 			colType = $that.data('type'),
 			column;

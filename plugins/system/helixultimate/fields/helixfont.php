@@ -313,11 +313,11 @@ class JFormFieldHelixfont extends FormField
 
 	private function renderFontColor($value)
 	{
-		$color = !empty($value->fontColor) ? $value->fontColor : '#000000';
+		$color = !empty($value->fontColor) ? $value->fontColor : '';
 		$html = '';
 		$html .= '<div class="hu-font-color">';
 		$html .= '<label class="hu-mb-2">' . Text::_('HELIX_ULTIMATE_FONT_COLOR') . '</label>';
-		$html .= '<input type="text" class="form-control hu-font-color-input minicolors" id="hu-menu-badge-body-font" placeholder="Font Color" value="' . $color . '" />';
+		$html .= '<input type="text" class="form-control hu-font-color-input minicolors" placeholder="Font Color" value="' . $color . '" />';
 		$html .= '</div>';
 
 		return $html;

@@ -230,15 +230,9 @@ var megaMenu = {
 
 	initMiniColors() {
 		$('.hu-input-color').each(function () {
-			$(this).addClass('minicolors');
+			!$(this).hasClass('minicolors') && $(this).addClass('minicolors');
 		});
-		$('.hu-megamenu-container .minicolors').each(function () {
-			$(this).minicolors({
-				control: 'hue',
-				position: 'bottom',
-				theme: 'bootstrap',
-			});
-		});
+		Joomla.initColorPicker('.hu-megamenu-container .minicolors');
 	},
 
 	handleMegaMenuToggle() {

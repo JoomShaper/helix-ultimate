@@ -13,6 +13,22 @@ jQuery(function ($) {
 	const storage = localStorage || window.localStorage;
 	let delayTimeout = null;
 
+	Joomla.initColorPicker = function (selector, options = {}) {
+		const defaults = {
+			animationSpeed: 50,
+			animationEasing: 'swing',
+			control: 'hue',
+			position: 'bottom',
+			theme: 'bootstrap',
+			keywords: 'transparent, initial, inherit',
+			letterCase: 'uppercase',
+		};
+
+		$(selector).each(function () {
+			$(this).minicolors({ ...defaults, ...options });
+		});
+	};
+
 	/** In case of chosen multi-select not working.  */
 	$('.form-select[multiple]').chosen({ width: '100%' });
 

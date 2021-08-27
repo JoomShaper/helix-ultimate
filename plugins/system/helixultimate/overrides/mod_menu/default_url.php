@@ -15,7 +15,7 @@ $attributes = array();
 
 $isOffcanvasMenu = $params->get('hu_offcanvas', 0, 'INT') === 1;
 $maxLevel = $params->get('endLevel', 0, 'INT');
-$showToggler = $maxLevel === 0 || $isOffcanvasMenu && $item->level < $maxLevel;
+$showToggler = $maxLevel === 0 || $item->level < $maxLevel;
 
 if ($item->anchor_title)
 {

@@ -69,6 +69,11 @@ class JFormFieldHelixheaders extends FormField
 							? Text::_('HELIX_ULTIMATE_HEADER_STYLE_' . $styleNumber)
 							: ucfirst(str_replace("-", ' ', $header));
 					}
+					else
+					{
+						$_headerName = \strtoupper(\implode('_', \explode(' ', $headerName)));
+						$headerName = Text::_('HELIX_ULTIMATE_HEADER_STYLE' . $_headerName);
+					}
 
 					$html .= '<li class="hu-header-item' . (($this->value === $header) ? ' active' : '') . '" data-style="' . $header . '">';
 

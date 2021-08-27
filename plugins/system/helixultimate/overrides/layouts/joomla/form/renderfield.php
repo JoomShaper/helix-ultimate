@@ -8,6 +8,7 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 extract($displayData);
@@ -27,6 +28,7 @@ if (!empty($options['showonEnabled']))
 	}
 }
 
+$name 			 = $name ?? '';
 $class           = empty($options['class']) ? '' : ' ' . $options['class'];
 $rel             = empty($options['rel']) ? '' : ' ' . $options['rel'];
 $id              = $name . '-desc';

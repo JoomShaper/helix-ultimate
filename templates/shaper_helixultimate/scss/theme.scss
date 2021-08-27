@@ -1214,7 +1214,6 @@ body.view-article.remove-container {
   }
 
   .article-full-image {
-    text-align: center;
     img {
       display: inline-block;
       border-radius: 4px;
@@ -1287,10 +1286,12 @@ body.view-article.remove-container {
 .tags {
   list-style: none;
   padding: 0;
-  margin: 2rem 0 0 0;
-  display: block;
+  margin: -0.3125rem;
+  display: flex;
+  flex-wrap: wrap;
   > li {
     display: inline-block;
+    margin: 0.3125rem;
     a {
       display: block;
       font-size: 0.875rem;
@@ -1779,6 +1780,12 @@ select.form-control:not([multiple]),
 select.inputbox:not([multiple]),
 select:not([multiple]) {
   height: calc(2.25rem + 2px);
+}
+
+.form-control-feedback {
+  display: block;
+  margin-top: .25rem;
+  font-size: .875em;
 }
 
 //remove bootstrap input focus outline

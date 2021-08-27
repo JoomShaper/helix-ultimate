@@ -3668,3 +3668,6 @@ input[type='color'] {
 .field-hidden {
 	display: none !important;
 }
+.hu-no-gutter-bottom .hu-inline-group {
+	margin-bottom: 0px !important;
+}

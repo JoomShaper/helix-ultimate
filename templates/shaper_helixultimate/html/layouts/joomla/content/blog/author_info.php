@@ -8,4 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-require_once HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();
+require HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

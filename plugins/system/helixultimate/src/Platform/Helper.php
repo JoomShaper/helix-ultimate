@@ -238,6 +238,18 @@ class Helper
 		return md5($string);
 	}
 
+	private static function checkTemplateStyleValidity(int $id) : bool
+	{
+		$db 	= Factory::getDbo();
+		$query 	= $db->getQuery(true);
+		$query->select('id')->from($db->quoteName('#__template_styles'))
+			->where($db->quoteName('id') . ' = ' . $id);
+		$db->setQuery($query);
+		$result = $db->loadResult();
+
+		return isset($result);
+	}
+
 	/**
 	 * Load template data from cache or database.
 	 *

@@ -111,5 +111,6 @@
 	"scssoption": "1",
 	"enable_fontawesome": "1",
 	"ga_code": "",
-	"ga_tracking_method": ""
+	"ga_tracking_method": "",
+	"offcanvas_max_level": "0"
 }

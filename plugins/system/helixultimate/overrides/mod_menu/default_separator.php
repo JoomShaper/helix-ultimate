@@ -13,6 +13,10 @@ use Joomla\CMS\HTML\HTMLHelper;
 $title      = $item->anchor_title ? ' title="' . $item->anchor_title . '"' : '';
 $anchor_css = $item->anchor_css ?: '';
 
+$isOffcanvasMenu = $params->get('hu_offcanvas', 0, 'INT') === 1;
+$maxLevel = $params->get('endLevel', 0, 'INT');
+$showToggler = $maxLevel === 0 || $isOffcanvasMenu && $item->level < $maxLevel;
+
 $linktype   = $item->title;
 
 if ($item->menu_image)
@@ -33,7 +37,7 @@ if ($item->menu_image)
 	}
 }
 
-if ($item->parent)
+if ($item->parent && $showToggler)
 {
 	$linktype .= '<span class="menu-toggler"></span>';
 }

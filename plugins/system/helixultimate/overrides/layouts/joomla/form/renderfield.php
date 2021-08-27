@@ -28,6 +28,7 @@ if (!empty($options['showonEnabled']))
 	}
 }
 
+$name 			 = $name ?? '';
 $class           = empty($options['class']) ? '' : ' ' . $options['class'];
 $rel             = empty($options['rel']) ? '' : ' ' . $options['rel'];
 $id              = $name . '-desc';

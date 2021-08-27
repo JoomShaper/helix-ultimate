@@ -8,6 +8,8 @@
 
 namespace HelixUltimate\Framework\Platform;
 
+use Joomla\CMS\Filesystem\Path;
+
 /**
  * Static class for managing the overrides.
  *
@@ -45,7 +47,7 @@ final class HTMLOverride
 		$template = Helper::loadTemplateData();
 		$path = \preg_replace("@\{\{template\}\}@", $template->template, $path);
 
-		return $path;
+		return Path::clean($path);
 	}
 
 	private static function extractPath(string $path): array

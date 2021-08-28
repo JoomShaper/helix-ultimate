@@ -8,10 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-use Joomla\CMS\Language\Text;
-
-?>
-<span class="btn btn-outline-secondary btn-sm">
-	<span class="fas fa-print" aria-hidden="true"></span>
-	<?php echo Text::_('JGLOBAL_PRINT'); ?>
-</span>
+require HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

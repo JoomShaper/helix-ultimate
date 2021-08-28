@@ -7,7 +7,9 @@
 
 jQuery(function ($) {
 	/** Enable chosen for the font family of the typography panel. */
-	$('.hu-webfont-list').chosen({width: '100%'});
+	$('.hu-webfont-list').chosen({ width: '100%' });
+
+	Joomla.initColorPicker('.hu-font-color-input');
 
 	//Web Fonts
 	let $parentId = $('.hu-field-webfont').data('id');
@@ -16,16 +18,11 @@ jQuery(function ($) {
 	function renderPreview($parent) {
 		let fontFamily = $parent.find('.hu-webfont-list').val(),
 			fontWeight = $parent.find('.hu-webfont-weight-list').val(),
-			fontSize = $parent
-				.find('.hu-webfont-unit.active')
-				.find('.hu-unit-field-value')
-				.val(),
+			fontSize = $parent.find('.hu-webfont-unit.active').find('.hu-unit-field-value').val(),
 			fontColor = $parent.find('.hu-font-color-input').val(),
 			fontSubset = $parent.find('.hu-webfont-subset-list').val(),
 			fontLineHeight = $parent.find('.hu-font-line-height-input').val(),
-			fontSpacing = $parent
-				.find('[name=hu-font-letter-spacing-input]')
-				.val(),
+			fontSpacing = $parent.find('[name=hu-font-letter-spacing-input]').val(),
 			textDecoration = $parent.find('input.hu-text-decoration').val(),
 			textAlign = $parent.find('input.hu-text-align').val();
 
@@ -94,22 +91,10 @@ jQuery(function ($) {
 		var $that = $(this),
 			fontName = $that.val();
 
-		var systemFonts = [
-			'Arial',
-			'Tahoma',
-			'Verdana',
-			'Helvetica',
-			'Times New Roman',
-			'Trebuchet MS',
-			'Georgia',
-		];
+		var systemFonts = ['Arial', 'Tahoma', 'Verdana', 'Helvetica', 'Times New Roman', 'Trebuchet MS', 'Georgia'];
 
 		if ($.inArray(fontName, systemFonts) !== -1) {
-			$that
-				.closest('.hu-field-webfont')
-				.find('.hu-webfont-subset-list')
-				.html('')
-				.trigger('liszt:updated');
+			$that.closest('.hu-field-webfont').find('.hu-webfont-subset-list').html('').trigger('liszt:updated');
 		} else {
 			var data = {
 				fontName: fontName,
@@ -151,14 +136,10 @@ jQuery(function ($) {
 	});
 
 	// Font Size
-	$(document).on(
-		'change',
-		'.hu-webfont-unit .hu-unit-field-value',
-		function (event) {
-			event.preventDefault();
-			renderPreview($(this).closest('.hu-field-webfont'));
-		}
-	);
+	$(document).on('change', '.hu-webfont-unit .hu-unit-field-value', function (event) {
+		event.preventDefault();
+		renderPreview($(this).closest('.hu-field-webfont'));
+	});
 
 	$('.hu-font-color-input').on('input', function (event) {
 		event.preventDefault();
@@ -191,11 +172,7 @@ jQuery(function ($) {
 	$('.list-font-subset').on('change', function (event) {
 		event.preventDefault();
 
-		var font = $(this)
-			.closest('.hu-field-webfont')
-			.find('.hu-webfont-list')
-			.val()
-			.replace(' ', '+');
+		var font = $(this).closest('.hu-field-webfont').find('.hu-webfont-list').val().replace(' ', '+');
 		$('head').append(
 			"<link href='//fonts.googleapis.com/css?family=" +
 				font +
@@ -207,42 +184,32 @@ jQuery(function ($) {
 	});
 
 	// Text decoration
-	$('.hu-font-decoration .hu-action-group .hu-switcher-action').on(
-		'click',
-		function (e) {
-			e.preventDefault();
-			e.stopPropagation();
+	$('.hu-font-decoration .hu-action-group .hu-switcher-action').on('click', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
 
-			$(this).siblings().removeClass('active');
-			$(this).addClass('active');
-			$(this)
-				.closest('.hu-font-decoration')
-				.find('input.hu-text-decoration')
-				.val($(this).data('value'))
-				.trigger('change');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$(this)
+			.closest('.hu-font-decoration')
+			.find('input.hu-text-decoration')
+			.val($(this).data('value'))
+			.trigger('change');
 
-			renderPreview($(this).closest('.hu-field-webfont'));
-		}
-	);
+		renderPreview($(this).closest('.hu-field-webfont'));
+	});
 
 	// Text alignment
-	$('.hu-font-alignment .hu-action-group .hu-switcher-action').on(
-		'click',
-		function (e) {
-			e.preventDefault();
-			e.stopPropagation();
+	$('.hu-font-alignment .hu-action-group .hu-switcher-action').on('click', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
 
-			$(this).siblings().removeClass('active');
-			$(this).addClass('active');
-			$(this)
-				.closest('.hu-font-alignment')
-				.find('input.hu-text-align')
-				.val($(this).data('value'))
-				.trigger('change');
+		$(this).siblings().removeClass('active');
+		$(this).addClass('active');
+		$(this).closest('.hu-font-alignment').find('input.hu-text-align').val($(this).data('value')).trigger('change');
 
-			renderPreview($(this).closest('.hu-field-webfont'));
-		}
-	);
+		renderPreview($(this).closest('.hu-field-webfont'));
+	});
 
 	//Update Fonts list
 	$(document).on('click', '#update_fonts', function (event) {

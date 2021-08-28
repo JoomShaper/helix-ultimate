@@ -6,20 +6,6 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined('JPATH_BASE') or die;
+defined ('JPATH_BASE') or die();
 
-use Joomla\CMS\Language\Text;
-
-$name = $displayData;
-
-?>
-<div class="toggle-editor btn-toolbar float-end clearfix mt-3">
-	<div class="btn-group">
-		<a class="btn btn-secondary" href="#"
-			onclick="tinyMCE.execCommand('mceToggleEditor', false, '<?php echo $name; ?>');return false;"
-			title="<?php echo Text::_('PLG_TINY_BUTTON_TOGGLE_EDITOR'); ?>"
-		>
-			<span class="icon-eye" aria-hidden="true"></span> <?php echo Text::_('PLG_TINY_BUTTON_TOGGLE_EDITOR'); ?>
-		</a>
-	</div>
-</div>
+require HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

@@ -27,16 +27,19 @@ $logo = new HelixUltimateFeatureLogo($params);
 
 $hasModMenu = array_search('mod_menu', array_column(ModuleHelper::getModules('offcanvas'), 'module'));
 
+$menuType = $params->get('offcanvas_menu', 'mainmenu', 'STRING');
+$maxLevel = $params->get('offcanvas_max_level', 0, 'INT');
+
 $menuModule = Helper::createModule('mod_menu', [
 	'title' => 'Main Menu',
-	'params' => '{"menutype":"' . $params->get('offcanvas_menu', 'mainmenu') . '","base":"","startLevel":"1","endLevel":"0","showAllChildren":"1","tag_id":"","class_sfx":" nav-pills","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}',
+	'params' => '{"menutype":"' . $menuType . '","base":"","startLevel":1,"endLevel":' . $maxLevel . ',"showAllChildren":1,"tag_id":"","class_sfx":" nav-pills","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0", "hu_offcanvas": 1}',
 	'name' => 'menu'
 ]);
 
 $searchModule = Helper::getSearchModule();
 ?>
 <div class="offcanvas-menu border-menu center-alignment text-center">
-	<div class="d-flex align-items-center p-3">
+	<div class="d-flex align-items-center p-3 pt-4">
 		<?php echo $logo->renderFeature(); ?>
 		<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
 			<div class="burger-icon">

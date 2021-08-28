@@ -8,13 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-$form = $displayData->getForm();
-
-$title = $form->getField('title') ? 'title' : ($form->getField('name') ? 'name' : '');
-?>
-<div class="m-t-2 m-b-3">
-	<?php
-	echo $title ? $form->renderField($title) : '';
-	echo $form->renderField('alias');
-	?>
-</div>
+require HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

@@ -238,6 +238,18 @@ class Helper
 		return md5($string);
 	}
 
+	private static function checkTemplateStyleValidity(int $id) : bool
+	{
+		$db 	= Factory::getDbo();
+		$query 	= $db->getQuery(true);
+		$query->select('id')->from($db->quoteName('#__template_styles'))
+			->where($db->quoteName('id') . ' = ' . $id);
+		$db->setQuery($query);
+		$result = $db->loadResult();
+
+		return isset($result);
+	}
+
 	/**
 	 * Load template data from cache or database.
 	 *
@@ -463,9 +475,10 @@ class Helper
 	public static function getTemplatePositions()
 	{
 		$positions = array();
+		$template = self::loadTemplateData();
 
 		$templateBaseDir = JPATH_SITE;
-		$filePath = Path::clean($templateBaseDir . '/templates/shaper_helixultimate/templateDetails.xml');
+		$filePath = Path::clean($templateBaseDir . '/templates/' . $template->template . '/templateDetails.xml');
 
 		if (is_file($filePath))
 		{
@@ -532,12 +545,13 @@ class Helper
 					$menuItemList->$parentId->children[] = $element->id;
 				}
 
+				$elementId = $element->id;
 				$temp = new \stdClass;
 				$temp->id = $element->id;
 				$temp->title = $element->title;
 				$temp->level = $element->level;
 				$temp->children = [];
-				$menuItemList->{$element->id} = $temp;
+				$menuItemList->$elementId = $temp;
 
 				self::getMenuItems($element->id, $menuItemList);
 			}
@@ -557,7 +571,7 @@ class Helper
 
 		$module = self::createModule($name, [
 			'title' => 'Search',
-			'params' => '{"label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}'
+			'params' => '{"show_label": 0, "label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}'
 		]);
 
 		return $module;
@@ -576,7 +590,7 @@ class Helper
 	{
 		if (empty($name))
 		{
-			throw new \Exception(sprintf('createModule method expect the module $name as first argument!'));
+			throw new \Exception(\sprintf('%s method expect the module $name as first argument!', __METHOD__));
 		}
 
 		if (!empty($options) && \is_object($options))
@@ -587,5 +601,49 @@ class Helper
 		$defaultOptions = ['id' => 0, 'title' => '', 'module' => $name, 'position' => '', 'content' => '', 'showtitle' => 0, 'control' => '', 'params' => '', 'menuid' => 0, 'style' => ''];
 
 		return ArrayHelper::toObject(\array_merge($defaultOptions, $options));
+	}
+
+	/**
+	 * Check a string ends with a needle or not.
+	 *
+	 * @param	string	$haystack	The main string.
+	 * @param	string	$needle		The needle to search at the end.
+	 *
+	 * @return	bool	True if find at the end, false otherwise.
+	 * @since 	2.0.2
+	 */
+	public static function endsWith(string $haystack, string $needle): bool
+	{
+		$isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
+		$length = strlen($needle);
+
+		if ($isEight)
+		{
+			return \str_ends_with($haystack, $needle);
+		}
+
+		return !$length ? true : substr($haystack, -$length) === $needle;
+	}
+
+	/**
+	 * Check a string starts with a needle or not.
+	 *
+	 * @param	string	$haystack	The main string.
+	 * @param	string	$needle		The needle to search at the beginning.
+	 *
+	 * @return	bool	True if find at the starting position, false otherwise.
+	 * @since 	2.0.2
+	 */
+	public static function startsWith(string $haystack, string $needle): bool
+	{
+		$isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
+		$length = strlen($needle);
+
+		if ($isEight)
+		{
+			return \str_starts_with($haystack, $needle);
+		}
+
+		return substr($haystack, 0, $length) === $needle;
 	}
 }

@@ -13,6 +13,22 @@ jQuery(function ($) {
 	const storage = localStorage || window.localStorage;
 	let delayTimeout = null;
 
+	Joomla.initColorPicker = function (selector, options = {}) {
+		const defaults = {
+			animationSpeed: 50,
+			animationEasing: 'swing',
+			control: 'hue',
+			position: 'bottom',
+			theme: 'bootstrap',
+			keywords: 'transparent, initial, inherit',
+			letterCase: 'uppercase',
+		};
+
+		$(selector).each(function () {
+			$(this).minicolors({ ...defaults, ...options });
+		});
+	};
+
 	/** In case of chosen multi-select not working.  */
 	$('.form-select[multiple]').chosen({ width: '100%' });
 
@@ -360,7 +376,7 @@ jQuery(function ($) {
 	 */
 	(function trackChanges() {
 		$('form#hu-style-form')
-			.find('input[type="text"], input[type="email"], input[type="number"], textarea')
+			.find('input[type="text"], input[type="email"], input[type="number"]')
 			.on('keydown', function (e) {
 				if (e.keyCode === 13) {
 					e.preventDefault();
@@ -604,11 +620,23 @@ jQuery(function ($) {
 	function onDeviceChange({ name, parent, map, device }) {
 		['', '_sm', '_xs'].forEach(size => {
 			const $element = $(`input[name=${name}${size}]`).closest(parent);
-			if (!$element.hasClass('hidden')) $element.addClass('hidden');
+			if (!$element.hasClass('field-hidden')) $element.addClass('field-hidden');
 		});
 		const selector = `input[name=${name}${map[device] === 'md' ? '' : '_' + map[device]}]`;
-		$(selector).closest(parent).removeClass('hidden');
+		$(selector).closest(parent).removeClass('field-hidden');
 	}
+
+	/** Change logo height on device changed. */
+	onDeviceChange({
+		name: 'logo_height',
+		parent: '.group-style-logo',
+		map: {
+			desktop: 'md',
+			tablet: 'sm',
+			mobile: 'xs',
+		},
+		device: 'desktop',
+	});
 
 	/**
 	 * Function to switch between various devices
@@ -950,16 +978,6 @@ jQuery(function ($) {
 		const reader = new FileReader();
 		reader.onload = function (event) {
 			const settings = JSON.parse(event.target.result);
-
-			if (settings.template === undefined || settings.template !== 'shaper_helixultimate') {
-				Joomla.HelixToaster.error(
-					'The settings JSON file seems invalid! Please import a valid helix ultimate settings JSON.',
-					'Error'
-				);
-				$('#helix-import-file').val('');
-				return false;
-			}
-
 			var data = { settings: event.target.result };
 
 			var request = {

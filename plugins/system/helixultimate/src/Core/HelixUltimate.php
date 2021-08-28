@@ -404,16 +404,22 @@ class HelixUltimate
 				continue;
 			}
 
+			
 			$file = trim($file);
 			$file_path = $asset_path . $file;
+			
+			if (!Helper::endsWith($file_path, $folder))
+			{
+				$file_path .= '.' . $folder;
+			}
 
 			if (File::exists($file_path))
 			{
-				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . $file;
+				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
 			}
 			elseif (File::exists($file))
 			{
-				$file_url = $file;
+				$file_url = Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder;
 			}
 			else
 			{
@@ -1468,8 +1474,22 @@ class HelixUltimate
 
 			foreach ($all_declared_scripts as $key => $script)
 			{
+				$scriptString = '';
+
+				if (\is_array($script))
+				{
+					foreach ($script as $value)
+					{
+						$scriptString .= $value . "\r\n";
+					}
+				}
+				else
+				{
+					$scriptString = $script;
+				}
+
 				$declaredScriptHash .= md5($key);
-				$scriptContent .= \JShrink\Minifier::minify($script, array('flaggedComments' => false));
+				$scriptContent .= \JShrink\Minifier::minify($scriptString, array('flaggedComments' => false));
 				unset($this->doc->_script[$key]);
 			}
 

@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2020 JoomShaper
+ * Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -50,13 +50,13 @@ $searchModule = Helper::getSearchModule();
 		<div class="container-inner">
 		<div class="row align-items-center">
 					<!-- Contact -->
-					<div id="sp-contact" class="col-6 col-xl-4">
+					<div id="sp-contact" class="col-6 col-xl-3">
 					<?php echo $contact->renderFeature(); ?>
 					</div>
 	
 					<!-- Logo -->
-					<div id="sp-logo" class="col-12 col-xl-4 d-none d-xl-block">
-						<div class="sp-column d-flex align-items-center  justify-content-center">
+					<div id="sp-logo" class="col-12 col-xl-3 d-none d-xl-block">
+						<div class="sp-column d-flex align-items-center  justify-content-end">
 							<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
 								<?php echo $logo->renderFeature(); ?>
 								<jdoc:include type="modules" name="logo" style="sp_xhtml" />
@@ -68,7 +68,7 @@ $searchModule = Helper::getSearchModule();
 					</div>
 								
 					<!-- Social -->
-					<div id="sp-social" class="col-6 col-xl-4">
+					<div id="sp-social" class="col-6 col-xl-6">
 						<div class="sp-column d-flex justify-content-end">
 							<!-- Social icons -->
 							<div class="social-wrap d-flex align-items-center">
@@ -97,7 +97,7 @@ $searchModule = Helper::getSearchModule();
 		<div class="container-inner">
 			<!-- Menu -->
 			<div class="row">
-				<div class="col-6 d-block d-xl-none">
+				<div class="col-lg-3 col-6 d-block d-xl-none">
 					<div class="sp-column d-flex justify-content-between align-items-center">
 						<div id="sp-logo" class="menu-with-offcanvas">
 							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
@@ -106,7 +106,7 @@ $searchModule = Helper::getSearchModule();
 					</div>
 				</div>
 
-				<div class="col-6 col-xl-12">
+				<div class="col-lg-9 col-6 col-xl-12">
 					<div class="d-flex justify-content-end justify-content-xl-center align-items-center">
 						<!-- if offcanvas position left -->
 						<?php if($offcanvas_position === 'left') : ?>

@@ -11,7 +11,9 @@ const zip = require('gulp-zip');
 const config = {
 	srcPath: path.resolve(__dirname),
 	buildPath: path.resolve(__dirname, './package/'),
-	packageName: 'Helix_Ultimate_2.0.1.zip',
+	packageName: 'helix_ultimate_pkg_2.0.2.zip',
+	pluginPackageName: 'helix_ultimate_plugin_pkg_2.0.2.zip',
+	templatePackageName: 'helix_ultimate_template_pkg_2.0.2.zip',
 	templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css',
 	pluginFileExtensions: function () {
 		return this.templateFileExtensions + ', ini';
@@ -81,6 +83,28 @@ function buildPackage() {
 		.pipe(dest(config.buildPath));
 }
 
+function buildPkgForPlugin() {
+	return src(`${config.buildPath}/plugins/system/**`)
+		.pipe(zip(config.pluginPackageName))
+		.pipe(dest(config.buildPath));
+}
+
+function buildPkgForTemplate() {
+	return src(`${config.buildPath}/template/**`).pipe(zip(config.templatePackageName)).pipe(dest(config.buildPath));
+}
+
+function clear() {
+	return del(
+		[
+			`${config.buildPath}/plugins`,
+			`${config.buildPath}/template`,
+			`${config.buildPath}/installer.script.php`,
+			`${config.buildPath}/installer.xml`,
+		],
+		{ force: true }
+	);
+}
+
 exports.default = series(
 	clean,
 	parallel(
@@ -88,5 +112,6 @@ exports.default = series(
 		series(templateLanguageStreamTask, templateStreamTask),
 		series(pluginStreamTask, templatePluginLanguageStreamTask)
 	),
-	buildPackage
+	parallel(buildPackage, buildPkgForPlugin, buildPkgForTemplate),
+	clear
 );

@@ -8,9 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-use Joomla\CMS\Language\Text;
-?>
-<span class="btn btn-outline-secondary btn-sm">
-	<span class="fas fa-envelope" aria-hidden="true"></span>
-	<?php echo Text::_('JGLOBAL_EMAIL'); ?>
-</span>
+require HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

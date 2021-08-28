@@ -8,12 +8,4 @@
 
 defined ('JPATH_BASE') or die();
 
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
-$articleView = $displayData['articleView'];
-?>
-<span class="create" title="<?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $displayData['item']->created, Text::_('DATE_FORMAT_LC3'))); ?>">
-	<time datetime="<?php echo HTMLHelper::_('date', $displayData['item']->created, 'c'); ?>"<?php echo ($articleView == 'details') ? ' itemprop="dateCreated"' : ''; ?>>
-		<?php echo HTMLHelper::_('date', $displayData['item']->created, Text::_('DATE_FORMAT_LC3')); ?>
-	</time>
-</span>
+require HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

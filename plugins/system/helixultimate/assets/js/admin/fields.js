@@ -8,6 +8,9 @@ jQuery(function ($) {
 			control: 'hue',
 			position: 'bottom',
 			theme: 'bootstrap',
+			keywords: 'transparent, initial, inherit',
+			letterCase: 'uppercase',
+			opacity: true,
 		});
 	});
 
@@ -20,9 +23,7 @@ jQuery(function ($) {
 		}
 
 		$(this).addClass('active');
-		const $inputField = $(this)
-			.closest('.hu-field-alignment')
-			.find('input[type=hidden]');
+		const $inputField = $(this).closest('.hu-field-alignment').find('input[type=hidden]');
 		$inputField.val($(this).data('value')).trigger('change');
 	});
 
@@ -32,70 +33,54 @@ jQuery(function ($) {
 	 */
 
 	// Select all
-	$(document).on(
-		'change',
-		'.hu-menu-hierarchy-container .hu-menu-item-selector.select-all',
-		function (e) {
-			e.preventDefault();
-			const $parent = $(this).closest('.hu-menu-hierarchy-list');
-			const $siblings = $parent.find(
-				'.hu-menu-hierarchy-item:not(.level-0)'
-			);
-			const $inputField = $(this)
-				.closest('.hu-menu-hierarchy-container')
-				.find('input[type=hidden]');
+	$(document).on('change', '.hu-menu-hierarchy-container .hu-menu-item-selector.select-all', function (e) {
+		e.preventDefault();
+		const $parent = $(this).closest('.hu-menu-hierarchy-list');
+		const $siblings = $parent.find('.hu-menu-hierarchy-item:not(.level-0)');
+		const $inputField = $(this).closest('.hu-menu-hierarchy-container').find('input[type=hidden]');
 
-			let checked = $(this).prop('checked');
-			let value = [];
+		let checked = $(this).prop('checked');
+		let value = [];
 
-			if (!checked) if (value.length > 0) value = [];
+		if (!checked) if (value.length > 0) value = [];
 
-			$siblings.each(function () {
-				const $input = $(this).find('input[type=checkbox]');
-				$input.prop('checked', checked);
-				const v = $input.val();
-				if (checked) if (value.indexOf(v) === -1) value.push(v);
-			});
+		$siblings.each(function () {
+			const $input = $(this).find('input[type=checkbox]');
+			$input.prop('checked', checked);
+			const v = $input.val();
+			if (checked) if (value.indexOf(v) === -1) value.push(v);
+		});
 
-			$inputField.val(JSON.stringify(value)).trigger('change');
-		}
-	);
+		$inputField.val(JSON.stringify(value)).trigger('change');
+	});
 
-	$(document).on(
-		'change',
-		'.hu-menu-hierarchy-container .hu-menu-item-selector:not(.level-0)',
-		function (e) {
-			e.preventDefault();
-			const $inputField = $(this)
-				.closest('.hu-menu-hierarchy-container')
-				.find('input[type=hidden]');
-			const $selectAllInputField = $(this)
-				.closest('.hu-menu-hierarchy-list')
-				.find('input[type=checkbox].select-all');
-			const elements = $selectAllInputField.data('elements');
+	$(document).on('change', '.hu-menu-hierarchy-container .hu-menu-item-selector:not(.level-0)', function (e) {
+		e.preventDefault();
+		const $inputField = $(this).closest('.hu-menu-hierarchy-container').find('input[type=hidden]');
+		const $selectAllInputField = $(this).closest('.hu-menu-hierarchy-list').find('input[type=checkbox].select-all');
+		const elements = $selectAllInputField.data('elements');
 
-			let value = $inputField.val();
-			value = (value.length && JSON.parse(value)) || [];
+		let value = $inputField.val();
+		value = (value.length && JSON.parse(value)) || [];
 
-			const val = $(this).val();
+		const val = $(this).val();
 
-			if ($(this).prop('checked')) {
-				if (value.indexOf(val) === -1) value.push(val);
-			} else {
-				let index = value.indexOf(val);
-				if (index > -1) {
-					value.splice(index, 1);
-				}
+		if ($(this).prop('checked')) {
+			if (value.indexOf(val) === -1) value.push(val);
+		} else {
+			let index = value.indexOf(val);
+			if (index > -1) {
+				value.splice(index, 1);
 			}
-
-			if (value.length === elements.length) {
-				$selectAllInputField.prop('checked', true);
-			} else {
-				$selectAllInputField.prop('checked', false);
-			}
-			$inputField.val(JSON.stringify(value)).trigger('change');
 		}
-	);
+
+		if (value.length === elements.length) {
+			$selectAllInputField.prop('checked', true);
+		} else {
+			$selectAllInputField.prop('checked', false);
+		}
+		$inputField.val(JSON.stringify(value)).trigger('change');
+	});
 
 	/**
 	 * Method to check condition and change the target visibility
@@ -114,9 +99,7 @@ jQuery(function ($) {
 		for (var j = 0, lj = jsondata.length; j < lj; j++) {
 			condition = jsondata[j] || {};
 			fieldName = condition.field;
-			$fields = $context.find(
-				'[name="' + fieldName + '"], [name="' + fieldName + '[]"]'
-			);
+			$fields = $context.find('[name="' + fieldName + '"], [name="' + fieldName + '[]"]');
 
 			condition['valid'] = 0;
 
@@ -132,10 +115,7 @@ jQuery(function ($) {
 					// se we can always tream 'itemval' as an array
 					itemval = $field.val();
 					// a multi-select <select> $field  will return null when no elements are selected so we need to define itemval accordingly
-					if (
-						itemval == null &&
-						$field.prop('tagName').toLowerCase() == 'select'
-					) {
+					if (itemval == null && $field.prop('tagName').toLowerCase() == 'select') {
 						itemval = [];
 					}
 				}
@@ -151,17 +131,11 @@ jQuery(function ($) {
 						continue;
 					}
 
-					if (
-						jsondata[j]['sign'] == '=' &&
-						jsondata[j]['values'].indexOf(itemval[i]) !== -1
-					) {
+					if (jsondata[j]['sign'] == '=' && jsondata[j]['values'].indexOf(itemval[i]) !== -1) {
 						jsondata[j]['valid'] = 1;
 					}
 
-					if (
-						jsondata[j]['sign'] == '!=' &&
-						jsondata[j]['values'].indexOf(itemval[i]) === -1
-					) {
+					if (jsondata[j]['sign'] == '!=' && jsondata[j]['values'].indexOf(itemval[i]) === -1) {
 						jsondata[j]['valid'] = 1;
 					}
 				}
@@ -172,18 +146,12 @@ jQuery(function ($) {
 					showfield = false;
 				}
 			} else {
-				if (
-					condition['op'] === 'AND' &&
-					condition['valid'] + jsondata[j - 1]['valid'] < 2
-				) {
+				if (condition['op'] === 'AND' && condition['valid'] + jsondata[j - 1]['valid'] < 2) {
 					showfield = false;
 					condition['valid'] = 0;
 				}
 
-				if (
-					condition['op'] === 'OR' &&
-					condition['valid'] + jsondata[j - 1]['valid'] > 0
-				) {
+				if (condition['op'] === 'OR' && condition['valid'] + jsondata[j - 1]['valid'] > 0) {
 					showfield = true;
 					condition['valid'] = 1;
 				}
@@ -233,9 +201,7 @@ jQuery(function ($) {
 				// Collect an all referenced elements
 				for (var ij = 0, lj = jsondata.length; ij < lj; ij++) {
 					field = jsondata[ij]['field'];
-					$fields = $fields.add(
-						$('[name="' + field + '"], [name="' + field + '[]"]')
-					);
+					$fields = $fields.add($('[name="' + field + '"], [name="' + field + '[]"]'));
 				}
 
 				// Check current condition for element
@@ -279,9 +245,7 @@ jQuery(function ($) {
 		if (match && match.length > 0) {
 			[_, value, unit] = match;
 			if (unit === undefined) {
-				unit =
-					$(this).parent().find('select.hu-unit-select').val() ||
-					'px';
+				unit = $(this).parent().find('select.hu-unit-select').val() || 'px';
 			}
 		} else {
 			value = parseFloat(value) || '';

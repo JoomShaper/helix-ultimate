@@ -53,11 +53,11 @@ class JFormFieldHelixpresets extends FormField
 	protected function getInput()
 	{
 		$children = $this->element->children();
-		$defaults = array();
+		$presetXml = array();
 
 		foreach ($children as $child)
 		{
-			$defaults[(string) $child['name']] = $this->getDefaultDataFromXML($child);
+			$presetXml[(string) $child['name']] = $this->getDefaultDataFromXML($child);
 		}
 
 		$html = '<div class="hu-presets clearfix">';
@@ -70,7 +70,8 @@ class JFormFieldHelixpresets extends FormField
 		}
 
 		$params = $templateData->params;
-		$presetsData = $params->get('presets-data', null);
+		$data = $params->get('presets-data', null);
+		$presetsData = $this->createPresetData($data, array_keys($presetXml), $children);
 
 		if (!empty($presetsData))
 		{
@@ -84,7 +85,7 @@ class JFormFieldHelixpresets extends FormField
 		$data = json_encode($data);
 
 		$html .= $htmlString;
-		$html .= '<input id="default-values" type="hidden" class="default-values" value=\'' . json_encode($defaults) . '\' />';
+		$html .= '<input id="default-values" type="hidden" class="default-values" value=\'' . json_encode($presetXml) . '\' />';
 		$html .= '<input id="presets-data" type="hidden" name="presets-data" class="hu-presets-data" value=\'' . $data . '\' />';
 		$html .= '<input id="' . $this->id . '" type="hidden" name="' . $this->name . '" class="hu-input-preset" value=\'' . $this->value . '\' />';
 		$html .= '</div>';
@@ -92,6 +93,60 @@ class JFormFieldHelixpresets extends FormField
 
 		return $html;
 	}
+
+	/**
+	 * Check if the options.xml is updated with new preset values or not.
+	 * If any new preset added to the xml then update the json and add the
+	 * new one. Same for removing a preset at xml.
+	 *
+	 * @param 	string 		$json	The JSON preset value string.
+	 * @param	array		$names	The preset names array.
+	 * @param 	SimpleXML	$presets	The simple XML children of the presets.
+	 *
+	 * @return 	array
+	 * @since 	2.0.2
+	 */
+	private function createPresetData($json, $names, $presets) : \stdClass
+	{
+		if (\is_string($json))
+		{
+			$json = \json_decode($json);
+		}
+
+		$keys = \array_keys((array) $json);
+		$names = \array_flip($names);
+
+		foreach ($json as $presetName => $presetData)
+		{
+			if (!isset($names[$presetName]))
+			{
+				unset($json->$presetName);
+			}
+			else
+			{
+				unset($names[$presetName]);
+			}
+		}
+
+		foreach ($presets as $child)
+		{
+			$elementName = (string) $child['name'];
+
+			if (isset($names[$elementName]))
+			{
+				$json->$elementName = array(
+					'label' => isset($child['label']) ? (string) $child['label'] : '',
+					'default' => isset($child['default']) ? (string) $child['default'] : '',
+					'description' => isset($child['description']) ? $child['description'] : '',
+					'data' => (object) $this->getDefaultDataFromXML($child)
+				);
+				$json->$elementName = (object) $json->$elementName;
+			}
+		}
+		
+		return $json;
+	}
+
 
 	private function getDefaultDataFromXML($presets)
 	{
@@ -112,7 +167,7 @@ class JFormFieldHelixpresets extends FormField
 	 * data into database
 	 *
 	 * @param	string	$json	Preset json string.
-	 * @param	object	$value	Field value
+	 * @param	string	$value	Field value
 	 *
 	 * @return	array
 	 * @since	2.0.0
@@ -177,7 +232,7 @@ class JFormFieldHelixpresets extends FormField
 	 *
 	 *
 	 * @param	array	$children	Preset fields
-	 * @param	object	$value		Field value
+	 * @param	string	$value		Field value
 	 *
 	 * @return	array
 	 * @since	2.0.0

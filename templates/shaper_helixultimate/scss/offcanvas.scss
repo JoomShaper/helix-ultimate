@@ -48,7 +48,7 @@
 
 .close-offcanvas {
   position: absolute;
-  top: 15px;
+  top: 25px;
   z-index: 1;
 }
 
@@ -75,7 +75,7 @@
     }
     .sp-sign-in {
       position: relative;
-      top: 44px;
+      top: 10px;
       .signin-text {
         display: none !important;
       }
@@ -97,6 +97,7 @@
       }
     }
     .sp-contact-info {
+      margin-top:20px;
       > li:not(:last-child) {
         margin-bottom: 10px;
       }
@@ -115,6 +116,10 @@
 
       &:not(:last-child) {
         margin-bottom: 20px;
+      }
+      //search width
+      .awesomplete {
+        width: 210px;
       }
     }
     ul.menu {
@@ -144,13 +149,18 @@
         > span {
           display: block;
           font-size: 18px;
-          padding: 0.125rem 0;
+          padding: 10px 0px;
           position: relative;
+          line-height: 18px;
           opacity: 0.7;
           transition: 0.3s;
           &:hover {
             opacity: 1;
           }
+        }
+
+        ul.menu-child {
+          display: none;
         }
 
         &.menu-parent {
@@ -167,6 +177,35 @@
                 font-family: "Font Awesome 5 Free";
                 content: "\f105";
                 font-weight: 900;
+              }
+            }
+          }
+
+          & li.menu-parent {
+            > a {
+              position: relative;
+              display: block;
+            }
+
+            .menu-toggler {
+              right: 0px;
+              display: block;
+              position: absolute;
+              top: 50%;
+              cursor: pointer;
+              transform: translateY(-50%);
+              -webkit-transform: translateY(-50%);
+              &:after {
+                font-family: "Font Awesome 5 Free";
+                content: "\f105";
+                font-weight: 900;
+              }
+            }
+            &.menu-parent-open {
+              .menu-toggler {
+                &:after {
+                  content: "\f107";
+                }
               }
             }
           }
@@ -209,11 +248,14 @@
           }
         }
 
-        ul {
+        > ul {
           display: none;
           li {
             a {
-              font-size: 0.875rem;
+              font-size: 15px;
+              padding: 4px 0px;
+              line-height: 18px;
+              font-weight: 400;
             }
           }
         }

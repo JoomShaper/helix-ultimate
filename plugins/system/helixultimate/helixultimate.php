@@ -26,6 +26,7 @@ use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
@@ -402,6 +403,16 @@ class  PlgSystemHelixultimate extends JPlugin
 			{
 				$theme->compress_js($params->get('exclude_js'));
 			}
+
+			/**
+			 * Adding custom directory for the assets.
+			 * If anyone put any file inside the `templates/shaper_helixultimate/css/custom`
+			 * or `templates/shaper_helixultimate/js/custom` directory then the files
+			 * would be added to the site.
+			 */
+			$theme->addCustomCSS();
+			$theme->addCustomSCSS();
+			$theme->addCustomJS();
 		}
 	}
 
@@ -512,8 +523,9 @@ class  PlgSystemHelixultimate extends JPlugin
 			$classRegex = "@<img[^>]*class=[\"\']([^\"\']*)[\"\'][^>]*>@";
 
 			$body = $content = $this->app->getBody();
+			$find = [];
 
-			// Get all the images tags
+			/** Get all the images tags. */
 			preg_match_all($srcRegex, $body, $matches);
 
 			if (!empty($matches))
@@ -525,16 +537,30 @@ class  PlgSystemHelixultimate extends JPlugin
 				 */
 				foreach ($matches[1] as $key => $match)
 				{
+					$find[] = $matches[0][$key];
+
+					/** Cleanup the image src. */
+					$_match = JVERSION >= 4
+						? MediaHelper::getCleanMediaFieldValue($match)
+						: $match;
+					
 					if (preg_match("@(^images\/|^\/+images\/).*$@", $match))
 					{
-						$update = Uri::root(true) . '/' . $match;
-						$matches[0][$key] = preg_replace("@" . $match . "@", $update, $matches[0][$key]);
+						$update = Uri::base() . $_match;
+						$regex = "@" . \preg_quote($match, '/') . "@";
+						$matches[0][$key] = preg_replace($regex, $update, $matches[0][$key]);
+					}
+					else
+					{
+						if ($match !== $_match)
+						{
+							$regex = "@" . \preg_quote($match, '/') . "@";
+							$matches[0][$key] = preg_replace($regex, $_match, $matches[0][$key]);
+						}
 					}
 				}
 
-				/**
-				 * Loop through the full matches
-				 */
+				/** Loop through the full matches. */
 				foreach ($matches[0] as $key => $match)
 				{
 					$imageElement = $match;
@@ -560,9 +586,7 @@ class  PlgSystemHelixultimate extends JPlugin
 						$imageElement = preg_replace("@(<img[^>]*?)(\/?>)@", "$1 " . $dataSize, $imageElement);
 					}
 
-					/**
-					 * Check if there is any class attribute at the image element
-					 */
+					/** Check if there is any class attribute at the image element. */
 					if (preg_match($classRegex, $imageElement, $classMatches))
 					{
 						/**
@@ -579,17 +603,13 @@ class  PlgSystemHelixultimate extends JPlugin
 					}
 					else
 					{
-						/**
-						 * If no class attribute exists then add a class attribute
-						 */
+						/** If no class attribute exists then add a class attribute. */
 						$newClass = 'class="lazyload" />';
 						$imageElement = preg_replace("@(<img[^>]*?)(\/?>)@", "$1 " . $newClass, $imageElement);
 					}
 
-					/**
-					 * Update the content with updated images
-					 */
-					$content = str_replace($matches[0][$key], $imageElement, $content);
+					/** Update the content with updated images. */
+					$content = str_replace($find[$key], $imageElement, $content);
 				}
 			}
 

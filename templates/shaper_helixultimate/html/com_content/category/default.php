@@ -8,19 +8,4 @@
 
 defined ('_JEXEC') or die();
 
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Layout\LayoutHelper;
-
-HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
-// HTMLHelper::_('behavior.caption');
-
-?>
-<div class="category-list<?php echo $this->pageclass_sfx; ?>">
-
-<?php
-
-$this->subtemplatename = 'articles';
-echo LayoutHelper::render('joomla.content.category_default', $this);
-?>
-
-</div>
+require HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate();

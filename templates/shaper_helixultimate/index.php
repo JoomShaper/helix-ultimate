@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2020 JoomShaper
+ * Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -182,16 +182,6 @@ if ($custom_js = $this->params->get('custom_js', null))
 		{
 			$theme->add_css('custom.css');
 		}
-
-		/**
-		 * Adding custom directory for the assets.
-		 * If anyone put any file inside the `templates/shaper_helixultimate/css/custom`
-		 * or `templates/shaper_helixultimate/js/custom` directory then the files
-		 * would be added to the site.
-		 */
-		$theme->addCustomCSS();
-		$theme->addCustomSCSS();
-		$theme->addCustomJS();
 
 		//Before Head
 		if ($before_head = $this->params->get('before_head'))

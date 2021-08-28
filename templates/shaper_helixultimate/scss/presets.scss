@@ -32,8 +32,9 @@ body,
 #sp-header {
 	background: $header_bg_color;
 }
-#sp-menu ul.social-icons{
-	a:hover, a:focus{
+#sp-menu ul.social-icons {
+	a:hover,
+	a:focus {
 		color: $link_color;
 	}
 }
@@ -168,7 +169,7 @@ a {
 	background-color: $menu_dropdown_bg_color;
 	color: $menu_dropdown_text_color;
 	.offcanvas-inner {
-		a{
+		a {
 			color: $text_color;
 			&:hover,
 			&:focus,
@@ -193,21 +194,20 @@ a {
 					> .menu-separator {
 						> .menu-toggler {
 							@if $menu_dropdown_text_color {
-								color: fade-out(
-									$menu_dropdown_text_color,
-									0.5
-								);
+								color: fade-out($menu_dropdown_text_color, 0.5);
 							}
+						}
+					}
+					.menu-toggler {
+						@if $menu_dropdown_text_color {
+							color: fade-out($menu_dropdown_text_color, 0.5);
 						}
 					}
 				}
 				li {
 					a {
 						@if $menu_dropdown_text_color {
-							color: fade-out(
-								$menu_dropdown_text_color,
-								0.2
-							);
+							color: fade-out($menu_dropdown_text_color, 0.2);
 						}
 					}
 				}

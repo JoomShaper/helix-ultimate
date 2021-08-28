@@ -1,15 +1,1 @@
-<svg width="76" height="140" viewBox="0 0 76 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="1.25" y="1.25" width="73.5" height="137.5" rx="3.75" fill="#E3E9F2" stroke="#CDD0DF" stroke-width="1.5"/>
-<rect x="2" y="2" width="64" height="136" rx="3" fill="#F8FBFF"/>
-<path d="M59 9.525L58.475 9L56 11.475L53.525 9L53 9.525L55.475 12L53 14.475L53.525 15L56 12.525L58.475 15L59 14.475L56.525 12L59 9.525Z" fill="#6B709B"/>
-<rect opacity="0.5" x="9" y="8" width="20" height="8" rx="1" fill="#6B719B"/>
-<path opacity="0.7" d="M60 45L9 45" stroke="#CDD0DF" stroke-width="0.5"/>
-<path opacity="0.7" d="M60 63L9 63" stroke="#CDD0DF" stroke-width="0.5"/>
-<path opacity="0.7" d="M60 81H9" stroke="#CDD0DF" stroke-width="0.5"/>
-<path opacity="0.7" d="M60 99H9" stroke="#CDD0DF" stroke-width="0.5"/>
-<rect x="9" y="34" width="21.25" height="4" rx="1" fill="#6B719B"/>
-<rect x="9" y="52" width="17" height="4" rx="1" fill="#6B719B"/>
-<rect x="9" y="70" width="15.5833" height="4" rx="1" fill="#6B719B"/>
-<rect x="9" y="88" width="19.8333" height="4" rx="1" fill="#6B719B"/>
-<rect x="9" y="106" width="14.1667" height="4" rx="1" fill="#6B719B"/>
-</svg>
+<svg width="76" height="140" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1.25" y="1.25" width="73.5" height="137.5" rx="3.75" fill="#E3E9F2" stroke="#CDD0DF" stroke-width="1.5"/><rect x="2" y="2" width="64" height="136" rx="3" fill="#F8FBFF"/><path d="M59 9.525L58.475 9 56 11.475 53.525 9 53 9.525 55.475 12 53 14.475l.525.525L56 12.525 58.475 15l.525-.525L56.525 12 59 9.525z" fill="#6B709B"/><rect opacity="0.5" x="9" y="8" width="20" height="8" rx="1" fill="#6B719B"/><path opacity="0.7" d="M60 45H9M60 63H9M60 81H9M60 99H9" stroke="#CDD0DF" stroke-width="0.5"/><rect x="9" y="34" width="21.25" height="4" rx="1" fill="#6B719B"/><rect x="9" y="52" width="17" height="4" rx="1" fill="#6B719B"/><rect x="9" y="70" width="15.5833" height="4" rx="1" fill="#6B719B"/><rect x="9" y="88" width="19.8333" height="4" rx="1" fill="#6B719B"/><rect x="9" y="106" width="14.1667" height="4" rx="1" fill="#6B719B"/></svg>

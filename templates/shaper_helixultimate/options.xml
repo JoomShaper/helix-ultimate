@@ -56,23 +56,23 @@
 			display="inline" 
 			default="30" 
 			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
-			showon="logo_type:image[AND]logo_image!:" />
+			showon="logo_type:image" />
 
 		<field name="logo_height_sm" 
 			helixgroup="logo" 
 			type="helixUnit"
 			display="inline" 
-			className="hidden"
+			className="field-hidden"
 			label="HELIX_ULTIMATE_LOGO_HEIGHT_SM" 
-			showon="logo_type:image[AND]logo_image!:" />
+			showon="logo_type:image" />
 
 		<field name="logo_height_xs" 
 			helixgroup="logo" 
 			type="helixUnit"
 			display="inline" 
-			className="hidden"
+			className="field-hidden"
 			label="HELIX_ULTIMATE_LOGO_HEIGHT_XS" 
-			showon="logo_type:image[AND]logo_image!:" />
+			showon="logo_type:image" />
 
 		<field name="logo_text" 
 			helixgroup="logo" 
@@ -108,12 +108,12 @@
 			helixgroup="header" 
 			type="helixUnit" 
 			display="inline"
-			className="hidden"
+			className="field-hidden"
 			label="HELIX_ULTIMATE_HEADER_HEIGHT_SM" />
 		<field name="header_height_xs" 
 			helixgroup="header" 
 			type="helixUnit"
-			className="hidden"
+			className="field-hidden"
 			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT_XS" />
 
@@ -177,6 +177,7 @@
 		<field name="loader_type" 
 			helixgroup="body" 
 			type="list" 
+			class="form-select"
 			default="circle" 
 			label="HELIX_ULTIMATE_PRELOADER_LOADER_TYPE" 
 			description="HELIX_ULTIMATE_PRELOADER_LOADER_TYPE_DESC" 
@@ -205,6 +206,7 @@
 		<field name="body_bg_repeat" 
 			helixgroup="body" 
 			type="list" 
+			class="form-select"
 			default="inherit" 
 			helixsubgroup="body_bg_image"
 			subclasses="col-6"
@@ -219,6 +221,7 @@
 		<field name="body_bg_position" 
 			helixgroup="body" 
 			type="list" 
+			class="form-select"
 			default="0 0"
 			helixsubgroup="body_bg_image"
 			subclasses="col-6"
@@ -237,6 +240,7 @@
 		<field name="body_bg_size" 
 			helixgroup="body" 
 			type="list" 
+			class="form-select"
 			default="inherit"
 			helixsubgroup="body_bg_image"
 			subclasses="col-6"
@@ -249,6 +253,7 @@
 		<field name="body_bg_attachment" 
 			helixgroup="body" 
 			type="list" 
+			class="form-select"
 			default="inherit"
 			helixsubgroup="body_bg_image"
 			subclasses="col-6"
@@ -274,6 +279,7 @@
 		<field name="copyright_load_pos" 
 			helixgroup="footer" 
 			type="list" 
+			class="form-select"
 			default="default" 
 			label="HELIX_ULTIMATE_FEATURE_POSITION" 
 			description="HELIX_ULTIMATE_FEATURE_POSITION_DESC" 
@@ -314,6 +320,7 @@
 		<field name="social_load_pos" 
 			helixgroup="social_icons" 
 			type="list" 
+			class="form-select"
 			default="default" 
 			label="HELIX_ULTIMATE_FEATURE_POSITION" 
 			description="HELIX_ULTIMATE_FEATURE_POSITION_DESC" 
@@ -417,6 +424,7 @@
 		<field name="contact_load_pos" 
 			helixgroup="contact_info" 
 			type="list" 
+			class="form-select"
 			default="default" 
 			label="HELIX_ULTIMATE_FEATURE_POSITION" 
 			description="HELIX_ULTIMATE_FEATURE_POSITION_DESC" 
@@ -863,6 +871,7 @@
 				<color name="footer_link_hover_color" 
 					value="#FFFFFF" />
 			</preset>
+
 		</field>
 
 		<field name="custom_style" 
@@ -903,7 +912,7 @@
 			class="preset-control" 
 			helixgroup="preset_header" 
 			type="color" 
-			default="#0345BF" 
+			default="#FFFFFF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_HEADER_BACKGROUND_COLOR"
 			separator="true"
@@ -1041,6 +1050,7 @@
 		<field name="menu_type" 
 			helixgroup="megamenu" 
 			type="list" 
+			class="form-select"
 			default="mega_offcanvas" 
 			label="HELIX_ULTIMATE_MENU_TYPE" 
 			description="HELIX_ULTIMATE_MENU_TYPE_DESC">
@@ -1060,6 +1070,7 @@
 		<field name="menu_animation" 
 			helixgroup="megamenu" 
 			type="list" 
+			class="form-select"
 			default="menu-fade" 
 			label="HELIX_ULTIMATE_MENU_DROPDOWN_ANIMATION" 
 			showon="menu_type!:offcanvas">
@@ -1075,6 +1086,7 @@
 		<field name="offcanvas_position" 
 			helixgroup="offcanvas" 
 			type="list" 
+			class="form-select"
 			default="right" 
 			label="HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION" 
 			description="HELIX_ULTIMATE_OFFCANVAS_MENU_POSITION_DESC">
@@ -1095,6 +1107,31 @@
 			default="mainmenu"
 			track="on"
 			label="HELIX_ULTIMATE_OFFCANVAS_MENU" />
+
+		<field name="offcanvas_max_level" 
+			type="list"
+			class="form-select"
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_OFFCANVAS_MAX_LEVEL"
+			description="HELIX_ULTIMATE_OFFCANVAS_MAX_LEVEL_DESC"
+			className="hu-no-gutter-bottom"
+			display="inline"
+			separator="true"
+			default="0">
+			<option value="0">JALL</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+			<option value="8">8</option>
+			<option value="9">9</option>
+			<option value="10">10</option>
+		</field>
+		
+
 		<field name="offcanvas_enable_search" 
 			type="checkbox" 
 			helixgroup="offcanvas" 
@@ -1423,7 +1460,8 @@
 			description="HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_DESC" />
 		<field name="social_share_lists" 
 			type="list" 
-			multiple="true" 
+			multiple="true"
+			class="form-select"
 			helixgroup="blog_details" 
 			default="thumbnail,large"
 			separator="true"
@@ -1485,6 +1523,7 @@
 			showon="reading_time_progress:1" />
 		<field name="reading_timeline_position" 
 			type="list"
+			class="form-select"
 			helixgroup="blog_details" 
 			default="top" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_POSITION" 
@@ -1516,6 +1555,7 @@
 			showon="related_article:1" />
 		<field name="related_article_view_type" 
 			type="list" 
+			class="form-select"
 			helixgroup="blog_details" 
 			default="thumb" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_VIEW_TYPE" 
@@ -1532,6 +1572,7 @@
 			label="HELIX_ULTIMATE_BLOG_DETAILS_REMOVE_CONTAINER" />
 		<field name="comment" 
 			type="list" 
+			class="form-select"
 			helixgroup="comments" 
 			default="disabled" 
 			label="HELIX_ULTIMATE_BLOG_COMMENT">
@@ -1713,6 +1754,7 @@
 		<field name="ga_tracking_method" 
 			helixgroup="analytics" 
 			type="list" 
+			class="form-select"
 			label="HELIX_ULTIMATE_GOOGLE_ANALYTICS_TRACKING_METHOD" 
 			description="HELIX_ULTIMATE_GOOGLE_ANALYTICS_TRACKING_METHOD_DESC" 
 			showon="ga_code!:">

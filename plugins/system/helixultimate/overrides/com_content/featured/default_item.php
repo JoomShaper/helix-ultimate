@@ -49,7 +49,7 @@ $isNotPublishedYet = $this->item->publish_up > $currentDate;
 
 	<?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $this->item); ?>
 
-	<?php if (JVERION < 4 ? $this->item->state == 0 : $this->item->state == ContentComponent::CONDITION_UNPUBLISHED) : ?>
+	<?php if (JVERSION < 4 ? $this->item->state == 0 : $this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED) : ?>
 		<span class="badge bg-warning text-light"><?php echo Text::_('JUNPUBLISHED'); ?></span>
 	<?php endif; ?>
 	<?php if ($isNotPublishedYet) : ?>

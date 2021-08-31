@@ -449,6 +449,25 @@ class HelixUltimate
 	}
 
 	/**
+	 * Load font awesome font for J3 & J4 separately.
+	 *
+	 * @return	void
+	 * @since 	2.0.3
+	 */
+	public function loadFontAwesome()
+	{
+		if (JVERSION < 4)
+		{
+			$this->add_css('font-awesome.min.css');
+			$this->add_css('v4-shims.min.css');
+		}
+		else
+		{
+			$this->doc->addStyleSheet(Uri::root(true) . '/media/system/css/joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
+		}
+	}
+
+	/**
 	 * Get template URI.
 	 *
 	 * @return	void

@@ -45,7 +45,7 @@ Factory::getDocument()->addScriptDeclaration("
 							placeholder="<?php echo Text::_('COM_TAGS_TITLE_FILTER_LABEL'); ?>"
 						>
 						<button type="submit" name="filter_submit" class="btn btn-primary"><?php echo Text::_('JGLOBAL_FILTER_BUTTON'); ?></button>
-						<button type="reset" name="filter-clear-button" class="btn btn-secondary"><?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>
+						<button type="reset" name="filter-clear-button" class="btn btn-secondary" onclick="resetFilter(); document.adminForm.submit();"><?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?></button>
 					</div>
 				<?php endif; ?>
 				
@@ -99,7 +99,7 @@ Factory::getDocument()->addScriptDeclaration("
 					<tr>
 				<?php endif; ?>
 					<td <?php if ($this->params->get('show_headings')) echo "headers=\"categorylist_header_title\""; ?> class="list-title">
-						<a href="<?php echo Route::_(TagsHelperRoute::getItemRoute($item->content_item_id, $item->core_alias, $item->core_catid, $item->core_language, $item->type_alias, $item->router)); ?>">
+						<a href="<?php echo Route::_($item->link); ?>">
 							<?php echo $this->escape($item->core_title); ?>
 						</a>
 						<?php if ($item->core_state == 0) : ?>

@@ -12,12 +12,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\Registry\Registry;
 
-if (JVERSION < 4)
-{
-	JLoader::register('TagsHelperRoute', JPATH_BASE . '/components/com_tags/helpers/route.php');
-}
-
-
 $authorised = Factory::getUser()->getAuthorisedViewLevels();
 
 ?>
@@ -28,7 +22,7 @@ $authorised = Factory::getUser()->getAuthorisedViewLevels();
 				<?php $tagParams = new Registry($tag->params); ?>
 				<?php $link_class = $tagParams->get('tag_link_class', ''); ?>
 				<li class="tag-<?php echo $tag->tag_id; ?> tag-list<?php echo $i; ?>" itemprop="keywords">
-					<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($tag->tag_id . ':' . $tag->alias)); ?>" class="<?php echo $link_class; ?>">
+					<a href="<?php echo Route::_(Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($tag->tag_id . ':' . $tag->alias)); ?>" class="<?php echo $link_class; ?>">
 						<?php echo $this->escape($tag->title); ?>
 					</a>
 				</li>

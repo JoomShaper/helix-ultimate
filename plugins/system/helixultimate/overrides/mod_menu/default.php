@@ -9,6 +9,7 @@
 defined ('_JEXEC') or die();
 
 use Joomla\CMS\Helper\ModuleHelper;
+use Joomla\Registry\Registry;
 
 $id = '';
 
@@ -17,12 +18,16 @@ if ($tagId = $params->get('tag_id', ''))
 	$id = ' id="' . $tagId . '"';
 }
 
+
 // The menu class is deprecated. Use nav instead
 ?>
 <ul class="menu<?php echo $class_sfx; ?>"<?php echo $id; ?>>
 <?php foreach ($list as $i => &$item)
 
 {
+	$helixMenuLayout = new Registry($item->getParams()->get('helixultimatemenulayout', ''));
+	$customClass = $helixMenuLayout->get('customclass', '');
+
 	$class = 'item-' . $item->id;
 
 	if ($item->id == $default_id)
@@ -66,6 +71,11 @@ if ($tagId = $params->get('tag_id', ''))
 	if ($item->parent)
 	{
 		$class .= ' menu-parent';
+	}
+
+	if ($customClass)
+	{
+		$class .= ' ' . $customClass;
 	}
 
 	echo '<li class="' . $class . '">';

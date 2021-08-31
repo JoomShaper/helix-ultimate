@@ -1,0 +1,75 @@
+:root {
+    --hue: 214;
+    --template-bg-light: #f0f4fb;
+    --template-text-dark: #495057;
+    --template-text-light: #fff;
+    --template-link-color: #2a69b8;
+    --template-special-color: #001b4c;
+}
+
+/* js tools */
+.js-stools-container-bar {
+    padding: 10px 20px;
+}
+.js-stools-container-bar .btn-toolbar {
+    justify-content: flex-end;
+}
+.js-stools-container-bar .btn-toolbar > * {
+    margin: 4px 0;
+    margin-inline-end: 8px;
+}
+.js-stools-container-bar .btn-toolbar .js-stools-btn-clear {
+    background-color: #1e95cc;
+    border: 0;
+}
+.js-stools-container-bar .ordering-select {
+    display: flex;
+}
+.js-stools-container-filters {
+    display: none;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+.js-stools-container-filters-visible {
+    display: grid;
+    grid-gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    padding: 10px;
+    background-color: #fff;
+}
+.js-stools-container-filters > * {
+    margin: 4px 0;
+    margin-inline-end: 8px;
+}
+.js-stools-field-list + .js-stools-field-list {
+    margin-inline-start: 8px;
+}
+
+/* Tooltip */
+[role="tooltip"]:not(.show) {
+    right: 5em;
+    z-index: 9999;
+    display: none;
+    max-width: 100%;
+    padding: 0.5em;
+    margin: 0.5em;
+    color: #000;
+    text-align: start;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, .8);
+}
+[role="tooltip"]:not(.show)[id^=editarticle-] {
+    right: auto;
+    margin-inline-start: -10em;
+}
+[role="tooltip"]:not(.show)[id^=editcontact-] {
+    right: auto;
+    margin-inline-start: -10em;
+}
+:focus + [role="tooltip"],
+:hover + [role="tooltip"] {
+    position: absolute;
+    display: block;
+}

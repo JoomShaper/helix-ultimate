@@ -172,15 +172,8 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		$theme->add_scss('presets', $scssVars, 'presets/' . $scssVars['preset']);
 
-		if (file_exists(JPATH_THEMES . '/' . $template->template . '/scss/custom.scss'))
-		{
-			$theme->add_scss('custom', [], 'custom-compiled', true);
-		}
-
-		if (file_exists(JPATH_THEMES . '/' . $template->template . '/css/custom.css'))
-		{
-			$theme->add_css('custom.css');
-		}
+		$theme->add_scss('custom', [], 'custom-compiled', true);
+		$theme->add_css('custom.css');
 
 		//Before Head
 		if ($before_head = $this->params->get('before_head'))

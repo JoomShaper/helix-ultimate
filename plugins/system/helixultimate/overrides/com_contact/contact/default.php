@@ -15,8 +15,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\Component\Contact\Site\Helper\RouteHelper;
-use Joomla\Component\Contact\Site\Helper\Route as ContactHelperRoute;
 use Joomla\CMS\Component\ComponentHelper;
 
 $cparams = ComponentHelper::getParams('com_media');
@@ -302,7 +300,7 @@ $htag    = $tparams->get('show_page_heading') ? 'h2' : 'h1';
 			<span class="contact-category"><?php echo $this->item->category_title; ?></span>
 		</h3>
 	<?php elseif ($show_contact_category === 'show_with_link') : ?>
-		<?php $contactLink = RouteHelper::getCategoryRoute($this->item->catid, $this->item->language); ?>
+		<?php $contactLink = ContactHelperRoute::getCategoryRoute($this->contact->catid); ?>
 		<h3>
 			<span class="contact-category"><a href="<?php echo $contactLink; ?>">
 				<?php echo $this->escape($this->item->category_title); ?></a>

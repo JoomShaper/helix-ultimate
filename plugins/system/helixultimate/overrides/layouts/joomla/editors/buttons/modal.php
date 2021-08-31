@@ -47,11 +47,6 @@ else
 	$id = str_replace(' ', '', $button->get('text')) . 'Modal';
 }
 
-$template = Helper::loadTemplateData();
-
-$fontAwesomePath = JPATH_THEMES . '/' . $template->template . '/css/font-awesome.min.css';
-Factory::getDocument()->addStylesheet(Uri::root(true) . '/templates/' . $template->template . '/css/font-awesome.min.css');
-
 // Create the modal
 echo HTMLHelper::_(
 	'bootstrap.renderModal',

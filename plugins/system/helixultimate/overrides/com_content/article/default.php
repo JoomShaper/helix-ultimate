@@ -16,8 +16,6 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Component\Content\Administrator\Extension\ContentComponent;
-use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 

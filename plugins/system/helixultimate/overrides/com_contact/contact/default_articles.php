@@ -10,7 +10,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 ?>
 <?php if ($this->params->get('show_articles')) : ?>
@@ -18,7 +17,7 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 	<ul class="list-unstyled">
 		<?php foreach ($this->item->articles as $article) : ?>
 			<li>
-				<?php echo HTMLHelper::_('link', Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)), htmlspecialchars($article->title, ENT_COMPAT, 'UTF-8')); ?>
+				<?php echo HTMLHelper::_('link', Route::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)), htmlspecialchars($article->title, ENT_COMPAT, 'UTF-8')); ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>

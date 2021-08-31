@@ -319,6 +319,7 @@ class HelixUltimate
 		{
 			echo '<jdoc:include type="metas" />';
 			echo '<jdoc:include type="styles" />';
+			echo '<jdoc:include type="scripts" />';
 		}
 
 		$this->add_css('bootstrap.min.css');
@@ -340,7 +341,10 @@ class HelixUltimate
 			$this->add_js('popper.min.js, bootstrap.min.js');
 		}
 
-		$this->add_css('system-j4.min.css');
+		if (JVERSION >= 4)
+		{
+			$this->add_css('system-j4.min.css');
+		}
 	}
 
 	/**
@@ -456,14 +460,17 @@ class HelixUltimate
 	 */
 	public function loadFontAwesome()
 	{
-		if (JVERSION < 4)
+		if ($this->params->get('enable_fontawesome'))
 		{
-			$this->add_css('font-awesome.min.css');
-			$this->add_css('v4-shims.min.css');
-		}
-		else
-		{
-			$this->doc->addStyleSheet(Uri::root(true) . '/media/system/css/joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
+			if (JVERSION < 4)
+			{
+				$this->add_css('font-awesome.min.css');
+				$this->add_css('v4-shims.min.css');
+			}
+			else
+			{
+				$this->doc->addStyleSheet(Uri::root(true) . '/media/system/css/joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
+			}
 		}
 	}
 

@@ -141,13 +141,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<?php
 
 		$theme->head();
-
-		/** Check if it is enabled font-awesome or not. */
-		if ($this->params->get('enable_fontawesome', 1))
-		{
-			$theme->loadFontAwesome();
-		}
-
+		$theme->loadFontAwesome();
 		$theme->add_js('main.js');
 
 		if ($this->params->get('image_lazy_loading', 0))
@@ -235,9 +229,5 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<?php if( $app->input->get('view') === 'article' && $this->params->get('reading_time_progress', 0) ): ?>
 			<div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>
 		<?php endif; ?>
-
-		<?php if (JoomlaBridge::getVersion('major') >= 4): ?>
-			<jdoc:include type="scripts" />
-		<?php endif ?>
 	</body>
 </html>

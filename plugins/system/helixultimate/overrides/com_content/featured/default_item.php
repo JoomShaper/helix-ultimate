@@ -26,10 +26,10 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 
 $currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
-$isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate())) : ($this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
-	|| ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
-$isExpired         = !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
 $isNotPublishedYet = $this->item->publish_up > $currentDate;
+$isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate())) : ($this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED || $isNotPublishedYet)
+	|| ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
+$isExpired         = JVERSION < 4 ? $this->item->publish_down < $currentDate && $this->item->publish_down !== Factory::getDbo()->getNullDate() : !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
 ?>
 
 <?php if($article_format == 'gallery') : ?>

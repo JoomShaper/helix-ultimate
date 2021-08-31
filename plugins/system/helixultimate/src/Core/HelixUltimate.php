@@ -406,10 +406,9 @@ class HelixUltimate
 				continue;
 			}
 
-			
 			$file = trim($file);
 			$file_path = $asset_path . $file;
-			
+
 			if (!Helper::endsWith($file_path, $folder))
 			{
 				$file_path .= '.' . $folder;
@@ -425,7 +424,17 @@ class HelixUltimate
 			}
 			else
 			{
-				continue;
+				/** If asset not exists inside the template path then try to load from plugin's asset path. */
+				$uri = '/plugins/system/helixultimate/assets/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
+
+				if (\file_exists(JPATH_ROOT . $uri))
+				{
+					$file_url = Uri::base(true) . $uri;
+				}
+				else
+				{
+					continue;
+				}
 			}
 
 			if ($folder === 'js')

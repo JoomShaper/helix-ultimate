@@ -143,7 +143,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		$theme->head();
 
 		/** Check if it is enabled font-awesome or not. */
-		if ($this->params->get('enable_fontawesome'))
+		if ($this->params->get('enable_fontawesome', 1))
 		{
 			$theme->add_css('font-awesome.min.css');
 			$theme->add_css('v4-shims.min.css');
@@ -214,7 +214,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<!-- Rendering the offcanvas style -->
 		<!-- If canvas style selected then render the style -->
 		<!-- otherwise (for old templates) attach the offcanvas module position -->
-		<?php if (!empty($this->params->get('offcanvas_style', ''))): ?>
+		<?php if (!empty($this->params->get('offcanvas_style', '1-LeftAlign'))): ?>
 			<?php echo $theme->getOffcanvasStyle(); ?>
 		<?php else : ?>
 			<div class="offcanvas-menu">

@@ -300,7 +300,7 @@ $htag    = $tparams->get('show_page_heading') ? 'h2' : 'h1';
 			<span class="contact-category"><?php echo $this->item->category_title; ?></span>
 		</h3>
 	<?php elseif ($show_contact_category === 'show_with_link') : ?>
-		<?php $contactLink = ContactHelperRoute::getCategoryRoute($this->contact->catid); ?>
+		<?php $contactLink = Route::_(JVERSION < 4 ? ContactHelperRoute::getCategoryRoute($this->item) : Joomla\Component\Contact\Site\Helper\RouteHelper::getCategoryRoute($this->item->catid, $this->item->language)); ?>
 		<h3>
 			<span class="contact-category"><a href="<?php echo $contactLink; ?>">
 				<?php echo $this->escape($this->item->category_title); ?></a>

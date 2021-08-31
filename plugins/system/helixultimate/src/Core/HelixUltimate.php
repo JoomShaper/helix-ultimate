@@ -340,7 +340,7 @@ class HelixUltimate
 			$this->add_js('popper.min.js, bootstrap.min.js');
 		}
 
-		$this->add_css('system.j4.min.css');
+		$this->add_css('system-j4.min.css');
 	}
 
 	/**

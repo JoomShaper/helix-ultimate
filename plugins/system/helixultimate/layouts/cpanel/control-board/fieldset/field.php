@@ -87,18 +87,19 @@ extract($displayData);
 
 	$listStyle = $field->getAttribute('style');
 	$display = $field->getAttribute('display', '');
+	$invalidDataFields = ['before_head', 'after_body', 'before_body', 'custom_css', 'custom_js'];
+	$isValidDataField = !\in_array($field->name, $invalidDataFields);
 ?>
 
-<?php 
-
-
- ?>
 <div class="<?php echo $group_class; ?>" <?php echo $attribs; ?>>
 	<div class="control-group">
 		<div class="control-group-inner<?php echo $display === 'inline' ? ' hu-inline-group' : ''; ?>">
 			<?php if ($type === 'checkbox' && $checkboxStyle === 'plain'): ?>
 				<label class="control-label">
-					<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">
+					<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>"
+						data-safepoint='<?php echo $isValidDataField ? $setvalue : ''; ?>'
+						data-currpoint='<?php echo $isValidDataField ? $setvalue : ''; ?>'
+						data-selector="#<?php echo $field->id; ?>">
 						<?php echo $field->input; ?>
 					</div>
 
@@ -128,7 +129,10 @@ extract($displayData);
 					<?php endif; ?>
 				<?php endif; ?>
 
-				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>" data-safepoint='<?php echo $setvalue; ?>' data-currpoint='<?php echo $setvalue; ?>' data-selector="#<?php echo $field->id; ?>">
+				<div class="controls <?php echo $hasTrack ? 'trackable' : ''; ?>"
+					data-safepoint='<?php echo $isValidDataField ? $setvalue : ''; ?>'
+					data-currpoint='<?php echo $isValidDataField ? $setvalue : ''; ?>'
+					data-selector="#<?php echo $field->id; ?>">
 					<?php echo $field->input; ?>
 				</div>
 

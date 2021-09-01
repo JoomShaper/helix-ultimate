@@ -10,7 +10,7 @@ defined('_JEXEC') or die();
 
 /**
  * Bootstrap php file.
- * This is responsible for autoloading php classes.
+ * This is responsible for auto-loading php classes.
  *
  * @since 2.0.0
  */

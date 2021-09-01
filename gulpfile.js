@@ -2,6 +2,8 @@ const path = require('path');
 const { series, parallel, src, dest } = require('gulp');
 const del = require('del');
 const zip = require('gulp-zip');
+const minifyCss = require('gulp-clean-css');
+const uglify = require('gulp-uglify-es').default;
 
 /**
  * Configuration object.
@@ -83,6 +85,33 @@ function buildPackage() {
 		.pipe(dest(config.buildPath));
 }
 
+function minifyPluginCss() {
+	return src([
+		`${config.buildPath}/plugins/system/assets/css/*.css`,
+		`!${config.buildPath}/plugins/system/assets/css/bootstrap.min.css`,
+	])
+		.pipe(minifyCss())
+		.pipe(dest(`${config.buildPath}/plugins/system/assets/css`));
+}
+
+function minifyPluginAdminCss() {
+	return src([
+		`${config.buildPath}/plugins/system/assets/css/admin/*.css`,
+		`!${config.buildPath}/plugins/system/assets/css/admin/*min.css`,
+	])
+		.pipe(minifyCss())
+		.pipe(dest(`${config.buildPath}/plugins/system/assets/css/admin`));
+}
+
+function minifyPluginAdminJs() {
+	return src([
+		`${config.buildPath}/plugins/system/assets/js/admin/*.js`,
+		`!${config.buildPath}/plugins/system/assets/js/admin/*.min.js`,
+	])
+		.pipe(uglify())
+		.pipe(dest(`${config.buildPath}/plugins/system/assets/js/admin`));
+}
+
 function buildPkgForPlugin() {
 	return src(`${config.buildPath}/plugins/system/**`)
 		.pipe(zip(config.pluginPackageName))
@@ -112,6 +141,7 @@ exports.default = series(
 		series(templateLanguageStreamTask, templateStreamTask),
 		series(pluginStreamTask, templatePluginLanguageStreamTask)
 	),
+	parallel(minifyPluginCss, minifyPluginAdminCss, minifyPluginAdminJs),
 	parallel(buildPackage, buildPkgForPlugin, buildPkgForTemplate),
 	clear
 );

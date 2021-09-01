@@ -1,0 +1,15 @@
+{
+  "name": "helix_ultimate",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:JoomShaper/helix-ultimate.git",
+  "author": "JoomShaper <support@joomshaper.com>",
+  "license": "GNU/GPLv2",
+  "devDependencies": {
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-uglify-es": "^3.0.0",
+    "gulp-zip": "^5.1.0"
+  }
+}

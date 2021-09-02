@@ -1106,7 +1106,9 @@
 			helixgroup="offcanvas" 
 			default="mainmenu"
 			track="on"
-			label="HELIX_ULTIMATE_OFFCANVAS_MENU" />
+			label="HELIX_ULTIMATE_OFFCANVAS_MENU"
+			description="HELIX_ULTIMATE_OFFCANVAS_MENU_DESC"
+		/>
 
 		<field name="offcanvas_max_level" 
 			type="list"

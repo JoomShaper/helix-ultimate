@@ -2061,12 +2061,12 @@ class HelixUltimate
 	}
 
 	/**
-	 * If user put their own JS or CSS files into `templates/shaper_helixultimate/js/custom`
-	 * or `templates/shaper_helixultimate/css/custom` directory respectively then,
+	 * If user put their own JS or CSS files into `templates/{template}/js/custom`
+	 * or `templates/{template}/css/custom` directory respectively then,
 	 * those files would be added automatically to the template.
 	 *
 	 * @param	string	$type	The asset type
-	 * 
+	 *
 	 * @return	void
 	 * @since	2.0.0
 	 */

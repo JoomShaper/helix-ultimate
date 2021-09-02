@@ -40,7 +40,7 @@ final class HTMLOverride
 	 * @var 	string	$tmplOverridePath	The template's override path.
 	 * @since 	2.0.3
 	 */
-	private static $tmplOverridePath = JPATH_ROOT . '/templates/{{template}}/html/overrides';
+	private static $tmplOverridePath = JPATH_ROOT . '/templates/{{template}}/overrides';
 
 	/**
 	 * Parse the path with proper template name.

@@ -82,6 +82,7 @@
         <folder>fonts/</folder>
         <folder>headers/</folder>
         <folder>offcanvas/</folder>
+        <folder>overrides/</folder>
         <folder>html/</folder>
         <folder>images/</folder>
         <folder>js/</folder>

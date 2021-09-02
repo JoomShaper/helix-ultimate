@@ -45,6 +45,7 @@ $theme = new HelixUltimate;
 $template = Helper::loadTemplateData();
 $this->params = $template->params;
 
+
 /** Load needed data for javascript */
 Helper::flushSettingsDataToJs();
 
@@ -89,10 +90,9 @@ else
 }
 
 $scssVars['header_height'] 		= $this->params->get('header_height', '60px');
-$scssVars['header_height_sm'] 		= $this->params->get('header_height_sm', '60px');
-$scssVars['header_height_xs'] 		= $this->params->get('header_height_xs', '60px');
+$scssVars['header_height_sm'] 	= $this->params->get('header_height_sm', '60px');
+$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '60px');
 $scssVars['offcanvas_width'] 	= $this->params->get('offcanvas_width', '300') . 'px';
-
 
 // Body Background Image
 if ($bg_image = $this->params->get('body_bg_image'))

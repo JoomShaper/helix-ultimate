@@ -42,7 +42,6 @@ $menuClass = 'col-auto flex-auto';
  * The modules are mod_search
  */
 $searchModule = Helper::getSearchModule();
-
 ?>
 
 <?php if($displayData->params->get('sticky_header')) { ?>
@@ -54,15 +53,27 @@ $searchModule = Helper::getSearchModule();
 			<div class="row">
 				<div id="sp-top1" class="col-lg-6">
 					<div class="sp-column text-center text-lg-start">
-						<?php echo $social->renderFeature(); ?>
+						<?php if ($displayData->params->get('social_position') === 'top1'): ?>
+							<?php echo $social->renderFeature(); ?>
+						<?php endif ?>
+
+						<?php if ($displayData->params->get('contact_position') === 'top1'): ?>
+							<?php echo $contact->renderFeature(); ?>
+						<?php endif ?>
 						<jdoc:include type="modules" name="top1" style="sp_xhtml"/>
 					</div>
 				</div>
 
 				<div id="sp-top2" class="col-lg-6">
 					<div class="sp-column text-center text-lg-end">
+						<?php if ($displayData->params->get('social_position') === 'top2'): ?>
+							<?php echo $social->renderFeature(); ?>
+						<?php endif ?>
+
+						<?php if ($displayData->params->get('contact_position') === 'top2'): ?>
 							<?php echo $contact->renderFeature(); ?>
-							<jdoc:include type="modules" name="top2" style="sp_xhtml" />
+						<?php endif ?>
+						<jdoc:include type="modules" name="top2" style="sp_xhtml" />
 					</div>
 				</div>
 			</div>

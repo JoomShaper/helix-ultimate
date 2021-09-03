@@ -18,6 +18,8 @@ if (JVERSION < 4)
 {
 	HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 	HTMLHelper::_('behavior.core');
+
+	JLoader::register('TagsHelperRoute', JPATH_BASE . '/components/com_tags/helpers/route.php');
 }
 else
 {
@@ -110,7 +112,7 @@ Factory::getDocument()->addScriptDeclaration("
 		<li class="list-group-item list-group-item-action">
 			<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
 				<h3 class="mb-0">
-					<a href="<?php echo Route::_(JVERSION < 4 ? $item->link : Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
+					<a href="<?php echo Route::_(JVERSION < 4 ? TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias) : Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
 						<?php echo $this->escape($item->title); ?>
 					</a>
 				</h3>

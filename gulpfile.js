@@ -13,9 +13,9 @@ const uglify = require('gulp-uglify-es').default;
 const config = {
 	srcPath: path.resolve(__dirname),
 	buildPath: path.resolve(__dirname, './package/'),
-	packageName: 'helix_ultimate_pkg_2.0.3.zip',
-	pluginPackageName: 'helix_ultimate_plugin_pkg_2.0.3.zip',
-	templatePackageName: 'helix_ultimate_template_pkg_2.0.3.zip',
+	packageName: 'helix_ultimate_pkg_2.0.4.zip',
+	pluginPackageName: 'helix_ultimate_plugin_pkg_2.0.4.zip',
+	templatePackageName: 'helix_ultimate_template_pkg_2.0.4.zip',
 	templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css, html',
 	pluginFileExtensions: function () {
 		return this.templateFileExtensions + ', ini';

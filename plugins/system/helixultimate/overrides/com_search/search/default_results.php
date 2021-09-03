@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 	<dt class="result-title">
 		<?php echo $this->pagination->limitstart + $result->count . '. '; ?>
 		<?php if ($result->href) : ?>
-			<a rel="noopener noreferrer" href="<?php echo Route::_($result->href); ?>"<?php if ($result->browsernav == 1) : ?> target="_blank"<?php endif; ?>>
+			<a rel="noopener noreferrer" href="<?php echo Route::_($result->href); ?>"<?php if (isset($result->browsernav) && $result->browsernav == 1) : ?> target="_blank"<?php endif; ?>>
 				<?php // $result->title should not be escaped in this case, as it may ?>
 				<?php // contain span HTML tags wrapping the searched terms, if present ?>
 				<?php // in the title. ?>
@@ -28,7 +28,7 @@ use Joomla\CMS\Router\Route;
 			<?php echo $result->title; ?>
 		<?php endif; ?>
 	</dt>
-	<?php if ($result->section) : ?>
+	<?php if (!empty($result->section)) : ?>
 		<dd class="result-category">
 			<span class="small">
 				(<?php echo $this->escape($result->section); ?>)

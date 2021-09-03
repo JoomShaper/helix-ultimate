@@ -25,7 +25,14 @@ if ($tagId = $params->get('tag_id', ''))
 <?php foreach ($list as $i => &$item)
 
 {
-	$helixMenuLayout = new Registry($item->getParams()->get('helixultimatemenulayout', ''));
+	$layout = \json_decode($item->getParams()->get('helixultimatemenulayout', ''));
+
+	if (\json_last_error() !== JSON_ERROR_NONE)
+	{
+		$layout = '';
+	}
+
+	$helixMenuLayout = new Registry($layout);
 	$customClass = $helixMenuLayout->get('customclass', '');
 
 	$class = 'item-' . $item->id;

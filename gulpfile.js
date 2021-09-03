@@ -1,5 +1,5 @@
 const path = require('path');
-const { series, parallel, src, dest } = require('gulp');
+const { series, parallel, src, dest, relo } = require('gulp');
 const del = require('del');
 const zip = require('gulp-zip');
 const minifyCss = require('gulp-clean-css');
@@ -13,6 +13,8 @@ const uglify = require('gulp-uglify-es').default;
 const config = {
 	srcPath: path.resolve(__dirname),
 	buildPath: path.resolve(__dirname, './package/'),
+	qsPath: path.resolve(__dirname, './package/helix_ultimate_quickstart/'),
+	qsPackageName: 'helix_ultimate_quickstart_j4_2.0.4.zip',
 	packageName: 'helix_ultimate_pkg_2.0.4.zip',
 	pluginPackageName: 'helix_ultimate_plugin_pkg_2.0.4.zip',
 	templatePackageName: 'helix_ultimate_template_pkg_2.0.4.zip',
@@ -31,7 +33,24 @@ const config = {
 		if (typeof this[key] === 'string') return this[key].replace(/\s+/g, '');
 		else if (typeof this[key] === 'function') return this[key]().replace(/\s+/g, '');
 	},
+	destOptions: {
+		mode: 0644,
+		dirMode: 0755,
+	},
 };
+
+function exportSqlDump(done) {
+	mysqldump({
+		connection: {
+			host: 'localhost',
+			user: 'root',
+			password: 'root',
+			database: 'helix_v2_j4',
+		},
+		dumpToFile: path.resolve(`${config.qsPath}/installation/custom.sql`),
+	});
+	done();
+}
 
 function clean() {
 	return del([config.buildPath]);
@@ -41,14 +60,14 @@ function manifestStreamTask() {
 	const templatePath = path.resolve(config.srcPath, './templates/shaper_helixultimate');
 
 	return src([templatePath + '/installer.script.php', templatePath + '/installer.xml']).pipe(
-		dest(path.resolve(config.buildPath))
+		dest(path.resolve(config.buildPath), config.destOptions)
 	);
 }
 
 function templateLanguageStreamTask() {
 	const languagePath = path.resolve(config.srcPath, './language/en-GB/**en-GB.tpl_shaper_helixultimate.ini');
 
-	return src([languagePath]).pipe(dest(path.resolve(config.buildPath, './template/')));
+	return src([languagePath]).pipe(dest(path.resolve(config.buildPath, './template/'), config.destOptions));
 }
 
 function templatePluginLanguageStreamTask() {
@@ -57,7 +76,9 @@ function templatePluginLanguageStreamTask() {
 		'./administrator/language/en-GB/**en-GB.plg_system_helixultimate.ini'
 	);
 
-	return src([languagePath]).pipe(dest(path.resolve(config.buildPath, './plugins/system/language/')));
+	return src([languagePath]).pipe(
+		dest(path.resolve(config.buildPath, './plugins/system/language/'), config.destOptions)
+	);
 }
 
 function templateStreamTask() {
@@ -67,7 +88,7 @@ function templateStreamTask() {
 		templatePath + '/**/*.{' + config.parseExtensions('templateFileExtensions') + '}',
 		'!' + templatePath + '/installer.script.php',
 		'!' + templatePath + '/installer.xml',
-	]).pipe(dest(path.resolve(config.buildPath, './template/')));
+	]).pipe(dest(path.resolve(config.buildPath, './template/'), config.destOptions));
 }
 
 function pluginStreamTask() {
@@ -76,13 +97,13 @@ function pluginStreamTask() {
 			'/**/*.{' +
 			config.parseExtensions('pluginFileExtensions') +
 			'}',
-	]).pipe(dest(path.resolve(config.buildPath, './plugins/system/')));
+	]).pipe(dest(path.resolve(config.buildPath, './plugins/system/'), config.destOptions));
 }
 
 function buildPackage() {
 	return src(config.buildPath + '/**')
 		.pipe(zip(config.packageName))
-		.pipe(dest(config.buildPath));
+		.pipe(dest(config.buildPath, config.destOptions));
 }
 
 function minifyPluginCss() {
@@ -91,16 +112,16 @@ function minifyPluginCss() {
 		`!${config.buildPath}/plugins/system/assets/css/bootstrap.min.css`,
 	])
 		.pipe(minifyCss())
-		.pipe(dest(`${config.buildPath}/plugins/system/assets/css`));
+		.pipe(dest(`${config.buildPath}/plugins/system/assets/css`, config.destOptions));
 }
 
 function minifyPluginAdminCss() {
 	return src([
 		`${config.buildPath}/plugins/system/assets/css/admin/*.css`,
-		`!${config.buildPath}/plugins/system/assets/css/admin/*min.css`,
+		`!${config.buildPath}/plugins/system/assets/css/admin/*.min.css`,
 	])
 		.pipe(minifyCss())
-		.pipe(dest(`${config.buildPath}/plugins/system/assets/css/admin`));
+		.pipe(dest(`${config.buildPath}/plugins/system/assets/css/admin`, config.destOptions));
 }
 
 function minifyPluginAdminJs() {
@@ -109,17 +130,19 @@ function minifyPluginAdminJs() {
 		`!${config.buildPath}/plugins/system/assets/js/admin/*.min.js`,
 	])
 		.pipe(uglify())
-		.pipe(dest(`${config.buildPath}/plugins/system/assets/js/admin`));
+		.pipe(dest(`${config.buildPath}/plugins/system/assets/js/admin`, config.destOptions));
 }
 
 function buildPkgForPlugin() {
 	return src(`${config.buildPath}/plugins/system/**`)
 		.pipe(zip(config.pluginPackageName))
-		.pipe(dest(config.buildPath));
+		.pipe(dest(config.buildPath, config.destOptions));
 }
 
 function buildPkgForTemplate() {
-	return src(`${config.buildPath}/template/**`).pipe(zip(config.templatePackageName)).pipe(dest(config.buildPath));
+	return src(`${config.buildPath}/template/**`)
+		.pipe(zip(config.templatePackageName))
+		.pipe(dest(config.buildPath, config.destOptions));
 }
 
 function clear() {
@@ -134,6 +157,56 @@ function clear() {
 	);
 }
 
+function QSFiles() {
+	const files = ['cache/index.html', 'htaccess.txt', 'index.php', 'LICENSE.txt', 'README.txt', 'web.config.txt'].map(
+		file => `${config.srcPath}/${file}`
+	);
+
+	return src(files).pipe(dest(config.qsPath));
+}
+
+function QSDirectories(done) {
+	const directories = [
+		'administrator',
+		'api',
+		'cli',
+		'cache',
+		'components',
+		'installation',
+		'images',
+		'includes',
+		'language',
+		'layouts',
+		'libraries',
+		'media',
+		'modules',
+		'plugins',
+		'templates',
+		'tmp',
+	];
+
+	const tasks = [];
+
+	for (const dir of directories) {
+		const task = taskDone => {
+			src(`${config.srcPath}/${dir}/**/*.*`).pipe(dest(`${config.qsPath}/${dir}/`));
+			taskDone();
+		};
+		tasks.push(task);
+	}
+
+	return series(...tasks, seriesDone => {
+		seriesDone();
+		done();
+	})();
+}
+
+function packTheQS() {
+	return src(`${config.qsPath}/**/*.*`)
+		.pipe(zip(config.qsPackageName))
+		.pipe(dest(config.buildPath, config.destOptions));
+}
+
 exports.default = series(
 	clean,
 	parallel(
@@ -144,4 +217,5 @@ exports.default = series(
 	parallel(minifyPluginCss, minifyPluginAdminCss, minifyPluginAdminJs),
 	parallel(buildPackage, buildPkgForPlugin, buildPkgForTemplate),
 	clear
+	// series(parallel(QSDirectories, QSFiles), packTheQS)
 );

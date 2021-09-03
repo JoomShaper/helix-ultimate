@@ -50,7 +50,7 @@ $searchModule = Helper::getSearchModule();
 		<div class="container-inner">
 		<div class="row align-items-center">
 					<!-- Contact -->
-					<div id="sp-contact" class="col-6 col-xl-3">
+					<div id="sp-contact" class="col-6 col-xl-5">
 						<?php if ($displayData->params->get('social_position') === 'top1'): ?>
 							<?php echo $social->renderFeature(); ?>
 						<?php endif ?>
@@ -61,8 +61,8 @@ $searchModule = Helper::getSearchModule();
 					</div>
 	
 					<!-- Logo -->
-					<div id="sp-logo" class="col-12 col-xl-3 d-none d-xl-block">
-						<div class="sp-column d-flex align-items-center  justify-content-end">
+					<div id="sp-logo" class="col-12 col-xl-2 d-none d-xl-block">
+						<div class="sp-column d-flex align-items-center  justify-content-center">
 							<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
 								<?php echo $logo->renderFeature(); ?>
 								<jdoc:include type="modules" name="logo" style="sp_xhtml" />
@@ -72,9 +72,9 @@ $searchModule = Helper::getSearchModule();
 							<?php endif ?>
 						</div>
 					</div>
-								
+
 					<!-- Social -->
-					<div id="sp-social" class="col-6 col-xl-6">
+					<div id="sp-social" class="col-6 col-xl-5">
 						<div class="sp-column d-flex justify-content-end">
 							<!-- Social icons -->
 							<div class="social-wrap d-flex align-items-center">
@@ -132,7 +132,7 @@ $searchModule = Helper::getSearchModule();
 
 						<!-- if offcanvas position right -->
 						<?php if($offcanvas_position === 'right') : ?>
-							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> ms-3 offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#"><div class="burger-icon"><span></span><span></span><span></span></div></a>
+							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> ms-3 offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center ps-2" href="#"><div class="burger-icon"><span></span><span></span><span></span></div></a>
 						<?php endif; ?>		
 					</div>	
 				</div>

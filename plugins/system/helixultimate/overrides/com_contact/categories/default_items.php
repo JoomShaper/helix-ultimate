@@ -12,7 +12,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use Joomla\Component\Contact\Site\Helper\RouteHelper;
 
 $lang  = Factory::getLanguage();
 
@@ -24,7 +23,7 @@ if ($this->maxLevelcat != 0 && count($this->items[$this->parent->id]) > 0) :
 				<div style="padding-<?php echo $lang->isRtl() ? 'right' : 'left' ?>: <?php echo (int) $this->level * 16; ?>px">
 					<div class="d-flex justify-content-between align-items-center">
 						<h5 class="m-0">
-							<a href="<?php echo Route::_(RouteHelper::getCategoryRoute($item->id, $item->language)); ?>">
+							<a href="<?php echo Route::_(JVERSION < 4 ? ContactHelperRoute::getCategoryRoute($item->id, $item->language) : Joomla\Component\Contact\Site\Helper\RouteHelper::getCategoryRoute($item->id, $item->language)); ?>">
 								<?php echo $this->escape($item->title); ?>
 							</a>
 						</h5>

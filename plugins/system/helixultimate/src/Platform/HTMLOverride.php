@@ -35,6 +35,14 @@ final class HTMLOverride
 	private static $overridePath = JPATH_ROOT . '/plugins/system/helixultimate/overrides';
 
 	/**
+	 * The template override path from the template.
+	 *
+	 * @var 	string	$tmplOverridePath	The template's override path.
+	 * @since 	2.0.3
+	 */
+	private static $tmplOverridePath = JPATH_ROOT . '/templates/{{template}}/overrides';
+
+	/**
 	 * Parse the path with proper template name.
 	 *
 	 * @param 	string 	$path	The location path.
@@ -108,6 +116,8 @@ final class HTMLOverride
 		$callPath = $backtrace[0]['file'] ?? '';
 		$staticHtmlPath = self::parsePath(self::$htmlPath);
 		$staticOverridePath = self::parsePath(self::$overridePath);
+		$templateOverrideUri = self::parsePath(self::$tmplOverridePath);
+
 		$relativePath = '';
 		$overridePath = '';
 
@@ -119,14 +129,18 @@ final class HTMLOverride
 			$relativePath = \substr($callPath, \strlen($staticHtmlPath));
 		}
 
-		if (!empty($relativePath))
+		$templateOverridePath = $templateOverrideUri . $relativePath;
+
+		if (\file_exists($templateOverridePath))
 		{
-			$overridePath = $staticOverridePath . $relativePath;
+			return $templateOverridePath;
 		}
 
-		if (\file_exists($overridePath))
+		$pluginOverridePath = $staticOverridePath . $relativePath;
+
+		if (\file_exists($pluginOverridePath))
 		{
-			return $overridePath;
+			return $pluginOverridePath;
 		}
 
 		return self::generateComponentPath($relativePath);

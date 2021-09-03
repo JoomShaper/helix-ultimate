@@ -45,6 +45,7 @@ $theme = new HelixUltimate;
 $template = Helper::loadTemplateData();
 $this->params = $template->params;
 
+
 /** Load needed data for javascript */
 Helper::flushSettingsDataToJs();
 
@@ -89,10 +90,9 @@ else
 }
 
 $scssVars['header_height'] 		= $this->params->get('header_height', '60px');
-$scssVars['header_height_sm'] 		= $this->params->get('header_height_sm', '60px');
-$scssVars['header_height_xs'] 		= $this->params->get('header_height_xs', '60px');
+$scssVars['header_height_sm'] 	= $this->params->get('header_height_sm', '60px');
+$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '60px');
 $scssVars['offcanvas_width'] 	= $this->params->get('offcanvas_width', '300') . 'px';
-
 
 // Body Background Image
 if ($bg_image = $this->params->get('body_bg_image'))
@@ -141,14 +141,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<?php
 
 		$theme->head();
-
-		/** Check if it is enabled font-awesome or not. */
-		if ($this->params->get('enable_fontawesome'))
-		{
-			$theme->add_css('font-awesome.min.css');
-			$theme->add_css('v4-shims.min.css');
-		}
-
+		$theme->loadFontAwesome();
 		$theme->add_js('main.js');
 
 		if ($this->params->get('image_lazy_loading', 0))
@@ -173,15 +166,8 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		$theme->add_scss('presets', $scssVars, 'presets/' . $scssVars['preset']);
 
-		if (file_exists(JPATH_THEMES . '/' . $template->template . '/scss/custom.scss'))
-		{
-			$theme->add_scss('custom', [], 'custom-compiled', true);
-		}
-
-		if (file_exists(JPATH_THEMES . '/' . $template->template . '/css/custom.css'))
-		{
-			$theme->add_css('custom.css');
-		}
+		$theme->add_scss('custom', [], 'custom-compiled', true);
+		$theme->add_css('custom.css');
 
 		//Before Head
 		if ($before_head = $this->params->get('before_head'))
@@ -214,7 +200,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<!-- Rendering the offcanvas style -->
 		<!-- If canvas style selected then render the style -->
 		<!-- otherwise (for old templates) attach the offcanvas module position -->
-		<?php if (!empty($this->params->get('offcanvas_style', ''))): ?>
+		<?php if (!empty($this->params->get('offcanvas_style', '1-LeftAlign'))): ?>
 			<?php echo $theme->getOffcanvasStyle(); ?>
 		<?php else : ?>
 			<div class="offcanvas-menu">
@@ -243,9 +229,5 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<?php if( $app->input->get('view') === 'article' && $this->params->get('reading_time_progress', 0) ): ?>
 			<div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>
 		<?php endif; ?>
-
-		<?php if (JoomlaBridge::getVersion('major') >= 4): ?>
-			<jdoc:include type="scripts" />
-		<?php endif ?>
 	</body>
 </html>

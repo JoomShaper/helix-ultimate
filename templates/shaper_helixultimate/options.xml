@@ -74,6 +74,7 @@
 			label="HELIX_ULTIMATE_LOGO_HEIGHT_XS" 
 			showon="logo_type:image" />
 
+
 		<field name="logo_text" 
 			helixgroup="logo" 
 			type="text" 
@@ -84,6 +85,13 @@
 			type="text" 
 			label="HELIX_ULTIMATE_LOGO_SLOGAN" 
 			showon="logo_type:text" />
+
+		<field name="favicon" 
+			helixgroup="logo" 
+			type="helixmedia" 
+			preview="true" 
+			label="HELIX_ULTIMATE_FAVICON" 
+			description="HELIX_ULTIMATE_FAVICON_DESC" />
 
 		<field name="predefined_header" 
 			type="checkbox" 
@@ -162,12 +170,6 @@
 			description="HELIX_ULTIMATE_HEADER_STICKY_OFFSET_DESC"
 			showon="sticky_header:1" />
 
-		<field name="favicon" 
-			helixgroup="header" 
-			type="helixmedia" 
-			preview="true" 
-			label="HELIX_ULTIMATE_FAVICON" 
-			description="HELIX_ULTIMATE_FAVICON_DESC" />
 		<field name="preloader" 
 			helixgroup="body" 
 			type="checkbox" 
@@ -1106,7 +1108,9 @@
 			helixgroup="offcanvas" 
 			default="mainmenu"
 			track="on"
-			label="HELIX_ULTIMATE_OFFCANVAS_MENU" />
+			label="HELIX_ULTIMATE_OFFCANVAS_MENU"
+			description="HELIX_ULTIMATE_OFFCANVAS_MENU_DESC"
+		/>
 
 		<field name="offcanvas_max_level" 
 			type="list"

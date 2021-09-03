@@ -110,15 +110,9 @@ Factory::getDocument()->addScriptDeclaration("
 		<li class="list-group-item list-group-item-action">
 			<?php if ((!empty($item->access)) && in_array($item->access, $this->user->getAuthorisedViewLevels())) : ?>
 				<h3 class="mb-0">
-					<?php if (JVERSION < 4): ?>
-						<a href="<?php echo Route::_(TagsHelperRoute::getTagRoute($item->id . ':' . $item->alias)); ?>">
-							<?php echo $this->escape($item->title); ?>
-						</a>
-					<?php else: ?>
-						<a href="<?php echo Route::_(Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
-							<?php echo $this->escape($item->title); ?>
-						</a>
-					<?php endif ?>
+					<a href="<?php echo Route::_(JVERSION < 4 ? $item->link : Joomla\Component\Tags\Site\Helper\RouteHelper::getTagRoute($item->id . ':' . $item->alias)); ?>">
+						<?php echo $this->escape($item->title); ?>
+					</a>
 				</h3>
 			<?php endif; ?>
 

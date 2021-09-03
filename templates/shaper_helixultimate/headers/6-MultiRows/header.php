@@ -51,7 +51,13 @@ $searchModule = Helper::getSearchModule();
 		<div class="row align-items-center">
 					<!-- Contact -->
 					<div id="sp-contact" class="col-6 col-xl-3">
-					<?php echo $contact->renderFeature(); ?>
+						<?php if ($displayData->params->get('social_position') === 'top1'): ?>
+							<?php echo $social->renderFeature(); ?>
+						<?php endif ?>
+
+						<?php if ($displayData->params->get('contact_position') === 'top1'): ?>
+							<?php echo $contact->renderFeature(); ?>
+						<?php endif ?>
 					</div>
 	
 					<!-- Logo -->
@@ -72,7 +78,13 @@ $searchModule = Helper::getSearchModule();
 						<div class="sp-column d-flex justify-content-end">
 							<!-- Social icons -->
 							<div class="social-wrap d-flex align-items-center">
-								<?php echo $social->renderFeature(); ?>
+								<?php if ($displayData->params->get('social_position') === 'top2'): ?>
+									<?php echo $social->renderFeature(); ?>
+								<?php endif ?>
+
+								<?php if ($displayData->params->get('contact_position') === 'top2'): ?>
+									<?php echo $contact->renderFeature(); ?>
+								<?php endif ?>
 							</div>
 
 							<!-- Related Modules -->

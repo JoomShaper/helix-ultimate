@@ -319,6 +319,7 @@ class HelixUltimate
 		{
 			echo '<jdoc:include type="metas" />';
 			echo '<jdoc:include type="styles" />';
+			echo '<jdoc:include type="scripts" />';
 		}
 
 		$this->add_css('bootstrap.min.css');
@@ -338,6 +339,11 @@ class HelixUltimate
 		elseif (\file_exists($bsJsPath))
 		{
 			$this->add_js('popper.min.js, bootstrap.min.js');
+		}
+
+		if (JVERSION >= 4)
+		{
+			$this->add_css('system-j4.min.css');
 		}
 	}
 
@@ -404,10 +410,9 @@ class HelixUltimate
 				continue;
 			}
 
-			
 			$file = trim($file);
 			$file_path = $asset_path . $file;
-			
+
 			if (!Helper::endsWith($file_path, $folder))
 			{
 				$file_path .= '.' . $folder;
@@ -423,7 +428,17 @@ class HelixUltimate
 			}
 			else
 			{
-				continue;
+				/** If asset not exists inside the template path then try to load from plugin's asset path. */
+				$uri = '/plugins/system/helixultimate/assets/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
+
+				if (\file_exists(JPATH_ROOT . $uri))
+				{
+					$file_url = Uri::base(true) . $uri;
+				}
+				else
+				{
+					continue;
+				}
 			}
 
 			if ($folder === 'js')
@@ -433,6 +448,28 @@ class HelixUltimate
 			else
 			{
 				$this->doc->addStyleSheet($file_url, $files['options'], $files['attribs']);
+			}
+		}
+	}
+
+	/**
+	 * Load font awesome font for J3 & J4 separately.
+	 *
+	 * @return	void
+	 * @since 	2.0.3
+	 */
+	public function loadFontAwesome()
+	{
+		if ($this->params->get('enable_fontawesome'))
+		{
+			if (JVERSION < 4)
+			{
+				$this->add_css('font-awesome.min.css');
+				$this->add_css('v4-shims.min.css');
+			}
+			else
+			{
+				$this->doc->addStyleSheet(Uri::root(true) . '/media/system/css/joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
 			}
 		}
 	}
@@ -2024,12 +2061,12 @@ class HelixUltimate
 	}
 
 	/**
-	 * If user put their own JS or CSS files into `templates/shaper_helixultimate/js/custom`
-	 * or `templates/shaper_helixultimate/css/custom` directory respectively then,
+	 * If user put their own JS or CSS files into `templates/{template}/js/custom`
+	 * or `templates/{template}/css/custom` directory respectively then,
 	 * those files would be added automatically to the template.
 	 *
 	 * @param	string	$type	The asset type
-	 * 
+	 *
 	 * @return	void
 	 * @since	2.0.0
 	 */

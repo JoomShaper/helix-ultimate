@@ -9,8 +9,14 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
+
+if (!$list)
+{
+	return;
+}
+
 ?>
-<ul class="latestnews<?php echo $moduleclass_sfx; ?>">
+<ul class="latestnews <?php echo $moduleclass_sfx ?? ''; ?>">
 <?php foreach ($list as $item) : ?>
 	<li>
 		<a href="<?php echo $item->link; ?>">

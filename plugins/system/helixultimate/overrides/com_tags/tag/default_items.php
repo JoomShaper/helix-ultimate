@@ -13,7 +13,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\Component\Tags\Site\Helper\RouteHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
@@ -95,7 +94,7 @@ Factory::getDocument()->addScriptDeclaration("
 			<?php echo $item->event->afterDisplayTitle; ?>
 			<?php $images  = json_decode($item->core_images); ?>
 			<?php if ($this->params->get('tag_list_show_item_image', 1) == 1 && !empty($images->image_intro)) : ?>
-				<a href="<?php echo Route::_(RouteHelper::getItemRoute($item->content_item_id, $item->core_alias, $item->core_catid, $item->core_language, $item->type_alias, $item->router)); ?>">
+				<a href="<?php echo Route::_($item->link); ?>">
 					<img src="<?php echo htmlspecialchars($images->image_intro); ?>"
 						alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>">
 				</a>

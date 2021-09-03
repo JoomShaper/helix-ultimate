@@ -16,7 +16,7 @@ defined('_JEXEC') or die();
  * @since   	2.0.0
  * @deprecated 	3.0.0 	Instead of using this class by requiring directly from index.php or other files,
  * 						use from the BaseHelixUltimateMenu directly.
- * 						@see templates/shaper_helixultimate/index.php file for reference.
+ * 						@see templates/{template}/index.php file for reference.
  */
 class HelixultimateMenu extends BaseHelixUltimateMenu
 {

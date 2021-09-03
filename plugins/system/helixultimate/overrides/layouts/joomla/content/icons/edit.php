@@ -25,7 +25,6 @@ if ($isUnpublished)
 {
 	$icon = 'eye-slash';
 }
-
 ?>
 <SPAN class="link-edit-article">
 	<span class="hasTooltip fas fa-<?php echo $icon; ?>" title="<?php echo HTMLHelper::tooltipText(Text::_('COM_CONTENT_EDIT_ITEM'), $tooltip, 0, 0); ?>"></span>

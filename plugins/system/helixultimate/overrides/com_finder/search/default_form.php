@@ -76,30 +76,28 @@ if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosugge
 		<input type="hidden" name="o" value="<?php echo $this->escape($this->state->get('list.ordering')); ?>">
 	<?php endif; ?>
 	<fieldset class="word mb-3">
-		<div class="d-flex flex-wrap">
-			<label for="q" class="me-2 mt-2">
-				<?php echo Text::_('COM_FINDER_SEARCH_TERMS'); ?>
-			</label>
-			<div class="btn-group">
-				<input type="text" id="q" name="q" class="js-finder-search-query form-control" value="<?php echo $this->escape($this->query->input); ?>">
-				<?php if ($this->escape($this->query->input) != '' || $this->params->get('allow_empty_query')) : ?>
-					<button name="Search" type="submit" class="btn btn-primary">
-                        <span class="fas fa-search icon-white" aria-hidden="true"></span>
-                        <?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>
-                    </button>
-				<?php else : ?>
-					<button name="Search" type="submit" class="btn btn-primary disabled">
-                        <span class="fas fa-search icon-white" aria-hidden="true"></span>
-                        <?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>
-                    </button>
-				<?php endif; ?>
-				<?php if ($this->params->get('show_advanced', 1)) : ?>
-					<a href="#advancedSearch" data-bs-toggle="collapse" class="btn btn-secondary" aria-hidden="true">
-						<span class="fas fa-search-plus" aria-hidden="true"></span>
-                        <?php echo Text::_('COM_FINDER_ADVANCED_SEARCH_TOGGLE'); ?>
-					</a>
-				<?php endif; ?>
-			</div>
+		<label for="q" class="form-label">
+			<?php echo Text::_('COM_FINDER_SEARCH_TERMS'); ?>
+		</label>
+		<div class="input-group">
+			<input type="text" id="q" name="q" class="js-finder-search-query form-control" value="<?php echo $this->escape($this->query->input); ?>">
+			<?php if ($this->escape($this->query->input) != '' || $this->params->get('allow_empty_query')) : ?>
+				<button name="Search" type="submit" class="btn btn-primary">
+					<span class="fas fa-search icon-white" aria-hidden="true"></span>
+					<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>
+				</button>
+			<?php else : ?>
+				<button name="Search" type="submit" class="btn btn-primary disabled">
+					<span class="fas fa-search icon-white" aria-hidden="true"></span>
+					<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>
+				</button>
+			<?php endif; ?>
+			<?php if ($this->params->get('show_advanced', 1)) : ?>
+				<a href="#advancedSearch" data-bs-toggle="collapse" class="btn btn-secondary" aria-hidden="true">
+					<span class="fas fa-search-plus" aria-hidden="true"></span>
+					<?php echo Text::_('COM_FINDER_ADVANCED_SEARCH_TOGGLE'); ?>
+				</a>
+			<?php endif; ?>
 		</div>
 	</fieldset>
 

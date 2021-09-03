@@ -35,12 +35,12 @@ $menu_font_size: 14px;
       margin: 0;
     }
 
-    &:last-child{
-      >a{
-          padding:0px 0px 0px 15px;
+    &:last-child {
+      > a {
+        padding: 0px 0px 0px 15px;
       }
     }
-   
+
     &.active > a {
       font-weight: 500;
     }
@@ -250,6 +250,13 @@ $menu_font_size: 14px;
         }
       }
     }
+  }
+}
+
+// Hide Off-canvas menu by using .hide-on-offcanvas class
+.offcanvas-menu {
+  .hide-on-offcanvas {
+    display: none !important;
   }
 }
 

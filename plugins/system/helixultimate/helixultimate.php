@@ -10,7 +10,7 @@ defined('_JEXEC') or die();
 
 /**
  * Bootstrap php file.
- * This is responsible for autoloading php classes.
+ * This is responsible for auto-loading php classes.
  *
  * @since 2.0.0
  */
@@ -406,8 +406,8 @@ class  PlgSystemHelixultimate extends JPlugin
 
 			/**
 			 * Adding custom directory for the assets.
-			 * If anyone put any file inside the `templates/shaper_helixultimate/css/custom`
-			 * or `templates/shaper_helixultimate/js/custom` directory then the files
+			 * If anyone put any file inside the `templates/{template}/css/custom`
+			 * or `templates/{template}/js/custom` directory then the files
 			 * would be added to the site.
 			 */
 			$theme->addCustomCSS();

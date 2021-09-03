@@ -120,13 +120,13 @@ $afterDisplayContent = trim(implode("\n", $results));
 	<?php endif; ?>
 
 	<?php if (!empty($this->link_items)) : ?>
-		<div class="articles-more">
+		<div class="articles-more mb-4">
 			<?php echo $this->loadTemplate('links'); ?>
 		</div>
 	<?php endif; ?>
 
 	<?php if ($this->maxLevel != 0 && !empty($this->children[$this->category->id])) : ?>
-		<div class="cat-children">
+		<div class="cat-children mb-4">
 			<?php if ($this->params->get('show_category_heading_title_text', 1) == 1) : ?>
 				<h3> <?php echo Text::_('JGLOBAL_SUBCATEGORIES'); ?> </h3>
 			<?php endif; ?>

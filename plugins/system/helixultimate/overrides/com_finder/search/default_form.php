@@ -13,59 +13,67 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-
-/** This segment of code sets up the autoCompleter.*/
-if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosuggest', 1))
+if (JVERSION < 4)
 {
-	HTMLHelper::_('jquery.framework');
-
-	$script = "
-	jQuery(function() {";
-
-	if ($this->params->get('show_advanced', 1))
+	if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosuggest', 1))
 	{
+		HTMLHelper::_('jquery.framework');
+	
+		$script = "
+		jQuery(function() {";
+	
+		if ($this->params->get('show_advanced', 1))
+		{
+			/*
+			* This segment of code disables select boxes that have no value when the
+			* form is submitted so that the URL doesn't get blown up with null values.
+			*/
+			$script .= "
+		jQuery('#finder-search').on('submit', function(e){
+			e.stopPropagation();
+			// Disable select boxes with no value selected.
+			jQuery('#advancedSearch').find('select').each(function(index, el) {
+				var el = jQuery(el);
+				if(!el.val()){
+					el.attr('disabled', 'disabled');
+				}
+			});
+		});";
+		}
+	
 		/*
-		* This segment of code disables select boxes that have no value when the
-		* form is submitted so that the URL doesn't get blown up with null values.
+		* This segment of code sets up the autocompleter.
 		*/
+		if ($this->params->get('show_autosuggest', 1))
+		{
+			HTMLHelper::_('script', 'jui/jquery.autocomplete.min.js', array('version' => 'auto', 'relative' => true));
+	
+			$script .= "
+			var suggest = jQuery('#q').autocomplete({
+				serviceUrl: '" . Route::_('index.php?option=com_finder&task=suggestions.suggest&format=json&tmpl=component') . "',
+				paramName: 'q',
+				minChars: 1,
+				maxHeight: 400,
+				width: 300,
+				zIndex: 9999,
+				deferRequestBy: 500
+			});";
+		}
+	
 		$script .= "
-	jQuery('#finder-search').on('submit', function(e){
-		e.stopPropagation();
-		// Disable select boxes with no value selected.
-		jQuery('#advancedSearch').find('select').each(function(index, el) {
-			var el = jQuery(el);
-			if(!el.val()){
-				el.attr('disabled', 'disabled');
-			}
-		});
-	});";
+		});";
+	
+		Factory::getDocument()->addScriptDeclaration($script);
 	}
-
-	/*
-	* This segment of code sets up the autocompleter.
-	*/
+}
+else
+{
 	if ($this->params->get('show_autosuggest', 1))
 	{
-		HTMLHelper::_('script', 'jui/jquery.autocomplete.min.js', array('version' => 'auto', 'relative' => true));
-
-		$script .= "
-		var suggest = jQuery('#q').autocomplete({
-			serviceUrl: '" . Route::_('index.php?option=com_finder&task=suggestions.suggest&format=json&tmpl=component') . "',
-			paramName: 'q',
-			minChars: 1,
-			maxHeight: 400,
-			width: 300,
-			zIndex: 9999,
-			deferRequestBy: 500
-		});";
+		$this->document->getWebAssetManager()->usePreset('awesomplete');
+		$this->document->addScriptOptions('finder-search', array('url' => Route::_('index.php?option=com_finder&task=suggestions.suggest&format=json&tmpl=component')));
 	}
-
-	$script .= "
-	});";
-
-	Factory::getDocument()->addScriptDeclaration($script);
 }
-
 ?>
 
 <form action="<?php echo Route::_($this->query->toUri()); ?>" id="finder-search" method="get" class="js-finder-searchform">
@@ -93,7 +101,7 @@ if ($this->params->get('show_advanced', 1) || $this->params->get('show_autosugge
 				</button>
 			<?php endif; ?>
 			<?php if ($this->params->get('show_advanced', 1)) : ?>
-				<a href="#advancedSearch" data-bs-toggle="collapse" class="btn btn-secondary" aria-hidden="true">
+				<a class="btn btn-secondary" data-bs-toggle="collapse" href="#advancedSearch" role="button" aria-expanded="false" aria-controls="advancedSearch">
 					<span class="fas fa-search-plus" aria-hidden="true"></span>
 					<?php echo Text::_('COM_FINDER_ADVANCED_SEARCH_TOGGLE'); ?>
 				</a>

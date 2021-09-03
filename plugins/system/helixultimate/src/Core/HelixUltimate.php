@@ -244,10 +244,21 @@ class HelixUltimate
 		$layout = $this->input->get('layout', 'default', 'STRING');
 
 		HTMLHelper::_('jquery.framework');
-		HTMLHelper::_('bootstrap.framework');
 
-		unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']);
-		unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap-tooltip-extended.min.js']);
+		if (JVERSION < 4)
+		{
+			HTMLHelper::_('bootstrap.framework');
+
+			if(isset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']))
+			{
+				unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']);
+			}
+
+			if(isset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap-tooltip-extended.min.js']))
+			{
+				unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap-tooltip-extended.min.js']);
+			}
+		}
 
 		$webfonts = array();
 

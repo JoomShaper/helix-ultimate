@@ -83,7 +83,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 <?php endif; ?>
 
 <?php if (!empty($this->link_items)) : ?>
-	<div class="articles-more">
+	<div class="articles-more mb-4">
 		<?php echo $this->loadTemplate('links'); ?>
 	</div>
 <?php endif; ?>

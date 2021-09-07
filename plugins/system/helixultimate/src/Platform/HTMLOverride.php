@@ -8,6 +8,7 @@
 
 namespace HelixUltimate\Framework\Platform;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Path;
 
 /**
@@ -117,9 +118,21 @@ final class HTMLOverride
 		$staticHtmlPath = self::parsePath(self::$htmlPath);
 		$staticOverridePath = self::parsePath(self::$overridePath);
 		$templateOverrideUri = self::parsePath(self::$tmplOverridePath);
+		$webAssetUri = self::parsePath('/templates/{{template}}/joomla.asset.json');
 
 		$relativePath = '';
 		$overridePath = '';
+
+		/**
+		 * In case of different templates.
+		 * If the template's web asset file exists then
+		 * add this to the registry.
+		 * This is useful if a menu item is assigned to a different template.
+		 */
+		if(\file_exists(JPATH_ROOT . $webAssetUri))
+		{
+			Factory::getDocument()->getWebAssetManager()->getRegistry()->addRegistryFile($webAssetUri);
+		}
 
 		/**
 		 * If the callee file is in the template's html directory.
@@ -127,6 +140,12 @@ final class HTMLOverride
 		if (\strpos($callPath, $staticHtmlPath) === 0)
 		{
 			$relativePath = \substr($callPath, \strlen($staticHtmlPath));
+		}
+
+		/** If no relative path extracted. */
+		if (empty($relativePath))
+		{
+			return self::generateComponentPath(\substr($callPath, stripos($callPath, 'html') + 5));
 		}
 
 		$templateOverridePath = $templateOverrideUri . $relativePath;

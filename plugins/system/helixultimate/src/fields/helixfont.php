@@ -256,7 +256,7 @@ class JFormFieldHelixfont extends FormField
 
 		foreach ($fontWeights as $key => $fontWeight)
 		{
-			if (isset($value->fontWeight) && $value->fontWeight === $key)
+			if (isset($value->fontWeight) && (int)$value->fontWeight === $key)
 			{
 				$html .= '<option value="' . $key . '" selected>' . $fontWeight . '</option>';
 			}

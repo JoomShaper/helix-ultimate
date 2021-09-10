@@ -151,11 +151,15 @@ jQuery(function ($) {
 			deviceWiseStickyHeader('sticky-header-sm', getHeaderOffset());
 		} */
 	}
-
-	handleStickiness();
+	const headerExist = $('#sp-header');
+	if(headerExist.length>0) {
+		handleStickiness();
+	}
 
 	$(window).on('resize', function (e) {
-		handleStickiness();
+		if(headerExist.length>0) {
+			handleStickiness();
+		}
 	});
 
 	// go to top

@@ -9,6 +9,9 @@
 
 defined ('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+
 /**
  * Helix Ultimate Site Title.
  *
@@ -45,7 +48,7 @@ class HelixUltimateFeatureTitle
 	public function renderFeature()
 	{
 
-		$app = \JFactory::getApplication();
+		$app = Factory::getApplication();
 		$menuitem   = $app->getMenu()->getActive();
 
 		if($menuitem)
@@ -81,7 +84,7 @@ class HelixUltimateFeatureTitle
 
 				if($page_title_bg_image)
 				{
-					$style .= 'background-image: url(' . \JURI::root(true) . '/' . $page_title_bg_image . ');';
+					$style .= 'background-image: url(' . Uri::root(true) . '/' . $page_title_bg_image . ');';
 				}
 
 				if($style)

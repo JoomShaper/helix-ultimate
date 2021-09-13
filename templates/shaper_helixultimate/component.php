@@ -43,7 +43,7 @@ $theme = new HelixUltimate;
 $template = Helper::loadTemplateData();
 $this->params = $template->params;
 
-$theme_url = URI::base(true) . '/templates/'. $this->template;
+$theme_url = Uri::base(true) . '/templates/'. $this->template;
 $option = $app->input->get('option', '', 'STRING');
 
 $body_class = htmlspecialchars(str_replace('_', '-', $option));

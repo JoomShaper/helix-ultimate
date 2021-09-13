@@ -14,11 +14,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $app = Factory::getApplication();
-$doc = JFactory::getDocument();
+$doc = Factory::getDocument();
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $params = $template->params;
 
-$theme_url = URI::base(true) . '/templates/'. $this->template;
+$theme_url = Uri::base(true) . '/templates/'. $this->template;
 ?>
 
 <!doctype html>
@@ -29,7 +29,7 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 		<title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></title>
 
 		<?php if ($favicon = $params->get('favicon')) : ?>
-			<link rel="icon" href="<?php echo URI::base(true) . '/' . $favicon; ?>" />
+			<link rel="icon" href="<?php echo Uri::base(true) . '/' . $favicon; ?>" />
 		<?php else: ?>
 			<link rel="icon" href="<?php echo $theme_url .'/images/favicon.ico'; ?>" />
 		<?php endif; ?>
@@ -37,7 +37,7 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 		<?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/bootstrap.min.css' )) : ?>
 			<link href="<?php echo $theme_url . '/css/bootstrap.min.css'; ?>" rel="stylesheet">
 		<?php else: ?>
-			<link href="<?php echo URI::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
+			<link href="<?php echo Uri::base(true) . '/plugins/system/helixultimate/css/bootstrap.min.css'; ?>" rel="stylesheet">
 		<?php endif; ?>
 
 		<?php if(file_exists( \JPATH_THEMES . '/' . $this->template . '/css/custom.css' )) : ?>
@@ -93,7 +93,7 @@ $theme_url = URI::base(true) . '/templates/'. $this->template;
 		<?php if($params->get('error_bg')) : ?>
 			<style>
 				body {
-					background-image: url(<?php echo JURI::base(true) . '/' . $params->get('error_bg'); ?>)
+					background-image: url(<?php echo Uri::base(true) . '/' . $params->get('error_bg'); ?>)
 				}
 			</style>
 		<?php endif; ?>

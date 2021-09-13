@@ -8,6 +8,10 @@
 
 defined ('_JEXEC') or die();
 
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 class TplShaperHelixultimateHelper
 {
     public static function getAjax()
@@ -20,9 +24,9 @@ class TplShaperHelixultimateHelper
         $output = array();
         $output['status'] = false;
         $output['message'] = 'Invalid Token';
-        \JSession::checkToken() or die(json_encode($output));
+        Session::checkToken() or die(json_encode($output));
 
-        $app = \JFactory::getApplication();
+        $app = Factory::getApplication();
         $input = $app->input;
         $article_id = (int) $input->post->get('article_id', 0, 'INT');
         $rating = (int) $input->post->get('rating', 0, 'INT');
@@ -39,7 +43,7 @@ class TplShaperHelixultimateHelper
         if($userIP == $lastip)
         {
             $output['status'] = false;
-            $output['message'] = JText::_('HELIX_ALREADY_RATED');
+            $output['message'] = Text::_('HELIX_ALREADY_RATED');
             $output['rating_count'] = (isset($last_rating->rating_count) && $last_rating->rating_count) ? $last_rating->rating_count : 0;
         }
         else
@@ -47,7 +51,7 @@ class TplShaperHelixultimateHelper
             $newRatings = self::addRating($article_id, $rating, $userIP);
 
             $output['status'] = true;
-            $output['message'] = JText::_('HELIX_THANK_YOU');
+            $output['message'] = Text::_('HELIX_THANK_YOU');
 
             $rating = round($newRatings->rating_sum/$newRatings->rating_count);
             $output['rating_count'] = $newRatings->rating_count;
@@ -70,7 +74,7 @@ class TplShaperHelixultimateHelper
 
     private static function addRating($id, $rating, $ip)
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $lastRating = self::getRating($id);
 
         $userRating = new stdClass();
@@ -95,7 +99,7 @@ class TplShaperHelixultimateHelper
 
     private static function getRating($id)
     {
-        $db = \JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select('*')
             ->from($db->quoteName('#__content_rating'))

@@ -97,6 +97,15 @@ final class HTMLOverride
 
 			return JPATH_ROOT . '/modules/' . \implode('/', $path);
 		}
+		elseif (\strpos($extension, 'plg_') === 0)
+		{
+			$pluginPath = \explode('_', $extension);
+			\array_splice($pluginPath, 0, 1);
+			\array_push($pluginPath, 'tmpl');
+
+			\array_splice($path, 0, 1, $pluginPath);
+			return JPATH_ROOT . '/plugins/' . \implode('/', $path);
+		}
 		elseif ($extension === 'layouts')
 		{
 			return JPATH_ROOT . '/' . \implode('/', $path);

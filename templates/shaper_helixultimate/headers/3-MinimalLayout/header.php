@@ -24,16 +24,11 @@ include_once $feature_folder_path . '/menu.php';
 /**
  * Helper classes for-
  * site logo, Menu header.
- *
  */
 $logo    	= new HelixUltimateFeatureLogo($data->params);
 $menu    	= new HelixUltimateFeatureMenu($data->params);
 
-
-/**
- * Logo and menu html classes
- *
- */
+/** Logo and menu html classes. */
 $logoClass = 'col-auto';
 $menuClass = 'col-auto flex-auto';
 

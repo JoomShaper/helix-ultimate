@@ -180,7 +180,7 @@ final class HTMLOverride
 		/** If no relative path extracted. */
 		if (empty($relativePath))
 		{
-			return self::generateExtensionPath(\substr($callPath, stripos($callPath, 'html') + 5));
+			return self::generateExtensionPath(\substr($callPath, stripos($callPath, '/html/') + 5));
 		}
 
 		$templateOverridePath = $templateOverrideUri . $relativePath;

@@ -191,6 +191,30 @@ class  PlgSystemHelixultimate extends JPlugin
 	}
 
 	/**
+	 * Attach the joomla web asset JSON file to the registry.
+	 * From Joomla!4, the new web asset manager comes into the account.
+	 * The templates might contains a joomla.asset.json file for managing
+	 * the web assets.
+	 *
+	 * @return 	void
+	 * @since 	2.0.5
+	 */
+	private function attachWebAsset() : void
+	{
+		$activeMenu = $this->app->getMenu()->getActive();
+		$template = !empty($activeMenu) && $activeMenu->template_style_id > 0
+			? Helper::getTemplateStyle($activeMenu->template_style_id)
+			: Helper::loadTemplateData();
+
+		$webAssetUri = '/templates/' . $template->template . '/joomla.asset.json';
+
+		if(\file_exists(JPATH_ROOT . $webAssetUri))
+		{
+			Factory::getDocument()->getWebAssetManager()->getRegistry()->addRegistryFile($webAssetUri);
+		}
+	}
+
+	/**
 	 * After route.
 	 *
 	 * @return  void
@@ -208,6 +232,8 @@ class  PlgSystemHelixultimate extends JPlugin
 		$id         = $this->app->input->get('id', 0, 'INT');
 		$tmpl		= $this->app->input->get('tmpl', '', 'STRING');
 		$helixReturn= $this->app->input->get('helixreturn', '', 'STRING');
+
+		$this->attachWebAsset();
 
 		$this->app->input->set('helix_id', 9);
 

@@ -1065,7 +1065,7 @@ class HelixUltimate
 
 					$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 					$scssCache = array();
-					$scssCache['imports'] = $compiledCss->getIncludedFiles();
+					$scssCache['imports'] = $this->parseIncludedFiles($compiledCss->getIncludedFiles());
 					$scssCache['vars'] = $compiler->getVariables();
 
 					File::write($cache_path, json_encode($scssCache));
@@ -1074,6 +1074,29 @@ class HelixUltimate
 		}
 
 		$this->add_css($css);
+	}
+
+	/**
+	 * Parse the included scss files and get the filemtime.
+	 *
+	 * @param 	array 	$files	The files path array.
+	 *
+	 * @return 	array	The new array with filepath and the modified time.
+	 * @since 	2.0.5
+	 */
+	private function parseIncludedFiles(array $files) : array
+	{
+		$parsedFiles = [];
+
+		foreach ($files as $file)
+		{
+			if (!empty($file) && \file_exists($file))
+			{
+				$parsedFiles[realpath($file)] = filemtime($file);
+			}
+		}
+
+		return $parsedFiles;
 	}
 
 	/**
@@ -1088,7 +1111,7 @@ class HelixUltimate
 	public function needScssCompile($scss, $vars = array())
 	{
 		$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
-
+		
 		if (file_exists($cache_path))
 		{
 			$cache_file = json_decode(file_get_contents($cache_path));
@@ -1100,7 +1123,7 @@ class HelixUltimate
 				return true;
 			}
 
-			if ($imports)
+			if (!empty($imports))
 			{
 				foreach ($imports as $import => $mtime)
 				{
@@ -1118,18 +1141,18 @@ class HelixUltimate
 						return true;
 					}
 				}
+
+				return false;
 			}
 			else
 			{
 				return true;
 			}
-		}
-		else
-		{
-			return true;
+
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	/**
@@ -1164,12 +1187,12 @@ class HelixUltimate
 				{
 					$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
 
-					if (isset($font->fontSubset) && $font->fontSubset)
+					if (!empty(trim($font->fontSubset)))
 					{
-						$fontUrl .= '&amp;subset=' . $font->fontSubset;
+						$fontUrl .= '&subset=' . $font->fontSubset;
 					}
 
-					$fontUrl .= '&amp;display=swap';
+					$fontUrl .= '&display=swap';
 
 					$this->doc->addStylesheet($fontUrl, ['version' => 'auto'], ['media' => 'none', 'onload' => 'media="all"']);
 				}

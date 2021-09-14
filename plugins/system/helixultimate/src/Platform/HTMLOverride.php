@@ -59,12 +59,31 @@ final class HTMLOverride
 		return Path::clean($path);
 	}
 
+	/**
+	 * Extract the path string by splitting it using a backslash.
+	 * returns the splitted array.
+	 *
+	 * @param 	string 	$path	The path string to extract.
+	 *
+	 * @return 	array	The splitted array of the path.
+	 * @since 	2.0.2
+	 */
 	private static function extractPath(string $path): array
 	{
 		return explode('/', trim($path, '/'));
 	}
 
-	private static function generateComponentPath(string $path) : string
+	/**
+	 * If the system could not detect the override file at template's `overrides`
+	 * folder or the plugin's `override` folder, then it search the template
+	 * file at the extension's path. 
+	 *
+	 * @param 	string 	$path	The path to identify the extension template location.
+	 *
+	 * @return 	string	The extension path after parsing the location $path.
+	 * @since 2.0.2
+	 */
+	private static function generateExtensionPath(string $path) : string
 	{
 		if (empty($path))
 		{
@@ -76,7 +95,7 @@ final class HTMLOverride
 		$version = JVERSION;
 		$extension = $path[0];
 
-		/** If the path is for component- */
+		/** If the path is for a component- */
 		if (\strpos($extension, 'com_') === 0)
 		{
 			if ($version < 4)
@@ -91,12 +110,28 @@ final class HTMLOverride
 
 			return JPATH_ROOT . '/components/' . \implode('/', $path);
 		}
+		/** If the extension path is for a module- */
 		elseif (\strpos($extension, 'mod_') === 0)
 		{
 			\array_splice($path, 1, 0, ['tmpl']);
 
 			return JPATH_ROOT . '/modules/' . \implode('/', $path);
 		}
+		/** If the extension path is for a plugin- */
+		elseif (\strpos($extension, 'plg_') === 0)
+		{
+			/**
+			 * Plugin folder name inside a override directory is like `plg_pluginFolder_pluginName`
+			 * explode the string using the  underscore (_) and make the plugin path.
+			 */
+			$pluginPath = \explode('_', $extension);
+			\array_splice($pluginPath, 0, 1);
+			\array_push($pluginPath, 'tmpl');
+
+			\array_splice($path, 0, 1, $pluginPath);
+			return JPATH_ROOT . '/plugins/' . \implode('/', $path);
+		}
+		/** If the path is for the layouts */
 		elseif ($extension === 'layouts')
 		{
 			return JPATH_ROOT . '/' . \implode('/', $path);
@@ -145,7 +180,7 @@ final class HTMLOverride
 		/** If no relative path extracted. */
 		if (empty($relativePath))
 		{
-			return self::generateComponentPath(\substr($callPath, stripos($callPath, 'html') + 5));
+			return self::generateExtensionPath(\substr($callPath, stripos($callPath, 'html') + 5));
 		}
 
 		$templateOverridePath = $templateOverrideUri . $relativePath;
@@ -162,6 +197,6 @@ final class HTMLOverride
 			return $pluginOverridePath;
 		}
 
-		return self::generateComponentPath($relativePath);
+		return self::generateExtensionPath($relativePath);
 	}
 }

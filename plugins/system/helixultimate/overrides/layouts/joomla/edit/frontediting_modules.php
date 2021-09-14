@@ -9,6 +9,7 @@
 defined ('JPATH_BASE') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -21,6 +22,7 @@ $menusEditing = $displayData['menusediting'];
 $parameters   = ComponentHelper::getParams('com_modules');
 $redirectUri  = '&return=' . urlencode(base64_encode(Uri::getInstance()->toString()));
 $target       = '_blank';
+$itemid       = Factory::getApplication()->input->get('Itemid', '0', 'int');
 
 if (preg_match('/<(?:div|span|nav|ul|ol|h\d) [^>]*class="[^"]* jmoddiv"/', $moduleHtml))
 {
@@ -33,7 +35,9 @@ $editUrl = Uri::base() . 'administrator/index.php?option=com_modules&task=module
 
 if ($parameters->get('redirect_edit', 'site') === 'site')
 {
-	$editUrl = Uri::base() . 'index.php?option=com_config&controller=config.display.modules&id=' . (int) $mod->id . $redirectUri;
+	$editUrl = JVERSION < 4
+		? Uri::base() . 'index.php?option=com_config&controller=config.display.modules&id=' . (int) $mod->id . $redirectUri
+		: Uri::base() . 'index.php?option=com_config&view=modules&id=' . (int) $mod->id . '&Itemid=' . $itemid . $redirectUri;
 	$target  = '_self';
 }
 
@@ -60,6 +64,7 @@ $moduleHtml = preg_replace(
 	1,
 	$count
 );
+
 
 if ($count)
 {

@@ -52,10 +52,7 @@
 				var moduleTarget = $(this).data('target');
 
 				// Stop timeout on previous tooltip and remove it:
-				$('body>.btn.jmodedit')
-					.clearQueue()
-					.tooltip('dispose')
-					.remove();
+				$('body>.btn.jmodedit').clearQueue().tooltip('dispose').remove();
 
 				// Add editing button with tooltip:
 				$(this)
@@ -63,7 +60,7 @@
 					.prepend(
 						'<a class="btn jmodedit" href="#" target="' +
 							moduleTarget +
-							'"><span class="icon-edit"></span></a>'
+							'"><span class="fas fa-edit" aria-hidden="true"></span></a>'
 					)
 					.children(':first')
 					.attr('href', moduleEditUrl)
@@ -115,23 +112,17 @@
 					// Transform module editing URL into Menu Item editing url:
 					var menuitemEditUrl = moduleEditUrl.replace(
 						/\/index.php\?option=com_config&controller=config.display.modules([^\d]+).+$/,
-						'/administrator/index.php?option=com_menus&view=item&layout=edit$1' +
-							itemids[1]
+						'/administrator/index.php?option=com_menus&view=item&layout=edit$1' + itemids[1]
 					);
 				}
 
 				// Get tooltip for menu items from enclosing module
-				var menuEditTip = enclosingModuleDiv
-					.data('jmenuedittip')
-					.replace('%s', itemids[1]);
+				var menuEditTip = enclosingModuleDiv.data('jmenuedittip').replace('%s', itemids[1]);
 
 				var content = $(
 					'<div><a class="btn jfedit-menu" href="#" target="_blank" rel="noopener noreferrer"><span class="icon-edit"></span></a></div>'
 				);
-				content
-					.children('a.jfedit-menu')
-					.prop('href', menuitemEditUrl)
-					.prop('title', menuEditTip);
+				content.children('a.jfedit-menu').prop('href', menuitemEditUrl).prop('title', menuEditTip);
 
 				if (activePopover) {
 					$(activePopover).popover('hide');
@@ -179,10 +170,7 @@
 		var mHide = Element.prototype.hide;
 		Element.implement({
 			hide: function () {
-				if (
-					$('.hasPopover') &&
-					$('.hasPopover').attr('data-original-title')
-				) {
+				if ($('.hasPopover') && $('.hasPopover').attr('data-original-title')) {
 					return this;
 				}
 				mHide.apply(this, arguments);

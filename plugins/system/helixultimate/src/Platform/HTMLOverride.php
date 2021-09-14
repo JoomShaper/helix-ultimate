@@ -159,17 +159,6 @@ final class HTMLOverride
 		$overridePath = '';
 
 		/**
-		 * In case of different templates.
-		 * If the template's web asset file exists then
-		 * add this to the registry.
-		 * This is useful if a menu item is assigned to a different template.
-		 */
-		if(\file_exists(JPATH_ROOT . $webAssetUri))
-		{
-			Factory::getDocument()->getWebAssetManager()->getRegistry()->addRegistryFile($webAssetUri);
-		}
-
-		/**
 		 * If the callee file is in the template's html directory.
 		 */
 		if (\strpos($callPath, $staticHtmlPath) === 0)

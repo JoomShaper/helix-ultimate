@@ -507,16 +507,36 @@
 			showon="comingsoon:1" />
 
 		<!--Error Page-->
+		<field name="error_sppb" 
+			helixgroup="errorpage" 
+			type="checkbox"
+			default="0"  
+			label="Page Builder Page"
+			description="Enable this option to render a SP Page Builder page as a 404 page."
+		/>
+
+		<field name="error_sppb_id" 
+			helixgroup="errorpage" 
+			type="number"
+			label="Page ID"
+			description="Enter the SP Page Builder page ID."
+			showon="error_sppb:1"
+		/>
+
 		<field name="error_logo" 
 			helixgroup="errorpage" 
 			type="helixmedia" 
 			preview="true" 
-			label="HELIX_ULTIMATE_ERROR_LOGO" />
+			label="HELIX_ULTIMATE_ERROR_LOGO"
+		/>
+
 		<field name="error_bg" 
 			helixgroup="errorpage" 
 			type="helixmedia" 
 			preview="true" 
-			label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE" />
+			label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE"
+			
+		/>
 
 	</fieldset>
 

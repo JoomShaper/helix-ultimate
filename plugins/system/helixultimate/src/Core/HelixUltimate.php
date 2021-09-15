@@ -1335,7 +1335,7 @@ class HelixUltimate
 	{
 		$content = file_get_contents($file);
 		$contentLength = strlen($content);
-		$numberOfLines = preg_match_all("#[\r\n]#", $content);
+		$numberOfLines = preg_match_all("@[\r\n]@", $content);
 
 		return ($numberOfLines === 1)
 			|| (($numberOfLines * 100 / $contentLength) < 1);
@@ -1364,6 +1364,12 @@ class HelixUltimate
 		$criticalCode = '';
 		$criticalHash = '';
 		$criticalRegex = "@(jquery.*)\.js$@";
+
+		// echo '<xmp>';
+		// print_r($all_scripts);
+		// echo '</xmp>';
+		// die();
+
 
 		/**
 		 * Version hashes are used here for maintaining
@@ -1396,7 +1402,13 @@ class HelixUltimate
 				$js_file = JPATH_ROOT . $key;
 			}
 
-			if (File::exists($js_file))
+			/** If the js_file contains a version number suffix, then remove that. */
+			if (strpos($js_file, '?') !== false)
+			{
+				$js_file = \substr($js_file, 0, \stripos($js_file, '?'));
+			}
+
+			if (\file_exists($js_file))
 			{
 				if (!$this->exclude_js($key, $excludes))
 				{
@@ -1534,7 +1546,7 @@ class HelixUltimate
 					'version' => $versionHashes['url']
 				],
 				[
-					'defer' => true
+					'defer' => false
 				]
 			);
 		}

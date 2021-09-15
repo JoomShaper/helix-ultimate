@@ -357,6 +357,10 @@ class HelixUltimate
 			$this->add_css('system-j4.min.css');
 			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
 		}
+		else
+		{
+			$this->add_css('system-j3.min.css');
+		}
 	}
 
 	/**
@@ -1596,16 +1600,13 @@ class HelixUltimate
 
 				$versionHashes['declared'] = md5($scriptContent);
 
-				/**
-				 * Asynchronously load the non critical JavaScript
-				 */
 				$this->doc->addScript(
 					Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . $declaredScriptHash . '.js',
 					[
 						'version' => $versionHashes['declared']
 					],
 					[
-						'defer' => true
+						'defer' => false
 					]
 				);
 			}

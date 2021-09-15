@@ -1,41 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form name="preset">
 	<fieldset name="colors">
-		<field name="text_color" 
-			class="preset-control internal-use-only" 
-			helixgroup="preset_body" 
-			type="color" 
-			label="Body Text Color" 
-			track="false" />
-
-		<field name="bg_color" 
-			class="preset-control internal-use-only" 
-			helixgroup="preset_body" 
-			type="color" 
-			label="Body Background Color" 
-			track="false" />
-
-		<field name="link_color" 
-			class="preset-control internal-use-only" 
-			helixgroup="preset_body" 
-			type="color" 
-			label="Body Link Color" 
-			track="false" />
-
-		<field name="link_hover_color" 
-			class="preset-control internal-use-only" 
-			helixgroup="preset_body" 
-			type="color" 
-			label="Body Link Hover Color" 
-			track="false" />
-
-		<field name="header_bg_color" 
-			class="preset-control internal-use-only" 
-			helixgroup="preset_header" 
-			type="color" 
-			label="Header Background Color" 
-			track="false" />
-
+		<!-- Preset edit topbar -->
 		<field name="topbar_bg_color" 
 			class="preset-control internal-use-only" 
 			helixgroup="preset_topbar" 
@@ -50,6 +16,14 @@
 			label="Topbar Text Color" 
 			track="false" />
 
+		<!-- Preset edit header -->
+		<field name="header_bg_color" 
+			class="preset-control internal-use-only" 
+			helixgroup="preset_header" 
+			type="color" 
+			label="Header Background Color" 
+			track="false" />
+
 		<field name="logo_text_color" 
 			class="preset-control internal-use-only" 
 			helixgroup="preset_header" 
@@ -57,6 +31,7 @@
 			label="Logo Text Color" 
 			track="false" />
 
+		<!-- Preset edit menu -->
 		<field name="menu_text_color" 
 			class="preset-control internal-use-only" 
 			helixgroup="preset_menu" 
@@ -106,6 +81,36 @@
 			label="Menu Dropdown Text Active Color" 
 			track="false" />
 
+		<!-- Preset edit body -->
+		<field name="text_color" 
+			class="preset-control internal-use-only" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Text Color" 
+			track="false" />
+
+		<field name="bg_color" 
+			class="preset-control internal-use-only" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Background Color" 
+			track="false" />
+
+		<field name="link_color" 
+			class="preset-control internal-use-only" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Link Color" 
+			track="false" />
+
+		<field name="link_hover_color" 
+			class="preset-control internal-use-only" 
+			helixgroup="preset_body" 
+			type="color" 
+			label="Body Link Hover Color" 
+			track="false" />
+
+		<!-- Preset edit footer -->
 		<field name="footer_bg_color" 
 			class="preset-control internal-use-only" 
 			helixgroup="preset_footer" 

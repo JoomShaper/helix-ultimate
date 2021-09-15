@@ -103,11 +103,16 @@ class JFormFieldHelixpresets extends FormField
 	 * @param	array		$names	The preset names array.
 	 * @param 	SimpleXML	$presets	The simple XML children of the presets.
 	 *
-	 * @return 	array
+	 * @return 	\stdClass | null
 	 * @since 	2.0.2
 	 */
-	private function createPresetData($json, $names, $presets) : \stdClass
+	private function createPresetData($json, $names, $presets)
 	{
+		if (empty($json))
+		{
+			return null;
+		}
+
 		if (\is_string($json))
 		{
 			$json = \json_decode($json);

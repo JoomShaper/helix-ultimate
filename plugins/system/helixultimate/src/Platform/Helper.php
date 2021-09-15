@@ -668,7 +668,7 @@ class Helper
 
 		return '404';
 	}
-
+	
 	public static function renderPage(string $code, int $pageId)
 	{
 		$app = Factory::getApplication();
@@ -696,9 +696,6 @@ class Helper
 		{
 			$redirect_url = 'index.php?option=com_sppagebuilder&view=page&id=' . $pageId;
 		}
-
-		var_dump($redirect_url);
-		// exit;
 
 		if ($code == '404')
 		{

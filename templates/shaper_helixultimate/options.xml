@@ -507,7 +507,7 @@
 			showon="comingsoon:1" />
 
 		<!--Error Page-->
-		<field name="error_sppb" 
+		<!-- <field name="error_sppb" 
 			helixgroup="errorpage" 
 			type="checkbox"
 			default="0"  
@@ -521,7 +521,7 @@
 			label="Page ID"
 			description="Enter the SP Page Builder page ID."
 			showon="error_sppb:1"
-		/>
+		/> -->
 
 		<field name="error_logo" 
 			helixgroup="errorpage" 

@@ -22,11 +22,11 @@ $params = $template->params;
 $theme_url = Uri::base(true) . '/templates/'. $this->template;
 
 /** If SP Page Builder page as a error page is activated- */
-if ($params->get('error_sppb'))
+/* if ($params->get('error_sppb'))
 {
 	Helper::renderPage($this->error->getCode(), $params->get('error_sppb_id'));
 }
-
+ */
 ?>
 
 <!doctype html>

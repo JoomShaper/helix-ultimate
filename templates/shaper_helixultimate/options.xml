@@ -994,14 +994,6 @@
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_DROPDOWN_ACTIVE_TEXT_COLOR" />
 
-		<field name="footer_bg_color" 
-			class="preset-control" 
-			helixgroup="preset_footer" 
-			type="color" 
-			default="#171717" 
-			dependant="custom_style:1"
-			label="HELIX_ULTIMATE_PRESET_FOOTER_BACKGROUND_COLOR" />
-
 		<!-- Custom preset body -->
 		<field name="text_color" 
 			class="preset-control" 
@@ -1036,6 +1028,14 @@
 			label="HELIX_ULTIMATE_PRESET_LINK_HOVER_COLOR" />
 
 		<!-- Custom preset footer -->
+		<field name="footer_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_footer" 
+			type="color" 
+			default="#171717" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_PRESET_FOOTER_BACKGROUND_COLOR" />
+
 		<field name="footer_text_color" 
 			class="preset-control" 
 			helixgroup="preset_footer" 

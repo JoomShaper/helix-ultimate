@@ -1029,7 +1029,7 @@ class HelixUltimate
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function add_scss($scss, $vars = array(), $css = '', $forceCompile = false)
+	public function add_scss($scss, $vars = array(), $css = '', $forceCompile = false, $path = '')
 	{
 		$scss = File::stripExt($scss);
 
@@ -2097,6 +2097,55 @@ class HelixUltimate
 	}
 
 	/**
+	 * Generate the SCSS variables from the preset settings.
+	 *
+	 * @return 	array
+	 * @since 	2.0.5
+	 */
+	public function getSCSSVariables() : array
+	{
+		$custom_style = $this->params->get('custom_style');
+		$preset = $this->params->get('preset');
+
+		if($custom_style || !$preset)
+		{
+			$scssVars = array(
+				'preset' => 'default',
+				'text_color' => $this->params->get('text_color'),
+				'bg_color' => $this->params->get('bg_color'),
+				'link_color' => $this->params->get('link_color'),
+				'link_hover_color' => $this->params->get('link_hover_color'),
+				'header_bg_color' => $this->params->get('header_bg_color'),
+				'logo_text_color' => $this->params->get('logo_text_color'),
+				'menu_text_color' => $this->params->get('menu_text_color'),
+				'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
+				'menu_text_active_color' => $this->params->get('menu_text_active_color'),
+				'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
+				'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
+				'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
+				'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
+				'footer_bg_color' => $this->params->get('footer_bg_color'),
+				'footer_text_color' => $this->params->get('footer_text_color'),
+				'footer_link_color' => $this->params->get('footer_link_color'),
+				'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
+				'topbar_bg_color' => $this->params->get('topbar_bg_color'),
+				'topbar_text_color' => $this->params->get('topbar_text_color')
+			);
+		}
+		else
+		{
+			$scssVars = (array) json_decode($this->params->get('preset'));
+		}
+
+		$scssVars['header_height'] 		= $this->params->get('header_height', '60px');
+		$scssVars['header_height_sm'] 	= $this->params->get('header_height_sm', '60px');
+		$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '60px');
+		$scssVars['offcanvas_width'] 	= $this->params->get('offcanvas_width', '300') . 'px';
+
+		return $scssVars;
+	}
+
+	/**
 	 * If user put their own JS or CSS files into `templates/{template}/js/custom`
 	 * or `templates/{template}/css/custom` directory respectively then,
 	 * those files would be added automatically to the template.
@@ -2134,7 +2183,8 @@ class HelixUltimate
 				{
 					if (preg_match("@\.scss$@", $file))
 					{
-						$this->add_scss('custom/' . $file);
+						$vars = $this->getSCSSVariables();
+						$this->add_scss('custom/' . $file, $vars);
 					}
 				}
 				elseif ($type === 'js')

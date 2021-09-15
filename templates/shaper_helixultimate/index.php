@@ -56,43 +56,7 @@ if (!\is_null($this->params->get('comingsoon', null)))
 	exit();
 }
 
-$custom_style = $this->params->get('custom_style');
-$preset = $this->params->get('preset');
-
-if($custom_style || !$preset)
-{
-	$scssVars = array(
-		'preset' => 'default',
-		'text_color' => $this->params->get('text_color'),
-		'bg_color' => $this->params->get('bg_color'),
-		'link_color' => $this->params->get('link_color'),
-		'link_hover_color' => $this->params->get('link_hover_color'),
-		'header_bg_color' => $this->params->get('header_bg_color'),
-		'logo_text_color' => $this->params->get('logo_text_color'),
-		'menu_text_color' => $this->params->get('menu_text_color'),
-		'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
-		'menu_text_active_color' => $this->params->get('menu_text_active_color'),
-		'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
-		'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
-		'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
-		'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
-		'footer_bg_color' => $this->params->get('footer_bg_color'),
-		'footer_text_color' => $this->params->get('footer_text_color'),
-		'footer_link_color' => $this->params->get('footer_link_color'),
-		'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
-		'topbar_bg_color' => $this->params->get('topbar_bg_color'),
-		'topbar_text_color' => $this->params->get('topbar_text_color')
-	);
-}
-else
-{
-	$scssVars = (array) json_decode($this->params->get('preset'));
-}
-
-$scssVars['header_height'] 		= $this->params->get('header_height', '60px');
-$scssVars['header_height_sm'] 	= $this->params->get('header_height_sm', '60px');
-$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '60px');
-$scssVars['offcanvas_width'] 	= $this->params->get('offcanvas_width', '300') . 'px';
+$scssVars = $theme->getSCSSVariables();
 
 // Body Background Image
 if ($bg_image = $this->params->get('body_bg_image'))
@@ -144,11 +108,6 @@ if ($custom_js = $this->params->get('custom_js', null))
 		$theme->loadFontAwesome();
 		$theme->add_js('main.js');
 
-		if ($this->params->get('image_lazy_loading', 0))
-		{
-			$theme->add_js('lazysizes.min.js');
-		}
-
 		/**
 		 * Add custom.js for user
 		 */
@@ -166,7 +125,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		$theme->add_scss('presets', $scssVars, 'presets/' . $scssVars['preset']);
 
-		$theme->add_scss('custom', [], 'custom-compiled', true);
+		$theme->add_scss('custom', $scssVars, 'custom-compiled');
 		$theme->add_css('custom.css');
 
 		//Before Head

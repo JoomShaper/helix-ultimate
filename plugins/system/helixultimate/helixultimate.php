@@ -430,6 +430,11 @@ class  PlgSystemHelixultimate extends JPlugin
 				$theme->compress_js($params->get('exclude_js'));
 			}
 
+			if ($params->get('image_lazy_loading', 0))
+			{
+				$theme->add_js('lazysizes.min.js');
+			}
+
 			/**
 			 * Adding custom directory for the assets.
 			 * If anyone put any file inside the `templates/{template}/css/custom`

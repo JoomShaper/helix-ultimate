@@ -369,7 +369,7 @@ class  PlgSystemHelixultimate extends JPlugin
 			Platform::loadFrameworkSystem();
 		}
 
-		if (!$this->app->isClient('administrator'))
+		if ($this->app->isClient('site'))
 		{
 			$activeMenu = $this->app->getMenu()->getActive();
 

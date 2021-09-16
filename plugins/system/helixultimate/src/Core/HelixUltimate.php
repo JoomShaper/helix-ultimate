@@ -1365,12 +1365,6 @@ class HelixUltimate
 		$criticalHash = '';
 		$criticalRegex = "@(jquery.*)\.js$@";
 
-		// echo '<xmp>';
-		// print_r($all_scripts);
-		// echo '</xmp>';
-		// die();
-
-
 		/**
 		 * Version hashes are used here for maintaining
 		 * the file versioning. If an asset file's content is changed then for caching,

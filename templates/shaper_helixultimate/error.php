@@ -64,7 +64,6 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 			}
 		?>
 		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
-		
 	</head>
 	<body>
 		<div class="container">

@@ -58,9 +58,12 @@ if (!\is_null($this->params->get('comingsoon', null)))
 
 $scssVars = $theme->getSCSSVariables();
 
+$boxedLayout = $this->params->get('boxed_layout');
+
 // Body Background Image
-if ($bg_image = $this->params->get('body_bg_image'))
+if ($boxedLayout && $this->params->get('body_bg_image'))
 {
+	$bg_image = $this->params->get('body_bg_image');
 	$body_style = 'background-image: url(' . Uri::base(true) . '/' . $bg_image . ');';
 	$body_style .= 'background-repeat: ' . $this->params->get('body_bg_repeat') . ';';
 	$body_style .= 'background-size: ' . $this->params->get('body_bg_size') . ';';

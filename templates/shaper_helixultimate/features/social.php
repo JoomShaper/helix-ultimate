@@ -61,6 +61,8 @@ class HelixUltimateFeatureSocial
 			'custom' 	=> $this->params->get('custom'),
 		);
 
+		$iconPrefix = 'fab';
+
 		$hasAnySocialLink = array_reduce($socials,
 			function ($acc, $curr) {
 				return $acc || !empty($curr);
@@ -74,10 +76,7 @@ class HelixUltimateFeatureSocial
 
 			foreach ($socials as $name => $link)
 			{
-				/**
-				 * Modify links and name if needed.
-				 *
-				 */
+				/** Modify links and name if needed. */
 				if (!empty($link))
 				{
 					$iconName = 'fa-' . $name;
@@ -93,9 +92,21 @@ class HelixUltimateFeatureSocial
 						break;
 
 						case 'custom':
-							$array = explode(' ', trim($link));
-							$link = count($array) === 2 ? $array[1] : '';
-							$iconName = !empty($link) ? $array[0] : '';
+							$array = explode(' ', preg_replace("@\s+@", ' ', trim($link)));
+
+							if (!empty($array) && count($array) > 1)
+							{
+								$chunks = count($array);
+
+								if ($chunks === 2)
+								{
+									list($iconName, $link) = $array;
+								}
+								elseif ($chunks === 3)
+								{
+									list($iconPrefix, $iconName, $link) = $array;
+								}
+							}
 						break;
 
 						default:
@@ -104,13 +115,10 @@ class HelixUltimateFeatureSocial
 					}
 				}
 
-				/**
-				 * Generate link after modification.
-				 *
-				 */
+				/** Generate link after modification.*/
 				if (!empty($link))
 				{
-					$iconClass = 'fab ' . $iconName;
+					$iconClass = $iconPrefix . ' ' . $iconName;
 					$html .= '<li class="social-icon-' . $name . '"><a target="_blank" rel="noopener noreferrer" href="' . $link . '" aria-label="' . ucfirst($name) . '"><span class="' . $iconClass . '" aria-hidden="true"></span></a></li>';
 				}
 			}

@@ -507,16 +507,35 @@
 			showon="comingsoon:1" />
 
 		<!--Error Page-->
+		<!-- <field name="error_sppb" 
+			helixgroup="errorpage" 
+			type="checkbox"
+			default="0"  
+			label="Page Builder Page"
+			description="Enable this option to render a SP Page Builder page as a 404 page."
+		/>
+
+		<field name="error_sppb_id" 
+			helixgroup="errorpage" 
+			type="number"
+			label="Page ID"
+			description="Enter the SP Page Builder page ID."
+			showon="error_sppb:1"
+		/> -->
+
 		<field name="error_logo" 
 			helixgroup="errorpage" 
 			type="helixmedia" 
 			preview="true" 
-			label="HELIX_ULTIMATE_ERROR_LOGO" />
+			label="HELIX_ULTIMATE_ERROR_LOGO"
+		/>
+
 		<field name="error_bg" 
 			helixgroup="errorpage" 
 			type="helixmedia" 
 			preview="true" 
-			label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE" />
+			label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE"
+		/>
 
 	</fieldset>
 
@@ -882,43 +901,8 @@
 			label="HELIX_ULTIMATE_CUSTOM_STYLE" 
 			track="on"
 			description="HELIX_ULTIMATE_CUSTOM_STYLE_DESC" />
-		<field name="text_color" 
-			class="preset-control" 
-			helixgroup="preset_body" 
-			type="color" 
-			default="#252525" 
-			dependant="custom_style:1"
-			label="HELIX_ULTIMATE_COLOR" />
-		<field name="bg_color" 
-			class="preset-control" 
-			helixgroup="preset_body" 
-			type="color" 
-			default="#FFFFFF" 
-			dependant="custom_style:1"
-			label="HELIX_ULTIMATE_BACKGROUND_COLOR" />
-		<field name="link_color" 
-			class="preset-control" 
-			helixgroup="preset_body" 
-			type="color" 
-			default="#0345BF" 
-			dependant="custom_style:1"
-			label="HELIX_ULTIMATE_PRESET_LINK_COLOR" />
-		<field name="link_hover_color" 
-			class="preset-control" 
-			helixgroup="preset_body" 
-			type="color" 
-			default="#044CD0" 
-			dependant="custom_style:1"
-			label="HELIX_ULTIMATE_PRESET_LINK_HOVER_COLOR" />
-		<field name="header_bg_color" 
-			class="preset-control" 
-			helixgroup="preset_header" 
-			type="color" 
-			default="#FFFFFF" 
-			dependant="custom_style:1"
-			label="HELIX_ULTIMATE_PRESET_HEADER_BACKGROUND_COLOR"
-			separator="true"
-			/>
+
+		<!-- Custom preset topbar -->
 		<field name="topbar_bg_color" 
 			class="preset-control" 
 			helixgroup="preset_topbar" 
@@ -933,6 +917,18 @@
 			default="#AAAAAA" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_TOPBAR_TEXT_COLOR" />
+
+		<!-- Custom preset header -->
+		<field name="header_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_header" 
+			type="color" 
+			default="#FFFFFF" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_PRESET_HEADER_BACKGROUND_COLOR"
+			separator="true"
+			/>
+
 		<field name="logo_text_color" 
 			class="preset-control" 
 			helixgroup="preset_header" 
@@ -940,6 +936,8 @@
 			default="#0345BF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_LOGO_TEXT_COLOR" />
+
+		<!-- Custom preset menu -->
 		<field name="menu_text_color" 
 			class="preset-control" 
 			helixgroup="preset_menu" 
@@ -947,6 +945,7 @@
 			default="#252525" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_MENU_TEXT_COLOR" />
+
 		<field name="menu_text_hover_color" 
 			class="preset-control" 
 			helixgroup="preset_menu" 
@@ -954,6 +953,7 @@
 			default="#0345BF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_MENU_HOVER_TEXT_COLOR" />
+
 		<field name="menu_text_active_color" 
 			class="preset-control" 
 			helixgroup="preset_menu" 
@@ -961,6 +961,7 @@
 			default="#0345BF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_MENU_ACTIVE_TEXT_COLOR" />
+
 		<field name="menu_dropdown_bg_color" 
 			class="preset-control" 
 			helixgroup="preset_menu" 
@@ -968,6 +969,7 @@
 			default="#FFFFFF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_DROPDOWN_BACKGROUND_COLOR" />
+
 		<field name="menu_dropdown_text_color" 
 			class="preset-control" 
 			helixgroup="preset_menu" 
@@ -975,6 +977,7 @@
 			default="#252525" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_DROPDOWN_TEXT_COLOR" />
+
 		<field name="menu_dropdown_text_hover_color" 
 			class="preset-control" 
 			helixgroup="preset_menu" 
@@ -982,6 +985,7 @@
 			default="#0345BF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_DROPDOWN_HOVER_TEXT_COLOR" />
+
 		<field name="menu_dropdown_text_active_color" 
 			class="preset-control" 
 			helixgroup="preset_menu" 
@@ -989,6 +993,41 @@
 			default="#0345BF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_DROPDOWN_ACTIVE_TEXT_COLOR" />
+
+		<!-- Custom preset body -->
+		<field name="text_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			default="#252525" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_COLOR" />
+
+		<field name="bg_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			default="#FFFFFF" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_BACKGROUND_COLOR" />
+
+		<field name="link_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			default="#0345BF" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_PRESET_LINK_COLOR" />
+
+		<field name="link_hover_color" 
+			class="preset-control" 
+			helixgroup="preset_body" 
+			type="color" 
+			default="#044CD0" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_PRESET_LINK_HOVER_COLOR" />
+
+		<!-- Custom preset footer -->
 		<field name="footer_bg_color" 
 			class="preset-control" 
 			helixgroup="preset_footer" 
@@ -996,6 +1035,7 @@
 			default="#171717" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_FOOTER_BACKGROUND_COLOR" />
+
 		<field name="footer_text_color" 
 			class="preset-control" 
 			helixgroup="preset_footer" 
@@ -1003,6 +1043,7 @@
 			default="#FFFFFF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_FOOTER_TEXT_COLOR" />
+
 		<field name="footer_link_color" 
 			class="preset-control" 
 			helixgroup="preset_footer" 
@@ -1010,6 +1051,7 @@
 			default="#A2A2A2" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_FOOTER_LINK_COLOR" />
+
 		<field name="footer_link_hover_color" 
 			class="preset-control" 
 			helixgroup="preset_footer" 
@@ -1017,6 +1059,7 @@
 			default="#FFFFFF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_FOOTER_LINK_HOVER_COLOR" />
+
 	</fieldset>
 
 	<fieldset name="layout" 

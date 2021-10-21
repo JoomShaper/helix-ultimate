@@ -646,4 +646,61 @@ class Helper
 
 		return substr($haystack, 0, $length) === $needle;
 	}
+
+	private static function getMenuAliasById(int $pageId)
+	{
+		$db 	= Factory::getDbo();
+		$query 	= $db->getQuery(true);
+		$query->select('alias')
+			->from($db->quoteName('#__menu'))
+			->where($db->quoteName('link') . ' = ' . $db->quote('index.php?option=com_sppagebuilder&view=page&id=' . $pageId));
+		$db->setQuery($query);
+
+		try
+		{
+			return $db->loadResult();
+		}
+		catch (\Exception $e)
+		{
+			Factory::getApplication()->enqueueMessage($e->getMessage());
+			return '404';
+		}
+
+		return '404';
+	}
+	
+	public static function renderPage(string $code, int $pageId)
+	{
+		$app = Factory::getApplication();
+		$config = $app->getConfig();
+		$sef = $config->get('sef');
+		$sef_rewrite = $config->get('sef_rewrite');
+		$sef_suffix = $config->get('sef_suffix');
+
+		$redirect_url = Uri::base();
+
+		if(!$sef_rewrite)
+		{
+			$redirect_url .= 'index.php/';
+		}
+
+		$redirect_url .= self::getMenuAliasById($pageId);
+
+		if($sef_suffix)
+		{
+			$redirect_url .= '.html';
+		}
+
+		// If sef is turned off
+		if(!$sef)
+		{
+			$redirect_url = 'index.php?option=com_sppagebuilder&view=page&id=' . $pageId;
+		}
+
+		if ($code == '404')
+		{
+			header('Location: ' . $redirect_url, true, 301);
+			exit;
+		}
+	}
 }

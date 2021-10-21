@@ -8,6 +8,7 @@
 
 defined ('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -19,6 +20,13 @@ $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $params = $template->params;
 
 $theme_url = Uri::base(true) . '/templates/'. $this->template;
+
+/** If SP Page Builder page as a error page is activated- */
+/* if ($params->get('error_sppb'))
+{
+	Helper::renderPage($this->error->getCode(), $params->get('error_sppb_id'));
+}
+ */
 ?>
 
 <!doctype html>
@@ -56,7 +64,6 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 			}
 		?>
 		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
-		
 	</head>
 	<body>
 		<div class="container">

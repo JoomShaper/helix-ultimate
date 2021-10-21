@@ -14,10 +14,10 @@ const config = {
 	srcPath: path.resolve(__dirname),
 	buildPath: path.resolve(__dirname, './package/'),
 	qsPath: path.resolve(__dirname, './package/helix_ultimate_quickstart/'),
-	qsPackageName: 'helix_ultimate_quickstart_j4_2.0.4.zip',
-	packageName: 'helix_ultimate_pkg_2.0.4.zip',
-	pluginPackageName: 'helix_ultimate_plugin_pkg_2.0.4.zip',
-	templatePackageName: 'helix_ultimate_template_pkg_2.0.4.zip',
+	qsPackageName: 'helix_ultimate_quickstart_j4_2.0.5.zip',
+	packageName: 'helix_ultimate_pkg_2.0.5.zip',
+	pluginPackageName: 'helix_ultimate_plugin_pkg_2.0.5.zip',
+	templatePackageName: 'helix_ultimate_template_pkg_2.0.5.zip',
 	templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css, html',
 	pluginFileExtensions: function () {
 		return this.templateFileExtensions + ', ini';

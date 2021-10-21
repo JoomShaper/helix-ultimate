@@ -62,13 +62,12 @@ class  PlgSystemHelixultimate extends JPlugin
 	protected $app;
 
 	/**
-	 * Handle the event hook onAfterInitialize.
-	 * Here we can override the HTML functions.
+	 * Register the missing bootstrap methods tooltip and popover.
 	 *
-	 * @return	void
-	 * @since	2.0.0
+	 * @return void
+	 * @since 2.0.6
 	 */
-	public function onAfterInitialise()
+	private function registerBootstrap()
 	{
 		$template = Helper::loadTemplateData();
 
@@ -199,7 +198,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	 * @return 	void
 	 * @since 	2.0.5
 	 */
-	private function attachWebAsset() : void
+	private function attachWebAsset()
 	{
 		$activeMenu = $this->app->getMenu()->getActive();
 		$template = !empty($activeMenu) && $activeMenu->template_style_id > 0
@@ -208,7 +207,7 @@ class  PlgSystemHelixultimate extends JPlugin
 
 		$webAssetUri = '/templates/' . $template->template . '/joomla.asset.json';
 
-		if(\file_exists(JPATH_ROOT . $webAssetUri))
+		if(JVERSION >= 4 && \file_exists(JPATH_ROOT . $webAssetUri))
 		{
 			Factory::getDocument()->getWebAssetManager()->getRegistry()->addRegistryFile($webAssetUri);
 		}
@@ -352,6 +351,8 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	public function onAfterDispatch()
 	{
+		$this->registerBootstrap();
+
 		$option     = $this->app->input->get('option', '', 'STRING');
 		$helix      = $this->app->input->get('helix', '', 'STRING');
 		$view       = $this->app->input->get('view', '', 'STRING');
@@ -369,7 +370,7 @@ class  PlgSystemHelixultimate extends JPlugin
 			Platform::loadFrameworkSystem();
 		}
 
-		if (!$this->app->isClient('administrator'))
+		if ($this->app->isClient('site'))
 		{
 			$activeMenu = $this->app->getMenu()->getActive();
 
@@ -428,6 +429,11 @@ class  PlgSystemHelixultimate extends JPlugin
 			if ($params->get('compress_js'))
 			{
 				$theme->compress_js($params->get('exclude_js'));
+			}
+
+			if ($params->get('image_lazy_loading', 0))
+			{
+				$theme->add_js('lazysizes.min.js');
 			}
 
 			/**

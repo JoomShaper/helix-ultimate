@@ -322,12 +322,12 @@ class HelixUltimate
 
 		$this->doc->addScriptdeclaration('template="' . $this->template->template . '";');
 
-		$generatorText = Text::_('HELIX_ULTIMATE_GENERATOR_TEXT');
+		// $generatorText = Text::_('HELIX_ULTIMATE_GENERATOR_TEXT');
 
-		if (!empty($generatorText))
-		{
-			$this->doc->setGenerator($generatorText);
-		}
+		// if (!empty($generatorText))
+		// {
+		// 	$this->doc->setGenerator($generatorText);
+		// }
 
 		if (JVERSION < 4)
 		{

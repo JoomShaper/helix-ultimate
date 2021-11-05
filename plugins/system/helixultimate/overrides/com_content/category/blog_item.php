@@ -31,7 +31,7 @@ $tmpl_params = $template->params;
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 
 $currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
-$isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate())) : ($this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
+$isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(Factory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate())) : ($this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
 	|| ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
 
 ?>

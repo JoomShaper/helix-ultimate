@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -320,9 +321,15 @@ class HelixUltimate
 		$this->addGoogleFont($webfonts);
 
 		$this->doc->addScriptdeclaration('template="' . $this->template->template . '";');
-		$this->doc->setGenerator('Helix Ultimate - The Most Popular Joomla! Template Framework.');
 
-		if (JoomlaBridge::getVersion('major') < 4)
+		$generatorText = Text::_('HELIX_ULTIMATE_GENERATOR_TEXT');
+
+		if (!empty($generatorText))
+		{
+			$this->doc->setGenerator($generatorText);
+		}
+
+		if (JVERSION < 4)
 		{
 			echo '<jdoc:include type="head" />';
 		}

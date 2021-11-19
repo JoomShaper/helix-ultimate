@@ -121,7 +121,7 @@ class JFormFieldHelixpresets extends FormField
 		$keys = \array_keys((array) $json);
 		$names = \array_flip($names);
 
-		foreach ($json as $presetName => $presetData)
+		foreach ($json as $presetName => $_)
 		{
 			if (!isset($names[$presetName]))
 			{
@@ -137,18 +137,25 @@ class JFormFieldHelixpresets extends FormField
 		{
 			$elementName = (string) $child['name'];
 
+			if (!empty($json->$elementName))
+			{
+				$json->$elementName = array_merge((array) $json->$elementName, [
+					'default' => !empty($child['default']) ? (string) $child['default'] : ''
+				]);
+			}
+
 			if (isset($names[$elementName]))
 			{
-				$json->$elementName = array(
+				$json->$elementName = array_merge($json->$elementName, [
 					'label' => isset($child['label']) ? (string) $child['label'] : '',
-					'default' => isset($child['default']) ? (string) $child['default'] : '',
 					'description' => isset($child['description']) ? $child['description'] : '',
 					'data' => (object) $this->getDefaultDataFromXML($child)
-				);
-				$json->$elementName = (object) $json->$elementName;
+				]);
 			}
+
+			$json->$elementName = (object) $json->$elementName;
 		}
-		
+
 		return $json;
 	}
 
@@ -245,7 +252,6 @@ class JFormFieldHelixpresets extends FormField
 	private function generateFieldFromXmlData($children, $value)
 	{
 		$data = array();
-
 		$html = '';
 
 		foreach ($children as $child)

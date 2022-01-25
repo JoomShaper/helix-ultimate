@@ -61,9 +61,4 @@ if (!empty($this->query->highlight)
 			<?php echo $description; ?>
 		</p>
 	<?php endif; ?>
-	<?php if ($this->params->get('show_url', 1)) : ?>
-		<div class="small result-url">
-			<?php echo $this->baseUrl . Route::_($this->result->route); ?>
-		</div>
-	<?php endif; ?>
 </li>

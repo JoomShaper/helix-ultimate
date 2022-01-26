@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 // Create a shortcut for params.
 $params  = $displayData->params;
 $canEdit = $displayData->params->get('access-edit');
+$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 ?>

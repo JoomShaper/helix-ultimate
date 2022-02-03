@@ -173,6 +173,7 @@
               cursor: pointer;
               transform: translateY(-50%);
               -webkit-transform: translateY(-50%);
+              padding: 10px;
               &:after {
                 font-family: "Font Awesome 5 Free";
                 content: "\f105";
@@ -188,13 +189,14 @@
             }
 
             .menu-toggler {
-              right: 0px;
+              right: -10px;
               display: block;
               position: absolute;
               top: 50%;
               cursor: pointer;
               transform: translateY(-50%);
               -webkit-transform: translateY(-50%);
+              padding: 2px 10px;
               &:after {
                 font-family: "Font Awesome 5 Free";
                 content: "\f105";
@@ -269,7 +271,7 @@
         border-bottom: 1px solid rgba(32, 31, 31, 0.1);
         margin-bottom: 0;
         > a {
-          padding: 15px 10px;
+          padding: 15px 30px 15px 10px;
         }
       }
       ul {
@@ -347,12 +349,12 @@ body {
               > a,
               > .menu-separator {
                 > .menu-toggler {
-                  right: 0;
+                  right: -10px;
                 }
               }
               > .nav-header {
                 > .menu-toggler {
-                  right: 0;
+                  right: -10px;
                 }
               }
             }

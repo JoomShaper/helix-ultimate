@@ -76,7 +76,7 @@ $isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->ite
 
 	<div class="article-introtext">
 		<?php echo $this->item->introtext; ?>
-	</div>
+	
 
 	<?php if ($useDefList && ($info == 1)) : ?>
 		<?php echo LayoutHelper::render('joomla.content.info_block', array('item' => $this->item, 'params' => $params, 'position' => 'below', 'intro' => true)); ?>
@@ -96,6 +96,7 @@ $isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->ite
 		<?php echo LayoutHelper::render('joomla.content.readmore', array('item' => $this->item, 'params' => $params, 'link' => $link)); ?>
 
 	<?php endif; ?>
+	</div>
 
 	<?php if ($isUnpublished) : ?>
 		</div>

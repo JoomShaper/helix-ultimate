@@ -214,16 +214,16 @@ jQuery(function ($) {
 	}
 
 	// Tooltip
-	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"], .hasTooltip'));
-	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"], .hasTooltip'));
+	tooltipTriggerList.map(function (tooltipTriggerEl) {
 		return new bootstrap.Tooltip(tooltipTriggerEl,{
 			html: true
 		  });
 	});
 
 	// Popover
-	var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-	var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+	const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"], .hasPopover'));
+	popoverTriggerList.map(function (popoverTriggerEl) {
 		return new bootstrap.Popover(popoverTriggerEl);
 	});
 

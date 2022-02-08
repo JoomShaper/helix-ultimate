@@ -81,6 +81,23 @@ class  PlgSystemHelixultimate extends JPlugin
 				{
 					require_once $bootstrapPath;
 				}
+				
+				if(JVERSION < 4) {
+					unset(Factory::getDocument()->_script);
+					$name = 'csrf.token';
+					HTMLHelper::_('form.csrf', $name);
+					Factory::getDocument()->addScriptDeclaration(
+						<<<JS
+						;(function ($) {
+							$.ajaxSetup({
+								headers: {
+									'X-CSRF-Token': Joomla.getOptions('$name')
+								}
+							});
+						})(jQuery);
+						JS
+					);
+				}
 
 				HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
 				HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);

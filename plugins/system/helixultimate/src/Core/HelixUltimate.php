@@ -1890,46 +1890,6 @@ class HelixUltimate
 			}
 		}
 
-		if ($criticalCssCode)
-		{
-			if (!Folder::exists($cache_path))
-			{
-				Folder::create($cache_path, 0755);
-			}
-
-			$file = $cache_path . '/' . md5($criticalCssHash) . '.css';
-
-			if (!File::exists($file))
-			{
-				File::write($file, $criticalCssCode);
-			}
-			else
-			{
-				/**
-				 * Check if the current content of the CSS
-				 * is differ from the cached content.
-				 * In such a situation override the cache file with the
-				 * current changed content.
-				 */
-				if ($this->contentsChanged($file, $criticalCssCode)
-					|| filesize($file) === 0
-					|| ((filemtime($file) + $cachetime * 60) < time()))
-				{
-					File::write($file, $criticalCssCode);
-				}
-			}
-
-			$versionHashes['critical'] = md5($criticalCssCode);
-
-			/**
-			 * Load template styles asynchronously
-			 */
-			$this->doc->addStylesheet(
-				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($criticalCssHash) . '.css',
-				['version' => $versionHashes['critical']]
-			);
-		}
-
 		// Compress All stylesheets
 		if ($minifiedCode)
 		{
@@ -1968,6 +1928,46 @@ class HelixUltimate
 			$this->doc->addStylesheet(
 				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css',
 				['version' => $versionHashes['lazy']]
+			);
+		}
+
+		if ($criticalCssCode)
+		{
+			if (!Folder::exists($cache_path))
+			{
+				Folder::create($cache_path, 0755);
+			}
+
+			$file = $cache_path . '/' . md5($criticalCssHash) . '.css';
+
+			if (!File::exists($file))
+			{
+				File::write($file, $criticalCssCode);
+			}
+			else
+			{
+				/**
+				 * Check if the current content of the CSS
+				 * is differ from the cached content.
+				 * In such a situation override the cache file with the
+				 * current changed content.
+				 */
+				if ($this->contentsChanged($file, $criticalCssCode)
+					|| filesize($file) === 0
+					|| ((filemtime($file) + $cachetime * 60) < time()))
+				{
+					File::write($file, $criticalCssCode);
+				}
+			}
+
+			$versionHashes['critical'] = md5($criticalCssCode);
+
+			/**
+			 * Load template styles asynchronously
+			 */
+			$this->doc->addStylesheet(
+				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($criticalCssHash) . '.css',
+				['version' => $versionHashes['critical']]
 			);
 		}
 

@@ -1363,7 +1363,7 @@ class HelixUltimate
         $cachetime = $app->get('cachetime', 15);
 
         $all_scripts  = $this->doc->_scripts;
-        $cache_path   = JPATH_CACHE . '/com_templates/templates/' . $this->template->template;
+        $cache_path   = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
         $scripts      = array();
         $root_url     = Uri::root(true);
         $minifiedCode = '';
@@ -1415,7 +1415,7 @@ class HelixUltimate
                         File::write($file, $minifiedCode);
                     }
                 }
-                $this->doc->addScript(Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
+                $this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
             }
         }
 

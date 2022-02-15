@@ -62,6 +62,17 @@ class  PlgSystemHelixultimate extends JPlugin
 	protected $app;
 
 	/**
+	 * The application initialization event.
+	 *
+	 * @return 	void
+	 * @since 	4.0.7
+	 */
+	public function onAfterInitialise()
+	{
+		$this->registerBootstrap();
+	}
+
+	/**
 	 * Register the missing bootstrap methods tooltip and popover.
 	 *
 	 * @return void
@@ -71,7 +82,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	{
 		$template = Helper::loadTemplateData();
 
-		if (isset($template->template) && !empty($template->template))
+		if (!empty($template->template))
 		{
 			$bootstrapPath = JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
 
@@ -81,29 +92,13 @@ class  PlgSystemHelixultimate extends JPlugin
 				{
 					require_once $bootstrapPath;
 				}
-				
-				// if(JVERSION < 4) {
-				// 	unset(Factory::getDocument()->_script);
-				// 	$name = 'csrf.token';
-				// 	HTMLHelper::_('form.csrf', $name);
-				// 	Factory::getDocument()->addScriptDeclaration(
-				// 		<<<JS
-				// 		;(function ($) {
-				// 			$.ajaxSetup({
-				// 				headers: {
-				// 					'X-CSRF-Token': Joomla.getOptions('$name')
-				// 				}
-				// 			});
-				// 		})(jQuery);
-				// 		JS
-				// 	);
-				// }
 
 				HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
 				HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
 			}
 		}
 	}
+
 
 	/**
 	 * The form event. Load additional parameters when available into the field form.
@@ -368,7 +363,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	public function onAfterDispatch()
 	{
-		$this->registerBootstrap();
+		// $this->registerBootstrap();
 
 		$option     = $this->app->input->get('option', '', 'STRING');
 		$helix      = $this->app->input->get('helix', '', 'STRING');

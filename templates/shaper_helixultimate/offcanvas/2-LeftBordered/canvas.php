@@ -81,5 +81,8 @@ $searchModule = Helper::getSearchModule();
 		<?php if ($hasModMenu === false): ?>
 			<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />
 		<?php endif ?>
+
+		<!-- custom module position -->
+		<jdoc:include type="modules" name="offcanvas-modules" style="sp_xhtml" />
 	</div>
 </div>

@@ -63,6 +63,7 @@
         <position>pagebuilder</position>
         <position>404</position>
         <position>debug</position>
+        <position>offcanvas-modules</position>
     </positions>
 
     <files>

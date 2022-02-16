@@ -17,6 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
@@ -1369,7 +1370,10 @@ class HelixUltimate
         $minifiedCode = '';
         $md5sum       = '';
 
-        //Check all local scripts
+				$excludeScripts = ['validate.js', 'tinymce.min.js'];
+				$excludedScriptPaths = [];
+
+        // Check all local scripts
         foreach ($all_scripts as $key => $value)
         {
             $js_file = str_replace($root_url, JPATH_ROOT, $key);
@@ -1379,16 +1383,25 @@ class HelixUltimate
                 $js_file = JPATH_ROOT . $key;
             }
 
+						/**
+						 * Exclude the scripts which are crating trouble while minifying,
+						 * and searching scripts with relative path inside the script e.g. tinymce.
+						*/
+						if (JVERSION < 4 && in_array(basename($js_file), $excludeScripts)) {
+							$excludedScriptPaths[] = $js_file;
+							unset($this->doc->_scripts[$key]);
+							continue;
+						}
+
             if (\file_exists($js_file))
             {
                 if (!$this->exclude_js($key, $excludes))
                 {
                     $scripts[] = $key;
                     $md5sum .= md5($key);
-                    $compressed = \JShrink\Minifier::minify(file_get_contents($js_file), array('flaggedComments' => false));
+										$compressed = \JShrink\Minifier::minify(file_get_contents($js_file), array('flaggedComments' => false));
                     $minifiedCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n"; //add file name to compressed JS
-
-                    unset($this->doc->_scripts[$key]); //Remove sripts
+                    unset($this->doc->_scripts[$key]); // Remove scripts
                 }
             }
         }
@@ -1418,6 +1431,17 @@ class HelixUltimate
                 $this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
             }
         }
+
+				/** Add the script paths excluded earlier. */
+				if (!empty($excludedScriptPaths))
+				{
+					foreach ($excludedScriptPaths as $path)
+					{
+						$path = Path::clean($path);
+						$paths = explode('media/', $path, 2);
+						$this->doc->addScript(Uri::root(true) . '/media/' . $paths[1]);
+					}
+				}
 
         return;
     }

@@ -443,22 +443,22 @@ class Helper
 		{
 			foreach ($modules as &$module)
 			{
-				$module->desc = Text::_('COM_MODULES_NODESCRIPTION');
+				$module->desc = '';
 
 				if (isset($module->manifest_cache) && \is_string($module->manifest_cache))
 				{
-					$lang->load($module->module . '.sys', $client->path, null, false, true)
-						|| $lang->load($module->module . '.sys', $client->path . '/modules/' . $module->module, null, false, true);
+					// $lang->load($module->module . '.sys', $client->path, null, false, true)
+					// 	|| $lang->load($module->module . '.sys', $client->path . '/modules/' . $module->module, null, false, true);
 
 					$module->manifest_cache = \json_decode($module->manifest_cache);
 					
 					if (!empty($module->manifest_cache->description))
 					{
-						$module->desc = Text::_($module->manifest_cache->description);
+						// $module->desc = Text::_($module->manifest_cache->description);
 					}
 					else
 					{
-						$module->desc = Text::_('COM_MODULES_NODESCRIPTION');
+						// $module->desc = Text::_('COM_MODULES_NODESCRIPTION');
 					}
 				}
 			}

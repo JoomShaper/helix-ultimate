@@ -1358,93 +1358,116 @@ class HelixUltimate
 	 * @since	1.0.0
 	 */
 	public function compress_js($excludes = '')
-    {
+	{
+			$app       = Factory::getApplication();
+			$cachetime = $app->get('cachetime', 15);
 
-        $app       = Factory::getApplication();
-        $cachetime = $app->get('cachetime', 15);
+			$all_scripts  = $this->doc->_scripts;
+			$cache_path   = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
+			$scripts      = array();
+			$root_url     = Uri::root(true);
+			$minifiedCode = '';
+			$md5sum       = '';
 
-        $all_scripts  = $this->doc->_scripts;
-        $cache_path   = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
-        $scripts      = array();
-        $root_url     = Uri::root(true);
-        $minifiedCode = '';
-        $md5sum       = '';
+			$excludeScripts = ['validate.js', 'tinymce.min.js', 'tiny_mce.js', 'editor.min.js'];
+			$excludedScriptPaths = [];
+			$remoteScripts = [];
 
-				$excludeScripts = ['validate.js', 'tinymce.min.js'];
-				$excludedScriptPaths = [];
+			// Check all local scripts
+			foreach ($all_scripts as $key => $value)
+			{
+				$js_file = str_replace($root_url, JPATH_ROOT, $key);
 
-        // Check all local scripts
-        foreach ($all_scripts as $key => $value)
-        {
-            $js_file = str_replace($root_url, JPATH_ROOT, $key);
-
-            if (strpos($js_file, JPATH_ROOT) === false)
-            {
-                $js_file = JPATH_ROOT . $key;
-            }
-
-						/**
-						 * Exclude the scripts which are crating trouble while minifying,
-						 * and searching scripts with relative path inside the script e.g. tinymce.
-						*/
-						if (JVERSION < 4 && in_array(basename($js_file), $excludeScripts)) {
-							$excludedScriptPaths[] = $js_file;
-							unset($this->doc->_scripts[$key]);
-							continue;
-						}
-
-            if (\file_exists($js_file))
-            {
-                if (!$this->exclude_js($key, $excludes))
-                {
-                    $scripts[] = $key;
-                    $md5sum .= md5($key);
-										$compressed = \JShrink\Minifier::minify(file_get_contents($js_file), array('flaggedComments' => false));
-                    $minifiedCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n"; //add file name to compressed JS
-                    unset($this->doc->_scripts[$key]); // Remove scripts
-                }
-            }
-        }
-
-        //Compress All scripts
-        if ($minifiedCode)
-        {
-            if (!Folder::exists($cache_path))
-            {
-                Folder::create($cache_path, 0755);
-            }
-            else
-            {
-                $file = $cache_path . '/' . md5($md5sum) . '.js';
-
-                if (!\file_exists($file))
-                {
-                    File::write($file, $minifiedCode);
-                }
-                else
-                {
-                    if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
-                    {
-                        File::write($file, $minifiedCode);
-                    }
-                }
-                $this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
-            }
-        }
-
-				/** Add the script paths excluded earlier. */
-				if (!empty($excludedScriptPaths))
+				if (strpos($js_file, JPATH_ROOT) === false)
 				{
-					foreach ($excludedScriptPaths as $path)
-					{
-						$path = Path::clean($path);
-						$paths = explode('media/', $path, 2);
-						$this->doc->addScript(Uri::root(true) . '/media/' . $paths[1]);
-					}
+					$js_file = JPATH_ROOT . $key;
 				}
 
-        return;
-    }
+				$fullPath = $js_file;
+
+				if (\stripos($js_file, '?') !== false)
+				{
+					$js_file = \substr($js_file, 0, \stripos($js_file, '?'));
+				}
+
+				$ext = \strtolower(\pathinfo($js_file, PATHINFO_EXTENSION));
+
+				if ($ext !== 'js')
+				{
+					$remoteScripts[] = $fullPath;
+					unset($this->doc->_scripts[$key]);
+					continue;
+				}
+
+				/**
+				 * Exclude the scripts which are crating trouble while minifying,
+				 * and searching scripts with relative path inside the script e.g. tinymce.
+				*/
+				if (JVERSION < 4 && \in_array(basename($js_file), $excludeScripts)) {
+					$excludedScriptPaths[] = $js_file;
+					unset($this->doc->_scripts[$key]);
+					continue;
+				}
+
+				if (\file_exists($js_file))
+				{
+					if (!$this->exclude_js($key, $excludes))
+					{
+						$scripts[] = $key;
+						$md5sum .= md5($key);
+						$compressed = \JShrink\Minifier::minify(file_get_contents($js_file), array('flaggedComments' => false));
+						$minifiedCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n"; //add file name to compressed JS
+						unset($this->doc->_scripts[$key]); // Remove scripts
+					}
+				}
+			}
+
+			// Compress All scripts
+			if ($minifiedCode)
+			{
+				if (!Folder::exists($cache_path))
+				{
+					Folder::create($cache_path, 0755);
+				}
+				else
+				{
+					$file = $cache_path . '/' . md5($md5sum) . '.js';
+
+					if (!\file_exists($file))
+					{
+						File::write($file, $minifiedCode);
+					}
+					else
+					{
+						if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
+						{
+							File::write($file, $minifiedCode);
+						}
+					}
+					$this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
+				}
+			}
+
+			$excludedScriptPaths = array_merge($excludedScriptPaths, $remoteScripts);
+
+			/** Add the script paths excluded earlier. */
+			if (!empty($excludedScriptPaths))
+			{
+				foreach ($excludedScriptPaths as $path)
+				{
+					$path = Path::clean($path);
+
+					if (\stripos($path, JPATH_ROOT) === 0)
+					{
+						$path = str_replace(JPATH_ROOT, '', $path);
+					}
+
+					$this->doc->addScript(Uri::root(true) . $path);
+				}
+			}
+
+			return;
+	}
 
 	/**
 	 * Get preloader of specific type

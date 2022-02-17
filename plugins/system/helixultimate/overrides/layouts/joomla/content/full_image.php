@@ -44,7 +44,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 ?>
 <?php if($full_image) : ?>
 	<div class="article-full-image">
-		<img src="<?php echo $full_image; ?>" alt="<?php echo htmlspecialchars($attribs->helix_ultimate_image_alt_txt ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
+		<img src="<?php echo $full_image; ?>" alt="<?php echo htmlspecialchars(isset($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
 	</div>
 <?php else: ?>
 	<?php $images = json_decode($displayData->images); ?>
@@ -54,7 +54,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 			<?php if ($images->image_fulltext_caption) :
 				echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_fulltext_caption) . '"';
 			endif; ?>
-			src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo htmlspecialchars($attribs->helix_ultimate_image_alt_txt ? $attribs->helix_ultimate_image_alt_txt : $images->image_fulltext_alt); ?>" itemprop="image"> </div>
+			src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo htmlspecialchars(isset($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $images->image_fulltext_alt); ?>" itemprop="image"> </div>
 	<?php endif; ?>
 <?php endif; ?>
 

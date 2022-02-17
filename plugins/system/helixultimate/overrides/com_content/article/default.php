@@ -37,6 +37,7 @@ $params  = $this->item->params;
 $images  = json_decode($this->item->images);
 $urls    = json_decode($this->item->urls);
 $canEdit = $params->get('access-edit');
+$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 $user    = Factory::getUser();
 $info    = $params->get('info_block_position', 0);
 $page_header_tag = 'h1';

@@ -446,7 +446,7 @@ class RowColumnSettings
 		$query->select($db->quoteName(array('template')));
 		$query->from($db->quoteName('#__template_styles'));
 		$query->where($db->quoteName('client_id') . ' = 0');
-		$query->where($db->quoteName('home') . ' = 1');
+		$query->where($db->quoteName('home') . ' = ' . $db->quote('1', false));
 		$db->setQuery($query);
 
 		return $db->loadObject()->template;

@@ -17,7 +17,7 @@ extract($displayData);
 
 	<?php if(count((array)$images)) : ?>
 		<div class="article-feature-gallery">
-			<div id="article-feature-gallery-<?php echo $id; ?>" class="carousel slide" data-ride="carousel">
+			<div id="article-feature-gallery-<?php echo $id; ?>" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner" role="listbox">
 					<?php foreach ( $images as $key => $image ) : ?>
 						<div class="carousel-item<?php echo ($key===0) ? ' active': ''; ?>">

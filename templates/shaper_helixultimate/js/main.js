@@ -347,4 +347,13 @@ jQuery(function ($) {
 			scrollBar.css({ width: `${scrollPercent}%` });
 		}
 	});
+
+	// Error Alert close issue fix for Joomla 3
+	var observer = new MutationObserver(function(mutations) {
+		$('#system-message-container .alert .close').attr('data-bs-dismiss', 'alert');
+	});
+	var target = document.querySelector('#system-message-container');
+	observer.observe(target, {
+		attributes: true
+	});
 });

@@ -703,4 +703,9 @@ class Helper
 			exit;
 		}
 	}
+
+	public static function SetColumn($num_columns, $default = 3)
+	{
+		return empty($num_columns) ? $default : $num_columns;
+	}
 }

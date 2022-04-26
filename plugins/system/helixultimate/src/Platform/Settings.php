@@ -274,8 +274,17 @@ class Settings
 	 */
 	public static function preparePresetEditForm($presetData, $presetName)
 	{
+		$template = Helper::loadTemplateData();
 		$presetForm = new Form('preset');
-		$presetForm->loadFile(JPATH_PLUGINS . '/system/helixultimate/src/form/preset.xml');
+		$presetFormPath = JPATH_PLUGINS . '/system/helixultimate/src/form/preset.xml';
+		$templatePresetFormPath = JPATH_ROOT . '/templates/' . $template->template . '/preset.xml';
+
+		if (\file_exists($templatePresetFormPath))
+		{
+			$presetFormPath = $templatePresetFormPath;
+		}
+
+		$presetForm->loadFile($presetFormPath);
 
 		if (!empty($presetData['data']))
 		{

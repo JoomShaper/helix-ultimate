@@ -66,7 +66,7 @@ $alt = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 			// In case there is no stored value, use the option's default state.
 			$checked     = (!$hasValue && $option->checked) ? 'checked' : $checked;
 			$optionClass = !empty($option->class) ? 'class="form-check-input ' . $option->class . '"' : ' class="form-check-input"';
-			$disabled    = !empty($option->disable) || $disabled ? 'disabled' : '';
+			$optionDisabled    = !empty($option->disable) || $disabled ? 'disabled' : '';
 
 			// Initialize some JavaScript option attributes.
 			$onclick  = !empty($option->onclick) ? 'onclick="' . $option->onclick . '"' : '';
@@ -74,7 +74,7 @@ $alt = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 
 			$oid        = $id . $i;
 			$value      = htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8');
-			$attributes = array_filter(array($checked, $optionClass, $disabled, $onchange, $onclick));
+			$attributes = array_filter(array($checked, $optionClass, $optionDisabled, $onchange, $onclick));
 		?>
 		<div class="form-check form-check-inline">
 			<label for="<?php echo $oid; ?>" class="form-check-label">

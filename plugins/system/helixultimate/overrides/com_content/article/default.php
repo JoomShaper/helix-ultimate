@@ -37,6 +37,7 @@ $params  = $this->item->params;
 $images  = json_decode($this->item->images);
 $urls    = json_decode($this->item->urls);
 $canEdit = $params->get('access-edit');
+$currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 $user    = Factory::getUser();
 $info    = $params->get('info_block_position', 0);
 $page_header_tag = 'h1';
@@ -47,7 +48,7 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 $isExpired  = JVERSION < 4
 	? (strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()
-	: !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
+	: !is_null($this->item->publish_down) && $this->item->publish_down > $currentDate;
 ?>
 <div class="article-details <?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? Factory::getConfig()->get('language') : $this->item->language; ?>">
@@ -92,7 +93,7 @@ $isExpired  = JVERSION < 4
 			<span class="badge bg-warning text-dark"><?php echo Text::_('JNOTPUBLISHEDYET'); ?></span>
 		<?php endif; ?>
 		<?php if ($isExpired) : ?>
-			<span class="badge bg-warning text-dark"><?php echo Text::_('JEXPIRED'); ?></span>
+			<span class="badge bg-warning text-dark mb-2"><?php echo Text::_('JEXPIRED'); ?></span>
 		<?php endif; ?>
 	</div>
 	<?php endif; ?>

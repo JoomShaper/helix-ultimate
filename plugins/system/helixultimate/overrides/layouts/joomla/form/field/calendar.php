@@ -87,6 +87,7 @@ if (JVERSION >= 4)
 					id="<?php echo $id; ?>_btn"
 					data-inputfield="<?php echo $id; ?>"
 					data-dayformat="<?php echo $format; ?>"
+					data-date-format="<?php echo $format; ?>"
 					data-button="<?php echo $id; ?>_btn"
 					data-firstday="<?php echo Factory::getLanguage()->getFirstDay(); ?>"
 					data-weekend="<?php echo Factory::getLanguage()->getWeekEnd(); ?>"

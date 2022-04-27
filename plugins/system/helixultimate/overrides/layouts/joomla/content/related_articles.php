@@ -2,10 +2,12 @@
 <?php 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Layout\LayoutHelper;
+
 $articles = $displayData['articles'];
 $mainItem = $displayData['item'];
-$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+$template = Helper::loadTemplateData();
 $tmpl_params = $template->params;
 ?>
 <div class="related-article-list-container">
@@ -15,7 +17,7 @@ $tmpl_params = $template->params;
 		<div class="article-list related-article-list">
 			<div class="row">
 				<?php foreach( $articles as $item ): ?> 
-					<div class="col-lg-<?php echo round(12 / $mainItem->params->get('num_columns')); ?>">            
+					<div class="col-lg-<?php echo round(12 / Helper::SetColumn($mainItem->params->get('num_columns'), 4)); ?>">
 						<?php echo LayoutHelper::render('joomla.content.related_article', $item); ?>
 					</div>
 				<?php endforeach; ?>

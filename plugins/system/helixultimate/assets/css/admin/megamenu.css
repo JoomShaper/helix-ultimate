@@ -228,6 +228,8 @@
 .hu-megamenu-settings .control-group label {
 	flex-basis: 100%;
 }
+.hu-megamenu-builder-faicon,
+.hu-megamenu-builder-faicon + .chosen-container>a,
 .hu-mega-menu-builder .control-group select {
 	height: 30px;
 	width: 88px;
@@ -240,6 +242,12 @@
 	border: 1px solid rgba(121, 127, 167, 0.3);
 	box-shadow: 0px 1px 1px rgba(20, 50, 80, 0.1);
 	border-radius: 5px;
+}
+.hu-megamenu-builder-faicon + .chosen-container>a{
+	line-height: 30px;
+}
+.hu-megamenu-builder-faicon + .chosen-container-single .chosen-single abbr{
+	top: 9px;
 }
 .hu-mega-menu-builder .control-group input:not([type='checkbox']) {
 	padding: 5px 12px;

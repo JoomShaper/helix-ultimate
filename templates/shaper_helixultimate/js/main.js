@@ -1,7 +1,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2022 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -40,11 +40,11 @@ jQuery(function ($) {
 	var settings = Joomla.getOptions('data') || {};
 
 	/**
-	 * Device wise sticky header
+	 * sticky header
 	 *
 	 * @param {string} className the header className
 	 */
-	var deviceWiseStickyHeader = function (className, offsetTop) {
+	var handleStickiness = function (className, offsetTop) {
 		if ($('body:not(.layout-edit-iframe)').hasClass(className)) {
 			var $header = $('#sp-header');
 			var headerHeight = $header.outerHeight();
@@ -134,33 +134,10 @@ jQuery(function ($) {
 		return headerOffset;
 	}
 
-	function handleStickiness() {
-		deviceWiseStickyHeader('sticky-header', getHeaderOffset());
-
-		/** @TODO: uncomment it if devicewise sticky header is required. */
-
-		/* let width = window.innerWidth;
-		if (width > settings.breakpoints.tablet) {
-			deviceWiseStickyHeader('sticky-header', getHeaderOffset());
-		} else if (
-			width <= settings.breakpoints.tablet &&
-			width > settings.breakpoints.mobile
-		) {
-			deviceWiseStickyHeader('sticky-header-md', getHeaderOffset());
-		} else {
-			deviceWiseStickyHeader('sticky-header-sm', getHeaderOffset());
-		} */
-	}
 	const headerExist = $('#sp-header');
 	if(headerExist.length>0) {
-		handleStickiness();
+		handleStickiness('sticky-header', getHeaderOffset());
 	}
-
-	$(window).on('resize', function (e) {
-		if(headerExist.length>0) {
-			handleStickiness();
-		}
-	});
 
 	// go to top
 	$(window).scroll(function () {
@@ -237,16 +214,16 @@ jQuery(function ($) {
 	}
 
 	// Tooltip
-	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"], .hasTooltip'));
-	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"], .hasTooltip'));
+	tooltipTriggerList.map(function (tooltipTriggerEl) {
 		return new bootstrap.Tooltip(tooltipTriggerEl,{
 			html: true
 		  });
 	});
 
 	// Popover
-	var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-	var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+	const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"], .hasPopover'));
+	popoverTriggerList.map(function (popoverTriggerEl) {
 		return new bootstrap.Popover(popoverTriggerEl);
 	});
 
@@ -369,5 +346,14 @@ jQuery(function ($) {
 			}
 			scrollBar.css({ width: `${scrollPercent}%` });
 		}
+	});
+
+	// Error Alert close issue fix for Joomla 3
+	var observer = new MutationObserver(function(mutations) {
+		$('#system-message-container .alert .close').attr('data-bs-dismiss', 'alert');
+	});
+	var target = document.querySelector('#system-message-container');
+	observer.observe(target, {
+		attributes: true
 	});
 });

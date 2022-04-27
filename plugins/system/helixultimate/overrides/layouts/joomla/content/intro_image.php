@@ -1,14 +1,16 @@
 <?php
+
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
  * @copyright Copyright (c) 2010 - 2021 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ */
 
-defined ('JPATH_BASE') or die();
+defined('JPATH_BASE') or die();
 
 use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
@@ -20,7 +22,7 @@ $tplParams = $template->params;
 
 $leading = (isset($displayData->leading) && $displayData->leading) ? 1 : 0;
 
-if($leading)
+if ($leading) 
 {
 	$blog_list_image = $tplParams->get('leading_blog_list_image', 'large');
 }
@@ -30,51 +32,102 @@ else
 }
 
 $intro_image = '';
-if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '')
+if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '')
 {
-	if($blog_list_image == 'default')
+	if ($blog_list_image == 'default') 
 	{
 		$intro_image = $attribs->helix_ultimate_image;
-	}
-	else
+	} 
+	else 
 	{
 		$intro_image = $attribs->helix_ultimate_image;
 		$basename = basename($intro_image);
-		$list_image = JPATH_ROOT . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_'. $blog_list_image .'.' . File::getExt($basename);
-		if(File::exists($list_image)) {
-			$intro_image = Uri::root(true) . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_'. $blog_list_image .'.' . File::getExt($basename);
+		$list_image = JPATH_ROOT . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . File::getExt($basename);
+		if (File::exists($list_image)) 
+		{
+			$intro_image = Uri::root(true) . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . File::getExt($basename);
 		}
 	}
 }
 ?>
-<?php if($intro_image) : ?>
+<?php if ($intro_image) : ?>
 	<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
 		<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
-	<?php endif; ?>
+		<?php endif; ?>
 		<div class="article-intro-image">
-			<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>">
+			<?php 
+			if (JVERSION >= 4)
+			{
+				$layoutAttr = [
+					'src' => $intro_image,
+					'alt' => empty($displayData->title) ? false : htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'),
+				];
+				echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+			}
+			else
+			{
+			?>
+				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>">
+			<?php
+			}
+			?>
 		</div>
-	<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
+		<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
 		</a>
 	<?php endif; ?>
-<?php else: ?>
+<?php else : ?>
 
 	<?php $images = json_decode($displayData->images); ?>
 	<?php if (isset($images->image_intro) && !empty($images->image_intro)) : ?>
 		<?php $imgfloat = empty($images->float_intro) ? $params->get('float_intro') : $images->float_intro; ?>
 		<div class="article-intro-image float-<?php echo htmlspecialchars($imgfloat, ENT_COMPAT, 'UTF-8'); ?>">
 			<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
-				<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>"><img
-					<?php if ($images->image_intro_caption) : ?>
-						<?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?>
-					<?php endif; ?>
-					src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>"></a>
-				<?php else : ?><img
-					<?php if ($images->image_intro_caption) : ?>
-						<?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8') . '"'; ?>
-					<?php endif; ?>
-					src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>">
-				<?php endif; ?>
-			</div>
-		<?php endif; ?>
+				<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
+					<?php
+					if (JVERSION >= 4)
+					{
+						$layoutAttr = [
+							'src' => htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'),
+							'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'),
+						];
+						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
+						{
+							$layoutAttr['class'] = 'caption';
+							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption);
+						}
+						echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+					}
+					else
+					{
+					?>
+						<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>">
+					<?php
+					}
+					?>
+				</a>
+			<?php else : ?>
+				<?php 
+				if (JVERSION >= 4)
+				{
+					$layoutAttr = [
+						'src' => htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'),
+						'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'),
+					];
+					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
+					{
+						$layoutAttr['class'] = 'caption';
+						$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8');
+					}
+					echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+				}
+				else 
+				{
+				?>
+					<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8') . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>">
+				<?php
+				}
+				?>
+			<?php endif; ?>
+		</div>
 	<?php endif; ?>
+<?php endif; ?>

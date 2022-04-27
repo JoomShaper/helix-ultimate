@@ -8,6 +8,7 @@
 
 defined ('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\HTML\HTMLHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
@@ -53,32 +54,25 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 	$this->columns = $this->columns ?? 1;
 ?>
 <?php if (!empty($this->intro_items)) : ?>
+	<?php $blogClass = $this->params->get('blog_class', ''); ?>
+		<?php if ((int) $this->params->get('num_columns') > 1) : ?>
+			<?php $blogClass .= 'cols-' . (int) $this->params->get('num_columns'); ?>	
+		<?php endif; ?>
 	<div class="article-list">
-		<?php foreach ($this->intro_items as $key => &$item) : ?>
-			<?php
-			$key = ($key - $leadingcount) + 1;
-			$rowcount = (((int) $key - 1) % (int) $this->columns) + 1;
-			$row = $counter / $this->columns;
-
-			if ($rowcount === 1) : ?>
-			<div class="row items-row cols-<?php echo (int) $this->columns; ?> <?php echo 'row-' . $row; ?> row">
-			<?php endif; ?>
-			
-			<div class="col-lg-<?php echo round(12 / $this->columns); ?> item column-<?php echo $rowcount; ?>">
-				<div class="article"
-					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-					<?php
-						$this->item = &$item;
-						echo $this->loadTemplate('item');
-					?>
+		<div class="row row-<?php echo $counter + 1; ?> <?php echo $blogClass; ?>">
+			<?php foreach ($this->intro_items as $key => &$item) : ?>
+				<div class="col-lg-<?php echo round(12 / Helper::SetColumn($this->params->get('num_columns'), 3)); ?>">
+					<div class="article"
+						itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+						<?php
+							$this->item = &$item;
+							echo $this->loadTemplate('item');
+						?>
+					</div>
 				</div>
-			</div>
-			
 			<?php $counter++; ?>
-			<?php if (($rowcount == $this->columns) or ($counter == $introcount)) : ?>
-				</div>
-			<?php endif; ?>
-		<?php endforeach; ?>
+			<?php endforeach; ?>
+		</div>
 	</div>
 <?php endif; ?>
 

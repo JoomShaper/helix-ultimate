@@ -17,6 +17,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Filesystem\Path;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
@@ -217,15 +218,13 @@ class HelixUltimate
 		elseif ($method === 'ua' && !empty($code))
 		{
 			$script = "
-			<script>
-				(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-				(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-				})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-				ga('create', '{$code}', 'auto');
-				ga('send', 'pageview');
-			</script>
+			<!-- Google Tag Manager -->
+			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','{$code}');</script>
+			<!-- End Google Tag Manager -->
 			";
 		}
 
@@ -1358,274 +1357,114 @@ class HelixUltimate
 	 */
 	public function compress_js($excludes = '')
 	{
-		$app       = Factory::getApplication();
-		$cachetime = $app->get('cachetime', 15);
+			$app       = Factory::getApplication();
+			$cachetime = $app->get('cachetime', 15);
 
-		$all_scripts  = $this->doc->_scripts;
-		$all_declared_scripts = $this->doc->_script;
-		$cache_path   = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
-		$scripts      = array();
-		$root_url     = Uri::root(true);
-		$minifiedCode = '';
-		$md5sum       = '';
-		$criticalCode = '';
-		$criticalHash = '';
-		$criticalRegex = "@(jquery.*)\.js$@";
+			$all_scripts  = $this->doc->_scripts;
+			$cache_path   = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
+			$scripts      = array();
+			$root_url     = Uri::root(true);
+			$minifiedCode = '';
+			$md5sum       = '';
 
-		/**
-		 * Version hashes are used here for maintaining
-		 * the file versioning. If an asset file's content is changed then for caching,
-		 * the browser cannot detect, if the file is changed or not.
-		 * So it executes the cached one. But for rapid changing of styles as well as scripts
-		 * we need to preview the changes.
-		 *
-		 * That's why we add this version control system. Where we add a version number hash
-		 * with each js|css assets and if the content is changed then the hash also be changed
-		 * so that the browser can detect, the file is changed and it brings the file
-		 * from server, instead of browser cache.
-		 *
-		 * And don't worry. If the content of the file are same as before then the browser will
-		 * bring the cached one.
-		 */
-		$versionHashes = array(
-			'url' => 'auto',
-			'declared' => 'auto',
-			'critical' => 'auto'
-		);
+			$excludeScripts = ['validate.js', 'tinymce.min.js', 'tiny_mce.js', 'editor.min.js'];
+			$excludedScriptPaths = [];
+			$remoteScripts = [];
 
-		// Check all local scripts
-		foreach ($all_scripts as $key => $value)
-		{
-			$js_file = str_replace($root_url, JPATH_ROOT, $key);
-
-			if (strpos($js_file, JPATH_ROOT) === false)
+			// Check all local scripts
+			foreach ($all_scripts as $key => $value)
 			{
-				$js_file = JPATH_ROOT . $key;
-			}
+				$js_file = str_replace($root_url, JPATH_ROOT, $key);
 
-			/** If the js_file contains a version number suffix, then remove that. */
-			if (strpos($js_file, '?') !== false)
-			{
-				$js_file = \substr($js_file, 0, \stripos($js_file, '?'));
-			}
-
-			if (\file_exists($js_file))
-			{
-				if (!$this->exclude_js($key, $excludes))
+				if (strpos($js_file, JPATH_ROOT) === false)
 				{
-					$scripts[] = $key;
+					$js_file = JPATH_ROOT . $key;
+				}
 
-					if (preg_match($criticalRegex, $key))
-					{
-						$criticalHash .= md5($key);
-					}
-					else
-					{
-						$md5sum .= md5($key);
-					}
+				$fullPath = $js_file;
 
-					/**
-					 * Check if an empty file is given for compression
-					 */
-					if (!strlen(file_get_contents($js_file)))
-					{
-						$compressed = "/* No content */";
-					}
-					else
-					{
-						/**
-						 * If the file is already minified then skip it from re-minimization.
-						 */
-						if ($this->isMinified($js_file))
-						{
-							$compressed = file_get_contents($js_file);
-						}
-						else
-						{
-							$compressed = \JShrink\Minifier::minify(file_get_contents($js_file), array('flaggedComments' => false));
-						}
-					}
+				if (\stripos($js_file, '?') !== false)
+				{
+					$js_file = \substr($js_file, 0, \stripos($js_file, '?'));
+				}
 
-					// Add file name to compressed JS
-					if (preg_match($criticalRegex, $key))
-					{
-						$criticalCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n";
-					}
-					else
-					{
-						$minifiedCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n";
-					}
+				$ext = \strtolower(\pathinfo($js_file, PATHINFO_EXTENSION));
 
-					// Remove scripts
+				if ($ext !== 'js')
+				{
+					$remoteScripts[] = $fullPath;
 					unset($this->doc->_scripts[$key]);
+					continue;
 				}
-			}
-		}
 
-		if ($criticalCode)
-		{
-			if (!Folder::exists($cache_path))
-			{
-				Folder::create($cache_path, 0755);
-			}
-
-			$fileMd5 = md5($criticalHash);
-			$file = $cache_path . '/' . $fileMd5 . '.js';
-
-			if (!File::exists($file))
-			{
-				File::write($file, $criticalCode);
-			}
-			else
-			{
 				/**
-				 * Check if the current content of the JS
-				 * is differ from the cached content.
-				 * In such a situation override the cache file with the
-				 * current changed content.
-				 */
-				if ($this->contentsChanged($file, $criticalCode)
-					|| filesize($file) === 0
-					|| ((filemtime($file) + $cachetime * 60) < time()))
-				{
-					File::write($file, $criticalCode);
+				 * Exclude the scripts which are crating trouble while minifying,
+				 * and searching scripts with relative path inside the script e.g. tinymce.
+				*/
+				if (JVERSION < 4 && \in_array(basename($js_file), $excludeScripts)) {
+					$excludedScriptPaths[] = $js_file;
+					unset($this->doc->_scripts[$key]);
+					continue;
 				}
-			}
 
-			$versionHashes['critical'] = md5($criticalCode);
-
-			/**
-			 * Asynchronously load the non critical JavaScript
-			 */
-			$this->doc->addScript(
-				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . $fileMd5 . '.js',
-				[
-					'version' => $versionHashes['critical']
-				]
-			);
-		}
-
-		// Compress All scripts
-		if ($minifiedCode)
-		{
-			if (!Folder::exists($cache_path))
-			{
-				Folder::create($cache_path, 0755);
-			}
-
-			$fileMd5 = md5($md5sum);
-			$file = $cache_path . '/' . $fileMd5 . '.js';
-
-			if (!File::exists($file))
-			{
-				File::write($file, $minifiedCode);
-			}
-			else
-			{
-				/**
-				 * Check if the current content of the JS
-				 * is differ from the cached content.
-				 * In such a situation override the cache file with the
-				 * current changed content.
-				 */
-				if ($this->contentsChanged($file, $minifiedCode)
-					|| filesize($file) === 0
-					|| ((filemtime($file) + $cachetime * 60) < time()))
+				if (\file_exists($js_file))
 				{
-					File::write($file, $minifiedCode);
-				}
-			}
-
-			$versionHashes['url'] = md5($minifiedCode);
-
-			/**
-			 * Asynchronously load the non critical JavaScript
-			 */
-			$this->doc->addScript(
-				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . $fileMd5 . '.js',
-				[
-					'version' => $versionHashes['url']
-				],
-				[
-					'defer' => false
-				]
-			);
-		}
-
-		/**
-		 * Make a javascript file at cache folder for declared scripts
-		 * and make sure of deferring them.
-		 */
-		if (!empty($all_declared_scripts))
-		{
-			$declaredScriptHash = '';
-			$scriptContent = '';
-
-			foreach ($all_declared_scripts as $key => $script)
-			{
-				$scriptString = '';
-
-				if (\is_array($script))
-				{
-					foreach ($script as $value)
+					if (!$this->exclude_js($key, $excludes))
 					{
-						$scriptString .= $value . "\r\n";
+						$scripts[] = $key;
+						$md5sum .= md5($key);
+						$compressed = \JShrink\Minifier::minify(file_get_contents($js_file), array('flaggedComments' => false));
+						$minifiedCode .= "/*------ " . basename($js_file) . " ------*/\n" . $compressed . "\n\n"; //add file name to compressed JS
+						unset($this->doc->_scripts[$key]); // Remove scripts
 					}
 				}
-				else
-				{
-					$scriptString = $script;
-				}
-
-				$declaredScriptHash .= md5($key);
-				$scriptContent .= \JShrink\Minifier::minify($scriptString, array('flaggedComments' => false));
-				unset($this->doc->_script[$key]);
 			}
 
-			if (!empty($scriptContent))
+			// Compress All scripts
+			if ($minifiedCode)
 			{
 				if (!Folder::exists($cache_path))
 				{
 					Folder::create($cache_path, 0755);
 				}
-
-				$file = $cache_path . '/' . $declaredScriptHash . '.js';
-
-				if (!File::exists($file))
-				{
-					File::write($file, $scriptContent);
-				}
 				else
 				{
-					/**
-					 * Check if the current content of the JS
-					 * is differ from the cached content.
-					 * In such a situation override the cache file with the
-					 * current changed content.
-					 */
-					if ($this->contentsChanged($file, $scriptContent)
-						|| filesize($file) === 0
-						|| ((filemtime($file) + $cachetime * 60) < time()))
+					$file = $cache_path . '/' . md5($md5sum) . '.js';
+
+					if (!\file_exists($file))
 					{
-						File::write($file, $scriptContent);
+						File::write($file, $minifiedCode);
 					}
+					else
+					{
+						if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
+						{
+							File::write($file, $minifiedCode);
+						}
+					}
+					$this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
 				}
-
-				$versionHashes['declared'] = md5($scriptContent);
-
-				$this->doc->addScript(
-					Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . $declaredScriptHash . '.js',
-					[
-						'version' => $versionHashes['declared']
-					],
-					[
-						'defer' => false
-					]
-				);
 			}
-		}
 
-		return;
+			$excludedScriptPaths = array_merge($excludedScriptPaths, $remoteScripts);
+
+			/** Add the script paths excluded earlier. */
+			if (!empty($excludedScriptPaths))
+			{
+				foreach ($excludedScriptPaths as $path)
+				{
+					$path = Path::clean($path);
+
+					if (\stripos($path, JPATH_ROOT) === 0)
+					{
+						$path = str_replace(JPATH_ROOT, '', $path);
+					}
+
+					$this->doc->addScript(Uri::root(true) . $path);
+				}
+			}
+
+			return;
 	}
 
 	/**
@@ -1788,192 +1627,86 @@ class HelixUltimate
 	 */
 	public function compress_css()
 	{
-		$app             = Factory::getApplication();
-		$cachetime       = $app->get('cachetime', 15);
-		$all_stylesheets = $this->doc->_styleSheets;
-		$cache_path      = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
-		$stylesheets     = array();
-		$root_url        = Uri::root(true);
-		$minifiedCode    = '';
-		$md5sum          = '';
+			$app             = Factory::getApplication();
+			$cachetime       = $app->get('cachetime', 15);
+			$all_stylesheets = $this->doc->_styleSheets;
+			$cache_path      = \JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
+			$stylesheets     = [];
+			$root_url        = Uri::root(true);
+			$minifiedCode    = '';
+			$md5sum          = '';
 
-		$criticalCssRegex = "@(preset.*|font-awesome.*)\.css@";
-		$criticalCssHash = '';
-		$criticalCssCode = '';
-
-		/**
-		 * Version hashes are used here for maintaining
-		 * the file versioning. If an asset file's content is changed then for caching,
-		 * the browser cannot detect, if the file is changed or not.
-		 * So it executes the cached one. But for rapid changing of styles as well as scripts
-		 * we need to preview the changes.
-		 *
-		 * That's why we add this version control system. Where we add a version number hash
-		 * with each js|css assets and if the content is changed then the hash also be changed
-		 * so that the browser can detect, the file is changed and it brings the file
-		 * from server, instead of browser cache.
-		 *
-		 * And don't worry. If the content of the file are same as before then the browser will
-		 * bring the cached one.
-		 */
-		$versionHashes	= array(
-			'critical' => 'auto',
-			'lazy' => 'auto'
-		);
-
-		// Check all local stylesheets
-		foreach ($all_stylesheets as $key => $value)
-		{
-			$css_file = str_replace($root_url, \JPATH_ROOT, $key);
-
-			if (strpos($css_file, JPATH_ROOT) === false)
+			// Check all local stylesheets
+			foreach ($all_stylesheets as $key => $value)
 			{
-				$css_file = JPATH_ROOT . $key;
-			}
+					$css_file = str_replace($root_url, \JPATH_ROOT, $key);
 
-			$GLOBALS['absolute_url'] = $key;
 
-			if (File::exists($css_file))
-			{
-				$stylesheets[] = $key;
-
-				if (preg_match($criticalCssRegex, $key))
-				{
-					$criticalCssHash .= md5($key);
-				}
-				else
-				{
-					$md5sum .= md5($key);
-				}
-
-				$compressed = $this->minifyCss(file_get_contents($css_file));
-
-				$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/',
-					function ($matches)
+					if (strpos($css_file, \JPATH_ROOT) === false)
 					{
-						global $absolute_url;
+							$css_file = \JPATH_ROOT . $key;
+					}
 
-						$url = str_replace(array('"', '\''), '', $matches[1]);
+					global $absolute_url;
+					$absolute_url = $key;            
 
-						if (preg_match('/\.(jpg|png|jpeg|mp4|gif)$/i', $url))
-						{
-							return "url('$url')";
-						}
+					if (\file_exists($css_file))
+					{
+							$stylesheets[] = $key;
+							$md5sum .= md5($key);
+							$compressed = $this->minifyCss(\file_get_contents($css_file));
 
-						$base = dirname($absolute_url);
+							$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches) {
 
-						while (preg_match('/^\.\.\//', $url))
-						{
-							$base = dirname($base);
-							$url  = substr($url, 3);
-						}
+											global $absolute_url;
 
-						$url = $base . '/' . $url;
+											$url = str_replace(array('"', '\''), '', $matches[1]);
 
-						return "url('$url')";
-					},
-					$compressed
-				);
+											$base = dirname($absolute_url);
+											while (preg_match('/^\.\.\//', $url))
+											{
+													$base = dirname($base);
+													$url  = substr($url, 3);
+											}
+											$url = $base . '/' . $url;
 
-				// Add file name to compressed css
-				if (preg_match($criticalCssRegex, $key))
-				{
-					$criticalCssCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n";
-				}
-				else
-				{
-					$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n";
-				}
+											return "url('$url')";
+									}, $compressed);
 
-				// Remove stylesheets
-				unset($this->doc->_styleSheets[$key]);
+							$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
+
+							unset($this->doc->_styleSheets[$key]); //Remove stylesheets
+					}
 			}
-		}
 
-		if ($criticalCssCode)
-		{
-			if (!Folder::exists($cache_path))
+			//Compress All stylesheets
+			if ($minifiedCode)
 			{
-				Folder::create($cache_path, 0755);
+					if (!Folder::exists($cache_path))
+					{
+							Folder::create($cache_path, 0755);
+					}
+					else
+					{
+							$file = $cache_path . '/' . md5($md5sum) . '.css';
+
+							if (!\file_exists($file))
+							{
+									File::write($file, $minifiedCode);
+							}
+							else
+							{
+									if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
+									{
+											File::write($file, $minifiedCode);
+									}
+							}
+							$this->doc->addStylesheet(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
+					}
 			}
 
-			$file = $cache_path . '/' . md5($criticalCssHash) . '.css';
-
-			if (!File::exists($file))
-			{
-				File::write($file, $criticalCssCode);
-			}
-			else
-			{
-				/**
-				 * Check if the current content of the CSS
-				 * is differ from the cached content.
-				 * In such a situation override the cache file with the
-				 * current changed content.
-				 */
-				if ($this->contentsChanged($file, $criticalCssCode)
-					|| filesize($file) === 0
-					|| ((filemtime($file) + $cachetime * 60) < time()))
-				{
-					File::write($file, $criticalCssCode);
-				}
-			}
-
-			$versionHashes['critical'] = md5($criticalCssCode);
-
-			/**
-			 * Load template styles asynchronously
-			 */
-			$this->doc->addStylesheet(
-				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($criticalCssHash) . '.css',
-				['version' => $versionHashes['critical']]
-			);
-		}
-
-		// Compress All stylesheets
-		if ($minifiedCode)
-		{
-			if (!Folder::exists($cache_path))
-			{
-				Folder::create($cache_path, 0755);
-			}
-
-			$file = $cache_path . '/' . md5($md5sum) . '.css';
-
-			if (!File::exists($file))
-			{
-				File::write($file, $minifiedCode);
-			}
-			else
-			{
-				/**
-				 * Check if the current content of the CSS
-				 * is differ from the cached content.
-				 * In such a situation override the cache file with the
-				 * current changed content.
-				 */
-				if ($this->contentsChanged($file, $minifiedCode)
-					|| filesize($file) === 0
-					|| ((filemtime($file) + $cachetime * 60) < time()))
-				{
-					File::write($file, $minifiedCode);
-				}
-			}
-
-			$versionHashes['lazy'] = md5($minifiedCode);
-
-			/**
-			 * Load template styles asynchronously
-			 */
-			$this->doc->addStylesheet(
-				Uri::base(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css',
-				['version' => $versionHashes['lazy']]
-			);
-		}
-
-		return;
+			return;
 	}
-
 	/**
 	 * Get related articles.
 	 *

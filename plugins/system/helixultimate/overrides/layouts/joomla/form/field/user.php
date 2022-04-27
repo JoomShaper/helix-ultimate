@@ -47,13 +47,33 @@ extract($displayData);
  * @var   mixed    $excluded        The users to exclude from the list of users
  */
 
+$uri = new Uri('index.php?option=com_users&view=users&layout=modal&tmpl=component&required=0');
+
 if (!$readonly)
 {
-	HTMLHelper::_('behavior.modal', 'a.modal_' . $id);
+	if (JVERSION >= 4)
+	{
+		HTMLHelper::_(
+			'bootstrap.renderModal', 
+			'a.modal_' . $id,
+			array(
+				'url'         => $uri,
+				'title'       => Text::_('JLIB_FORM_CHANGE_USER'),
+				'closeButton' => true,
+				'height'      => '100%',
+				'width'       => '100%',
+				'modalWidth'  => 80,
+				'bodyHeight'  => 60,
+				'footer'      => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">' . Text::_('JCANCEL') . '</button>',
+			)
+		);
+	}
+	else
+	{
+		HTMLHelper::_('behavior.modal', 'a.modal_' . $id);
+	}
 	HTMLHelper::_('script', 'system/fields/fielduser.min.js', array('version' => 'auto', 'relative' => true));
 }
-
-$uri = new Uri('index.php?option=com_users&view=users&layout=modal&tmpl=component&required=0');
 
 $uri->setVar('field', $this->escape($id));
 

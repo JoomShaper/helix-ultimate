@@ -80,10 +80,10 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	private function registerBootstrap()
 	{
-		$template = Helper::loadTemplateData();
+		// $template = Helper::loadTemplateData();
 
-		if (!empty($template->template))
-		{
+		// if (!empty($template->template))
+		// {
 			$bootstrapPath = JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
 
 			if ($this->app->isClient('site') && \file_exists($bootstrapPath))
@@ -96,7 +96,7 @@ class  PlgSystemHelixultimate extends JPlugin
 				HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
 				HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
 			}
-		}
+		// }
 	}
 
 
@@ -364,7 +364,8 @@ class  PlgSystemHelixultimate extends JPlugin
 	public function onAfterDispatch()
 	{
 		// $this->registerBootstrap();
-
+		Helper::loadTemplateData();
+		
 		$option     = $this->app->input->get('option', '', 'STRING');
 		$helix      = $this->app->input->get('helix', '', 'STRING');
 		$view       = $this->app->input->get('view', '', 'STRING');
@@ -408,10 +409,11 @@ class  PlgSystemHelixultimate extends JPlugin
 				}
 
 				$style->load($template_style_id);
-
+				
 				if (!empty($style->template))
 				{
-					$this->app->setTemplate($style->template, $style->params);
+					// Commented to solve the issue of different assigned template for a menu
+					// $this->app->setTemplate($style->template, $style->params);
 				}
 			}
 		}

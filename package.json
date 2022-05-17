@@ -6,7 +6,7 @@
   "author": "JoomShaper <support@joomshaper.com>",
   "license": "GNU/GPLv2",
   "devDependencies": {
-    "del": "^6.0.0",
+    "del": "^6.1.0",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-uglify-es": "^3.0.0",

@@ -44,13 +44,13 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 ?>
 <?php if($full_image) : ?>
 	<div class="article-full-image">
-		<?php 
+		<?php
 		if (JVERSION >= 4)
 		{
 			$layoutAttr = [
 				'src'      => $full_image,
 				'itemprop' => 'image',
-				'alt'      => htmlspecialchars(isset($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'),
+				'alt'      => htmlspecialchars(!empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'),
 			];
 
 			echo LayoutHelper::render('joomla.html.image', $layoutAttr);
@@ -58,7 +58,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 		else
 		{
 		?>
-			<img src="<?php echo $full_image; ?>" alt="<?php echo htmlspecialchars(isset($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
+			<img src="<?php echo $full_image; ?>" alt="<?php echo htmlspecialchars(!empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
 		<?php
 		}
 		?>
@@ -74,7 +74,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 				$layoutAttr = [
 					'src'      => htmlspecialchars($images->image_fulltext),
 					'itemprop' => 'image',
-					'alt'      => htmlspecialchars(isset($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $images->image_fulltext_alt),
+					'alt'      => empty($images->image_fulltext_alt) && empty($images->image_fulltext_alt_empty) ? $displayData->title : $images->image_fulltext_alt,
 				];
 				if (isset($images->image_fulltext_caption) && $images->image_fulltext_caption !== '') 
 				{
@@ -83,6 +83,13 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 				}
 
 				echo LayoutHelper::render('joomla.html.image', $layoutAttr);
+				
+				// Image Caption 
+				if (isset($images->image_fulltext_caption) && $images->image_fulltext_caption !== '') 
+				{ ?>
+					<figcaption class="caption"><?php echo $this->escape($images->image_fulltext_caption); ?></figcaption>
+				<?php 
+				}
 			}
 			else
 			{
@@ -90,8 +97,14 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 				<img <?php if ($images->image_fulltext_caption) :
 				echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_fulltext_caption) . '"';
 				endif; ?>
-				src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo htmlspecialchars(isset($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $images->image_fulltext_alt); ?>" itemprop="image">
+				src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo empty($images->image_fulltext_alt) && empty($images->image_fulltext_alt_empty) ? $displayData->title : $images->image_fulltext_alt; ?>" itemprop="image">
 			<?php 
+				// Image Caption
+				if (isset($images->image_fulltext_caption) && $images->image_fulltext_caption !== '') 
+				{ ?>
+					<figcaption class="caption"><?php echo $this->escape($images->image_fulltext_caption); ?></figcaption>
+				<?php 
+				}
 			}
 			?>
 		</div>

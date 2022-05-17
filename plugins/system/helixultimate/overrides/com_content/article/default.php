@@ -48,7 +48,7 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 $isExpired  = JVERSION < 4
 	? (strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate()
-	: !is_null($this->item->publish_down) && $this->item->publish_down > $currentDate;
+	: !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
 ?>
 <div class="article-details <?php echo $this->pageclass_sfx; ?>" itemscope itemtype="https://schema.org/Article">
 	<meta itemprop="inLanguage" content="<?php echo ($this->item->language === '*') ? Factory::getConfig()->get('language') : $this->item->language; ?>">

@@ -80,22 +80,17 @@ class  PlgSystemHelixultimate extends JPlugin
 	 */
 	private function registerBootstrap()
 	{
-		$template = Helper::loadTemplateData();
+		$bootstrapPath = JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
 
-		if (!empty($template->template))
+		if ($this->app->isClient('site') && \file_exists($bootstrapPath))
 		{
-			$bootstrapPath = JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
-
-			if ($this->app->isClient('site') && \file_exists($bootstrapPath))
+			if (!class_exists('HelixBootstrap'))
 			{
-				if (!class_exists('HelixBootstrap'))
-				{
-					require_once $bootstrapPath;
-				}
-
-				HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
-				HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
+				require_once $bootstrapPath;
 			}
+
+			HTMLHelper::register('bootstrap.tooltip', ['HelixBootstrap', 'tooltip']);
+			HTMLHelper::register('bootstrap.popover', ['HelixBootstrap', 'popover']);
 		}
 	}
 
@@ -364,7 +359,7 @@ class  PlgSystemHelixultimate extends JPlugin
 	public function onAfterDispatch()
 	{
 		// $this->registerBootstrap();
-
+		
 		$option     = $this->app->input->get('option', '', 'STRING');
 		$helix      = $this->app->input->get('helix', '', 'STRING');
 		$view       = $this->app->input->get('view', '', 'STRING');
@@ -382,39 +377,44 @@ class  PlgSystemHelixultimate extends JPlugin
 			Platform::loadFrameworkSystem();
 		}
 
-		if ($this->app->isClient('site'))
-		{
-			$activeMenu = $this->app->getMenu()->getActive();
+		// if ($this->app->isClient('site'))
+		// {
+		// 	$activeMenu = $this->app->getMenu()->getActive();
 
-			if (is_null($activeMenu))
-			{
-				$template_style_id = 0;
-			}
-			else
-			{
-				$template_style_id = (int) $activeMenu->template_style_id;
-			}
+		// 	if (is_null($activeMenu))
+		// 	{
+		// 		$template_style_id = 0;
+		// 	}
+		// 	else
+		// 	{
+		// 		$template_style_id = (int) $activeMenu->template_style_id;
+		// 	}
 
-			if ($template_style_id > 0)
-			{
-				if (JoomlaBridge::getVersion('major') < 4)
-				{
-					Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
-					$style = Table::getInstance('Style', 'TemplatesTable');
-				}
-				else
-				{
-					$style = new Joomla\Component\Templates\Administrator\Table\StyleTable(Factory::getContainer()->get('DatabaseDriver'));
-				}
+		// 	if ($template_style_id > 0)
+		// 	{
+		// 		if (JoomlaBridge::getVersion('major') < 4)
+		// 		{
+		// 			Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_templates/tables');
+		// 			$style = Table::getInstance('Style', 'TemplatesTable');
+		// 		}
+		// 		else
+		// 		{
+		// 			$style = new Joomla\Component\Templates\Administrator\Table\StyleTable(Factory::getContainer()->get('DatabaseDriver'));
+		// 		}
 
-				$style->load($template_style_id);
-
-				if (!empty($style->template))
-				{
-					$this->app->setTemplate($style->template, $style->params);
-				}
-			}
-		}
+		// 		$style->load($template_style_id);
+				
+		// 		if (!empty($style->template))
+		// 		{
+		// 			// Commented to solve the issue of different assigned template for a menu
+					
+		// 			if ($this->app->isClient('site'))
+		// 			{
+		// 				// $this->app->setTemplate($style->template, $style->params);
+		// 			}
+		// 		}
+		// 	}
+		// }
 	}
 
 	public function onBeforeCompileHead()

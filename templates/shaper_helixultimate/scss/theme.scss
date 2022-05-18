@@ -1135,6 +1135,13 @@ body.view-article.remove-container {
         }
       }
     }
+
+    figcaption.caption {
+      text-align: center;
+      font-size: 14px;
+      margin: 5px 0px;
+      opacity: .7;
+    }
   }
 }
 
@@ -1250,6 +1257,12 @@ body.view-article.remove-container {
       border-radius: 3px;
       font-size: 14px;
     }
+  }
+
+  figcaption.caption {
+    font-size: 14px;
+    margin: 5px 0px;
+    opacity: 0.7;
   }
 }
 .related-article-list-container {

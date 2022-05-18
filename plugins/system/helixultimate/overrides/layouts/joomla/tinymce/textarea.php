@@ -12,24 +12,27 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 
 $data = $displayData;
-$wa   = Factory::getDocument()->getWebAssetManager();
-
-if (!$wa->assetExists('script', 'tinymce'))
-{
-	$wa->registerScript('tinymce', 'media/vendor/tinymce/tinymce.min.js', [], ['defer' => true]);
-}
-
-if (!$wa->assetExists('script', 'plg_editors_tinymce'))
-{
-	$wa->registerScript('plg_editors_tinymce', 'plg_editors_tinymce/tinymce.min.js', [], ['defer' => true], ['core', 'tinymce']);
-}
-
-$wa->useScript('tinymce')->useScript('plg_editors_tinymce');
 
 if (JVERSION < 4)
 {
 	$doc = Factory::getDocument();
 	$doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/icomoon.css');
+}
+else 
+{
+	$wa   = Factory::getDocument()->getWebAssetManager();
+
+	if (!$wa->assetExists('script', 'tinymce'))
+	{
+		$wa->registerScript('tinymce', 'media/vendor/tinymce/tinymce.min.js', [], ['defer' => true]);
+	}
+	
+	if (!$wa->assetExists('script', 'plg_editors_tinymce'))
+	{
+		$wa->registerScript('plg_editors_tinymce', 'plg_editors_tinymce/tinymce.min.js', [], ['defer' => true], ['core', 'tinymce']);
+	}
+	
+	$wa->useScript('tinymce')->useScript('plg_editors_tinymce');
 }
 
 ?>

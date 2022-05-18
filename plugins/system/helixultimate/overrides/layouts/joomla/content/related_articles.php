@@ -3,6 +3,7 @@
 defined ('JPATH_BASE') or die();
 
 use HelixUltimate\Framework\Platform\Helper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
 
 $articles = $displayData['articles'];
@@ -16,7 +17,12 @@ $tmpl_params = $template->params;
 	<?php if( $tmpl_params->get('related_article_view_type') === 'thumb' ): ?> 
 		<div class="article-list related-article-list">
 			<div class="row">
-				<?php foreach( $articles as $item ): ?> 
+				<?php foreach( $articles as $item ): ?>
+					<?php 
+						if (strtotime($item->publish_up) > strtotime(Factory::getDate())) {
+							continue;
+						}
+					?>
 					<div class="col-lg-<?php echo round(12 / Helper::SetColumn($mainItem->params->get('num_columns'), 4)); ?>">
 						<?php echo LayoutHelper::render('joomla.content.related_article', $item); ?>
 					</div>

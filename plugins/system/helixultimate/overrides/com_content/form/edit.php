@@ -39,6 +39,7 @@ $params = $this->state->get('params');
 $attribs = json_decode($this->item->attribs);
 
 $this->form->setValue('helix_ultimate_image', 'attribs', !empty($attribs->helix_ultimate_image) ? $attribs->helix_ultimate_image : '');
+$this->form->setValue('helix_ultimate_image_alt_txt', 'attribs', !empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : '');
 $this->form->setValue('helix_ultimate_article_format', 'attribs', !empty($attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard');
 $this->form->setValue('helix_ultimate_audio', 'attribs', !empty($attribs->helix_ultimate_audio) ? $attribs->helix_ultimate_audio : '');
 $this->form->setValue('helix_ultimate_gallery', 'attribs', !empty($attribs->helix_ultimate_gallery) ? $attribs->helix_ultimate_gallery : '');

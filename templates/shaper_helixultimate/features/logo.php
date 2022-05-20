@@ -97,9 +97,14 @@ class HelixUltimateFeatureLogo
 
 				if (file_exists($defaultLogo))
 				{
-					$srcset .= Uri::root() . $defaultLogo . ' 1x, ';
+					$srcset .= Uri::root() . $defaultLogo . ' 1x ';
 				}
 
+				if (file_exists($defaultLogo) && (!is_null($retinaLogo) && file_exists($retinaLogo)))
+				{
+					$srcset .= ', ';
+				}
+				
 				if (!is_null($retinaLogo) && file_exists($retinaLogo))
 				{
 					$srcset .= Uri::root() . $retinaLogo . ' 2x';

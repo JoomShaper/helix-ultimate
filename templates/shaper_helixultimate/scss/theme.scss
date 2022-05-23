@@ -1823,7 +1823,7 @@ select:not(.form-select) {
   &:not(.form-control) {
     display: block;
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.5rem;
     font-size: 1rem;
     line-height: 1.25;
     color: #495057;
@@ -2473,4 +2473,11 @@ body.contentpane.com-contact.view-contacts.layout-modal {
 // remove button box-shadow on focus
 .btn:focus {
   box-shadow: none !important;
+}
+
+// Joomla Modal height fix
+.joomla-modal {
+  .modal-content {
+    height: 55vh;
+  }
 }

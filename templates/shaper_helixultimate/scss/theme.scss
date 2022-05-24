@@ -2476,8 +2476,13 @@ body.contentpane.com-contact.view-contacts.layout-modal {
 }
 
 // Joomla Modal height fix
-.joomla-modal {
+.hu-media-modal {
   .modal-content {
-    height: 55vh;
+    height: 65vh;
   }
+}
+
+// J4 media input group btn width fix
+.input-group.hu-j4-media {
+  max-width: 356px;
 }

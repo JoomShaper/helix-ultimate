@@ -16,7 +16,7 @@ $id       = isset($displayData['id']) ? $displayData['id'] : '';
 $doTask   = isset($displayData['onclick']) ? $displayData['onclick'] : $displayData['doTask'];
 $class    = $displayData['class'];
 $text     = $displayData['text'];
-$btnClass = $displayData['btnClass'];
+$btnClass = isset($displayData['btnClass']) ? $displayData['btnClass'] : '';
 $group    = isset($displayData['group']) ? $displayData['group'] : '';
 ?>
 

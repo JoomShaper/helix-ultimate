@@ -2234,6 +2234,14 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
   }
 }
 
+.hu-media-modal {
+  .modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 1rem);
+  }
+}
+
 //privacy
 .registration {
   #member-registration {

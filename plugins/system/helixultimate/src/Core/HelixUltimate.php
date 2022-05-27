@@ -358,14 +358,20 @@ class HelixUltimate
 			$this->add_js('popper.min.js, bootstrap.min.js');
 		}
 
-		if (JVERSION >= 4)
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+		// If user is logged in
+		if ($user->id)
 		{
-			$this->add_css('system-j4.min.css');
-			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
-		}
-		else
-		{
-			$this->add_css('system-j3.min.css');
+			if (JVERSION >= 4)
+			{
+				$this->add_css('system-j4.min.css');
+				$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
+			}
+			else
+			{
+				$this->add_css('system-j3.min.css');
+			}
 		}
 	}
 

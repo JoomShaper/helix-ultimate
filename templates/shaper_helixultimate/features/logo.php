@@ -94,22 +94,18 @@ class HelixUltimateFeatureLogo
 				$defaultLogo = $this->params->get('logo_image', null);
 				$retinaLogo	= $this->params->get('retina_logo', null);
 				$srcset = '';
-
 				if (file_exists($defaultLogo))
 				{
-					$srcset .= Uri::root() . $defaultLogo . ' 1x ';
+					$srcset .= Uri::root() . $defaultLogo . ' 1x';
 				}
-
 				if (file_exists($defaultLogo) && (!is_null($retinaLogo) && file_exists($retinaLogo)))
 				{
 					$srcset .= ', ';
 				}
-				
 				if (!is_null($retinaLogo) && file_exists($retinaLogo))
 				{
 					$srcset .= Uri::root() . $retinaLogo . ' 2x';
 				}
-
 				$logoWithUrl = Uri::root() . $defaultLogo;
 				$siteLogo = "
 				<img class='logo-image {$custom_logo_class}'

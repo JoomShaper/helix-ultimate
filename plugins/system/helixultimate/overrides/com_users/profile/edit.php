@@ -8,6 +8,7 @@
 
 defined ('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -67,13 +68,26 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 							<div class="row mb-3">
 								<?php foreach ($fields as $field) : ?>
 									<?php // If the field is hidden, just display the input. ?>
+									<?php
+									$showon = $field->getAttribute('showon');
+									$attribs = '';
+									if ($showon) {
+										$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+									}
+									// Enable disable on
+									$enableOn = $field->getAttribute('enableon', '');
+									if ($enableOn)
+									{
+										$attribs .= ' data-enableon="' . $enableOn . '"';
+									}
+									?>
 									<?php if ($field->hidden) : ?>
 										<?php echo $field->input; ?>
 									<?php else : ?>
 										<?php if(($field->fieldname == 'name') || ($field->fieldname == 'username')) : ?>
-											<div class="col-lg-12">
+											<div class="col-lg-12" <?php echo $attribs; ?>>
 											<?php else: ?>
-												<div class="col-lg-6">
+												<div class="col-lg-6" <?php echo $attribs; ?>>
 												<?php endif; ?>
 												<div class="mb-3">
 													<?php echo $field->label; ?>

@@ -345,6 +345,8 @@ class HelixUltimate
 		{
 			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
 		}
+		
+		$this->doc->getWebAssetManager()->useScript('showon');
 
 		$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
 		$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';

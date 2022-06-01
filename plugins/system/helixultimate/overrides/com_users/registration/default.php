@@ -8,6 +8,7 @@
 
 defined ('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -34,14 +35,28 @@ HTMLHelper::_('behavior.formvalidator');
 							<?php endif; ?>
 							<div class="row">
 								<?php foreach ($fields as $field) : ?>
+									<?php
+										$showon = $field->getAttribute('showon');
+										$attribs = '';
+										if ($showon) 
+										{
+											$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+										}
+										// Enable disable on
+										$enableOn = $field->getAttribute('enableon', '');
+										if ($enableOn)
+										{
+											$attribs .= ' data-enableon="' . $enableOn . '"';
+										}
+									?>
 									<?php if ($field->hidden) : ?>
 										<?php echo $field->input; ?>
 									<?php else : ?>
 										<?php $fieldName = $field->getAttribute('name'); ?>
 										<?php if(($fieldName == 'password1') || ($fieldName == 'password2') || ($fieldName == 'email1') || ($fieldName == 'email2')) : ?>
-											<div class="col-lg-6">
+											<div class="col-lg-6" <?php echo $attribs; ?>>
 										<?php else: ?>
-											<div class="col-xl-12">
+											<div class="col-xl-12" <?php echo $attribs; ?>>
 										<?php endif; ?>
 										<div class="mb-3">
 											<?php echo $field->label; ?>

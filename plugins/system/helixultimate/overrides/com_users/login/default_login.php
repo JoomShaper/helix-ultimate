@@ -8,6 +8,7 @@
 
 defined('_JEXEC') or die;
 
+use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -50,8 +51,22 @@ $usersConfig = ComponentHelper::getParams('com_users');
 			<form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="form-validate">
 
 				<?php foreach ($this->form->getFieldset('credentials') as $field) : ?>
+					<?php
+						$showon = $field->getAttribute('showon');
+						$attribs = '';
+						if ($showon) 
+						{
+							$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+						}
+						// Enable disable on
+						$enableOn = $field->getAttribute('enableon', '');
+						if ($enableOn)
+						{
+							$attribs .= ' data-enableon="' . $enableOn . '"';
+						}
+					?>
 					<?php if (!$field->hidden) : ?>
-						<div class="mb-3">
+						<div class="mb-3" <?php echo $attribs; ?>>
 							<?php echo $field->label; ?>
 							<?php echo $field->input; ?>
 						</div>

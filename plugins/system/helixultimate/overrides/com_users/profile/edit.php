@@ -69,17 +69,18 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 								<?php foreach ($fields as $field) : ?>
 									<?php // If the field is hidden, just display the input. ?>
 									<?php
-									$showon = $field->getAttribute('showon');
-									$attribs = '';
-									if ($showon) {
-										$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
-									}
-									// Enable disable on
-									$enableOn = $field->getAttribute('enableon', '');
-									if ($enableOn)
-									{
-										$attribs .= ' data-enableon="' . $enableOn . '"';
-									}
+										$showon = $field->getAttribute('showon');
+										$attribs = '';
+										if ($showon) 
+										{
+											$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+										}
+										// Enable disable on
+										$enableOn = $field->getAttribute('enableon', '');
+										if ($enableOn)
+										{
+											$attribs .= ' data-enableon="' . $enableOn . '"';
+										}
 									?>
 									<?php if ($field->hidden) : ?>
 										<?php echo $field->input; ?>

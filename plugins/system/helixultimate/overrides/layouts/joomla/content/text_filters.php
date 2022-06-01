@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+use HelixUltimate\Framework\Platform\Settings;
+
 defined ('JPATH_BASE') or die();
 ?>
 
@@ -17,7 +19,21 @@ defined ('JPATH_BASE') or die();
 	<?php $fieldsnames = explode(',', $displayData->fieldsname); ?>
 	<?php foreach ($fieldsnames as $fieldname) : ?>
 		<?php foreach ($displayData->form->getFieldset($fieldname) as $field) : ?>
-			<div><?php echo $field->input; ?></div>
+			<?php
+				$showon = $field->getAttribute('showon');
+				$attribs = '';
+				if ($showon) 
+				{
+					$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+				}
+				// Enable disable on
+				$enableOn = $field->getAttribute('enableon', '');
+				if ($enableOn)
+				{
+					$attribs .= ' data-enableon="' . $enableOn . '"';
+				}
+			?>
+			<div <?php echo $attribs; ?>><?php echo $field->input; ?></div>
 		<?php endforeach; ?>
 	<?php endforeach; ?>
 </fieldset>

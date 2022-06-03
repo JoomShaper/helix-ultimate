@@ -24,7 +24,10 @@ $doc->addStylesheet($cssPath);
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('behavior.formvalidator');
 
-$doc->getWebAssetManager()->useScript('bootstrap.modal');
+if (JVERSION >= 4)
+{
+	$doc->getWebAssetManager()->useScript('bootstrap.modal');
+}
 
 if (JVERSION < 4)
 {

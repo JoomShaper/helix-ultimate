@@ -2502,3 +2502,15 @@ body.contentpane.com-contact.view-contacts.layout-modal {
 .hidden {
   display: none !important;
 }
+
+// Calendar form css fix
+.field-calendar {
+  .input-group-text {
+    padding: 0;
+    button#jform_mycalendar_btn {
+      background: transparent;
+      border: none;
+      color: #212529;
+    }
+  }
+}

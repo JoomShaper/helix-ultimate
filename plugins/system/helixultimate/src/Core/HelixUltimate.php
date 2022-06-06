@@ -365,10 +365,10 @@ class HelixUltimate
 
 		$app = Factory::getApplication();
 		$user = $app->getIdentity();
-		// If user is logged in
 		if (JVERSION >= 4)
 		{
 			$this->add_css('system-j4.min.css');
+			// If user is logged in
 			if ($user->id)
 			{
 				$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');

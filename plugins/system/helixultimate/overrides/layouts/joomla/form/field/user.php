@@ -202,8 +202,8 @@ else
 	);
 
 	?>
-	<div class="input-append">
-		<input <?php echo ArrayHelper::toString($inputAttributes); ?> readonly />
+	<div class="input-group">
+		<input class="form-control field-user-input-name" <?php echo ArrayHelper::toString($inputAttributes); ?> readonly />
 		<?php if (!$readonly) : ?>
 			<?php echo JHtml::_('link', (string) $uri, '<span class="fa fa-user"></span>', $anchorAttributes); ?>
 		<?php endif; ?>

@@ -2514,3 +2514,8 @@ body.contentpane.com-contact.view-contacts.layout-modal {
     }
   }
 }
+
+// J3 radio button fix
+.form-check-inline label.form-check-label.btn {
+  padding: 0.375rem 3px;
+}

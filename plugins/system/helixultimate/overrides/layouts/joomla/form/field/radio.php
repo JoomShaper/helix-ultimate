@@ -66,7 +66,7 @@ $alt    = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 				// Initialize some option attributes.
 				$checked  = ((string) $option->value === $value) ? 'checked="checked"' : '';
 				$optionClass    = !empty($option->class) ? 'class="form-check-input ' . $option->class . '"' : 'class="form-check-input"';
-				$labelClass    = !empty($option->class) ? 'class="form-check-label ' . $option->class . '"' : 'class="form-check-label"';
+				$labelClass    = !empty($option->class) ? 'class="form-check-label ' . $option->class . '"' : 'class="form-check-label btn"';
 				$disabled = !empty($option->disable) || ($disabled && !$checked) ? 'disabled' : '';
 
 				// Initialize some JavaScript option attributes.

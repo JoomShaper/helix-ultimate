@@ -18,7 +18,7 @@ if (!empty($options['showonEnabled']))
 	if (JVERSION < 4)
 	{
 		HTMLHelper::_('jquery.framework');
-		HTMLHelper::_('script', 'system/cms.min.js', array('version' => 'auto', 'relative' => true));
+		HTMLHelper::_('script', 'jui/cms.js', array('version' => 'auto', 'relative' => true));
 	}
 	else
 	{

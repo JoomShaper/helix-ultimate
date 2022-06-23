@@ -8,6 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\HTML\HTMLHelper;
 
 extract($displayData);
@@ -57,7 +58,7 @@ $attributes = array(
 	!empty($size) ? 'size="' . $size . '"' : '',
 	$disabled ? 'disabled' : '',
 	$readonly ? 'readonly' : '',
-	strlen($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : '',
+	strlen(Helper::CheckNull($hint)) ? 'placeholder="' . htmlspecialchars(Helper::CheckNull($hint), ENT_COMPAT, 'UTF-8') . '"' : '',
 	$autocomplete,
 	$autofocus ? ' autofocus' : '',
 	$spellcheck ? '' : 'spellcheck="false"',
@@ -71,5 +72,5 @@ $attributes = array(
 	name="<?php echo $name; ?>"
 	<?php echo !empty($class) ? ' class="form-control ' . $class . '"' : 'class="form-control"'; ?>
 	id="<?php echo $id; ?>"
-	value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+	value="<?php echo htmlspecialchars(Helper::CheckNull($value), ENT_COMPAT, 'UTF-8'); ?>"
 	<?php echo implode(' ', $attributes); ?>>

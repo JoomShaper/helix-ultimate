@@ -8,6 +8,7 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Settings;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -104,7 +105,7 @@ extract($displayData);
 					</div>
 
 					<?php if (!$field->getAttribute('hideLabel', false)): ?>
-						<?php echo Text::_($field->getAttribute('label')); ?>
+						<?php echo Text::_(Helper::CheckNull($field->getAttribute('label'))); ?>
 
 						<!-- if description exists then show the help icon -->
 						<?php if (!empty($description)): ?>
@@ -115,7 +116,7 @@ extract($displayData);
 			<?php else: ?>
 				<?php if (!$field->getAttribute('hideLabel', false)): ?>
 					<label class="control-label">
-						<?php echo Text::_($field->getAttribute('label')); ?>
+						<?php echo Text::_(Helper::CheckNull($field->getAttribute('label'))); ?>
 
 						<!-- if description exists then show the help icon -->
 						<?php if (!empty($description)): ?>

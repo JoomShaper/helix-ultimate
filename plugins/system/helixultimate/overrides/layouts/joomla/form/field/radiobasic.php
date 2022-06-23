@@ -8,6 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
@@ -72,7 +73,7 @@ $alt    = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 				$onclick    = !empty($option->onclick) ? 'onclick="' . $option->onclick . '"' : '';
 				$onchange   = !empty($option->onchange) ? 'onchange="' . $option->onchange . '"' : '';
 				$oid        = $id . $i;
-				$ovalue     = htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8');
+				$ovalue     = htmlspecialchars(Helper::CheckNull($option->value), ENT_COMPAT, 'UTF-8');
 				$attributes = array_filter(array($checked, $optionClass, $disabled, $onchange, $onclick));
 			?>
 			<?php if ($required) : ?>

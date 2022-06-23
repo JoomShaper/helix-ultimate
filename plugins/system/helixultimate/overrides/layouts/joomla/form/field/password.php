@@ -8,6 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
@@ -34,7 +35,7 @@ Text::script('JSHOW');
 Text::script('JHIDE');
 
 $attributes = array(
-	strlen($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : '',
+	strlen(Helper::CheckNull($hint)) ? 'placeholder="' . htmlspecialchars(Helper::CheckNull($hint), ENT_COMPAT, 'UTF-8') . '"' : '',
 	!$autocomplete ? 'autocomplete="off"' : '',
 	!empty($class) ? 'class="form-control ' . $class . '"' : 'class="form-control"',
 	$readonly ? 'readonly' : '',
@@ -62,7 +63,7 @@ $attributes = array(
 			type="password"
 			name="<?php echo $name; ?>"
 			id="<?php echo $id; ?>"
-			value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+			value="<?php echo htmlspecialchars(Helper::CheckNull($value), ENT_COMPAT, 'UTF-8'); ?>"
 			<?php echo implode(' ', $attributes); ?>>
 	</div>
 </div>

@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+use HelixUltimate\Framework\Platform\Helper;
+
 defined('_JEXEC') or die;
 
 $module  = $displayData['module'];
@@ -24,7 +26,7 @@ $headerTag     = htmlspecialchars($params->get('header_tag', 'h3'), ENT_QUOTES, 
 $headerClass   = htmlspecialchars($params->get('header_class', 'sp-module-title'), ENT_COMPAT, 'UTF-8');
 
 if ($module->content) {
-	echo '<' . $moduleTag . ' class="sp-module ' . htmlspecialchars($params->get('moduleclass_sfx'), ENT_COMPAT, 'UTF-8') . $moduleClass . '">';
+	echo '<' . $moduleTag . ' class="sp-module ' . htmlspecialchars(Helper::CheckNull($params->get('moduleclass_sfx')), ENT_COMPAT, 'UTF-8') . $moduleClass . '">';
 
 	if ($module->showtitle) {
 		echo '<' . $headerTag . ' class="' . $headerClass . '">' . $module->title . '</' . $headerTag . '>';

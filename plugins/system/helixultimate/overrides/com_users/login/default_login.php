@@ -8,6 +8,7 @@
 
 defined('_JEXEC') or die;
 
+use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -32,7 +33,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
 				</div>
 			<?php endif; ?>
 
-			<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', $this->params->get('login_description')) != '') || $this->params->get('login_image') != '') : ?>
+			<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', Helper::CheckNull($this->params->get('login_description'))) != '') || $this->params->get('login_image') != '') : ?>
 				<div class="login-description">
 				<?php endif; ?>
 
@@ -44,7 +45,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
 					<img src="<?php echo $this->escape($this->params->get('login_image')); ?>" class="login-image" alt="<?php echo Text::_('COM_USERS_LOGIN_IMAGE_ALT'); ?>">
 				<?php endif; ?>
 
-				<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', $this->params->get('login_description')) != '') || $this->params->get('login_image') != '') : ?>
+				<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', Helper::CheckNull($this->params->get('login_description'))) != '') || $this->params->get('login_image') != '') : ?>
 				</div>
 			<?php endif; ?>
 

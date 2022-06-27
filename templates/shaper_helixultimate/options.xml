@@ -1728,7 +1728,7 @@
 	</fieldset>
 
 	<!--Advanced-->
-	<fieldset name="advance" 
+	<fieldset name="advanced" 
 		label="HELIX_ULTIMATE_FIELDSET_ADVANCED" 
 		activegroup="compression"
 		icon="fas fa-cog">

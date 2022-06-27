@@ -1649,44 +1649,42 @@ class HelixUltimate
 			// Check all local stylesheets
 			foreach ($all_stylesheets as $key => $value)
 			{
-					$css_file = str_replace($root_url, \JPATH_ROOT, $key);
+				$css_file = str_replace($root_url, \JPATH_ROOT, $key);
 
+				if (strpos($css_file, \JPATH_ROOT) === false)
+				{
+					$css_file = \JPATH_ROOT . $key;
+				}
 
-					if (strpos($css_file, \JPATH_ROOT) === false)
-					{
-							$css_file = \JPATH_ROOT . $key;
-					}
+				global $absolute_url;
+				$absolute_url = $key;            
 
-					global $absolute_url;
-					$absolute_url = $key;            
+				if (\file_exists($css_file))
+				{
+					$stylesheets[] = $key;
+					$md5sum .= md5($key);
+					$compressed = $this->minifyCss(\file_get_contents($css_file));
 
-					if (\file_exists($css_file))
-					{
-							$stylesheets[] = $key;
-							$md5sum .= md5($key);
-							$compressed = $this->minifyCss(\file_get_contents($css_file));
+					$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches) {
 
-							$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches) {
+						global $absolute_url;
+					
+						$url = str_replace(array('"', '\''), '', $matches[1]);
+						$base = dirname($absolute_url);
+						while (preg_match('/^\.\.\//', $url))
+						{
+							$base = dirname($base);
+							$url  = substr($url, 3);
+						}
+						$url = $base . '/' . $url;
+						$url = str_replace('//', '/', $url); // For fixing double slash '//' in url for fontawesome
+						return "url('$url')";
+					}, $compressed);
 
-											global $absolute_url;
+					$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
 
-											$url = str_replace(array('"', '\''), '', $matches[1]);
-
-											$base = dirname($absolute_url);
-											while (preg_match('/^\.\.\//', $url))
-											{
-													$base = dirname($base);
-													$url  = substr($url, 3);
-											}
-											$url = $base . '/' . $url;
-
-											return "url('$url')";
-									}, $compressed);
-
-							$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
-
-							unset($this->doc->_styleSheets[$key]); //Remove stylesheets
-					}
+					unset($this->doc->_styleSheets[$key]); //Remove stylesheets
+				}
 			}
 
 			//Compress All stylesheets

@@ -52,7 +52,7 @@ class plgSystemTmp_helixultInstallerScript
 				$plg_manifest = $installer->parseXMLInstallFile($path.'/'.$name.'.xml');
 				$version = $plg_manifest['version'];
 
-				if($version < $cache_version)
+				if (version_compare($version, $cache_version, '<'))
 				{
 					continue;
 				}

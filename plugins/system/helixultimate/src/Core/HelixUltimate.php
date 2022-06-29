@@ -1368,6 +1368,15 @@ class HelixUltimate
 	public function compress_js($excludes = '')
 	{
 			$app       = Factory::getApplication();
+			$view      = $app->input->get('view');
+			$layout    = $app->input->get('layout');
+			
+			// disable js compress for edit view
+			if($view == 'form' || $layout == 'edit')
+			{
+				return;
+			}
+			
 			$cachetime = $app->get('cachetime', 15);
 
 			$all_scripts  = $this->doc->_scripts;

@@ -56,6 +56,19 @@ class plgSystemTmp_helixultInstallerScript
 				{
 					continue;
 				}
+				
+				// Check if directory "/overrides/com_finder/search" exists then deletes it
+				if (JVERSION >= 4)
+				{
+					if ($version == '2.0.10') {
+						$path = JPATH_PLUGINS;
+						$dir = $path.'/'.$group.'/'.$name.'/overrides/com_finder/search';
+						if (JFolder::exists($dir))
+						{
+							$this->deleteDir($dir);
+						}
+					}
+				}
 			}
 
 			$result = $installer->install($path);
@@ -109,6 +122,36 @@ class plgSystemTmp_helixultInstallerScript
 		$conf = JFactory::getConfig();
 		$conf->set('debug', false);
 		$parent->getParent()->abort();
+	}
+
+	/**
+	 * Function for removing directory and files
+	 *
+	 * @param string $dirPath
+	 * @return void
+	 */
+	public function deleteDir($dirPath) 
+	{
+		if (! is_dir($dirPath)) 
+		{
+			throw new InvalidArgumentException("$dirPath must be a directory");
+		}
+		if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') 
+		{
+			$dirPath .= '/';
+		}
+		$files = glob($dirPath . '*', GLOB_MARK);
+		foreach ($files as $file) {
+			if (is_dir($file)) 
+			{
+				self::deleteDir($file);
+			}
+			else 
+			{
+				unlink($file);
+			}
+		}
+		rmdir($dirPath);
 	}
 
 	/**

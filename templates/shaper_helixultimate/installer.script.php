@@ -1,4 +1,8 @@
 <?php
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Installer\Installer;
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
@@ -34,10 +38,10 @@ class plgSystemTmp_helixultInstallerScript
 		{
 			$name = (string) $plugin->attributes()->plugin;
 			$group = (string) $plugin->attributes()->group;
-			$installer = new JInstaller;
+			$installer = new Installer;
 
 			$path = $src.'/plugins/'.$group;
-			if (JFolder::exists($src.'/plugins/'.$group.'/'.$name))
+			if (Folder::exists($src.'/plugins/'.$group.'/'.$name))
 			{
 				$path = $src.'/plugins/'.$group.'/'.$name;
 			}
@@ -61,11 +65,11 @@ class plgSystemTmp_helixultInstallerScript
 				if (JVERSION >= 4)
 				{
 					if ($version == '2.0.10') {
-						$path = JPATH_PLUGINS;
-						$dir = $path.'/'.$group.'/'.$name.'/overrides/com_finder/search';
-						if (JFolder::exists($dir))
+						$plg_path = JPATH_PLUGINS;
+						$dir = $plg_path.'/'.$group.'/'.$name.'/overrides/com_finder/search';
+						if (Folder::exists($dir))
 						{
-							$this->deleteDir($dir);
+							Folder::delete($dir);
 						}
 					}
 				}
@@ -82,9 +86,9 @@ class plgSystemTmp_helixultInstallerScript
 		$template_path = $src . '/template';
 		$plugin_path = $src . '/plugins/system';
 
-		if (JFolder::exists( $template_path ))
+		if (Folder::exists( $template_path ))
 		{
-			$installer = new JInstaller;
+			$installer = new Installer;
 			$result = $installer->install($template_path);
 		}
 
@@ -102,7 +106,7 @@ class plgSystemTmp_helixultInstallerScript
 			{
 				$options_default = file_get_contents($template_path .'/options.json');
 
-				$db = JFactory::getDBO();
+				$db = Factory::getDBO();
 				$query = $db->getQuery(true);
 				$fields = array(
 					$db->quoteName('params') . ' = ' . $db->quote($options_default)
@@ -119,39 +123,9 @@ class plgSystemTmp_helixultInstallerScript
 			}
 		}
 
-		$conf = JFactory::getConfig();
+		$conf = Factory::getConfig();
 		$conf->set('debug', false);
 		$parent->getParent()->abort();
-	}
-
-	/**
-	 * Function for removing directory and files
-	 *
-	 * @param string $dirPath
-	 * @return void
-	 */
-	public function deleteDir($dirPath) 
-	{
-		if (! is_dir($dirPath)) 
-		{
-			throw new InvalidArgumentException("$dirPath must be a directory");
-		}
-		if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') 
-		{
-			$dirPath .= '/';
-		}
-		$files = glob($dirPath . '*', GLOB_MARK);
-		foreach ($files as $file) {
-			if (is_dir($file)) 
-			{
-				self::deleteDir($file);
-			}
-			else 
-			{
-				unlink($file);
-			}
-		}
-		rmdir($dirPath);
 	}
 
 	/**
@@ -164,7 +138,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function getTemplateInfoByName($name)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__template_styles'));
@@ -187,7 +161,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function activeInstalledPlugin($name, $group)
 	{
-		$db = JFactory::getDBO();
+		$db = Factory::getDBO();
 		$query = $db->getQuery(true);
 		$fields = array(
 			$db->quoteName('enabled') . ' = 1'
@@ -215,7 +189,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function getPluginInfoByName($name, $group)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__extensions'));
@@ -239,7 +213,8 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	public function abort($msg = null, $type = null){
 		if ($msg) {
-			JError::raiseWarning(100, $msg);
+			//JError::raiseWarning(100, $msg);
+			Factory::getApplication()->enqueueMessage($msg, 100);
 		}
 		foreach ($this->packages as $package) {
 			$package['installer']->abort(null, $type);

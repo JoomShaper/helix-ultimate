@@ -2519,3 +2519,10 @@ body.contentpane.com-contact.view-contacts.layout-modal {
 .form-check-inline label.form-check-label.btn {
   padding: 0.375rem 3px;
 }
+
+// Modal iFrame height fix
+.modal-body {
+  .iframe {
+    min-height: 60vh !important;
+  }
+}

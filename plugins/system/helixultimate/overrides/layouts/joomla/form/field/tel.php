@@ -49,7 +49,7 @@ extract($displayData);
 
 // Including fallback code for HTML5 non supported browsers.
 HTMLHelper::_('jquery.framework');
-// HTMLHelper::_('script', 'system/html5fallback.js', false, true);
+HTMLHelper::_('script', 'system/html5fallback.js', array('version' => 'auto', 'relative' => true, 'conditional' => 'lt IE 9'));
 
 $autocomplete = !$autocomplete ? ' autocomplete="off"' : ' autocomplete="' . $autocomplete . '"';
 $autocomplete = $autocomplete == ' autocomplete="on"' ? '' : $autocomplete;

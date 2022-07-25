@@ -215,6 +215,15 @@ ul.social-icons {
     }
   }
 }
+div.mod-languages {
+  ul {
+    li.lang-active {
+      background-color: #82828280 !important;
+      padding: 0px 5px 3px;
+      border-radius: 3px;
+    }
+  }
+}
 
 .sp-contact-info {
   list-style: none;

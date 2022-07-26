@@ -28,6 +28,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
@@ -43,7 +44,7 @@ define('HELIX_LAYOUT_PATH', JPATH_PLUGINS . '/system/helixultimate/layout');
  *
  * @since 1.0.0
  */
-class  PlgSystemHelixultimate extends JPlugin
+class  PlgSystemHelixultimate extends CMSPlugin
 {
 	/**
 	 * Is autoload language.

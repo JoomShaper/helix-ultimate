@@ -64,7 +64,7 @@ class plgSystemTmp_helixultInstallerScript
 				// Check if directory "/overrides/com_finder/search" exists then deletes it
 				if (JVERSION >= 4)
 				{
-					if ($version == '2.0.10') {
+					if ($version == '2.0.11') {
 						$plg_path = JPATH_PLUGINS;
 						$dir = $plg_path.'/'.$group.'/'.$name.'/overrides/com_finder/search';
 						if (Folder::exists($dir))

@@ -23,6 +23,7 @@ use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Media;
 use HelixUltimate\Framework\Platform\Platform;
 use HelixUltimate\Framework\System\JoomlaBridge;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\Form;
@@ -523,6 +524,23 @@ class  PlgSystemHelixultimate extends CMSPlugin
 
 		if ($this->app->isClient('site') && $params->get('image_lazy_loading', 0))
 		{
+			// Check for Page Builder lazy load, if finds it will skip Helix lazy load
+			$option = $this->app->input->getCmd('option', '');
+			$pagebuilder = false;
+			$sp_pb_lazyload = 0;
+			if ($option === 'com_sppagebuilder')
+			{
+				$pagebuilder = true;
+			}
+			if ($pagebuilder)
+			{
+				$config = ComponentHelper::getParams('com_sppagebuilder');
+				$sp_pb_lazyload = $config->get('lazyloadimg', '0');
+			}
+			if ($sp_pb_lazyload != 0) {
+				return;
+			}
+
 			$srcRegex = "@<img[^>]*src=[\"\']([^\"\']*)[\"\'][^>]*>@";
 			$classRegex = "@<img[^>]*class=[\"\']([^\"\']*)[\"\'][^>]*>@";
 

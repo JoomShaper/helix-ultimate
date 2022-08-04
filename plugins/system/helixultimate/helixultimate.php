@@ -619,8 +619,24 @@ class  PlgSystemHelixultimate extends CMSPlugin
 						 */
 						if (!empty($classMatches))
 						{
-							$newClass = 'class="' . $classMatches[1] . ' lazyload"';
-							$imageElement = preg_replace("@class=[\"\']([^\"\']*)[\"\']@", $newClass, $imageElement);
+							$sp_pb_lazy_found = false;
+							// Test if string contains 'sppb-element-lazy'
+							if(strpos($classMatches[1], 'sppb-element-lazy') !== false)
+							{
+								$sp_pb_lazy_found = true;
+							} else
+							{
+								$sp_pb_lazy_found = false;
+							}
+							if($sp_pb_lazy_found)
+							{
+								$newClass = 'class="' . $classMatches[1] . '"';
+								$imageElement = preg_replace("@class=[\"\']([^\"\']*)[\"\']@", $newClass, $imageElement);
+							} else 
+							{
+								$newClass = 'class="' . $classMatches[1] . ' lazyload"';
+								$imageElement = preg_replace("@class=[\"\']([^\"\']*)[\"\']@", $newClass, $imageElement);
+							}
 						}
 					}
 					else

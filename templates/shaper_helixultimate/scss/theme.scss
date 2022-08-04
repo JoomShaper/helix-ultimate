@@ -2535,3 +2535,9 @@ body.contentpane.com-contact.view-contacts.layout-modal {
     min-height: 60vh !important;
   }
 }
+#sbox-content {
+  iframe {
+    width: 780px;
+    height: 480px;
+  }
+}

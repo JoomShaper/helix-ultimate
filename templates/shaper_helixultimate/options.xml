@@ -1593,12 +1593,13 @@
 			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE"
 			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE_DESC"
 			showon="related_article:1" />
-		<field name="related_article_row" 
+		<field name="related_article_column" 
 			type="number" 
 			default="3" 
+			max="12" 
 			helixgroup="blog_details" 
-			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_ROW" 
-			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_ROW_DESC" 
+			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_COLUMN" 
+			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_COLUMN_DESC" 
 			showon="related_article:1[AND]related_article_view_type:thumb" />
 		<field name="related_article_limit" 
 			type="number" 

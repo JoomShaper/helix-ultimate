@@ -972,6 +972,7 @@ class HelixUltimate
 	 */
 	public function count_modules($position)
 	{
+		$position = Helper::CheckNull($position);
 		return ($this->doc->countModules($position) || $this->has_feature($position));
 	}
 
@@ -1017,17 +1018,6 @@ class HelixUltimate
 	 */
 	public function after_body()
 	{
-		// if ($this->params->get('compress_css'))
-		// {
-		// 	$this->compress_css();
-		// }
-
-		// if ($this->params->get('compress_js'))
-		// {
-		// 	$this->compress_js($this->params->get('exclude_js'));
-		// }
-
-
 		if ($before_body = $this->params->get('before_body'))
 		{
 			echo $before_body . "\n";

@@ -16,7 +16,11 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
-$twofactormethods 	= AuthenticationHelper::getTwoFactorMethods();
+$twofactormethods	= [];
+if(version_compare(JVERSION, '4.2.0', '<'))
+{
+	$twofactormethods 	= AuthenticationHelper::getTwoFactorMethods();
+}
 $doc 				= Factory::getDocument();
 $app              	= Factory::getApplication();
 

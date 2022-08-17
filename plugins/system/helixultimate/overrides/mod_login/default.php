@@ -50,25 +50,26 @@ HTMLHelper::_('bootstrap.tooltip');
 			<input id="modlgn-passwd" type="password" name="password" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('JGLOBAL_PASSWORD'); ?>" />
 		<?php endif; ?>
 	</div>
-
-	<?php if (count($twofactormethods) > 1) : ?>
-		<div id="form-login-secretkey" class="mb-3">
-			<?php if (!$params->get('usetext')) : ?>
-				<div class="input-group">
-					<span class="input-group-text" aria-label="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>"><span class="fas fa-star" aria-hidden="true"></span></span>
+	<?php if(version_compare(JVERSION, '4.2.0', '<')) : ?>
+		<?php if (count($twofactormethods) > 1) : ?>
+			<div id="form-login-secretkey" class="mb-3">
+				<?php if (!$params->get('usetext')) : ?>
+					<div class="input-group">
+						<span class="input-group-text" aria-label="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>"><span class="fas fa-star" aria-hidden="true"></span></span>
+						<input id="modlgn-secretkey" autocomplete="off" type="text" name="secretkey" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>" />
+						<button class="btn btn-secondary hasTooltip" type="button" title="<?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?>">
+							<span class="fas fa-headset" aria-hidden="true"></span>
+						</button>
+					</div>
+				<?php else : ?>
+					<label for="modlgn-secretkey"><?php echo Text::_('JGLOBAL_SECRETKEY'); ?></label>
 					<input id="modlgn-secretkey" autocomplete="off" type="text" name="secretkey" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>" />
-					<button class="btn btn-secondary hasTooltip" type="button" title="<?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?>">
-						<span class="fas fa-headset" aria-hidden="true"></span>
-					</button>
-				</div>
-			<?php else : ?>
-				<label for="modlgn-secretkey"><?php echo Text::_('JGLOBAL_SECRETKEY'); ?></label>
-				<input id="modlgn-secretkey" autocomplete="off" type="text" name="secretkey" class="form-control" tabindex="0" size="18" placeholder="<?php echo Text::_('JGLOBAL_SECRETKEY'); ?>" />
-				<small class="d-block text-muted"><span class="fas fa-asterisk" aria-hidden="true"></span> <?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?></small>
-			<?php endif; ?>
-		</div>
+					<small class="d-block text-muted"><span class="fas fa-asterisk" aria-hidden="true"></span> <?php echo Text::_('JGLOBAL_SECRETKEY_HELP'); ?></small>
+				<?php endif; ?>
+			</div>
+		<?php endif; ?>
 	<?php endif; ?>
-
+	
 	<?php if (PluginHelper::isEnabled('system', 'remember')) : ?>
 		<div id="form-login-remember" class="mb-3 form-check">
 			<input id="modlgn-remember" type="checkbox" name="remember" class="form-check-input" value="yes"/>

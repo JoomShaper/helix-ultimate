@@ -30,11 +30,7 @@ if ($item->menu_image)
 	{
 		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
 	}
-
-	if ($item->params->get('menu_text', 1))
-	{
-		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
-	}
+	$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
 }
 
 if ($item->parent && $showToggler)

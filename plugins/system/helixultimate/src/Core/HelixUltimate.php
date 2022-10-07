@@ -1360,18 +1360,9 @@ class HelixUltimate
 			$app       = Factory::getApplication();
 			$view      = $app->input->get('view');
 			$layout    = $app->input->get('layout');
-
-			$jinput = Factory::getApplication()->input;
-			$component_name = $jinput->get('option');
 			
 			// disable js compress for edit view
 			if($view == 'form' || $layout == 'edit')
-			{
-				return;
-			}
-
-			// disable js compress for sp_pagebuilder
-			if($component_name == 'com_sppagebuilder')
 			{
 				return;
 			}
@@ -1394,6 +1385,7 @@ class HelixUltimate
 			{
 				$js_file = str_replace($root_url, JPATH_ROOT, $key);
 
+				// disable js compress for sp_pagebuilder
 				if(strpos($js_file, 'com_sppagebuilder')) {
 					continue;
 				}
@@ -1663,6 +1655,7 @@ class HelixUltimate
 			{
 				$css_file = str_replace($root_url, \JPATH_ROOT, $key);
 				
+				// disable css compress for sp_pagebuilder
 				if(strpos($css_file, 'com_sppagebuilder')) {
 					continue;
 				}

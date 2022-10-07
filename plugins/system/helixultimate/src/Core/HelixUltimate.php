@@ -1394,6 +1394,10 @@ class HelixUltimate
 			{
 				$js_file = str_replace($root_url, JPATH_ROOT, $key);
 
+				if(strpos($js_file, 'com_sppagebuilder')) {
+					continue;
+				}
+
 				if (strpos($js_file, JPATH_ROOT) === false)
 				{
 					$js_file = JPATH_ROOT . $key;
@@ -1658,6 +1662,10 @@ class HelixUltimate
 			foreach ($all_stylesheets as $key => $value)
 			{
 				$css_file = str_replace($root_url, \JPATH_ROOT, $key);
+				
+				if(strpos($css_file, 'com_sppagebuilder')) {
+					continue;
+				}
 
 				if (strpos($css_file, \JPATH_ROOT) === false)
 				{

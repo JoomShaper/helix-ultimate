@@ -141,7 +141,7 @@ $isExpired  = JVERSION < 4
 					<?php echo LayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>
 				</div>
 			<?php endif; ?>
-			<div>
+			<div class="social-share-block">
 				<?php echo LayoutHelper::render('joomla.content.social_share', $this->item); ?>
 			</div>
 		</div>

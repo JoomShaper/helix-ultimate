@@ -71,7 +71,7 @@ class  PlgSystemHelixultimate extends CMSPlugin
 	 */
 	public function onAfterInitialise()
 	{
-		$this->registerBootstrap();
+		
 	}
 
 	/**
@@ -360,6 +360,8 @@ class  PlgSystemHelixultimate extends CMSPlugin
 	 */
 	public function onAfterDispatch()
 	{
+		$this->registerBootstrap();
+
 		$option     = $this->app->input->get('option', '', 'STRING');
 		$helix      = $this->app->input->get('helix', '', 'STRING');
 		$view       = $this->app->input->get('view', '', 'STRING');

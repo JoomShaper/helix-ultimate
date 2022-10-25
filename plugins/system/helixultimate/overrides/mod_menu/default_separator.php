@@ -12,6 +12,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $title      = $item->anchor_title ? ' title="' . $item->anchor_title . '"' : '';
 $anchor_css = $item->anchor_css ?: '';
+$rel 		= $item->anchor_rel ? ' rel="' . $item->anchor_rel . '" ' : '';
 
 $isOffcanvasMenu = $params->get('hu_offcanvas', 0, 'INT') === 1;
 $maxLevel = $params->get('endLevel', 0, 'INT');
@@ -39,4 +40,4 @@ if ($item->parent && $showToggler)
 }
 
 ?>
-<span class="menu-separator <?php echo $anchor_css; ?>"<?php echo $title; ?>><?php echo $linktype; ?></span>
+<span class="menu-separator <?php echo $anchor_css; ?>"<?php echo $title; ?><?php echo $rel; ?>><?php echo $linktype; ?></span>

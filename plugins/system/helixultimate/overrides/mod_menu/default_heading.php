@@ -12,6 +12,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $title      = $item->anchor_title ? ' title="' . $item->anchor_title . '"' : '';
 $anchor_css = $item->anchor_css ?: '';
+$rel 		= $item->anchor_rel ? ' rel="' . $item->anchor_rel . '" ' : '';
 
 $linktype   = $item->title;
 
@@ -43,4 +44,4 @@ if ($item->parent && $showToggler)
 }
 
 ?>
-<span class="nav-header <?php echo $anchor_css; ?>"<?php echo $title; ?>><?php echo $linktype; ?></span>
+<span class="nav-header <?php echo $anchor_css; ?>"<?php echo $title; ?><?php echo $rel; ?>><?php echo $linktype; ?></span>

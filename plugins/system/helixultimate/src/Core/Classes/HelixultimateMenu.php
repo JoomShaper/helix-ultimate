@@ -219,6 +219,7 @@ class HelixultimateMenu
 			$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
 			$item->anchor_css   = htmlspecialchars($item->getParams()->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
 			$item->anchor_title = htmlspecialchars($item->getParams()->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
+			$item->anchor_rel = htmlspecialchars($item->getParams()->get('menu-anchor_rel', ''), ENT_COMPAT, 'UTF-8', false);
 			$item->menu_image   = $item->getParams()->get('menu_image', '') ? htmlspecialchars($item->getParams()->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
 		}
 	}
@@ -637,6 +638,8 @@ class HelixultimateMenu
 		$class = $extra_class;
 		$class .= ($item->anchor_css && $class) ? ' ' . $item->anchor_css : $item->anchor_css;
 
+		$rel = $item->anchor_rel ? 'rel="' . $item->anchor_rel . '" ' : '';
+
 		if ($item->type === 'separator')
 		{
 			$class .= ' sp-menu-separator';
@@ -746,22 +749,22 @@ class HelixultimateMenu
 				case 0:
 					if ($item->type === 'separator' || $item->type === 'heading')
 					{
-						$output .= '<span ' . $ariaLabelOpen . ' ' . $class . ' ' . $title . '>' . $linktitle . '</span>';
+						$output .= '<span ' . $ariaLabelOpen . ' ' . $class . ' ' . $title . ' ' . $rel . '>' . $linktitle . '</span>';
 					}
 					else
 					{
-						$output .= '<a ' . $ariaLabelOpen .  ' ' . $class . ' href="' . $flink . '" ' . $title . '>' . $linktitle . '</a>';
+						$output .= '<a ' . $ariaLabelOpen .  ' ' . $class . ' href="' . $flink . '" ' . $title . ' ' . $rel . '>' . $linktitle . '</a>';
 					}
 
 					break;
 
 				case 1:
-					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . '>' . $linktitle . '</a>';
+					$output .= '<a ' . $class . ' rel="noopener noreferrer" href="' . $flink . '" target="_blank" ' . $title . ' ' . $rel . '>' . $linktitle . '</a>';
 					break;
 
 				case 2:
 					$options .= 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,' . $item->getParams()->get('window_open');
-					$output .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . '>' . $linktitle . '</a>';
+					$output .= '<a ' . $class . ' href="' . $flink . '" onclick="window.open(this.href, \'targetWindow\', \'' . $options . '\');return false;"' . $title . ' ' . $rel . '>' . $linktitle . '</a>';
 					break;
 			}
 		}

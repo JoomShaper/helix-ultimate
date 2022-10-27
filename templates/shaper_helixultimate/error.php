@@ -76,6 +76,8 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 			<h1 class="error-code"><?php echo $this->error->getCode(); ?></h1>
 			<h2 class="error-message"><?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></h2>
 
+			<jdoc:include type="modules" name="404" style="sp_xhtml"/>
+
 			<a href="<?php echo $this->baseurl; ?>/index.php" class="btn btn-secondary"><span class="fas fa-home" aria-hidden="true"></span> <?php echo Text::_('JERROR_LAYOUT_HOME_PAGE'); ?></a>
 
 			<?php if ($this->debug) : ?>

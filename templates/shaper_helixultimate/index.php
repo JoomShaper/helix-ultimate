@@ -52,7 +52,7 @@ Helper::flushSettingsDataToJs();
 $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
 
 // Coming Soon
-if(!$requestFromIframe) 
+if (!$requestFromIframe) 
 {
 	if (!\is_null($this->params->get('comingsoon', null)))
 	{

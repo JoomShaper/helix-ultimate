@@ -483,8 +483,10 @@
 			showon="comingsoon:1" />
 		<field name="comingsoon_date" 
 			helixgroup="comingsoon" 
-			type="text" 
-			default="5-10-2018" 
+			type="calendar"
+			translateformat="true"
+			filter="user_utc"
+			default="NOW"
 			label="HELIX_ULTIMATE_COMINGSOON_DATE" 
 			showon="comingsoon:1" />
 		<field name="comingsoon_logo" 
@@ -504,6 +506,24 @@
 			type="checkbox" 
 			default="1" 
 			label="HELIX_ULTIMATE_COMINGSOON_SOCIAL_ICONS" 
+			showon="comingsoon:1" />
+		<field name="comingsoon_title_status" 
+			helixgroup="comingsoon" 
+			type="checkbox" 
+			default="1" 
+			label="HELIX_ULTIMATE_COMINGSOON_TITLE" 
+			showon="comingsoon:1" />
+		<field name="comingsoon_content_status" 
+			helixgroup="comingsoon" 
+			type="checkbox" 
+			default="1" 
+			label="HELIX_ULTIMATE_COMINGSOON_CONTENT" 
+			showon="comingsoon:1" />
+		<field name="comingsoon_countdown" 
+			helixgroup="comingsoon" 
+			type="checkbox" 
+			default="1" 
+			label="HELIX_ULTIMATE_COMINGSOON_COUNTDOWN" 
 			showon="comingsoon:1" />
 
 		<!--Error Page-->

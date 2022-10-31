@@ -487,7 +487,8 @@
 			translateformat="true"
 			filter="user_utc"
 			default="NOW"
-			label="HELIX_ULTIMATE_COMINGSOON_DATE" 
+			label="HELIX_ULTIMATE_COMINGSOON_DATE"
+			description="HELIX_ULTIMATE_COMINGSOON_DATE_DESC"
 			showon="comingsoon:1" />
 		<field name="comingsoon_logo" 
 			helixgroup="comingsoon" 

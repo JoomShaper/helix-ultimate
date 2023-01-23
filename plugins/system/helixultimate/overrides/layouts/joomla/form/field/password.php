@@ -36,7 +36,7 @@ Text::script('JHIDE');
 
 $attributes = array(
 	strlen(Helper::CheckNull($hint)) ? 'placeholder="' . htmlspecialchars(Helper::CheckNull($hint), ENT_COMPAT, 'UTF-8') . '"' : '',
-	!$autocomplete ? 'autocomplete="off"' : '',
+	!empty($autocomplete) ? 'autocomplete="off"' : '',
 	!empty($class) ? 'class="form-control ' . $class . '"' : 'class="form-control"',
 	$readonly ? 'readonly' : '',
 	$disabled ? 'disabled' : '',

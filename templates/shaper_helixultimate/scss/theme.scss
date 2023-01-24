@@ -1669,7 +1669,7 @@ html.error-page {
   .error-code {
     margin: 0 0 1rem;
     font-size: 6rem;
-    line-break: 1;
+    line-break: auto;
   }
 
   .error-message {

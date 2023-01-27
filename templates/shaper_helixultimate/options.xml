@@ -121,8 +121,9 @@
 		<field name="header_height_xs" 
 			helixgroup="header" 
 			type="helixUnit"
+			default="50px"
+			display="inline"
 			className="field-hidden"
-			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT_XS" />
 
 		<field name="enable_search" 

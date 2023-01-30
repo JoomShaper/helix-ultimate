@@ -1892,12 +1892,21 @@ class HelixUltimate
 				'footer_link_color' => $this->params->get('footer_link_color'),
 				'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
 				'topbar_bg_color' => $this->params->get('topbar_bg_color'),
-				'topbar_text_color' => $this->params->get('topbar_text_color')
+				'topbar_text_color' => $this->params->get('topbar_text_color'),
+				'offcanvas_menu_icon_color' => $this->params->get('offcanvas_menu_icon_color'),
+				'offcanvas_menu_bg_color' => $this->params->get('offcanvas_menu_bg_color'),
+				'offcanvas_menu_items_and_items_color' => $this->params->get('offcanvas_menu_items_and_items_color'),
+				'offcanvas_menu_active_menu_item_color' => $this->params->get('offcanvas_menu_active_menu_item_color')
 			);
 		}
 		else
 		{
 			$scssVars = (array) json_decode($this->params->get('preset'));
+
+			$scssVars['offcanvas_menu_icon_color'] = '#000000';
+			$scssVars['offcanvas_menu_bg_color'] = $this->params->get('menu_dropdown_bg_color');
+			$scssVars['offcanvas_menu_items_and_items_color'] = '#252525';
+			$scssVars['offcanvas_menu_active_menu_item_color'] = $scssVars['menu_text_active_color'];
 		}
 
 		$scssVars['header_height'] 		= $this->params->get('header_height', '60px');

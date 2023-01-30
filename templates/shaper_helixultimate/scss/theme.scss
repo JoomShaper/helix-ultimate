@@ -528,7 +528,7 @@ div.mod-languages {
   > span {
     display: block;
     height: 2px;
-    background-color: #000;
+    background-color: $offcanvas_menu_icon_color;
     margin: 5px 0;
     transition: background-color 0.3s ease-in, opacity 0.3s ease-in, transform 0.3s ease-in;
   }
@@ -537,7 +537,7 @@ div.mod-languages {
 .offcanvas-active,
 #modal-menu-toggler.active {
   .burger-icon > span {
-    background-color: #000;
+    background-color: $offcanvas_menu_icon_color;
     &:nth-child(1) {
       transform: translate(0, 8px) rotate(-45deg);
     }

@@ -1081,6 +1081,36 @@
 			default="#FFFFFF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_FOOTER_LINK_HOVER_COLOR" />
+		
+		<!-- Custom preset Offcanvas  -->
+		<field name="offcanvas_menu_icon_color" 
+			class="preset-control"
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#000000" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_ICON_COLOR" />
+		<field name="offcanvas_menu_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#FFFFFF" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_BACKGROUND_COLOR" />
+		<field name="offcanvas_menu_items_and_items_color" 
+			class="preset-control" 
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#252525" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_ITEMS_AND_ICONS_COLOR" />
+		<field name="offcanvas_menu_active_menu_item_color" 
+			class="preset-control" 
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#0345bf" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_ACTIVE_MENU_ITEM_COLOR" />
 
 	</fieldset>
 

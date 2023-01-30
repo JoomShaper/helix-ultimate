@@ -1905,7 +1905,7 @@ class HelixUltimate
 
 			$scssVars['offcanvas_menu_icon_color'] = '#000000';
 			$scssVars['offcanvas_menu_bg_color'] = $this->params->get('menu_dropdown_bg_color');
-			$scssVars['offcanvas_menu_items_and_items_color'] = '#252525';
+			$scssVars['offcanvas_menu_items_and_items_color'] = $this->params->get('menu_dropdown_text_color');
 			$scssVars['offcanvas_menu_active_menu_item_color'] = $scssVars['menu_text_active_color'];
 		}
 

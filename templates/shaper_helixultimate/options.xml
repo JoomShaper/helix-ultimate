@@ -49,6 +49,13 @@
 			label="HELIX_ULTIMATE_LOGO_ALT_TEXT"
 			description="HELIX_ULTIMATE_LOGO_ALT_TEXT_DESC"
 			showon="logo_type:image" />
+		
+		<field name="logo_custom_link"
+			helixgroup="logo"
+			type="text"
+			label="HELIX_ULTIMATE_LOGO_CUSTOM_LINK"
+			description="HELIX_ULTIMATE_LOGO_CUSTOM_LINK_DESC"
+			showon="logo_type:image" />
 
 		<field name="logo_height" 
 			helixgroup="logo" 

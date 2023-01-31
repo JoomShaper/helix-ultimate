@@ -89,8 +89,10 @@ class HelixUltimateFeatureLogo
 
 			if ($this->params->get('logo_image'))
 			{
+				$logoUrl = $this->params->get('logo_custom_link') ?? Uri::base(true) . '/';
+
 				$html .= '<div class="logo">';
-				$html .= '<a href="' . Uri::base(true) . '/">';
+				$html .= '<a href="' . $logoUrl . '">';
 
 				$defaultLogo = $this->params->get('logo_image', null);
 				$retinaLogo	= $this->params->get('retina_logo', null);

@@ -108,10 +108,12 @@ class HelixUltimateFeatureLogo
 					$srcset .= Uri::root() . $retinaLogo . ' 2x';
 				}
 				$logoWithUrl = Uri::root() . $defaultLogo;
+				$attrLogoHeight = $this->params->get('logo_height', '') ?? '0px';
 				$siteLogo = "
 				<img class='logo-image {$custom_logo_class}'
 					srcset='{$srcset}'
 					src='{$logoWithUrl}'
+					height='{$attrLogoHeight}'
 					alt='{$altText}'
 				/>
 				";

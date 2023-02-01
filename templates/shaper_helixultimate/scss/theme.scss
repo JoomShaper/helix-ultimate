@@ -1001,6 +1001,14 @@ body.view-article.remove-container {
       margin-top: 6px;
     }
   }
+
+  .password-group {
+    button.input-password-toggle {
+      background-color: #eaecef;
+      border-color: #ced4da;
+      color: #212529;
+    }
+  }
 }
 
 .form-links {

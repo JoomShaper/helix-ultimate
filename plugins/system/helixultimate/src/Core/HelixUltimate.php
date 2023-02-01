@@ -244,11 +244,10 @@ class HelixUltimate
 		$layout = $this->input->get('layout', 'default', 'STRING');
 
 		HTMLHelper::_('jquery.framework');
+		HTMLHelper::_('bootstrap.framework');
 
 		if (JVERSION < 4)
 		{
-			HTMLHelper::_('bootstrap.framework');
-
 			if(isset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']))
 			{
 				unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']);
@@ -350,17 +349,19 @@ class HelixUltimate
 		{
 			$this->doc->getWebAssetManager()->useScript('showon');
 		}
-		
-		$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
-		$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
-
-		if (\file_exists($bsBundleJSPath))
+		else
 		{
-			$this->add_js('bootstrap.bundle.min.js');
-		}
-		elseif (\file_exists($bsJsPath))
-		{
-			$this->add_js('popper.min.js, bootstrap.min.js');
+			$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
+			$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
+			
+			if (\file_exists($bsBundleJSPath))
+			{
+				$this->add_js('bootstrap.bundle.min.js');
+			}
+			elseif (\file_exists($bsJsPath))
+			{
+				$this->add_js('popper.min.js, bootstrap.min.js');
+			}
 		}
 
 		$app = Factory::getApplication();

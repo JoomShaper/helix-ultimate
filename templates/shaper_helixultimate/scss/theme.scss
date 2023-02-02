@@ -1842,7 +1842,7 @@ select:not(.form-select) {
   &:not(.form-control) {
     display: block;
     width: 100%;
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem 0.5rem !important;
     font-size: 1rem;
     line-height: 1.25;
     color: #495057;

@@ -65,9 +65,11 @@ $attributes = array(
 			id="<?php echo $id; ?>"
 			value="<?php echo htmlspecialchars(Helper::CheckNull($value), ENT_COMPAT, 'UTF-8'); ?>"
 			<?php echo implode(' ', $attributes); ?>>
-		<button type="button" class="btn btn-secondary input-password-toggle">
-            <span class="icon-eye icon-fw" aria-hidden="true"></span>
-            <span class="visually-hidden"><?php echo Text::_('JSHOWPASSWORD'); ?></span>
-        </button>
+		<?php if (JVERSION >= 4) :?>
+			<button type="button" class="btn btn-secondary input-password-toggle">
+				<span class="icon-eye icon-fw" aria-hidden="true"></span>
+				<span class="visually-hidden"><?php echo Text::_('JSHOWPASSWORD'); ?></span>
+			</button>
+		<?php endif; ?>
 	</div>
 </div>

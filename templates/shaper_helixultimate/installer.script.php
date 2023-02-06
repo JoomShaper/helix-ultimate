@@ -62,7 +62,7 @@ class plgSystemTmp_helixultInstallerScript
 				}
 				
 				// Check if directory "/overrides/com_finder/tmpl" exists then deletes it
-				if ($version >= '2.0.11') 
+				if ($version >= '2.0.12') 
 				{
 					$plg_path = JPATH_PLUGINS;
 					$dir = $plg_path.'/'.$group.'/'.$name.'/overrides/com_finder/tmpl';

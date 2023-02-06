@@ -1127,6 +1127,13 @@ body.view-article.remove-container {
       }
     }
 
+    .article-full-image {
+      margin: -20px -20px 20px -20px;
+      border-radius: 3px 3px 0 0;
+      border-bottom: 1px solid #f5f5f5;
+      overflow: hidden;
+    }
+
     .article-header {
       h1,
       h2 {

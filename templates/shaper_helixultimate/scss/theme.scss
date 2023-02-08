@@ -1434,6 +1434,18 @@ body.view-article.remove-container {
   }
 }
 
+// Pagination
+.pagenavigation {
+  padding: 2rem 0;
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    a {
+      padding: 5px 15px;
+    }
+  }
+}
+
 //Social Share
 .article-social-share {
   float: right;

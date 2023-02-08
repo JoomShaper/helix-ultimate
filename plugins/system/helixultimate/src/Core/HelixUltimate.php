@@ -165,9 +165,9 @@ class HelixUltimate
 		$stickyHeader 	= $this->params->get('sticky_header_xs', 0) ? $stickyHeader . ' sticky-header-sm' : $stickyHeader;
 
 		$compClass = $this->input->get('option', '', 'STRING');
-		$fixCompClass = $compClass === 'com_sppagebuilder' ? str_replace('_', '-', $compClass) : $compClass;
+		$compClassDash = str_replace('_', '-', $compClass);
 
-		$bodyClass       = 'site helix-ultimate hu ' . htmlspecialchars($fixCompClass);
+		$bodyClass       = 'site helix-ultimate hu ' . htmlspecialchars($compClass) . ' ' . $compClassDash;
 		$bodyClass      .= ' view-' . htmlspecialchars($this->input->get('view', '', 'STRING'));
 		$bodyClass      .= ' layout-' . htmlspecialchars($this->input->get('layout', 'default', 'STRING'));
 		$bodyClass      .= ' task-' . htmlspecialchars($this->input->get('task', 'none', 'STRING'));

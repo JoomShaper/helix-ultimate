@@ -51,7 +51,7 @@ function addGoogleFont($fonts)
 
 				$fontCheck[] = $font->fontFamily;
 				
-				$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+				$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i';
 
 				if (!empty(trim($font->fontSubset)))
 				{
@@ -216,7 +216,7 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 				$preset = $preset->preset;
 			}
 		?>
-		
+
 		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
 		
 		<link href="//fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&amp;display=swap" rel="stylesheet" />

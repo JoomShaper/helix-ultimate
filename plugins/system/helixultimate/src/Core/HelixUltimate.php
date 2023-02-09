@@ -1199,7 +1199,7 @@ class HelixUltimate
 
 				if (!in_array($font->fontFamily, $systemFonts))
 				{
-					$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+					$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i';
 
 					if (!empty(trim($font->fontSubset)))
 					{

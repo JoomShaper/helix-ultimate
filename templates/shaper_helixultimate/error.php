@@ -8,25 +8,179 @@
 
 defined ('_JEXEC') or die();
 
+use HelixUltimate\Framework\Core\HelixUltimate;
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 $app = Factory::getApplication();
 $doc = Factory::getDocument();
-$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+$template = Helper::loadTemplateData();
 $params = $template->params;
+$fontCSS = '';
+
+function addGoogleFont($fonts)
+{
+	$systemFonts = array(
+		'Arial',
+		'Tahoma',
+		'Verdana',
+		'Helvetica',
+		'Times New Roman',
+		'Trebuchet MS',
+		'Georgia'
+	);
+
+	if (is_array($fonts))
+	{
+		$fontUrls = "";
+		$styles = "";
+		$fontCheck = [];
+
+		foreach ($fonts as $key => $font)
+		{
+			$font = json_decode($font);
+
+			if (!in_array($font->fontFamily, $systemFonts))
+			{
+
+				if (in_array($font->fontFamily, $fontCheck)) {
+					continue;
+				}
+
+				$fontCheck[] = $font->fontFamily;
+				
+				$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+
+				if (!empty(trim($font->fontSubset)))
+				{
+					$fontUrl .= '&subset=' . $font->fontSubset;
+				}
+
+				$fontUrl .= '&display=swap';
+
+				$fontUrls .= '<link href="'. $fontUrl .'" rel="stylesheet" media="none" onload="media=media=&quot;all&quot;" />'. PHP_EOL . "\t\t";
+			}
+
+			$fontCSS = $key . "{";
+			$fontCSS .= "font-family: '" . $font->fontFamily . "', sans-serif;";
+
+			if (isset($font->fontSize) && $font->fontSize)
+			{
+				$fontCSS .= 'font-size: ' . $font->fontSize . (!preg_match("@(px|em|rem|%)$@", $font->fontSize) ? 'px;' : ';');
+			}
+
+			if (isset($font->fontWeight) && $font->fontWeight)
+			{
+				$fontCSS .= 'font-weight: ' . $font->fontWeight . ';';
+			}
+
+			if (isset($font->fontStyle) && $font->fontStyle)
+			{
+				$fontCSS .= 'font-style: ' . $font->fontStyle . ';';
+			}
+
+			if (!empty($font->fontColor))
+			{
+				$fontCSS .= 'color: ' . $font->fontColor . ';';
+			}
+
+			if (!empty($font->fontLineHeight))
+			{
+				$fontCSS .= 'line-height: ' . $font->fontLineHeight . ';';
+			}
+
+			if (!empty($font->fontLetterSpacing))
+			{
+				$fontCSS .= 'letter-spacing: ' . $font->fontLetterSpacing . ';';
+			}
+
+			if (!empty($font->textDecoration))
+			{
+				$fontCSS .= 'text-decoration: ' . $font->textDecoration . ';';
+			}
+
+			if (!empty($font->textAlign))
+			{
+				$fontCSS .= 'text-align: ' . $font->textAlign . ';';
+			}
+
+			$fontCSS .= "}";
+
+			if (isset($font->fontSize_sm) && $font->fontSize_sm)
+			{
+				$fontCSS .= '@media (min-width:768px) and (max-width:991px){';
+				$fontCSS .= $key . "{";
+				$fontCSS .= 'font-size: ' . $font->fontSize_sm . (!preg_match("@(px|em|rem|%)$@", $font->fontSize_sm) ? 'px;' : ';');
+				$fontCSS .= "}}";
+			}
+
+			if (isset($font->fontSize_xs) && $font->fontSize_xs)
+			{
+				$fontCSS .= '@media (max-width:767px){';
+				$fontCSS .= $key . "{";
+				$fontCSS .= 'font-size: ' . $font->fontSize_xs . (!preg_match("@(px|em|rem|%)$@", $font->fontSize_xs) ? 'px;' : ';');
+				$fontCSS .= "}}";
+			}
+
+			$styles .= $fontCSS;
+		}
+
+		echo $fontUrls;
+		echo "<style>" . $styles . "</style>" . PHP_EOL;
+	}
+}
+
+$helixPlugin = new HelixUltimate();
+$webfonts = array();
+
+if ($helixPlugin->params->get('enable_body_font'))
+{
+	$webfonts['body'] = $helixPlugin->params->get('body_font');
+}
+
+if ($helixPlugin->params->get('enable_h1_font'))
+{
+	$webfonts['h1'] = $helixPlugin->params->get('h1_font');
+}
+
+if ($helixPlugin->params->get('enable_h2_font'))
+{
+	$webfonts['h2'] = $helixPlugin->params->get('h2_font');
+}
+
+if ($helixPlugin->params->get('enable_h3_font'))
+{
+	$webfonts['h3'] = $helixPlugin->params->get('h3_font');
+}
+
+if ($helixPlugin->params->get('enable_h4_font'))
+{
+	$webfonts['h4'] = $helixPlugin->params->get('h4_font');
+}
+
+if ($helixPlugin->params->get('enable_h5_font'))
+{
+	$webfonts['h5'] = $helixPlugin->params->get('h5_font');
+}
+
+if ($helixPlugin->params->get('enable_h6_font'))
+{
+	$webfonts['h6'] = $helixPlugin->params->get('h6_font');
+}
+
+if ($helixPlugin->params->get('enable_navigation_font'))
+{
+	$webfonts['.sp-megamenu-parent > li > a, .sp-megamenu-parent > li > span, .sp-megamenu-parent .sp-dropdown li.sp-menu-item > a'] = $helixPlugin->params->get('navigation_font');
+}
+
+if ($helixPlugin->params->get('enable_custom_font') && $helixPlugin->params->get('custom_font_selectors'))
+{
+	$webfonts[$helixPlugin->params->get('custom_font_selectors')] = $helixPlugin->params->get('custom_font');
+}
 
 $theme_url = Uri::base(true) . '/templates/'. $this->template;
-
-/** If SP Page Builder page as a error page is activated- */
-/* if ($params->get('error_sppb'))
-{
-	Helper::renderPage($this->error->getCode(), $params->get('error_sppb_id'));
-}
- */
 ?>
 
 <!doctype html>
@@ -54,7 +208,6 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 
 		<link href="<?php echo $theme_url . '/css/font-awesome.min.css'; ?>" rel="stylesheet">
 		<link href="<?php echo $theme_url . '/css/template.css'; ?>" rel="stylesheet">
-
 		<?php
 			$preset = $params->get('preset', json_encode(['preset' => 'preset1']));
 
@@ -63,7 +216,14 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 				$preset = $preset->preset;
 			}
 		?>
+		
 		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
+		
+		<link href="//fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&amp;display=swap" rel="stylesheet" />
+		<link href="//fonts.googleapis.com/css?family=Inter:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&amp;display=swap" rel="stylesheet" />
+		<?php
+			addGoogleFont($webfonts);
+		?>
 	</head>
 	<body>
 		<div class="container">

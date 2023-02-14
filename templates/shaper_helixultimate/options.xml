@@ -566,6 +566,14 @@
 			label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE"
 		/>
 
+		<field name="error_font_load" 
+			helixgroup="errorpage" 
+			type="checkbox"
+			default="0"  
+			label="HELIX_ULTIMATE_ERROR_FONT_LOAD"
+			description="HELIX_ULTIMATE_ERROR_FONT_LOAD_DESC"
+		/>
+
 	</fieldset>
 
 	<!--Presets-->

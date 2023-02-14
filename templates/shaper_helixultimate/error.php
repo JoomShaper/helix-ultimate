@@ -219,10 +219,10 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 
 		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
 		
-		<link href="//fonts.googleapis.com/css?family=IBM+Plex+Sans:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&amp;display=swap" rel="stylesheet" />
-		<link href="//fonts.googleapis.com/css?family=Inter:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic&amp;display=swap" rel="stylesheet" />
 		<?php
-			addGoogleFont($webfonts);
+			if ($params->get('error_font_load')) {
+				addGoogleFont($webfonts);
+			}
 		?>
 	</head>
 	<body>

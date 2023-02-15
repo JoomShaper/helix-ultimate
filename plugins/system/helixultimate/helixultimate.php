@@ -523,22 +523,31 @@ class  PlgSystemHelixultimate extends CMSPlugin
 	{
 		$template = Helper::loadTemplateData();
 		$params = $template->params;
+		$excludeComponents = ['com_spsimpleportfolio'];
+		$option = $this->app->input->getCmd('option', '');
 
 		if ($this->app->isClient('site') && $params->get('image_lazy_loading', 0))
 		{
+			
+			if(\in_array($option, $excludeComponents)) {
+				return;
+			}
+				
 			// Check for Page Builder lazy load, if finds it will skip Helix lazy load
-			$option = $this->app->input->getCmd('option', '');
 			$pagebuilder = false;
 			$sp_pb_lazyload = 0;
+
 			if ($option === 'com_sppagebuilder')
 			{
 				$pagebuilder = true;
 			}
+
 			if ($pagebuilder)
 			{
 				$config = ComponentHelper::getParams('com_sppagebuilder');
 				$sp_pb_lazyload = $config->get('lazyloadimg', '0');
 			}
+
 			if ($sp_pb_lazyload != 0) {
 				return;
 			}

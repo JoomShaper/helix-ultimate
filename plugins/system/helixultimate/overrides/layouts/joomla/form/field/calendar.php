@@ -8,6 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\Utilities\ArrayHelper;
@@ -53,11 +54,14 @@ $cssFileExt = ($direction === 'rtl') ? '-rtl.css' : '.css';
 $localesPath = $localesPath ?? '';
 $helperPath = $helperPath ?? '';
 
-// The static assets for the calendar
-HTMLHelper::_('script', $localesPath, false, true, false, false, true);
-HTMLHelper::_('script', $helperPath, false, true, false, false, true);
-HTMLHelper::_('script', 'system/fields/calendar.min.js', false, true, false, false, true);
-HTMLHelper::_('stylesheet', 'system/fields/calendar' . $cssFileExt, array(), true);
+if (JVERSION < 4)
+{
+	// The static assets for the calendar
+	HTMLHelper::_('script', Helper::CheckNull($localesPath), false, true, false, false, true);
+	HTMLHelper::_('script', Helper::CheckNull($helperPath), false, true, false, false, true);
+	HTMLHelper::_('script', 'system/fields/calendar.min.js', false, true, false, false, true);
+	HTMLHelper::_('stylesheet', 'system/fields/calendar' . Helper::CheckNull($cssFileExt), array(), true);
+}
 
 // Redefine locale/helper assets to use correct path, and load calendar assets
 if (JVERSION >= 4)

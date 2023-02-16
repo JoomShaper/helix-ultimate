@@ -8,6 +8,7 @@
 
 defined('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
@@ -57,7 +58,7 @@ class HelixUltimateFeatureLogo
 
 		$doc = Factory::getDocument();
 
-		$presetVars = (array) json_decode($this->params->get('preset'));
+		$presetVars = (array) json_decode(Helper::CheckNull($this->params->get('preset')));
 		$preset = (isset($presetVars['preset']) && $presetVars['preset']) ? $presetVars['preset'] : 'default';
 
 		$html = '';
@@ -94,17 +95,18 @@ class HelixUltimateFeatureLogo
 				$defaultLogo = $this->params->get('logo_image', null);
 				$retinaLogo	= $this->params->get('retina_logo', null);
 				$srcset = '';
-
 				if (file_exists($defaultLogo))
 				{
-					$srcset .= Uri::root() . $defaultLogo . ' 1x, ';
+					$srcset .= Uri::root() . $defaultLogo . ' 1x';
 				}
-
+				if (file_exists($defaultLogo) && (!is_null($retinaLogo) && file_exists($retinaLogo)))
+				{
+					$srcset .= ', ';
+				}
 				if (!is_null($retinaLogo) && file_exists($retinaLogo))
 				{
 					$srcset .= Uri::root() . $retinaLogo . ' 2x';
 				}
-
 				$logoWithUrl = Uri::root() . $defaultLogo;
 				$siteLogo = "
 				<img class='logo-image {$custom_logo_class}'

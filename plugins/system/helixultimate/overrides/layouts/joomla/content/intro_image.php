@@ -96,12 +96,24 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption);
 						}
 						echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+						// Image Caption 
+						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
+						{ ?>
+							<figcaption class="caption text-dark"><?php echo $this->escape($images->image_intro_caption); ?></figcaption>
+						<?php 
+						}
 					}
 					else
 					{
 					?>
 						<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>">
 					<?php
+						// Image Caption 
+						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
+						{ ?>
+							<figcaption class="caption text-dark"><?php echo $this->escape($images->image_intro_caption); ?></figcaption>
+						<?php 
+						}
 					}
 					?>
 				</a>
@@ -119,12 +131,24 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 						$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8');
 					}
 					echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+					// Image Caption 
+					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
+					{ ?>
+						<figcaption class="caption text-dark"><?php echo $this->escape($images->image_intro_caption); ?></figcaption>
+					<?php 
+					}
 				}
 				else 
 				{
 				?>
 					<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8') . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>">
 				<?php
+					// Image Caption 
+					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
+					{ ?>
+						<figcaption class="caption text-dark"><?php echo $this->escape($images->image_intro_caption); ?></figcaption>
+					<?php 
+					}
 				}
 				?>
 			<?php endif; ?>

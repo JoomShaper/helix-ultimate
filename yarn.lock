@@ -537,10 +537,10 @@
     "is-descriptor" "^1.0.2"
     "isobject" "^3.0.1"
 
-"del@^6.0.0":
-  "integrity" "sha512-1shh9DQ23L16oXSZKB2JxpL7iMy2E0S9d517ptA1P8iw0alkPtQcrKH7ru31rYtKwF499HkTu+DRzq3TCKDFRQ=="
-  "resolved" "https://registry.npmjs.org/del/-/del-6.0.0.tgz"
-  "version" "6.0.0"
+"del@^6.1.1":
+  "integrity" "sha512-ua8BhapfP0JUJKC/zV9yHHDW/rDoDxP4Zhn3AkA6/xT6gY7jYXJiaeyBZznYVujhZZET+UgcbZiQ7sN3WqcImg=="
+  "resolved" "https://registry.npmjs.org/del/-/del-6.1.1.tgz"
+  "version" "6.1.1"
   dependencies:
     "globby" "^11.0.1"
     "graceful-fs" "^4.2.4"

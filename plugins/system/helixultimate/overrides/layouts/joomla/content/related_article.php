@@ -1,6 +1,7 @@
 <?php 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
 
 $item = $displayData;
 $item->enableOpenGraph = false;
@@ -18,7 +19,9 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
     <?php elseif($article_format === 'audio') : ?>
         <?php echo LayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
     <?php else: ?>
-        <?php echo LayoutHelper::render('joomla.content.full_image', $item); ?>
+        <a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
+            <?php echo LayoutHelper::render('joomla.content.full_image', $item); ?>
+        </a>
     <?php endif; ?>
 
     <?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $item); ?>

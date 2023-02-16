@@ -355,7 +355,7 @@ class HelixultimateMenu
 		$this->menu .= $this->start_el(array('item' => $item));
 		$this->menu .= $this->item($item);
 
-		$menulayout = json_decode($item->getParams()->get('helixultimatemenulayout'));
+		$menulayout = json_decode(Helper::CheckNull($item->getParams()->get('helixultimatemenulayout')));
 
 		if (isset($menulayout->megamenu) && $menulayout->megamenu)
 		{
@@ -389,7 +389,7 @@ class HelixultimateMenu
 		$dropdown_width = preg_match("@(px|em|rem|%)$@", $dropdown_width) ? $dropdown_width : $dropdown_width . 'px';
 		$dropdown_alignment = 'right';
 		$dropdown_style = 'width: ' . $dropdown_width . ';';
-		$layout = json_decode($this->_items[$item->id]->getParams()->get('helixultimatemenulayout'));
+		$layout = json_decode(Helper::CheckNull($this->_items[$item->id]->getParams()->get('helixultimatemenulayout')));
 
 		if (isset($layout->dropdown) && $layout->dropdown === 'left')
 		{
@@ -585,7 +585,7 @@ class HelixultimateMenu
 		// Menu show
 		$menu_show = $this->getMenuShow($args['item']->id);
 
-		$layout = json_decode($item->getParams()->get('helixultimatemenulayout'));
+		$layout = json_decode(Helper::CheckNull($item->getParams()->get('helixultimatemenulayout')));
 
 		$item->hasChild = 0;
 
@@ -660,7 +660,7 @@ class HelixultimateMenu
 			$linktitle = $item->title;
 		}
 
-		$layout = json_decode($item->getParams()->get('helixultimatemenulayout'));
+		$layout = json_decode(Helper::CheckNull($item->getParams()->get('helixultimatemenulayout')));
 
 		$showmenutitle = (isset($layout->showtitle)) ? $layout->showtitle : 1;
 		$icon = (isset($layout->faicon)) ? $layout->faicon : '';

@@ -1593,6 +1593,14 @@
 			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE"
 			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE_DESC"
 			showon="related_article:1" />
+		<field name="related_article_column" 
+			type="number" 
+			default="3" 
+			max="12" 
+			helixgroup="blog_details" 
+			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_COLUMN" 
+			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_COLUMN_DESC" 
+			showon="related_article:1[AND]related_article_view_type:thumb" />
 		<field name="related_article_limit" 
 			type="number" 
 			default="3" 
@@ -1728,7 +1736,7 @@
 	</fieldset>
 
 	<!--Advanced-->
-	<fieldset name="advance" 
+	<fieldset name="advanced" 
 		label="HELIX_ULTIMATE_FIELDSET_ADVANCED" 
 		activegroup="compression"
 		icon="fas fa-cog">

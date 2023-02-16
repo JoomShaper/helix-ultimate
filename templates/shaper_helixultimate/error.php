@@ -32,9 +32,9 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 <!doctype html>
 <html class="error-page" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
+		<title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></title>
 
 		<?php if ($favicon = $params->get('favicon')) : ?>
 			<link rel="icon" href="<?php echo Uri::base(true) . '/' . $favicon; ?>" />

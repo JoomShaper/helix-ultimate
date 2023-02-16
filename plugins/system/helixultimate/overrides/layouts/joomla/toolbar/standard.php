@@ -13,20 +13,20 @@ use Joomla\CMS\HTML\HTMLHelper;
 HTMLHelper::_('behavior.core');
 
 $id       = isset($displayData['id']) ? $displayData['id'] : '';
-$doTask   = $displayData['doTask'];
+$doTask   = isset($displayData['onclick']) ? $displayData['onclick'] : $displayData['doTask'];
 $class    = $displayData['class'];
 $text     = $displayData['text'];
-$btnClass = $displayData['btnClass'];
-$group    = $displayData['group'];
+$btnClass = isset($displayData['btnClass']) ? $displayData['btnClass'] : '';
+$group    = isset($displayData['group']) ? $displayData['group'] : '';
 ?>
 
 <?php if ($group) : ?>
-<a<?php echo $id; ?> href="#" onclick="<?php echo $doTask; ?>" class="dropdown-item">
+<a id="<?php echo $id; ?>" href="#" onclick="<?php echo $doTask; ?>" class="dropdown-item">
 	<span class="<?php echo trim($class); ?>"></span>
 	<?php echo $text; ?>
 </a>
 <?php else : ?>
-<button<?php echo $id; ?> onclick="<?php echo $doTask; ?>" class="<?php echo $btnClass; ?>">
+<button id="<?php echo $id; ?>" onclick="<?php echo $doTask; ?>" class="<?php echo $btnClass; ?>">
 	<span class="<?php echo trim($class); ?>" aria-hidden="true"></span>
 	<?php echo $text; ?>
 </button>

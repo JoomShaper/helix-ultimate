@@ -24,6 +24,11 @@ $doc->addStylesheet($cssPath);
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('behavior.formvalidator');
 
+if (JVERSION >= 4)
+{
+	$doc->getWebAssetManager()->useScript('bootstrap.modal');
+}
+
 if (JVERSION < 4)
 {
 	HTMLHelper::_('formbehavior.chosen', '#jform_catid', null, array('disable_search_threshold' => 0));
@@ -39,6 +44,7 @@ $params = $this->state->get('params');
 $attribs = json_decode($this->item->attribs);
 
 $this->form->setValue('helix_ultimate_image', 'attribs', !empty($attribs->helix_ultimate_image) ? $attribs->helix_ultimate_image : '');
+$this->form->setValue('helix_ultimate_image_alt_txt', 'attribs', !empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : '');
 $this->form->setValue('helix_ultimate_article_format', 'attribs', !empty($attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard');
 $this->form->setValue('helix_ultimate_audio', 'attribs', !empty($attribs->helix_ultimate_audio) ? $attribs->helix_ultimate_audio : '');
 $this->form->setValue('helix_ultimate_gallery', 'attribs', !empty($attribs->helix_ultimate_gallery) ? $attribs->helix_ultimate_gallery : '');

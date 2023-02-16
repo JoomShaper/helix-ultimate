@@ -8,6 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\String\PunycodeHelper;
 
 extract($displayData);
@@ -68,5 +69,5 @@ $attributes = array(
 	name="<?php echo $name; ?>"
 	<?php echo !empty($class) ? ' class="form-control validate-email ' . $class . '"' : ' class="form-control validate-email"'; ?>
 	id="<?php echo $id; ?>"
-	value="<?php echo htmlspecialchars(PunycodeHelper::emailToUTF8($value), ENT_COMPAT, 'UTF-8'); ?>"
+	value="<?php echo htmlspecialchars(Helper::CheckNull(PunycodeHelper::emailToUTF8($value)), ENT_COMPAT, 'UTF-8'); ?>"
 	<?php echo implode(' ', $attributes); ?>>

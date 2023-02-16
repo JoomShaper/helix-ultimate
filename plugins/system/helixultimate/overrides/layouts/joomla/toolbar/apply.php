@@ -24,12 +24,12 @@ if (preg_match('/Joomla.submitbutton/', $displayData['doTask']))
 }
 
 $id       = isset($displayData['id']) ? $displayData['id'] : '';
-$doTask   = $displayData['doTask'];
+$doTask   = isset($displayData['onclick']) ? $displayData['onclick'] : $displayData['doTask'];
 $class    = $displayData['class'];
 $text     = $displayData['text'];
 $btnClass = $displayData['btnClass'];
 ?>
-<button<?php echo $id; ?> onclick="<?php echo $doTask; ?>" class="<?php echo $btnClass; ?>">
+<button id="<?php echo $id; ?>" onclick="<?php echo $doTask; ?>" class="<?php echo $btnClass; ?>">
 	<span class="<?php echo trim($class); ?>"></span>
 	<?php echo $text; ?>
 </button>

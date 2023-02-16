@@ -38,6 +38,6 @@ echo HTMLHelper::_('bootstrap.renderModal',
 	)
 );
 ?>
-<button<?php echo $id; ?> onclick="jQuery('#modal_<?php echo $selector; ?>').modal('show')" class="<?php echo $class; ?>" data-bs-toggle="modal" title="<?php echo $text; ?>">
+<button id="<?php echo $id; ?>" onclick="jQuery('#modal_<?php echo $selector; ?>').modal('show')" class="<?php echo $class; ?>" data-bs-toggle="modal" title="<?php echo $text; ?>">
 	<span class="icon-<?php echo $icon; ?>" aria-hidden="true"></span><?php echo $text; ?>
 </button>

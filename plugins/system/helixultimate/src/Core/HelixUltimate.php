@@ -345,7 +345,12 @@ class HelixUltimate
 		{
 			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
 		}
-
+		
+		if (JVERSION >= 4)
+		{
+			$this->doc->getWebAssetManager()->useScript('showon');
+		}
+		
 		$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
 		$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
 
@@ -358,10 +363,15 @@ class HelixUltimate
 			$this->add_js('popper.min.js, bootstrap.min.js');
 		}
 
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
 		if (JVERSION >= 4)
 		{
 			$this->add_css('system-j4.min.css');
-			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
+			if ($user->id)
+			{
+				$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
+			}
 		}
 		else
 		{
@@ -962,6 +972,7 @@ class HelixUltimate
 	 */
 	public function count_modules($position)
 	{
+		$position = Helper::CheckNull($position);
 		return ($this->doc->countModules($position) || $this->has_feature($position));
 	}
 
@@ -1007,17 +1018,6 @@ class HelixUltimate
 	 */
 	public function after_body()
 	{
-		// if ($this->params->get('compress_css'))
-		// {
-		// 	$this->compress_css();
-		// }
-
-		// if ($this->params->get('compress_js'))
-		// {
-		// 	$this->compress_js($this->params->get('exclude_js'));
-		// }
-
-
 		if ($before_body = $this->params->get('before_body'))
 		{
 			echo $before_body . "\n";
@@ -1358,6 +1358,24 @@ class HelixUltimate
 	public function compress_js($excludes = '')
 	{
 			$app       = Factory::getApplication();
+			$view      = $app->input->get('view');
+			$layout    = $app->input->get('layout');
+
+			$jinput = Factory::getApplication()->input;
+			$component_name = $jinput->get('option');
+			
+			// disable js compress for edit view
+			if($view == 'form' || $layout == 'edit')
+			{
+				return;
+			}
+
+			// disable js compress for sp_pagebuilder
+			if($component_name == 'com_sppagebuilder')
+			{
+				return;
+			}
+			
 			$cachetime = $app->get('cachetime', 15);
 
 			$all_scripts  = $this->doc->_scripts;
@@ -1639,44 +1657,42 @@ class HelixUltimate
 			// Check all local stylesheets
 			foreach ($all_stylesheets as $key => $value)
 			{
-					$css_file = str_replace($root_url, \JPATH_ROOT, $key);
+				$css_file = str_replace($root_url, \JPATH_ROOT, $key);
 
+				if (strpos($css_file, \JPATH_ROOT) === false)
+				{
+					$css_file = \JPATH_ROOT . $key;
+				}
 
-					if (strpos($css_file, \JPATH_ROOT) === false)
-					{
-							$css_file = \JPATH_ROOT . $key;
-					}
+				global $absolute_url;
+				$absolute_url = $key;            
 
-					global $absolute_url;
-					$absolute_url = $key;            
+				if (\file_exists($css_file))
+				{
+					$stylesheets[] = $key;
+					$md5sum .= md5($key);
+					$compressed = $this->minifyCss(\file_get_contents($css_file));
 
-					if (\file_exists($css_file))
-					{
-							$stylesheets[] = $key;
-							$md5sum .= md5($key);
-							$compressed = $this->minifyCss(\file_get_contents($css_file));
+					$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches) {
 
-							$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches) {
+						global $absolute_url;
+					
+						$url = str_replace(array('"', '\''), '', $matches[1]);
+						$base = dirname($absolute_url);
+						while (preg_match('/^\.\.\//', $url))
+						{
+							$base = dirname($base);
+							$url  = substr($url, 3);
+						}
+						$url = $base . '/' . $url;
+						$url = str_replace('//', '/', $url); // For fixing double slash '//' in url for fontawesome
+						return "url('$url')";
+					}, $compressed);
 
-											global $absolute_url;
+					$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
 
-											$url = str_replace(array('"', '\''), '', $matches[1]);
-
-											$base = dirname($absolute_url);
-											while (preg_match('/^\.\.\//', $url))
-											{
-													$base = dirname($base);
-													$url  = substr($url, 3);
-											}
-											$url = $base . '/' . $url;
-
-											return "url('$url')";
-									}, $compressed);
-
-							$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
-
-							unset($this->doc->_styleSheets[$key]); //Remove stylesheets
-					}
+					unset($this->doc->_styleSheets[$key]); //Remove stylesheets
+				}
 			}
 
 			//Compress All stylesheets

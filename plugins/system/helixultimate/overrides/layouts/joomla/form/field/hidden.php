@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+use HelixUltimate\Framework\Platform\Helper;
+
 defined ('JPATH_BASE') or die();
 
 extract($displayData);
@@ -51,5 +53,5 @@ $onchange = $onchange ? ' onchange="' . $onchange . '"' : '';
 	type="hidden"
 	name="<?php echo $name; ?>"
 	id="<?php echo $id; ?>"
-	value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+	value="<?php echo htmlspecialchars(Helper::CheckNull($value), ENT_COMPAT, 'UTF-8'); ?>"
 	<?php echo $class, $disabled, $onchange; ?>>

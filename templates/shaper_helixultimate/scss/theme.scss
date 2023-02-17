@@ -1438,10 +1438,22 @@ body.view-article.remove-container {
 .pagenavigation {
   padding: 2rem 0;
   .pagination {
-    display: flex;
-    justify-content: space-between;
+    display: block;
     a {
       padding: 5px 15px;
+    }
+    .next {
+      float: right;
+    }
+    .previous {
+      float: left;
+    }
+    &:before, &:after {
+      clear: both;
+      display: table;
+      content: "";
+      line-height: 0;
+      box-sizing: border-box;
     }
   }
 }

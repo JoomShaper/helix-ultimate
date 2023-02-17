@@ -134,14 +134,14 @@ $isExpired  = JVERSION < 4
 	endif; ?>
 
 	<?php if( ($tmpl_params->get('social_share') || $params->get('show_vote')) && !$this->print) : ?>
-		<div class="article-ratings-social-share d-flex justify-content-end">
-			<div class="me-auto align-self-center">
-				<?php if($params->get('show_vote')): ?>
+		<div class="article-ratings-social-share d-flex justify-content-around">
+			<?php if($params->get('show_vote')): ?>
+				<div class="align-self-center">	
 					<?php HTMLHelper::_('jquery.token'); ?>
 					<?php echo LayoutHelper::render('joomla.content.rating', array('item' => $this->item, 'params' => $params)) ?>
-				<?php endif; ?>
-			</div>
-			<div>
+				</div>
+			<?php endif; ?>
+			<div class="social-share-block">
 				<?php echo LayoutHelper::render('joomla.content.social_share', $this->item); ?>
 			</div>
 		</div>

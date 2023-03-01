@@ -61,16 +61,15 @@ class plgSystemTmp_helixultInstallerScript
 					continue;
 				}
 				
-				// Check if directory "/overrides/com_finder/search" exists then deletes it
-				if (JVERSION >= 4)
+				// Check if directory "/overrides/com_finder/tmpl" exists then deletes it
+				if ($version >= '2.0.12') 
 				{
-					if ($version == '2.0.11') {
-						$plg_path = JPATH_PLUGINS;
-						$dir = $plg_path.'/'.$group.'/'.$name.'/overrides/com_finder/search';
-						if (Folder::exists($dir))
-						{
-							Folder::delete($dir);
-						}
+					$plg_path = JPATH_PLUGINS;
+					$dir = $plg_path.'/'.$group.'/'.$name.'/overrides/com_finder/tmpl';
+					
+					if (Folder::exists($dir))
+					{
+						Folder::delete($dir);
 					}
 				}
 			}

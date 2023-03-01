@@ -49,11 +49,16 @@ $this->params = $template->params;
 /** Load needed data for javascript */
 Helper::flushSettingsDataToJs();
 
+$requestFromIframe = $app->input->get('helixMode', '') === 'edit';
+
 // Coming Soon
-if (!\is_null($this->params->get('comingsoon', null)))
+if (!$requestFromIframe) 
 {
-	header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
-	exit();
+	if (!\is_null($this->params->get('comingsoon', null)))
+	{
+		header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
+		exit();
+	}
 }
 
 $scssVars = $theme->getSCSSVariables();

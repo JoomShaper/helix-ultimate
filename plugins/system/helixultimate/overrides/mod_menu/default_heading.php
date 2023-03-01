@@ -12,6 +12,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 $title      = $item->anchor_title ? ' title="' . $item->anchor_title . '"' : '';
 $anchor_css = $item->anchor_css ?: '';
+$rel 		= $item->anchor_rel ? ' rel="' . $item->anchor_rel . '" ' : '';
 
 $linktype   = $item->title;
 
@@ -31,7 +32,7 @@ if ($item->menu_image)
 		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
 	}
 
-	if ($item->params->get('menu_text', 1))
+	if ($item->getParams->get('menu_text', 1))
 	{
 		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
 	}
@@ -43,4 +44,4 @@ if ($item->parent && $showToggler)
 }
 
 ?>
-<span class="nav-header <?php echo $anchor_css; ?>"<?php echo $title; ?>><?php echo $linktype; ?></span>
+<span class="nav-header <?php echo $anchor_css; ?>"<?php echo $title; ?><?php echo $rel; ?>><?php echo $linktype; ?></span>

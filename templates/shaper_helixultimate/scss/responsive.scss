@@ -135,6 +135,21 @@
 	.modal-dialog.jviewport-width80 {
 		width: auto;
 	}
+	.article.related-article-large.d-flex {
+		display: block !important;
+	}
+	.related-article-large {
+		.article-image {
+			width: auto;
+			min-width: auto;
+			margin-bottom: 15px;
+		}
+		.article-information {
+			border-left: none;
+			padding-left: 0;
+			margin-left: 0;
+		}
+	}
 }
 
 @media (max-width: 575px) {
@@ -150,7 +165,7 @@
 		}
 	}
 	#sp-header {
-		height: $header_height_sm;
+		height: $header_height_xs;
 		.logo {
 			height: $header_height_sm;
 		}

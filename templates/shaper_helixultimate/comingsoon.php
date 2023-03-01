@@ -18,7 +18,7 @@ $this->params = $template->params;
 
 if (\is_null($this->params->get('comingsoon', null)))
 {
-  $app->redirect(Uri::root(true) . '/index.php?template=' . $template->template);
+  $app->redirect(Uri::root(true) . '/index.php');
   $app->close();
 }
 

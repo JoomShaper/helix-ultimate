@@ -17,7 +17,8 @@ $data = $displayData;
 $options = $data->settings;
 $params = Helper::loadTemplateData()->params;
 $isHeader = !empty($data->section_sematic) && $data->section_sematic === 'header';
-$hasOffcanvas = in_array($params->get('menu_type', ''), ['mega_offcanvas', 'offcanvas']);
+$menuType = $params->get('menu_type', '');
+$hasOffcanvas = in_array($menuType, ['mega_offcanvas', 'offcanvas']);
 $offcanvasPosition = $params->get('offcanvas_position', 'right');
 $columnClass = $isHeader ? ' d-flex align-items-center' : '';
 
@@ -50,9 +51,12 @@ if ($isHeader && $hasOffcanvas && $options->name === 'menu')
 {
     if ($offcanvasPosition === 'right')
     {
-        $output .= '<a id="offcanvas-toggler"  aria-label="'. Text::_('HELIX_ULTIMATE_NAVIGATION') . '" title="'. Text::_('HELIX_ULTIMATE_NAVIGATION') . '"  class="offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">';
-        $output .= '<div class="burger-icon"><span></span><span></span><span></span></div>';
-        $output .= '</a>';
+        if ($menuType !== 'offcanvas')
+        {
+            $output .= '<a id="offcanvas-toggler"  aria-label="'. Text::_('HELIX_ULTIMATE_NAVIGATION') . '" title="'. Text::_('HELIX_ULTIMATE_NAVIGATION') . '"  class="offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">';
+            $output .= '<div class="burger-icon"><span></span><span></span><span></span></div>';
+            $output .= '</a>';
+        }
     }
 }
 

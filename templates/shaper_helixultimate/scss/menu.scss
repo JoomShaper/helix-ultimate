@@ -258,6 +258,20 @@ $menu_font_size: 14px;
   .hide-on-offcanvas {
     display: none !important;
   }
+
+  .fa, .fab, .far, .fas {
+    color: $offcanvas_menu_items_and_items_color;
+  }
+
+  .offcanvas-inner {
+		ul.menu {
+      li.active {
+        a {
+          color: $offcanvas_menu_active_menu_item_color !important;
+        }
+      }
+    }
+  }
 }
 
 // ltr

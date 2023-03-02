@@ -10,6 +10,8 @@ namespace HelixUltimate\Framework\Platform;
 
 defined('_JEXEC') or die();
 
+use DateTime;
+use Exception;
 use HelixUltimate\Framework\HttpResponse\Response;
 use HelixUltimate\Framework\Platform\Blog;
 use HelixUltimate\Framework\Platform\Helper;
@@ -228,6 +230,16 @@ class Request
 		Session::checkToken() or die(json_encode($this->report));
 
 		$data = $_POST;
+
+		$dateStatus = $this->validateDate($data['comingsoon_date']);
+
+		if (!$dateStatus) {
+			$this->report['status'] = false;
+			$this->report['message'] = 'Coming Soon Date for Countdown is invalid';
+			$this->report['isDrafted'] = Helper::isDrafted();
+			return;
+		}
+		
 		$inputs = $this->filterInputs($data);
 
 		if (!$this->id || !is_int($this->id))
@@ -258,6 +270,13 @@ class Request
 			$this->report['message'] = 'Style changed successfully';
 			$this->report['isDrafted'] = Helper::isDrafted();
 		}
+	}
+
+	private function validateDate($date, $format = 'Y-m-d')
+	{
+		$d = DateTime::createFromFormat($format, $date);
+		// The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+		return $d && $d->format($format) === $date;
 	}
 
 	private function draftTemplateStyle()

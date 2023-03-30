@@ -71,7 +71,9 @@ class  PlgSystemHelixultimate extends CMSPlugin
 	 */
 	public function onAfterInitialise()
 	{
-		
+		if (JVERSION < 4) {
+			$this->registerBootstrap();	
+		}
 	}
 
 	/**

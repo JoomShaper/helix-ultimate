@@ -49,6 +49,13 @@
 			label="HELIX_ULTIMATE_LOGO_ALT_TEXT"
 			description="HELIX_ULTIMATE_LOGO_ALT_TEXT_DESC"
 			showon="logo_type:image" />
+		
+		<field name="logo_custom_link"
+			helixgroup="logo"
+			type="text"
+			label="HELIX_ULTIMATE_LOGO_CUSTOM_LINK"
+			description="HELIX_ULTIMATE_LOGO_CUSTOM_LINK_DESC"
+			showon="logo_type:image" />
 
 		<field name="logo_height" 
 			helixgroup="logo" 
@@ -121,8 +128,9 @@
 		<field name="header_height_xs" 
 			helixgroup="header" 
 			type="helixUnit"
+			default="50px"
+			display="inline"
 			className="field-hidden"
-			display="inline" 
 			label="HELIX_ULTIMATE_HEADER_HEIGHT_XS" />
 
 		<field name="enable_search" 
@@ -482,10 +490,37 @@
 			filter="safehtml" 
 			showon="comingsoon:1" />
 		<field name="comingsoon_date" 
+			helixgroup="comingsoon"
+			type="calendar"
+			translateformat="true"
+			filter="user_utc"
+			default="NOW"
+			label="HELIX_ULTIMATE_COMINGSOON_DATE"
+			description="HELIX_ULTIMATE_COMINGSOON_DATE_DESC"
+			showon="comingsoon:1" />
+		<field name="comingsoon_social_icons" 
 			helixgroup="comingsoon" 
-			type="text" 
-			default="5-10-2018" 
-			label="HELIX_ULTIMATE_COMINGSOON_DATE" 
+			type="checkbox" 
+			default="1" 
+			label="HELIX_ULTIMATE_COMINGSOON_SOCIAL_ICONS" 
+			showon="comingsoon:1" />
+		<field name="comingsoon_title_status" 
+			helixgroup="comingsoon" 
+			type="checkbox" 
+			default="1" 
+			label="HELIX_ULTIMATE_COMINGSOON_TITLE" 
+			showon="comingsoon:1" />
+		<field name="comingsoon_content_status" 
+			helixgroup="comingsoon" 
+			type="checkbox" 
+			default="1" 
+			label="HELIX_ULTIMATE_COMINGSOON_CONTENT" 
+			showon="comingsoon:1" />
+		<field name="comingsoon_countdown" 
+			helixgroup="comingsoon" 
+			type="checkbox" 
+			default="1" 
+			label="HELIX_ULTIMATE_COMINGSOON_COUNTDOWN" 
 			showon="comingsoon:1" />
 		<field name="comingsoon_logo" 
 			helixgroup="comingsoon" 
@@ -498,12 +533,6 @@
 			type="helixmedia" 
 			preview="true" 
 			label="HELIX_ULTIMATE_COMINGSOON_BACKGROUND_IMAGE" 
-			showon="comingsoon:1" />
-		<field name="comingsoon_social_icons" 
-			helixgroup="comingsoon" 
-			type="checkbox" 
-			default="1" 
-			label="HELIX_ULTIMATE_COMINGSOON_SOCIAL_ICONS" 
 			showon="comingsoon:1" />
 
 		<!--Error Page-->
@@ -535,6 +564,14 @@
 			type="helixmedia" 
 			preview="true" 
 			label="HELIX_ULTIMATE_ERROR_BACKGROUND_IMAGE"
+		/>
+
+		<field name="error_font_load" 
+			helixgroup="errorpage" 
+			type="checkbox"
+			default="0"  
+			label="HELIX_ULTIMATE_ERROR_FONT_LOAD"
+			description="HELIX_ULTIMATE_ERROR_FONT_LOAD_DESC"
 		/>
 
 	</fieldset>
@@ -994,6 +1031,36 @@
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_DROPDOWN_ACTIVE_TEXT_COLOR" />
 
+		<!-- Custom preset Offcanvas  -->
+		<field name="offcanvas_menu_icon_color" 
+			class="preset-control"
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#000000" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_ICON_COLOR" />
+		<field name="offcanvas_menu_bg_color" 
+			class="preset-control" 
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#FFFFFF" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_BACKGROUND_COLOR" />
+		<field name="offcanvas_menu_items_and_items_color" 
+			class="preset-control" 
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#252525" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_ITEMS_AND_ICONS_COLOR" />
+		<field name="offcanvas_menu_active_menu_item_color" 
+			class="preset-control" 
+			helixgroup="preset_offcanvas_menu" 
+			type="color" 
+			default="#0345bf" 
+			dependant="custom_style:1"
+			label="HELIX_ULTIMATE_GROUP_PRESET_OFFCANVAS_MENU_ACTIVE_MENU_ITEM_COLOR" />
+			
 		<!-- Custom preset body -->
 		<field name="text_color" 
 			class="preset-control" 
@@ -1059,7 +1126,6 @@
 			default="#FFFFFF" 
 			dependant="custom_style:1"
 			label="HELIX_ULTIMATE_PRESET_FOOTER_LINK_HOVER_COLOR" />
-
 	</fieldset>
 
 	<fieldset name="layout" 
@@ -1593,6 +1659,14 @@
 			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE"
 			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_TITLE_DESC"
 			showon="related_article:1" />
+		<field name="related_article_column" 
+			type="number" 
+			default="3" 
+			max="12" 
+			helixgroup="blog_details" 
+			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_COLUMN" 
+			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_COLUMN_DESC" 
+			showon="related_article:1[AND]related_article_view_type:thumb" />
 		<field name="related_article_limit" 
 			type="number" 
 			default="3" 
@@ -1728,7 +1802,7 @@
 	</fieldset>
 
 	<!--Advanced-->
-	<fieldset name="advance" 
+	<fieldset name="advanced" 
 		label="HELIX_ULTIMATE_FIELDSET_ADVANCED" 
 		activegroup="compression"
 		icon="fas fa-cog">

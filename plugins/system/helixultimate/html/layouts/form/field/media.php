@@ -171,7 +171,7 @@ if (count($doc->getScriptOptions('media-picker')) === 0) {
 }
 
 ?>
-<joomla-field-media class="field-media-wrapper" type="image" <?php // @TODO add this attribute to the field in order to use it for all media types ?> 
+<joomla-field-media class="field-media-wrapper hu-media-modal" type="image" <?php // @TODO add this attribute to the field in order to use it for all media types ?> 
 	base-path="<?php echo Uri::root(); ?>" 
 	root-folder="<?php echo ComponentHelper::getParams('com_media')->get('file_path', 'images'); ?>" 
 	url="<?php echo $url; ?>" 
@@ -195,7 +195,7 @@ if (count($doc->getScriptOptions('media-picker')) === 0) {
 			<?php echo ' ' . $previewImg; ?>
 		</div>
 	<?php endif; ?>
-	<div class="input-group">
+	<div class="input-group hu-j4-media">
 		<input type="text" name="<?php echo $name; ?>" id="<?php echo $id; ?>" value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>" readonly="readonly" <?php echo $attr; ?>>
 		<?php if ($disabled != true) : ?>
 			<button type="button" class="btn btn-success button-select"><?php echo Text::_('JLIB_FORM_BUTTON_SELECT'); ?></button>

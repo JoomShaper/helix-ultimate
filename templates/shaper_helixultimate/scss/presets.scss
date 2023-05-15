@@ -166,11 +166,11 @@ a {
 }
 
 .offcanvas-menu {
-	background-color: $menu_dropdown_bg_color;
+	background-color: $offcanvas_menu_bg_color;
 	color: $menu_dropdown_text_color;
 	.offcanvas-inner {
 		a {
-			color: $text_color;
+			color: $offcanvas_menu_items_and_items_color;
 			&:hover,
 			&:focus,
 			&:active {
@@ -181,8 +181,7 @@ a {
 			> li {
 				a,
 				span {
-					color: $menu_dropdown_text_color;
-
+					color: $offcanvas_menu_items_and_items_color;
 					&:hover,
 					&:focus {
 						color: $menu_dropdown_text_hover_color;
@@ -193,21 +192,21 @@ a {
 					> a,
 					> .menu-separator {
 						> .menu-toggler {
-							@if $menu_dropdown_text_color {
-								color: fade-out($menu_dropdown_text_color, 0.5);
+							@if $offcanvas_menu_items_and_items_color {
+								color: fade-out($offcanvas_menu_items_and_items_color, 0.5);
 							}
 						}
 					}
 					.menu-toggler {
-						@if $menu_dropdown_text_color {
-							color: fade-out($menu_dropdown_text_color, 0.5);
+						@if $offcanvas_menu_items_and_items_color {
+							color: fade-out($offcanvas_menu_items_and_items_color, 0.5);
 						}
 					}
 				}
 				li {
 					a {
-						@if $menu_dropdown_text_color {
-							color: fade-out($menu_dropdown_text_color, 0.2);
+						@if $offcanvas_menu_items_and_items_color {
+							color: fade-out($offcanvas_menu_items_and_items_color, 0.2);
 						}
 					}
 				}

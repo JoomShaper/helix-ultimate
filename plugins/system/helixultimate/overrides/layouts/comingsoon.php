@@ -18,6 +18,9 @@ extract($displayData);
 $app = Factory::getApplication();
 $doc = Factory::getDocument();
 
+$title_status = $params->get('comingsoon_title_status');
+$content_status = $params->get('comingsoon_content_status');
+$countdown = $params->get('comingsoon_countdown');
 
 /**
  * Load the bootstrap file for enabling the HelixUltimate\Framework namespacing.
@@ -73,48 +76,51 @@ $site_title = $app->get('sitename');
 			<?php if($params->get('comingsoon_logo')) : ?>
 				<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo htmlspecialchars($site_title); ?>">
 			<?php endif; ?>
-
-			<?php if($params->get('comingsoon_title')) : ?>
-				<h1 class="coming-soon-title"><?php echo htmlspecialchars($params->get('comingsoon_title')); ?></h1>
-			<?php else: ?>
-				<h1 class="coming-soon-title"><?php echo htmlspecialchars($site_title); ?></h1>
-			<?php endif; ?>
-
-			<?php if($params->get('comingsoon_content')) : ?>
-				<div class="row justify-content-center">
-					<div class="col-lg-8">
-						<div class="coming-soon-content">
-							<?php echo $params->get('comingsoon_content'); ?>
-						</div>
-					</div>
-				</div>
-			<?php else: ?>
-				<?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
-					<div class="row justify-content-center">
-						<div class="col-lg-8">
-							<div class="coming-soon-content">
-								<?php echo $app->get('offline_message'); ?>
-							</div>
-						</div>
-					</div>
-				<?php elseif ($app->get('display_offline_message', 1) == 2) : ?>
-					<div class="row justify-content-center">
-						<div class="col-lg-8">
-							<div class="coming-soon-content">
-								<?php echo Text::_('JOFFLINE_MESSAGE'); ?>
-							</div>
-						</div>
-					</div>
+			<?php if ($title_status) :?>
+				<?php if($params->get('comingsoon_title')) : ?>
+					<h1 class="coming-soon-title"><?php echo htmlspecialchars($params->get('comingsoon_title')); ?></h1>
+				<?php else: ?>
+					<h1 class="coming-soon-title"><?php echo htmlspecialchars($site_title); ?></h1>
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<?php if($params->get('comingsoon_date')) : ?>
+			<?php if ($content_status) :?>				
+				<?php if($params->get('comingsoon_content')) : ?>
+					<div class="row justify-content-center">
+						<div class="col-lg-8">
+							<div class="coming-soon-content">
+								<?php echo $params->get('comingsoon_content'); ?>
+							</div>
+						</div>
+					</div>
+				<?php else: ?>
+					<?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
+						<div class="row justify-content-center">
+							<div class="col-lg-8">
+								<div class="coming-soon-content">
+									<?php echo $app->get('offline_message'); ?>
+								</div>
+							</div>
+						</div>
+					<?php elseif ($app->get('display_offline_message', 1) == 2) : ?>
+						<div class="row justify-content-center">
+							<div class="col-lg-8">
+								<div class="coming-soon-content">
+									<?php echo Text::_('JOFFLINE_MESSAGE'); ?>
+								</div>
+							</div>
+						</div>
+					<?php endif; ?>
+				<?php endif; ?>
+			<?php endif; ?>
+
+			<?php if($countdown && $params->get('comingsoon_date')) : ?>
 				<?php $comingsoon_date = explode('-', $params->get("comingsoon_date")); ?>
 				<div id="coming-soon-countdown" class="clearfix"></div>
 				<script type="text/javascript">
 					jQuery(function($) {
-						$('#coming-soon-countdown').countdown('<?php echo trim($comingsoon_date[2]); ?>/<?php echo trim($comingsoon_date[1]); ?>/<?php echo trim($comingsoon_date[0]); ?>', function(event) {
-							$(this).html(event.strftime('<div class="coming-soon-days"><span class="coming-soon-number">%-D</span><span class="coming-soon-string">%!D:<?php echo JText::_("HELIX_ULTIMATE_DAY"); ?>,<?php echo JText::_("HELIX_ULTIMATE_DAYS"); ?>;</span></div><div class="coming-soon-hours"><span class="coming-soon-number">%H</span><span class="coming-soon-string">%!H:<?php echo JText::_("HELIX_ULTIMATE_HOUR"); ?>,<?php echo JText::_("HELIX_ULTIMATE_HOURS"); ?>;</span></div><div class="coming-soon-minutes"><span class="coming-soon-number">%M</span><span class="coming-soon-string">%!M:<?php echo JText::_("HELIX_ULTIMATE_MINUTE"); ?>,<?php echo JText::_("HELIX_ULTIMATE_MINUTES"); ?>;</span></div><div class="coming-soon-seconds"><span class="coming-soon-number">%S</span><span class="coming-soon-string">%!S:<?php echo JText::_("HELIX_ULTIMATE_SECOND"); ?>,<?php echo JText::_("HELIX_ULTIMATE_SECONDS"); ?>;</span></div>'));
+						$('#coming-soon-countdown').countdown('<?php echo trim($comingsoon_date[0]); ?>/<?php echo trim($comingsoon_date[1]); ?>/<?php echo trim($comingsoon_date[2]); ?>', function(event) {
+							$(this).html(event.strftime('<div class="coming-soon-days"><span class="coming-soon-number">%-D</span><span class="coming-soon-string">%!D:<?php echo Text::_("HELIX_ULTIMATE_DAY"); ?>,<?php echo Text::_("HELIX_ULTIMATE_DAYS"); ?>;</span></div><div class="coming-soon-hours"><span class="coming-soon-number">%H</span><span class="coming-soon-string">%!H:<?php echo Text::_("HELIX_ULTIMATE_HOUR"); ?>,<?php echo Text::_("HELIX_ULTIMATE_HOURS"); ?>;</span></div><div class="coming-soon-minutes"><span class="coming-soon-number">%M</span><span class="coming-soon-string">%!M:<?php echo Text::_("HELIX_ULTIMATE_MINUTE"); ?>,<?php echo Text::_("HELIX_ULTIMATE_MINUTES"); ?>;</span></div><div class="coming-soon-seconds"><span class="coming-soon-number">%S</span><span class="coming-soon-string">%!S:<?php echo Text::_("HELIX_ULTIMATE_SECOND"); ?>,<?php echo Text::_("HELIX_ULTIMATE_SECONDS"); ?>;</span></div>'));
 						});
 					});
 				</script>
@@ -199,6 +205,8 @@ $site_title = $app->get('sitename');
 			<style>
 				body{
 					background-image: url(<?php echo Uri::base(true) . '/' . $params->get('comingsoon_bg_image'); ?>);
+					background-size: cover;
+    				background-position: center !important;
 				}
 			</style>
 		<?php endif; ?>

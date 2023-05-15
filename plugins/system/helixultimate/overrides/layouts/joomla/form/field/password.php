@@ -8,6 +8,7 @@
 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
@@ -34,8 +35,8 @@ Text::script('JSHOW');
 Text::script('JHIDE');
 
 $attributes = array(
-	strlen($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : '',
-	!$autocomplete ? 'autocomplete="off"' : '',
+	strlen(Helper::CheckNull($hint)) ? 'placeholder="' . htmlspecialchars(Helper::CheckNull($hint), ENT_COMPAT, 'UTF-8') . '"' : '',
+	!empty($autocomplete) ? 'autocomplete="off"' : '',
 	!empty($class) ? 'class="form-control ' . $class . '"' : 'class="form-control"',
 	$readonly ? 'readonly' : '',
 	$disabled ? 'disabled' : '',
@@ -62,7 +63,13 @@ $attributes = array(
 			type="password"
 			name="<?php echo $name; ?>"
 			id="<?php echo $id; ?>"
-			value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+			value="<?php echo htmlspecialchars(Helper::CheckNull($value), ENT_COMPAT, 'UTF-8'); ?>"
 			<?php echo implode(' ', $attributes); ?>>
+		<?php if (JVERSION >= 4) :?>
+			<button type="button" class="btn btn-secondary input-password-toggle">
+				<span class="icon-eye icon-fw" aria-hidden="true"></span>
+				<span class="visually-hidden"><?php echo Text::_('JSHOWPASSWORD'); ?></span>
+			</button>
+		<?php endif; ?>
 	</div>
 </div>

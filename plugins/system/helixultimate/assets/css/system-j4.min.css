@@ -6,7 +6,15 @@
 	--template-link-color: #2a69b8;
 	--template-special-color: #001b4c;
 }
-
+.hidden {
+	display: none !important;
+}
+body.com-media {
+	padding: 15px;
+}
+.media-breadcrumb-item::after {
+	border-inline-start-color: #fff;
+}
 /* js tools */
 .js-stools-container-bar {
 	padding: 10px 20px;

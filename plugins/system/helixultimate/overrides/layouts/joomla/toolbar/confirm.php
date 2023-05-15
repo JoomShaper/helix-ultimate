@@ -14,11 +14,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 HTMLHelper::_('behavior.core');
 
 $id     = isset($displayData['id']) ? $displayData['id'] : '';
-$doTask = $displayData['doTask'];
+$doTask = isset($displayData['onclick']) ? $displayData['onclick'] : $displayData['doTask'];
 $class  = $displayData['class'];
 $text   = $displayData['text'];
 ?>
-<button<?php echo $id; ?> onclick="<?php echo $doTask; ?>" class="btn btn-sm btn-outline-danger">
+<button id="<?php echo $id; ?>" onclick="<?php echo $doTask; ?>" class="btn btn-sm btn-outline-danger">
 	<span class="<?php echo $class; ?>" aria-hidden="true"></span>
 	<?php echo $text; ?>
 </button>

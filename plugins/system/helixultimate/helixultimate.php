@@ -23,11 +23,13 @@ use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Media;
 use HelixUltimate\Framework\Platform\Platform;
 use HelixUltimate\Framework\System\JoomlaBridge;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Table\Table;
@@ -43,7 +45,7 @@ define('HELIX_LAYOUT_PATH', JPATH_PLUGINS . '/system/helixultimate/layout');
  *
  * @since 1.0.0
  */
-class  PlgSystemHelixultimate extends JPlugin
+class  PlgSystemHelixultimate extends CMSPlugin
 {
 	/**
 	 * Is autoload language.
@@ -521,9 +523,35 @@ class  PlgSystemHelixultimate extends JPlugin
 	{
 		$template = Helper::loadTemplateData();
 		$params = $template->params;
+		$excludeComponents = ['com_spsimpleportfolio'];
+		$option = $this->app->input->getCmd('option', '');
 
 		if ($this->app->isClient('site') && $params->get('image_lazy_loading', 0))
 		{
+			
+			if(\in_array($option, $excludeComponents)) {
+				return;
+			}
+				
+			// Check for Page Builder lazy load, if finds it will skip Helix lazy load
+			$pagebuilder = false;
+			$sp_pb_lazyload = 0;
+
+			if ($option === 'com_sppagebuilder')
+			{
+				$pagebuilder = true;
+			}
+
+			if ($pagebuilder)
+			{
+				$config = ComponentHelper::getParams('com_sppagebuilder');
+				$sp_pb_lazyload = $config->get('lazyloadimg', '0');
+			}
+
+			if ($sp_pb_lazyload != 0) {
+				return;
+			}
+
 			$srcRegex = "@<img[^>]*src=[\"\']([^\"\']*)[\"\'][^>]*>@";
 			$classRegex = "@<img[^>]*class=[\"\']([^\"\']*)[\"\'][^>]*>@";
 
@@ -602,8 +630,24 @@ class  PlgSystemHelixultimate extends JPlugin
 						 */
 						if (!empty($classMatches))
 						{
-							$newClass = 'class="' . $classMatches[1] . ' lazyload"';
-							$imageElement = preg_replace("@class=[\"\']([^\"\']*)[\"\']@", $newClass, $imageElement);
+							$sp_pb_lazy_found = false;
+							// Test if string contains 'sppb-element-lazy'
+							if(strpos($classMatches[1], 'sppb-element-lazy') !== false)
+							{
+								$sp_pb_lazy_found = true;
+							} else
+							{
+								$sp_pb_lazy_found = false;
+							}
+							if($sp_pb_lazy_found)
+							{
+								$newClass = 'class="' . $classMatches[1] . '"';
+								$imageElement = preg_replace("@class=[\"\']([^\"\']*)[\"\']@", $newClass, $imageElement);
+							} else 
+							{
+								$newClass = 'class="' . $classMatches[1] . ' lazyload"';
+								$imageElement = preg_replace("@class=[\"\']([^\"\']*)[\"\']@", $newClass, $imageElement);
+							}
 						}
 					}
 					else

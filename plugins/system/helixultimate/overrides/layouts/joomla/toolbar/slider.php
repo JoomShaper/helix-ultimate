@@ -13,13 +13,13 @@ use Joomla\CMS\HTML\HTMLHelper;
 HTMLHelper::_('behavior.core');
 
 $id      = isset($displayData['id']) ? $displayData['id'] : '';
-$doTask  = $displayData['doTask'];
+$doTask  = isset($displayData['onclick']) ? $displayData['onclick'] : $displayData['doTask'];
 $class   = $displayData['class'];
 $text    = $displayData['text'];
 $name    = $displayData['name'];
 $onClose = $displayData['onClose'];
 ?>
-<button<?php echo $id; ?> onclick="<?php echo $doTask; ?>" class="btn btn-sm btn-secondary" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $name; ?>"<?php echo $onClose; ?>>
+<button id="<?php echo $id; ?>" onclick="<?php echo $doTask; ?>" class="btn btn-sm btn-secondary" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $name; ?>"<?php echo $onClose; ?>>
 	<span class="icon-cog" aria-hidden="true"></span>
 	<?php echo $text; ?>
 </button>

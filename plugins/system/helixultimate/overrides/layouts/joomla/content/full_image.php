@@ -112,5 +112,11 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 <?php endif; ?>
 
 <?php if($og) : ?>
+	<?php 
+		if (empty($full_image)) 
+		{
+			$full_image = $images->image_fulltext ?? $images->image_intro;
+		}
+	?>
 	<?php echo LayoutHelper::render('joomla.content.open_graph', array('image'=>$full_image, 'title'=>$displayData->title, 'fb_app_id'=>$tplParams->get('og_fb_id'), 'twitter_site'=>$tplParams->get('og_twitter_site'), 'content'=>$displayData->introtext)); ?>
 <?php endif; ?>

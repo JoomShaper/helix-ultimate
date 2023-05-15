@@ -23,7 +23,7 @@ $tmpl_params = $template->params;
 							continue;
 						}
 					?>
-					<div class="col-lg-<?php echo round(12 / Helper::SetColumn($mainItem->params->get('num_columns'), 4)); ?>">
+					<div class="col-lg-<?php echo round(12 / Helper::SetColumn($tmpl_params->get('related_article_column'))); ?>">
 						<?php echo LayoutHelper::render('joomla.content.related_article', $item); ?>
 					</div>
 				<?php endforeach; ?>

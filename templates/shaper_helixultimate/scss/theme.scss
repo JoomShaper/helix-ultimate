@@ -196,6 +196,10 @@ ul.social-icons {
         }
       }
     }
+    img {
+      display: inline-block;
+      border: none;
+    }
   }
 
   // Latest Articles
@@ -208,6 +212,15 @@ ul.social-icons {
           font-size: 85%;
         }
       }
+    }
+  }
+}
+div.mod-languages {
+  ul {
+    li.lang-active {
+      background-color: #82828280 !important;
+      padding: 0px 5px 3px;
+      border-radius: 3px;
     }
   }
 }
@@ -515,7 +528,7 @@ ul.social-icons {
   > span {
     display: block;
     height: 2px;
-    background-color: #000;
+    background-color: $offcanvas_menu_icon_color;
     margin: 5px 0;
     transition: background-color 0.3s ease-in, opacity 0.3s ease-in, transform 0.3s ease-in;
   }
@@ -524,7 +537,7 @@ ul.social-icons {
 .offcanvas-active,
 #modal-menu-toggler.active {
   .burger-icon > span {
-    background-color: #000;
+    background-color: $offcanvas_menu_icon_color;
     &:nth-child(1) {
       transform: translate(0, 8px) rotate(-45deg);
     }
@@ -988,6 +1001,14 @@ body.view-article.remove-container {
       margin-top: 6px;
     }
   }
+
+  .password-group {
+    button.input-password-toggle {
+      background-color: #eaecef;
+      border-color: #ced4da;
+      color: #212529;
+    }
+  }
 }
 
 .form-links {
@@ -1106,6 +1127,13 @@ body.view-article.remove-container {
       }
     }
 
+    .article-full-image {
+      margin: -20px -20px 20px -20px;
+      border-radius: 3px 3px 0 0;
+      border-bottom: 1px solid #f5f5f5;
+      overflow: hidden;
+    }
+
     .article-header {
       h1,
       h2 {
@@ -1139,6 +1167,7 @@ body.view-article.remove-container {
     figcaption.caption {
       text-align: center;
       font-size: 14px;
+      color: #252525;
       margin: 5px 0px;
       opacity: .7;
     }
@@ -1261,6 +1290,7 @@ body.view-article.remove-container {
 
   figcaption.caption {
     font-size: 14px;
+    color: #252525;
     margin: 5px 0px;
     opacity: 0.7;
   }
@@ -1403,6 +1433,38 @@ body.view-article.remove-container {
     margin-bottom: 0;
   }
 }
+
+// Pagination
+.pagenavigation {
+  padding: 2rem 0;
+  .pagination {
+    display: block;
+    a {
+      padding: 5px 15px;
+    }
+    .next {
+      float: right;
+    }
+    .previous {
+      float: left;
+    }
+    &:before, &:after {
+      clear: both;
+      display: table;
+      content: "";
+      line-height: 0;
+      box-sizing: border-box;
+    }
+  }
+}
+.page-item:nth-child(2) {
+  .page-link {
+    border-top-left-radius: var(--bs-pagination-border-radius);
+    border-bottom-left-radius: var(--bs-pagination-border-radius);
+  }
+}
+  
+
 
 //Social Share
 .article-social-share {
@@ -1654,7 +1716,7 @@ html.error-page {
   .error-code {
     margin: 0 0 1rem;
     font-size: 6rem;
-    line-break: 1;
+    line-break: auto;
   }
 
   .error-message {
@@ -1819,7 +1881,7 @@ select:not(.form-select) {
   &:not(.form-control) {
     display: block;
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.5rem !important;
     font-size: 1rem;
     line-height: 1.25;
     color: #495057;
@@ -2203,6 +2265,7 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
   bottom: 0px;
   right: 15px;
   max-width: 350px;
+  z-index: 9999;
   .alert {
     font-size: 13px;
     line-height: 1.5;
@@ -2227,6 +2290,14 @@ body.com-content.view-form.layout-edit .nav-tabs .nav-link {
       align-items: center;
       min-height: calc(100% - 1rem);
     }
+  }
+}
+
+.hu-media-modal {
+  .modal-dialog {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - 1rem);
   }
 }
 
@@ -2469,4 +2540,57 @@ body.contentpane.com-contact.view-contacts.layout-modal {
 // remove button box-shadow on focus
 .btn:focus {
   box-shadow: none !important;
+}
+
+// Joomla Modal height fix
+.hu-media-modal {
+  .modal-content {
+    height: 65vh;
+  }
+}
+
+// J4 media input group btn width fix
+.input-group.hu-j4-media {
+  max-width: 356px;
+}
+
+// hidden class
+.hidden {
+  display: none !important;
+}
+
+// Calendar form css fix
+.field-calendar {
+  .input-group-text {
+    padding: 0;
+    button#jform_mycalendar_btn {
+      background: transparent;
+      border: none;
+      color: #212529;
+    }
+  }
+}
+
+// J3 radio button fix
+.form-check-inline label.form-check-label.btn {
+  padding: 0.375rem 3px;
+}
+
+// Modal iFrame height fix
+.modal-body {
+  .iframe {
+    min-height: 60vh !important;
+  }
+}
+#sbox-content {
+  iframe {
+    width: 780px;
+    height: 480px;
+  }
+}
+
+.carousel-item {
+  img {
+    width: 100%;
+  }
 }

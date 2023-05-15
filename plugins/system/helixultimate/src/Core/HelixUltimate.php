@@ -164,7 +164,10 @@ class HelixUltimate
 		$stickyHeader 	= $this->params->get('sticky_header_sm', 0) ? $stickyHeader . ' sticky-header-md' : $stickyHeader;
 		$stickyHeader 	= $this->params->get('sticky_header_xs', 0) ? $stickyHeader . ' sticky-header-sm' : $stickyHeader;
 
-		$bodyClass       = 'site helix-ultimate hu ' . htmlspecialchars(str_replace('_', '-', $this->input->get('option', '', 'STRING')));
+		$compClass = $this->input->get('option', '', 'STRING');
+		$compClassDash = str_replace('_', '-', $compClass);
+
+		$bodyClass       = 'site helix-ultimate hu ' . htmlspecialchars($compClass) . ' ' . $compClassDash;
 		$bodyClass      .= ' view-' . htmlspecialchars($this->input->get('view', '', 'STRING'));
 		$bodyClass      .= ' layout-' . htmlspecialchars($this->input->get('layout', 'default', 'STRING'));
 		$bodyClass      .= ' task-' . htmlspecialchars($this->input->get('task', 'none', 'STRING'));
@@ -244,11 +247,10 @@ class HelixUltimate
 		$layout = $this->input->get('layout', 'default', 'STRING');
 
 		HTMLHelper::_('jquery.framework');
+		HTMLHelper::_('bootstrap.framework');
 
 		if (JVERSION < 4)
 		{
-			HTMLHelper::_('bootstrap.framework');
-
 			if(isset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']))
 			{
 				unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']);
@@ -345,23 +347,35 @@ class HelixUltimate
 		{
 			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
 		}
-
-		$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
-		$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
-
-		if (\file_exists($bsBundleJSPath))
+		
+		if (JVERSION >= 4)
 		{
-			$this->add_js('bootstrap.bundle.min.js');
+			$this->doc->getWebAssetManager()->useScript('showon');
 		}
-		elseif (\file_exists($bsJsPath))
+		else
 		{
-			$this->add_js('popper.min.js, bootstrap.min.js');
+			$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
+			$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
+			
+			if (\file_exists($bsBundleJSPath))
+			{
+				$this->add_js('bootstrap.bundle.min.js');
+			}
+			elseif (\file_exists($bsJsPath))
+			{
+				$this->add_js('popper.min.js, bootstrap.min.js');
+			}
 		}
 
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
 		if (JVERSION >= 4)
 		{
 			$this->add_css('system-j4.min.css');
-			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
+			if ($user->id)
+			{
+				$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
+			}
 		}
 		else
 		{
@@ -962,6 +976,7 @@ class HelixUltimate
 	 */
 	public function count_modules($position)
 	{
+		$position = Helper::CheckNull($position);
 		return ($this->doc->countModules($position) || $this->has_feature($position));
 	}
 
@@ -1007,17 +1022,6 @@ class HelixUltimate
 	 */
 	public function after_body()
 	{
-		// if ($this->params->get('compress_css'))
-		// {
-		// 	$this->compress_css();
-		// }
-
-		// if ($this->params->get('compress_js'))
-		// {
-		// 	$this->compress_js($this->params->get('exclude_js'));
-		// }
-
-
 		if ($before_body = $this->params->get('before_body'))
 		{
 			echo $before_body . "\n";
@@ -1195,7 +1199,7 @@ class HelixUltimate
 
 				if (!in_array($font->fontFamily, $systemFonts))
 				{
-					$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,300,300i,400,400i,500,500i,700,700i,900,900i';
+					$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i';
 
 					if (!empty(trim($font->fontSubset)))
 					{
@@ -1358,6 +1362,15 @@ class HelixUltimate
 	public function compress_js($excludes = '')
 	{
 			$app       = Factory::getApplication();
+			$view      = $app->input->get('view');
+			$layout    = $app->input->get('layout');
+			
+			// disable js compress for edit view
+			if($view == 'form' || $layout == 'edit')
+			{
+				return;
+			}
+			
 			$cachetime = $app->get('cachetime', 15);
 
 			$all_scripts  = $this->doc->_scripts;
@@ -1375,6 +1388,11 @@ class HelixUltimate
 			foreach ($all_scripts as $key => $value)
 			{
 				$js_file = str_replace($root_url, JPATH_ROOT, $key);
+
+				// disable js compress for sp_pagebuilder
+				if(strpos($js_file, 'com_sppagebuilder')) {
+					continue;
+				}
 
 				if (strpos($js_file, JPATH_ROOT) === false)
 				{
@@ -1639,44 +1657,47 @@ class HelixUltimate
 			// Check all local stylesheets
 			foreach ($all_stylesheets as $key => $value)
 			{
-					$css_file = str_replace($root_url, \JPATH_ROOT, $key);
+				$css_file = str_replace($root_url, \JPATH_ROOT, $key);
+				
+				// disable css compress for sp_pagebuilder
+				if(strpos($css_file, 'com_sppagebuilder')) {
+					continue;
+				}
 
+				if (strpos($css_file, \JPATH_ROOT) === false)
+				{
+					$css_file = \JPATH_ROOT . $key;
+				}
 
-					if (strpos($css_file, \JPATH_ROOT) === false)
-					{
-							$css_file = \JPATH_ROOT . $key;
-					}
+				global $absolute_url;
+				$absolute_url = $key;            
 
-					global $absolute_url;
-					$absolute_url = $key;            
+				if (\file_exists($css_file))
+				{
+					$stylesheets[] = $key;
+					$md5sum .= md5($key);
+					$compressed = $this->minifyCss(\file_get_contents($css_file));
 
-					if (\file_exists($css_file))
-					{
-							$stylesheets[] = $key;
-							$md5sum .= md5($key);
-							$compressed = $this->minifyCss(\file_get_contents($css_file));
+					$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches) {
 
-							$fixUrl = preg_replace_callback('/url\(([^\):]*)\)/', function ($matches) {
+						global $absolute_url;
+					
+						$url = str_replace(array('"', '\''), '', $matches[1]);
+						$base = dirname($absolute_url);
+						while (preg_match('/^\.\.\//', $url))
+						{
+							$base = dirname($base);
+							$url  = substr($url, 3);
+						}
+						$url = $base . '/' . $url;
+						$url = str_replace('//', '/', $url); // For fixing double slash '//' in url for fontawesome
+						return "url('$url')";
+					}, $compressed);
 
-											global $absolute_url;
+					$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
 
-											$url = str_replace(array('"', '\''), '', $matches[1]);
-
-											$base = dirname($absolute_url);
-											while (preg_match('/^\.\.\//', $url))
-											{
-													$base = dirname($base);
-													$url  = substr($url, 3);
-											}
-											$url = $base . '/' . $url;
-
-											return "url('$url')";
-									}, $compressed);
-
-							$minifiedCode .= "/*------ " . basename($css_file) . " ------*/\n" . $fixUrl . "\n\n"; //add file name to compressed css
-
-							unset($this->doc->_styleSheets[$key]); //Remove stylesheets
-					}
+					unset($this->doc->_styleSheets[$key]); //Remove stylesheets
+				}
 			}
 
 			//Compress All stylesheets
@@ -1875,17 +1896,26 @@ class HelixUltimate
 				'footer_link_color' => $this->params->get('footer_link_color'),
 				'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
 				'topbar_bg_color' => $this->params->get('topbar_bg_color'),
-				'topbar_text_color' => $this->params->get('topbar_text_color')
+				'topbar_text_color' => $this->params->get('topbar_text_color'),
+				'offcanvas_menu_icon_color' => $this->params->get('offcanvas_menu_icon_color'),
+				'offcanvas_menu_bg_color' => $this->params->get('offcanvas_menu_bg_color'),
+				'offcanvas_menu_items_and_items_color' => $this->params->get('offcanvas_menu_items_and_items_color'),
+				'offcanvas_menu_active_menu_item_color' => $this->params->get('offcanvas_menu_active_menu_item_color')
 			);
 		}
 		else
 		{
 			$scssVars = (array) json_decode($this->params->get('preset'));
+
+			$scssVars['offcanvas_menu_icon_color'] = '#000000';
+			$scssVars['offcanvas_menu_bg_color'] = $this->params->get('menu_dropdown_bg_color');
+			$scssVars['offcanvas_menu_items_and_items_color'] = $this->params->get('menu_dropdown_text_color');
+			$scssVars['offcanvas_menu_active_menu_item_color'] = $scssVars['menu_text_active_color'];
 		}
 
 		$scssVars['header_height'] 		= $this->params->get('header_height', '60px');
 		$scssVars['header_height_sm'] 	= $this->params->get('header_height_sm', '60px');
-		$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '60px');
+		$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '50px');
 		$scssVars['offcanvas_width'] 	= $this->params->get('offcanvas_width', '300') . 'px';
 
 		return $scssVars;

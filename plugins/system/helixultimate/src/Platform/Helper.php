@@ -704,8 +704,25 @@ class Helper
 		}
 	}
 
+	/**
+	 * Function to set default column
+	 *
+	 * @param integer $num_columns
+	 * @param integer $default
+	 * @return integer
+	 */
 	public static function SetColumn($num_columns, $default = 3)
 	{
 		return empty($num_columns) ? $default : $num_columns;
+	}
+
+	/**
+	 * Function to check if Null then replace with empty string [for php 8.1 fix]
+	 *
+	 * @return string
+	 */
+	public static function CheckNull($value = null)
+	{
+		return ($value == null) ? '' : $value;
 	}
 }

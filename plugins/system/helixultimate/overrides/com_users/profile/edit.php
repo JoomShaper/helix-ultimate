@@ -8,6 +8,7 @@
 
 defined ('_JEXEC') or die();
 
+use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -67,13 +68,27 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 							<div class="row mb-3">
 								<?php foreach ($fields as $field) : ?>
 									<?php // If the field is hidden, just display the input. ?>
+									<?php
+										$showon = $field->getAttribute('showon');
+										$attribs = '';
+										if ($showon) 
+										{
+											$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+										}
+										// Enable disable on
+										$enableOn = $field->getAttribute('enableon', '');
+										if ($enableOn)
+										{
+											$attribs .= ' data-enableon="' . $enableOn . '"';
+										}
+									?>
 									<?php if ($field->hidden) : ?>
 										<?php echo $field->input; ?>
 									<?php else : ?>
 										<?php if(($field->fieldname == 'name') || ($field->fieldname == 'username')) : ?>
-											<div class="col-lg-12">
+											<div class="col-lg-12" <?php echo $attribs; ?>>
 											<?php else: ?>
-												<div class="col-lg-6">
+												<div class="col-lg-6" <?php echo $attribs; ?>>
 												<?php endif; ?>
 												<div class="mb-3">
 													<?php echo $field->label; ?>
@@ -90,48 +105,50 @@ $lang->load('plg_user_profile', JPATH_ADMINISTRATOR);
 						<?php endif; ?>
 					<?php endforeach; ?>
 
-					<?php if (count($this->twofactormethods) > 1) : ?>
-						<fieldset>
-							<legend><?php echo Text::_('COM_USERS_PROFILE_TWO_FACTOR_AUTH'); ?></legend>
+					<?php if(version_compare(JVERSION, '4.2.0', '<')) : ?>
+						<?php if (count($this->twofactormethods) > 1) : ?>
+							<fieldset>
+								<legend><?php echo Text::_('COM_USERS_PROFILE_TWO_FACTOR_AUTH'); ?></legend>
 
-							<div class="mb-3">
-								<label id="jform_twofactor_method-lbl" for="jform_twofactor_method" class="hasTooltip"
-								title="<?php echo '<strong>' . Text::_('COM_USERS_PROFILE_TWOFACTOR_LABEL') . '</strong><br>' . Text::_('COM_USERS_PROFILE_TWOFACTOR_DESC'); ?>">
-								<?php echo Text::_('COM_USERS_PROFILE_TWOFACTOR_LABEL'); ?>
-							</label>
-							<?php echo HTMLHelper::_('select.genericlist', $this->twofactormethods, 'jform[twofactor][method]', array('onchange' => 'Joomla.twoFactorMethodChange()'), 'value', 'text', $this->otpConfig->method, 'jform_twofactor_method', false); ?>
-						</div>
-						<div id="com_users_twofactor_forms_container">
-							<?php foreach ($this->twofactorform as $form) : ?>
-								<?php $style = $form['method'] == $this->otpConfig->method ? 'display: block' : 'display: none'; ?>
-								<div id="com_users_twofactor_<?php echo $form['method']; ?>" style="<?php echo $style; ?>">
-									<?php echo $form['form']; ?>
+								<div class="mb-3">
+									<label id="jform_twofactor_method-lbl" for="jform_twofactor_method" class="hasTooltip"
+									title="<?php echo '<strong>' . Text::_('COM_USERS_PROFILE_TWOFACTOR_LABEL') . '</strong><br>' . Text::_('COM_USERS_PROFILE_TWOFACTOR_DESC'); ?>">
+									<?php echo Text::_('COM_USERS_PROFILE_TWOFACTOR_LABEL'); ?>
+									</label>
+									<?php echo HTMLHelper::_('select.genericlist', $this->twofactormethods, 'jform[twofactor][method]', array('onchange' => 'Joomla.twoFactorMethodChange()'), 'value', 'text', $this->otpConfig->method, 'jform_twofactor_method', false); ?>
 								</div>
-							<?php endforeach; ?>
-						</div>
-					</fieldset>
+								<div id="com_users_twofactor_forms_container">
+									<?php foreach ($this->twofactorform as $form) : ?>
+										<?php $style = $form['method'] == $this->otpConfig->method ? 'display: block' : 'display: none'; ?>
+										<div id="com_users_twofactor_<?php echo $form['method']; ?>" style="<?php echo $style; ?>">
+											<?php echo $form['form']; ?>
+										</div>
+									<?php endforeach; ?>
+								</div>
+							</fieldset>
 
-					<fieldset>
-						<legend>
-							<?php echo Text::_('COM_USERS_PROFILE_OTEPS'); ?>
-						</legend>
-						<div class="alert alert-info">
-							<?php echo Text::_('COM_USERS_PROFILE_OTEPS_DESC'); ?>
-						</div>
-						<?php if (empty($this->otpConfig->otep)) : ?>
-							<div class="alert alert-warning">
-								<?php echo Text::_('COM_USERS_PROFILE_OTEPS_WAIT_DESC'); ?>
-							</div>
-						<?php else : ?>
-							<?php foreach ($this->otpConfig->otep as $otep) : ?>
-								<span class="col-lg-3">
-									<?php echo substr($otep, 0, 4); ?>-<?php echo substr($otep, 4, 4); ?>-<?php echo substr($otep, 8, 4); ?>-<?php echo substr($otep, 12, 4); ?>
-								</span>
-							<?php endforeach; ?>
-							<div class="clearfix"></div>
+							<fieldset>
+								<legend>
+									<?php echo Text::_('COM_USERS_PROFILE_OTEPS'); ?>
+								</legend>
+								<div class="alert alert-info">
+									<?php echo Text::_('COM_USERS_PROFILE_OTEPS_DESC'); ?>
+								</div>
+								<?php if (empty($this->otpConfig->otep)) : ?>
+									<div class="alert alert-warning">
+										<?php echo Text::_('COM_USERS_PROFILE_OTEPS_WAIT_DESC'); ?>
+									</div>
+								<?php else : ?>
+									<?php foreach ($this->otpConfig->otep as $otep) : ?>
+										<span class="col-lg-3">
+											<?php echo substr($otep, 0, 4); ?>-<?php echo substr($otep, 4, 4); ?>-<?php echo substr($otep, 8, 4); ?>-<?php echo substr($otep, 12, 4); ?>
+										</span>
+									<?php endforeach; ?>
+									<div class="clearfix"></div>
+								<?php endif; ?>
+							</fieldset>
 						<?php endif; ?>
-					</fieldset>
-				<?php endif; ?>
+					<?php endif; ?>
 
 				<div class="mb-3">
 					<button type="submit" class="btn btn-primary validate"><span><?php echo Text::_('JSUBMIT'); ?></span></button>

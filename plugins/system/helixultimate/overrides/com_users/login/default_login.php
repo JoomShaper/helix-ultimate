@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die;
 
+use HelixUltimate\Framework\Platform\Helper;
+use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -31,7 +33,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
 				</div>
 			<?php endif; ?>
 
-			<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', $this->params->get('login_description')) != '') || $this->params->get('login_image') != '') : ?>
+			<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', Helper::CheckNull($this->params->get('login_description'))) != '') || $this->params->get('login_image') != '') : ?>
 				<div class="login-description">
 				<?php endif; ?>
 
@@ -43,15 +45,29 @@ $usersConfig = ComponentHelper::getParams('com_users');
 					<img src="<?php echo $this->escape($this->params->get('login_image')); ?>" class="login-image" alt="<?php echo Text::_('COM_USERS_LOGIN_IMAGE_ALT'); ?>">
 				<?php endif; ?>
 
-				<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', $this->params->get('login_description')) != '') || $this->params->get('login_image') != '') : ?>
+				<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', Helper::CheckNull($this->params->get('login_description'))) != '') || $this->params->get('login_image') != '') : ?>
 				</div>
 			<?php endif; ?>
 
 			<form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="form-validate">
 
 				<?php foreach ($this->form->getFieldset('credentials') as $field) : ?>
+					<?php
+						$showon = $field->getAttribute('showon');
+						$attribs = '';
+						if ($showon) 
+						{
+							$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+						}
+						// Enable disable on
+						$enableOn = $field->getAttribute('enableon', '');
+						if ($enableOn)
+						{
+							$attribs .= ' data-enableon="' . $enableOn . '"';
+						}
+					?>
 					<?php if (!$field->hidden) : ?>
-						<div class="mb-3">
+						<div class="mb-3" <?php echo $attribs; ?>>
 							<?php echo $field->label; ?>
 							<?php echo $field->input; ?>
 						</div>
@@ -81,7 +97,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
 				</div>
 
 				<?php $return = $this->form->getValue('return', '', $this->params->get('login_redirect_url', $this->params->get('login_redirect_menuitem'))); ?>
-				<input type="hidden" name="return" value="<?php echo base64_encode($return); ?>">
+				<input type="hidden" name="return" value="<?php echo base64_encode(Helper::CheckNull($return)); ?>">
 				<?php echo HTMLHelper::_('form.token'); ?>
 			</form>
 

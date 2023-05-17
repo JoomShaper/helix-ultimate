@@ -40,7 +40,7 @@ function addGoogleFont($fonts)
 
 		foreach ($fonts as $key => $font)
 		{
-			$font = json_decode($font);
+			$font = json_decode($font ?? "");
 
 			if (!in_array($font->fontFamily, $systemFonts))
 			{
@@ -186,7 +186,7 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 <!doctype html>
 <html class="error-page" lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
-		<title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></title>
+		<title><?php echo $this->title; ?> <?php echo htmlspecialchars($this->error->getMessage() ?? "", ENT_QUOTES, 'UTF-8'); ?></title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -229,12 +229,12 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 		<div class="container">
 			<?php if($params->get('error_logo')) : ?>
 				<a href="<?php echo $this->baseurl; ?>/index.php">
-					<img class="error-logo" src="<?php echo Uri::base(true) . '/' . $params->get('error_logo'); ?>" alt="<?php echo htmlspecialchars($this->title); ?>">
+					<img class="error-logo" src="<?php echo Uri::base(true) . '/' . $params->get('error_logo'); ?>" alt="<?php echo htmlspecialchars($this->title ?? ""); ?>">
 				</a>
 			<?php endif; ?>
 
 			<h1 class="error-code"><?php echo $this->error->getCode(); ?></h1>
-			<h2 class="error-message"><?php echo htmlspecialchars($this->error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></h2>
+			<h2 class="error-message"><?php echo htmlspecialchars($this->error->getMessage() ?? "", ENT_QUOTES, 'UTF-8'); ?></h2>
 
 			<jdoc:include type="modules" name="404" style="sp_xhtml"/>
 
@@ -248,7 +248,7 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 						<?php $this->setError($this->_error->getPrevious()); ?>
 						<?php while ($loop === true) : ?>
 							<p><strong><?php echo Text::_('JERROR_LAYOUT_PREVIOUS_ERROR'); ?></strong></p>
-							<p><?php echo htmlspecialchars($this->_error->getMessage(), ENT_QUOTES, 'UTF-8'); ?></p>
+							<p><?php echo htmlspecialchars($this->_error->getMessage() ?? "", ENT_QUOTES, 'UTF-8'); ?></p>
 							<?php echo $this->renderBacktrace(); ?>
 							<?php $loop = $this->setError($this->_error->getPrevious()); ?>
 						<?php endwhile; ?>

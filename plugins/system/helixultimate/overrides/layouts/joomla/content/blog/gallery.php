@@ -12,7 +12,7 @@ extract($displayData);
 ?>
 
 <?php if(isset($attribs->helix_ultimate_gallery) && $attribs->helix_ultimate_gallery) : ?>
-	<?php $gallery = json_decode($attribs->helix_ultimate_gallery); ?>
+	<?php $gallery = json_decode($attribs->helix_ultimate_gallery ?? ""); ?>
 	<?php $images = (isset($gallery->helix_ultimate_gallery_images) && $gallery->helix_ultimate_gallery_images) ? $gallery->helix_ultimate_gallery_images : array(); ?>
 
 	<?php if(count((array)$images)) : ?>

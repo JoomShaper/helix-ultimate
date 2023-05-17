@@ -167,10 +167,10 @@ class HelixUltimate
 		$compClass = $this->input->get('option', '', 'STRING');
 		$compClassDash = str_replace('_', '-', $compClass);
 
-		$bodyClass       = 'site helix-ultimate hu ' . htmlspecialchars($compClass) . ' ' . $compClassDash;
-		$bodyClass      .= ' view-' . htmlspecialchars($this->input->get('view', '', 'STRING'));
-		$bodyClass      .= ' layout-' . htmlspecialchars($this->input->get('layout', 'default', 'STRING'));
-		$bodyClass      .= ' task-' . htmlspecialchars($this->input->get('task', 'none', 'STRING'));
+		$bodyClass       = 'site helix-ultimate hu ' . htmlspecialchars($compClass ?? "") . ' ' . $compClassDash;
+		$bodyClass      .= ' view-' . htmlspecialchars($this->input->get('view', '', 'STRING') ?? "");
+		$bodyClass      .= ' layout-' . htmlspecialchars($this->input->get('layout', 'default', 'STRING') ?? "");
+		$bodyClass      .= ' task-' . htmlspecialchars($this->input->get('task', 'none', 'STRING') ?? "");
 		$bodyClass      .= ' itemid-' . (int) $this->input->get('Itemid', '', 'INT');
 		$bodyClass      .= ($this->doc->language) ? ' ' . $this->doc->language : '';
 		$bodyClass      .= ($this->doc->direction) ? ' ' . $this->doc->direction : '';
@@ -575,7 +575,7 @@ class HelixUltimate
 
 		if (!empty($layout))
 		{
-			$rows = json_decode($layout);
+			$rows = json_decode($layout ?? "");
 		}
 		else
 		{
@@ -586,8 +586,8 @@ class HelixUltimate
 				die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');
 			}
 
-			$layout_data = json_decode(file_get_contents($layout_file));
-			$rows = json_decode($layout_data->layout);
+			$layout_data = json_decode(file_get_contents($layout_file) ?? "");
+			$rows = json_decode($layout_data->layout ?? "");
 		}
 
 		$output = $this->get_recursive_layout($rows);	
@@ -1128,7 +1128,7 @@ class HelixUltimate
 		
 		if (file_exists($cache_path))
 		{
-			$cache_file = json_decode(file_get_contents($cache_path));
+			$cache_file = json_decode(file_get_contents($cache_path) ?? "");
 			$imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
 			$cached_vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
 
@@ -1195,7 +1195,7 @@ class HelixUltimate
 		{
 			foreach ($fonts as $key => $font)
 			{
-				$font = json_decode($font);
+				$font = json_decode($font ?? "");
 
 				if (!in_array($font->fontFamily, $systemFonts))
 				{
@@ -1905,7 +1905,7 @@ class HelixUltimate
 		}
 		else
 		{
-			$scssVars = (array) json_decode($this->params->get('preset'));
+			$scssVars = (array) json_decode($this->params->get('preset') ?? "");
 
 			$scssVars['offcanvas_menu_icon_color'] = '#000000';
 			$scssVars['offcanvas_menu_bg_color'] = $this->params->get('menu_dropdown_bg_color');

@@ -24,7 +24,7 @@ if( $displayData['params']->get('comment_disqus_subdomain') != '' )
 	}
 	?>
 
-	var disqus_shortname = '<?php echo htmlspecialchars($displayData["params"]->get("comment_disqus_subdomain")); ?>';
+	var disqus_shortname = '<?php echo htmlspecialchars($displayData["params"]->get("comment_disqus_subdomain") ?? ""); ?>';
 	var disqus_config = function () {
         this.page.url = "<?php echo $displayData['url']; ?>";
     };

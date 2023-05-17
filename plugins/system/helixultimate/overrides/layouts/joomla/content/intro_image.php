@@ -15,7 +15,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 
 $params = $displayData->params;
-$attribs = json_decode($displayData->attribs);
+$attribs = json_decode($displayData->attribs ?? "");
 
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $tplParams = $template->params;
@@ -60,14 +60,14 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 			{
 				$layoutAttr = [
 					'src' => $intro_image,
-					'alt' => empty($displayData->title) ? false : htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'),
+					'alt' => empty($displayData->title) ? false : htmlspecialchars($displayData->title ?? "", ENT_COMPAT, 'UTF-8'),
 				];
 				echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
 			}
 			else
 			{
 			?>
-				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title, ENT_COMPAT, 'UTF-8'); ?>">
+				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title ?? "", ENT_COMPAT, 'UTF-8'); ?>">
 			<?php
 			}
 			?>
@@ -77,7 +77,7 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 	<?php endif; ?>
 <?php else : ?>
 
-	<?php $images = json_decode($displayData->images); ?>
+	<?php $images = json_decode($displayData->images ?? ""); ?>
 	<?php if (isset($images->image_intro) && !empty($images->image_intro)) : ?>
 		<?php $imgfloat = empty($images->float_intro) ? $params->get('float_intro') : $images->float_intro; ?>
 		<div class="article-intro-image float-<?php echo htmlspecialchars($imgfloat, ENT_COMPAT, 'UTF-8'); ?>">
@@ -88,12 +88,12 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 					{
 						$layoutAttr = [
 							'src' => htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'),
-							'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'),
+							'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt ?? "", ENT_COMPAT, 'UTF-8'),
 						];
 						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 						{
 							$layoutAttr['class'] = 'caption';
-							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption);
+							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption ?? "");
 						}
 						echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
 						// Image Caption 
@@ -106,7 +106,7 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 					else
 					{
 					?>
-						<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>">
+						<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption ?? "") . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt ?? "", ENT_COMPAT, 'UTF-8'); ?>">
 					<?php
 						// Image Caption 
 						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
@@ -122,13 +122,13 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 				if (JVERSION >= 4)
 				{
 					$layoutAttr = [
-						'src' => htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'),
+						'src' => htmlspecialchars($images->image_intro ?? "", ENT_COMPAT, 'UTF-8'),
 						'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'),
 					];
 					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 					{
 						$layoutAttr['class'] = 'caption';
-						$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8');
+						$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption ?? "", ENT_COMPAT, 'UTF-8');
 					}
 					echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
 					// Image Caption 
@@ -141,7 +141,7 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 				else 
 				{
 				?>
-					<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8') . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'); ?>">
+					<img <?php if ($images->image_intro_caption) : ?> <?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption, ENT_COMPAT, 'UTF-8') . '"'; ?> <?php endif; ?> src="<?php echo htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($images->image_intro_alt ?? "", ENT_COMPAT, 'UTF-8'); ?>">
 				<?php
 					// Image Caption 
 					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 

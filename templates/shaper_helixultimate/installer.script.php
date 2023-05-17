@@ -50,7 +50,7 @@ class plgSystemTmp_helixultInstallerScript
 
 			if($plugin_info)
 			{
-				$manifest_cache = json_decode($plugin_info->manifest_cache);
+				$manifest_cache = json_decode($plugin_info->manifest_cache ?? "");
 				$cache_version = $manifest_cache->version;
 
 				$plg_manifest = $installer->parseXMLInstallFile($path.'/'.$name.'.xml');
@@ -98,7 +98,7 @@ class plgSystemTmp_helixultInstallerScript
 			$tmpl_name = (string) $template->attributes()->name;
 			$tmpl_info = $this->getTemplateInfoByName($tmpl_name);
 
-			$params = json_decode($tmpl_info->params);
+			$params = json_decode($tmpl_info->params ?? "");
 			$params_array = (array) $params;
 
 			if(empty($params_array))

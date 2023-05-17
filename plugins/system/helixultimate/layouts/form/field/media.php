@@ -125,7 +125,7 @@ if ($showPreview)
 }
 
 echo '	<input type="text" name="' . $name . '" id="' . $id . '" value="'
-	. htmlspecialchars($value, ENT_COMPAT, 'UTF-8') . '" readonly="readonly"' . $attr . ' data-basepath="'
+	. htmlspecialchars($value ?? "", ENT_COMPAT, 'UTF-8') . '" readonly="readonly"' . $attr . ' data-basepath="'
 	. Uri::root() . '"/>';
 
 ?>

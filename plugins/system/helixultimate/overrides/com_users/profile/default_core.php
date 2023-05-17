@@ -35,7 +35,7 @@ use Joomla\CMS\Router\Route;
 		</li>
 		<li class="list-group-item">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_USERNAME_LABEL'); ?></strong>:
-			<?php echo htmlspecialchars($this->data->username, ENT_COMPAT, 'UTF-8'); ?>
+			<?php echo htmlspecialchars($this->data->username ?? "", ENT_COMPAT, 'UTF-8'); ?>
 		</li>
 		<li class="list-group-item">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_REGISTERED_DATE_LABEL'); ?></strong>:

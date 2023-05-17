@@ -216,11 +216,11 @@ class HelixultimateMenu
 				$item->flink = Route::_($item->flink);
 			}
 
-			$item->title = htmlspecialchars($item->title, ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_css   = htmlspecialchars($item->getParams()->get('menu-anchor_css', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_title = htmlspecialchars($item->getParams()->get('menu-anchor_title', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->anchor_rel = htmlspecialchars($item->getParams()->get('menu-anchor_rel', ''), ENT_COMPAT, 'UTF-8', false);
-			$item->menu_image   = $item->getParams()->get('menu_image', '') ? htmlspecialchars($item->getParams()->get('menu_image', ''), ENT_COMPAT, 'UTF-8', false) : '';
+			$item->title = htmlspecialchars($item->title ?? "", ENT_COMPAT, 'UTF-8', false);
+			$item->anchor_css   = htmlspecialchars($item->getParams()->get('menu-anchor_css', '') ?? "", ENT_COMPAT, 'UTF-8', false);
+			$item->anchor_title = htmlspecialchars($item->getParams()->get('menu-anchor_title', '') ?? "", ENT_COMPAT, 'UTF-8', false);
+			$item->anchor_rel = htmlspecialchars($item->getParams()->get('menu-anchor_rel', '') ?? "", ENT_COMPAT, 'UTF-8', false);
+			$item->menu_image   = $item->getParams()->get('menu_image', '') ? htmlspecialchars($item->getParams()->get('menu_image', '') ?? "", ENT_COMPAT, 'UTF-8', false) : '';
 		}
 	}
 
@@ -449,7 +449,7 @@ class HelixultimateMenu
 		$items     = isset($this->children[$item->id]) ? $this->children[$item->id] : array();
 		$firstitem = count($items) ? $items[0]->id : 0;
 
-		$mega = json_decode($item->getParams()->get('helixultimatemenulayout'));
+		$mega = json_decode($item->getParams()->get('helixultimatemenulayout') ?? "");
 
 		$layout = $mega->layout ?? [];
 
@@ -694,7 +694,7 @@ class HelixultimateMenu
 
 		$flink = $item->flink;
 		$ariaLabelOpen = $item->ariaLabelOpen;
-		$flink = str_replace('&amp;', '&', OutputFilter::ampReplace(htmlspecialchars($flink)));
+		$flink = str_replace('&amp;', '&', OutputFilter::ampReplace(htmlspecialchars($flink ?? "")));
 
 		$badge_html = '';
 

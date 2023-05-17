@@ -194,7 +194,7 @@ class Settings
 
 		if (!empty($templateStyle->params))
 		{
-			$formData = \json_decode($templateStyle->params);
+			$formData = \json_decode($templateStyle->params ?? "");
 		}
 
 		if (empty($formData))
@@ -204,7 +204,7 @@ class Settings
 
 			if (\file_exists($optionsPath))
 			{
-				$optionDefaults = \json_decode(\file_get_contents($optionsPath));
+				$optionDefaults = \json_decode(\file_get_contents($optionsPath) ?? "");
 			}
 
 			$formData = $optionDefaults;

@@ -319,7 +319,7 @@ class Response
 		$rowId = $input->post->get('rowId', 0, 'INT');
 		$itemId = $input->post->get('itemId', 0, 'INT');
 
-		$rowData = \json_decode($rowData);
+		$rowData = \json_decode($rowData ?? "");
 		$layout = \preg_replace("@\s@", '', $layout);
 		$layoutArray = explode('+', $layout);
 

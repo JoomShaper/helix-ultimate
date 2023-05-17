@@ -68,7 +68,7 @@ if (!empty($this->query->highlight)
 				$imageAlt = $this->result->title;
 			}
 		?>
-        <figure class="<?php echo htmlspecialchars($imageClass, ENT_COMPAT, 'UTF-8'); ?> result__image">
+        <figure class="<?php echo htmlspecialchars($imageClass ?? "", ENT_COMPAT, 'UTF-8'); ?> result__image">
             <?php if ($this->params->get('link_image') && $this->result->route) : ?>
                 <a href="<?php echo Route::_($this->result->route); ?>">
                     <?php echo HTMLHelper::_('image', $imageUrl, $imageAlt, $extraAttr); ?>

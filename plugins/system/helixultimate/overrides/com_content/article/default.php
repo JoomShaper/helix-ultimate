@@ -34,14 +34,14 @@ if ($tmpl_params->get('related_article'))
 
 // Create shortcuts to some parameters.
 $params  = $this->item->params;
-$images  = json_decode($this->item->images);
-$urls    = json_decode($this->item->urls);
+$images  = json_decode($this->item->images ?? "");
+$urls    = json_decode($this->item->urls ?? "");
 $canEdit = $params->get('access-edit');
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 $user    = Factory::getUser();
 $info    = $params->get('info_block_position', 0);
 $page_header_tag = 'h1';
-$attribs = json_decode($this->item->attribs);
+$attribs = json_decode($this->item->attribs ?? "");
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';
 
 // Check if associations are implemented. If they are, define the parameter.
@@ -179,7 +179,7 @@ $isExpired  = JVERSION < 4
 	<?php $link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language))); ?>
 	<p class="readmore">
 		<a href="<?php echo $link; ?>" class="register">
-		<?php $attribs = json_decode($this->item->attribs); ?>
+		<?php $attribs = json_decode($this->item->attribs ?? ""); ?>
 		<?php
 		if ($attribs->alternative_readmore == null) :
 			echo Text::_('COM_CONTENT_REGISTER_TO_READ_MORE');

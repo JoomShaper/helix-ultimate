@@ -16,7 +16,6 @@ defined('_JEXEC') or die();
  */
 require_once __DIR__ . '/bootstrap.php';
 
-
 use HelixUltimate\Framework\Core\HelixUltimate;
 use HelixUltimate\Framework\Platform\Blog;
 use HelixUltimate\Framework\Platform\Helper;
@@ -45,7 +44,7 @@ define('HELIX_LAYOUT_PATH', JPATH_PLUGINS . '/system/helixultimate/layout');
  *
  * @since 1.0.0
  */
-class  PlgSystemHelixultimate extends CMSPlugin
+class PlgSystemHelixultimate extends CMSPlugin
 {
 	/**
 	 * Is autoload language.

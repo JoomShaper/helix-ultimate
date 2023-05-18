@@ -25,7 +25,7 @@ if ($tagId = $params->get('tag_id', ''))
 <?php foreach ($list as $i => &$item)
 
 {
-	$layout = \json_decode($item->getParams()->get('helixultimatemenulayout', ''));
+	$layout = \json_decode($item->getParams()->get('helixultimatemenulayout', '') ?? "");
 
 	if (\json_last_error() !== JSON_ERROR_NONE)
 	{

@@ -160,7 +160,7 @@ class Helper
 		$db->setQuery($query);
 		$result = $db->loadObject();
 
-		$manifest_cache = json_decode($result->manifest_cache);
+		$manifest_cache = json_decode($result->manifest_cache ?? "");
 
 		if (isset($manifest_cache->version))
 		{
@@ -450,7 +450,7 @@ class Helper
 					// $lang->load($module->module . '.sys', $client->path, null, false, true)
 					// 	|| $lang->load($module->module . '.sys', $client->path . '/modules/' . $module->module, null, false, true);
 
-					$module->manifest_cache = \json_decode($module->manifest_cache);
+					$module->manifest_cache = \json_decode($module->manifest_cache ?? "");
 					
 					if (!empty($module->manifest_cache->description))
 					{

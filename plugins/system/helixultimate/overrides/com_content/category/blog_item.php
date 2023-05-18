@@ -18,7 +18,7 @@ use Joomla\CMS\Uri\Uri;
 
 // Create a shortcut for params.
 $params = $this->item->params;
-$attribs = json_decode($this->item->attribs);
+$attribs = json_decode($this->item->attribs ?? "");
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $canEdit = $this->item->params->get('access-edit');
 $info    = $params->get('info_block_position', 0);

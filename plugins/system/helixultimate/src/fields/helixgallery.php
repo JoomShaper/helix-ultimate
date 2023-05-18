@@ -46,7 +46,7 @@ class JFormFieldHelixgallery extends FormField
 
 		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
 
-		$values = json_decode($this->value);
+		$values = json_decode($this->value ?? "");
 
 		if (!empty($values))
 		{
@@ -92,7 +92,7 @@ class JFormFieldHelixgallery extends FormField
 		$output .= '<input type="file" id="hu-gallery-item-upload" accept="image/*" multiple="multiple" style="display:none;">';
 		$output .= '<a class="btn btn-default btn-secondary btn-hu-gallery-item-upload" href="#"><i class="fas fa-plus" aria-hidden="true"></i> ' . Text::_('HELIX_ULTIMATE_UPLOAD_IMAGES') . '</a>';
 
-		$output .= '<input type="hidden" name="' . $this->name . '" data-name="' . $this->element['name'] . '_images" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8')
+		$output .= '<input type="hidden" name="' . $this->name . '" data-name="' . $this->element['name'] . '_images" id="' . $this->id . '" value="' . htmlspecialchars($this->value ?? "", ENT_COMPAT, 'UTF-8')
 				. '"  class="form-field-hu-gallery">';
 		$output .= '</div>';
 

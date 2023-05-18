@@ -38,7 +38,7 @@ class Blog
 
 		$input = Factory::getApplication()->input;
 		$image = $input->files->get('image');
-		$index = htmlspecialchars($input->post->get('index', '', 'STRING'));
+		$index = htmlspecialchars($input->post->get('index', '', 'STRING') ?? "");
 		$gallery = $input->post->get('gallery', false, 'BOOLEAN');
 
 		$tplRegistry = new Registry;

@@ -36,8 +36,7 @@ $direction = Factory::getLanguage()->isRtl() ? 'left' : 'right';
 		</a>
 	<?php else : ?>
 		<a href="<?php echo $displayData['link']; ?>" itemprop="url" aria-label="<?php echo Text::_('COM_CONTENT_READ_MORE'); ?> <?php echo htmlspecialchars($item->title ?? "", ENT_QUOTES, 'UTF-8'); ?>">
-			<?php echo Text::_('COM_CONTENT_READ_MORE'); ?>
-			<?php echo HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit')); ?>
+			<?php echo Text::sprintf('JGLOBAL_READ_MORE_TITLE', HTMLHelper::_('string.truncate', $item->title, $params->get('readmore_limit'))); ?>
 		</a>
 	<?php endif; ?>
 </div>

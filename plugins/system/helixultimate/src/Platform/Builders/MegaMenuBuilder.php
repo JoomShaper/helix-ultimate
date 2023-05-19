@@ -80,7 +80,7 @@ class MegaMenuBuilder extends Builder
 
 		if (!empty($megaMenu) && \is_string($megaMenu))
 		{
-			$megaMenu = \json_decode($megaMenu);
+			$megaMenu = \json_decode($megaMenu ?? "");
 		}
 
 		return $megaMenu;

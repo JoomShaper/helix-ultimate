@@ -17,7 +17,7 @@ use Joomla\CMS\Uri\Uri;
 
 // Create a shortcut for params.
 $params  = &$this->item->params;
-$images  = json_decode($this->item->images);
+$images  = json_decode($this->item->images ?? "");
 $canEdit = $this->item->params->get('access-edit');
 $info    = $this->item->params->get('info_block_position', 0);
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';

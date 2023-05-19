@@ -50,7 +50,7 @@ $moduleHtml = preg_replace(
 	'\\1 jmoddiv" data-jmodediturl="' . $editUrl . '" data-target="' . $target . '" data-jmodtip="'
 	.	HTMLHelper::_('tooltipText',
 			Text::_('JLIB_HTML_EDIT_MODULE'),
-			htmlspecialchars($mod->title, ENT_COMPAT, 'UTF-8') . '<br />' . sprintf(Text::_('JLIB_HTML_EDIT_MODULE_IN_POSITION'), htmlspecialchars($position, ENT_COMPAT, 'UTF-8')),
+			htmlspecialchars($mod->title ?? "", ENT_COMPAT, 'UTF-8') . '<br />' . sprintf(Text::_('JLIB_HTML_EDIT_MODULE_IN_POSITION'), htmlspecialchars($position ?? "", ENT_COMPAT, 'UTF-8')),
 			0
 		)
 	. '"'

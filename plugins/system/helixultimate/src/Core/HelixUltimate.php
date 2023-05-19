@@ -771,6 +771,11 @@ class HelixUltimate
 				$className = 'col-lg-' . $col_grid_size;
 			}
 
+			if (isset($options->xxl_col) && $options->xxl_col)
+			{
+				$className = $className . ' col-xxl-' . $options->xxl_col;
+			}
+
 			if (isset($options->xl_col) && $options->xl_col)
 			{
 				$className = $className . ' col-xl-' . $options->xl_col;
@@ -943,6 +948,12 @@ class HelixUltimate
 		{
 			$device_class = $this->reshape_device_class('xl', $device_class);
 			$device_class .= ' d-xl-none';
+		}
+
+		if (isset($options->hide_on_ex_large_desktop) && $options->hide_on_ex_large_desktop)
+		{
+			$device_class = $this->reshape_device_class('xxl', $device_class);
+			$device_class .= ' d-xxl-none';
 		}
 
 		return $device_class;

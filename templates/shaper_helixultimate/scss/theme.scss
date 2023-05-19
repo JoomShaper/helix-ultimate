@@ -801,7 +801,7 @@ body.modal-menu-active {
     background: #fff;
     border: 1px solid #e4e4e4;
     border-radius: 3px;
-    padding: 10px 15px !important;
+    padding: 10px 5px !important;
     list-style: none !important;
     font-size: 14px;
     position: absolute;
@@ -809,6 +809,13 @@ body.modal-menu-active {
     right: 0;
     top: 100%;
     display: none !important;
+    li {
+      a {
+        display: block;
+        width: 100%;
+        padding: 0 15px;
+      }
+    }
     > li:not(:last-child) {
       border-bottom: 1px solid #e4e4e4;
       padding-bottom: 5px;

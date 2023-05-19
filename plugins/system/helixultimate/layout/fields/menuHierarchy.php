@@ -45,7 +45,7 @@ class HelixultimateFieldMenuHierarchy
 
 		if (!empty($value) && \is_string($value))
 		{
-			$value = json_decode($value, true);
+			$value = json_decode($value ?? "", true);
 		}
 		else
 		{

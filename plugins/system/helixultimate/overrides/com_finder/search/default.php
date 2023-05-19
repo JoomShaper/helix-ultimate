@@ -34,7 +34,7 @@ else
 <div class="finder">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<h1>
-			<?php if ($this ->escape($this->params->get('page_heading'))) : ?>
+			<?php if ($this->escape($this->params->get('page_heading'))) : ?>
 				<?php echo $this->escape($this->params->get('page_heading')); ?>
 			<?php else : ?>
 				<?php echo $this->escape($this->params->get('page_title')); ?>

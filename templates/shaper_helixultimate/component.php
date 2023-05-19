@@ -44,12 +44,12 @@ $template = Helper::loadTemplateData();
 $this->params = $template->params;
 
 $theme_url = Uri::base(true) . '/templates/'. $this->template;
-$option = $app->input->get('option', '', 'STRING');
+$option = $app->input->get('option', '', 'STRING') ?? "";
 
-$body_class = htmlspecialchars(str_replace('_', '-', $option));
-$body_class .= ' view-' . htmlspecialchars($app->input->get('view', '', 'STRING'));
-$body_class .= ' layout-' . htmlspecialchars($app->input->get('layout', 'default', 'STRING'));
-$body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STRING'));
+$body_class = htmlspecialchars(str_replace('_', '-', $option) ?? "");
+$body_class .= ' view-' . htmlspecialchars($app->input->get('view', '', 'STRING') ?? "");
+$body_class .= ' layout-' . htmlspecialchars($app->input->get('layout', 'default', 'STRING') ?? "");
+$body_class .= ' task-' . htmlspecialchars($app->input->get('task', 'none', 'STRING') ?? "");
 
 /**
  * Load the framework bootstrap file for enabling the HelixUltimate\Framework namespacing.

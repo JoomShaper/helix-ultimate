@@ -41,7 +41,7 @@ $this->ignore_fieldsets = array('image-intro', 'image-full', 'jmetadata', 'item_
 $params = $this->state->get('params');
 
 //Blog Options
-$attribs = json_decode($this->item->attribs);
+$attribs = json_decode($this->item->attribs ?? "");
 
 $this->form->setValue('helix_ultimate_image', 'attribs', !empty($attribs->helix_ultimate_image) ? $attribs->helix_ultimate_image : '');
 $this->form->setValue('helix_ultimate_image_alt_txt', 'attribs', !empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : '');

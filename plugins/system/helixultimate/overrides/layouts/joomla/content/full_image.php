@@ -13,7 +13,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Uri\Uri;
 
 $params = $displayData->params;
-$attribs = json_decode($displayData->attribs);
+$attribs = json_decode($displayData->attribs ?? "");
 
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $tplParams = $template->params;
@@ -64,7 +64,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 		?>
 	</div>
 <?php else: ?>
-	<?php $images = json_decode($displayData->images); ?>
+	<?php $images = json_decode($displayData->images ?? ""); ?>
 	<?php if (isset($images->image_fulltext) && !empty($images->image_fulltext)) : ?>
 		<?php $imgfloat = empty($images->float_fulltext) ? $params->get('float_fulltext') : $images->float_fulltext; ?>
 		<div class="article-full-image float-<?php echo htmlspecialchars($imgfloat); ?>">
@@ -72,14 +72,14 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 			if (JVERSION >= 4)
 			{
 				$layoutAttr = [
-					'src'      => htmlspecialchars($images->image_fulltext),
+					'src'      => htmlspecialchars($images->image_fulltext ?? ""),
 					'itemprop' => 'image',
 					'alt'      => empty($images->image_fulltext_alt) && empty($images->image_fulltext_alt_empty) ? $displayData->title : $images->image_fulltext_alt,
 				];
 				if (isset($images->image_fulltext_caption) && $images->image_fulltext_caption !== '') 
 				{
 					$layoutAttr['class'] = 'caption';
-					$layoutAttr['title'] = htmlspecialchars($images->image_fulltext_caption);
+					$layoutAttr['title'] = htmlspecialchars($images->image_fulltext_caption ?? "");
 				}
 
 				echo LayoutHelper::render('joomla.html.image', $layoutAttr);
@@ -95,9 +95,9 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 			{
 			?>
 				<img <?php if ($images->image_fulltext_caption) :
-				echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_fulltext_caption) . '"';
+				echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_fulltext_caption ?? "") . '"';
 				endif; ?>
-				src="<?php echo htmlspecialchars($images->image_fulltext); ?>" alt="<?php echo empty($images->image_fulltext_alt) && empty($images->image_fulltext_alt_empty) ? $displayData->title : $images->image_fulltext_alt; ?>" itemprop="image">
+				src="<?php echo htmlspecialchars($images->image_fulltext ?? ""); ?>" alt="<?php echo empty($images->image_fulltext_alt) && empty($images->image_fulltext_alt_empty) ? $displayData->title : $images->image_fulltext_alt; ?>" itemprop="image">
 			<?php 
 				// Image Caption
 				if (isset($images->image_fulltext_caption) && $images->image_fulltext_caption !== '') 

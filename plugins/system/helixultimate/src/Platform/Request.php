@@ -461,7 +461,7 @@ class Request
 
 			if (isset($content) && $content)
 			{
-				$layoutHtml = $this->generateLayoutHTML(json_decode($content));
+				$layoutHtml = $this->generateLayoutHTML(json_decode($content ?? ""));
 
 				$this->report['status'] = true;
 				$this->report['message'] = 'Files content rendered';
@@ -553,7 +553,7 @@ class Request
 		}
 
 		$settings 	= $this->data['settings'];
-		$data 		= json_decode($settings);
+		$data 		= json_decode($settings ?? "");
 
 		if (json_last_error() === JSON_ERROR_NONE)
 		{
@@ -610,9 +610,9 @@ class Request
 		elseif ($str->code === 403)
 		{
 			$this->report['status']  = true;
-			$decode_msg = json_decode($str->body);
+			$decode_msg = json_decode($str->body ?? "");
 
-			if (isset(json_decode($str->body)->error->message) && $get_msg = json_decode($str->body)->error->message)
+			if (isset(json_decode($str->body ?? "")->error->message) && $get_msg = json_decode($str->body ?? "")->error->message)
 			{
 				$this->report['message'] = "<p class='font-update-failed'>" . $get_msg . "</p>";
 			}
@@ -645,7 +645,7 @@ class Request
 			$json = file_get_contents($plugin_path);
 		}
 
-		$webfonts   = json_decode($json);
+		$webfonts   = json_decode($json ?? "");
 		$items      = $webfonts->items;
 
 		foreach ($items as $item)

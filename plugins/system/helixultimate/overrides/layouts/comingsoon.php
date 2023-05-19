@@ -74,13 +74,13 @@ $site_title = $app->get('sitename');
 			<jdoc:include type="message" />
 
 			<?php if($params->get('comingsoon_logo')) : ?>
-				<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo htmlspecialchars($site_title); ?>">
+				<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo htmlspecialchars($site_title ?? ""); ?>">
 			<?php endif; ?>
 			<?php if ($title_status) :?>
 				<?php if($params->get('comingsoon_title')) : ?>
-					<h1 class="coming-soon-title"><?php echo htmlspecialchars($params->get('comingsoon_title')); ?></h1>
+					<h1 class="coming-soon-title"><?php echo htmlspecialchars($params->get('comingsoon_title') ?? ""); ?></h1>
 				<?php else: ?>
-					<h1 class="coming-soon-title"><?php echo htmlspecialchars($site_title); ?></h1>
+					<h1 class="coming-soon-title"><?php echo htmlspecialchars($site_title ?? ""); ?></h1>
 				<?php endif; ?>
 			<?php endif; ?>
 

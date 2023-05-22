@@ -180,6 +180,12 @@ $rowSettings = array(
 			'type' => 'checkbox',
 			'group' => 'responsive',
 			'title' => Text::_('HELIX_ULTIMATE_HIDDEN_DESKTOP')
+		),
+
+		'hide_on_ex_large_desktop' => array(
+			'type' => 'checkbox',
+			'group' => 'responsive',
+			'title' => Text::_('HELIX_ULTIMATE_HIDDEN_EXTRA_LARGE_DESKTOP')
 		)
 	)
 );
@@ -211,6 +217,14 @@ $columnSettings = array(
 			'title' => Text::_('HELIX_ULTIMATE_CUSTOM_CLASS'),
 			'desc' => Text::_('HELIX_ULTIMATE_CUSTOM_CLASS_DESC'),
 			'std' => ''
+		),
+
+		'xxl_col' => array(
+			'type' => 'select',
+			'group' => 'grid',
+			'title' => Text::_('HELIX_ULTIMATE_EXTRA_LARGER_DESKTOP_GRID'),
+			'values' => column_grid_system('xxl'),
+			'std' => 0,
 		),
 
 		'xl_col' => array(
@@ -282,6 +296,12 @@ $columnSettings = array(
 			'group' => 'responsive',
 			'title' => Text::_('HELIX_ULTIMATE_HIDDEN_DESKTOP')
 		),
+
+		'hide_on_ex_large_desktop' => array(
+			'type' => 'checkbox',
+			'group' => 'responsive',
+			'title' => Text::_('HELIX_ULTIMATE_HIDDEN_EXTRA_LARGE_DESKTOP')
+		)
 	)
 );
 

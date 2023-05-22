@@ -75,7 +75,7 @@ class Helper
 
 			if (Multilanguage::isEnabled())
 			{
-				$query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', 1)');
+				$query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', ' . $db->quote('1', false) . ')');
 			}
 
 			$db->setQuery($query);

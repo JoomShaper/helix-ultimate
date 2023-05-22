@@ -688,7 +688,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 		if (empty($id))
 		{
-			$query->where($db->quoteName('home') . ' = 1');
+			$query->where($db->quoteName('home') . ' = ' . $db->quote('1', false));
 		}
 		else
 		{

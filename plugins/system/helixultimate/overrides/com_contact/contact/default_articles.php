@@ -17,7 +17,7 @@ use Joomla\CMS\Router\Route;
 	<ul class="list-unstyled">
 		<?php foreach ($this->item->articles as $article) : ?>
 			<li>
-				<?php echo HTMLHelper::_('link', Route::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)), htmlspecialchars($article->title, ENT_COMPAT, 'UTF-8')); ?>
+				<?php echo HTMLHelper::_('link', Route::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)), htmlspecialchars($article->title ?? "", ENT_COMPAT, 'UTF-8')); ?>
 			</li>
 		<?php endforeach; ?>
 	</ul>

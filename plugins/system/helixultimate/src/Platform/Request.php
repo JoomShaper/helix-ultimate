@@ -10,6 +10,8 @@ namespace HelixUltimate\Framework\Platform;
 
 defined('_JEXEC') or die();
 
+use DateTime;
+use Exception;
 use HelixUltimate\Framework\HttpResponse\Response;
 use HelixUltimate\Framework\Platform\Blog;
 use HelixUltimate\Framework\Platform\Helper;
@@ -228,6 +230,17 @@ class Request
 		Session::checkToken() or die(json_encode($this->report));
 
 		$data = $_POST;
+
+		$data['comingsoon_date'] = date('Y-m-d', strtotime($data['comingsoon_date']));
+		$dateStatus = $this->validateDate($data['comingsoon_date']);
+
+		if (!$dateStatus) {
+			$this->report['status'] = false;
+			$this->report['message'] = 'Coming Soon Date for Countdown is invalid';
+			$this->report['isDrafted'] = Helper::isDrafted();
+			return;
+		}
+		
 		$inputs = $this->filterInputs($data);
 
 		if (!$this->id || !is_int($this->id))
@@ -258,6 +271,13 @@ class Request
 			$this->report['message'] = 'Style changed successfully';
 			$this->report['isDrafted'] = Helper::isDrafted();
 		}
+	}
+
+	private function validateDate($date, $format = 'Y-m-d')
+	{
+		$d = DateTime::createFromFormat($format, $date);
+		// The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+		return $d && $d->format($format) === $date;
 	}
 
 	private function draftTemplateStyle()
@@ -441,7 +461,7 @@ class Request
 
 			if (isset($content) && $content)
 			{
-				$layoutHtml = $this->generateLayoutHTML(json_decode($content));
+				$layoutHtml = $this->generateLayoutHTML(json_decode($content ?? ""));
 
 				$this->report['status'] = true;
 				$this->report['message'] = 'Files content rendered';
@@ -533,7 +553,7 @@ class Request
 		}
 
 		$settings 	= $this->data['settings'];
-		$data 		= json_decode($settings);
+		$data 		= json_decode($settings ?? "");
 
 		if (json_last_error() === JSON_ERROR_NONE)
 		{
@@ -590,9 +610,9 @@ class Request
 		elseif ($str->code === 403)
 		{
 			$this->report['status']  = true;
-			$decode_msg = json_decode($str->body);
+			$decode_msg = json_decode($str->body ?? "");
 
-			if (isset(json_decode($str->body)->error->message) && $get_msg = json_decode($str->body)->error->message)
+			if (isset(json_decode($str->body ?? "")->error->message) && $get_msg = json_decode($str->body ?? "")->error->message)
 			{
 				$this->report['message'] = "<p class='font-update-failed'>" . $get_msg . "</p>";
 			}
@@ -625,7 +645,7 @@ class Request
 			$json = file_get_contents($plugin_path);
 		}
 
-		$webfonts   = json_decode($json);
+		$webfonts   = json_decode($json ?? "");
 		$items      = $webfonts->items;
 
 		foreach ($items as $item)

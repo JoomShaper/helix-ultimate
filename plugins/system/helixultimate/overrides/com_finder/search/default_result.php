@@ -40,6 +40,14 @@ if ($show_description)
 
 $route = $this->result->route;
 
+$showImage  = $this->params->get('show_image', 0);
+$imageClass = $this->params->get('image_class', '');
+$extraAttr  = [];
+
+if ($showImage && !empty($this->result->imageUrl) && $imageClass !== '') {
+    $extraAttr['class'] = $imageClass;
+}
+
 // Get the route with highlighting information.
 if (!empty($this->query->highlight)
 	&& empty($this->result->mime)
@@ -51,6 +59,25 @@ if (!empty($this->query->highlight)
 
 ?>
 <li>
+	<?php if ($showImage && isset($this->result->imageUrl)) : ?>
+		<?php 
+			$imageUrl = $this->result->imageUrl;
+			$imageAlt = $this->result->imageAlt;
+			if (!empty($this->result->params->get('helix_ultimate_image'))) {
+				$imageUrl = $this->result->params->get('helix_ultimate_image');
+				$imageAlt = $this->result->title;
+			}
+		?>
+        <figure class="<?php echo htmlspecialchars($imageClass ?? "", ENT_COMPAT, 'UTF-8'); ?> result__image">
+            <?php if ($this->params->get('link_image') && $this->result->route) : ?>
+                <a href="<?php echo Route::_($this->result->route); ?>">
+                    <?php echo HTMLHelper::_('image', $imageUrl, $imageAlt, $extraAttr); ?>
+                </a>
+            <?php else : ?>
+                <?php echo HTMLHelper::_('image', $imageUrl, $imageAlt, $extraAttr); ?>
+            <?php endif; ?>
+        </figure>
+    <?php endif; ?>
 	<h4 class="result-title <?php echo $mime; ?>">
 		<a href="<?php echo Route::_($route); ?>">
 			<?php echo $this->result->title; ?>

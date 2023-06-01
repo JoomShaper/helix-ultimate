@@ -12,16 +12,16 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 
-if(JVERSION < 4)
+if (JVERSION < 4)
 {
 	HTMLHelper::_('behavior.core');
 	HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-	
+
 	HTMLHelper::_('stylesheet', 'com_finder/finder.css', array('version' => 'auto', 'relative' => true));
 	HTMLHelper::_('stylesheet', 'vendor/awesomplete/awesomplete.css', array('version' => 'auto', 'relative' => true));
-	
+
 	Text::script('MOD_FINDER_SEARCH_VALUE', true);
-	
+
 	HTMLHelper::_('script', 'com_finder/finder.js', array('version' => 'auto', 'relative' => true));
 }
 else
@@ -34,7 +34,7 @@ else
 <div class="finder">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<h1>
-			<?php if ($this ->escape($this->params->get('page_heading'))) : ?>
+			<?php if ($this->escape($this->params->get('page_heading'))) : ?>
 				<?php echo $this->escape($this->params->get('page_heading')); ?>
 			<?php else : ?>
 				<?php echo $this->escape($this->params->get('page_title')); ?>

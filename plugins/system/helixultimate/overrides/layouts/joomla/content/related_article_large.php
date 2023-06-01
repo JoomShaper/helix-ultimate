@@ -7,7 +7,7 @@ use Joomla\CMS\Router\Route;
 $item = $displayData;
 $params = $item->params;
 $info = $params->get('info_block_position', 0);
-$attribs = json_decode($item->attribs);
+$attribs = json_decode($item->attribs ?? "");
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format)
 	? $attribs->helix_ultimate_article_format

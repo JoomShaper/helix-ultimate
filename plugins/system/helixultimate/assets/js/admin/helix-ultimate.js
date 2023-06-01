@@ -565,17 +565,25 @@ jQuery(function ($) {
                     if (data.status) {
                         let $previewFrame = document.getElementById('hu-template-preview');
                         $previewFrame.contentWindow.location.reload(true);
+
+                        Joomla.HelixToaster.success('Changes have been successfully saved!', 'Success');
+                        $('.hu-loading-msg').hide();
+                        $('.hu-done-msg').hide();
+                        $('.action-reset-drafts').hide();
+                        showSaveLoader(false);
+                    } else {
+                        Joomla.HelixToaster.error(data.message, 'Failed');
+                        $('.hu-loading-msg').hide();
+                        $('.hu-done-msg').hide();
+                        $('.action-reset-drafts').hide();
+                        showSaveLoader(false);
                     }
 
                     // Update the setvalues.
                     updateSetvalue();
+                    
                 },
                 complete() {
-                    Joomla.HelixToaster.success('Changes have been successfully saved!', 'Success');
-                    $('.hu-loading-msg').hide();
-                    $('.hu-done-msg').hide();
-                    $('.action-reset-drafts').hide();
-                    showSaveLoader(false);
                 },
                 error: function (err) {
                     console.error('error', err);

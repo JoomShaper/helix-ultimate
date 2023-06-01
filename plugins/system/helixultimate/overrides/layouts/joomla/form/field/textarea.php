@@ -69,4 +69,4 @@ $attributes = array(
 <textarea name="<?php
 echo $name; ?>" id="<?php
 echo $id; ?>" <?php
-echo implode(' ', $attributes); ?> ><?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?></textarea>
+echo implode(' ', $attributes); ?> ><?php echo htmlspecialchars($value ?? "", ENT_COMPAT, 'UTF-8'); ?></textarea>

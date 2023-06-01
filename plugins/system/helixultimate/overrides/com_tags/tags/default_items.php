@@ -61,7 +61,7 @@ Factory::getDocument()->addScriptDeclaration("
 
 ?>
 <div class="mb-4">
-	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
+	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString() ?? ""); ?>" method="post" name="adminForm" id="adminForm">
 		<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
 			<fieldset class="filters d-flex justify-content-between mb-3">
 				<?php if ($this->params->get('filter_field')) : ?>
@@ -119,17 +119,17 @@ Factory::getDocument()->addScriptDeclaration("
 			<?php endif; ?>
 
 			<?php if ($this->params->get('all_tags_show_tag_image') && !empty($item->images)) : ?>
-				<?php $images  = json_decode($item->images); ?>
+				<?php $images  = json_decode($item->images ?? ""); ?>
 				<span class="tag-body">
 					<?php if (!empty($images->image_intro)) : ?>
 						<?php $imgfloat = empty($images->float_intro) ? $this->params->get('float_intro') : $images->float_intro; ?>
-						<div class="float-<?php echo htmlspecialchars($imgfloat); ?> item-image">
+						<div class="float-<?php echo htmlspecialchars($imgfloat ?? ""); ?> item-image">
 							<img
 								<?php if ($images->image_intro_caption) : ?>
-									<?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption) . '"'; ?>
+									<?php echo 'class="caption"' . ' title="' . htmlspecialchars($images->image_intro_caption ?? "") . '"'; ?>
 								<?php endif; ?>
 								src="<?php echo $images->image_intro; ?>"
-								alt="<?php echo htmlspecialchars($images->image_intro_alt); ?>">
+								alt="<?php echo htmlspecialchars($images->image_intro_alt ?? ""); ?>">
 						</div>
 					<?php endif; ?>
 				</span>

@@ -73,7 +73,7 @@ $alt = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 			$onchange = !empty($option->onchange) ? 'onchange="' . $option->onchange . '"' : '';
 
 			$oid        = $id . $i;
-			$value      = htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8');
+			$value      = htmlspecialchars($option->value ?? "", ENT_COMPAT, 'UTF-8');
 			$attributes = array_filter(array($checked, $optionClass, $optionDisabled, $onchange, $onclick));
 		?>
 		<div class="form-check form-check-inline">

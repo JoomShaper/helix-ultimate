@@ -39,7 +39,7 @@ if (!empty($this->items))
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 ?>
 
-<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString() ?? ""); ?>" method="post" name="adminForm" id="adminForm">
 
 <?php if ($this->params->get('filter_field') !== 'hide' || $this->params->get('show_pagination_limit')) : ?>
 	<div class="d-flex justify-content-between align-items-centerd-flex mb-4">

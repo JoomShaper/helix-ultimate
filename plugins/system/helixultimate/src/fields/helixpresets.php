@@ -115,7 +115,7 @@ class JFormFieldHelixpresets extends FormField
 
 		if (\is_string($json))
 		{
-			$json = \json_decode($json);
+			$json = \json_decode($json ?? "");
 		}
 
 		$keys = \array_keys((array) $json);
@@ -189,12 +189,12 @@ class JFormFieldHelixpresets extends FormField
 		$data = array();
 		$html = '';
 
-		if (\is_string($json) && strlen($json) > 0)
+		if (\is_string($json ?? "") && strlen($json ?? "") > 0)
 		{
-			$json = json_decode($json);
+			$json = json_decode($json ?? "");
 		}
 
-		$preset = json_decode($value);
+		$preset = json_decode($value ?? "");
 
 		foreach ($json as $name => $child)
 		{
@@ -263,7 +263,7 @@ class JFormFieldHelixpresets extends FormField
 				'data' => array()
 			);
 
-			$preset = json_decode($value);
+			$preset = json_decode($value ?? "");
 
 			$class = '';
 

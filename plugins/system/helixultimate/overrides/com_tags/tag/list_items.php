@@ -28,7 +28,7 @@ Factory::getDocument()->addScriptDeclaration("
 
 ?>
 <div class="mb-4">
-	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
+	<form action="<?php echo htmlspecialchars(Uri::getInstance()->toString() ?? ""); ?>" method="post" name="adminForm" id="adminForm">
 		<?php if ($this->params->get('filter_field') || $this->params->get('show_pagination_limit')) : ?>
 			<fieldset class="filters d-flex justify-content-between mb-3">
 				<?php if ($this->params->get('filter_field')) : ?>

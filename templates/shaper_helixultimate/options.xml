@@ -1871,7 +1871,7 @@
 			type="text" 
 			label="HELIX_ULTIMATE_GOOGLE_ANALYTICS_CODE" 
 			description="HELIX_ULTIMATE_GOOGLE_ANALYTICS_CODE_DESC" 
-			hint="UA-xxxxxxxxx-x" />
+			hint="G-XXXXXXXXXX" />
 		<field name="ga_tracking_method" 
 			helixgroup="analytics" 
 			type="list" 

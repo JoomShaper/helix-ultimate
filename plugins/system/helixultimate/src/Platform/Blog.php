@@ -38,7 +38,7 @@ class Blog
 
 		$input = Factory::getApplication()->input;
 		$image = $input->files->get('image');
-		$index = htmlspecialchars($input->post->get('index', '', 'STRING'));
+		$index = htmlspecialchars($input->post->get('index', '', 'STRING') ?? "");
 		$gallery = $input->post->get('gallery', false, 'BOOLEAN');
 
 		$tplRegistry = new Registry;
@@ -259,7 +259,7 @@ class Blog
 		$query->select($db->quoteName(array('template', 'params')));
 		$query->from($db->quoteName('#__template_styles'));
 		$query->where($db->quoteName('client_id') . ' = ' . $db->quote(0));
-		$query->where($db->quoteName('home') . ' = ' . $db->quote(1));
+		$query->where($db->quoteName('home') . ' = ' . $db->quote('1', false));
 
 		$db->setQuery($query);
 

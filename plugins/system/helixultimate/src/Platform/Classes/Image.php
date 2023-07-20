@@ -21,6 +21,7 @@ class Image
 	{
 
 		list($originalWidth, $originalHeight) = getimagesize($src);
+		$ext = strtolower($ext);
 
 		switch ($ext)
 		{

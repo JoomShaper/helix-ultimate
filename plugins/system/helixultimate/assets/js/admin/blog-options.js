@@ -152,7 +152,7 @@ jQuery(function($) {
 		var paths = Joomla.getOptions('system.paths');
 
 		for (i=0;i<files.length;i++){
-			var ext = files[i].name.split('.').pop();
+			var ext = files[i].name.split('.').pop().toLowerCase();
 			var allowed = ((ext == 'png') || (ext == 'jpg') || (ext == 'jpeg') || (ext == 'gif') || (ext == 'svg'));
 			if(allowed) {
 				

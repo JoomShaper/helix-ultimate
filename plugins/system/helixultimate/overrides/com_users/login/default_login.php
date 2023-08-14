@@ -49,7 +49,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
 				</div>
 			<?php endif; ?>
 
-			<form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="form-validate">
+			<form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="form-validate" id="com-users-login__form">
 
 				<?php foreach ($this->form->getFieldset('credentials') as $field) : ?>
 					<?php
@@ -89,6 +89,39 @@ $usersConfig = ComponentHelper::getParams('com_users');
 						</label>
 					</div>
 				<?php endif; ?>
+
+				<?php foreach ($this->extraButtons as $button) :
+                $dataAttributeKeys = array_filter(array_keys($button), function ($key) {
+                    return substr($key, 0, 5) == 'data-';
+                });
+                ?>
+                <div class="com-users-login__submit control-group">
+                    <div class="controls">
+                        <button type="button"
+                                class="btn btn-dark w-100 <?php echo $button['class'] ?? '' ?>"
+                                <?php foreach ($dataAttributeKeys as $key) : ?>
+                                    <?php echo $key ?>="<?php echo $button[$key] ?>"
+                                <?php endforeach; ?>
+                                <?php if ($button['onclick']) : ?>
+                                onclick="<?php echo $button['onclick'] ?>"
+                                <?php endif; ?>
+                                title="<?php echo Text::_($button['label']) ?>"
+                                id="<?php echo $button['id'] ?>"
+                        >
+                            <?php if (!empty($button['icon'])) : ?>
+                                <span class="<?php echo $button['icon'] ?>"></span>
+                            <?php elseif (!empty($button['image'])) : ?>
+                                <?php echo HTMLHelper::_('image', $button['image'], Text::_($button['tooltip'] ?? ''), [
+                                    'class' => 'icon',
+                                ], true) ?>
+                            <?php elseif (!empty($button['svg'])) : ?>
+                                <?php echo $button['svg']; ?>
+                            <?php endif; ?>
+                            <?php echo Text::_($button['label']) ?>
+                        </button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
 
 				<div class="mb-3">
 					<button type="submit" class="btn btn-primary btn-lg w-100">

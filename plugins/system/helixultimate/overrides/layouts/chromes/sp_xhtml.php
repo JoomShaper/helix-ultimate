@@ -24,9 +24,11 @@ $bootstrapSize = (int) $params->get('bootstrap_size', 0);
 $moduleClass   = $bootstrapSize !== 0 ? ' span' . $bootstrapSize : '';
 $headerTag     = htmlspecialchars($params->get('header_tag', 'h3') ?? "", ENT_QUOTES, 'UTF-8');
 $headerClass   = htmlspecialchars($params->get('header_class', 'sp-module-title') ?? "", ENT_COMPAT, 'UTF-8');
+$moduleClassSfx = Helper::CheckNull($params->get('moduleclass_sfx'));
+$encodedModuleClassSfx = is_string($moduleClassSfx) ? htmlspecialchars($moduleClassSfx, ENT_COMPAT, 'UTF-8') : '';
 
 if ($module->content) {
-	echo '<' . $moduleTag . ' class="sp-module ' . htmlspecialchars(Helper::CheckNull($params->get('moduleclass_sfx')), ENT_COMPAT, 'UTF-8') . $moduleClass . '">';
+    echo '<' . $moduleTag . ' class="sp-module ' . $encodedModuleClassSfx . $moduleClass . '">';
 
 	if ($module->showtitle) {
 		echo '<' . $headerTag . ' class="' . $headerClass . '">' . $module->title . '</' . $headerTag . '>';

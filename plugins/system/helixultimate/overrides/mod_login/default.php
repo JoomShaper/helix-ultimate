@@ -51,7 +51,7 @@ HTMLHelper::_('bootstrap.tooltip');
 		<?php endif; ?>
 	</div>
 	<?php if(version_compare(JVERSION, '4.2.0', '<')) : ?>
-		<?php if (count($twofactormethods) > 1) : ?>
+		<?php if (empty($twofactormethods) > 1) : ?>
 			<div id="form-login-secretkey" class="mb-3">
 				<?php if (!$params->get('usetext')) : ?>
 					<div class="input-group">

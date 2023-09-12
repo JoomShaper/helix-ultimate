@@ -1913,6 +1913,8 @@ class HelixUltimate
 								$customElements[] = (string) $attribute['name'];
 							}
 						}
+
+						break;
 					}
 				}
 			}

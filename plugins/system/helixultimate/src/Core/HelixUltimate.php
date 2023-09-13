@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
@@ -1887,32 +1888,50 @@ class HelixUltimate
 
 		if($custom_style || !$preset)
 		{
-			$scssVars = array(
-				'preset' => 'default',
-				'text_color' => $this->params->get('text_color'),
-				'bg_color' => $this->params->get('bg_color'),
-				'link_color' => $this->params->get('link_color'),
-				'link_hover_color' => $this->params->get('link_hover_color'),
-				'header_bg_color' => $this->params->get('header_bg_color'),
-				'logo_text_color' => $this->params->get('logo_text_color'),
-				'menu_text_color' => $this->params->get('menu_text_color'),
-				'menu_text_hover_color' => $this->params->get('menu_text_hover_color'),
-				'menu_text_active_color' => $this->params->get('menu_text_active_color'),
-				'menu_dropdown_bg_color' => $this->params->get('menu_dropdown_bg_color'),
-				'menu_dropdown_text_color' => $this->params->get('menu_dropdown_text_color'),
-				'menu_dropdown_text_hover_color' => $this->params->get('menu_dropdown_text_hover_color'),
-				'menu_dropdown_text_active_color' => $this->params->get('menu_dropdown_text_active_color'),
-				'footer_bg_color' => $this->params->get('footer_bg_color'),
-				'footer_text_color' => $this->params->get('footer_text_color'),
-				'footer_link_color' => $this->params->get('footer_link_color'),
-				'footer_link_hover_color' => $this->params->get('footer_link_hover_color'),
-				'topbar_bg_color' => $this->params->get('topbar_bg_color'),
-				'topbar_text_color' => $this->params->get('topbar_text_color'),
-				'offcanvas_menu_icon_color' => $this->params->get('offcanvas_menu_icon_color') ?? '#000000',
-				'offcanvas_menu_bg_color' => $this->params->get('offcanvas_menu_bg_color') ?? $this->params->get('menu_dropdown_bg_color'),
-				'offcanvas_menu_items_and_items_color' => $this->params->get('offcanvas_menu_items_and_items_color') ?? $this->params->get('menu_dropdown_text_color'),
-				'offcanvas_menu_active_menu_item_color' => $this->params->get('offcanvas_menu_active_menu_item_color') ?? $scssVars['menu_text_active_color']
-			);
+			$scssVars = ['preset' => 'default'];
+			$customElements = [];
+
+			// Read Custom Style data from XML to set custom $scssVars
+			$template = Helper::loadTemplateData();
+			$form = new Form('custom');
+			$form->loadFile(JPATH_ROOT . '/templates/' . $template->template . '/options.xml');
+			$formXml = $form->getXml();
+
+			if (!empty($formXml))
+			{
+				for ($i = 0; $i < $formXml->count(); ++$i)
+				{
+					$fieldset = isset($formXml->fieldset[$i]) ? $formXml->fieldset[$i] : null;
+					$attributes = !\is_null($fieldset) ? $fieldset->attributes() : null;
+
+					if ($attributes['name'] == 'presets') {
+
+						foreach ($fieldset as $field) {
+							$attribute = !\is_null($field) ? $field->attributes() : null;
+
+							if (isset($attribute['dependant']) && $attribute['dependant'] == 'custom_style:1') {
+								$customElements[] = (string) $attribute['name'];
+							}
+						}
+
+						break;
+					}
+				}
+			}
+
+			foreach ($customElements as $customElement) {
+				if ($customElement == 'offcanvas_menu_icon_color') {
+					$scssVars[$customElement] = $this->params->get($customElement) ?? '#000000';
+				} elseif ($customElement == 'offcanvas_menu_bg_color') {
+					$scssVars[$customElement] = $this->params->get($customElement) ?? $this->params->get('menu_dropdown_bg_color');
+				} elseif ($customElement == 'offcanvas_menu_items_and_items_color') {
+					$scssVars[$customElement] = $this->params->get($customElement) ?? $this->params->get('menu_dropdown_text_color');
+				} elseif ($customElement == 'offcanvas_menu_active_menu_item_color') {
+					$scssVars[$customElement] = $this->params->get($customElement) ?? $this->params->get('menu_text_active_color');
+				} else {
+					$scssVars[$customElement] = $this->params->get($customElement);
+				}
+			}
 		}
 		else
 		{

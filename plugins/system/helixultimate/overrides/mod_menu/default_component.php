@@ -35,7 +35,10 @@ if ($item->anchor_rel)
 
 $linktype = $item->title;
 
-if ($item->menu_image)
+if ($item->menu_icon) {
+	$linktype = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+}
+else if ($item->menu_image)
 {
 	if ($item->menu_image_css)
 	{

@@ -115,8 +115,11 @@ class HelixUltimateFeatureMenu
 			$html[] = '<a href="#" class="sp-sign-in"><i class="fas fa-user-circle" aria-hidden="true"></i> <span class="user-text d-none d-xl-inline-block"> ' . ($user->name ?? '') . '</span> <i class="fas fa-chevron-down arrow-icon" aria-hidden="true"></i></a>';
 			$html[] = '<ul class="sp-profile-dropdown">';
 
-			$modules= ModuleHelper::getModules('logged-in-usernemu');
-			$html[] = '<li class="custom_user_login_menu">'.ModuleHelper::renderModule($modules[0], ['style' => 'none']).'</li>';
+			$modules= ModuleHelper::getModules('logged-in-usermenu');
+
+			if (!empty($modules)) {
+				$html[] = '<li class="custom_user_login_menu">'.ModuleHelper::renderModule($modules[0], ['style' => 'none']).'</li>';
+			}
 
 			$html[] = '	<li class="sp-profile-dropdown-item">';
 			$html[] = '		<a href="' . Route::_('index.php?option=com_users&view=profile') . '">' . Text::_('HELIX_ULTIMATE_USER_PROFILE') . '</a>';

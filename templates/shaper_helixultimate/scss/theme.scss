@@ -2606,3 +2606,16 @@ body.contentpane.com-contact.view-contacts.layout-modal {
   white-space: nowrap !important;
   border: 0 !important;
 }
+
+// Custom logged in user menu
+li.custom_user_login_menu ul li:last-child, li.custom_user_login_menu {
+  border-bottom: none; 
+}
+li.custom_user_login_menu ul {
+  padding-left:0;
+  list-style:none;
+}
+li.custom_user_login_menu ul li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee; 
+}

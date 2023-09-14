@@ -64,6 +64,7 @@
         <position>404</position>
         <position>debug</position>
         <position>offcanvas-modules</position>
+        <position>logged-in-usermenu</position>
     </positions>
 
     <files>

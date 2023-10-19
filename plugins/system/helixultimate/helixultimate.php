@@ -296,7 +296,11 @@ class PlgSystemHelixultimate extends CMSPlugin
 				 */
 				if (!empty($request))
 				{
-					$this->app->getDispatcher()->dispatch('onAfterRespond');
+					if (JoomlaBridge::getVersion('major') > 4) {
+						$this->app->getDispatcher()->dispatch('onAfterRespond');
+					} else {
+						$this->app->triggerEvent('onAfterRespond');
+					}
 				}
 			}
 		}

@@ -22,6 +22,8 @@ class HelixUltimateFeatureContact
 	 * @since	1.0.0
 	 */
 	private $params;
+	public $position;
+	public $load_pos;
 
 	/**
 	 * Constructor function

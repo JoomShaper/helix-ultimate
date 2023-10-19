@@ -22,6 +22,8 @@ class HelixUltimateFeatureFooter
 	 * @since	1.0.0
 	 */
 	private $params;
+	public $position;
+	public $load_pos;
 
 	public function __construct($params)
 	{

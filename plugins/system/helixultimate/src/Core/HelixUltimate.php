@@ -1947,7 +1947,14 @@ class HelixUltimate
 		$scssVars['header_height_sm'] 	= $this->params->get('header_height_sm', '60px');
 		$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '50px');
 		$scssVars['offcanvas_width'] 	= $this->params->get('offcanvas_width', '300') . 'px';
+		
+		
+		$scssVars['font_awesome_font_family'] 	= '"Font Awesome 5 Free"';
 
+		if (JoomlaBridge::getVersion('major') > 4) {
+			$scssVars['font_awesome_font_family'] 	= '"Font Awesome 6 Free"';
+		}
+		
 		return $scssVars;
 	}
 

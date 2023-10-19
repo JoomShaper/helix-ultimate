@@ -36,7 +36,7 @@ else if ($item->menu_image)
 		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
 	}
 
-	if ($item->getParams->get('menu_text', 1))
+	if ($item->params->get('menu_text', 1))
 	{
 		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
 	}

@@ -26,6 +26,7 @@ class HelixUltimateFeatureTitle
 	 * @since	1.0.0
 	 */
 	private $params;
+	public $position;
 
 	/**
 	 * Constructor function

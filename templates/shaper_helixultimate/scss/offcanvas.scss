@@ -175,7 +175,7 @@
               -webkit-transform: translateY(-50%);
               padding: 10px;
               &:after {
-                font-family: "Font Awesome 5 Free";
+                font-family: $font_awesome_font_family;
                 content: "\f105";
                 font-weight: 900;
               }
@@ -198,7 +198,7 @@
               -webkit-transform: translateY(-50%);
               padding: 2px 10px;
               &:after {
-                font-family: "Font Awesome 5 Free";
+                font-family: $font_awesome_font_family;
                 content: "\f105";
                 font-weight: 900;
               }
@@ -217,7 +217,7 @@
             > .menu-separator {
               > .menu-toggler {
                 &:after {
-                  font-family: "Font Awesome 5 Free";
+                  font-family: $font_awesome_font_family;
                   content: "\f107";
                   font-weight: 900;
                 }
@@ -226,7 +226,7 @@
             > .nav-header {
               > .menu-toggler {
                 &:after {
-                  font-family: "Font Awesome 5 Free";
+                  font-family: $font_awesome_font_family;
                   content: "\f107";
                   font-weight: 900;
                 }
@@ -242,7 +242,7 @@
               transform: translateY(-50%);
               -webkit-transform: translateY(-50%);
               &:after {
-                font-family: "Font Awesome 5 Free";
+                font-family: $font_awesome_font_family;
                 content: "\f105";
                 font-weight: 900;
               }

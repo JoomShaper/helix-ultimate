@@ -501,7 +501,7 @@ div.mod-languages {
     form {
       &:after {
         content: "\f002";
-        font-family: "Font Awesome 5 Free";
+        font-family: $font_awesome_font_family;
         font-weight: 900;
         position: absolute;
         top: 0;
@@ -664,7 +664,7 @@ body.modal-menu-active {
         position: relative;
         &:after {
           content: "\f105";
-          font-family: "Font Awesome 5 Free";
+          font-family: $font_awesome_font_family;
           float: right;
           position: absolute;
           top: 2px;
@@ -1399,7 +1399,7 @@ body.view-article.remove-container {
     display: inline-block;
     margin-left: 5px;
     span.rating-star {
-      font-family: "Font Awesome 5 Free";
+      font-family: $font_awesome_font_family;
       font-weight: normal;
       font-style: normal;
       display: inline-block;
@@ -1939,7 +1939,7 @@ select:not(.form-select) {
           font: normal normal normal 14px/1 FontAwesome;
           &:after {
             content: "\f0dc";
-            font-family: "Font Awesome 5 Free";
+            font-family: $font_awesome_font_family;
             font-weight: 900;
             font-size: 0.875rem;
             position: absolute;

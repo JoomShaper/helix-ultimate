@@ -78,6 +78,11 @@ class HelixultimateMenu
 	 */
 	public $menuname = 'mainmenu';
 
+	public $app;
+	public $template;
+	public $extraclass;
+	public $children;
+
 	/**
 	 * Constructor class.
 	 *

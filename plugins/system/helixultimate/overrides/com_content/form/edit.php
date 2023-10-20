@@ -55,7 +55,7 @@ $editoroptions = isset($params->show_publishing_options);
 
 if (!$editoroptions)
 {
-	$params->show_urls_images_frontend = '0';
+	$params->set('show_urls_images_frontend', '0');
 }
 
 $jversion = "";

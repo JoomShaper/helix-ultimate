@@ -1989,7 +1989,7 @@ select:not(.form-select) {
 
       &:after {
         content: "\f002";
-        font-family: FontAwesome;
+        font-family: "FontAwesome";
         font-size: 0.875rem;
         color: rgba(0, 0, 0, 0.2);
         position: absolute;
@@ -2061,7 +2061,7 @@ select:not(.form-select) {
             }
             &:after {
               content: "\f00d";
-              font-family: FontAwesome;
+              font-family: "FontAwesome";
               font-size: 0.875rem;
               position: absolute;
               top: 0;

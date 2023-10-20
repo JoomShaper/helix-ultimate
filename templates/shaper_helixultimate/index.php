@@ -10,7 +10,6 @@ defined('_JEXEC') or die('Restricted Direct Access!');
 
 use HelixUltimate\Framework\Core\HelixUltimate;
 use HelixUltimate\Framework\Platform\Helper;
-use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;

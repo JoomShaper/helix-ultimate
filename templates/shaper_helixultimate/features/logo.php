@@ -46,11 +46,13 @@ class HelixUltimateFeatureLogo
 
 	/**
 	 * Render the logo features.
+	 * 
+	 * @param boolean $isToggle 	Will show toggler if true
 	 *
 	 * @return	string
 	 * @since	1.0.0
 	 */
-	public function renderFeature()
+	public function renderFeature($isToggle = true)
 	{
 
 		$template_name = HelixUltimate\Framework\Platform\Helper::loadTemplateData()->template;
@@ -65,7 +67,7 @@ class HelixUltimateFeatureLogo
 
 		$html = '';
 
-		if ($offcanvas_position === 'left')
+		if ($isToggle && $offcanvas_position === 'left')
 		{
 			if ($menu_type === 'mega')
 			{

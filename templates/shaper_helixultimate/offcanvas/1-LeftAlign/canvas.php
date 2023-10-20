@@ -40,6 +40,11 @@ $searchModule = Helper::getSearchModule();
 ?>
 <div class="offcanvas-menu">
 	<div class="d-flex align-items-center p-3 pt-4">
+		<?php 
+			if ($params->get('offcanvas_enable_logo', 0)) {
+				echo $logo->renderFeature(false);
+			} 
+		?>
 		<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
 			<div class="burger-icon">
 				<span></span>
@@ -48,6 +53,7 @@ $searchModule = Helper::getSearchModule();
 			</div>
 		</a>
 	</div>
+	
 	<div class="offcanvas-inner">
 		<div class="d-flex header-modules mb-3">
 			<?php if ($params->get('offcanvas_enable_search', 0)): ?>

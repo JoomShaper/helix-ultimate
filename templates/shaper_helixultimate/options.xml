@@ -1270,6 +1270,13 @@
 			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_CONTACTS_DESC"
 			default="0"/>
 
+		<field name="offcanvas_enable_logo" 
+			type="checkbox" 
+			helixgroup="offcanvas" 
+			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGO"
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGO_DESC"
+			default="0"/>
+
 	</fieldset>
 
 	<!--Typography-->

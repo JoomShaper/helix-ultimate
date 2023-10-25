@@ -10,7 +10,21 @@ jQuery(function($) {
 	$(document).ready(function() {
 		var first_tab = $('#myTabTabs').find('>li').first();
 		$('a[href="#attrib-helix_ultimate_blog_options"]').parent().insertAfter(first_tab);
+
+		activateBlogMediaContent();
 	})
+
+	function activateBlogMediaContent() {
+		console.log('called');
+		// Find the label with the "active" class within the fieldset
+		var activeLabel = $('#jform_attribs_helix_ultimate_article_format label.active');
+
+		// Check if a label with "active" class was found
+		if (activeLabel.length > 0) {
+			// Trigger a click event on the found label
+			activeLabel.click();
+		}
+	}
 
 	$('.hu-image-field').each(function(index, el) {
 

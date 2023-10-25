@@ -15,7 +15,6 @@ jQuery(function($) {
 	})
 
 	function activateBlogMediaContent() {
-		console.log('called');
 		// Find the label with the "active" class within the fieldset
 		var activeLabel = $('#jform_attribs_helix_ultimate_article_format label.active');
 

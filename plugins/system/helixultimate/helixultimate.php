@@ -296,7 +296,11 @@ class PlgSystemHelixultimate extends CMSPlugin
 				 */
 				if (!empty($request))
 				{
-					$this->app->triggerEvent('onAfterRespond');
+					if (JoomlaBridge::getVersion('major') > 4) {
+						$this->app->getDispatcher()->dispatch('onAfterRespond');
+					} else {
+						$this->app->triggerEvent('onAfterRespond');
+					}
 				}
 			}
 		}
@@ -479,6 +483,40 @@ class PlgSystemHelixultimate extends CMSPlugin
 	 * @since	2.0.0
 	 */
 	private function sanitizeAssetsForJ4()
+	{
+		$doc = Factory::getDocument();
+		$wa = $doc->getWebAssetManager();
+
+		/**
+		 * Disable the atum specific styles and scripts.
+		 */
+		$assets = [
+			'style' => ['template.atum.base', 'template.atum', 'template.active', 'template.active.language', 'template.user', 'template.atum.ltr', 'template.atum.rtl'],
+			'script' => ['choicesjs', 'dragula']
+		];
+
+		foreach ($assets as $type => $names)
+		{
+			foreach ($names as $name)
+			{
+				if ($wa->assetExists($type, $name))
+				{
+					$methodName = 'disable' . ucfirst($type);
+					$wa->$methodName($name);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Sanitize the assets i.e. scripts and stylesheets before adding to the head.
+	 * This function is applicable for Joomla 4.
+	 * @note This method is using dynamically.
+	 *
+	 * @return	void
+	 * @since	2.0.16
+	 */
+	private function sanitizeAssetsForJ5()
 	{
 		$doc = Factory::getDocument();
 		$wa = $doc->getWebAssetManager();

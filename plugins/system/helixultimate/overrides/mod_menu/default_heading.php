@@ -20,7 +20,11 @@ $isOffcanvasMenu = $params->get('hu_offcanvas', 0, 'INT') === 1;
 $maxLevel = $params->get('endLevel', 0, 'INT');
 $showToggler = $maxLevel === 0 || $item->level < $maxLevel;
 
-if ($item->menu_image)
+if ($item->menu_icon) {
+	$linktype = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+}
+
+else if ($item->menu_image)
 {
 	if ($item->menu_image_css)
 	{
@@ -32,7 +36,7 @@ if ($item->menu_image)
 		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
 	}
 
-	if ($item->getParams->get('menu_text', 1))
+	if ($item->params->get('menu_text', 1))
 	{
 		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
 	}

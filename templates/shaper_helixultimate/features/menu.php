@@ -12,7 +12,7 @@ use HelixUltimate\Framework\Core\Classes\HelixultimateMenu;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-
+use Joomla\CMS\Helper\ModuleHelper;
 /**
  * Helix Ultimate Menu class
  *
@@ -27,6 +27,8 @@ class HelixUltimateFeatureMenu
 	 * @since	1.0.0
 	 */
 	private $params;
+	public $position;
+	public $load_pos;
 
 	/**
 	 * Constructor function
@@ -114,6 +116,13 @@ class HelixUltimateFeatureMenu
 			$html[] = '<div class="sp-profile-wrapper">';
 			$html[] = '<a href="#" class="sp-sign-in"><i class="fas fa-user-circle" aria-hidden="true"></i> <span class="user-text d-none d-xl-inline-block"> ' . ($user->name ?? '') . '</span> <i class="fas fa-chevron-down arrow-icon" aria-hidden="true"></i></a>';
 			$html[] = '<ul class="sp-profile-dropdown">';
+
+			$modules= ModuleHelper::getModules('logged-in-usermenu');
+
+			if (!empty($modules)) {
+				$html[] = '<li class="custom_user_login_menu">'.ModuleHelper::renderModule($modules[0], ['style' => 'none']).'</li>';
+			}
+
 			$html[] = '	<li class="sp-profile-dropdown-item">';
 			$html[] = '		<a href="' . Route::_('index.php?option=com_users&view=profile') . '">' . Text::_('HELIX_ULTIMATE_USER_PROFILE') . '</a>';
 			$html[] = '	</li>';

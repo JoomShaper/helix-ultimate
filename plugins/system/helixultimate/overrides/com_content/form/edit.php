@@ -51,11 +51,8 @@ $this->form->setValue('helix_ultimate_gallery', 'attribs', !empty($attribs->heli
 $this->form->setValue('helix_ultimate_video', 'attribs', !empty($attribs->helix_ultimate_video) ? $attribs->helix_ultimate_video : '');
 
 // This checks if the editor config options have ever been saved. If they haven't they will fall back to the original settings.
-$editoroptions = isset($params->show_publishing_options);
-
-if (!$editoroptions)
-{
-	$params->show_urls_images_frontend = '0';
+if (!$params->exists('show_publishing_options')) {
+	$params->set('show_urls_images_frontend', '0');
 }
 
 $jversion = "";
@@ -92,59 +89,59 @@ if (JVERSION >= 4) {
 			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab'); ?>
 			
 			<?php if ($params->get('show_urls_images_frontend')) : ?>
-			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.addTab', $this->tab_name, 'images', Text::_('COM_CONTENT_IMAGES_AND_URLS')); ?>
-			
-				<div class="row">
-					<div class="col-sm-6 mb-3">
-						<?php echo $this->form->renderField('image_intro', 'images'); ?>
-						<?php echo $this->form->renderField('image_intro_alt', 'images'); ?>
-						<?php echo $this->form->renderField('image_intro_caption', 'images'); ?>
-						<?php echo $this->form->renderField('float_intro', 'images'); ?>
-					</div>
-
-					<div class="col-sm-6">
-						<?php echo $this->form->renderField('image_fulltext', 'images'); ?>
-						<?php echo $this->form->renderField('image_fulltext_alt', 'images'); ?>
-						<?php echo $this->form->renderField('image_fulltext_caption', 'images'); ?>
-						<?php echo $this->form->renderField('float_fulltext', 'images'); ?>
-					</div>
-				</div>
-
-				<hr>
-
-				<div class="row">
-					<div class="col-sm-4 mb-3">
-						<?php echo $this->form->renderField('urla', 'urls'); ?>
-						<?php echo $this->form->renderField('urlatext', 'urls'); ?>
-						<div class="control-group">
-							<div class="controls">
-								<?php echo $this->form->getInput('targeta', 'urls'); ?>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-4 mb-3">
-						<?php echo $this->form->renderField('urlb', 'urls'); ?>
-						<?php echo $this->form->renderField('urlbtext', 'urls'); ?>
-						<div class="control-group">
-							<div class="controls">
-								<?php echo $this->form->getInput('targetb', 'urls'); ?>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-sm-4 mb-3">
-						<?php echo $this->form->renderField('urlc', 'urls'); ?>
-						<?php echo $this->form->renderField('urlctext', 'urls'); ?>
-						<div class="control-group">
-							<div class="controls">
-								<?php echo $this->form->getInput('targetc', 'urls'); ?>
-							</div>
-						</div>
-					</div>
-				</div>
+				<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.addTab', $this->tab_name, 'images', Text::_('COM_CONTENT_IMAGES_AND_URLS')); ?>
 				
-			<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab'); ?>
+					<div class="row">
+						<div class="col-sm-6 mb-3">
+							<?php echo $this->form->renderField('image_intro', 'images'); ?>
+							<?php echo $this->form->renderField('image_intro_alt', 'images'); ?>
+							<?php echo $this->form->renderField('image_intro_caption', 'images'); ?>
+							<?php echo $this->form->renderField('float_intro', 'images'); ?>
+						</div>
+
+						<div class="col-sm-6">
+							<?php echo $this->form->renderField('image_fulltext', 'images'); ?>
+							<?php echo $this->form->renderField('image_fulltext_alt', 'images'); ?>
+							<?php echo $this->form->renderField('image_fulltext_caption', 'images'); ?>
+							<?php echo $this->form->renderField('float_fulltext', 'images'); ?>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="row">
+						<div class="col-sm-4 mb-3">
+							<?php echo $this->form->renderField('urla', 'urls'); ?>
+							<?php echo $this->form->renderField('urlatext', 'urls'); ?>
+							<div class="control-group">
+								<div class="controls">
+									<?php echo $this->form->getInput('targeta', 'urls'); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-4 mb-3">
+							<?php echo $this->form->renderField('urlb', 'urls'); ?>
+							<?php echo $this->form->renderField('urlbtext', 'urls'); ?>
+							<div class="control-group">
+								<div class="controls">
+									<?php echo $this->form->getInput('targetb', 'urls'); ?>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-4 mb-3">
+							<?php echo $this->form->renderField('urlc', 'urls'); ?>
+							<?php echo $this->form->renderField('urlctext', 'urls'); ?>
+							<div class="control-group">
+								<div class="controls">
+									<?php echo $this->form->getInput('targetc', 'urls'); ?>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				<?php echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab'); ?>
 			<?php endif; ?>
 
 			<?php echo LayoutHelper::render('joomla.edit.params', $this); ?>

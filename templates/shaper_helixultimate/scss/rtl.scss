@@ -28,7 +28,7 @@ body.rtl {
 		> li {
 			&.sp-has-child > a:before,
 			&.sp-has-child > span:before {
-				font-family: 'Font Awesome 5 Free';
+				font-family: $font_awesome_font_family;
 				content: '\f107';
 				float: left;
 				margin-right: 7px;
@@ -48,7 +48,7 @@ body.rtl {
 		.sp-dropdown {
 			.sp-dropdown-items {
 				.sp-has-child > a:after {
-					font-family: 'Font Awesome 5 Free';
+					font-family: $font_awesome_font_family;
 					content: '\f104';
 					float: left;
 					margin-right: 7px;

@@ -78,6 +78,11 @@ class HelixultimateMenu
 	 */
 	public $menuname = 'mainmenu';
 
+	public $app;
+	public $template;
+	public $extraclass;
+	public $children;
+
 	/**
 	 * Constructor class.
 	 *
@@ -219,6 +224,7 @@ class HelixultimateMenu
 			$item->title = htmlspecialchars($item->title ?? "", ENT_COMPAT, 'UTF-8', false);
 			$item->anchor_css   = htmlspecialchars($item->getParams()->get('menu-anchor_css', '') ?? "", ENT_COMPAT, 'UTF-8', false);
 			$item->anchor_title = htmlspecialchars($item->getParams()->get('menu-anchor_title', '') ?? "", ENT_COMPAT, 'UTF-8', false);
+			$item->menu_icon = htmlspecialchars($item->getParams()->get('menu_icon_css', '') ?? "", ENT_COMPAT, 'UTF-8', false);
 			$item->anchor_rel = htmlspecialchars($item->getParams()->get('menu-anchor_rel', '') ?? "", ENT_COMPAT, 'UTF-8', false);
 			$item->menu_image   = $item->getParams()->get('menu_image', '') ? htmlspecialchars($item->getParams()->get('menu_image', '') ?? "", ENT_COMPAT, 'UTF-8', false) : '';
 		}
@@ -652,7 +658,10 @@ class HelixultimateMenu
 
 		$class = !empty($class) ? 'class="' . $class . '"' : '';
 
-		if ($item->menu_image)
+		if ($item->menu_icon) {
+			$linktitle = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+		}
+		else if ($item->menu_image)
 		{
 			$item->getParams()->get('menu_text', 1) ?
 				$linktitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" /><span class="image-title">' . $item->title . '</span> ' :

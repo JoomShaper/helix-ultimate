@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "scssphp/scssphp",
-            "version": "v1.10.3",
+            "version": "v1.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/scssphp/scssphp.git",
-                "reference": "0f1e1516ed2412ad43e42a6a319e77624ba1f713"
+                "reference": "ace2503684bab0dcc817d7614c8a54b865122414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/0f1e1516ed2412ad43e42a6a319e77624ba1f713",
-                "reference": "0f1e1516ed2412ad43e42a6a319e77624ba1f713",
+                "url": "https://api.github.com/repos/scssphp/scssphp/zipball/ace2503684bab0dcc817d7614c8a54b865122414",
+                "reference": "ace2503684bab0dcc817d7614c8a54b865122414",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,7 @@
                 "thoughtbot/bourbon": "^7.0",
                 "twbs/bootstrap": "~5.0",
                 "twbs/bootstrap4": "4.6.1",
-                "zurb/foundation": "~6.5"
+                "zurb/foundation": "~6.7.0"
             },
             "suggest": {
                 "ext-iconv": "Can be used as fallback when ext-mbstring is not available",
@@ -44,6 +44,12 @@
                 "bin/pscss"
             ],
             "type": "library",
+            "extra": {
+                "bamarni-bin": {
+                    "forward-command": false,
+                    "bin-links": false
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "ScssPhp\\ScssPhp\\": "src/"
@@ -76,31 +82,31 @@
             ],
             "support": {
                 "issues": "https://github.com/scssphp/scssphp/issues",
-                "source": "https://github.com/scssphp/scssphp/tree/v1.10.3"
+                "source": "https://github.com/scssphp/scssphp/tree/v1.11.1"
             },
-            "time": "2022-05-16T07:22:18+00:00"
+            "time": "2023-09-24T13:38:17+00:00"
         },
         {
             "name": "tedivm/jshrink",
-            "version": "v1.4.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tedious/JShrink.git",
-                "reference": "0513ba1407b1f235518a939455855e6952a48bbc"
+                "reference": "7a35f5a4651ca2ce77295eb8a3b4e133ba47e19e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tedious/JShrink/zipball/0513ba1407b1f235518a939455855e6952a48bbc",
-                "reference": "0513ba1407b1f235518a939455855e6952a48bbc",
+                "url": "https://api.github.com/repos/tedious/JShrink/zipball/7a35f5a4651ca2ce77295eb8a3b4e133ba47e19e",
+                "reference": "7a35f5a4651ca2ce77295eb8a3b4e133ba47e19e",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.6|^7.0|^8.0"
+                "php": "^7.0|^8.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.8",
-                "php-coveralls/php-coveralls": "^1.1.0",
-                "phpunit/phpunit": "^6"
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "php-coveralls/php-coveralls": "^2.5.0",
+                "phpunit/phpunit": "^9|^10"
             },
             "type": "library",
             "autoload": {
@@ -126,15 +132,19 @@
             ],
             "support": {
                 "issues": "https://github.com/tedious/JShrink/issues",
-                "source": "https://github.com/tedious/JShrink/tree/v1.4.0"
+                "source": "https://github.com/tedious/JShrink/tree/v1.7.0"
             },
             "funding": [
+                {
+                    "url": "https://github.com/tedivm",
+                    "type": "github"
+                },
                 {
                     "url": "https://tidelift.com/funding/github/packagist/tedivm/jshrink",
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-11-30T18:10:21+00:00"
+            "time": "2023-10-04T17:23:23+00:00"
         }
     ],
     "packages-dev": [],

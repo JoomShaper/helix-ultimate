@@ -1872,7 +1872,7 @@ input[type="search"],
 input[type="tel"],
 input[type="number"],
 textarea {
-  outline: none;
+  outline: none !important;
   box-shadow: none !important;
 }
 

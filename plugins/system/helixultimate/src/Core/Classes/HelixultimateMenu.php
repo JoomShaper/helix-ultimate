@@ -659,7 +659,14 @@ class HelixultimateMenu
 		$class = !empty($class) ? 'class="' . $class . '"' : '';
 
 		if ($item->menu_icon) {
-			$linktitle = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+			if ($item->getParams()->get('menu_text', 1))
+			{
+				$linktitle = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+			}
+			else
+			{
+				$linktitle = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+			}
 		}
 		else if ($item->menu_image)
 		{

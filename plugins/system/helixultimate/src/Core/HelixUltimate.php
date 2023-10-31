@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -645,7 +646,7 @@ class HelixUltimate
 					$fluidrow = $modified_row->settings->fluidrow;
 				}
 
-				$id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-' . \JFilterOutput::stringURLSafe($modified_row->settings->name) : 'sp-section-' . ($key + 1);
+				$id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-' . OutputFilter::stringURLSafe($modified_row->settings->name) : 'sp-section-' . ($key + 1);
 				$row_class = $this->build_row_class($modified_row->settings);
 				$this->add_row_styles($modified_row->settings, $id);
 				$sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';

@@ -293,13 +293,13 @@ class Media
 						$folder = ltrim($dir, '/');
 
 						// Do no override existing file
-						$media_file = preg_replace('#\s+#', "-", \JFile::makeSafe(basename(strtolower($name))));
+						$media_file = preg_replace('#\s+#', "-", File::makeSafe(basename(strtolower($name))));
 						$i = 0;
 
 						do
 						{
-							$base_name  = \JFile::stripExt($media_file) . ($i ? "$i" : "");
-							$ext        = \JFile::getExt($media_file);
+							$base_name  = File::stripExt($media_file) . ($i ? "$i" : "");
+							$ext        = File::getExt($media_file);
 							$media_name = $base_name . '.' . $ext;
 							$i++;
 							$dest       = \JPATH_ROOT . '/' . $folder . '/' . $media_name;

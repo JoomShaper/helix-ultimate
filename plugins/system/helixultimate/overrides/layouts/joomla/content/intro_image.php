@@ -13,6 +13,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 $params = $displayData->params;
 $attribs = json_decode($displayData->attribs ?? "");
@@ -48,11 +49,14 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 			$intro_image = Uri::root(true) . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . File::getExt($basename);
 		}
 	}
+
+	$version = new Version();
+	$JoomlaVersion = $version->getShortVersion();
 }
 ?>
 <?php if ($intro_image) : ?>
 	<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
-		<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
+		<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language) : ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
 		<?php endif; ?>
 		<div class="article-intro-image">
 			<?php 
@@ -82,7 +86,8 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 		<?php $imgfloat = empty($images->float_intro) ? $params->get('float_intro') : $images->float_intro; ?>
 		<div class="article-intro-image float-<?php echo htmlspecialchars($imgfloat, ENT_COMPAT, 'UTF-8'); ?>">
 			<?php if ($params->get('link_titles') && $params->get('access-view')) : ?>
-				<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
+				
+				<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language) : ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
 					<?php
 					if (JVERSION >= 4)
 					{

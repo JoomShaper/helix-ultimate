@@ -149,11 +149,11 @@ else
 {
 	if (!$readonly)
 	{
-		JHtml::_('behavior.modal', 'a.modal_' . $id);
-		JHtml::_('script', 'jui/fielduser.min.js', array('version' => 'auto', 'relative' => true));
+		HTMLHelper::_('behavior.modal', 'a.modal_' . $id);
+		HTMLHelper::_('script', 'jui/fielduser.min.js', array('version' => 'auto', 'relative' => true));
 	}
 
-	$uri = new JUri('index.php?option=com_users&view=users&layout=modal&tmpl=component&required=0');
+	$uri = new Uri('index.php?option=com_users&view=users&layout=modal&tmpl=component&required=0');
 
 	$uri->setVar('field', $this->escape($id));
 
@@ -173,7 +173,7 @@ else
 	}
 
 	// Invalidate the input value if no user selected
-	if ($this->escape($userName) === JText::_('JLIB_FORM_SELECT_USER'))
+	if ($this->escape($userName) === Text::_('JLIB_FORM_SELECT_USER'))
 	{
 		$userName = '';
 	}
@@ -194,18 +194,18 @@ else
 
 	if (!$readonly)
 	{
-		$inputAttributes['placeholder'] = JText::_('JLIB_FORM_SELECT_USER');
+		$inputAttributes['placeholder'] = Text::_('JLIB_FORM_SELECT_USER');
 	}
 
 	$anchorAttributes = array(
-		'class' => 'btn btn-primary modal_' . $id, 'title' => JText::_('JLIB_FORM_CHANGE_USER'), 'rel' => '{handler: \'iframe\', size: {x: 800, y: 500}}'
+		'class' => 'btn btn-primary modal_' . $id, 'title' => Text::_('JLIB_FORM_CHANGE_USER'), 'rel' => '{handler: \'iframe\', size: {x: 800, y: 500}}'
 	);
 
 	?>
 	<div class="input-group">
 		<input class="form-control field-user-input-name" <?php echo ArrayHelper::toString($inputAttributes); ?> readonly />
 		<?php if (!$readonly) : ?>
-			<?php echo JHtml::_('link', (string) $uri, '<span class="fa fa-user"></span>', $anchorAttributes); ?>
+			<?php echo HTMLHelper::_('link', (string) $uri, '<span class="fa fa-user"></span>', $anchorAttributes); ?>
 		<?php endif; ?>
 	</div>
 	<?php if (!$readonly) : ?>

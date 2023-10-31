@@ -11,9 +11,13 @@ defined ('JPATH_BASE') or die();
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $params = $template->params;
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 
 if( $params->get('comment') != 'disabled' )
 {
@@ -23,7 +27,7 @@ if( $params->get('comment') != 'disabled' )
 	{
 		if(in_array($displayData->catid, $comment_categories))
 		{
-			$url = Route::_(\ContentHelperRoute::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language));
+			$url = Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language) : ContentHelperRoute::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language));
 			$root = Uri::base();
 			$root = new Uri($root);
 			$url = $root->getScheme() . '://' . $root->getHost() . $url;

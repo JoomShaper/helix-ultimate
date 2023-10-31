@@ -87,7 +87,7 @@ class Blog
 				if (!$error)
 				{
 					$date = Factory::getDate();
-					$folder = HTMLHelper::_('date', $date, 'Y') . '/' . \JHtml::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
+					$folder = HTMLHelper::_('date', $date, 'Y') . '/' . HTMLHelper::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
 
 					if (!file_exists(JPATH_ROOT . '/images/' . $folder))
 					{

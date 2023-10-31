@@ -10,10 +10,10 @@ defined ('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 // Create a shortcut for params.
 $params  = &$this->item->params;
@@ -27,9 +27,12 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 
 $currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
 $isNotPublishedYet = $this->item->publish_up > $currentDate;
-$isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(JFactory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(JFactory::getDate())) && $this->item->publish_down != JFactory::getDbo()->getNullDate())) : ($this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED || $isNotPublishedYet)
+$isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(Factory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate())) : ($this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED || $isNotPublishedYet)
 	|| ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
 $isExpired         = JVERSION < 4 ? $this->item->publish_down < $currentDate && $this->item->publish_down !== Factory::getDbo()->getNullDate() : !is_null($this->item->publish_down) && $this->item->publish_down < $currentDate;
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 ?>
 
 <?php if($article_format == 'gallery') : ?>
@@ -82,13 +85,13 @@ $isExpired         = JVERSION < 4 ? $this->item->publish_down < $currentDate && 
 
 	<?php if ($params->get('show_readmore') && $this->item->readmore) :
 		if ($params->get('access-view')) :
-			$link = Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language));
+			$link = Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language) : ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language));
 		else :
 			$menu = Factory::getApplication()->getMenu();
 			$active = $menu->getActive();
 			$itemId = $active->id;
 			$link = new Uri(Route::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false));
-			$link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language)));
+			$link->setVar('return', base64_encode(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language) : ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language)));
 		endif; ?>
 
 		<?php echo LayoutHelper::render('joomla.content.readmore', array('item' => $this->item, 'params' => $params, 'link' => $link)); ?>

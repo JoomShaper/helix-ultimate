@@ -16,6 +16,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Helper\MediaHelper;
 
 /**
  * Media helper class.
@@ -254,7 +255,7 @@ class Media
 				$params 		= ComponentHelper::getParams('com_media');
 				$contentLength 	= (int) $_SERVER['CONTENT_LENGTH'];
 
-				$mediaHelper = new \JHelperMedia;
+				$mediaHelper = new MediaHelper;
 				$postMaxSize = $mediaHelper->toBytes(ini_get('post_max_size'));
 				$memoryLimit = $mediaHelper->toBytes(ini_get('memory_limit'));
 

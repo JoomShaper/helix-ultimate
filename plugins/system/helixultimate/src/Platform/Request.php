@@ -485,7 +485,7 @@ class Request
 			unlink($this->layout_file_path);
 			$this->report['status'] = true;
 			$this->report['message'] = 'File removed';
-			$this->report['layout'] = \JFolder::files($this->layouts_folder_path, '.json');
+			$this->report['layout'] = Folder::files($this->layouts_folder_path, '.json');
 		}
 	}
 
@@ -706,7 +706,7 @@ class Request
 	 */
 	private function generateLayoutHTML($content = array())
 	{
-		$lang = \JFactory::getLanguage();
+		$lang = Factory::getLanguage();
 		$lang->load('tpl_' . $this->template, JPATH_SITE, $lang->getName(), true);
 
 		$colGrid = array(

@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+use Joomla\CMS\Language\Text;
+
 defined ('_JEXEC') or die();
 
 function pagination_list_render($list)
@@ -31,11 +33,11 @@ function pagination_item_active(&$item)
 
 	$cls = '';
 
-    if ($item->text == JText::_('Next')) { $item->text = '&raquo;'; $cls = "next";}
-    if ($item->text == JText::_('Prev')) { $item->text = '&laquo;'; $cls = "previous";}
+    if ($item->text == Text::_('Next')) { $item->text = '&raquo;'; $cls = "next";}
+    if ($item->text == Text::_('Prev')) { $item->text = '&laquo;'; $cls = "previous";}
 
-	if ($item->text == JText::_('First')) { $cls = "first";}
-    if ($item->text == JText::_('Last'))   { $cls = "last";}
+	if ($item->text == Text::_('First')) { $cls = "first";}
+    if ($item->text == Text::_('Last'))   { $cls = "last";}
 
     return '<li class="page-item"><a class="page-link ' . $cls . '" href="' . $item->link . '" title="' . $item->text . '">' . $item->text . '</a></li>';
 }

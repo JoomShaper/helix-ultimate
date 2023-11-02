@@ -6,9 +6,13 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\FileLayout;
+
 defined ('_JEXEC') or die ();
 
-$fields = JFolder::files( dirname( __FILE__ ) . '/fields', '\.php$', false, true);
+$fields = Folder::files( dirname( __FILE__ ) . '/fields', '\.php$', false, true);
 foreach ($fields as $field)
 {
     require_once $field;
@@ -25,7 +29,7 @@ $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 <div class="hidden">
     <div class="save-box">
         <div class="mb-3">
-            <label><?php echo JText::_('HELIX_ENTER_LAYOUT_NAME'); ?></label>
+            <label><?php echo Text::_('HELIX_ENTER_LAYOUT_NAME'); ?></label>
             <input class="form-control addon-input addon-name" type="text" data-attrname="layout_name" value="" placeholder="">
         </div>
     </div>
@@ -33,7 +37,7 @@ $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
 
 <div class="hidden">
     <?php
-        $lt_section = new JLayoutFile('backend.section', $layout_path );
+        $lt_section = new FileLayout('backend.section', $layout_path );
         $obj = new stdClass;
         $obj->sectionID = true;
         echo $lt_section->render($obj);
@@ -50,7 +54,7 @@ $layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
     {
         foreach ($layout_data as $row)
         {
-            $lt_section = new JLayoutFile('backend.section', $layout_path );
+            $lt_section = new FileLayout('backend.section', $layout_path );
             $output .= $lt_section->render($row);
         }
     }

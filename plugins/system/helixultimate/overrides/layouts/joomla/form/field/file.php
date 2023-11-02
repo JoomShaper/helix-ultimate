@@ -10,6 +10,7 @@
 defined ('JPATH_BASE') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Utility\Utility;
 
 extract($displayData);
@@ -61,4 +62,4 @@ $maxSize = HTMLHelper::_('number.bytes', Utility::getMaxUploadSize());
 	<?php echo $autofocus ? ' autofocus' : ''; ?>
 	<?php echo !empty($onchange) ? ' onchange="' . $onchange . '"' : ''; ?>
 	<?php echo $required ? ' required aria-required="true"' : ''; ?>><br>
-	<?php echo JText::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?>
+	<?php echo Text::sprintf('JGLOBAL_MAXIMUM_UPLOAD_SIZE_LIMIT', $maxSize); ?>

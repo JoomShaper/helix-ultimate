@@ -6,13 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
-
 defined('_JEXEC') or die();
-
-$doc = Factory::getDocument();
-$doc->addStyleSheet(Uri::root(true) . '/media/system/css/joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
 
 extract($displayData);
 

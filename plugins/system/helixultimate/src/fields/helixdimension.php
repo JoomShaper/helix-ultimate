@@ -7,8 +7,6 @@
  */
 
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\HTML\HTMLHelper;
-use HelixUltimate\Framework\Core\Lib\FontawesomeIcons;
 
 defined('_JEXEC') or die();
 

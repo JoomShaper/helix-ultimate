@@ -23,6 +23,9 @@ $tplParams = $template->params;
 
 $leading = (isset($displayData->leading) && $displayData->leading) ? 1 : 0;
 
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
+
 if ($leading) 
 {
 	$blog_list_image = $tplParams->get('leading_blog_list_image', 'large');
@@ -49,9 +52,6 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 			$intro_image = Uri::root(true) . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . File::getExt($basename);
 		}
 	}
-
-	$version = new Version();
-	$JoomlaVersion = $version->getShortVersion();
 }
 ?>
 <?php if ($intro_image) : ?>

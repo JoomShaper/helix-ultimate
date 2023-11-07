@@ -51,7 +51,8 @@ $site_title = $app->get('sitename');
 			$theme->head();
 			$theme->add_js('jquery.countdown.min.js');
 			$theme->add_js('custom.js');
-			$theme->add_css('font-awesome.min.css, template.css');
+			$theme->add_css('font-awesome.min.css');
+			$theme->add_css('template.css');
 			$theme->add_css('presets/' . $params->get('preset', 'preset1') . '.css');
 			$theme->add_css('custom.css');
 

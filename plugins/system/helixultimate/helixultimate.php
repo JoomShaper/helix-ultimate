@@ -514,7 +514,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 	 * @note This method is using dynamically.
 	 *
 	 * @return	void
-	 * @since	2.0.16
+	 * @since	2.0.17
 	 */
 	private function sanitizeAssetsForJ5()
 	{

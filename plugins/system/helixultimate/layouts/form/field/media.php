@@ -6,23 +6,27 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+
 defined('JPATH_BASE') or die;
 
 extract($displayData);
 
 // Load the modal behavior script.
-JHtml::_('behavior.modal');
+HTMLHelper::_('behavior.modal');
 
 // Include jQuery
-JHtml::_('jquery.framework');
-JHtml::_('script', 'media/mediafield-mootools.min.js', array('version' => 'auto', 'relative' => true, 'framework' => true));
+HTMLHelper::_('jquery.framework');
+HTMLHelper::_('script', 'media/mediafield-mootools.min.js', array('version' => 'auto', 'relative' => true, 'framework' => true));
 
 // Tooltip for INPUT showing whole image path
 $options = array(
 	'onShow' => 'jMediaRefreshImgpathTip',
 );
 
-JHtml::_('behavior.tooltip', '.hasTipImgpath', $options);
+HTMLHelper::_('behavior.tooltip', '.hasTipImgpath', $options);
 
 if (!empty($class))
 {
@@ -69,7 +73,7 @@ switch ($preview)
 		$options = array(
 				'onShow' => 'jMediaRefreshPreviewTip',
 		);
-		JHtml::_('behavior.tooltip', '.hasTipPreview', $options);
+		HTMLHelper::_('behavior.tooltip', '.hasTipPreview', $options);
 		break;
 }
 
@@ -97,22 +101,22 @@ if ($showPreview)
 		'style' => $style,
 	);
 
-	$img = JHtml::_('image', $src, JText::_('JLIB_FORM_MEDIA_PREVIEW_ALT'), $imgattr);
+	$img = HTMLHelper::_('image', $src, Text::_('JLIB_FORM_MEDIA_PREVIEW_ALT'), $imgattr);
 	$previewImg = '<div id="' . $id . '_preview_img"' . ($src ? '' : ' style="display:none"') . '>' . $img . '</div>';
 	$previewImgEmpty = '<div id="' . $id . '_preview_empty"' . ($src ? ' style="display:none"' : '') . '>'
-		. JText::_('JLIB_FORM_MEDIA_PREVIEW_EMPTY') . '</div>';
+		. Text::_('JLIB_FORM_MEDIA_PREVIEW_EMPTY') . '</div>';
 
 	if ($showAsTooltip)
 	{
 		echo '<div class="media-preview add-on">';
 		$tooltip = $previewImgEmpty . $previewImg;
 		$options = array(
-			'title' => JText::_('JLIB_FORM_MEDIA_PREVIEW_SELECTED_IMAGE'),
+			'title' => Text::_('JLIB_FORM_MEDIA_PREVIEW_SELECTED_IMAGE'),
 					'text' => '<span class="icon-eye" aria-hidden="true"></span>',
 					'class' => 'hasTipPreview'
 					);
 
-		echo JHtml::_('tooltip', $tooltip, $options);
+		echo HTMLHelper::_('tooltip', $tooltip, $options);
 		echo '</div>';
 	}
 	else
@@ -129,12 +133,12 @@ echo '	<input type="text" name="' . $name . '" id="' . $id . '" value="'
 	. Uri::root() . '"/>';
 
 ?>
-<a class="modal btn" title="<?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?>" href="
+<a class="modal btn" title="<?php echo Text::_('JLIB_FORM_BUTTON_SELECT'); ?>" href="
 <?php echo ($readonly ? ''
 		: ($link ?: 'index.php?option=com_media&amp;view=images&amp;tmpl=component&amp;asset=' . $asset . '&amp;author='
 	. $authorField) . '&amp;fieldid=' . $id . '&amp;folder=' . $folder) . '"'
 	. ' rel="{handler: \'iframe\', size: {x: 800, y: 500}}"'; ?>>
- <?php echo JText::_('JLIB_FORM_BUTTON_SELECT'); ?></a><a class="btn hasTooltip" title="<?php echo JText::_('JLIB_FORM_BUTTON_CLEAR'); ?>" href="#" onclick="jInsertFieldValue('', '<?php echo $id; ?>'); return false;">
+ <?php echo Text::_('JLIB_FORM_BUTTON_SELECT'); ?></a><a class="btn hasTooltip" title="<?php echo Text::_('JLIB_FORM_BUTTON_CLEAR'); ?>" href="#" onclick="jInsertFieldValue('', '<?php echo $id; ?>'); return false;">
 	<span class="icon-remove" aria-hidden="true"></span></a>
 
 

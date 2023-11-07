@@ -6,6 +6,8 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
+use Joomla\CMS\Layout\FileLayout;
+
 defined('_JEXEC') or die();
 
 
@@ -32,7 +34,7 @@ extract($displayData);
 		<?php endif ?>
 	<?php endif ?>
 
-	<?php echo (new JLayoutFile('frontend.rows', $layout_path))->render($data); ?>
+	<?php echo (new FileLayout('frontend.rows', $layout_path))->render($data); ?>
 
 	<?php if ($componentArea): ?>
 		<?php if (!$pagebuilder): ?>

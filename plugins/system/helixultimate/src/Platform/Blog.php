@@ -20,6 +20,7 @@ use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 use HelixUltimate\Framework\Platform\Classes\Image;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Helper\MediaHelper;
 
 /**
  * Blog class.
@@ -62,7 +63,7 @@ class Blog
 				$params = ComponentHelper::getParams('com_media');
 
 				$contentLength 	= (int) $_SERVER['CONTENT_LENGTH'];
-				$mediaHelper 	= new \JHelperMedia;
+				$mediaHelper 	= new MediaHelper;
 				$postMaxSize 	= $mediaHelper->toBytes(ini_get('post_max_size'));
 				$memoryLimit 	= $mediaHelper->toBytes(ini_get('memory_limit'));
 
@@ -87,7 +88,7 @@ class Blog
 				if (!$error)
 				{
 					$date = Factory::getDate();
-					$folder = HTMLHelper::_('date', $date, 'Y') . '/' . \JHtml::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
+					$folder = HTMLHelper::_('date', $date, 'Y') . '/' . HTMLHelper::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
 
 					if (!file_exists(JPATH_ROOT . '/images/' . $folder))
 					{

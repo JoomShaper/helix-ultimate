@@ -3,6 +3,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Version;
 
 $item = $displayData;
 $params = $item->params;
@@ -13,6 +14,8 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 	? $attribs->helix_ultimate_article_format
 	: 'standard';
 
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 ?>
 <div class="article related-article-large d-flex">
 	<div class="article-image">
@@ -23,7 +26,7 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 		<?php elseif($article_format === 'audio') : ?>
 			<?php echo LayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
 		<?php else: ?>
-			<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
+			<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language) : ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
 				<?php echo LayoutHelper::render('joomla.content.full_image', $item); ?>
 			</a>
 		<?php endif; ?>
@@ -45,6 +48,6 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
 			</div>
 		<?php endif ?>
 
-		<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>" class="btn btn-outline-secondary btn-sm"><?php echo Text::_('HELIX_ULTIMATE_READ_MORE') ?></a>
+		<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language) : ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>" class="btn btn-outline-secondary btn-sm"><?php echo Text::_('HELIX_ULTIMATE_READ_MORE') ?></a>
 	</div>
 </div>

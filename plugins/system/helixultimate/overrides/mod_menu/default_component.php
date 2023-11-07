@@ -40,20 +40,18 @@ if ($item->menu_icon) {
 }
 else if ($item->menu_image)
 {
-	if ($item->menu_image_css)
-	{
-		$image_attributes['class'] = $item->menu_image_css;
-		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
-	}
-	else
-	{
-		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
-	}
+	// The link is an image, maybe with its own class
+    $image_attributes = [];
 
-	if ($item->getParams()->get('menu_text', 1))
-	{
-		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
-	}
+    if ($item->menu_image_css) {
+        $image_attributes['class'] = $item->menu_image_css;
+    }
+
+    $linktype = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
+
+    if ($item->getParams()->get('menu_text', 1)) {
+        $linktype .= '<span class="image-title">' . $item->title . '</span>';
+    }
 }
 
 

@@ -14,10 +14,9 @@ const config = {
     srcPath: path.resolve(__dirname),
     buildPath: path.resolve(__dirname, './package/'),
     qsPath: path.resolve(__dirname, './package/helix_ultimate_quickstart/'),
-    qsPackageName: 'helix_ultimate_quickstart_j4_2.0.17.zip',
-    packageName: 'helix_ultimate_pkg_2.0.17.zip',
-    pluginPackageName: 'helix_ultimate_plugin_pkg_2.0.17.zip',
-    templatePackageName: 'helix_ultimate_template_pkg_2.0.17.zip',
+    qsPackageName: 'helixultimate_quickstart_j4_2.0.17.zip',
+    packageName: 'helixultimate_template_v2.0.17.zip',
+    pluginPackageName: 'plg_system_helixultimate_v2.0.17.zip',
     templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css, html',
     pluginFileExtensions: function () {
         return this.templateFileExtensions + ', ini';
@@ -139,12 +138,6 @@ function buildPkgForPlugin() {
         .pipe(dest(config.buildPath, config.destOptions));
 }
 
-function buildPkgForTemplate() {
-    return src(`${config.buildPath}/template/**`)
-        .pipe(zip(config.templatePackageName))
-        .pipe(dest(config.buildPath, config.destOptions));
-}
-
 function clear() {
     return del(
         [
@@ -215,7 +208,7 @@ exports.default = series(
         series(pluginStreamTask, templatePluginLanguageStreamTask)
     ),
     parallel(minifyPluginCss, minifyPluginAdminCss, minifyPluginAdminJs),
-    parallel(buildPackage, buildPkgForPlugin, buildPkgForTemplate),
+    parallel(buildPackage, buildPkgForPlugin),
     clear
     // series(parallel(QSDirectories, QSFiles), packTheQS)
 );

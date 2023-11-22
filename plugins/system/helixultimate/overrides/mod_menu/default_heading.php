@@ -21,7 +21,7 @@ $maxLevel = $params->get('endLevel', 0, 'INT');
 $showToggler = $maxLevel === 0 || $item->level < $maxLevel;
 
 if ($item->menu_icon) {
-	$linktype = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+	$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
 }
 
 else if ($item->menu_image)

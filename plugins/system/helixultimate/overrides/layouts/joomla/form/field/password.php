@@ -52,7 +52,31 @@ $attributes = array(
 	!empty($forcePassword) ? 'data-min-force="' . $forcePassword . '"' : '',
 );
 
+if ($rules) {
+    $requirements = [];
+
+    if ($minLength) {
+        $requirements[] = Text::sprintf('JFIELD_PASSWORD_RULES_CHARACTERS', $minLength);
+    }
+
+    if ($minIntegers) {
+        $requirements[] = Text::sprintf('JFIELD_PASSWORD_RULES_DIGITS', $minIntegers);
+    }
+
+    if ($minSymbols) {
+        $requirements[] = Text::sprintf('JFIELD_PASSWORD_RULES_SYMBOLS', $minSymbols);
+    }
+
+    if ($minUppercase) {
+        $requirements[] = Text::sprintf('JFIELD_PASSWORD_RULES_UPPERCASE', $minUppercase);
+    }
+
+    if ($minLowercase) {
+        $requirements[] = Text::sprintf('JFIELD_PASSWORD_RULES_LOWERCASE', $minLowercase);
+    }
+}
 ?>
+
 <div class="password-group">
 	<div class="input-group">
 		<span class="input-group-text">
@@ -73,3 +97,9 @@ $attributes = array(
 		<?php endif; ?>
 	</div>
 </div>
+
+<?php if ($rules) : ?>
+    <div id="<?php echo $name . '-rules'; ?>" class="small text-muted">
+        <?php echo Text::sprintf('JFIELD_PASSWORD_RULES_MINIMUM_REQUIREMENTS', implode(', ', $requirements)); ?>
+    </div>
+<?php endif; ?>

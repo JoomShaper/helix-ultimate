@@ -11,6 +11,7 @@ defined ('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 extract($displayData);
 
@@ -51,7 +52,7 @@ extract($displayData);
  * @var   JForm[] $setsForms       Form with extra options for an each set
  * @var   string   $languageFile   TinyMCE language file to translate the buttons
  *
- * @var   JLayoutFile  $this       Context
+ * @var   FileLayout  $this       Context
  */
 
 HTMLHelper::_('behavior.core');

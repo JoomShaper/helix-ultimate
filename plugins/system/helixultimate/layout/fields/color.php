@@ -29,9 +29,6 @@ class HelixultimateFieldColor
 	 */
 	public static function getInput($key, $attr)
 	{
-		// JHtml::_('jquery.framework');
-		// JHtml::_('script', 'system/html5fallback.js', false, true);
-
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
 		$value = !empty($attr['value']) ? $attr['value'] : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;

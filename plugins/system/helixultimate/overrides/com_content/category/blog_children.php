@@ -12,9 +12,13 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Version;
 
 $class = ' class="first"';
 $lang  = Factory::getLanguage();
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 
 if ($this->maxLevel != 0 && count($this->children[$this->category->id]) > 0) : ?>
 
@@ -34,7 +38,7 @@ if ($this->maxLevel != 0 && count($this->children[$this->category->id]) > 0) : ?
 						<?php echo $child->getNumItems(true); ?>
 					</span>
 				<?php endif; ?>
-				<a href="<?php echo Route::_(ContentHelperRoute::getCategoryRoute($child->id)); ?>">
+				<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getCategoryRoute($child->id) : ContentHelperRoute::getCategoryRoute($child->id)); ?>">
 				<?php echo $this->escape($child->title); ?></a>
 
 				<?php if ($this->maxLevel > 1 && count($child->getChildren()) > 0) : ?>
@@ -42,7 +46,7 @@ if ($this->maxLevel != 0 && count($this->children[$this->category->id]) > 0) : ?
 				<?php endif; ?>
 			</h3>
 			<?php else : ?>
-			<h3 class="page-header item-title"><a href="<?php echo Route::_(ContentHelperRoute::getCategoryRoute($child->id)); ?>">
+			<h3 class="page-header item-title"><a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getCategoryRoute($child->id) : ContentHelperRoute::getCategoryRoute($child->id)); ?>">
 				<?php echo $this->escape($child->title); ?></a>
 				<?php if ( $this->params->get('show_cat_num_articles', 1)) : ?>
 					<span class="badge bg-info tip hasTooltip" title="<?php echo HTMLHelper::_('tooltipText', 'COM_CONTENT_NUM_ITEMS_TIP'); ?>">

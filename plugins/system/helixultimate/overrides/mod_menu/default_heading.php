@@ -23,11 +23,11 @@ $showToggler = $maxLevel === 0 || $item->level < $maxLevel;
 if ($item->menu_icon) {
 	if ($item->params->get('menu_text', 1))
 	{
-		$linktype = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
 	}
 	else
 	{
-		$linktype = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
 	}
 }
 else if ($item->menu_image)

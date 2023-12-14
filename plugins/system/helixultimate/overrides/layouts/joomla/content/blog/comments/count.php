@@ -11,9 +11,13 @@ defined ('JPATH_BASE') or die();
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $params = $template->params;
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 
 if( ( $params->get('comment') != 'disabled' ) && ( $params->get('comments_count') ) )
 {
@@ -23,7 +27,7 @@ if( ( $params->get('comment') != 'disabled' ) && ( $params->get('comments_count'
 	{
 		if(in_array($displayData['item']->catid, $comment_categories))
 		{
-			$url = Route::_(ContentHelperRoute::getArticleRoute($displayData['item']->id . ':' . $displayData['item']->alias, $displayData['item']->catid, $displayData['item']->language));
+			$url = Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($displayData['item']->id . ':' . $displayData['item']->alias, $displayData['item']->catid, $displayData['item']->language) : ContentHelperRoute::getArticleRoute($displayData['item']->id . ':' . $displayData['item']->alias, $displayData['item']->catid, $displayData['item']->language));
 			$root = Uri::base();
 			$root = new Uri($root);
 			$url = $root->getScheme() . '://' . $root->getHost() . $url;

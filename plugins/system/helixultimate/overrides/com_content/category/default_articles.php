@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Associations;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
@@ -37,6 +38,8 @@ if (!empty($this->items))
 	}
 }
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 ?>
 
 <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString() ?? ""); ?>" method="post" name="adminForm" id="adminForm">
@@ -163,7 +166,7 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 			<?php endif; ?>
 			<td headers="categorylist_header_title" class="list-title">
 				<?php if (in_array($article->access, $this->user->getAuthorisedViewLevels())) : ?>
-					<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)); ?>">
+					<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language) : ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)); ?>">
 						<?php echo $this->escape($article->title); ?>
 					</a>
 					<?php if (Associations::isEnabled() && $this->params->get('show_associations')) : ?>
@@ -183,7 +186,7 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 					echo $this->escape($article->title) . ' : ';
 					$itemId = Factory::getApplication()->getMenu()->getActive()->id;
 					$link   = new Uri(Route::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false));
-					$link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)));
+					$link->setVar('return', base64_encode(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language) : ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)));
 					?>
 					<a href="<?php echo $link; ?>" class="register">
 						<?php echo Text::_('COM_CONTENT_REGISTER_TO_READ_MORE'); ?>

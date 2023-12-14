@@ -11,8 +11,12 @@ defined ('JPATH_BASE') or die();
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
-$url = Route::_(ContentHelperRoute::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language));
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
+
+$url = Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language) : ContentHelperRoute::getArticleRoute($displayData->id . ':' . $displayData->alias, $displayData->catid, $displayData->language));
 $root = Uri::base();
 $root = new Uri($root);
 $url = $root->getScheme() . '://' . $root->getHost() . $url;

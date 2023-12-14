@@ -12,6 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Version;
 
 // Create a shortcut for params.
 $params  = $displayData->params;
@@ -19,6 +20,9 @@ $canEdit = $displayData->params->get('access-edit');
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 ?>
 
 <?php if ($displayData->state == 0 || $params->get('show_title') || ($params->get('show_author') && !empty($displayData->author ))) : ?>
@@ -26,7 +30,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 		<?php if ($params->get('show_title')) : ?>
 			<h2>
 				<?php if ($params->get('link_titles') && ($params->get('access-view') || $params->get('show_noauth', '0') == '1')) : ?>
-					<a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
+					<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language) : ContentHelperRoute::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
 						<?php echo $this->escape($displayData->title); ?>
 					</a>
 				<?php else : ?>

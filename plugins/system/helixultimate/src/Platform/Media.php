@@ -16,6 +16,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Helper\MediaHelper;
 
 /**
  * Media helper class.
@@ -254,7 +255,7 @@ class Media
 				$params 		= ComponentHelper::getParams('com_media');
 				$contentLength 	= (int) $_SERVER['CONTENT_LENGTH'];
 
-				$mediaHelper = new \JHelperMedia;
+				$mediaHelper = new MediaHelper;
 				$postMaxSize = $mediaHelper->toBytes(ini_get('post_max_size'));
 				$memoryLimit = $mediaHelper->toBytes(ini_get('memory_limit'));
 
@@ -293,13 +294,13 @@ class Media
 						$folder = ltrim($dir, '/');
 
 						// Do no override existing file
-						$media_file = preg_replace('#\s+#', "-", \JFile::makeSafe(basename(strtolower($name))));
+						$media_file = preg_replace('#\s+#', "-", File::makeSafe(basename(strtolower($name))));
 						$i = 0;
 
 						do
 						{
-							$base_name  = \JFile::stripExt($media_file) . ($i ? "$i" : "");
-							$ext        = \JFile::getExt($media_file);
+							$base_name  = File::stripExt($media_file) . ($i ? "$i" : "");
+							$ext        = File::getExt($media_file);
 							$media_name = $base_name . '.' . $ext;
 							$i++;
 							$dest       = \JPATH_ROOT . '/' . $folder . '/' . $media_name;

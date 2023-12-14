@@ -38,29 +38,27 @@ $linktype = $item->title;
 if ($item->menu_icon) {
 	if ($item->getParams()->get('menu_text', 1))
 	{
-		$linktype = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
 	}
 	else
 	{
-		$linktype = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
 	}
 }
 else if ($item->menu_image)
 {
-	if ($item->menu_image_css)
-	{
-		$image_attributes['class'] = $item->menu_image_css;
-		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
-	}
-	else
-	{
-		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
-	}
+	// The link is an image, maybe with its own class
+    $image_attributes = [];
 
-	if ($item->getParams()->get('menu_text', 1))
-	{
-		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
-	}
+    if ($item->menu_image_css) {
+        $image_attributes['class'] = $item->menu_image_css;
+    }
+
+    $linktype = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
+
+    if ($item->getParams()->get('menu_text', 1)) {
+        $linktype .= '<span class="image-title">' . $item->title . '</span>';
+    }
 }
 
 

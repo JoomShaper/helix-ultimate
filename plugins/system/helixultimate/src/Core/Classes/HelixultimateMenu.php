@@ -661,11 +661,11 @@ class HelixultimateMenu
 		if ($item->menu_icon) {
 			if ($item->getParams()->get('menu_text', 1))
 			{
-				$linktitle = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+				$linktitle = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
 			}
 			else
 			{
-				$linktitle = '<span class="p-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+				$linktitle = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
 			}
 		}
 		else if ($item->menu_image)

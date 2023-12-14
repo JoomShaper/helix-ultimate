@@ -2,6 +2,7 @@
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Version;
 
 $item = $displayData;
 $item->enableOpenGraph = false;
@@ -10,6 +11,9 @@ $info = $params->get('info_block_position', 0);
 $attribs = json_decode($item->attribs ?? "");
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 ?>
 <div class="article">
     <?php if($article_format === 'gallery') : ?>
@@ -19,7 +23,7 @@ $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->h
     <?php elseif($article_format === 'audio') : ?>
         <?php echo LayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
     <?php else: ?>
-        <a href="<?php echo Route::_(ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
+        <a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language) : ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
             <?php echo LayoutHelper::render('joomla.content.full_image', $item); ?>
         </a>
     <?php endif; ?>

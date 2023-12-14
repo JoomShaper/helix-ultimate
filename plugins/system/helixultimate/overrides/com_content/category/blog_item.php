@@ -15,6 +15,7 @@ use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
 
 // Create a shortcut for params.
 $params = $this->item->params;
@@ -33,6 +34,9 @@ $assocParam = (Associations::isEnabled() && $params->get('show_associations'));
 $currentDate   = Factory::getDate()->format('Y-m-d H:i:s');
 $isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->item->publish_up) > strtotime(Factory::getDate()) || ((strtotime($this->item->publish_down) < strtotime(Factory::getDate())) && $this->item->publish_down != Factory::getDbo()->getNullDate())) : ($this->item->state == Joomla\Component\Content\Administrator\Extension\ContentComponent::CONDITION_UNPUBLISHED || $this->item->publish_up > $currentDate)
 	|| ($this->item->publish_down < $currentDate && $this->item->publish_down !== null);
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
 
 ?>
 
@@ -84,13 +88,13 @@ $isUnpublished = JVERSION < 4 ? ($this->item->state == 0 || strtotime($this->ite
 
 	<?php if ($params->get('show_readmore') && $this->item->readmore) :
 		if ($params->get('access-view')) :
-			$link = Route::_(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language));
+			$link = Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language) : ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language));
 		else :
 			$menu = Factory::getApplication()->getMenu();
 			$active = $menu->getActive();
 			$itemId = $active->id;
 			$link = new Uri(Route::_('index.php?option=com_users&view=login&Itemid=' . $itemId, false));
-			$link->setVar('return', base64_encode(ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language)));
+			$link->setVar('return', base64_encode(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language) : ContentHelperRoute::getArticleRoute($this->item->slug, $this->item->catid, $this->item->language)));
 		endif; ?>
 
 		<?php echo LayoutHelper::render('joomla.content.readmore', array('item' => $this->item, 'params' => $params, 'link' => $link)); ?>

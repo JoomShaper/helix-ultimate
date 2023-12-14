@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\Path;
+use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -645,7 +646,7 @@ class HelixUltimate
 					$fluidrow = $modified_row->settings->fluidrow;
 				}
 
-				$id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-' . \JFilterOutput::stringURLSafe($modified_row->settings->name) : 'sp-section-' . ($key + 1);
+				$id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-' . OutputFilter::stringURLSafe($modified_row->settings->name) : 'sp-section-' . ($key + 1);
 				$row_class = $this->build_row_class($modified_row->settings);
 				$this->add_row_styles($modified_row->settings, $id);
 				$sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
@@ -1214,7 +1215,7 @@ class HelixUltimate
 				{
 					$fontUrl = '//fonts.googleapis.com/css?family=' . $font->fontFamily . ':100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i';
 
-					if (!empty(trim($font->fontSubset)))
+					if (!empty(trim($font->fontSubset ?? '')))
 					{
 						$fontUrl .= '&subset=' . $font->fontSubset;
 					}

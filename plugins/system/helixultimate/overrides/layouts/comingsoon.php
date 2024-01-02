@@ -135,6 +135,7 @@ $site_title = $app->get('sitename');
 
 			<?php
 				$facebook 	= $params->get('facebook');
+				$instagram 	= $params->get('instagram');
 				$twitter  	= $params->get('twitter');
 				$pinterest 	= $params->get('pinterest');
 				$youtube 	= $params->get('youtube');
@@ -145,13 +146,17 @@ $site_title = $app->get('sitename');
 				$flickr 	= $params->get('flickr');
 				$vk 		= $params->get('vk');
 
-				if( $params->get('comingsoon_social_icons') && ( $facebook || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) )
+				if( $params->get('comingsoon_social_icons') && ( $facebook || $instagram || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk ) )
 				{
 					$social_output  = '<ul class="social-icons">';
 
 					if( $facebook )
 					{
 						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $facebook .'"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>';
+					}
+					if( $instagram )
+					{
+						$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $instagram .'"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>';
 					}
 					if( $twitter )
 					{

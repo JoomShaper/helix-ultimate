@@ -725,4 +725,27 @@ class Helper
 	{
 		return ($value == null) ? '' : $value;
 	}
+
+	/**
+	 * Count read time buy content text
+	 *
+	 * @param string $text
+	 * @return string
+	 */
+	public static function getReadTime($text)
+	{
+		$words_per_minute 	= 200;
+		$word_count 		= str_word_count(strip_tags($text));
+		$read_time 			= ceil($word_count / $words_per_minute);
+
+		if ($read_time == 1) { //grammar conversion
+			$label = Text::_('HELIX_ULTIMATE_BLOG_MINUTE_READ');
+		} else {
+			$label = Text::_('HELIX_ULTIMATE_BLOG_MINUTES_READ');
+		}
+			
+		$totalString = $read_time . " " . $label; //adds time with minute/minutes label
+
+		return $totalString;
+	}
 }

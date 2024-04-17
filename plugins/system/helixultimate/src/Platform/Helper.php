@@ -736,7 +736,7 @@ class Helper
 	{
 		$words_per_minute 	= 200;
 		$word_count 		= str_word_count(strip_tags($text));
-		$read_time 			= ceil($word_count / $words_per_minute);
+		$read_time			= ceil($word_count / $words_per_minute);
 
 		if ($read_time == 1) { //grammar conversion
 			$label = Text::_('HELIX_ULTIMATE_BLOG_MINUTE_READ');

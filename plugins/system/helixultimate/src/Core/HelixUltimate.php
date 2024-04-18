@@ -721,7 +721,7 @@ class HelixUltimate
 
 		foreach ($row->attr as $key => &$column)
 		{
-			$column->settings->disable_modules = isset($column->settings->name) ? $this->disable_details_page_modules($column->settings->name) : false;
+			$column->settings->disable_modules = isset($column->settings->name) ? $this->disable_article_page_modules($column->settings->name) : false;
 
 			if (!$column->settings->column_type)
 			{
@@ -995,17 +995,34 @@ class HelixUltimate
 	}
 
 	/**
-	 * Disable module only from article page.
+	 * Disable module only from article list and detail pages.
 	 *
 	 * @param	string	$position	Module position.
 	 *
 	 * @return	boolean
 	 * @since	1.0.0
 	 */
-	private function disable_details_page_modules( $position )
+	private function disable_article_page_modules( $position )
 	{
-		$article_and_disable = ($this->app->input->get('view') === 'article' && $this->params->get('disable_module'));
-		$match_positions = $position === 'left' || $position === 'right';
+		if (!$this->app->input->get('option') === 'com_content') {
+			return false;
+		}
+
+		if ($this->app->input->get('view') === 'article' && $this->params->get('blog_detail_disable_module')) {
+			$article_and_disable = true;
+			$disabled_positions = !empty($this->params->get('blog_detail_disable_positions')) ? $this->params->get('blog_detail_disable_positions') : [];
+			
+		} elseif ($this->app->input->get('view') === 'category' || $this->app->input->get('view') === 'featured' && $this->params->get('blog_list_disable_module')) {
+			$article_and_disable = true;
+			$disabled_positions = !empty($this->params->get('blog_list_disable_positions')) ? $this->params->get('blog_list_disable_positions') : [];
+		} else {
+			return false;
+		}
+		
+		$match_positions = in_array($position, $disabled_positions);
+		
+		// $article_and_disable = (($this->app->input->get('view') === 'article' || $this->app->input->get('view') === 'category' || $this->app->input->get('view') === 'featured') && $this->params->get('disable_module'));
+		// $match_positions = $position === 'left' || $position === 'right';
 
 		return ($article_and_disable && $match_positions);
 	}

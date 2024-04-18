@@ -1020,9 +1020,6 @@ class HelixUltimate
 		}
 		
 		$match_positions = in_array($position, $disabled_positions);
-		
-		// $article_and_disable = (($this->app->input->get('view') === 'article' || $this->app->input->get('view') === 'category' || $this->app->input->get('view') === 'featured') && $this->params->get('disable_module'));
-		// $match_positions = $position === 'left' || $position === 'right';
 
 		return ($article_and_disable && $match_positions);
 	}

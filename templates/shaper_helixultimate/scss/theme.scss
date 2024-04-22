@@ -1251,12 +1251,20 @@ body.view-article.remove-container {
 }
 
 .article-details {
+  position: relative;
   .article-header {
     position: relative;
     h1,
     h2 {
       font-size: 2.25rem;
     }
+  }
+  
+  .featured-article-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    cursor: default;
   }
 
   .article-info {

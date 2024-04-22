@@ -1116,6 +1116,7 @@ body.view-article.remove-container {
 
 .article-list {
   .article {
+    position: relative;
     margin-bottom: 30px;
     padding: 20px;
     border: 1px solid #f5f5f5;
@@ -1132,6 +1133,13 @@ body.view-article.remove-container {
       img {
         border-radius: 3px 3px 0 0;
       }
+    }
+
+    .featured-article-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      cursor: default;
     }
 
     .article-full-image {

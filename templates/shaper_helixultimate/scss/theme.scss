@@ -1181,6 +1181,38 @@ body.view-article.remove-container {
   }
 }
 
+// Masonry blog styles
+.article-list.grid {
+  --gap: 1em;
+  margin: 0 auto;
+  display: column;
+  columns: var(--columns);
+  gap: var(--gap);
+}
+
+.article-list.grid > * {
+  break-inside: avoid;
+  margin-bottom: var(--gap);
+}
+
+@supports (grid-template-rows: masonry) {
+  .article-list.grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-template-rows: masonry;
+    grid-auto-flow: dense;
+    /* align-tracks: stretch; */
+  }
+
+  .article-list.grid > * {
+    margin-bottom: 0em;
+  }
+}
+
+.article-list.grid .article:nth-child(2n + 1) >:first-child {
+  display: none;
+}
+
 .related-article-large {
   .article-image {
     width: 350px;

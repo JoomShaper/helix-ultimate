@@ -1555,6 +1555,16 @@
 			label="HELIX_ULTIMATE_LIST_TAGS_OPTION" 
 			description="HELIX_ULTIMATE_LIST_TAGS_OPTION_DESC" />
 
+		<field name="blog_list_type" 
+			type="list" 
+			class="form-select"
+			helixgroup="blog_list" 
+			default="default" 
+			label="HELIX_ULTIMATE_BLOG_LIST_TYPE">
+			<option value="default">HELIX_ULTIMATE_BLOG_LIST_TYPE_DEFAULT</option>
+			<option value="masonry">HELIX_ULTIMATE_BLOG_LIST_TYPE_MASONRY</option>
+		</field>
+
 		<field name="blog_details_image" 
 			type="helixswitcher" 
 			switcherStyle="simple"

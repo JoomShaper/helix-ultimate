@@ -78,6 +78,10 @@ $JoomlaVersion = $version->getShortVersion();
 	<?php else: ?>
 		<?php echo LayoutHelper::render('joomla.content.full_image', $this->item); ?>
 	<?php endif; ?>
+	<?php if ($this->item->featured) :?>
+		<!-- Featured Tag -->
+		<span class="badge bg-danger featured-article-badge"><?php echo Text::_('HELIX_ULTIMATE_FEATURED'); ?></span>
+	<?php endif; ?>
 
 	<?php // Todo Not that elegant would be nice to group the params ?>
 	<?php $useDefList = ($params->get('show_modify_date') || $params->get('show_publish_date') || $params->get('show_create_date')

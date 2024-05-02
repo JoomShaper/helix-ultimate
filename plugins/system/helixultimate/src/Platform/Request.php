@@ -231,8 +231,8 @@ class Request
 
 		$data = $_POST;
 
-		$data['comingsoon_date'] = date('Y-m-d', strtotime($data['comingsoon_date']));
-		$dateStatus = $this->validateDate($data['comingsoon_date']);
+		$data['comingsoon_date'] = date('Y-m-d H:i:s', strtotime($data['comingsoon_date']));
+		$dateStatus = $this->validateDate($data['comingsoon_date'], 'Y-m-d H:i:s');
 
 		if (!$dateStatus) {
 			$this->report['status'] = false;

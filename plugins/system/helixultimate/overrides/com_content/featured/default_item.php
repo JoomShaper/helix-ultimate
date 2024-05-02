@@ -10,6 +10,7 @@ defined ('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Associations;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
@@ -43,6 +44,10 @@ $JoomlaVersion = $version->getShortVersion();
 	<?php echo LayoutHelper::render('joomla.content.blog.audio', array('attribs' => $attribs)); ?>
 <?php else: ?>
 	<?php echo LayoutHelper::render('joomla.content.intro_image', $this->item); ?>
+<?php endif; ?>
+<?php if ($this->item->featured) :?>
+	<!-- Featured Tag -->
+	<span class="badge bg-danger featured-article-badge"><?php echo Text::_('HELIX_ULTIMATE_FEATURED'); ?></span>
 <?php endif; ?>
 
 <div class="articleBody">

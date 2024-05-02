@@ -13,7 +13,6 @@ use Joomla\CMS\Layout\LayoutHelper;
 $intro = (isset($displayData['intro']) && $displayData['intro']) ? $displayData['intro'] : false;
 $displayData['articleView'] = ($intro) ? 'intro' : 'details';
 $blockPosition = $displayData['params']->get('info_block_position', 0);
-
 ?>
 <div class="article-info">
 
@@ -40,7 +39,7 @@ $blockPosition = $displayData['params']->get('info_block_position', 0);
 		<?php if ($displayData['params']->get('show_publish_date')) : ?>
 			<?php echo $this->sublayout('publish_date', $displayData); ?>
 		<?php endif; ?>
-		
+
 		<?php if ($intro) : ?>
 			<?php echo LayoutHelper::render('joomla.content.blog.comments.count', $displayData); ?>
 		<?php endif; ?>
@@ -61,5 +60,7 @@ $blockPosition = $displayData['params']->get('info_block_position', 0);
 		<?php if ($displayData['params']->get('show_hits') && $intro == false) : ?>
 			<?php echo $this->sublayout('hits', $displayData); ?>
 		<?php endif; ?>
+		
+		<?php echo $this->sublayout('reading_time', $displayData['item']); ?>
 	<?php endif; ?>
 </div>

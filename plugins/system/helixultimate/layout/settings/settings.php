@@ -210,6 +210,13 @@ $columnSettings = array(
 			'values' => array(),
 			'std' => 'none',
 		),
+		
+		'sticky_position' => array(
+			'type' => 'checkbox',
+			'group' => 'general',
+			'title' => Text::_('HELIX_ULTIMATE_STICKY_POSITION'),
+			'std' => '',
+		),
 
 		'custom_class' => array(
 			'type' => 'text',

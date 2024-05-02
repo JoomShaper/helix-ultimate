@@ -195,56 +195,5 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<?php if( $app->input->get('view') === 'article' && $this->params->get('reading_time_progress', 0) ): ?>
 			<div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>
 		<?php endif; ?>
-
-		<style>
-			.visible {
-				background: orange;
-			}
-
-		</style>
-
-		<script>
-			let options = {
-				root: null,
-				threshold: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
-			};
-
-			const observer = new IntersectionObserver(callback, options);
-			const item = document.querySelector('#sp-right');
-
-			function callback(entries, observer) {
-				entries.forEach(entry => {
-					console.log({top: entry.boundingClientRect.top, bottom: entry.boundingClientRect.bottom})
-					if (entry.isIntersecting) {
-						if(entry.boundingClientRect.bottom <= 400) {
-							item.classList.remove('visible')
-						} else {
-							if(entry.boundingClientRect.top >= 0) {
-								item.classList.add('visible');
-							}
-						}
-						// // Check if any part of the box is visible
-						// if (entry.intersectionRatio > 0) {
-						// 	item.classList.add('visible');
-						// } else {
-						// 	item.classList.remove('visible');
-						// }
-					} else {
-						item.classList.remove('visible');
-					}
-				});
-			}
-
-
-			observeEl();
-
-			function observeEl() {
-				observer.observe(item);
-				requestAnimationFrame(observeEl);
-
-			}
-
-
-		</script>
 	</body>
 </html>

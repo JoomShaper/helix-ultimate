@@ -206,6 +206,13 @@
 			type="checkbox" 
 			default="0" 
 			label="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT" />
+		
+		<field name="container_max_width" 
+			helixgroup="body" 
+			type="helixUnit"
+			display="inline" 
+			description="HELIX_ULTIMATE_CONTAINER_MAX_WIDTH_DESC" 
+			label="HELIX_ULTIMATE_CONTAINER_MAX_WIDTH" />
 
 		<field name="body_bg_image" 
 			helixgroup="body" 

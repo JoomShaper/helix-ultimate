@@ -144,7 +144,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		}
 		?>
 		<?php if (!empty($containerMaxWidth)) :?>
-			<style>.container, .sppb-row-container { max-width: <?php echo $containerMaxWidth; ?>; }</style>
+			<style>.container, .sppb-row-container { max-width: <?php echo $containerMaxWidth . 'px'; ?>; }</style>
 		<?php endif; ?>
 	</head>
 	<body class="<?php echo $theme->bodyClass(); ?>">

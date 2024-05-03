@@ -209,8 +209,8 @@
 		
 		<field name="container_max_width" 
 			helixgroup="body" 
-			type="helixUnit"
-			display="inline" 
+			type="number"
+			min="700"
 			description="HELIX_ULTIMATE_CONTAINER_MAX_WIDTH_DESC" 
 			label="HELIX_ULTIMATE_CONTAINER_MAX_WIDTH" />
 

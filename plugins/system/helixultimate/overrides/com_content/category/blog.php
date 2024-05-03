@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Layout\LayoutHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
@@ -109,11 +110,11 @@ $blogListType = $template->params->get('blog_list_type') ?? 'default';
 		<?php if ($blogListType == 'masonry') :?>
 			<div class="article-list grid">
 			<?php foreach ($this->intro_items as $key => &$item) : ?>
-				<div class="article flow"
-					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+				<div class="article flow" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 					$this->item = & $item;
-					echo $this->loadTemplate('item');
+					// echo $this->loadTemplate('item');
+					echo LayoutHelper::render('masonry.bloglist', [$item, ($counter + 1)], HELIX_LAYOUTS_PATH);
 					?>
 				</div>
 				<?php $counter++; ?>

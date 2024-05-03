@@ -267,7 +267,7 @@ $menu_font_size: 14px;
 		ul.menu {
       li.active {
         a {
-          color: $offcanvas_menu_active_menu_item_color !important;
+          color: $offcanvas_menu_active_menu_item_color;
         }
       }
     }

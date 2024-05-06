@@ -64,6 +64,8 @@ $scssVars = $theme->getSCSSVariables();
 
 $boxedLayout = $this->params->get('boxed_layout');
 
+$containerMaxWidth = $this->params->get('container_max_width');
+
 // Body Background Image
 if ($boxedLayout && $this->params->get('body_bg_image'))
 {
@@ -141,6 +143,9 @@ if ($custom_js = $this->params->get('custom_js', null))
 			echo $before_head . "\n";
 		}
 		?>
+		<?php if (!empty($containerMaxWidth)) :?>
+			<style>.container, .sppb-row-container { max-width: <?php echo $containerMaxWidth . 'px'; ?>; }</style>
+		<?php endif; ?>
 	</head>
 	<body class="<?php echo $theme->bodyClass(); ?>">
 

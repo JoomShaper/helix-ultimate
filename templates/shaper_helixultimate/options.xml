@@ -1562,6 +1562,13 @@
 			default="0" 
 			label="HELIX_ULTIMATE_LIST_TAGS_OPTION" 
 			description="HELIX_ULTIMATE_LIST_TAGS_OPTION_DESC" />
+		
+		<field name="blog_read_time" 
+			type="checkbox"
+			helixgroup="blog_list"
+			default="0" 
+			label="HELIX_ULTIMATE_BLOG_READ_TIME" 
+			description="HELIX_ULTIMATE_BLOG_READ_TIME_DESC" />
 
 		<field name="blog_list_disable_module" 
 			type="checkbox"

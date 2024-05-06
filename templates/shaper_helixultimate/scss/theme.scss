@@ -1245,17 +1245,12 @@ body.view-article.remove-container {
     grid-template-columns: repeat(var(--columns), 1fr);
     grid-template-rows: masonry;
     grid-auto-flow: dense;
-    /* align-tracks: stretch; */
   }
 
   .article-list.grid > * {
     margin-bottom: 0em;
   }
 }
-
-// .article-list.grid .article:nth-child(2n + 1) >:first-child {
-//   display: none;
-// }
 
 .related-article-large {
   .article-image {

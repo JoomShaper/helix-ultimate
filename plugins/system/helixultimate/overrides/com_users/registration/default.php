@@ -23,7 +23,7 @@ if (version_compare(JVERSION, 4, '<')) {
 }
 
 ?>
-<div class="com-users-registration registration">
+<div class="com-users-registration registration<?php echo $this->pageclass_sfx; ?>">
 	<div class="row justify-content-center">
 		<div class="col-lg-9 col-xl-6">
 			<?php if ($this->params->get('show_page_heading')) : ?>

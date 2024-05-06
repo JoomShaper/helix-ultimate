@@ -113,7 +113,6 @@ $blogListType = $template->params->get('blog_list_type') ?? 'default';
 				<div class="article flow" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
 					$this->item = & $item;
-					// echo $this->loadTemplate('item');
 					echo LayoutHelper::render('masonry.bloglist', [$item, ($counter + 1)], HELIX_LAYOUTS_PATH);
 					?>
 				</div>

@@ -52,7 +52,7 @@ $attributes = array(
 	!empty($forcePassword) ? 'data-min-force="' . $forcePassword . '"' : '',
 );
 
-if ($rules) {
+if (isset($rules) && $rules) {
     $requirements = [];
 
     if ($minLength) {
@@ -98,7 +98,7 @@ if ($rules) {
 	</div>
 </div>
 
-<?php if ($rules) : ?>
+<?php if (isset($rules) && $rules) : ?>
     <div id="<?php echo $name . '-rules'; ?>" class="small text-muted">
         <?php echo Text::sprintf('JFIELD_PASSWORD_RULES_MINIMUM_REQUIREMENTS', implode(', ', $requirements)); ?>
     </div>

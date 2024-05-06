@@ -12,7 +12,6 @@ jQuery(function ($) {
 		event.stopPropagation();
 
 		$(this).closest('li').find('.hu-column-list').slideToggle(300);
-		console.log('click fired');
 	});
 
 	/** Close the hu-column-list on select. */
@@ -32,9 +31,7 @@ jQuery(function ($) {
 				opacity: 1,
 				tolerance: 'pointer',
 				start(_, ui) {
-					$('.hu-layout-section [data-hu-layout-row]')
-						.find('.ui-state-highlight')
-						.addClass($(ui.item).attr('class'));
+					$('.hu-layout-section [data-hu-layout-row]').find('.ui-state-highlight').addClass($(ui.item).attr('class'));
 					$('.hu-layout-section [data-hu-layout-row]')
 						.find('.ui-state-highlight')
 						.css('height', $(ui.item).outerHeight());
@@ -82,7 +79,6 @@ jQuery(function ($) {
 
 	// setInputValue Callback Function
 	$.fn.setInputValue = function (options) {
-		console.log(options);
 		if (this.attr('type') == 'checkbox') {
 			if (options.field == '1') {
 				this.attr('checked', 'checked');
@@ -124,16 +120,6 @@ jQuery(function ($) {
 	// color picker initialize
 	$.fn.initColorPicker = function () {
 		Joomla.initColorPicker(this.find('.minicolors'));
-		// this.find('.minicolors').each(function () {
-		// 	$(this).minicolors({
-		// 		control: 'hue',
-		// 		position: 'bottom',
-		// 		theme: 'bootstrap',
-		// 		keywords: 'transparent, initial, inherit',
-		// 		letterCase: 'uppercase',
-		// 		opacity: true,
-		// 	});
-		// });
 	};
 
 	// Open Row settings Modal
@@ -213,10 +199,26 @@ jQuery(function ($) {
 
 		$clone = $('.hu-options-modal-inner').html($clone.removeAttr('id').addClass('hu-options-modal-content'));
 
+		var removeSticky = true;
+
 		$clone.find('.hu-input').each(function () {
 			var $that = $(this),
+				attrName = $that.data('attrname'),
 				attrValue = $parent.data($that.data('attrname'));
 			$that.setInputValue({ field: attrValue });
+
+			if ((attrName == 'name' && attrValue == 'right') || (attrName == 'name' && attrValue == 'left')) {
+				removeSticky = false;
+			}
+
+			if (removeSticky) {
+				if (attrName == 'sticky_position') {
+					if ($that.prop('checked')) {
+						$that.prop('checked', false);
+					}
+					$that.closest('.control-group').hide();
+				}
+			}
 		});
 
 		$clone.find('select.hu-input').each(function () {
@@ -224,6 +226,19 @@ jQuery(function ($) {
 		});
 
 		$clone.initColorPicker();
+
+		var $chosenSelect = $('select[data-attrname="name"]').chosen();
+		// Add change event listener to the Chosen select
+		$chosenSelect.on('change', function () {
+			var selectedValue = $(this).val();
+
+			if (selectedValue == 'right' || selectedValue == 'left') {
+				$(this).closest('.control-group').next().show();
+			} else {
+				$(this).closest('.control-group').next().hide();
+				$(this).closest('.control-group').next().find('.hu-input-sticky_position').prop('checked', false);
+			}
+		});
 	});
 
 	$('.hu-input-column_type').change(function (event) {
@@ -425,7 +440,7 @@ jQuery(function ($) {
 
 		Joomla.HelixToaster.success(
 			'Grid pattern updated to <strong>' + newLayout.join('+') + '</strong>',
-			'Layout Settings'
+			'Layout Settings',
 		);
 		updateLayoutField();
 	});
@@ -525,7 +540,7 @@ jQuery(function ($) {
 
 		Joomla.HelixToaster.success(
 			'Grid pattern updated to <strong>' + newLayout.join('+') + '</strong>',
-			'Layout Settings'
+			'Layout Settings',
 		);
 		updateLayoutField();
 

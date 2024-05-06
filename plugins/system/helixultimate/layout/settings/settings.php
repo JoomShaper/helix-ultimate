@@ -215,6 +215,7 @@ $columnSettings = array(
 			'type' => 'checkbox',
 			'group' => 'general',
 			'title' => Text::_('HELIX_ULTIMATE_STICKY_POSITION'),
+			'desc' => Text::_('HELIX_ULTIMATE_STICKY_POSITION_DESC'),
 			'std' => '',
 		),
 

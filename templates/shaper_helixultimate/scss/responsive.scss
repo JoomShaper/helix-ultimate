@@ -150,6 +150,9 @@
 			margin-left: 0;
 		}
 	}
+	.article-list.grid {
+		--columns: 1 !important;
+	}
 }
 
 @media (max-width: 575px) {

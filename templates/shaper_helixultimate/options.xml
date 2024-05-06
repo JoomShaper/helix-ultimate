@@ -1578,6 +1578,16 @@
 			description="HELIX_ULTIMATE_BLOG_LIST_DISABLE_MODULE_POSITIONS_DESC" 
 			showon="blog_list_disable_module:1" />
 		
+		<field name="blog_list_type" 
+			type="list" 
+			class="form-select"
+			helixgroup="blog_list" 
+			default="default" 
+			label="HELIX_ULTIMATE_BLOG_LIST_TYPE">
+			<option value="default">HELIX_ULTIMATE_BLOG_LIST_TYPE_DEFAULT</option>
+			<option value="masonry">HELIX_ULTIMATE_BLOG_LIST_TYPE_MASONRY</option>
+		</field>
+
 		<field name="blog_details_image" 
 			type="helixswitcher" 
 			switcherStyle="simple"

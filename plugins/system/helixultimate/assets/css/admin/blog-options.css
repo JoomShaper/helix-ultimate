@@ -10,13 +10,13 @@
 }
 
 .hu-image-upload-wrapper {
-	width: 200px;
+	width: 290px;
 	display: block;
 	margin-bottom: 20px;
 }
 
 .hu-image-upload-wrapper:not(.loading) {
-	max-height: 200px;
+	height: 290px;
 	background: #f5f5f5;
 	padding: 5px;
 	border: 1px solid #e5e5e5;

@@ -8,6 +8,21 @@
 
 defined('_JEXEC') or die();
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Version;
+
+defined('_JEXEC') or die();
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
+
+if (version_compare($JoomlaVersion, '5.0.0', '<'))
+{
+	$doc = Factory::getDocument();
+	$doc->addStyleSheet(Uri::root(true) . '/media/system/css/joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
+}
+
 extract($displayData);
 
 $style = '';

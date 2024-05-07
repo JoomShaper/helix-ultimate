@@ -13,6 +13,8 @@ use Joomla\CMS\Layout\LayoutHelper;
 $intro = (isset($displayData['intro']) && $displayData['intro']) ? $displayData['intro'] : false;
 $displayData['articleView'] = ($intro) ? 'intro' : 'details';
 $blockPosition = $displayData['params']->get('info_block_position', 0);
+$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+$blogReadTime = $template->params->get('blog_read_time'); 
 ?>
 <div class="article-info">
 
@@ -61,6 +63,8 @@ $blockPosition = $displayData['params']->get('info_block_position', 0);
 			<?php echo $this->sublayout('hits', $displayData); ?>
 		<?php endif; ?>
 		
-		<?php echo $this->sublayout('reading_time', $displayData['item']); ?>
+		<?php if ($blogReadTime) :?>
+			<?php echo $this->sublayout('reading_time', $displayData['item']); ?>
+		<?php endif; ?>
 	<?php endif; ?>
 </div>

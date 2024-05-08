@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
+use Joomla\CMS\Layout\LayoutHelper;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
@@ -30,9 +31,12 @@ $beforeDisplayContent = trim(implode("\n", $results));
 
 $results = $app->triggerEvent('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
 $afterDisplayContent = trim(implode("\n", $results));
+$columns = !empty((int) $this->params->get('num_columns')) ? (int) $this->params->get('num_columns') : 3;
 
+$template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
+$blogListType = $template->params->get('blog_list_type') ?? 'default'; 
 ?>
-
+<style>.article-list.grid {--columns: <?php echo $columns; ?>;}</style>
 <div class="blog<?php echo $this->pageclass_sfx; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
@@ -102,22 +106,37 @@ $afterDisplayContent = trim(implode("\n", $results));
 		<?php if ((int) $this->params->get('num_columns') > 1) : ?>
 			<?php $blogClass .= 'cols-' . (int) $this->params->get('num_columns'); ?>	
 		<?php endif; ?>
-		<div class="article-list">
-			<div class="row row-<?php echo $counter + 1; ?> <?php echo $blogClass; ?>">
+
+		<?php if ($blogListType == 'masonry') :?>
+			<div class="article-list grid">
 			<?php foreach ($this->intro_items as $key => &$item) : ?>
-				<div class="col-lg-<?php echo round(12 / Helper::SetColumn($this->params->get('num_columns'), 4)); ?>">
-					<div class="article"
-						itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-						<?php
-						$this->item = & $item;
-						echo $this->loadTemplate('item');
-						?>
-					</div>
-					<?php $counter++; ?>
+				<div class="article flow" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+					<?php
+					$this->item = & $item;
+					echo LayoutHelper::render('masonry.bloglist', [$item, ($counter + 1)], HELIX_LAYOUTS_PATH);
+					?>
 				</div>
+				<?php $counter++; ?>
 			<?php endforeach; ?>
-			</div>
 		</div>
+		<?php else : ?>
+			<div class="article-list">
+				<div class="row row-<?php echo $counter + 1; ?> <?php echo $blogClass; ?>">
+				<?php foreach ($this->intro_items as $key => &$item) : ?>
+					<div class="col-lg-<?php echo round(12 / Helper::SetColumn($this->params->get('num_columns'), 4)); ?>">
+						<div class="article"
+							itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+							<?php
+							$this->item = & $item;
+							echo $this->loadTemplate('item');
+							?>
+						</div>
+						<?php $counter++; ?>
+					</div>
+				<?php endforeach; ?>
+				</div>
+			</div>
+		<?php endif; ?>
 	<?php endif; ?>
 
 	<?php if (!empty($this->link_items)) : ?>

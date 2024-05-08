@@ -206,6 +206,13 @@
 			type="checkbox" 
 			default="0" 
 			label="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT" />
+		
+		<field name="container_max_width" 
+			helixgroup="body" 
+			type="number"
+			min="700"
+			description="HELIX_ULTIMATE_CONTAINER_MAX_WIDTH_DESC" 
+			label="HELIX_ULTIMATE_CONTAINER_MAX_WIDTH" />
 
 		<field name="body_bg_image" 
 			helixgroup="body" 
@@ -495,6 +502,7 @@
 			translateformat="true"
 			filter="user_utc"
 			default="NOW"
+			showtime="true"
 			label="HELIX_ULTIMATE_COMINGSOON_DATE"
 			description="HELIX_ULTIMATE_COMINGSOON_DATE_DESC"
 			showon="comingsoon:1" />
@@ -1554,6 +1562,38 @@
 			default="0" 
 			label="HELIX_ULTIMATE_LIST_TAGS_OPTION" 
 			description="HELIX_ULTIMATE_LIST_TAGS_OPTION_DESC" />
+		
+		<field name="blog_read_time" 
+			type="checkbox"
+			helixgroup="blog_list"
+			default="0" 
+			label="HELIX_ULTIMATE_BLOG_READ_TIME" 
+			description="HELIX_ULTIMATE_BLOG_READ_TIME_DESC" />
+
+		<field name="blog_list_disable_module" 
+			type="checkbox"
+			helixgroup="blog_list"
+			default="0" 
+			label="HELIX_ULTIMATE_BLOG_LIST_DISABLE_MODULE" 
+			description="HELIX_ULTIMATE_BLOG_LIST_DISABLE_MODULE_DESC" />
+
+		<field name="blog_list_disable_positions" 
+			type="helixmultipositions" 
+			multiple="true" 
+			helixgroup="blog_list" 
+			label="HELIX_ULTIMATE_BLOG_LIST_DISABLE_MODULE_POSITIONS" 
+			description="HELIX_ULTIMATE_BLOG_LIST_DISABLE_MODULE_POSITIONS_DESC" 
+			showon="blog_list_disable_module:1" />
+		
+		<field name="blog_list_type" 
+			type="list" 
+			class="form-select"
+			helixgroup="blog_list" 
+			default="default" 
+			label="HELIX_ULTIMATE_BLOG_LIST_TYPE">
+			<option value="default">HELIX_ULTIMATE_BLOG_LIST_TYPE_DEFAULT</option>
+			<option value="masonry">HELIX_ULTIMATE_BLOG_LIST_TYPE_MASONRY</option>
+		</field>
 
 		<field name="blog_details_image" 
 			type="helixswitcher" 
@@ -1589,12 +1629,22 @@
 			<option value="linkedin">HELIX_ULTIMATE_BLOG_SOCIAL_SHARE_LINKEDIN</option>
 		</field>
 
-		<field name="disable_module" 
+		<field name="blog_detail_disable_module" 
 			type="checkbox"
 			helixgroup="blog_details"
 			default="0" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE_DESC" />
+
+		<field name="blog_detail_disable_positions" 
+			type="helixmultipositions" 
+			multiple="true" 
+			separator="true"
+			helixgroup="blog_details" 
+			label="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE_POSITIONS" 
+			description="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE_POSITIONS_DESC" 
+			showon="blog_detail_disable_module:1" />
+
 		<field name="author_info" 
 			type="checkbox" 
 			helixgroup="blog_details" 

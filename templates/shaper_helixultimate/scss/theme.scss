@@ -1116,6 +1116,7 @@ body.view-article.remove-container {
 
 .article-list {
   .article {
+    position: relative;
     margin-bottom: 30px;
     padding: 20px;
     border: 1px solid #f5f5f5;
@@ -1132,6 +1133,13 @@ body.view-article.remove-container {
       img {
         border-radius: 3px 3px 0 0;
       }
+    }
+
+    .featured-article-badge {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      cursor: default;
     }
 
     .article-full-image {
@@ -1178,6 +1186,70 @@ body.view-article.remove-container {
       margin: 5px 0px;
       opacity: .7;
     }
+  }
+}
+
+// Masonry blog styles
+.article-list.grid {
+  --gap: 1em;
+  margin: 0 auto;
+  display: flow;
+  columns: var(--columns);
+  gap: var(--gap);
+  margin-bottom: 20px;
+
+  .article {
+    .article-intro-image {
+      overflow: hidden;
+      position: relative;
+      height: 40vh;
+    }
+
+    a {
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: none;
+        max-height: none;
+        width: auto;
+        height: 100%;
+      }
+    }
+    &:nth-child(1n) .article-intro-image {
+      height: 60vh;
+    }
+    &:nth-child(2n) .article-intro-image {
+      height: 30vh;
+    }
+    &:nth-child(3n) .article-intro-image {
+      height: 50vh;
+    }
+    &:nth-child(4n) .article-intro-image {
+      height: 45vh;
+    }
+    &:nth-child(5n) .article-intro-image {
+      height: 55vh;
+    }
+  }
+}
+
+.article-list.grid > * {
+  break-inside: avoid;
+  margin-bottom: var(--gap);
+}
+
+@supports (grid-template-rows: masonry) {
+  .article-list.grid {
+    display: grid;
+    grid-template-columns: repeat(var(--columns), 1fr);
+    grid-template-rows: masonry;
+    grid-auto-flow: dense;
+  }
+
+  .article-list.grid > * {
+    margin-bottom: 0em;
   }
 }
 
@@ -1243,12 +1315,20 @@ body.view-article.remove-container {
 }
 
 .article-details {
+  position: relative;
   .article-header {
     position: relative;
     h1,
     h2 {
       font-size: 2.25rem;
     }
+  }
+  
+  .featured-article-badge {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    cursor: default;
   }
 
   .article-info {
@@ -2626,3 +2706,11 @@ li.custom_user_login_menu ul li {
   padding: 5px 0;
   border-bottom: 1px solid #eee; 
 }
+
+// Login Passkey style
+svg#Passkey {
+  height: 2rem;
+}
+#icon-passkey {
+  fill: #fff;
+} 

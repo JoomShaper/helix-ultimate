@@ -667,6 +667,7 @@ class HelixultimateMenu
 			$item->getParams()->get('menu_text', 1) ?
 				$linktitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" class="' . $item->menu_image_css . '" /><span class="image-title">' . $item->title . '</span> ' :
 				$linktitle = '<img src="' . $item->menu_image . '" alt="' . $item->title . '" />';
+				
 		}
 		else
 		{

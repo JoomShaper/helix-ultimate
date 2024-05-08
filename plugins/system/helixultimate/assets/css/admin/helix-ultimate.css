@@ -2144,7 +2144,6 @@ select:focus::-ms-value {
 .hu-topbar .topbar-left {
 	display: flex;
 	align-items: center;
-	min-width: 400px;
 }
 
 .hu-topbar .topbar-middle {
@@ -2152,7 +2151,6 @@ select:focus::-ms-value {
 	align-items: center;
 	text-align: center;
 	justify-content: center;
-	min-width: 400px;
 	transition: all 0.3s ease;
 }
 
@@ -2209,7 +2207,6 @@ select:focus::-ms-value {
 	max-width: 450px;
 	border-left: 1px solid #f1f1f1;
 	margin-right: 20px;
-	min-width: 400px;
 }
 
 .hu-topbar .topbar-right .hu-btn:not(:last-child) {
@@ -2240,32 +2237,6 @@ select:focus::-ms-value {
 }
 .hu-topbar .topbar-middle .hu-display-variants button.hu-device.active svg path {
 	fill: rgb(var(--primary));
-}
-
-@media (max-width: 576px) {
-	.hu-topbar .topbar-middle {
-		display: none;
-	}
-	.hu-topbar .topbar-right .helix-topbar-save-text {
-		display: none;
-	}
-
-	.hu-btn svg {
-		margin-right: 0 !important;
-	}
-
-	.hu-topbar .topbar-right .helix-topbar-show-preview-text {
-		display: none;
-	}
-}
-
-@media (max-width: 768px) {
-	.hu-topbar .topbar-middle {
-		display: none;
-	}
-	.hu-topbar .topbar-right {
-		border-left: 0;
-	}
 }
 
 .hu-edit-panel {
@@ -3670,4 +3641,55 @@ input[type='color'] {
 }
 .hu-no-gutter-bottom .hu-inline-group {
 	margin-bottom: 0px !important;
+}
+
+/* Media css */
+@media (max-width: 768px) {
+	.hu-topbar .topbar-left {
+		min-width: auto;
+	}
+	.hu-topbar .topbar-middle {
+		display: none;
+		min-width: auto;
+	}
+	.hu-topbar .topbar-right {
+		border-left: 0;
+		min-width: auto;
+	}
+}
+@media (max-width: 576px) {
+	.hu-topbar .topbar-left {
+		min-width: auto;
+	}
+	.hu-topbar .topbar-middle {
+		display: none;
+		min-width: auto;
+	}
+	.hu-topbar .topbar-right {
+		min-width: auto;
+	}
+	.hu-topbar .topbar-right .helix-topbar-save-text {
+		display: none;
+	}
+
+	.hu-btn svg {
+		margin-right: 0 !important;
+	}
+
+	.hu-topbar .topbar-right .helix-topbar-show-preview-text {
+		display: none;
+	}
+
+	#hu-options-panel {
+		width: 44px;
+	}
+	.hu-fieldset-header .hu-option-title {
+		display: none;
+	}
+	.hu-panel-position-left .hu-fieldset-contents {
+		top: 12%;
+		right: 0;
+		width: 100%;
+		position: fixed;
+	}
 }

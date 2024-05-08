@@ -12,8 +12,18 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Version;
 
 FormHelper::loadFieldClass('list');
+
+$version = new Version();
+$JoomlaVersion = $version->getShortVersion();
+
+if (version_compare($JoomlaVersion, '4.0.0', '>='))
+{
+	JLoader::registerAlias('JFormFieldList', 'Joomla\CMS\Form\Field\ListField');
+}
+
 /**
  * Form field for Helix positions
  *

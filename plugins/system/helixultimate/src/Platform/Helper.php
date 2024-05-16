@@ -416,9 +416,11 @@ class Helper
 		{
 			$db = Factory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('DISTINCT m.id, m.title, m.module, m.position, m.params, e.manifest_cache')
+			$query->select('DISTINCT m.id, m.title, m.module, m.position, m.params, m.published, e.manifest_cache')
 				->from($db->quoteName('#__modules', 'm'))
-				->where($db->quoteName('m.client_id') . ' = 0');
+				->where($db->quoteName('m.client_id') . ' = 0')
+				->where($db->quoteName('e.client_id') . ' = 0') // Select only site extensions. This prevents returning duplicate entry for same module
+                ->where($db->quoteName('m.published'). ' != -2'); // Don't show trashed items, can parameterized.
 			$query->join('LEFT', $db->quoteName('#__extensions', 'e') . ' ON (' . $db->quoteName('e.element') . ' = ' . $db->quoteName('m.module') . ')');
 			
 			if (!empty($keyword))

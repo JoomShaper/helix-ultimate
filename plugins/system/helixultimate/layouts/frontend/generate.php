@@ -92,18 +92,24 @@ extract($displayData);
 		<script>
 			window.addEventListener('DOMContentLoaded', () => {
 				<?php if ($rightSticky) :?>
-				const rightSidebar = new StickySidebar('#sp-right .sp-column ', {
-					containerSelector: '#sp-main-body .row',
-					topSpacing: 15,
-					minWidth:991
-				});
+					var isRight = document.querySelector('#sp-right .sp-column');
+					if (isRight) {
+						const rightSidebar = new StickySidebar('#sp-right .sp-column', {
+							containerSelector: '#sp-main-body .row',
+							topSpacing: 15,
+							minWidth:991
+						});
+					}
 				<?php endif; ?>
 				<?php if ($leftSticky) :?>
-					const leftSidebar = new StickySidebar('#sp-left .sp-column ', {
-						containerSelector: '#sp-main-body .row',
-						topSpacing: 15,
-						minWidth:991
-					});
+					var isLeft = document.querySelector('#sp-left .sp-column');
+					if (isLeft) {
+						const leftSidebar = new StickySidebar('#sp-left .sp-column', {
+							containerSelector: '#sp-main-body .row',
+							topSpacing: 15,
+							minWidth:991
+						});
+					}
 				<?php endif; ?>
 			})
 		</script>

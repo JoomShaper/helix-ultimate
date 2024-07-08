@@ -11,12 +11,14 @@ defined ('JPATH_BASE') or die();
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 
 extract($displayData);
 
 // Get some system objects.
 $document = Factory::getDocument();
+$lang     = Factory::getApplication()->getLanguage();
 
 $inputvalue = '';
 
@@ -53,6 +55,36 @@ if (is_array($attributes))
 $cssFileExt = ($direction === 'rtl') ? '-rtl.css' : '.css';
 $localesPath = $localesPath ?? '';
 $helperPath = $helperPath ?? '';
+
+// Add language strings
+$strings = [
+    // Days
+    'SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY',
+    // Short days
+    'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT',
+    // Months
+    'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER',
+    // Short months
+    'JANUARY_SHORT', 'FEBRUARY_SHORT', 'MARCH_SHORT', 'APRIL_SHORT', 'MAY_SHORT', 'JUNE_SHORT',
+    'JULY_SHORT', 'AUGUST_SHORT', 'SEPTEMBER_SHORT', 'OCTOBER_SHORT', 'NOVEMBER_SHORT', 'DECEMBER_SHORT',
+    // Buttons
+    'JCLOSE', 'JCLEAR', 'JLIB_HTML_BEHAVIOR_TODAY',
+    // Miscellaneous
+    'JLIB_HTML_BEHAVIOR_WK',
+];
+
+foreach ($strings as $c) {
+    Text::script($c);
+}
+
+// These are new strings. Make sure they exist. Can be generalised at later time: eg in 4.1 version.
+if ($lang->hasKey('JLIB_HTML_BEHAVIOR_AM')) {
+    Text::script('JLIB_HTML_BEHAVIOR_AM');
+}
+
+if ($lang->hasKey('JLIB_HTML_BEHAVIOR_PM')) {
+    Text::script('JLIB_HTML_BEHAVIOR_PM');
+}
 
 if (JVERSION < 4)
 {

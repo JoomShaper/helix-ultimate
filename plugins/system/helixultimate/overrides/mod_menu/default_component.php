@@ -36,7 +36,14 @@ if ($item->anchor_rel)
 $linktype = $item->title;
 
 if ($item->menu_icon) {
-	$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+	if ($item->getParams()->get('menu_text', 1))
+	{
+		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+	}
+	else
+	{
+		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+	}
 }
 else if ($item->menu_image)
 {

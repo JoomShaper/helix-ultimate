@@ -40,6 +40,10 @@ class Helper
 	 */
 	public static function getTemplateStyle($id = 0)
 	{
+		static $cache = [];
+		if (isset($cache[$id])) {
+		return $cache[$id];
+		}
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
 
@@ -51,7 +55,9 @@ class Helper
 
 		$db->setQuery($query);
 
-		return $db->loadObject();
+		$cache[$id] = $db->loadObject();
+
+		return $cache[$id];
 	}
 
 	/**

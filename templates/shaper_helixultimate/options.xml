@@ -104,8 +104,7 @@
 			type="checkbox" 
 			helixgroup="header" 
 			label="HELIX_ULTIMATE_PREDEFINED_HEADER"
-			description="HELIX_ULTIMATE_PREDEFINED_HEADER_DESC"
-			default="0" />
+			description="HELIX_ULTIMATE_PREDEFINED_HEADER_DESC"/>
 
 		<field type="helixheaders" 
 			name="header_style" 
@@ -160,13 +159,11 @@
 		<!-- <field name="sticky_header_sm" 
 			helixgroup="header" 
 			type="checkbox" 
-			default="0" 
 			className="hidden"
 			label="HELIX_ULTIMATE_STICKY_HEADER_SM" />
 		<field name="sticky_header_xs" 
 			helixgroup="header" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			className="hidden"
 			label="HELIX_ULTIMATE_STICKY_HEADER_XS" /> -->
 		<field name="sticky_offset" 
@@ -180,8 +177,7 @@
 
 		<field name="preloader" 
 			helixgroup="body" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_PRELOADER" />
 
 		<field name="loader_type" 
@@ -204,7 +200,6 @@
 		<field name="boxed_layout" 
 			helixgroup="body" 
 			type="checkbox" 
-			default="0" 
 			label="HELIX_ULTIMATE_ENABLE_BOXED_LAYOUT" />
 		
 		<field name="container_max_width" 
@@ -317,8 +312,7 @@
 			showon="enabled_copyright:1" />
 		<field name="goto_top" 
 			helixgroup="footer" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_GO_TO_TOP" />
 
 		<!--Social Icons-->
@@ -479,7 +473,6 @@
 		<field name="comingsoon" 
 			helixgroup="comingsoon" 
 			type="checkbox" 
-			default="0" 
 			label="HELIX_ULTIMATE_COMINGSOON_MODE" />
 		<field name="comingsoon_title" 
 			helixgroup="comingsoon" 
@@ -547,7 +540,6 @@
 		<!-- <field name="error_sppb" 
 			helixgroup="errorpage" 
 			type="checkbox"
-			default="0"  
 			label="Page Builder Page"
 			description="Enable this option to render a SP Page Builder page as a 404 page."
 		/>
@@ -577,7 +569,6 @@
 		<field name="error_font_load" 
 			helixgroup="errorpage" 
 			type="checkbox"
-			default="0"  
 			label="HELIX_ULTIMATE_ERROR_FONT_LOAD"
 			description="HELIX_ULTIMATE_ERROR_FONT_LOAD_DESC"
 		/>
@@ -941,8 +932,7 @@
 		</field>
 
 		<field name="custom_style" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_CUSTOM_STYLE" 
 			track="on"
 			description="HELIX_ULTIMATE_CUSTOM_STYLE_DESC" />
@@ -1255,32 +1245,27 @@
 			type="checkbox" 
 			helixgroup="offcanvas" 
 			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGO"
-			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGO_DESC"
-			default="0"/>
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGO_DESC"/>
 		<field name="offcanvas_enable_search" 
 			type="checkbox" 
 			helixgroup="offcanvas" 
 			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SEARCH"
-			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SEARCH_DESC"
-			default="0"/>
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SEARCH_DESC"/>
 		<field name="offcanvas_enable_login" 
 			type="checkbox" 
 			helixgroup="offcanvas" 
 			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGIN"
-			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGIN_DESC"
-			default="0"/>
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_LOGIN_DESC"/>
 		<field name="offcanvas_enable_social" 
 			type="checkbox" 
 			helixgroup="offcanvas" 
 			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SOCIALS"
-			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SOCIALS_DESC"
-			default="0"/>
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_SOCIALS_DESC"/>
 		<field name="offcanvas_enable_contact" 
 			type="checkbox" 
 			helixgroup="offcanvas" 
 			label="HELIX_ULTIMATE_ENABLE_OFFCANVAS_CONTACTS"
-			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_CONTACTS_DESC"
-			default="0"/>
+			description="HELIX_ULTIMATE_ENABLE_OFFCANVAS_CONTACTS_DESC"/>
 	</fieldset>
 
 	<!--Typography-->
@@ -1401,7 +1386,6 @@
 			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
-			default="0" 
 			label="HELIX_ULTIMATE_GROUP_NAV_FONT" />
 		<field name="navigation_font"
 			helixsubgroup="font_navigation"
@@ -1415,7 +1399,6 @@
 			subclasses="col-12 hu-is-header"
 			masterclass="row hu-typography-wrapper"
 			type="checkbox" 
-			default="0" 
 			label="HELIX_ULTIMATE_GROUP_CUSTOM_FONT" />
 		<field name="custom_font"
 			helixsubgroup="font_custom"
@@ -1464,8 +1447,7 @@
 			style="plain"
 			helixgroup="blog_images" 
 			helixsubgroup="small_image"
-			subclasses="col-4"
-			default="0" 
+			subclasses="col-4" 
 			label="HELIX_ULTIMATE_IMAGE_SMALL" />
 
 		<field
@@ -1485,8 +1467,7 @@
 			style="plain" 
 			helixgroup="blog_images" 
 			helixsubgroup="medium_image"
-			subclasses="col-4"
-			default="0" 
+			subclasses="col-4" 
 			label="HELIX_ULTIMATE_IMAGE_MEDIUM" />
 
 		<field name="image_medium_size" 
@@ -1506,7 +1487,6 @@
 			helixgroup="blog_images" 
 			helixsubgroup="large_image"
 			subclasses="col-4"
-			default="0" 
 			label="HELIX_ULTIMATE_IMAGE_LARGE" />
 
 		<field name="image_large_size" 
@@ -1558,22 +1538,19 @@
 		</field>
 		<field name="show_list_tags" 
 			type="checkbox" 
-			helixgroup="blog_list" 
-			default="0" 
+			helixgroup="blog_list"
 			label="HELIX_ULTIMATE_LIST_TAGS_OPTION" 
 			description="HELIX_ULTIMATE_LIST_TAGS_OPTION_DESC" />
 		
 		<field name="blog_read_time" 
 			type="checkbox"
-			helixgroup="blog_list"
-			default="0" 
+			helixgroup="blog_list" 
 			label="HELIX_ULTIMATE_BLOG_READ_TIME" 
 			description="HELIX_ULTIMATE_BLOG_READ_TIME_DESC" />
 
 		<field name="blog_list_disable_module" 
 			type="checkbox"
-			helixgroup="blog_list"
-			default="0" 
+			helixgroup="blog_list" 
 			label="HELIX_ULTIMATE_BLOG_LIST_DISABLE_MODULE" 
 			description="HELIX_ULTIMATE_BLOG_LIST_DISABLE_MODULE_DESC" />
 
@@ -1632,7 +1609,6 @@
 		<field name="blog_detail_disable_module" 
 			type="checkbox"
 			helixgroup="blog_details"
-			default="0" 
 			label="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_DISABLE_MODULE_DESC" />
 
@@ -1647,8 +1623,7 @@
 
 		<field name="author_info" 
 			type="checkbox" 
-			helixgroup="blog_details" 
-			default="0" 
+			helixgroup="blog_details"
 			label="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_AUTHOR_INFO_DESC" />
 		<field name="og" 
@@ -1670,8 +1645,7 @@
 			showon="og:1" />
 		<field name="reading_time_progress" 
 			type="checkbox"
-			helixgroup="blog_details" 
-			default="0" 
+			helixgroup="blog_details"
 			label="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_READING_TIME_PROGRESS_DESC" />
 		<field name="reading_timeline_bg" 
@@ -1701,8 +1675,7 @@
 		</field>
 		<field name="related_article" 
 			type="checkbox"
-			helixgroup="blog_details" 
-			default="0" 
+			helixgroup="blog_details"
 			label="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE" 
 			description="HELIX_ULTIMATE_BLOG_DETAILS_RELATED_ARTICLE_DESC" />
 		<field name="related_article_title" 
@@ -1741,8 +1714,7 @@
 		</field>
 		<field name="blog_details_remove_container" 
 			helixgroup="blog_details" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_BLOG_DETAILS_REMOVE_CONTAINER" />
 		<field name="comment" 
 			type="list" 
@@ -1771,8 +1743,7 @@
 			showon="comment:disqus" />
 		<field name="comment_disqus_devmode" 
 			type="checkbox" 
-			helixgroup="comments" 
-			default="0" 
+			helixgroup="comments"
 			label="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE" 
 			description="HELIX_ULTIMATE_COMMENT_DISQUS_DEV_MODE_DESC" 
 			showon="comment:disqus" />
@@ -1805,8 +1776,7 @@
 			showon="comment:facebook" />
 		<field name="comments_count" 
 			helixgroup="comments" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_COMMENTS_COUNT" 
 			description="HELIX_ULTIMATE_COMMENTS_COUNT_DESC" 
 			showon="comment!:disabled" />
@@ -1861,14 +1831,12 @@
 		icon="fas fa-cog">
 		<field name="compress_css" 
 			helixgroup="compression" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_CSS_COMPRESS" 
 			description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
 		<field name="compress_js" 
 			helixgroup="compression" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_JS_COMPRESS" 
 			description="HELIX_ULTIMATE_JS_COMPRESS_DESC" />
 		<field name="exclude_js" 
@@ -1880,7 +1848,6 @@
 		<field name="scssoption" 
 			helixgroup="scss" 
 			type="checkbox" 
-			default="0" 
 			label="HELIX_ULTIMATE_ENABLE_SCSS" 
 			description="HELIX_ULTIMATE_ENABLE_SCSS_DESC" />
 
@@ -1910,8 +1877,7 @@
 
 		<field name="image_lazy_loading" 
 			helixgroup="image" 
-			type="checkbox" 
-			default="0" 
+			type="checkbox"
 			label="HELIX_ULTIMATE_ENABLE_IMAGE_LAZY_LOADING" 
 			description="HELIX_ULTIMATE_ENABLE_IMAGE_LAZY_LOADING_DESC" />
 

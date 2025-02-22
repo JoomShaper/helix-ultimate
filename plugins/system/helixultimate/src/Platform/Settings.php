@@ -171,6 +171,26 @@ class Settings
 		 */
 		$formXml = $this->form->getXml();
 
+		// Patch for an issue introduced in Joomla 5.2.4 for the checkbox field.
+		// If the default value is equal to '0' in the checkbox field now joomla
+		// acts weirdly. So, set the default value to empty string if it's '0' previously.
+		// @since 2.1.2 & joomla 5.2.4
+		if (!empty($formXml))
+		{
+			foreach ($formXml->fieldset as $fieldset)
+			{
+				foreach ($fieldset->field as $field)
+				{
+					$fieldType = (string) $field['type'];
+
+					if ($fieldType === 'checkbox' && strval($field['default'] ?? '') === '0')
+					{
+						$field['default'] = '';
+					}
+				}
+			}
+		}
+
 		if (!empty($formXml))
 		{
 			for ($i = 0; $i < $formXml->count(); ++$i)

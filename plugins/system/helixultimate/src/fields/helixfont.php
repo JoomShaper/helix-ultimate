@@ -64,6 +64,7 @@ class JFormFieldHelixfont extends FormField
 		$webfonts   = json_decode($json ?? "");
 		$items      = $webfonts->items;
 		$value      = json_decode($this->value ?? "");
+		$font 		= null;
 
 		if (isset($value->fontFamily))
 		{

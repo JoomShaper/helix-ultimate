@@ -280,7 +280,7 @@ class Media
 				}
 
 				// File formats
-				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'svg', 'ico');
+				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico');
 
 				// Upload if no error found
 				if (!$error)

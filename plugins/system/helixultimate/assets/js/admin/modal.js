@@ -167,7 +167,7 @@ jQuery(function ($) {
 
 		mediaModal += '<div class="hu-modal-header">';
 		mediaModal +=
-			'<input type="file" id="hu-file-input" accept="image/png, image/jpg, image/jpeg, image/gif, image/svg+xml, image/x-icon" style="display:none;" multiple>';
+			'<input type="file" id="hu-file-input" accept="image/png, image/jpg, image/jpeg, image/webp, image/gif, image/svg+xml, image/x-icon" style="display:none;" multiple>';
 			
 		mediaModal += '<div class="hu-modal-breadcrumbs"></div>';
 

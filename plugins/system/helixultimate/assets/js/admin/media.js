@@ -390,6 +390,7 @@ jQuery(function ($) {
 				file_ext == 'png' ||
 				file_ext == 'jpg' ||
 				file_ext == 'jpeg' ||
+				file_ext == 'webp' ||
 				file_ext == 'gif' ||
 				file_ext == 'svg' ||
 				file_ext == 'ico';

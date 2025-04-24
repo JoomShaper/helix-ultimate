@@ -1848,7 +1848,8 @@ class HelixUltimate
 			->join('LEFT', $db->quoteName('#__users', 'u') . ' ON (' . $db->quoteName('a.created_by') . ' = ' . $db->quoteName('u.id') . ')')
 			->where($db->quoteName('a.access') . " IN (" . implode(',', $authorised) . ")")
 			->where('a.id IN (' . $itemIds . ')')
-			->where('a.id != ' . (int) $item_id);
+			->where('a.id != ' . (int) $item_id)
+			->where('a.published = 1');
 
 		// Language filter
 		if ($app->getLanguageFilter())

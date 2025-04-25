@@ -360,6 +360,11 @@ class HelixultimateMenu
 	 */
 	private function getItem($item)
 	{
+		if ($item->getParams()->get('menu_show') === 0)
+		{
+			return;
+		}
+		
 		$this->menu .= $this->start_el(array('item' => $item));
 		$this->menu .= $this->item($item);
 

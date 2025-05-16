@@ -1849,7 +1849,7 @@ class HelixUltimate
 			->where($db->quoteName('a.access') . " IN (" . implode(',', $authorised) . ")")
 			->where('a.id IN (' . $itemIds . ')')
 			->where('a.id != ' . (int) $item_id)
-			->where($db->quoteName('a.published) . ' = 1');
+			->where($db->quoteName('a.published') . ' = 1');
 
 		// Language filter
 		if ($app->getLanguageFilter())

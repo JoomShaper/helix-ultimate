@@ -360,7 +360,7 @@ class HelixultimateMenu
 	 */
 	private function getItem($item)
 	{
-		if ($item->getParams()->get('menu_show') === 0)
+		if ((int) $item->getParams()->get('menu_show') === 0)
 		{
 			return;
 		}

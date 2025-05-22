@@ -166,7 +166,7 @@ jQuery(function($) {
 
 		for (i=0;i<files.length;i++){
 			var ext = files[i].name.split('.').pop().toLowerCase();
-			var allowed = ((ext == 'png') || (ext == 'jpg') || (ext == 'jpeg') || (ext == 'gif') || (ext == 'svg'));
+			var allowed = ((ext == 'png') || (ext == 'jpg') || (ext == 'jpeg') || (ext == 'gif') || (ext == 'svg') || (ext == 'webp'));
 			if(allowed) {
 				
 				let gallery_id = 'gallery-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1);

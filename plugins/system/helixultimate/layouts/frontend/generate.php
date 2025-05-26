@@ -97,7 +97,7 @@ extract($displayData);
 						const rightSidebar = new StickySidebar('#sp-right .sp-column', {
 							containerSelector: '#sp-main-body .row',
 							topSpacing: 15,
-							minWidth:991
+							minWidth:320
 						});
 					}
 				<?php endif; ?>
@@ -107,7 +107,7 @@ extract($displayData);
 						const leftSidebar = new StickySidebar('#sp-left .sp-column', {
 							containerSelector: '#sp-main-body .row',
 							topSpacing: 15,
-							minWidth:991
+							minWidth:320
 						});
 					}
 				<?php endif; ?>

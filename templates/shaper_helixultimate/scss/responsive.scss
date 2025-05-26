@@ -114,6 +114,10 @@
 			height: 80vh;
 		}
 	}
+	.inner-wrapper-sticky {
+		z-index:1000;
+		
+	}
 }
 
 @media (max-width: 767px) {
@@ -153,6 +157,11 @@
 	.article-list.grid {
 		--columns: 1 !important;
 		margin-bottom: 15px;
+	}
+
+	.inner-wrapper-sticky {
+		z-index:100;
+		
 	}
 }
 

@@ -42,7 +42,7 @@ $site_title = $app->get('sitename');
 
 <!doctype html>
 <html class="coming-soon" lang="<?php echo $language; ?>" dir="<?php echo $direction; ?>">
-
+  
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<?php

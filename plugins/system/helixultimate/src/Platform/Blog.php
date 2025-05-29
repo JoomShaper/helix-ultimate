@@ -67,7 +67,7 @@ class Blog
 				$postMaxSize 	= $mediaHelper->toBytes(ini_get('post_max_size'));
 				$memoryLimit 	= $mediaHelper->toBytes(ini_get('memory_limit'));
 
-				if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit !== -1 && $contentLength > $memoryLimit))
+				if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit > 0 && $contentLength > $memoryLimit)) 
 				{
 					$report['status'] = false;
 					$report['output'] = Text::_('Total size of upload exceeds the limit.');

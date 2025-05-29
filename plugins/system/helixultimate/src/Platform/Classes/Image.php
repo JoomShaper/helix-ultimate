@@ -40,6 +40,9 @@ class Image
 			case 'png':
 				$img = imagecreatefrompng($src);
 				break;
+			case 'webp':
+				$img = imagecreatefromwebp($src);
+				break;
 		}
 
 		if (!empty($sizes))
@@ -110,6 +113,9 @@ class Image
 						break;
 					case 'png':
 						imagepng($new, $dest);
+						break;
+					case 'webp':
+						imagewebp($new, $dest, $quality);
 						break;
 				}
 			}

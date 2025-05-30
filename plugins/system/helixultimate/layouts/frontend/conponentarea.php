@@ -15,7 +15,7 @@ $doc = Factory::getDocument();
 $data = $displayData;
 ?>
 
-<main id="sp-component" class="<?php echo $data->settings->className; ?>">
+<div id="sp-component" class="<?php echo $data->settings->className; ?>">
 	<div class="sp-column <?php echo $data->settings->custom_class; ?>">
 		<jdoc:include type="message" />
 
@@ -33,4 +33,4 @@ $data = $displayData;
 			</div>
 		<?php endif ?>
 	</div>
-</main>
+</div>

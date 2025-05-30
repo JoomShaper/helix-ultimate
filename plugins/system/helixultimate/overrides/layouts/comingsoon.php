@@ -42,7 +42,7 @@ $site_title = $app->get('sitename');
 
 <!doctype html>
 <html class="coming-soon" lang="<?php echo $language; ?>" dir="<?php echo $direction; ?>">
-  
+
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<?php
@@ -71,10 +71,10 @@ $site_title = $app->get('sitename');
 
 		<jdoc:include type="message" />
 
-		<?php if ($params->get('comingsoon_logo')) : ?>
+		<?php if ($params->get('comingsoon', 0) && $params->get('comingsoon_logo')) : ?>
 			<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo htmlspecialchars($site_title ?? ""); ?>">
 		<?php endif; ?>
-		<?php if ($title_status) : ?>
+		<?php if ($params->get('comingsoon', 0) && $title_status) : ?>
 			<?php if ($params->get('comingsoon_title')) : ?>
 				<h1 class="coming-soon-title"><?php echo htmlspecialchars($params->get('comingsoon_title') ?? ""); ?></h1>
 			<?php else: ?>
@@ -83,7 +83,7 @@ $site_title = $app->get('sitename');
 		<?php endif; ?>
 
 		<?php if ($content_status) : ?>
-			<?php if ($params->get('comingsoon_content')) : ?>
+			<?php if ($params->get('comingsoon', 0) && $params->get('comingsoon_content')) : ?>
 				<div class="row justify-content-center">
 					<div class="col-lg-8">
 						<div class="coming-soon-content">
@@ -112,7 +112,7 @@ $site_title = $app->get('sitename');
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<?php if ($countdown && $params->get('comingsoon_date')) : ?>
+		<?php if ($params->get('comingsoon', 0) && $countdown && $params->get('comingsoon_date')) : ?>
 			<?php $comingsoon_date = explode('-', $params->get("comingsoon_date")); ?>
 			<div id="coming-soon-countdown" class="clearfix"></div>
 			<script type="text/javascript">
@@ -124,7 +124,7 @@ $site_title = $app->get('sitename');
 			</script>
 		<?php endif; ?>
 
-		<?php if ($theme->count_modules('comingsoon')) : ?>
+		<?php if ($params->get('comingsoon', 0) && $theme->count_modules('comingsoon')) : ?>
 			<div class="coming-soon-position">
 				<jdoc:include type="modules" name="comingsoon" style="sp_xhtml" />
 			</div>
@@ -142,7 +142,7 @@ $site_title = $app->get('sitename');
 		$flickr 	= $params->get('flickr');
 		$vk 		= $params->get('vk');
 
-		if ($params->get('comingsoon_social_icons') && ($facebook || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk)) {
+		if ($params->get('comingsoon', 0) && $params->get('comingsoon_social_icons') && ($facebook || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $skype || $flickr || $vk)) {
 			$social_output  = '<ul class="social-icons">';
 
 			if ($facebook) {
@@ -181,32 +181,37 @@ $site_title = $app->get('sitename');
 			echo $social_output;
 		}
 		?>
-
-		<?php if (isset($login) && $login) : ?>
-			<?php echo $login_form; ?>
+		<?php if ($params->get('comingsoon', 0)) : ?>
+			<?php if (($params->get('comingsoon_enable_login', 0)) && isset($login) && $login) : ?>
+				<?php echo $login_form; ?>
+			<?php endif; ?>
+		<? else : ?>
+			<?php if (isset($login) && $login) : ?>
+				<?php echo $login_form; ?>
+			<?php endif; ?>
 		<?php endif; ?>
 
 		<?php $theme->after_body(); ?>
 	</div>
 	<?php
-// Show coming soon bg image if coming soon mode is on and image exists
-if ($params->get('comingsoon', 0) && $params->get('comingsoon_bg_image')) : ?>
-	<style>
-		body {
-			background-image: url('<?php echo Uri::base(true) . '/' . ltrim($params->get('comingsoon_bg_image'), '/'); ?>');
-			background-size: cover;
-			background-position: center !important;
-		}
-	</style>
-<?php elseif ($app->get('offline_image')): ?>
-	<style>
-		body {
-            background-image: url('<?php echo Uri::base(true) . '/' . ltrim($app->get('offline_image'), '/'); ?>');
-            background-size: cover;
-            background-position: center !important;
-        }
-	</style>
-<?php endif; ?>
+	// Show coming soon bg image if coming soon mode is on and image exists
+	if ($params->get('comingsoon', 0) && $params->get('comingsoon_bg_image')) : ?>
+		<style>
+			body {
+				background-image: url('<?php echo Uri::base(true) . '/' . ltrim($params->get('comingsoon_bg_image'), '/'); ?>');
+				background-size: cover;
+				background-position: center !important;
+			}
+		</style>
+	<?php elseif ($app->get('offline_image')): ?>
+		<style>
+			body {
+				background-image: url('<?php echo Uri::base(true) . '/' . ltrim($app->get('offline_image'), '/'); ?>');
+				background-size: cover;
+				background-position: center !important;
+			}
+		</style>
+	<?php endif; ?>
 
 </body>
 

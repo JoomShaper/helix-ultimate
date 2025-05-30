@@ -2,13 +2,6 @@
 <form name="preset">
 	<fieldset name="colors">
 		<!-- Preset edit topbar -->
-		<field name="topbar_bg_color" 
-			class="preset-control internal-use-only" 
-			helixgroup="preset_topbar" 
-			type="color" 
-			label="Topbar Background Color" 
-			track="false" />
-
 		<field name="topbar_text_color" 
 			class="preset-control internal-use-only" 
 			helixgroup="preset_topbar" 

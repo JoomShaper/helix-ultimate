@@ -82,8 +82,8 @@ $site_title = $app->get('sitename');
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<?php if ($content_status) : ?>
-			<?php if ($params->get('comingsoon', 0) && $params->get('comingsoon_content')) : ?>
+		<?php if ($params->get('comingsoon', 0)) : ?>
+			<?php if ($content_status && $params->get('comingsoon_content')) : ?>
 				<div class="row justify-content-center">
 					<div class="col-lg-8">
 						<div class="coming-soon-content">
@@ -91,24 +91,24 @@ $site_title = $app->get('sitename');
 						</div>
 					</div>
 				</div>
-			<?php else: ?>
-				<?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
-					<div class="row justify-content-center">
-						<div class="col-lg-8">
-							<div class="coming-soon-content">
-								<?php echo $app->get('offline_message'); ?>
-							</div>
+			<?php endif; ?>
+		<?php else: ?>
+			<?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+						<div class="coming-soon-content">
+							<?php echo $app->get('offline_message'); ?>
 						</div>
 					</div>
-				<?php elseif ($app->get('display_offline_message', 1) == 2) : ?>
-					<div class="row justify-content-center">
-						<div class="col-lg-8">
-							<div class="coming-soon-content">
-								<?php echo Text::_('JOFFLINE_MESSAGE'); ?>
-							</div>
+				</div>
+			<?php elseif ($app->get('display_offline_message', 1) == 2) : ?>
+				<div class="row justify-content-center">
+					<div class="col-lg-8">
+						<div class="coming-soon-content">
+							<?php echo Text::_('JOFFLINE_MESSAGE'); ?>
 						</div>
 					</div>
-				<?php endif; ?>
+				</div>
 			<?php endif; ?>
 		<?php endif; ?>
 
@@ -150,7 +150,7 @@ $site_title = $app->get('sitename');
 				$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="' . $facebook . '"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>';
 			}
 			if ($instagram) {
-				$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="'. $instagram .'"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>';
+				$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="' . $instagram . '"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>';
 			}
 			if ($twitter) {
 				$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="' . $twitter . '"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor" style="width: 13.56px;position: relative;top: -1.5px;"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg></a></li>';

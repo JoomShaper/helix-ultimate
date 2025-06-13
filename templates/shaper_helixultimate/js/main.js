@@ -164,31 +164,105 @@ jQuery(function ($) {
 		$(this).parent().addClass('menu-justify');
 	});
 
-	// Offcanvs
-	$('#offcanvas-toggler').on('click', function (event) {
+
+	// Offcanvas toggle handlers
+	$('#offcanvas-toggler, .offcanvas-toggler-secondary, .offcanvas-toggler-full').on('click', function (event) {
 		event.preventDefault();
-		$('.offcanvas-init').addClass('offcanvas-active');
+		openOffcanvas();
 	});
 
-	$('.offcanvas-toggler-secondary').on('click', function (event) {
-		event.preventDefault();
-		$('.offcanvas-init').addClass('offcanvas-active');
-	});
-
-	$('.offcanvas-toggler-full').on('click', function (event) {
-		event.preventDefault();
-		$('.offcanvas-init').addClass('offcanvas-active full-offcanvas');
-	});
-
+	// Close handlers
 	$('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
 		event.preventDefault();
-		$('.offcanvas-init').removeClass('offcanvas-active full-offcanvas');
+		closeOffcanvas();
 	});
 
-	$(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
-		event.preventDefault();
-		$(this).closest('.menu-parent').toggleClass('menu-parent-open').find('>.menu-child').slideToggle(400);
+	// Open function
+	function openOffcanvas() {
+		$('.offcanvas-init').addClass('offcanvas-active');
+		$(document.body).css('overflow', 'hidden');
+
+		// Make offcanvas interactive
+		$('.offcanvas-menu')
+			.removeAttr('inert')
+			.attr('tabindex', '0');
+
+		// Set focus to close button (better for accessibility)
+		setTimeout(() => {
+			$('.close-offcanvas').focus();
+		}, 100);
+
+		// Add keyboard trap
+		$(document).on('keydown.offcanvas', handleOffcanvasKeyboard);
+	}
+
+	// Close function
+	function closeOffcanvas() {
+		$('.offcanvas-init').removeClass('offcanvas-active full-offcanvas');
+		$(document.body).css('overflow', '');
+
+		// Make offcanvas non-interactive
+		$('.offcanvas-menu')
+			.attr('inert', '')
+			.attr('tabindex', '-1');
+
+		// Return focus to the trigger
+		$('#offcanvas-toggler').focus();
+
+		// Remove keyboard trap
+		$(document).off('keydown.offcanvas');
+	}
+
+	// Keyboard trap handler
+	function handleOffcanvasKeyboard(e) {
+		if (!$('.offcanvas-init').hasClass('offcanvas-active')) return;
+
+		const $offcanvas = $('.offcanvas-menu');
+		const focusable = 'a[href], button, input, textarea, select, [tabindex="0"]';
+		const $focusable = $offcanvas.find(focusable).filter(':visible');
+
+		// Escape key closes
+		if (e.key === 'Escape') {
+			e.preventDefault();
+			closeOffcanvas();
+			return;
+		}
+
+		// Tab key containment
+		if (e.key === 'Tab') {
+			const $first = $focusable.first();
+			const $last = $focusable.last();
+
+			if (!$offcanvas[0].contains(document.activeElement)) {
+				e.preventDefault();
+				$first.focus();
+				return;
+			}
+
+			if (e.shiftKey && document.activeElement === $first[0]) {
+				e.preventDefault();
+				$last.focus();
+			} else if (!e.shiftKey && document.activeElement === $last[0]) {
+				e.preventDefault();
+				$first.focus();
+			}
+		}
+	}
+
+	// Prevent focus on inert elements
+	$(document).on('focusin', function (e) {
+		if ($(e.target).closest('[inert]').length) {
+			e.preventDefault();
+			$('#offcanvas-toggler').focus();
+		}
 	});
+
+	// Load inert polyfill if needed
+	if (!('inert' in document.createElement('div'))) {
+		const inertPolyfill = document.createElement('script');
+		inertPolyfill.src = 'https://cdn.jsdelivr.net/npm/inert-polyfill@3.1.1/inert.min.js';
+		document.head.appendChild(inertPolyfill);
+	}
 
 	// Modal Menu
 	if ($('#modal-menu').length > 0) {
@@ -218,7 +292,7 @@ jQuery(function ($) {
 	tooltipTriggerList.map(function (tooltipTriggerEl) {
 		return new bootstrap.Tooltip(tooltipTriggerEl,{
 			html: true
-		  });
+		});
 	});
 
 	// Popover

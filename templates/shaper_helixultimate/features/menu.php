@@ -65,7 +65,7 @@ class HelixUltimateFeatureMenu
 			
 			if($offcanvas_position === 'right')
 			{
-				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div><span class="visually-hidden">' . Text::_('HELIX_ULTIMATE_OFFCANVAS_TOGGLE_HIDDEN') . '</span></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div></a>';
 			}
 			$output .= '</nav>';
 		}
@@ -75,7 +75,7 @@ class HelixUltimateFeatureMenu
 
 			if ($offcanvas_position === 'right')
 			{
-				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-flex d-lg-none" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div><span class="visually-hidden">' . Text::_('HELIX_ULTIMATE_OFFCANVAS_TOGGLE_HIDDEN') .'</span></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-flex d-lg-none" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div></a>';
 			}
 
 			$menu = new HelixultimateMenu('d-none d-lg-block', '');
@@ -86,7 +86,7 @@ class HelixUltimateFeatureMenu
 		{
 			if($offcanvas_position === 'right')
 			{
-				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"  class="offcanvas-toggler-right" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div><span class="visually-hidden">' . Text::_('HELIX_ULTIMATE_OFFCANVAS_TOGGLE_HIDDEN') .'</span></a>';
+				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"  class="offcanvas-toggler-right" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div></a>';
 			}
 		}
 

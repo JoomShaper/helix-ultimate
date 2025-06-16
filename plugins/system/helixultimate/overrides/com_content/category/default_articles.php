@@ -18,6 +18,11 @@ use Joomla\CMS\Version;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
+// Include the content helper for associations in Joomla 3
+if (version_compare(JVERSION, '4.0.0', '<')) {
+    require_once JPATH_SITE . '/components/com_content/helpers/association.php';
+}
+
 // Create some shortcuts.
 $n         = count($this->items);
 $listOrder = $this->escape($this->state->get('list.ordering'));
@@ -170,7 +175,13 @@ $JoomlaVersion = $version->getShortVersion();
 						<?php echo $this->escape($article->title); ?>
 					</a>
 					<?php if (Associations::isEnabled() && $this->params->get('show_associations')) : ?>
-						<?php $associations = ContentHelperAssociation::displayAssociations($article->id); ?>
+						<?php 
+						if (version_compare($JoomlaVersion, '4.0.0', '>=')) {
+							$associations = \Joomla\Component\Content\Site\Helper\AssociationHelper::displayAssociations($article->id);
+						} else {
+							$associations = ContentHelperAssociation::displayAssociations($article->id);
+						}
+						?>
 						<?php foreach ($associations as $association) : ?>
 							<?php if ($this->params->get('flags', 1)) : ?>
 								<?php $flag = HTMLHelper::_('image', 'mod_languages/' . $association['language']->image . '.gif', $association['language']->title_native, array('title' => $association['language']->title_native), true); ?>
@@ -192,7 +203,13 @@ $JoomlaVersion = $version->getShortVersion();
 						<?php echo Text::_('COM_CONTENT_REGISTER_TO_READ_MORE'); ?>
 					</a>
 					<?php if (Associations::isEnabled() && $this->params->get('show_associations')) : ?>
-						<?php $associations = ContentHelperAssociation::displayAssociations($article->id); ?>
+						<?php 
+						if (version_compare($JoomlaVersion, '4.0.0', '>=')) {
+							$associations = \Joomla\Component\Content\Site\Helper\AssociationHelper::displayAssociations($article->id);
+						} else {
+							$associations = ContentHelperAssociation::displayAssociations($article->id);
+						}
+						?>
 						<?php foreach ($associations as $association) : ?>
 							<?php if ($this->params->get('flags', 1)) : ?>
 								<?php $flag = HTMLHelper::_('image', 'mod_languages/' . $association['language']->image . '.gif', $association['language']->title_native, array('title' => $association['language']->title_native), true); ?>

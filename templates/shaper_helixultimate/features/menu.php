@@ -59,7 +59,7 @@ class HelixUltimateFeatureMenu
 
 		if ($menu_type === 'mega_offcanvas')
 		{
-			$output .= '<nav class="sp-megamenu-wrapper d-flex" role="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
+			$output .= '<nav class="sp-megamenu-wrapper d-flex" role="navigation" aria-label="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
 			$menu = new HelixultimateMenu('d-none d-lg-block', '');
 			$output .= $menu->render();
 			
@@ -71,7 +71,7 @@ class HelixUltimateFeatureMenu
 		}
 		elseif ($menu_type === 'mega')
 		{
-			$output .= '<nav class="sp-megamenu-wrapper d-flex" role="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
+			$output .= '<nav class="sp-megamenu-wrapper d-flex" role="navigation" aria-label="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
 
 			if ($offcanvas_position === 'right')
 			{

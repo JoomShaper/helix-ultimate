@@ -512,7 +512,7 @@ class Response
 	public static function generateNewCell()
 	{
 		$input = Factory::getApplication()->input;
-		
+
 		$itemId 	= $input->post->get('itemId', 0, 'INT');
 		$type 		= $input->post->get('type', 'module', 'STRING');
 		$elementId 	= $input->post->get('item_id', 0, 'INT');
@@ -552,12 +552,23 @@ class Response
 	{
 		$input = Factory::getApplication()->input;
 		$keyword = $input->get('keyword', '', 'STRING');
+		$itemId = $input->get('itemId', '', 'STRING');
+
+		$children = [];
+		if ($itemId) {
+			$builder = new MegaMenuBuilder($itemId);
+			$children = $builder->getItemChildren();
+		}
 
 		$moduleLayout = new FileLayout('megaMenu.modules', HELIX_LAYOUT_PATH);
 
 		return [
 			'status' => true,
-			'html' => $moduleLayout->render(['keyword' => $keyword])
+			'html' => $moduleLayout->render([
+				'keyword' => $keyword,
+				'children' => $children
+			]),
+			'children' => $children
 		];
 	}
 }

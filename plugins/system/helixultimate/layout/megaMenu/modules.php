@@ -23,10 +23,10 @@ $children = $children  ?? [];
 <div class="hu-switcher hu-switcher-inline hu-switcher-style-tab hu-switcher-style-tab-sm" style="margin-bottom: 1rem;">
 	<div class="hu-action-group">
 		<span id="toggle-menu-btn" data-value="menu" class="hu-switcher-action active" role="button" onclick="toggleMegaMenuView('menu')">
-			<?php echo Text::_('Menu Items'); ?>
+			<?php echo Text::_('HELIX_ULTIMATE_MENU_ITEMS'); ?>
 		</span>
 		<span id="toggle-module-btn" data-value="module" class="hu-switcher-action" role="button" onclick="toggleMegaMenuView('module')">
-			<?php echo Text::_('Modules'); ?>
+			<?php echo Text::_('HELIX_ULTIMATE_MODULES'); ?>
 		</span>
 	</div>
 </div>

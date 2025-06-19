@@ -105,7 +105,6 @@ var megaMenu = {
 	handleAddNewCell() {
 		const self = this;
 
-		// Remove existing handlers first to avoid duplication
 		$(document).off('click', '.hu-megamenu-insert-module');
 		$(document).off('click', '.hu-megamenu-insert-menu');
 
@@ -115,11 +114,13 @@ var megaMenu = {
 			const type = 'module';
 			const rowId = $popover.data('rowid');
 			const columnId = $popover.data('columnid');
+			const rowIndex = rowId - 1;
+			const columnIndex = columnId - 1;
 
-			if (!settingsData.layout[rowId - 1].attr) {
-				settingsData.layout[rowId - 1].attr = [];
+			if (!settingsData.layout[rowIndex].attr) {
+				settingsData.layout[rowIndex].attr = [];
 			}
-			const column = settingsData.layout[rowId - 1].attr[columnId - 1] || { items: [] };
+			const column = settingsData.layout[rowIndex].attr[columnIndex] || { items: [] };
 			if (!column.items) column.items = [];
 
 			const data = {
@@ -139,7 +140,7 @@ var megaMenu = {
 
 				self.closePopover();
 				column.items.push({ type, item_id });
-				settingsData.layout[rowId - 1].attr[columnId - 1] = column;
+				settingsData.layout[rowIndex].attr[columnIndex] = column;
 			}
 		});
 
@@ -149,8 +150,10 @@ var megaMenu = {
 			const type = 'menu_item';
 			const rowId = $popover.data('rowid');
 			const columnId = $popover.data('columnid');
+			const rowIndex = rowId - 1;
+			const columnIndex = columnId - 1;
 
-			const column = settingsData.layout[rowId - 1].attr[columnId - 1] || { items: [] };
+			const column = settingsData.layout[rowIndex].attr[columnIndex] || { items: [] };
 			if (!column.items) column.items = [];
 
 			const data = {
@@ -171,7 +174,7 @@ var megaMenu = {
 
 				self.closePopover();
 				column.items.push({ type, item_id });
-				settingsData.layout[rowId - 1].attr[columnId - 1] = column;
+				settingsData.layout[rowIndex].attr[columnIndex] = column;
 			}
 		});
 	},

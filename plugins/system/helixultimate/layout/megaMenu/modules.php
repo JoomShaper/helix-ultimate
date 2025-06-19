@@ -48,7 +48,7 @@ $children = $children  ?? [];
 		</div>
 	<?php else: ?>
 		<div class="hu-megamenu-module-not-found">
-			<h5><?php echo Text::_('No Child Menu Items'); ?></h5>
+			<h5><?php echo Text::_('HELIX_ULTIMATE_NO_CHILD_MENU_ITEMS'); ?></h5>
 		</div>
 	<?php endif; ?>
 </div>
@@ -68,17 +68,18 @@ $children = $children  ?? [];
 		</div>
 	<?php else: ?>
 		<div class="hu-megamenu-module-not-found">
-			<h4><?php echo Text::_('Opps! Nothing Found.'); ?></h4>
+			<h4><?php echo Text::_('HELIX_ULTIMATE_NOTHING_FOUND'); ?></h4>
 		</div>
 	<?php endif ?>
 </div>
 
 <script>
 function toggleMegaMenuView(type) {
-	var menuSection = document.getElementById('hu-megamenu-menu-section');
-	var moduleSection = document.getElementById('hu-megamenu-module-section');
-	var menuBtn = document.getElementById('toggle-menu-btn');
-	var moduleBtn = document.getElementById('toggle-module-btn');
+	const menuSection = document.getElementById('hu-megamenu-menu-section');
+	const moduleSection = document.getElementById('hu-megamenu-module-section');
+	const menuBtn = document.getElementById('toggle-menu-btn');
+	const moduleBtn = document.getElementById('toggle-module-btn');
+
 	if (type === 'menu') {
 		menuSection.style.display = 'block';
 		moduleSection.style.display = 'none';

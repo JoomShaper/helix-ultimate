@@ -39,7 +39,7 @@ if (!class_exists('MegaFields'))
         <div class="hu-megamenu-popover-body">
             <div class="hu-megamenu-search-wrapper">
                 <span class="fas fa-search" aria-hidden="true"></span>
-                <input type="search" class="hu-input hu-megamenu-module-search" placeholder="<?php echo Text::_('HELIX_ULTIMATE_SEARCH_MODULE_HINT'); ?>" />
+                <input type="search" class="hu-input hu-megamenu-module-search" placeholder="<?php echo Text::_('HELIX_ULTIMATE_SEARCH_ITEM'); ?>" />
             </div>
 
             <div class="hu-megamenu-modules-container">

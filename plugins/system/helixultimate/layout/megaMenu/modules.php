@@ -48,7 +48,7 @@ $children = $children  ?? [];
 		</div>
 	<?php else: ?>
 		<div class="hu-megamenu-module-not-found">
-			<h5><?php echo Text::_('HELIX_ULTIMATE_NO_CHILD_MENU_ITEMS'); ?></h5>
+			<h4><?php echo Text::_('HELIX_ULTIMATE_NOTHING_FOUND'); ?></h4>
 		</div>
 	<?php endif; ?>
 </div>

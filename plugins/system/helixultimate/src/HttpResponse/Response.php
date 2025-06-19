@@ -552,7 +552,7 @@ class Response
 	{
 		$input = Factory::getApplication()->input;
 		$keyword = $input->get('keyword', '', 'STRING');
-		$itemId = $input->getInt('itemId', 0);
+		$itemId = $input->get('itemId', 0, 'INT');
 
 		$children = [];
 		if ($itemId) {

@@ -99,6 +99,5 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 		echo '<div class="article-featured-video">';
 		echo $embed_code;
 		echo '</div>';
-		echo '</div>';
 	}
 }

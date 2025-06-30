@@ -42,7 +42,7 @@ class Helper
 	{
 		static $cache = [];
 		if (isset($cache[$id])) {
-		return $cache[$id];
+			return $cache[$id];
 		}
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);

@@ -8,6 +8,7 @@
 // Preloader
 jQuery(window).on('load', function () {
 	if (jQuery('.sp-loader-with-logo').length > 0) {
+
 		move();
 	}
 	jQuery('.sp-pre-loader').fadeOut(500, function () {
@@ -30,9 +31,11 @@ function move() {
 			elem.style.width = width + '%';
 		}
 	}
+
 }
 
 jQuery(function ($) {
+
 	/**
 	 * Helix settings data
 	 *
@@ -52,7 +55,7 @@ jQuery(function ($) {
 			let $stickyOffset = '100';
 
 			if (settings.header !== undefined && settings.header.stickyOffset !== undefined) {
-				$stickyOffset = settings.header .stickyOffset || '100';
+				$stickyOffset = settings.header.stickyOffset || '100';
 			}
 
 			var stickyHeader = function () {
@@ -135,7 +138,7 @@ jQuery(function ($) {
 	}
 
 	const headerExist = $('#sp-header');
-	if(headerExist.length>0) {
+	if (headerExist.length > 0) {
 		handleStickiness('sticky-header', getHeaderOffset());
 	}
 
@@ -165,7 +168,7 @@ jQuery(function ($) {
 	});
 
 
-	// Offcanvas toggle handlers
+
 	$('#offcanvas-toggler, .offcanvas-toggler-secondary, .offcanvas-toggler-full').on('click', function (event) {
 		event.preventDefault();
 		openOffcanvas();
@@ -179,7 +182,7 @@ jQuery(function ($) {
 
 	// Open function
 	function openOffcanvas() {
-		$('.offcanvas-init').addClass('offcanvas-active');
+		$('.offcanvas-init').addClass('offcanvas-active full-offcanvas');
 		$(document.body).css('overflow', 'hidden');
 
 		// Make offcanvas interactive
@@ -213,7 +216,7 @@ jQuery(function ($) {
 		$(document).off('keydown.offcanvas');
 	}
 
-	// Keyboard trap handler
+	// Keyboard trap handler on offcanvas
 	function handleOffcanvasKeyboard(e) {
 		if (!$('.offcanvas-init').hasClass('offcanvas-active')) return;
 
@@ -264,6 +267,16 @@ jQuery(function ($) {
 		document.head.appendChild(inertPolyfill);
 	}
 
+	// // Offcanvas menu toggler for submenu
+	// $(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
+	// 	event.preventDefault();
+	// 	$(this)
+	// 		.closest('.menu-parent')
+	// 		.toggleClass('menu-parent-open')
+	// 		.find('> .menu-child')
+	// 		.slideToggle(400);
+	// });
+
 	// Modal Menu
 	if ($('#modal-menu').length > 0) {
 		let $modalToggler = $('#modal-menu-toggler');
@@ -290,7 +303,7 @@ jQuery(function ($) {
 	// Tooltip
 	const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"], .hasTooltip'));
 	tooltipTriggerList.map(function (tooltipTriggerEl) {
-		return new bootstrap.Tooltip(tooltipTriggerEl,{
+		return new bootstrap.Tooltip(tooltipTriggerEl, {
 			html: true
 		});
 	});
@@ -423,11 +436,180 @@ jQuery(function ($) {
 	});
 
 	// Error Alert close issue fix for Joomla 3
-	var observer = new MutationObserver(function(mutations) {
+	var observer = new MutationObserver(function (mutations) {
 		$('#system-message-container .alert .close').attr('data-bs-dismiss', 'alert');
 	});
 	var target = document.querySelector('#system-message-container');
 	observer.observe(target, {
 		attributes: true
 	});
+
+
+});
+
+jQuery(function ($) {
+	const menuSelectors = '.sp-megamenu-parent > li, .menu-parent, .sp-profile-wrapper';
+
+	$(menuSelectors).each(function () {
+		const $menuItem = $(this);
+		const $trigger = $menuItem.children('a, button, .menu-toggler');
+		const $dropdown = $menuItem.children('.sp-dropdown, .menu-child, .sp-profile-dropdown');
+
+		if ($dropdown.length) {
+			setupDropdownEvents($menuItem, $trigger, $dropdown);
+		}
+	});
+
+	bindNestedDropdowns('body');
+
+	function setupDropdownEvents($menuItem, $trigger, $dropdown) {
+		// Show on focus or mouseenter
+		$trigger.on('focus mouseenter', function () {
+			openMenu($menuItem, $dropdown);
+		});
+
+		$menuItem.on('mouseenter', function () {
+			openMenu($menuItem, $dropdown);
+		});
+
+		// Hide on focusout or mouseleave
+		$menuItem.on('mouseleave focusout', function () {
+			setTimeout(function () {
+				if (!$menuItem.find(':focus').length && !$menuItem.is(':hover')) {
+					closeMenu($menuItem, $dropdown);
+				}
+			}, 100);
+		});
+
+		// Keyboard trigger
+		$trigger.on('keydown', function (e) {
+			switch (e.key) {
+				case 'Enter':
+				case ' ':
+					e.preventDefault();
+					toggleMenu($menuItem, $dropdown);
+					break;
+				case 'ArrowDown':
+					e.preventDefault();
+					openMenu($menuItem, $dropdown);
+					focusFirstItem($dropdown);
+					break;
+				case 'Escape':
+					e.preventDefault();
+					closeMenu($menuItem, $dropdown);
+					$trigger.focus();
+					break;
+			}
+		});
+	}
+
+	function bindNestedDropdowns(containerSelector) {
+		$(containerSelector).find('.menu-parent, .sp-has-child').each(function () {
+			const $subItem = $(this);
+			const $trigger = $subItem.children('a, button, .menu-toggler');
+			const $subDropdown = $subItem.children('.sp-dropdown, .menu-child');
+
+			if ($subDropdown.length) {
+				setupDropdownEvents($subItem, $trigger, $subDropdown);
+				bindNestedDropdowns($subDropdown); 
+			}
+		});
+	}
+
+	function openMenu($item, $dropdown) {
+		$dropdown.show();
+
+		// Only force display for .sp-profile-dropdown
+		if ($dropdown.hasClass('sp-profile-dropdown')) {
+			$dropdown.attr('style', 'display: block !important');
+		}
+		bindKeyboardNavigation($dropdown); 
+	}
+
+	function closeMenu($item, $dropdown) {
+		$dropdown.hide();
+
+		// Reset style for .sp-profile-dropdown
+		if ($dropdown.hasClass('sp-profile-dropdown')) {
+			$dropdown.removeAttr('style'); 
+		}
+	}
+
+	function toggleMenu($item, $dropdown) {
+		if ($dropdown.is(':visible')) {
+			closeMenu($item, $dropdown);
+		} else {
+			openMenu($item, $dropdown);
+		}
+	}
+
+	function focusFirstItem($dropdown) {
+		const $focusable = $dropdown.find('a, button').filter(':visible');
+		if ($focusable.length) {
+			$focusable.first().focus();
+		}
+	}
+
+	function bindKeyboardNavigation($dropdown) {
+		const $items = $dropdown.find('a, button').filter(':visible');
+
+		$items.off('keydown').on('keydown', function (e) {
+			const currentIndex = $items.index(this);
+			let newIndex = -1;
+
+			if (e.key === 'ArrowDown') {
+				e.preventDefault();
+				newIndex = (currentIndex + 1) % $items.length;
+			} else if (e.key === 'ArrowUp') {
+				e.preventDefault();
+				newIndex = (currentIndex - 1 + $items.length) % $items.length;
+			} else if (e.key === 'Escape') {
+				e.preventDefault();
+
+				// Reset style for .sp-profile-dropdown
+		if ($dropdown.hasClass('sp-profile-dropdown')) {
+			$dropdown.removeAttr('style'); // Remove inline styles
+		}
+				
+
+				const $currentDropdown = $(this).closest('.sp-dropdown, .menu-child');
+				const $parentItem = $currentDropdown.parent('.menu-parent, .sp-has-child, .sp-megamenu-parent > li');
+
+				// Check if this is the root-level dropdown
+				const isRoot = $parentItem.parent().is('.sp-megamenu-parent, .sp-megamenu-parent > ul, nav');
+
+				if (isRoot) {
+					// Close all menus
+					$(menuSelectors).each(function () {
+						const $item = $(this);
+						closeMenu($item, $item.children('.sp-dropdown, .menu-child'));
+					});
+				} else {
+					// Close only current submenu and focus its trigger
+					const $trigger = $parentItem.children('a, button, .menu-toggler');
+					closeMenu($parentItem, $currentDropdown);
+					if ($trigger.length) {
+						$trigger.focus();
+					}
+				}
+
+				return;
+			}
+
+			if (newIndex >= 0) {
+				$items.eq(newIndex).focus();
+			}
+		});
+	}
+
+	// Close all menus on outside click
+	$(document).on('click', function (e) {
+		if (!$(e.target).closest(menuSelectors).length) {
+			$(menuSelectors).each(function () {
+				const $item = $(this);
+				closeMenu($item, $item.children('.sp-dropdown, .menu-child'));
+			});
+		}
+	});
+
 });

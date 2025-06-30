@@ -267,15 +267,15 @@ jQuery(function ($) {
 		document.head.appendChild(inertPolyfill);
 	}
 
-	// // Offcanvas menu toggler for submenu
-	// $(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
-	// 	event.preventDefault();
-	// 	$(this)
-	// 		.closest('.menu-parent')
-	// 		.toggleClass('menu-parent-open')
-	// 		.find('> .menu-child')
-	// 		.slideToggle(400);
-	// });
+	// Offcanvas menu toggler for submenu
+	$(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
+		event.preventDefault();
+		$(this)
+			.closest('.menu-parent')
+			.toggleClass('menu-parent-open')
+			.find('> .menu-child')
+			.slideToggle(400);
+	});
 
 	// Modal Menu
 	if ($('#modal-menu').length > 0) {
@@ -481,27 +481,29 @@ jQuery(function ($) {
 			}, 100);
 		});
 
+
 		// Keyboard trigger
-		$trigger.on('keydown', function (e) {
-			switch (e.key) {
+		$trigger.on('keydown', function (event) {
+			switch (event.key) {
 				case 'Enter':
 				case ' ':
-					e.preventDefault();
+					event.preventDefault();
 					toggleMenu($menuItem, $dropdown);
 					break;
 				case 'ArrowDown':
-					e.preventDefault();
+					event.preventDefault();
 					openMenu($menuItem, $dropdown);
 					focusFirstItem($dropdown);
 					break;
 				case 'Escape':
-					e.preventDefault();
+					event.preventDefault();
 					closeMenu($menuItem, $dropdown);
 					$trigger.focus();
 					break;
 			}
 		});
 	}
+
 
 	function bindNestedDropdowns(containerSelector) {
 		$(containerSelector).find('.menu-parent, .sp-has-child').each(function () {
@@ -511,7 +513,7 @@ jQuery(function ($) {
 
 			if ($subDropdown.length) {
 				setupDropdownEvents($subItem, $trigger, $subDropdown);
-				bindNestedDropdowns($subDropdown); 
+				bindNestedDropdowns($subDropdown);
 			}
 		});
 	}
@@ -523,7 +525,7 @@ jQuery(function ($) {
 		if ($dropdown.hasClass('sp-profile-dropdown')) {
 			$dropdown.attr('style', 'display: block !important');
 		}
-		bindKeyboardNavigation($dropdown); 
+		bindKeyboardNavigation($dropdown);
 	}
 
 	function closeMenu($item, $dropdown) {
@@ -531,7 +533,7 @@ jQuery(function ($) {
 
 		// Reset style for .sp-profile-dropdown
 		if ($dropdown.hasClass('sp-profile-dropdown')) {
-			$dropdown.removeAttr('style'); 
+			$dropdown.removeAttr('style');
 		}
 	}
 
@@ -553,24 +555,23 @@ jQuery(function ($) {
 	function bindKeyboardNavigation($dropdown) {
 		const $items = $dropdown.find('a, button').filter(':visible');
 
-		$items.off('keydown').on('keydown', function (e) {
+		$items.off('keydown').on('keydown', function (event) {
 			const currentIndex = $items.index(this);
 			let newIndex = -1;
 
-			if (e.key === 'ArrowDown') {
-				e.preventDefault();
+			if (event.key === 'ArrowDown') {
+				event.preventDefault();
 				newIndex = (currentIndex + 1) % $items.length;
-			} else if (e.key === 'ArrowUp') {
-				e.preventDefault();
+			} else if (event.key === 'ArrowUp') {
+				event.preventDefault();
 				newIndex = (currentIndex - 1 + $items.length) % $items.length;
-			} else if (e.key === 'Escape') {
-				e.preventDefault();
+			} else if (event.key === 'Escape') {
+				event.preventDefault();
 
 				// Reset style for .sp-profile-dropdown
-		if ($dropdown.hasClass('sp-profile-dropdown')) {
-			$dropdown.removeAttr('style'); // Remove inline styles
-		}
-				
+				if ($dropdown.hasClass('sp-profile-dropdown')) {
+					$dropdown.removeAttr('style');
+				}
 
 				const $currentDropdown = $(this).closest('.sp-dropdown, .menu-child');
 				const $parentItem = $currentDropdown.parent('.menu-parent, .sp-has-child, .sp-megamenu-parent > li');
@@ -592,19 +593,18 @@ jQuery(function ($) {
 						$trigger.focus();
 					}
 				}
-
 				return;
 			}
 
-			if (newIndex >= 0) {
+			if (newIndex > -1) {
 				$items.eq(newIndex).focus();
 			}
 		});
 	}
 
 	// Close all menus on outside click
-	$(document).on('click', function (e) {
-		if (!$(e.target).closest(menuSelectors).length) {
+	$(document).on('click', function (event) {
+		if (!$(event.target).closest(menuSelectors).length) {
 			$(menuSelectors).each(function () {
 				const $item = $(this);
 				closeMenu($item, $item.children('.sp-dropdown, .menu-child'));
@@ -613,3 +613,5 @@ jQuery(function ($) {
 	});
 
 });
+
+

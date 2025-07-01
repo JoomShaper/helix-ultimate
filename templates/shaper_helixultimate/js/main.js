@@ -267,16 +267,6 @@ jQuery(function ($) {
 		document.head.appendChild(inertPolyfill);
 	}
 
-	// Offcanvas menu toggler for submenu
-	$(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
-		event.preventDefault();
-		$(this)
-			.closest('.menu-parent')
-			.toggleClass('menu-parent-open')
-			.find('> .menu-child')
-			.slideToggle(400);
-	});
-
 	// Modal Menu
 	if ($('#modal-menu').length > 0) {
 		let $modalToggler = $('#modal-menu-toggler');
@@ -447,13 +437,142 @@ jQuery(function ($) {
 
 });
 
+
+// Handle accessibility on off-canvas dropdown menus
 jQuery(function ($) {
-	const menuSelectors = '.sp-megamenu-parent > li, .menu-parent, .sp-profile-wrapper';
+	const menuSelector = '.menu-deeper.menu-parent';
+	const togglerSelector = '.menu-toggler';
+	const childSelector = '.menu-child';
+
+	// Toggle submenu open/close
+	function toggleSubmenu($item, open = null) {
+		const $submenu = $item.children(childSelector);
+		const isOpen = $item.hasClass('menu-parent-open');
+
+		if (open === null) open = !isOpen;
+
+		if (open) {
+			$item.addClass('menu-parent-open').attr('aria-expanded', 'true');
+			$submenu.slideDown(150);
+		} else {
+			$item.removeClass('menu-parent-open').attr('aria-expanded', 'false');
+			$submenu.slideUp(150);
+		}
+	}
+
+	// Prevent event bubbling from toggler to link
+	$(document).on('click', togglerSelector, function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const $item = $(this).closest(menuSelector);
+		const isOpen = $item.hasClass('menu-parent-open');
+		toggleSubmenu($item, !isOpen);
+	});
+
+	// Handle menu link click or Enter/Space key
+	$(document).on('click keydown', `${menuSelector} > a`, function (event) {
+		if (event.type === 'click' || event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			const $item = $(this).closest(menuSelector);
+			const isOpen = $item.hasClass('menu-parent-open');
+			toggleSubmenu($item, !isOpen);
+		}
+	});
+
+	// Handle arrow key navigation
+	$(document).on('keydown', `${menuSelector} > a`, function (event) {
+		const $currentItem = $(this).closest('li');
+		const $siblings = $currentItem.parent().children('li:visible');
+		const index = $siblings.index($currentItem);
+
+		if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			// If submenu is open, focus first child link
+			const $submenu = $currentItem.children(childSelector);
+			if ($submenu.length && $currentItem.hasClass('menu-parent-open')) {
+				const $firstChildLink = $submenu.children('li:visible').find('a').first();
+				if ($firstChildLink.length) {
+					$firstChildLink.focus();
+					return;
+				}
+			}
+			// Otherwise, move to next sibling
+			$siblings.eq((index + 1) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			// Move to previous sibling
+			$siblings.eq((index - 1 + $siblings.length) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowRight') {
+			// Open nested submenu if present
+			const $submenu = $currentItem.children(childSelector);
+			if ($submenu.length) {
+				event.preventDefault();
+				toggleSubmenu($currentItem, true);
+				const $firstChildLink = $submenu.children('li:visible').find('a').first();
+				if ($firstChildLink.length) {
+					$firstChildLink.focus();
+				}
+			}
+		} else if (event.key === 'ArrowLeft' || event.key === 'Escape') {
+			event.preventDefault();
+			// Close only the current open dropdown
+			toggleSubmenu($currentItem, false);
+			$currentItem.children('a').first().focus();
+		}
+	});
+
+	// Handle arrow key navigation inside submenu
+	$(document).on('keydown', `${childSelector} > li > a`, function (event) {
+		const $currentItem = $(this).closest('li');
+		const $siblings = $currentItem.parent().children('li:visible');
+		const index = $siblings.index($currentItem);
+
+		if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			$siblings.eq((index + 1) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			$siblings.eq((index - 1 + $siblings.length) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowRight') {
+			// Open nested submenu if present
+			const $submenu = $currentItem.children(childSelector);
+			if ($submenu.length) {
+				event.preventDefault();
+				toggleSubmenu($currentItem, true);
+				const $firstChildLink = $submenu.children('li:visible').find('a').first();
+				if ($firstChildLink.length) {
+					$firstChildLink.focus();
+				}
+			}
+		} else if (event.key === 'ArrowLeft' || event.key === 'Escape') {
+			event.preventDefault();
+			// Close submenu and focus parent
+			const $parentMenu = $currentItem.parents(menuSelector).first();
+			toggleSubmenu($parentMenu, false);
+			$parentMenu.children('a').first().focus();
+		}
+	});
+
+	// Close all menus when clicking outside
+	$(document).on('click', function (event) {
+		if (!$(event.target).closest('.menu-deeper').length) {
+			$(menuSelector).removeClass('menu-parent-open').attr('aria-expanded', 'false');
+			$(childSelector).slideUp(150);
+		}
+	});
+
+	//mark all menu-parents as aria-haspopup
+	$(menuSelector).attr('aria-haspopup', 'true').attr('aria-expanded', 'false');
+});
+
+// Handle accessibility on megamenu and profile dropdowns
+jQuery(function ($) {
+	const menuSelectors = '.sp-megamenu-parent > li, .sp-profile-wrapper';
 
 	$(menuSelectors).each(function () {
 		const $menuItem = $(this);
-		const $trigger = $menuItem.children('a, button, .menu-toggler');
-		const $dropdown = $menuItem.children('.sp-dropdown, .menu-child, .sp-profile-dropdown');
+		const $trigger = $menuItem.children('a, button');
+		const $dropdown = $menuItem.children('.sp-dropdown, .sp-profile-dropdown');
 
 		if ($dropdown.length) {
 			setupDropdownEvents($menuItem, $trigger, $dropdown);
@@ -481,14 +600,13 @@ jQuery(function ($) {
 			}, 100);
 		});
 
-
 		// Keyboard trigger
 		$trigger.on('keydown', function (event) {
 			switch (event.key) {
 				case 'Enter':
 				case ' ':
 					event.preventDefault();
-					toggleMenu($menuItem, $dropdown);
+					openMenu($menuItem, $dropdown);
 					break;
 				case 'ArrowDown':
 					event.preventDefault();
@@ -502,14 +620,21 @@ jQuery(function ($) {
 					break;
 			}
 		});
+
+		// Prevent click from toggling menu
+		$trigger.on('click', function (event) {
+			// Only prevent default if dropdown exists
+			if ($dropdown.length) {
+				event.preventDefault();
+			}
+		});
 	}
 
-
 	function bindNestedDropdowns(containerSelector) {
-		$(containerSelector).find('.menu-parent, .sp-has-child').each(function () {
+		$(containerSelector).find(' .sp-has-child').each(function () {
 			const $subItem = $(this);
-			const $trigger = $subItem.children('a, button, .menu-toggler');
-			const $subDropdown = $subItem.children('.sp-dropdown, .menu-child');
+			const $trigger = $subItem.children('a, button');
+			const $subDropdown = $subItem.children('.sp-dropdown');
 
 			if ($subDropdown.length) {
 				setupDropdownEvents($subItem, $trigger, $subDropdown);
@@ -520,7 +645,6 @@ jQuery(function ($) {
 
 	function openMenu($item, $dropdown) {
 		$dropdown.show();
-
 		// Only force display for .sp-profile-dropdown
 		if ($dropdown.hasClass('sp-profile-dropdown')) {
 			$dropdown.attr('style', 'display: block !important');
@@ -530,18 +654,9 @@ jQuery(function ($) {
 
 	function closeMenu($item, $dropdown) {
 		$dropdown.hide();
-
 		// Reset style for .sp-profile-dropdown
 		if ($dropdown.hasClass('sp-profile-dropdown')) {
 			$dropdown.removeAttr('style');
-		}
-	}
-
-	function toggleMenu($item, $dropdown) {
-		if ($dropdown.is(':visible')) {
-			closeMenu($item, $dropdown);
-		} else {
-			openMenu($item, $dropdown);
 		}
 	}
 
@@ -573,8 +688,8 @@ jQuery(function ($) {
 					$dropdown.removeAttr('style');
 				}
 
-				const $currentDropdown = $(this).closest('.sp-dropdown, .menu-child');
-				const $parentItem = $currentDropdown.parent('.menu-parent, .sp-has-child, .sp-megamenu-parent > li');
+				const $currentDropdown = $(this).closest('.sp-dropdown');
+				const $parentItem = $currentDropdown.parent(' .sp-has-child, .sp-megamenu-parent > li');
 
 				// Check if this is the root-level dropdown
 				const isRoot = $parentItem.parent().is('.sp-megamenu-parent, .sp-megamenu-parent > ul, nav');
@@ -583,11 +698,11 @@ jQuery(function ($) {
 					// Close all menus
 					$(menuSelectors).each(function () {
 						const $item = $(this);
-						closeMenu($item, $item.children('.sp-dropdown, .menu-child'));
+						closeMenu($item, $item.children('.sp-dropdown'));
 					});
 				} else {
 					// Close only current submenu and focus its trigger
-					const $trigger = $parentItem.children('a, button, .menu-toggler');
+					const $trigger = $parentItem.children('a, button');
 					closeMenu($parentItem, $currentDropdown);
 					if ($trigger.length) {
 						$trigger.focus();
@@ -607,7 +722,7 @@ jQuery(function ($) {
 		if (!$(event.target).closest(menuSelectors).length) {
 			$(menuSelectors).each(function () {
 				const $item = $(this);
-				closeMenu($item, $item.children('.sp-dropdown, .menu-child'));
+				closeMenu($item, $item.children('.sp-dropdown'));
 			});
 		}
 	});

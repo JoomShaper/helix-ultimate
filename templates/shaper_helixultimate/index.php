@@ -178,7 +178,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 			<?php echo $theme->getOffcanvasStyle(); ?>
 		<?php else : ?>
 			<div class="offcanvas-menu">
-				<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times" aria-hidden="true"></span></a>
+				<a href="#" class="close-offcanvas" role="button" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times" aria-hidden="true"></span></a>
 				<div class="offcanvas-inner">
 					<?php if ($this->countModules('offcanvas')) : ?>
 						<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />

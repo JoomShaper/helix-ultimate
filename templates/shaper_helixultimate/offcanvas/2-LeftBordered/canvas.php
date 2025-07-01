@@ -46,8 +46,8 @@ $searchModule = Helper::getSearchModule();
 				echo $logo->renderFeature(false);
 			} 
 		?>
-		<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
-			<div class="burger-icon">
+		<a href="#" class="close-offcanvas" role="button" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>">
+			<div class="burger-icon" aria-hidden="true">
 				<span></span>
 				<span></span>
 				<span></span>

@@ -189,7 +189,7 @@ $site_title = $app->get('sitename');
 			<?php if (($params->get('comingsoon_enable_login', 0)) && isset($login) && $login) : ?>
 				<?php echo $login_form; ?>
 			<?php endif; ?>
-		<? else : ?>
+		<?php else : ?>
 			<?php if (isset($login) && $login) : ?>
 				<?php echo $login_form; ?>
 			<?php endif; ?>
@@ -197,9 +197,7 @@ $site_title = $app->get('sitename');
 
 		<?php $theme->after_body(); ?>
 	</div>
-	<?php
-	// Show coming soon bg image if coming soon mode is on and image exists
-	if ($params->get('comingsoon', 0) && $params->get('comingsoon_bg_image')) : ?>
+	<?php if ($params->get('comingsoon', 0) && $params->get('comingsoon_bg_image')) : ?>
 		<style>
 			body {
 				background-image: url('<?php echo Uri::base(true) . '/' . ltrim($params->get('comingsoon_bg_image'), '/'); ?>');

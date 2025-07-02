@@ -54,7 +54,8 @@ $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
 if (!$requestFromIframe) 
 {
 	$user = Factory::getUser();
-	if (!\is_null($this->params->get('comingsoon', null)) && $user->get('id') == 0 && $app->get('offline', 0))
+
+	if (!\is_null($this->params->get('comingsoon', null)) && $user->get('id') === 0)
 	{
 		header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
 		exit();

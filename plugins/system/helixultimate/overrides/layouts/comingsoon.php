@@ -91,11 +91,11 @@ $theme = new HelixUltimate;
 				</style>
 			<?php endif; ?>
 
-			<?php if ($app->get('display_offline_message', 1) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
+			<?php if ($app->get('display_offline_message', 0) == 1 && str_replace(' ', '', $app->get('offline_message')) != '') : ?>
 				<div class="offline-message">
 					<?php echo $app->get('offline_message'); ?>
 				</div>
-			<?php elseif ($app->get('display_offline_message', 1) == 2) : ?>
+			<?php elseif ($app->get('display_offline_message', 0) == 2) : ?>
 				<div class="offline-message">
 					<?php echo Text::_('JOFFLINE_MESSAGE'); ?>
 				</div>
@@ -121,13 +121,13 @@ $theme = new HelixUltimate;
 				</style>
 			<?php endif; ?>
 
-			<?php if ($params->get('comingsoon_title_status', 1)) : ?>
+			<?php if ($params->get('comingsoon_title_status',0)) : ?>
 				<h1 class="coming-soon-title">
 					<?php echo htmlspecialchars($params->get('comingsoon_title', $site_title)); ?>
 				</h1>
 			<?php endif; ?>
 
-			<?php if ($params->get('comingsoon_content_status', 1) && $params->get('comingsoon_content')) : ?>
+			<?php if ($params->get('comingsoon_content_status',0) && $params->get('comingsoon_content')) : ?>
 				<div class="row justify-content-center">
 					<div class="col-lg-8">
 						<div class="coming-soon-content">

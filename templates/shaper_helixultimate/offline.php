@@ -68,4 +68,11 @@ ob_start();
 </div>	
 <?php
 $login_form = ob_get_clean();
-echo LayoutHelper::render('comingsoon', array('language' => $this->language, 'direction' => $this->direction, 'params' => $this->params, 'login' => true, 'login_form' => $login_form));
+echo LayoutHelper::render('comingsoon', array(
+    'language' => $this->language, 
+    'direction' => $this->direction, 
+    'params' => $this->params, 
+    'login' => true, 
+    'login_form' => $login_form,
+    'isOffline' => true)
+);

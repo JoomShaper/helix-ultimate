@@ -17,6 +17,7 @@ const config = {
     qsPackageName: 'helixultimate_quickstart_j5_2.1.3.zip',
     packageName: 'helixultimate_template_v2.1.3.zip',
     pluginPackageName: 'plg_system_helixultimate_v2.1.3.zip',
+
     templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css, html',
     pluginFileExtensions: function () {
         return this.templateFileExtensions + ', ini';

@@ -104,15 +104,57 @@ var megaMenu = {
 
 	handleAddNewCell() {
 		const self = this;
+
+		$(document).off('click', '.hu-megamenu-insert-module');
+		$(document).off('click', '.hu-megamenu-insert-menu');
+
+		// Insert module
 		$(document).on('click', '.hu-megamenu-insert-module', async function () {
 			const item_id = $(this).data('module');
 			const type = 'module';
 			const rowId = $popover.data('rowid');
 			const columnId = $popover.data('columnid');
+			const rowIndex = rowId - 1;
+			const columnIndex = columnId - 1;
 
-			const column = settingsData.layout[rowId - 1].attr[columnId - 1] || { items: [] };
+			if (!settingsData.layout[rowIndex].attr) {
+				settingsData.layout[rowIndex].attr = [];
+			}
+			const column = settingsData.layout[rowIndex].attr[columnIndex] || { items: [] };
+			if (!column.items) column.items = [];
 
-			if (column.items === undefined) column.items = [];
+			const data = {
+				type,
+				item_id,
+				itemId,
+				rowId,
+				columnId,
+				cellId: column.items.length + 1,
+			};
+
+			const res = await self.addNewCell(data);
+
+			if (res.status) {
+				$(`.hu-megamenu-row-wrapper[data-rowid=${rowId}] .hu-megamenu-col[data-columnid=${columnId}] .hu-megamenu-column-contents`)
+					.append(res.html);
+
+				self.closePopover();
+				column.items.push({ type, item_id });
+				settingsData.layout[rowIndex].attr[columnIndex] = column;
+			}
+		});
+
+		// Insert menu item
+		$(document).on('click', '.hu-megamenu-insert-menu', async function () {
+			const item_id = $(this).data('child');
+			const type = 'menu_item';
+			const rowId = $popover.data('rowid');
+			const columnId = $popover.data('columnid');
+			const rowIndex = rowId - 1;
+			const columnIndex = columnId - 1;
+
+			const column = settingsData.layout[rowIndex].attr[columnIndex] || { items: [] };
+			if (!column.items) column.items = [];
 
 			const data = {
 				type,
@@ -132,7 +174,7 @@ var megaMenu = {
 
 				self.closePopover();
 				column.items.push({ type, item_id });
-				settingsData.layout[rowId - 1].attr[columnId - 1] = column;
+				settingsData.layout[rowIndex].attr[columnIndex] = column;
 			}
 		});
 	},
@@ -212,11 +254,16 @@ var megaMenu = {
 
 	getModulesContents(keyword = '') {
 		const url = `${baseUrl}/administrator/index.php?option=com_ajax&helix=ultimate&request=task&action=getModuleList&keyword=${keyword}&helix_id=${helixUltimateStyleId}`;
+		const data = {
+			keyword,
+			itemId,
+		};
 
 		return new Promise((resolve, reject) => {
 			$.ajax({
 				method: 'GET',
 				url,
+				data,
 				success(res) {
 					res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
 					resolve(res);

@@ -530,6 +530,12 @@
 			default="1" 
 			label="HELIX_ULTIMATE_COMINGSOON_COUNTDOWN" 
 			showon="comingsoon:1" />
+		<field name="comingsoon_enable_login" 
+			helixgroup="comingsoon"
+			type="checkbox"
+    		label="Enable Login"
+    		default="1"
+    		showon="comingsoon:1" />
 		<field name="comingsoon_logo" 
 			helixgroup="comingsoon" 
 			type="helixmedia" 

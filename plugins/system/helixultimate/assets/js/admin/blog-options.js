@@ -1,7 +1,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -166,7 +166,7 @@ jQuery(function($) {
 
 		for (i=0;i<files.length;i++){
 			var ext = files[i].name.split('.').pop().toLowerCase();
-			var allowed = ((ext == 'png') || (ext == 'jpg') || (ext == 'jpeg') || (ext == 'gif') || (ext == 'svg'));
+			var allowed = ((ext == 'png') || (ext == 'jpg') || (ext == 'jpeg') || (ext == 'gif') || (ext == 'svg') || (ext == 'webp'));
 			if(allowed) {
 				
 				let gallery_id = 'gallery-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1);

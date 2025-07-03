@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -39,7 +39,7 @@ if (!class_exists('MegaFields'))
         <div class="hu-megamenu-popover-body">
             <div class="hu-megamenu-search-wrapper">
                 <span class="fas fa-search" aria-hidden="true"></span>
-                <input type="search" class="hu-input hu-megamenu-module-search" placeholder="<?php echo Text::_('HELIX_ULTIMATE_SEARCH_MODULE_HINT'); ?>" />
+                <input type="search" class="hu-input hu-megamenu-module-search" placeholder="<?php echo Text::_('HELIX_ULTIMATE_SEARCH_ITEM'); ?>" />
             </div>
 
             <div class="hu-megamenu-modules-container">

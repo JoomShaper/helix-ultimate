@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -68,4 +68,11 @@ ob_start();
 </div>	
 <?php
 $login_form = ob_get_clean();
-echo LayoutHelper::render('comingsoon', array('language' => $this->language, 'direction' => $this->direction, 'params' => $this->params, 'login' => true, 'login_form' => $login_form));
+echo LayoutHelper::render('comingsoon', array(
+    'language' => $this->language, 
+    'direction' => $this->direction, 
+    'params' => $this->params, 
+    'login' => true, 
+    'login_form' => $login_form,
+    'isOffline' => true)
+);

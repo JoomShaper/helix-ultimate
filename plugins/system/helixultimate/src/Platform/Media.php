@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 namespace HelixUltimate\Framework\Platform;
@@ -42,7 +42,7 @@ class Media
 		$input 	= Factory::getApplication()->input;
 		$path 	= $input->post->get('path', '/images', 'PATH');
 
-		$images 	= Folder::files(JPATH_ROOT . $path, '.png|.jpg|.jpeg|.gif|.svg|.ico', false, true);
+		$images 	= Folder::files(JPATH_ROOT . $path, '.png|.jpg|.jpeg|.gif|.svg|.ico|.webp', false, true);
 		$folders 	= Folder::folders(JPATH_ROOT . $path, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs'));
 
 		$crumbs = explode('/', ltrim($path, '/'));
@@ -280,7 +280,7 @@ class Media
 				}
 
 				// File formats
-				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'svg', 'ico');
+				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico');
 
 				// Upload if no error found
 				if (!$error)

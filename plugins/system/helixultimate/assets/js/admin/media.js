@@ -1,7 +1,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -390,6 +390,7 @@ jQuery(function ($) {
 				file_ext == 'png' ||
 				file_ext == 'jpg' ||
 				file_ext == 'jpeg' ||
+				file_ext == 'webp' ||
 				file_ext == 'gif' ||
 				file_ext == 'svg' ||
 				file_ext == 'ico';

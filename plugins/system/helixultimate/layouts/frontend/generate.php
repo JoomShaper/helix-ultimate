@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -97,7 +97,7 @@ extract($displayData);
 						const rightSidebar = new StickySidebar('#sp-right .sp-column', {
 							containerSelector: '#sp-main-body .row',
 							topSpacing: 15,
-							minWidth:991
+							minWidth:320
 						});
 					}
 				<?php endif; ?>
@@ -107,7 +107,7 @@ extract($displayData);
 						const leftSidebar = new StickySidebar('#sp-left .sp-column', {
 							containerSelector: '#sp-main-body .row',
 							topSpacing: 15,
-							minWidth:991
+							minWidth:320
 						});
 					}
 				<?php endif; ?>

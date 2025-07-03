@@ -2,7 +2,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
@@ -209,15 +209,12 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 		<link href="<?php echo $theme_url . '/css/font-awesome.min.css'; ?>" rel="stylesheet">
 		<link href="<?php echo $theme_url . '/css/template.css'; ?>" rel="stylesheet">
 		<?php
-			$preset = $params->get('preset', json_encode(['preset' => 'preset1']));
-
-			if (!empty($preset->preset))
-			{
-				$preset = $preset->preset;
-			}
+			// Fix the preset loading
+			$presetData = json_decode($params->get('preset', '{"preset":"preset1"}'));
+			$preset = isset($presetData->preset) ? $presetData->preset : 'default';
 		?>
 
-		<link href="<?php echo $theme_url . '/css/presets/' . $preset . '.css'; ?>" rel="stylesheet">
+		<link href="<?php echo $theme_url . '/css/presets/' . htmlspecialchars($preset, ENT_QUOTES, 'UTF-8') . '.css'; ?>" rel="stylesheet">
 		
 		<?php
 			if ($params->get('error_font_load')) {

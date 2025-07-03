@@ -1,7 +1,7 @@
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -167,7 +167,7 @@ jQuery(function ($) {
 
 		mediaModal += '<div class="hu-modal-header">';
 		mediaModal +=
-			'<input type="file" id="hu-file-input" accept="image/png, image/jpg, image/jpeg, image/gif, image/svg+xml, image/x-icon" style="display:none;" multiple>';
+			'<input type="file" id="hu-file-input" accept="image/png, image/jpg, image/jpeg, image/webp, image/gif, image/svg+xml, image/x-icon" style="display:none;" multiple>';
 			
 		mediaModal += '<div class="hu-modal-breadcrumbs"></div>';
 

@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 namespace HelixUltimate\Framework\Core\Classes;
@@ -360,6 +360,11 @@ class HelixultimateMenu
 	 */
 	private function getItem($item)
 	{
+		if ((int) $item->getParams()->get('menu_show') === 0)
+		{
+			return;
+		}
+		
 		$this->menu .= $this->start_el(array('item' => $item));
 		$this->menu .= $this->item($item);
 
@@ -660,7 +665,14 @@ class HelixultimateMenu
 		$class = !empty($class) ? 'class="' . $class . '"' : '';
 
 		if ($item->menu_icon) {
-			$linktitle = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+			if ($item->getParams()->get('menu_text', 1))
+			{
+				$linktitle = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+			}
+			else
+			{
+				$linktitle = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+			}
 		}
 		else if ($item->menu_image)
 		{

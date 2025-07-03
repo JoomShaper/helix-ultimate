@@ -8,6 +8,7 @@
 // Preloader
 jQuery(window).on('load', function () {
 	if (jQuery('.sp-loader-with-logo').length > 0) {
+
 		move();
 	}
 	jQuery('.sp-pre-loader').fadeOut(500, function () {
@@ -30,9 +31,11 @@ function move() {
 			elem.style.width = width + '%';
 		}
 	}
+
 }
 
 jQuery(function ($) {
+
 	/**
 	 * Helix settings data
 	 *
@@ -52,7 +55,7 @@ jQuery(function ($) {
 			let $stickyOffset = '100';
 
 			if (settings.header !== undefined && settings.header.stickyOffset !== undefined) {
-				$stickyOffset = settings.header .stickyOffset || '100';
+				$stickyOffset = settings.header.stickyOffset || '100';
 			}
 
 			var stickyHeader = function () {
@@ -135,7 +138,7 @@ jQuery(function ($) {
 	}
 
 	const headerExist = $('#sp-header');
-	if(headerExist.length>0) {
+	if (headerExist.length > 0) {
 		handleStickiness('sticky-header', getHeaderOffset());
 	}
 
@@ -164,31 +167,105 @@ jQuery(function ($) {
 		$(this).parent().addClass('menu-justify');
 	});
 
-	// Offcanvs
-	$('#offcanvas-toggler').on('click', function (event) {
+
+
+	$('#offcanvas-toggler, .offcanvas-toggler-secondary, .offcanvas-toggler-full').on('click', function (event) {
 		event.preventDefault();
-		$('.offcanvas-init').addClass('offcanvas-active');
+		openOffcanvas();
 	});
 
-	$('.offcanvas-toggler-secondary').on('click', function (event) {
-		event.preventDefault();
-		$('.offcanvas-init').addClass('offcanvas-active');
-	});
-
-	$('.offcanvas-toggler-full').on('click', function (event) {
-		event.preventDefault();
-		$('.offcanvas-init').addClass('offcanvas-active full-offcanvas');
-	});
-
+	// Close handlers
 	$('.close-offcanvas, .offcanvas-overlay').on('click', function (event) {
 		event.preventDefault();
-		$('.offcanvas-init').removeClass('offcanvas-active full-offcanvas');
+		closeOffcanvas();
 	});
 
-	$(document).on('click', '.offcanvas-inner .menu-toggler', function (event) {
-		event.preventDefault();
-		$(this).closest('.menu-parent').toggleClass('menu-parent-open').find('>.menu-child').slideToggle(400);
+	// Open function
+	function openOffcanvas() {
+		$('.offcanvas-init').addClass('offcanvas-active full-offcanvas');
+		$(document.body).css('overflow', 'hidden');
+
+		// Make offcanvas interactive
+		$('.offcanvas-menu')
+			.removeAttr('inert')
+			.attr('tabindex', '0');
+
+		// Set focus to close button (better for accessibility)
+		setTimeout(() => {
+			$('.close-offcanvas').focus();
+		}, 100);
+
+		// Add keyboard trap
+		$(document).on('keydown.offcanvas', handleOffcanvasKeyboard);
+	}
+
+	// Close function
+	function closeOffcanvas() {
+		$('.offcanvas-init').removeClass('offcanvas-active full-offcanvas');
+		$(document.body).css('overflow', '');
+
+		// Make offcanvas non-interactive
+		$('.offcanvas-menu')
+			.attr('inert', '')
+			.attr('tabindex', '-1');
+
+		// Return focus to the trigger
+		$('#offcanvas-toggler').focus();
+
+		// Remove keyboard trap
+		$(document).off('keydown.offcanvas');
+	}
+
+	// Keyboard trap handler on offcanvas
+	function handleOffcanvasKeyboard(e) {
+		if (!$('.offcanvas-init').hasClass('offcanvas-active')) return;
+
+		const $offcanvas = $('.offcanvas-menu');
+		const focusable = 'a[href], button, input, textarea, select, [tabindex="0"]';
+		const $focusable = $offcanvas.find(focusable).filter(':visible');
+
+		// Escape key closes
+		if (e.key === 'Escape') {
+			e.preventDefault();
+			closeOffcanvas();
+			return;
+		}
+
+		// Tab key containment
+		if (e.key === 'Tab') {
+			const $first = $focusable.first();
+			const $last = $focusable.last();
+
+			if (!$offcanvas[0].contains(document.activeElement)) {
+				e.preventDefault();
+				$first.focus();
+				return;
+			}
+
+			if (e.shiftKey && document.activeElement === $first[0]) {
+				e.preventDefault();
+				$last.focus();
+			} else if (!e.shiftKey && document.activeElement === $last[0]) {
+				e.preventDefault();
+				$first.focus();
+			}
+		}
+	}
+
+	// Prevent focus on inert elements
+	$(document).on('focusin', function (e) {
+		if ($(e.target).closest('[inert]').length) {
+			e.preventDefault();
+			$('#offcanvas-toggler').focus();
+		}
 	});
+
+	// Load inert polyfill if needed
+	if (!('inert' in document.createElement('div'))) {
+		const inertPolyfill = document.createElement('script');
+		inertPolyfill.src = 'https://cdn.jsdelivr.net/npm/inert-polyfill@3.1.1/inert.min.js';
+		document.head.appendChild(inertPolyfill);
+	}
 
 	// Modal Menu
 	if ($('#modal-menu').length > 0) {
@@ -216,9 +293,9 @@ jQuery(function ($) {
 	// Tooltip
 	const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"], .hasTooltip'));
 	tooltipTriggerList.map(function (tooltipTriggerEl) {
-		return new bootstrap.Tooltip(tooltipTriggerEl,{
+		return new bootstrap.Tooltip(tooltipTriggerEl, {
 			html: true
-		  });
+		});
 	});
 
 	// Popover
@@ -349,11 +426,307 @@ jQuery(function ($) {
 	});
 
 	// Error Alert close issue fix for Joomla 3
-	var observer = new MutationObserver(function(mutations) {
+	var observer = new MutationObserver(function (mutations) {
 		$('#system-message-container .alert .close').attr('data-bs-dismiss', 'alert');
 	});
 	var target = document.querySelector('#system-message-container');
 	observer.observe(target, {
 		attributes: true
 	});
+
+
 });
+
+
+// Handle accessibility on off-canvas dropdown menus
+jQuery(function ($) {
+	const menuSelector = '.menu-deeper.menu-parent';
+	const togglerSelector = '.menu-toggler';
+	const childSelector = '.menu-child';
+
+	// Toggle submenu open/close
+	function toggleSubmenu($item, open = null) {
+		const $submenu = $item.children(childSelector);
+		const isOpen = $item.hasClass('menu-parent-open');
+
+		if (open === null) open = !isOpen;
+
+		if (open) {
+			$item.addClass('menu-parent-open').attr('aria-expanded', 'true');
+			$submenu.slideDown(150);
+		} else {
+			$item.removeClass('menu-parent-open').attr('aria-expanded', 'false');
+			$submenu.slideUp(150);
+		}
+	}
+
+	// Prevent event bubbling from toggler to link
+	$(document).on('click', togglerSelector, function (event) {
+		event.preventDefault();
+		event.stopPropagation();
+		const $item = $(this).closest(menuSelector);
+		const isOpen = $item.hasClass('menu-parent-open');
+		toggleSubmenu($item, !isOpen);
+	});
+
+	// Handle menu link click or Enter/Space key
+	$(document).on('click keydown', `${menuSelector} > a`, function (event) {
+		if (event.type === 'click' || event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			const $item = $(this).closest(menuSelector);
+			const isOpen = $item.hasClass('menu-parent-open');
+			toggleSubmenu($item, !isOpen);
+		}
+	});
+
+	// Handle arrow key navigation
+	$(document).on('keydown', `${menuSelector} > a`, function (event) {
+		const $currentItem = $(this).closest('li');
+		const $siblings = $currentItem.parent().children('li:visible');
+		const index = $siblings.index($currentItem);
+
+		if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			// If submenu is open, focus first child link
+			const $submenu = $currentItem.children(childSelector);
+			if ($submenu.length && $currentItem.hasClass('menu-parent-open')) {
+				const $firstChildLink = $submenu.children('li:visible').find('a').first();
+				if ($firstChildLink.length) {
+					$firstChildLink.focus();
+					return;
+				}
+			}
+			// Otherwise, move to next sibling
+			$siblings.eq((index + 1) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			// Move to previous sibling
+			$siblings.eq((index - 1 + $siblings.length) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowRight') {
+			// Open nested submenu if present
+			const $submenu = $currentItem.children(childSelector);
+			if ($submenu.length) {
+				event.preventDefault();
+				toggleSubmenu($currentItem, true);
+				const $firstChildLink = $submenu.children('li:visible').find('a').first();
+				if ($firstChildLink.length) {
+					$firstChildLink.focus();
+				}
+			}
+		} else if (event.key === 'ArrowLeft' || event.key === 'Escape') {
+			event.preventDefault();
+			// Close only the current open dropdown
+			toggleSubmenu($currentItem, false);
+			$currentItem.children('a').first().focus();
+		}
+	});
+
+	// Handle arrow key navigation inside submenu
+	$(document).on('keydown', `${childSelector} > li > a`, function (event) {
+		const $currentItem = $(this).closest('li');
+		const $siblings = $currentItem.parent().children('li:visible');
+		const index = $siblings.index($currentItem);
+
+		if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			$siblings.eq((index + 1) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			$siblings.eq((index - 1 + $siblings.length) % $siblings.length).find('a').first().focus();
+		} else if (event.key === 'ArrowRight') {
+			// Open nested submenu if present
+			const $submenu = $currentItem.children(childSelector);
+			if ($submenu.length) {
+				event.preventDefault();
+				toggleSubmenu($currentItem, true);
+				const $firstChildLink = $submenu.children('li:visible').find('a').first();
+				if ($firstChildLink.length) {
+					$firstChildLink.focus();
+				}
+			}
+		} else if (event.key === 'ArrowLeft' || event.key === 'Escape') {
+			event.preventDefault();
+			// Close submenu and focus parent
+			const $parentMenu = $currentItem.parents(menuSelector).first();
+			toggleSubmenu($parentMenu, false);
+			$parentMenu.children('a').first().focus();
+		}
+	});
+
+	// Close all menus when clicking outside
+	$(document).on('click', function (event) {
+		if (!$(event.target).closest('.menu-deeper').length) {
+			$(menuSelector).removeClass('menu-parent-open').attr('aria-expanded', 'false');
+			$(childSelector).slideUp(150);
+		}
+	});
+
+	//mark all menu-parents as aria-haspopup
+	$(menuSelector).attr('aria-haspopup', 'true').attr('aria-expanded', 'false');
+});
+
+// Handle accessibility on megamenu and profile dropdowns
+jQuery(function ($) {
+	const menuSelectors = '.sp-megamenu-parent > li, .sp-profile-wrapper';
+
+	$(menuSelectors).each(function () {
+		const $menuItem = $(this);
+		const $trigger = $menuItem.children('a, button');
+		const $dropdown = $menuItem.children('.sp-dropdown, .sp-profile-dropdown');
+
+		if ($dropdown.length) {
+			setupDropdownEvents($menuItem, $trigger, $dropdown);
+		}
+	});
+
+	bindNestedDropdowns('body');
+
+	function setupDropdownEvents($menuItem, $trigger, $dropdown) {
+		// Show on focus or mouseenter
+		$trigger.on('focus mouseenter', function () {
+			openMenu($menuItem, $dropdown);
+		});
+
+		$menuItem.on('mouseenter', function () {
+			openMenu($menuItem, $dropdown);
+		});
+
+		// Hide on focusout or mouseleave
+		$menuItem.on('mouseleave focusout', function () {
+			setTimeout(function () {
+				if (!$menuItem.find(':focus').length && !$menuItem.is(':hover')) {
+					closeMenu($menuItem, $dropdown);
+				}
+			}, 100);
+		});
+
+		// Keyboard trigger
+		$trigger.on('keydown', function (event) {
+			switch (event.key) {
+				case 'Enter':
+				case ' ':
+					event.preventDefault();
+					openMenu($menuItem, $dropdown);
+					break;
+				case 'ArrowDown':
+					event.preventDefault();
+					openMenu($menuItem, $dropdown);
+					focusFirstItem($dropdown);
+					break;
+				case 'Escape':
+					event.preventDefault();
+					closeMenu($menuItem, $dropdown);
+					$trigger.focus();
+					break;
+			}
+		});
+
+		// Prevent click from toggling menu
+		$trigger.on('click', function (event) {
+			// Only prevent default if dropdown exists
+			if ($dropdown.length) {
+				event.preventDefault();
+			}
+		});
+	}
+
+	function bindNestedDropdowns(containerSelector) {
+		$(containerSelector).find(' .sp-has-child').each(function () {
+			const $subItem = $(this);
+			const $trigger = $subItem.children('a, button');
+			const $subDropdown = $subItem.children('.sp-dropdown');
+
+			if ($subDropdown.length) {
+				setupDropdownEvents($subItem, $trigger, $subDropdown);
+				bindNestedDropdowns($subDropdown);
+			}
+		});
+	}
+
+	function openMenu($item, $dropdown) {
+		$dropdown.show();
+		// Only force display for .sp-profile-dropdown
+		if ($dropdown.hasClass('sp-profile-dropdown')) {
+			$dropdown.attr('style', 'display: block !important');
+		}
+		bindKeyboardNavigation($dropdown);
+	}
+
+	function closeMenu($item, $dropdown) {
+		$dropdown.hide();
+		// Reset style for .sp-profile-dropdown
+		if ($dropdown.hasClass('sp-profile-dropdown')) {
+			$dropdown.removeAttr('style');
+		}
+	}
+
+	function focusFirstItem($dropdown) {
+		const $focusable = $dropdown.find('a, button').filter(':visible');
+		if ($focusable.length) {
+			$focusable.first().focus();
+		}
+	}
+
+	function bindKeyboardNavigation($dropdown) {
+		const $items = $dropdown.find('a, button').filter(':visible');
+
+		$items.off('keydown').on('keydown', function (event) {
+			const currentIndex = $items.index(this);
+			let newIndex = -1;
+
+			if (event.key === 'ArrowDown') {
+				event.preventDefault();
+				newIndex = (currentIndex + 1) % $items.length;
+			} else if (event.key === 'ArrowUp') {
+				event.preventDefault();
+				newIndex = (currentIndex - 1 + $items.length) % $items.length;
+			} else if (event.key === 'Escape') {
+				event.preventDefault();
+
+				// Reset style for .sp-profile-dropdown
+				if ($dropdown.hasClass('sp-profile-dropdown')) {
+					$dropdown.removeAttr('style');
+				}
+
+				const $currentDropdown = $(this).closest('.sp-dropdown');
+				const $parentItem = $currentDropdown.parent(' .sp-has-child, .sp-megamenu-parent > li');
+
+				// Check if this is the root-level dropdown
+				const isRoot = $parentItem.parent().is('.sp-megamenu-parent, .sp-megamenu-parent > ul, nav');
+
+				if (isRoot) {
+					// Close all menus
+					$(menuSelectors).each(function () {
+						const $item = $(this);
+						closeMenu($item, $item.children('.sp-dropdown'));
+					});
+				} else {
+					// Close only current submenu and focus its trigger
+					const $trigger = $parentItem.children('a, button');
+					closeMenu($parentItem, $currentDropdown);
+					if ($trigger.length) {
+						$trigger.focus();
+					}
+				}
+				return;
+			}
+
+			if (newIndex > -1) {
+				$items.eq(newIndex).focus();
+			}
+		});
+	}
+
+	// Close all menus on outside click
+	$(document).on('click', function (event) {
+		if (!$(event.target).closest(menuSelectors).length) {
+			$(menuSelectors).each(function () {
+				const $item = $(this);
+				closeMenu($item, $item.children('.sp-dropdown'));
+			});
+		}
+	});
+
+});
+
+

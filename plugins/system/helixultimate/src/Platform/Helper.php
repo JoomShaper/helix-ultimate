@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -40,6 +40,10 @@ class Helper
 	 */
 	public static function getTemplateStyle($id = 0)
 	{
+		static $cache = [];
+		if (isset($cache[$id])) {
+			return $cache[$id];
+		}
 		$db = Factory::getDbo();
 		$query = $db->getQuery(true);
 
@@ -51,7 +55,9 @@ class Helper
 
 		$db->setQuery($query);
 
-		return $db->loadObject();
+		$cache[$id] = $db->loadObject();
+
+		return $cache[$id];
 	}
 
 	/**

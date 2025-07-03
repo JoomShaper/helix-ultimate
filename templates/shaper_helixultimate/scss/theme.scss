@@ -2629,13 +2629,6 @@ body.contentpane.com-contact.view-contacts.layout-modal {
   box-shadow: none !important;
 }
 
-// Joomla Modal height fix
-.hu-media-modal {
-  .modal-content {
-    height: 65vh;
-  }
-}
-
 // J4 media input group btn width fix
 .input-group.hu-j4-media {
   max-width: 356px;
@@ -2714,3 +2707,7 @@ svg#Passkey {
 #icon-passkey {
   fill: #fff;
 } 
+
+.inner-wrapper-sticky{
+  background-color: white;
+}

@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -39,6 +39,9 @@ class Image
 				break;
 			case 'png':
 				$img = imagecreatefrompng($src);
+				break;
+			case 'webp':
+				$img = imagecreatefromwebp($src);
 				break;
 		}
 
@@ -110,6 +113,9 @@ class Image
 						break;
 					case 'png':
 						imagepng($new, $dest);
+						break;
+					case 'webp':
+						imagewebp($new, $dest, $quality);
 						break;
 				}
 			}

@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -15,7 +15,7 @@ $doc = Factory::getDocument();
 $data = $displayData;
 ?>
 
-<main id="sp-component" class="<?php echo $data->settings->className; ?>">
+<div id="sp-component" class="<?php echo $data->settings->className; ?>">
 	<div class="sp-column <?php echo $data->settings->custom_class; ?>">
 		<jdoc:include type="message" />
 
@@ -33,4 +33,4 @@ $data = $displayData;
 			</div>
 		<?php endif ?>
 	</div>
-</main>
+</div>

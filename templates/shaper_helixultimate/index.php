@@ -53,7 +53,9 @@ $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
 // Coming Soon
 if (!$requestFromIframe) 
 {
-	if (!\is_null($this->params->get('comingsoon', null)))
+	$user = Factory::getUser();
+
+	if (!\is_null($this->params->get('comingsoon', null)) && $user->get('id') === 0)
 	{
 		header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
 		exit();
@@ -162,7 +164,9 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<div class="body-wrapper">
 			<div class="body-innerwrapper">
 				<?php echo $theme->getHeaderStyle(); ?>
-				<?php $theme->render_layout(); ?>
+				<main id="sp-main">
+					<?php $theme->render_layout(); ?>
+				</main>
 			</div>
 		</div>
 
@@ -175,7 +179,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 			<?php echo $theme->getOffcanvasStyle(); ?>
 		<?php else : ?>
 			<div class="offcanvas-menu">
-				<a href="#" class="close-offcanvas" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times" aria-hidden="true"></span></a>
+				<a href="#" class="close-offcanvas" role="button" aria-label="<?php echo Text::_('HELIX_ULTIMATE_CLOSE_OFFCANVAS_ARIA_LABEL'); ?>"><span class="fas fa-times" aria-hidden="true"></span></a>
 				<div class="offcanvas-inner">
 					<?php if ($this->countModules('offcanvas')) : ?>
 						<jdoc:include type="modules" name="offcanvas" style="sp_xhtml" />

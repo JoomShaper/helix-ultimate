@@ -2,7 +2,7 @@
 /**
  * @package	Helix_Ultimate_Framework
  * @author	JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2021 JoomShaper
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -67,7 +67,7 @@ class Blog
 				$postMaxSize 	= $mediaHelper->toBytes(ini_get('post_max_size'));
 				$memoryLimit 	= $mediaHelper->toBytes(ini_get('memory_limit'));
 
-				if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit !== -1 && $contentLength > $memoryLimit))
+				if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit > 0 && $contentLength > $memoryLimit)) 
 				{
 					$report['status'] = false;
 					$report['output'] = Text::_('Total size of upload exceeds the limit.');

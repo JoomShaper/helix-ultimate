@@ -21,7 +21,7 @@ $maxLevel = $params->get('endLevel', 0, 'INT');
 $showToggler = $maxLevel === 0 || $item->level < $maxLevel;
 
 if ($item->menu_icon) {
-	if ($item->getParams()->get('menu_text', 1))
+	if ($item->params->get('menu_text', 1))
 	{
 		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
 	}
@@ -42,7 +42,7 @@ else if ($item->menu_image)
 		$linktype = HTMLHelper::_('image', $item->menu_image, $item->title);
 	}
 
-	if ($item->getParams()->get('menu_text', 1))
+	if ($item->params->get('menu_text', 1))
 	{
 		$linktype .= '<span class="menu-image-title">' . $item->title . '</span>';
 	}

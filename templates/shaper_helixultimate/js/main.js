@@ -471,11 +471,29 @@ jQuery(function ($) {
 
 	// Handle menu link click or Enter/Space key
 	$(document).on('click keydown', `${menuSelector} > a`, function (event) {
-		if (event.type === 'click' || event.key === 'Enter' || event.key === ' ') {
-			event.preventDefault();
+		const isToggleKey = event.type === 'click' || event.key === 'Enter' || event.key === ' ';
+		const isKeyboard = event.key === 'Enter' || event.key === ' ';
+
+		if (isToggleKey) {
 			const $item = $(this).closest(menuSelector);
-			const isOpen = $item.hasClass('menu-parent-open');
-			toggleSubmenu($item, !isOpen);
+			const $submenu = $item.children(childSelector);
+
+			// If submenu exists
+			if ($submenu.length) {
+				// If it's Space key (prevent scrolling), toggle submenu only
+				if (event.key === ' ') {
+					event.preventDefault();
+					toggleSubmenu($item);
+				}
+				// If it's Enter or click — follow link (do not preventDefault)
+				// but also toggle submenu if desired
+				else if (event.key === 'Enter') {
+					toggleSubmenu($item, true);
+
+				} else if (event.type === 'click') {
+					toggleSubmenu($item, true);
+				}
+			}
 		}
 	});
 
@@ -603,7 +621,6 @@ jQuery(function ($) {
 		// Keyboard trigger
 		$trigger.on('keydown', function (event) {
 			switch (event.key) {
-				case 'Enter':
 				case ' ':
 					event.preventDefault();
 					openMenu($menuItem, $dropdown);
@@ -623,11 +640,11 @@ jQuery(function ($) {
 
 		// Prevent click from toggling menu
 		$trigger.on('click', function (event) {
-			// Only prevent default if dropdown exists
 			if ($dropdown.length) {
-				event.preventDefault();
+				openMenu($menuItem, $dropdown);
 			}
 		});
+
 	}
 
 	function bindNestedDropdowns(containerSelector) {

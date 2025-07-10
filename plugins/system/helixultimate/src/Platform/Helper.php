@@ -570,7 +570,7 @@ class Helper
 	 * @return	Object	The module object.
 	 * @since	2.0.0
 	 */
-	public static function getSearchModule()
+	public static function getSearchModule($idSuffix = '')
 	{
 		$version = JoomlaBridge::getVersion('major');
 		$name = $version < 4 ? 'mod_search' : 'mod_finder';
@@ -578,7 +578,7 @@ class Helper
 		$module = self::createModule($name, [
 			'title' => 'Search',
 			'params' => '{"show_label": 0, "label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}'
-		]);
+		], $idSuffix);
 
 		return $module;
 	}
@@ -592,7 +592,7 @@ class Helper
 	 * @return	object	The module object.
 	 * @since	2.0.0
 	 */
-	public static function createModule($name, $options = [])
+	public static function createModule($name, $options = [], $idSuffix = '0')
 	{
 		if (empty($name))
 		{
@@ -604,7 +604,7 @@ class Helper
 			$options = (array) $options;
 		}
 
-		$defaultOptions = ['id' => 0, 'title' => '', 'module' => $name, 'position' => '', 'content' => '', 'showtitle' => 0, 'control' => '', 'params' => '', 'menuid' => 0, 'style' => ''];
+		$defaultOptions = ['id' => $idSuffix, 'title' => '', 'module' => $name, 'position' => '', 'content' => '', 'showtitle' => 0, 'control' => '', 'params' => '', 'menuid' => 0, 'style' => ''];
 
 		return ArrayHelper::toObject(\array_merge($defaultOptions, $options));
 	}

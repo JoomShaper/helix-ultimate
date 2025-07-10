@@ -36,7 +36,7 @@ $menuModule = Helper::createModule('mod_menu', [
 	'name' => 'menu'
 ]);
 
-$searchModule = Helper::getSearchModule();
+$searchModule = Helper::getSearchModule('-canvas');
 
 ?>
 <div class="offcanvas-menu border-menu">

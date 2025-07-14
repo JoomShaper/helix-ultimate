@@ -8,8 +8,6 @@
 
 namespace HelixUltimate\Framework\Platform;
 
-use DateTime;
-use HelixUltimate\Framework\Platform\Provider;
 use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
@@ -753,5 +751,47 @@ class Helper
 		$totalString = $read_time . " " . $label; //adds time with minute/minutes label
 
 		return $totalString;
+	}
+
+	/**
+	 * Save license data
+	 *
+	 * @param  array $inputs
+	 * @return mixed
+	 */
+	public static function saveLicenseInfo(array $inputs)
+	{
+		if (empty($inputs)) {
+			return;
+		}
+
+		$validKeys = ['template', 'joomshaper_email', 'joomshaper_license_key'];
+
+		// check $validKeys are exist in $inputs and not empty
+		if (array_diff($validKeys, array_keys($inputs))) {
+			return;
+		}
+
+		$template = $inputs['template'];
+		$email = $inputs['joomshaper_email'] ?? '';
+		$license_key = $inputs['joomshaper_license_key'] ?? '';
+
+		if (!empty($template)) {
+			$extra_query = 'joomshaper_email=' . urlencode($email);
+				$extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
+
+				$db = Factory::getDbo();
+				$fields = array(
+					$db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
+					$db->quoteName('last_check_timestamp') . ' = 0'
+				);
+
+				$query = $db->getQuery(true)
+					->update($db->quoteName('#__update_sites'))
+					->set($fields)
+					->where($db->quoteName('name') . ' = ' . $db->quote($template));
+				$db->setQuery($query);
+				$db->execute();
+		}
 	}
 }

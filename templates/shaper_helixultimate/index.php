@@ -55,7 +55,7 @@ if (!$requestFromIframe)
 {
 	$user = Factory::getUser();
 
-	if (!\is_null($this->params->get('comingsoon', null)) && $user->get('id') === 0)
+	if (!\is_null($this->params->get('comingsoon', null)) && !$user->authorise('core.admin'))
 	{
 		header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
 		exit();

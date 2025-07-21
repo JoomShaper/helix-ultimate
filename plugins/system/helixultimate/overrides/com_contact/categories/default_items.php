@@ -13,6 +13,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
+$this->level = 0; // Initialize the level for nested categories
 $lang  = Factory::getLanguage();
 
 if ($this->maxLevelcat != 0 && count($this->items[$this->parent->id]) > 0) :

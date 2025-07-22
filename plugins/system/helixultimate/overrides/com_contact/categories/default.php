@@ -10,10 +10,23 @@ defined ('_JEXEC') or die();
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
+
+$isJ4 = version_compare(JVERSION, '4.0', 'ge');
+
+if ($isJ4) {
+    // Add strings for translations in Javascript for Joomla 4
+    Text::script('JGLOBAL_EXPAND_CATEGORIES');
+    Text::script('JGLOBAL_COLLAPSE_CATEGORIES');
+
+    /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+    $wa = $this->document->getWebAssetManager();
+    $wa->getRegistry()->addExtensionRegistryFile('com_categories');
+    $wa->useScript('com_categories.shared-categories-accordion');
+}
 ?>
-<div class="categories-list<?php echo $this->pageclass_sfx; ?> list-group">
-	<?php
-		echo LayoutHelper::render('joomla.content.categories_default', $this);
-		echo $this->loadTemplate('items');
-	?>
+<div class="<?php echo $isJ4 ? 'com-contact-categories categories-list' : 'categories-list' . $this->pageclass_sfx; ?> list-group">
+    <?php
+        echo LayoutHelper::render('joomla.content.categories_default', $this);
+        echo $this->loadTemplate('items');
+    ?>
 </div>

@@ -37,7 +37,11 @@ $columns = !empty((int) $this->params->get('num_columns')) ? (int) $this->params
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $blogListType = $template->params->get('blog_list_type') ?? 'default';
 ?>
-<style>.article-list.grid {--columns: <?php echo $columns; ?>;}</style>
+<style>
+	.article-list.grid {
+		--columns: <?php echo $columns; ?>;
+	}
+</style>
 <div class="blog<?php echo $this->pageclass_sfx; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
@@ -147,7 +151,7 @@ $blogListType = $template->params->get('blog_list_type') ?? 'default';
 					<div class="row">
 						<?php for ($col = 0; $col < $numCols; $col++) :
 							// Fixed index calculation
-							$index = $orderDown ? ($row * $numCols + $col) : ($row + $col * $numRows);
+							$index = $orderDown ? ($row * $numCols + $col) : ($row + $col * $numRows); 
 							if ($index >= $introcount) {
 								continue;
 							}

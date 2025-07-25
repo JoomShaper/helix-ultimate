@@ -1,26 +1,26 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined ('JPATH_BASE') or die();
+defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
 
-$articleView = $displayData['articleView'];
-$author = ($displayData['item']->created_by_alias ?: $displayData['item']->author);
 ?>
-<span class="createdby"<?php echo ($articleView != 'intro') ? ' itemprop="author" itemscope itemtype="https://schema.org/Person"' : ''; ?> title="<?php echo Text::sprintf('COM_CONTENT_WRITTEN_BY', $author); ?>">
-	<?php $author = '<span itemprop="name">' . $author . '</span>'; ?>
-	<?php if (!empty($displayData['item']->contact_link ) && $displayData['params']->get('link_author') == true) : ?>
-		<a href="<?php echo Route::_($displayData['item']->contact_link); ?>"<?php echo ($articleView != 'intro') ? ' itemprop="url"' : ''; ?>>
-			<?php echo $author; ?>
-		</a>
-	<?php else : ?>
-		<?php echo $author; ?>
-	<?php endif; ?>
-</span>
+<dd class="createdby">
+    <span class="icon-user icon-fw" aria-hidden="true"></span>
+    <?php $author = ($displayData['item']->created_by_alias ?: $displayData['item']->author); ?>
+    <?php $author = '<span>' . $author . '</span>'; ?>
+    <?php if (!empty($displayData['item']->contact_link) && $displayData['params']->get('link_author') == true) : ?>
+        <?php echo Text::sprintf('COM_CONTENT_WRITTEN_BY', HTMLHelper::_('link', $displayData['item']->contact_link, $author)); ?>
+    <?php else : ?>
+        <?php echo Text::sprintf('COM_CONTENT_WRITTEN_BY', $author); ?>
+    <?php endif; ?>
+</dd>

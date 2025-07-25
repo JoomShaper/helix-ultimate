@@ -1,15 +1,15 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined ('JPATH_BASE') or die();
+defined('_JEXEC') or die;
 
-use HelixUltimate\Framework\Platform\Helper;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 extract($displayData);
@@ -41,10 +41,9 @@ extract($displayData);
  * @var   string   $validate        Validation rules to apply.
  * @var   string   $value           Value attribute of the field.
  * @var   array    $options         Options available for this field.
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attribute for eg, data-*.
  */
-
-// Including fallback code for HTML5 non supported browsers.
-HTMLHelper::_('jquery.framework');
 
 /**
  * The format of the input tag to be filled in using sprintf.
@@ -57,34 +56,35 @@ $format = '<input type="radio" id="%1$s" name="%2$s" value="%3$s" %4$s>';
 $alt    = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 ?>
 <fieldset id="<?php echo $id; ?>" class="<?php echo trim($class . ' radio'); ?>"
-	<?php echo $disabled ? 'disabled' : ''; ?>
-	<?php echo $required ? 'required aria-required="true"' : ''; ?>
-	<?php echo $autofocus ? 'autofocus' : ''; ?>>
+    <?php echo $disabled ? 'disabled' : ''; ?>
+    <?php echo $required ? 'required' : ''; ?>
+    <?php echo $autofocus ? 'autofocus' : ''; ?>
+    <?php echo $dataAttribute; ?>>
 
-	<?php if (!empty($options)) : ?>
-		<?php foreach ($options as $i => $option) : ?>
-			<?php
-				// Initialize some option attributes.
-				$checked     = ((string) $option->value == $value) ? 'checked="checked"' : '';
-				$optionClass = !empty($option->class) ? 'class="' . $option->class . '"' : '';
-				$disabled    = !empty($option->disable) || ($disabled && !$checked) ? 'disabled' : '';
+    <?php if (!empty($options)) : ?>
+        <?php foreach ($options as $i => $option) : ?>
+            <?php
+                // Initialize some option attributes.
+                $checked     = ((string) $option->value === $value) ? 'checked="checked"' : '';
+                $optionClass = !empty($option->class) ? 'class="' . $option->class . '"' : '';
+                $disabled    = !empty($option->disable) || ($disabled && !$checked) ? 'disabled' : '';
 
-				// Initialize some JavaScript option attributes.
-				$onclick    = !empty($option->onclick) ? 'onclick="' . $option->onclick . '"' : '';
-				$onchange   = !empty($option->onchange) ? 'onchange="' . $option->onchange . '"' : '';
-				$oid        = $id . $i;
-				$ovalue     = htmlspecialchars(Helper::CheckNull($option->value), ENT_COMPAT, 'UTF-8');
-				$attributes = array_filter(array($checked, $optionClass, $disabled, $onchange, $onclick));
-			?>
-			<?php if ($required) : ?>
-				<?php $attributes[] = 'required aria-required="true"'; ?>
-			<?php endif; ?>
-			<div class="radio m-b-0">
-				<label for="<?php echo $oid; ?>" <?php echo $optionClass; ?>>
-					<?php echo sprintf($format, $oid, $name, $ovalue, implode(' ', $attributes)); ?>
-					<?php echo Text::alt($option->text, $alt); ?>
-				</label>
-			</div>
-		<?php endforeach; ?>
-	<?php endif; ?>
+                // Initialize some JavaScript option attributes.
+                $onclick    = !empty($option->onclick) ? 'onclick="' . $option->onclick . '"' : '';
+                $onchange   = !empty($option->onchange) ? 'onchange="' . $option->onchange . '"' : '';
+                $oid        = $id . $i;
+                $ovalue     = htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8');
+                $attributes = array_filter([$checked, $optionClass, $disabled, $onchange, $onclick]);
+            ?>
+            <?php if ($required) : ?>
+                <?php $attributes[] = 'required'; ?>
+            <?php endif; ?>
+            <div class="radio mb-0">
+                <label for="<?php echo $oid; ?>" <?php echo $optionClass; ?>>
+                    <?php echo sprintf($format, $oid, $name, $ovalue, implode(' ', $attributes)); ?>
+                    <?php echo Text::alt($option->text, $alt); ?>
+                </label>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </fieldset>

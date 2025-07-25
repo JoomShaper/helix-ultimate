@@ -1,15 +1,14 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2017 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined ('JPATH_BASE') or die();
-
-use HelixUltimate\Framework\Platform\Helper;
-use Joomla\CMS\HTML\HTMLHelper;
+defined('_JEXEC') or die;
 
 extract($displayData);
 
@@ -45,32 +44,31 @@ extract($displayData);
  * @var   array    $inputType       Options available for this field.
  * @var   string   $accept          File types that are accepted.
  * @var   integer  $maxLength       The maximum length that the field shall accept.
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attribute for eg, data-*.
  */
 
-// Including fallback code for HTML5 non supported browsers.
-HTMLHelper::_('jquery.framework');
-HTMLHelper::_('script', 'system/html5fallback.js', array('version' => 'auto', 'relative' => true, 'conditional' => 'lt IE 9'));
-
-$autocomplete = !$autocomplete ? ' autocomplete="off"' : ' autocomplete="' . $autocomplete . '"';
-$autocomplete = $autocomplete == ' autocomplete="on"' ? '' : $autocomplete;
-
-$attributes = array(
-	!empty($size) ? 'size="' . $size . '"' : '',
-	$disabled ? 'disabled' : '',
-	$readonly ? 'readonly' : '',
-	strlen(Helper::CheckNull($hint)) ? 'placeholder="' . htmlspecialchars(Helper::CheckNull($hint), ENT_COMPAT, 'UTF-8') . '"' : '',
-	$autocomplete,
-	$autofocus ? ' autofocus' : '',
-	$spellcheck ? '' : 'spellcheck="false"',
-	$onchange ? ' onchange="' . $onchange . '"' : '',
-	!empty($maxLength) ? $maxLength : '',
-	$required ? 'required aria-required="true"' : '',
-);
+$attributes = [
+    !empty($size) ? 'size="' . $size . '"' : '',
+    !empty($description) ? 'aria-describedby="' . ($id ?: $name) . '-desc"' : '',
+    $disabled ? 'disabled' : '',
+    $readonly ? 'readonly' : '',
+    strlen($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : '',
+    !empty($autocomplete) ? 'autocomplete="' . $autocomplete . '"' : '',
+    $autofocus ? 'autofocus' : '',
+    $spellcheck ? '' : 'spellcheck="false"',
+    $onchange ? 'onchange="' . $onchange . '"' : '',
+    !empty($maxLength) ? $maxLength : '',
+    $required ? 'required' : '',
+    !empty($pattern) ? 'pattern="' . $pattern . '"' : '',
+    $dataAttribute,
+];
 ?>
 <input
-	type="tel"
-	name="<?php echo $name; ?>"
-	<?php echo !empty($class) ? ' class="form-control ' . $class . '"' : 'class="form-control"'; ?>
-	id="<?php echo $id; ?>"
-	value="<?php echo htmlspecialchars(Helper::CheckNull($value), ENT_COMPAT, 'UTF-8'); ?>"
-	<?php echo implode(' ', $attributes); ?>>
+    type="tel"
+    inputmode="tel"
+    name="<?php echo $name; ?>"
+    <?php echo !empty($class) ? ' class="form-control ' . $class . '"' : 'class="form-control"'; ?>
+    id="<?php echo $id; ?>"
+    value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+    <?php echo implode(' ', $attributes); ?>>

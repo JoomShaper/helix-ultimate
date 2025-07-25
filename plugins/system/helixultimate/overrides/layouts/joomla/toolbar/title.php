@@ -1,16 +1,21 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
-$icon = empty($displayData['icon']) ? 'generic' : preg_replace('#\.[^ .]*$#', '', $displayData['icon']);
+use Joomla\CMS\Layout\LayoutHelper;
+
+// Strip extension if given
+$icon = empty($displayData['icon']) ? 'dot-circle' : preg_replace('#\.[^ .]*$#', '', $displayData['icon']);
 ?>
 <h1 class="page-title">
-	<span class="icon-<?php echo $icon; ?>" aria-hidden="true"></span>
-	<?php echo $displayData['title']; ?>
+    <?php echo LayoutHelper::render('joomla.icon.iconclass', ['icon' => $icon]); ?>
+    <?php echo $displayData['title']; ?>
 </h1>

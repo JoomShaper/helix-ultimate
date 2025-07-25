@@ -1,12 +1,14 @@
 <?php
-/**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
 
-defined ('JPATH_BASE') or die();
+/**
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
@@ -17,24 +19,23 @@ $fieldSets = $form->getFieldsets('metadata');
 ?>
 
 <?php foreach ($fieldSets as $name => $fieldSet) : ?>
-	<?php if (isset($fieldSet->description) && trim($fieldSet->description)) : ?>
-		<p class="alert alert-info"><?php echo $this->escape(Text::_($fieldSet->description)); ?></p>
-	<?php endif; ?>
+    <?php if (isset($fieldSet->description) && trim($fieldSet->description)) : ?>
+        <div class="alert alert-info">
+            <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+            <?php echo $this->escape(Text::_($fieldSet->description)); ?>
+        </div>
+    <?php endif; ?>
 
-	<?php
-	// Include the real fields in this panel.
-	if ($name === 'jmetadata')
-	{
-		echo $form->renderField('metadesc');
-		echo $form->renderField('metakey');
-		echo $form->renderField('xreference');
-	}
+    <?php
+    // Include the real fields in this panel.
+    if ($name === 'jmetadata') {
+        echo $form->renderField('metadesc');
+        echo $form->renderField('metakey');
+    }
 
-	foreach ($form->getFieldset($name) as $field)
-	{
-		if ($field->name !== 'jform[metadata][tags][]')
-		{
-			echo $field->renderField();
-		}
-	} ?>
+    foreach ($form->getFieldset($name) as $field) {
+        if ($field->name !== 'jform[metadata][tags][]') {
+            echo $field->renderField();
+        }
+    } ?>
 <?php endforeach; ?>

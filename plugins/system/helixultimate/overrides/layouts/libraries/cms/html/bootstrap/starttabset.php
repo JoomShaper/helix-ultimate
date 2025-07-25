@@ -6,11 +6,10 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
 $selector = empty($displayData['selector']) ? '' : $displayData['selector'];
-
 ?>
 
-<ul class="joomla-tabs nav nav-tabs mb-3" id="<?php echo $selector; ?>Tabs"></ul>
+<ul class="joomla-tabs nav nav-tabs" id="<?php echo preg_replace('/^[\.#]/', '', $selector); ?>Tabs" role="tablist"></ul>
 <div class="tab-content" id="<?php echo $selector; ?>Content">

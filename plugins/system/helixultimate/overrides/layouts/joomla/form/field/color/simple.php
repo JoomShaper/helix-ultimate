@@ -1,14 +1,17 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined ('JPATH_BASE') or die();
+defined('_JEXEC') or die;
 
-use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 extract($displayData);
 
@@ -42,27 +45,28 @@ extract($displayData);
  * @var   boolean  $hasValue        Has this field a value assigned?
  * @var   array    $options         Options available for this field.
  * @var   array    $checked         Is this field checked?
- * @var   array    $position        Is this field checked?
- * @var   array    $control         Is this field checked?
+ * @var   array    $position        Position of input.
+ * @var   array    $control         The forms control.
+ * @var   array    $colors          The specified colors
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attribute for eg, data-*.
  */
 
-$class    = ' class="form-select ' . trim('simplecolors chzn-done ' . $class) . '"';
+$class    = ' class="form-select ' . trim($class) . '"';
 $disabled = $disabled ? ' disabled' : '';
 $readonly = $readonly ? ' readonly' : '';
 
-// Include jQuery
-HTMLHelper::_('jquery.framework');
-HTMLHelper::_('script', 'system/fields/simplecolors.min.js', array('version' => 'auto', 'relative' => true));
-HTMLHelper::_('stylesheet', 'system/simplecolors.css', array('version' => 'auto', 'relative' => true));
-HTMLHelper::_('script', 'system/fields/color-field-init.min.js', array('version' => 'auto', 'relative' => true));
+Factory::getDocument()->getWebAssetManager()
+    ->useStyle('webcomponent.field-simple-color')
+    ->useScript('webcomponent.field-simple-color');
+
 ?>
-<select data-chosen="true" name="<?php echo $name; ?>" id="<?php echo $id; ?>"<?php
-echo $disabled; ?><?php echo $readonly; ?><?php echo $required; ?><?php echo $class; ?><?php echo $position; ?><?php
-echo $onchange; ?><?php echo $autofocus; ?> style="visibility:hidden;width:22px;height:1px">
-	<?php foreach ($colors as $i => $c) : ?>
-		<option<?php echo ($c == $color ? ' selected="selected"' : ''); ?>><?php echo $c; ?></option>
-		<?php if (($i + 1) % $split == 0) : ?>
-			<option>-</option>
-		<?php endif; ?>
-	<?php endforeach; ?>
-</select>
+<joomla-field-simple-color text-select="<?php echo Text::_('JFIELD_COLOR_SELECT'); ?>" text-color="<?php echo Text::_('JFIELD_COLOR_VALUE'); ?>" text-close="<?php echo Text::_('JLIB_HTML_BEHAVIOR_CLOSE'); ?>" text-transparent="<?php echo Text::_('JFIELD_COLOR_TRANSPARENT'); ?>">
+    <select name="<?php echo $name; ?>" id="<?php echo $id; ?>"<?php
+    echo $disabled; ?><?php echo $readonly; ?><?php echo $dataAttribute; ?><?php echo $required; ?><?php echo $class; ?><?php echo $position; ?><?php
+    echo $onchange; ?><?php echo $autofocus; ?> style="visibility:hidden;width:22px;height:1px">
+        <?php foreach ($colors as $i => $c) : ?>
+            <option<?php echo ($c === $color ? ' selected="selected"' : ''); ?> value="<?php echo $c; ?>"></option>
+        <?php endforeach; ?>
+    </select>
+</joomla-field-simple-color>

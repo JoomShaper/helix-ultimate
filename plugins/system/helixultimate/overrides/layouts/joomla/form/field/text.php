@@ -7,6 +7,7 @@
 */
 
 use HelixUltimate\Framework\Platform\Helper;
+use Joomla\CMS\Language\Text;
 
 defined ('JPATH_BASE') or die();
 
@@ -73,7 +74,7 @@ $attributes = array(
 	!empty($pattern) ? 'pattern="' . $pattern . '"' : '',
 
 	// @TODO add a proper string here!!!
-	!empty($validationtext) ? 'data-validation-text="' . $validationtext . '"' : '',
+	!empty($validationtext) ? 'data-validation-text="' . $this->escape(Text::_($validationtext)) . '"' : '',
 );
 
 

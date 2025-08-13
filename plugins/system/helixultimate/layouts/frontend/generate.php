@@ -54,7 +54,7 @@ if (!empty($template->params->get('layout'))) {
 extract($displayData);
 ?>
 
-<<?php echo $semantic; ?> id="<?php echo $id ?>" <?php echo $row_class ?>>
+<<?php echo $sematic; ?> id="<?php echo $id ?>" <?php echo $row_class ?>>
 
 	<?php if ($componentArea): ?>
 		<?php if (!$pagebuilder): ?>
@@ -113,4 +113,4 @@ extract($displayData);
 			})
 		</script>
 	<?php endif; ?>
-</<?php echo $semantic; ?>>
+</<?php echo $sematic; ?>>

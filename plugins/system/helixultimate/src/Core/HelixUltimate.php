@@ -651,25 +651,25 @@ class HelixUltimate
 				$id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-' . OutputFilter::stringURLSafe($modified_row->settings->name) : 'sp-section-' . ($key + 1);
 				$row_class = $this->build_row_class($modified_row->settings);
 				$this->add_row_styles($modified_row->settings, $id);
-				$semantic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
+				$sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
 
-				switch ($semantic)
+				switch ($sematic)
 				{
 					case "header":
-						$semantic = 'header';
+						$sematic = 'header';
 						break;
 
 					case "footer":
-						$semantic = 'footer';
+						$sematic = 'footer';
 						break;
 
 					default:
-						$semantic = 'section';
+						$sematic = 'section';
 						break;
 				}
 
 				$data = array(
-					'semantic' 			=> $semantic,
+					'sematic' 			=> $sematic,
 					'id' 				=> $id,
 					'row_class' 		=> $row_class,
 					'componentArea' 	=> $componentArea,
@@ -690,19 +690,19 @@ class HelixUltimate
 				 * But if the predefined_header option is enabled then
 				 * render the predefined header instead of the header section.
 				 */
-				if ($semantic === 'header')
+				if ($sematic === 'header')
 				{
 					if (!$this->params->get('predefined_header'))
 					{
 						$output .= $rendered;
 					}
 				}
-				elseif ($semantic === 'footer')
+				elseif ($sematic === 'footer')
 				{
 					$output .= $rendered;
 				}
 				else
-				{
+				{	
 					$rendered_sections[] = $rendered;
 				}
 			}

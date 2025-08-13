@@ -8,7 +8,6 @@
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die();
@@ -55,7 +54,7 @@ if (!empty($template->params->get('layout'))) {
 extract($displayData);
 ?>
 
-<<?php echo $sematic; ?> id="<?php echo $id ?>" <?php echo $row_class ?>>
+<<?php echo $semantic; ?> id="<?php echo $id ?>" <?php echo $row_class ?>>
 
 	<?php if ($componentArea): ?>
 		<?php if (!$pagebuilder): ?>
@@ -114,4 +113,4 @@ extract($displayData);
 			})
 		</script>
 	<?php endif; ?>
-</<?php echo $sematic; ?>>
+</<?php echo $semantic; ?>>

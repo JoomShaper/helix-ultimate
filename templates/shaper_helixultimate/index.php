@@ -164,9 +164,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 		<div class="body-wrapper">
 			<div class="body-innerwrapper">
 				<?php echo $theme->getHeaderStyle(); ?>
-				<main id="sp-main">
-					<?php $theme->render_layout(); ?>
-				</main>
+				<?php $theme->render_layout(); ?>
 			</div>
 		</div>
 

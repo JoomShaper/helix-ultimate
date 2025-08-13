@@ -625,6 +625,8 @@ class HelixUltimate
 		$layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 		$layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 
+		$rendered_sections = [];
+
 		foreach ($rows as $key => $row)
 		{
 			$modified_row = $this->get_current_row($row);
@@ -649,27 +651,25 @@ class HelixUltimate
 				$id = (isset($modified_row->settings->name) && $modified_row->settings->name) ? 'sp-' . OutputFilter::stringURLSafe($modified_row->settings->name) : 'sp-section-' . ($key + 1);
 				$row_class = $this->build_row_class($modified_row->settings);
 				$this->add_row_styles($modified_row->settings, $id);
-				$sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
+				$semantic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
 
-				
-
-				switch ($sematic)
+				switch ($semantic)
 				{
 					case "header":
-						$sematic = 'header';
+						$semantic = 'header';
 						break;
 
 					case "footer":
-						$sematic = 'footer';
+						$semantic = 'footer';
 						break;
 
 					default:
-						$sematic = 'section';
+						$semantic = 'section';
 						break;
 				}
 
 				$data = array(
-					'sematic' 			=> $sematic,
+					'semantic' 			=> $semantic,
 					'id' 				=> $id,
 					'row_class' 		=> $row_class,
 					'componentArea' 	=> $componentArea,
@@ -682,24 +682,36 @@ class HelixUltimate
 				$layout_path  = JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 				$getLayout = new FileLayout('frontend.generate', $layout_path);
 
+				$rendered = $getLayout->render($data);
+
 				/**
 				 * If a section is named as `header` that means the section is for
 				 * the page header or site menu header.
 				 * But if the predefined_header option is enabled then
 				 * render the predefined header instead of the header section.
 				 */
-				if ($sematic === 'header')
+				if ($semantic === 'header')
 				{
 					if (!$this->params->get('predefined_header'))
 					{
-						$output .= $getLayout->render($data);
+						$output .= $rendered;
 					}
+				}
+				elseif ($semantic === 'footer')
+				{
+					$output .= $rendered;
 				}
 				else
 				{
-					$output .= $getLayout->render($data);
+					$rendered_sections[] = $rendered;
 				}
 			}
+		}
+
+		if (!empty($rendered_sections)) {
+        	$output = '<main id="sp-main">' . implode('', $rendered_sections) . '</main>' . $output;
+		} else {
+			$output .= implode('', $rendered_sections); 
 		}
 
 		return $output;

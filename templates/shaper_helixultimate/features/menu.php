@@ -63,10 +63,6 @@ class HelixUltimateFeatureMenu
 			$menu = new HelixultimateMenu('d-none d-lg-block', '');
 			$output .= $menu->render();
 			
-			if($offcanvas_position === 'right')
-			{
-				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div></a>';
-			}
 			$output .= '</nav>';
 		}
 		elseif ($menu_type === 'mega')

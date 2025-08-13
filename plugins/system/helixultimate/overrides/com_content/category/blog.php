@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
@@ -6,7 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
@@ -36,7 +37,11 @@ $columns = !empty((int) $this->params->get('num_columns')) ? (int) $this->params
 $template = HelixUltimate\Framework\Platform\Helper::loadTemplateData();
 $blogListType = $template->params->get('blog_list_type') ?? 'default';
 ?>
-<style>.article-list.grid {--columns: <?php echo $columns; ?>;}</style>
+<style>
+	.article-list.grid {
+		--columns: <?php echo $columns; ?>;
+	}
+</style>
 <div class="blog<?php echo $this->pageclass_sfx; ?>">
 	<?php if ($this->params->get('show_page_heading')) : ?>
 		<div class="page-header">
@@ -86,7 +91,7 @@ $blogListType = $template->params->get('blog_list_type') ?? 'default';
 				<div class="article<?php echo $item->state == 0 ? ' system-unpublished' : null; ?>"
 					itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 					<?php
-						$this->item = & $item;
+					$this->item = &$item;
 					$this->item->leading = true;
 					echo $this->loadTemplate('item');
 					?>
@@ -110,18 +115,15 @@ $blogListType = $template->params->get('blog_list_type') ?? 'default';
 		<?php if ($blogListType == 'masonry') : ?>
 			<?php
 			$numCols = (int) $this->params->get('num_columns', 1);
-			$orderDown = (int) $this->params->get('multi_column_order', 1); // Flip for Joomla logic
+			$orderDown = (int) $this->params->get('multi_column_order', 1); // 1 = down → across, 0 = across → down
 			$introcount = count($this->intro_items);
 			$numRows = ceil($introcount / $numCols);
 			?>
 			<div class="article-list grid">
 				<?php for ($row = 0; $row < $numRows; $row++) : ?>
 					<?php for ($col = 0; $col < $numCols; $col++) :
-						if ($orderDown) {
-							$index = $col * $numRows + $row;
-						} else {
-							$index = $row * $numCols + $col;
-						}
+						// Fixed index calculation
+						$index = $orderDown ? ($row + $col * $numRows) : ($row * $numCols + $col);
 						if ($index >= $introcount) {
 							continue;
 						}
@@ -136,44 +138,36 @@ $blogListType = $template->params->get('blog_list_type') ?? 'default';
 					<?php endfor; ?>
 				<?php endfor; ?>
 			</div>
-
 		<?php else : ?>
 			<div class="article-list">
-				<div class="row row-<?php echo $counter + 1; ?> <?php echo $blogClass; ?>">
-					<?php
-					$numCols = (int) $this->params->get('num_columns', 1);
-					$orderDown = (int) !$this->params->get('multi_column_order', 1); // 0 = across → down, 1 = down → across
+				<?php
+				$numCols = (int) $this->params->get('num_columns', 1);
+				$orderDown = (int) $this->params->get('multi_column_order', 1); // 1 = down → across, 0 = across → down
+				$introcount = count($this->intro_items);
+				$numRows = ceil($introcount / $numCols);
+				$columnClass = 'col-lg-' . (12 / $numCols);
 
-					// calculate number of rows
-					$introcount = count($this->intro_items);
-					$numRows = ceil($introcount / $numCols);
-
-					// Create rows and columns with direction support
-					for ($row = 0; $row < $numRows; $row++) : ?>
-						<div class="row">
-							<?php for ($col = 0; $col < $numCols; $col++) :
-								if ($orderDown) {
-									$index = $col * $numRows + $row;
-								} else {
-									$index = $row * $numCols + $col;
-								}
-								if ($index >= $introcount) {
-									continue;
-								}
-								$item = &$this->intro_items[$index];
-							?>
-								<div class="col-lg-<?php echo round(12 / Helper::SetColumn($numCols, 4)); ?>">
-									<div class="article" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-										<?php
-										$this->item = &$item;
-										echo $this->loadTemplate('item');
-										?>
-									</div>
+				for ($row = 0; $row < $numRows; $row++) : ?>
+					<div class="row">
+						<?php for ($col = 0; $col < $numCols; $col++) :
+							// Fixed index calculation
+							$index = $orderDown ? ($row * $numCols + $col) : ($row + $col * $numRows); 
+							if ($index >= $introcount) {
+								continue;
+							}
+							$item = &$this->intro_items[$index];
+						?>
+							<div class="<?php echo $columnClass; ?>">
+								<div class="article" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+									<?php
+									$this->item = &$item;
+									echo $this->loadTemplate('item');
+									?>
 								</div>
-							<?php endfor; ?>
-						</div>
-					<?php endfor; ?>
-				</div>
+							</div>
+						<?php endfor; ?>
+					</div>
+				<?php endfor; ?>
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>

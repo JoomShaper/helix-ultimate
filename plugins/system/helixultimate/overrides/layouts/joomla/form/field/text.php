@@ -80,12 +80,12 @@ $attributes = array(
 
 if(isset($addonBefore) && $addonBefore)
 {
-	$addonBeforeHtml = '<span class="input-group-addon">' . $addonBefore . '</span>';
+	$addonBeforeHtml = '<span class="input-group-addon">' . Text::_($addonBefore) . '</span>';
 }
 
 if(isset($addonBefore) && $addonBefore)
 {
-	$addonAfterHtml  = '<span class="input-group-addon">' . $addonAfter . '</span>';
+	$addonAfterHtml  = '<span class="input-group-addon">' . Text::_($addonAfter) . '</span>';
 }
 
 ?>

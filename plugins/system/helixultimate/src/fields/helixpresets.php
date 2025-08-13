@@ -137,9 +137,9 @@ class JFormFieldHelixpresets extends FormField
 		{
 			$elementName = (string) $child['name'];
 
-			if (!empty($json->$elementName))
+			if (isset($json->$elementName) && !empty($json->$elementName))
 			{
-				$json->$elementName = array_merge((array) $json->$elementName, [
+				$json->$elementName = array_merge((array) $json->$elementName ?? [], [
 					'default' => !empty($child['default']) ? (string) $child['default'] : ''
 				]);
 			}

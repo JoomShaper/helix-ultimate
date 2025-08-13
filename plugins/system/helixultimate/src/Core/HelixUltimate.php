@@ -626,6 +626,8 @@ class HelixUltimate
 		$layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 
 		$rendered_sections = [];
+		$header = '';
+		$footer = '';
 
 		foreach ($rows as $key => $row)
 		{
@@ -694,12 +696,12 @@ class HelixUltimate
 				{
 					if (!$this->params->get('predefined_header'))
 					{
-						$output .= $rendered;
+						$header .= $rendered;
 					}
 				}
 				elseif ($sematic === 'footer')
 				{
-					$output .= $rendered;
+					$footer .= $rendered;
 				}
 				else
 				{	
@@ -709,9 +711,7 @@ class HelixUltimate
 		}
 
 		if (!empty($rendered_sections)) {
-        	$output = '<main id="sp-main">' . implode('', $rendered_sections) . '</main>' . $output;
-		} else {
-			$output .= implode('', $rendered_sections); 
+        	$output = $header . '<main id="sp-main">' . implode('', $rendered_sections) . '</main>' . $footer;
 		}
 
 		return $output;

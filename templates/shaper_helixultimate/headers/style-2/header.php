@@ -36,7 +36,7 @@ $social 	= new HelixUltimateFeatureSocial($data->params);
  * Get related modules
  * The modules are mod_search
  */
-$searchModule = Helper::getSearchModule();
+$searchModule = Helper::getSearchModule('-header');
 ?>
 
 <?php if( $displayData->params->get('sticky_header')) { ?>

@@ -33,7 +33,7 @@ $menu    	= new HelixUltimateFeatureMenu($data->params);
  * Get related modules
  * The modules are mod_search
  */
-$searchModule = Helper::getSearchModule();
+$searchModule = Helper::getSearchModule('-header');
 
 ?>
 

@@ -8,7 +8,6 @@
 
 defined ('_JEXEC') or die();
 
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 ?>
 <div class="categories-list<?php echo $this->pageclass_sfx; ?> list-group">

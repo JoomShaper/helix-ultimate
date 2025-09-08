@@ -22,8 +22,9 @@ extract($displayData);
 // Initialize
 $app = Factory::getApplication();
 $doc = Factory::getDocument();
-$isOffline = $isOffline ?? false;
+$isOffline = $app->get('offline');
 $site_title = $site_title ?? $app->get('sitename');
+$comingsoonEnabled = (int) $params->get('comingsoon', 0) === 1;
 
 $twofactormethods	= [];
 if (version_compare(JVERSION, '4.2.0', '<')) {
@@ -74,7 +75,7 @@ $theme = new HelixUltimate;
 	?>
 </head>
 
-<body class="<?php echo $isOffline ? 'offline-mode' : 'coming-soon-mode'; ?>">
+<body class="<?php echo $isOffline ? 'offline-mode' : ($comingsoonEnabled ? 'coming-soon-mode' : ''); ?>">
 	<div class="container">
 
 		<jdoc:include type="message" />
@@ -104,8 +105,10 @@ $theme = new HelixUltimate;
 			<?php if (isset($login) && $login) : ?>
 				<?php echo $login_form; ?>
 			<?php endif; ?>
-
-		<?php else : ?>
+			
+		<?php endif; ?>
+		
+		<?php if (!$isOffline && $comingsoonEnabled) : ?>
 			<!-- COMING SOON CONTENT -->
 			<?php if ($params->get('comingsoon_logo')) : ?>
 				<img class="coming-soon-logo" src="<?php echo $params->get('comingsoon_logo'); ?>" alt="<?php echo htmlspecialchars($site_title ?? ''); ?>">

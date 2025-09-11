@@ -22,7 +22,7 @@ $JoomlaVersion = $version->getShortVersion();
 
 <div id="archive-items">
 	<?php foreach ($this->items as $i => $item) : ?>
-		<?php $info = $item->params->get('info_block_position', 0); ?>
+		<?php $info = $item->getParams()->get('info_block_position', 0); ?>
 		<div class="row<?php echo $i % 2; ?>" itemscope itemtype="https://schema.org/Article">
 			<div class="page-header">
 				<h2 itemprop="headline">

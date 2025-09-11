@@ -7,6 +7,7 @@
 */
 
 use HelixUltimate\Framework\Platform\Helper;
+use Joomla\CMS\Language\Text;
 
 defined ('JPATH_BASE') or die();
 
@@ -73,18 +74,18 @@ $attributes = array(
 	!empty($pattern) ? 'pattern="' . $pattern . '"' : '',
 
 	// @TODO add a proper string here!!!
-	!empty($validationtext) ? 'data-validation-text="' . $validationtext . '"' : '',
+	!empty($validationtext) ? 'data-validation-text="' . $this->escape(Text::_($validationtext)) . '"' : '',
 );
 
 
 if(isset($addonBefore) && $addonBefore)
 {
-	$addonBeforeHtml = '<span class="input-group-addon">' . $addonBefore . '</span>';
+	$addonBeforeHtml = '<span class="input-group-addon">' . Text::_($addonBefore) . '</span>';
 }
 
 if(isset($addonBefore) && $addonBefore)
 {
-	$addonAfterHtml  = '<span class="input-group-addon">' . $addonAfter . '</span>';
+	$addonAfterHtml  = '<span class="input-group-addon">' . Text::_($addonAfter) . '</span>';
 }
 
 ?>

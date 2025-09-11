@@ -11,7 +11,7 @@ defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Builders\Builder;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Helper class for building menu
@@ -44,7 +44,7 @@ class MenuBuilder extends Builder
 
 		try
 		{
-			$db 	= Factory::getDbo();
+			$db 	= Factory::getContainer()->get(DatabaseInterface::class);
 			$query 	= $db->getQuery(true);
 			$query->select('id, menutype, title')
 				->from($db->quoteName('#__menu_types'))
@@ -52,7 +52,7 @@ class MenuBuilder extends Builder
 			$db->setQuery($query);
 			$menu = $db->loadObjectList();
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			echo $e->getMessage();
 		}
@@ -89,7 +89,7 @@ class MenuBuilder extends Builder
 
 		try
 		{
-			$db 	= Factory::getDbo();
+			$db 	= Factory::getContainer()->get(DatabaseInterface::class);
 			$query 	= $db->getQuery(true);
 
 			/**
@@ -141,7 +141,7 @@ class MenuBuilder extends Builder
 		{
 			echo $e->getMessage();
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			echo $e->getMessage();
 

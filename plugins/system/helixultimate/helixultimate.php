@@ -24,15 +24,15 @@ use HelixUltimate\Framework\Platform\Platform;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 
 // Constant definition
@@ -183,7 +183,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 				$extra_query = 'joomshaper_email=' . urlencode($email);
 				$extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
 
-				$db = Factory::getDbo();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
 				$fields = array(
 					$db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
 					$db->quoteName('last_check_timestamp') . ' = 0'
@@ -257,7 +257,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 		}
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax'
-			&& $helix === 'ultimate' && !Factory::getUser()->id)
+			&& $helix === 'ultimate' && !Factory::getApplication()->getIdentity()->id)
 		{
 			// Redirect to the login page
 			$return = urlencode(base64_encode('index.php?option=com_ajax&helix=ultimate&id=' . $id));
@@ -265,7 +265,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 		}
 
 		/** If `helixreturn` query exists in the url then redirect to the return url. */
-		if (Factory::getUser()->id && !empty($helixReturn))
+		if (Factory::getApplication()->getIdentity()->id && !empty($helixReturn))
 		{
 			$this->app->redirect(base64_decode($helixReturn));
 		}
@@ -517,6 +517,41 @@ class PlgSystemHelixultimate extends CMSPlugin
 	 * @since	2.0.17
 	 */
 	private function sanitizeAssetsForJ5()
+	{
+		$doc = Factory::getDocument();
+		$wa = $doc->getWebAssetManager();
+
+		/**
+		 * Disable the atum specific styles and scripts.
+		 */
+		$assets = [
+			'style' => ['template.atum.base', 'template.atum', 'template.active', 'template.active.language', 'template.user', 'template.atum.ltr', 'template.atum.rtl'],
+			'script' => ['choicesjs', 'dragula']
+		];
+
+		foreach ($assets as $type => $names)
+		{
+			foreach ($names as $name)
+			{
+				if ($wa->assetExists($type, $name))
+				{
+					$methodName = 'disable' . ucfirst($type);
+					$wa->$methodName($name);
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * Sanitize the assets i.e. scripts and stylesheets before adding to the head.
+	 * This function is applicable for Joomla 4.
+	 * @note This method is using dynamically.
+	 *
+	 * @return	void
+	 * @since	2.2.0
+	 */
+	private function sanitizeAssetsForJ6()
 	{
 		$doc = Factory::getDocument();
 		$wa = $doc->getWebAssetManager();

@@ -12,10 +12,11 @@ use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
@@ -42,7 +43,7 @@ class Helper
 		if (isset($cache[$id])) {
 			return $cache[$id];
 		}
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$query->select(array('*'));
@@ -70,7 +71,7 @@ class Helper
 	{
 		try
 		{
-			$db 	= Factory::getDbo();
+			$db 	= Factory::getContainer()->get(DatabaseInterface::class);
 			$query 	= $db->getQuery(true);
 
 			$query->select('id')
@@ -128,7 +129,7 @@ class Helper
 
 		$data = json_encode($data);
 
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$fields = array($db->quoteName('params') . ' = ' . $db->quote($data));
@@ -151,7 +152,7 @@ class Helper
 	 */
 	public static function getVersion()
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$query->select(array('*'));
@@ -244,7 +245,7 @@ class Helper
 
 	private static function checkTemplateStyleValidity(int $id) : bool
 	{
-		$db 	= Factory::getDbo();
+		$db 	= Factory::getContainer()->get(DatabaseInterface::class);
 		$query 	= $db->getQuery(true);
 		$query->select('id')->from($db->quoteName('#__template_styles'))
 			->where($db->quoteName('id') . ' = ' . $id);
@@ -440,7 +441,7 @@ class Helper
 			return [];
 		}
 
-		$lang = Factory::getLanguage();
+		$lang = Factory::getApplication()->getLanguage();
 		$client = ApplicationHelper::getClientInfo(0);
 
 		if (!empty($modules))
@@ -524,7 +525,7 @@ class Helper
 
 		try
 		{
-			$db 	= Factory::getDbo();
+			$db 	= Factory::getContainer()->get(DatabaseInterface::class);
 			$query 	= $db->getQuery(true);
 			$query->select('id, title, parent_id, level')
 				->from($db->quoteName('#__menu'))
@@ -653,7 +654,7 @@ class Helper
 
 	private static function getMenuAliasById(int $pageId)
 	{
-		$db 	= Factory::getDbo();
+		$db 	= Factory::getContainer()->get(DatabaseInterface::class);
 		$query 	= $db->getQuery(true);
 		$query->select('alias')
 			->from($db->quoteName('#__menu'))
@@ -780,7 +781,7 @@ class Helper
 			$extra_query = 'joomshaper_email=' . urlencode($email);
 				$extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
 
-				$db = Factory::getDbo();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
 				$fields = array(
 					$db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
 					$db->quoteName('last_check_timestamp') . ' = 0'

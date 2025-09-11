@@ -8,9 +8,7 @@
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\HTML\HTMLHelper;
 use HelixUltimate\Framework\Platform\Settings;
 use HelixUltimate\Framework\Platform\Helper;
 /**

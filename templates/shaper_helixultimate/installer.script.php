@@ -1,8 +1,10 @@
 <?php
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Installer;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\Folder;
+
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
@@ -39,6 +41,8 @@ class plgSystemTmp_helixultInstallerScript
 			$name = (string) $plugin->attributes()->plugin;
 			$group = (string) $plugin->attributes()->group;
 			$installer = new Installer;
+			$installer->setDatabase(Factory::getContainer()->get(DatabaseInterface::class));
+			
 
 			$path = $src.'/plugins/'.$group;
 			if (Folder::exists($src.'/plugins/'.$group.'/'.$name))
@@ -88,6 +92,7 @@ class plgSystemTmp_helixultInstallerScript
 		if (Folder::exists( $template_path ))
 		{
 			$installer = new Installer;
+			$installer->setDatabase(Factory::getContainer()->get(DatabaseInterface::class));
 			$result = $installer->install($template_path);
 		}
 
@@ -105,7 +110,7 @@ class plgSystemTmp_helixultInstallerScript
 			{
 				$options_default = file_get_contents($template_path .'/options.json');
 
-				$db = Factory::getDBO();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
 				$query = $db->getQuery(true);
 				$fields = array(
 					$db->quoteName('params') . ' = ' . $db->quote($options_default)
@@ -137,7 +142,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function getTemplateInfoByName($name)
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__template_styles'));
@@ -160,7 +165,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function activeInstalledPlugin($name, $group)
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$fields = array(
 			$db->quoteName('enabled') . ' = 1'
@@ -188,7 +193,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function getPluginInfoByName($name, $group)
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__extensions'));

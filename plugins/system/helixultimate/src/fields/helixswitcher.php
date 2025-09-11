@@ -8,14 +8,9 @@
 
 defined('_JEXEC') or die();
 
-use HelixUltimate\Framework\Platform\Helper;
-use HelixUltimate\Framework\Platform\Settings;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 /**
  * Form field for helix presets.
  *

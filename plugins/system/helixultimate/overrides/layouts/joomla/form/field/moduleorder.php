@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined ('JPATH_BASE') or die();
+defined('_JEXEC') or die;
 
-use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
 
 extract($displayData);
 
@@ -42,30 +44,43 @@ extract($displayData);
  * @var   boolean  $hasValue        Has this field a value assigned?
  * @var   array    $options         Options available for this field.
  * @var   array    $inputType       Options available for this field.
- * @var   array    $spellcheck      Options available for this field.
  * @var   string   $accept          File types that are accepted.
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attributes for eg, data-*.
  */
 
-$attr  = '';
-
 // Initialize some field attributes.
-$attr .= !empty($class) ? ' class="module-ajax-ordering ' . $class . '"' : 'class="module-ajax-ordering"';
-$attr .= $disabled ? ' disabled' : '';
-$attr .= !empty($size) ? ' size="' . $size . '"' : '';
+$attributes['dataid'] = 'data-id="' . $id . '"';
+$attributes['data-url'] = 'data-url="index.php?option=com_modules&task=module.orderPosition&' . $token . '"';
+$attributes['data-element'] = 'data-element="parent_' . $id . '"';
+$attributes['data-ordering'] = 'data-ordering="' . $ordering . '"';
+$attributes['data-position-element'] = 'data-position-element="' . $element . '"';
+$attributes['data-client-id'] = 'data-client-id="' . $clientId . '"';
+$attributes['data-name'] = 'data-name="' . $name . '"';
+$attributes['data-module-id'] = 'data-module-id="' . $moduleId . '"';
 
-// Initialize JavaScript field attributes.
-$attr .= !empty($onchange) ? ' onchange="' . $onchange . '"' : '';
+if ($disabled) {
+    $attributes['disabled'] =  'disabled';
+}
 
-HTMLHelper::_('script', 'system/fields/moduleorder.js', array('version' => 'auto', 'relative' => true));
+if ($class) {
+    $attributes['class'] = 'class="' . $class . '"';
+}
+
+if ($size) {
+    $attributes['size'] = 'size="' . $size . '"';
+}
+
+if ($onchange) {
+    $attributes['onchange'] = 'onchange="' . $onchange . '"';
+}
+
+if ($dataAttribute) {
+    $attributes['dataAttribute'] = $dataAttribute;
+}
+
+Factory::getDocument()->getWebAssetManager()
+    ->useScript('webcomponent.field-module-order');
+
 ?>
-<div
-	id="parent_<?php echo $id; ?>"
-	<?php echo $attr; ?>
-	data-url="<?php echo 'index.php?option=com_modules&task=module.orderPosition&' . $token; ?>"
-	data-element="<?php echo 'parent_' . $id; ?>"
-	data-ordering="<?php echo $ordering; ?>"
-	data-position-element="<?php echo $element; ?>"
-	data-client-id="<?php echo $clientId; ?>"
-	data-name="<?php echo $name; ?>"
-	data-attr="<?php echo $attr; ?>">
-</div>
+<joomla-field-module-order <?php echo implode(' ', $attributes); ?>></joomla-field-module-order>

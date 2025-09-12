@@ -1,39 +1,60 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined('JPATH_BASE') or die;
+defined('_JEXEC') or die;
 
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Session\Session;
 
 extract($displayData);
 
-echo HTMLHelper::_(
-	'bootstrap.renderModal',
-	'versionsModal',
-	array(
-		'url'    => "index.php?option=com_contenthistory&amp;view=history&amp;layout=modal&amp;tmpl=component&amp;item_id="
-			. (int) $displayData['itemId']. "&amp;type_id=" . $displayData['typeId'] . "&amp;type_alias=" . $displayData['typeAlias']
-			. "&amp;" . Session::getFormToken() . "=1",
-		'title'  => $displayData['title'],
-		'height' => '100%',
-		'width'  => '100%',
-		'modalWidth'  => '80',
-		'bodyHeight'  => '60',
-		'footer' => '<a type="button" class="btn btn-secondary" data-dismiss="modal" aria-hidden="true">'
-			. Text::_("JLIB_HTML_BEHAVIOR_CLOSE") . '</a>'
-	)
-);
+/**
+ * Layout variables
+ * -----------------
+ * @var   string  $id
+ * @var   string  $itemId
+ * @var   string  $typeId
+ * @var   string  $typeAlias
+ * @var   string  $title
+ */
 
-$id = isset($displayData['id']) ? $displayData['id'] : '';
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+
+$wa->useScript('core')
+    ->useScript('joomla.dialog-autocreate')
+    ->useScript('webcomponent.toolbar-button');
+
+$url = 'index.php?' . http_build_query([
+    'option'                => 'com_contenthistory',
+    'view'                  => 'history',
+    'layout'                => 'modal',
+    'tmpl'                  => 'component',
+    'item_id'               => $itemId,
+    Session::getFormToken() => 1,
+]);
+
+
+$dialogOptions = [
+    'popupType'  => 'iframe',
+    'src'        => $url,
+    'textHeader' => $title ?? '',
+];
 
 ?>
-<button id="<?php echo $id; ?>" onclick="jQuery('#versionsModal').modal('show')" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" title="<?php echo $displayData['title']; ?>">
-	<span class="icon-archive" aria-hidden="true"></span><?php echo $displayData['title']; ?>
-</button>
+<joomla-toolbar-button id="toolbar-versions">
+    <button
+        class="btn btn-primary"
+        data-joomla-dialog="<?php echo $this->escape(json_encode($dialogOptions)); ?>"
+        type="button">
+        <span class="icon-code-branch" aria-hidden="true"></span>
+        <?php echo $title; ?>
+    </button>
+</joomla-toolbar-button>

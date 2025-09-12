@@ -33,6 +33,7 @@ final class HTMLOverride
 	 * @since 	2.0.2
 	 */
 	private static $overridePath = JPATH_ROOT . '/plugins/system/helixultimate/overrides';
+	private static $overridePathLegacy = JPATH_ROOT . '/plugins/system/helixultimate/overrides_legacy';
 
 	/**
 	 * The template override path from the template.
@@ -151,6 +152,11 @@ final class HTMLOverride
 		$callPath = $backtrace[0]['file'] ?? '';
 		$staticHtmlPath = self::parsePath(self::$htmlPath);
 		$staticOverridePath = self::parsePath(self::$overridePath);
+
+		if (JVERSION < 4) {
+			$staticOverridePath = self::parsePath(self::$overridePathLegacy);
+		}
+		
 		$templateOverrideUri = self::parsePath(self::$tmplOverridePath);
 		$webAssetUri = self::parsePath('/templates/{{template}}/joomla.asset.json');
 

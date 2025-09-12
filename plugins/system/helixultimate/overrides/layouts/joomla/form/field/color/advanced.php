@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-defined ('JPATH_BASE') or die();
+defined('_JEXEC') or die;
 
-use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
 
 extract($displayData);
 
@@ -33,7 +35,6 @@ extract($displayData);
  * @var   string   $pattern         Pattern (Reg Ex) of value of the form field.
  * @var   boolean  $readonly        Is this field read only?
  * @var   boolean  $repeat          Allows extensions to duplicate elements.
- * @var   boolean  $required        Is this field required?
  * @var   integer  $size            Size attribute of the input.
  * @var   boolean  $spellchec       Spellcheck state for the form field.
  * @var   string   $validate        Validation rules to apply.
@@ -42,55 +43,55 @@ extract($displayData);
  * @var   boolean  $hasValue        Has this field a value assigned?
  * @var   array    $options         Options available for this field.
  * @var   array    $checked         Is this field checked?
- * @var   array    $position        Is this field checked?
- * @var   array    $control         Is this field checked?
+ * @var   array    $position        Position of input.
+ * @var   string   $control         The forms control.
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attributes for eg, data-*.
  */
 
-if ($validate !== 'color' && in_array($format, array('rgb', 'rgba'), true))
-{
-	$alpha = ($format === 'rgba');
-	$placeholder = $alpha ? 'rgba(0, 0, 0, 0.5)' : 'rgb(0, 0, 0)';
-}
-else
-{
-	$placeholder = '#rrggbb';
+if ($validate !== 'color' && in_array($format, ['rgb', 'rgba'], true)) {
+    $alpha = ($format === 'rgba');
+    $placeholder = $alpha ? 'rgba(0, 0, 0, 0.5)' : 'rgb(0, 0, 0)';
+} else {
+    $placeholder = '#rrggbb';
 }
 
-$inputclass   = ($keywords && ! in_array($format, array('rgb', 'rgba'), true)) ? ' keywords' : ' ' . $format;
-$class        = ' class="form-control ' . trim('minicolors ' . $class) . ($validate === 'color' ? 'form-control ' : $inputclass) . '"';
+$inputclass   = ($keywords && ! in_array($format, ['rgb', 'rgba'], true)) ? ' keywords' : ' ' . $format;
+$class        = ' class="form-control ' . trim('minicolors ' . $class) . ($validate === 'color' ? '' : $inputclass) . '"';
 $control      = $control ? ' data-control="' . $control . '"' : '';
 $format       = $format ? ' data-format="' . $format . '"' : '';
 $keywords     = $keywords ? ' data-keywords="' . $keywords . '"' : '';
+$colors       = $colors ? ' data-colors="' . $colors . '"' : '';
 $validate     = $validate ? ' data-validate="' . $validate . '"' : '';
 $disabled     = $disabled ? ' disabled' : '';
 $readonly     = $readonly ? ' readonly' : '';
-$hint         = strlen($hint) ? ' placeholder="' . htmlspecialchars($hint ?? "", ENT_COMPAT, 'UTF-8') . '"' : ' placeholder="' . $placeholder . '"';
-$autocomplete = ! $autocomplete ? ' autocomplete="off"' : '';
+$hint         = strlen($hint) ? ' placeholder="' . $this->escape($hint) . '"' : ' placeholder="' . $placeholder . '"';
+$onchange     = $onchange ? ' onchange="' . $onchange . '"' : '';
+$required     = $required ? ' required' : '';
+$autocomplete = !empty($autocomplete) ? ' autocomplete="' . $autocomplete . '"' : '';
 
 // Force LTR input value in RTL, due to display issues with rgba/hex colors
 $direction = $lang->isRtl() ? ' dir="ltr" style="text-align:right"' : '';
 
-HTMLHelper::_('jquery.framework');
-HTMLHelper::_('script', 'vendor/minicolors/jquery.minicolors.min.js', array('version' => 'auto', 'relative' => true));
-HTMLHelper::_('stylesheet', 'vendor/minicolors/jquery.minicolors.css', array('version' => 'auto', 'relative' => true));
-HTMLHelper::_('script', 'system/fields/color-field-adv-init.min.js', array('version' => 'auto', 'relative' => true));
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->usePreset('minicolors')
+    ->useScript('field.color-adv');
 ?>
-<input
-	type="text"
-	name="<?php echo $name; ?>"
-	id="<?php echo $id; ?>"
-	value="<?php echo htmlspecialchars($color ?? "", ENT_COMPAT, 'UTF-8'); ?>"
-	<?php echo $hint; ?>
-	<?php echo $class; ?>
-	<?php echo $position; ?>
-	<?php echo $control; ?>
-	<?php echo $readonly; ?>
-	<?php echo $disabled; ?>
-	<?php echo $required; ?>
-	<?php echo $onchange; ?>
-	<?php echo $autocomplete; ?>
-	<?php echo $autofocus; ?>
-	<?php echo $format; ?>
-	<?php echo $keywords; ?>
-	<?php echo $direction; ?>
-	<?php echo $validate; ?>>
+<input type="text" name="<?php echo $name; ?>" id="<?php echo $id; ?>" value="<?php echo $this->escape($color); ?>"<?php
+    echo $hint,
+        $class,
+        $position,
+        $control,
+        $readonly,
+        $disabled,
+        $required,
+        $onchange,
+        $autocomplete,
+        $autofocus,
+        $format,
+        $keywords,
+        $direction,
+        $validate,
+        $dataAttribute;
+?>/>

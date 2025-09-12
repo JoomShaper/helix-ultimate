@@ -1,25 +1,28 @@
 <?php
-/**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
 
-defined ('JPATH_BASE') or die();
+/**
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2014 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Layout\LayoutHelper;
 
 $buttons = $displayData;
+
 ?>
-<div id="editor-xtd-buttons" role="toolbar" aria-label="<?php echo Text::_('JTOOLBAR'); ?>">
-	<?php if ($buttons) : ?>
-		<?php foreach ($buttons as $button) : ?>
-			<?php echo $this->sublayout('button', $button); ?>
-		<?php endforeach; ?>
-		<?php foreach ($buttons as $button) : ?>
-			<?php echo LayoutHelper::render('joomla.editors.buttons.modal', $button); ?>
-		<?php endforeach; ?>
-	<?php endif; ?>
+<div class="editor-xtd-buttons" role="toolbar" aria-label="<?php echo Text::_('JTOOLBAR'); ?>">
+    <?php if ($buttons) : ?>
+        <?php foreach ($buttons as $button) :
+            $options     = (array) $button->get('options');
+            $legacyModal = $button->get('modal');
+            ?>
+            <?php echo $this->sublayout('button', $button); ?>
+            <?php echo $legacyModal ? $this->sublayout('modal', $button) : ''; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>

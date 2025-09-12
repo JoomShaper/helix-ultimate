@@ -1,12 +1,14 @@
 <?php
-/**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
 
-defined ('JPATH_BASE') or die();
+/**
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
 
 extract($displayData);
 
@@ -44,8 +46,9 @@ extract($displayData);
  * @var   string   $animated        Is it animated.
  * @var   string   $active          Is it active.
  * @var   string   $max             The maximum value.
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attribute for eg, data-*
  */
-
 
 // Initialize some field attributes.
 $class = 'progress-bar ' . $class;
@@ -54,25 +57,26 @@ $class .= $active ? ' active' : '';
 $class = 'class="' . $class . '"';
 
 $value = (float) $value;
-$value = $value < $min ? $min : $value;
-$value = $value > $max ? $max : $value;
+$value = max($value, $min);
+$value = min($value, $max);
 
 $data = '';
 $data .= 'aria-valuemax="' . $max . '"';
 $data .= ' aria-valuemin="' . $min . '"';
 $data .= ' aria-valuenow="' . $value . '"';
 
-$attributes = array(
-	$class,
-	!empty($width) ? ' style="width:' . $width . ';"' : '',
-	$data
-);
+$attributes = [
+    $class,
+    !empty($width) ? ' style="width:' . $width . ';"' : '',
+    $data,
+    $dataAttribute,
+];
 
 $value = ((float) ($value - $min) * 100) / ($max - $min);
 ?>
 <div class="progress">
-	<div
-		role="progressbar"
-		<?php echo implode(' ', $attributes); ?>
-		style="width:<?php echo (string) $value; ?>%;<?php echo !empty($color) ? ' background-color:' . $color . ';' : ''; ?>"></div>
+    <div
+        role="progressbar"
+        <?php echo implode(' ', $attributes); ?>
+        style="width:<?php echo (string) $value; ?>%;<?php echo !empty($color) ? ' background-color:' . $color . ';' : ''; ?>"></div>
 </div>

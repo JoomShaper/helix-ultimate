@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
@@ -32,6 +33,7 @@ $afterDisplayContent = trim(implode("\n", $results));
 $htag    = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 
 ?>
+
 <div class="com-content-category-blog blog">
     <?php if ($this->params->get('show_page_heading')) : ?>
         <div class="page-header">

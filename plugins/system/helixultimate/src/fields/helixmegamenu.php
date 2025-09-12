@@ -11,7 +11,8 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
-
+use Joomla\CMS\Menu\SiteMenu;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Form field for Helix mega menu
@@ -81,7 +82,7 @@ class JFormFieldHelixmegamenu extends FormField
 	 */
 	private function getModuleNameById($id = 'all')
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$query->select($db->quoteName(array('id','title')));
@@ -153,7 +154,7 @@ class JFormFieldHelixmegamenu extends FormField
 	 */
 	private function menuItems()
 	{
-		$menus = new \JMenuSite;
+		$menus = new SiteMenu;
 		$menus = $menus->getMenu();
 		$new = array();
 

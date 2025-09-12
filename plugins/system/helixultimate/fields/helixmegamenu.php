@@ -11,7 +11,7 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
-
+use Joomla\CMS\Menu\SiteMenu;
 
 /**
  * Form field for Helix mega menu
@@ -154,7 +154,7 @@ class JFormFieldHelixmegamenu extends FormField
 	 */
 	private function menuItems()
 	{
-		$menus = new \JMenuSite;
+		$menus = new SiteMenu;
 		$menus = $menus->getMenu();
 		$new = array();
 

@@ -16,7 +16,7 @@
   <updateservers>
     <server type="extension" 
       priority="1" 
-      name="System - Helix Ultimate Framework">http://www.joomshaper.com/updates/plg-system-helixultimate.xml</server>
+      name="System - Helix Ultimate Framework">https://www.joomshaper.com/updates/plg-system-helixultimate.xml</server>
   </updateservers>
 
   <languages>

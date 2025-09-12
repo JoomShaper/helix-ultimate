@@ -15,13 +15,12 @@ use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
@@ -625,6 +624,10 @@ class HelixUltimate
 		$layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 		$layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 
+		$rendered_sections = [];
+		$header = '';
+		$footer = '';
+
 		foreach ($rows as $key => $row)
 		{
 			$modified_row = $this->get_current_row($row);
@@ -650,8 +653,6 @@ class HelixUltimate
 				$row_class = $this->build_row_class($modified_row->settings);
 				$this->add_row_styles($modified_row->settings, $id);
 				$sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
-
-				
 
 				switch ($sematic)
 				{
@@ -682,6 +683,8 @@ class HelixUltimate
 				$layout_path  = JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 				$getLayout = new FileLayout('frontend.generate', $layout_path);
 
+				$rendered = $getLayout->render($data);
+
 				/**
 				 * If a section is named as `header` that means the section is for
 				 * the page header or site menu header.
@@ -692,14 +695,22 @@ class HelixUltimate
 				{
 					if (!$this->params->get('predefined_header'))
 					{
-						$output .= $getLayout->render($data);
+						$header .= $rendered;
 					}
 				}
-				else
+				elseif ($sematic === 'footer')
 				{
-					$output .= $getLayout->render($data);
+					$footer .= $rendered;
+				}
+				else
+				{	
+					$rendered_sections[] = $rendered;
 				}
 			}
+		}
+
+		if (!empty($rendered_sections)) {
+        	$output = $header . '<main id="sp-main">' . implode('', $rendered_sections) . '</main>' . $footer;
 		}
 
 		return $output;

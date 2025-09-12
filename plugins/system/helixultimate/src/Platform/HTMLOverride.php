@@ -8,8 +8,7 @@
 
 namespace HelixUltimate\Framework\Platform;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\Path;
 
 /**
  * Static class for managing the overrides.

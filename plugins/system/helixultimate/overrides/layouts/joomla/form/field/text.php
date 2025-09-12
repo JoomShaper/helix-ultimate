@@ -10,8 +10,9 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Language\Text;
+
 
 extract($displayData);
 

@@ -12,9 +12,9 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Session\Session;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\MediaHelper;
 
@@ -225,7 +225,7 @@ class Media
 
 	public static function uploadMedia()
 	{
-		$user   = Factory::getUser();
+		$user   = Factory::getApplication()->getIdentity();
 		$input 	= Factory::getApplication()->input;
 		$dir 	= $input->post->get('path', '/images', 'PATH');
 		$index 	= $input->post->get('index', '', 'STRING');

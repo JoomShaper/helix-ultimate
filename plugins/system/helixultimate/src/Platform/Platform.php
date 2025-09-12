@@ -107,7 +107,7 @@ class Platform
 	 */
 	public function __construct()
 	{
-		$this->user = Factory::getUser();
+		$this->user = Factory::getApplication()->getIdentity();
 		$this->app  = Factory::getApplication();
 		$input 		= $this->app->input;
 

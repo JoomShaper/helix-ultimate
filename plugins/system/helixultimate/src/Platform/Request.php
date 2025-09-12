@@ -634,7 +634,7 @@ class Request
 		$template_path = JPATH_SITE . '/templates/' . $template . '/webfonts/webfonts.json';
 		$plugin_path   = JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
 
-		if (File::exists($template_path))
+		if (\file_exists($template_path))
 		{
 			// $json = File::read($template_path);
 			$json = file_get_contents($template_path);

@@ -144,7 +144,7 @@ class Blog
 							$sources = Image::createThumbs($dest, $sizes, $folder, $base_name, $ext, $image_quality);
 						}
 
-						if (File::exists(JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))
+						if (\file_exists(JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))
 						{
 							$src = 'images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext;
 						}
@@ -200,7 +200,7 @@ class Blog
 
 		$path = JPATH_ROOT . '/' . $src;
 
-		if (File::exists($path))
+		if (\file_exists($path))
 		{
 			if (File::delete($path))
 			{
@@ -210,22 +210,22 @@ class Blog
 				$medium 	= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_medium.' . File::getExt($basename);
 				$large 		= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_large.' . File::getExt($basename);
 
-				if (File::exists($small))
+				if (\file_exists($small))
 				{
 					File::delete($small);
 				}
 
-				if (File::exists($thumbnail))
+				if (\file_exists($thumbnail))
 				{
 					File::delete($thumbnail);
 				}
 
-				if (File::exists($medium))
+				if (\file_exists($medium))
 				{
-					File::delete($medium);
+					\file_exists($medium);
 				}
 
-				if (File::exists($large))
+				if (\file_exists($large))
 				{
 					File::delete($large);
 				}

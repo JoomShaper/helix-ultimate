@@ -47,7 +47,7 @@ if (isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != '
 		$intro_image = $attribs->helix_ultimate_image;
 		$basename = basename($intro_image);
 		$list_image = JPATH_ROOT . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . File::getExt($basename);
-		if (File::exists($list_image)) 
+		if (\file_exists($list_image)) 
 		{
 			$intro_image = Uri::root(true) . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . File::getExt($basename);
 		}

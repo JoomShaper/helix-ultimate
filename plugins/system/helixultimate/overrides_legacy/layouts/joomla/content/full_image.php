@@ -33,7 +33,7 @@ if(isset($attribs->helix_ultimate_image) && $attribs->helix_ultimate_image != ''
 		$basename = basename($full_image);
 		$details_image = JPATH_ROOT . '/' . dirname($full_image) . '/' . File::stripExt($basename) . '_'. $blog_image .'.' . File::getExt($basename);
 
-		if(File::exists($details_image))
+		if(\file_exists($details_image))
 		{
 			$full_image = Uri::root(true) . '/' . dirname($full_image) . '/' . File::stripExt($basename) . '_'. $blog_image .'.' . File::getExt($basename);
 		}

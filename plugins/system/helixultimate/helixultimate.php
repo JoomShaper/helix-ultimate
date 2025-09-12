@@ -143,7 +143,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 			$doc->addStyleSheet($plg_path . '/assets/css/admin/blog-options.css');
 			$doc->addScript($plg_path . '/assets/js/admin/blog-options.js', ['version' => 'auto', 'relative' => false]);
 
-			if (File::exists($tpl_path . '/blog-options.xml'))
+			if (\file_exists($tpl_path . '/blog-options.xml'))
 			{
 				Form::addFormPath($tpl_path);
 			}

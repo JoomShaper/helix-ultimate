@@ -47,7 +47,7 @@ class JFormFieldHelixOffcanvas extends FormField
 
 		$html = '';
 
-		if (Folder::exists($offCanvasDir))
+		if (is_dir($offCanvasDir))
 		{
 			$offCanvases = Folder::folders($offCanvasDir);
 

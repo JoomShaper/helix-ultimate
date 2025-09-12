@@ -456,11 +456,11 @@ class HelixUltimate
 				$file_path .= '.' . $folder;
 			}
 
-			if (File::exists($file_path))
+			if (\file_exists($file_path))
 			{
 				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
 			}
-			elseif (File::exists($file))
+			elseif (\file_exists($file))
 			{
 				$file_url = Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder;
 			}
@@ -533,7 +533,7 @@ class HelixUltimate
 	{
 		$folder_path = JPATH_THEMES . '/' . $this->template->template . '/features';
 
-		if (Folder::exists($folder_path))
+		if (is_dir($folder_path))
 		{
 			$files = Folder::files($folder_path, '.php');
 
@@ -1608,7 +1608,7 @@ class HelixUltimate
 
 		$tmpl_file_location = JPATH_ROOT . '/templates/' . $template . '/headers';
 
-		if (File::exists($tmpl_file_location . '/' . $header_style . '/header.php'))
+		if (\file_exists($tmpl_file_location . '/' . $header_style . '/header.php'))
 		{
 			$getLayout = new FileLayout($header_style . '.header', $tmpl_file_location);
 

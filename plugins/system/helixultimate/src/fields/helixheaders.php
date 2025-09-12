@@ -47,7 +47,7 @@ class JFormFieldHelixheaders extends FormField
 		$html = '';
 		$fallbackRegex = "@^style-(\d+)@i";
 
-		if (Folder::exists($headers_src))
+		if (is_dir($headers_src))
 		{
 			$headers = Folder::folders($headers_src);
 

@@ -63,7 +63,7 @@ if (!empty($this->item->featured)) : ?>
     <span class="badge bg-danger featured-article-badge"><?php echo Text::_('HELIX_ULTIMATE_FEATURED'); ?></span>
 <?php endif; ?>
 
-<div class="articleBody">
+<div class="item-content articleBody">
     <?php if ($isUnpublished) : ?>
         <div class="system-unpublished">
     <?php endif; ?>

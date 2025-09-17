@@ -23,10 +23,10 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
     <?php $leadingcount = 0; ?>
     <?php if (!empty($this->lead_items)) : ?>
         <div class="article-list">
-            <div class="items-leading">
+            <div class="blog-items items-leading <?php echo $this->params->get('blog_class_leading'); ?>">
                 <?php foreach ($this->lead_items as &$item) : ?>
                     <div class="leading-<?php echo (int) $leadingcount; ?>">
-                        <div class="article" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="blog-item article" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
                             <?php
                                 $this->item = &$item;
                                 $this->item->leading = true;
@@ -54,7 +54,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
             <div class="row row-<?php echo $counter + 1; ?> <?php echo $blogClass; ?>">
                 <?php foreach ($this->intro_items as $key => &$item) : ?>
                     <div class="col-lg-<?php echo (int) round(12 / Helper::SetColumn($numColumns, 3)); ?>">
-                        <div class="article" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+                        <div class="article blog-items <?php echo $blogClass; ?>" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
                             <?php
                                 $this->item = &$item;
                                 echo $this->loadTemplate('item');
@@ -68,7 +68,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
     <?php endif; ?>
 
     <?php if (!empty($this->link_items)) : ?>
-        <div class="articles-more mb-4">
+        <div class="items-more articles-more mb-4">
             <?php echo $this->loadTemplate('links'); ?>
         </div>
     <?php endif; ?>

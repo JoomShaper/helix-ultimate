@@ -132,7 +132,6 @@ $this->form->setValue('helix_ultimate_video',           'attribs', !empty($attri
                 <?php echo HTMLHelper::_('uitab.endTab'); ?>
             <?php endif; ?>
 
-            <?php // Template/Article params pane (advanced options) ?>
             <?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
 
             <?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'publishing', Text::_('COM_CONTENT_PUBLISHING')); ?>

@@ -49,6 +49,11 @@ $this->form->setValue('helix_ultimate_audio',           'attribs', !empty($attri
 $this->form->setValue('helix_ultimate_gallery',         'attribs', !empty($attribs->helix_ultimate_gallery) ? $attribs->helix_ultimate_gallery : '');
 $this->form->setValue('helix_ultimate_video',           'attribs', !empty($attribs->helix_ultimate_video) ? $attribs->helix_ultimate_video : '');
 
+// This checks if the editor config options have ever been saved. If they haven't they will fall back to the original settings.
+if (!$params->exists('show_publishing_options')) {
+	$params->set('show_urls_images_frontend', '0');
+}
+
 ?>
 <div class="hu-content-edit edit item-page<?php echo $this->pageclass_sfx ? ' ' . $this->pageclass_sfx : ''; ?>">
     <?php if ($params->get('show_page_heading')): ?>

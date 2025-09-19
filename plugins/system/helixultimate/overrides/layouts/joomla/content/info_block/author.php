@@ -14,7 +14,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 ?>
-<dd class="createdby">
+<span class="createdby">
     <span class="icon-user icon-fw" aria-hidden="true"></span>
     <?php $author = ($displayData['item']->created_by_alias ?: $displayData['item']->author); ?>
     <?php $author = '<span>' . $author . '</span>'; ?>
@@ -23,4 +23,4 @@ use Joomla\CMS\Language\Text;
     <?php else : ?>
         <?php echo Text::sprintf('COM_CONTENT_WRITTEN_BY', $author); ?>
     <?php endif; ?>
-</dd>
+</span>

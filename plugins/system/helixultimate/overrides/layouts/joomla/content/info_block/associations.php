@@ -19,7 +19,7 @@ use Joomla\CMS\Router\Route;
 <?php if (!empty($displayData['item']->associations)) : ?>
     <?php $associations = $displayData['item']->associations; ?>
 
-<dd class="association">
+<span class="association">
     <span class="icon-globe icon-fw" aria-hidden="true"></span>
     <?php echo Text::_('JASSOCIATIONS'); ?>
     <?php foreach ($associations as $association) : ?>
@@ -33,5 +33,5 @@ use Joomla\CMS\Router\Route;
             </a>
         <?php endif; ?>
     <?php endforeach; ?>
-</dd>
+</span>
 <?php endif; ?>

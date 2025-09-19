@@ -94,6 +94,7 @@ $params = $this->params;
 
                         <?php if ($params->get('show_publish_date')) : ?>
                             <span class="published">
+                                <span class="icon-calendar-alt" aria-hidden="true"></span>
                                 <time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
                                     <?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
                                 </time>
@@ -103,6 +104,7 @@ $params = $this->params;
                         <?php if ($info == 0) : ?>
                             <?php if ($params->get('show_modify_date')) : ?>
                                 <span class="modified">
+                                    <span class="icon-calendar-alt" aria-hidden="true"></span>
                                     <time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
                                         <?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
                                     </time>
@@ -110,6 +112,7 @@ $params = $this->params;
                             <?php endif; ?>
                             <?php if ($params->get('show_create_date')) : ?>
                                 <span class="create">
+                                    <span class="icon-calendar-alt" aria-hidden="true"></span>
                                     <time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
                                         <?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC3'))); ?>
                                     </time>
@@ -117,6 +120,7 @@ $params = $this->params;
                             <?php endif; ?>
                             <?php if ($params->get('show_hits')) : ?>
                                 <span class="hits">
+                                    <span class="icon-eye" aria-hidden="true"></span>
                                     <meta content="UserPageVisits:<?php echo (int) $item->hits; ?>" itemprop="interactionCount">
                                     <?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', (int) $item->hits); ?>
                                 </span>
@@ -168,6 +172,7 @@ $params = $this->params;
                         <?php if ($params->get('show_publish_date')) : ?>
 
                             <span class="published">
+                                <span class="icon-calendar-alt" aria-hidden="true"></span>
                                 <time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
                                     <?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
                                 </time>
@@ -177,8 +182,8 @@ $params = $this->params;
                     <?php endif; ?>
 
                     <?php if ($params->get('show_create_date')) : ?>
-
                         <span class="create">
+                            <span class="icon-calendar-alt" aria-hidden="true"></span>
                             <time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
                                 <?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC3'))); ?>
                             </time>
@@ -188,6 +193,7 @@ $params = $this->params;
 
                     <?php if ($params->get('show_modify_date')) : ?>
                         <span class="modified">
+                            <span class="icon-calendar-alt" aria-hidden="true"></span>
                             <time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
                                 <?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
                             </time>
@@ -196,6 +202,7 @@ $params = $this->params;
 
                     <?php if ($params->get('show_hits')) : ?>
                         <span class="hits">
+                            <span class="icon-eye" aria-hidden="true"></span>
                             <meta content="UserPageVisits:<?php echo (int) $item->hits; ?>" itemprop="interactionCount">
                             <?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', (int) $item->hits); ?>
                         </span>

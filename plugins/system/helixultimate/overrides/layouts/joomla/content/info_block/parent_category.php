@@ -16,7 +16,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\Component\Content\Site\Helper\RouteHelper;
 
 ?>
-<dd class="parent-category-name">
+<span class="parent-category-name">
     <?php echo LayoutHelper::render('joomla.icon.iconclass', ['icon' => 'icon-folder icon-fw']); ?>
     <?php $title = $this->escape($displayData['item']->parent_title); ?>
     <?php if ($displayData['params']->get('link_parent_category') && !empty($displayData['item']->parent_id)) : ?>
@@ -28,4 +28,4 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
     <?php else : ?>
         <?php echo Text::sprintf('COM_CONTENT_PARENT', '<span>' . $title . '</span>'); ?>
     <?php endif; ?>
-</dd>
+</span>

@@ -9,7 +9,6 @@
 defined ('_JEXEC') or die();
 
 use Joomla\CMS\Layout\LayoutHelper;
-use Joomla\CMS\Language\Text;
 
 // Add strings for translations in Javascript.
 Text::script('JGLOBAL_EXPAND_CATEGORIES');

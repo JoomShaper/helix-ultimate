@@ -47,4 +47,4 @@ if ($item->parent && $showToggler) {
 }
 
 ?>
-<span class="mod-menu__heading nav-header nav-header <?php echo $anchor_css; ?>"<?php echo $title; ?><?php echo $rel; ?>><?php echo $linktype; ?></span>
+<span class="mod-menu__heading nav-header <?php echo $anchor_css; ?>"<?php echo $title; ?><?php echo $rel; ?>><?php echo $linktype; ?></span>

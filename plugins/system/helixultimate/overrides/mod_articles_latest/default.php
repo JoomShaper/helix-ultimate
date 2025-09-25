@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\HTML\HTMLHelper;
+
 if (!$list) {
     return;
 }
@@ -20,6 +22,7 @@ if (!$list) {
             <span itemprop="name">
                 <?php echo $item->title; ?>
             </span>
+            <span><?php echo HTMLHelper::_('date', $item->created, 'DATE_FORMAT_LC3'); ?></span>
         </a>
     </li>
 <?php endforeach; ?>

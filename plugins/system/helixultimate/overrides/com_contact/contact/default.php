@@ -25,7 +25,7 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
 
 ?>
 
-<div class="com-contact contact">
+<div class="com-contact contact" itemscope itemtype="https://schema.org/Person">
     <?php if ($tparams->get('show_page_heading')) : ?>
         <h1>
             <?php echo $this->escape($tparams->get('page_heading')); ?>
@@ -71,13 +71,13 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
     <?php echo $this->item->event->afterDisplayTitle; ?>
 
     <?php if ($tparams->get('show_contact_list') && count($this->contacts) > 1) : ?>
-        <form action="#" method="get" name="selectForm" id="selectForm">
+        <form action="#" method="get" name="selectForm" id="selectForm" class="mb-4">
             <label for="select_contact"><?php echo Text::_('COM_CONTACT_SELECT_CONTACT'); ?></label>
             <?php echo HTMLHelper::_(
                 'select.genericlist',
                 $this->contacts,
                 'select_contact',
-                'class="form-select" onchange="document.location.href = this.value"',
+                'class="form-select inputbox" onchange="document.location.href = this.value"',
                 'link',
                 'name',
                 $this->item->link
@@ -100,7 +100,7 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
             <?php echo '<' . $htag2 . '>' . Text::_('COM_CONTACT_DETAILS') . '</' . $htag2 . '>'; ?>
 
             <?php if ($this->item->image && $tparams->get('show_image')) : ?>
-                <div class="com-contact__thumbnail thumbnail">
+                <div class="com-contact__thumbnail thumbnail float-end">
                     <?php echo LayoutHelper::render(
                         'joomla.html.image',
                         [
@@ -112,21 +112,24 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
             <?php endif; ?>
 
             <?php if ($this->item->con_position && $tparams->get('show_position')) : ?>
-                <dl class="com-contact__position contact-position dl-horizontal">
-                    <dt><?php echo Text::_('COM_CONTACT_POSITION'); ?>:</dt>
-                    <dd>
+                <div class="contact-position d-flex mb-3">
+						<div class="me-2 ">
+                            <strong><?php echo Text::_('COM_CONTACT_POSITION'); ?>:</strong>
+                        </div>
+                    <div itemprop="jobTitle">
                         <?php echo $this->item->con_position; ?>
-                    </dd>
-                </dl>
+                    </div>
+                </div>
             <?php endif; ?>
 
-            <div class="com-contact__info">
+            <div class="com-contact__info contact-info">
                 <?php echo $this->loadTemplate('address'); ?>
-
                 <?php if ($tparams->get('allow_vcard')) : ?>
+                	<div class="mb-4">
                     <?php echo Text::_('COM_CONTACT_DOWNLOAD_INFORMATION_AS'); ?>
                     <a href="<?php echo Route::_('index.php?option=com_contact&view=contact&catid=' . $this->item->catslug . '&id=' . $this->item->slug . '&format=vcf'); ?>">
                     <?php echo Text::_('COM_CONTACT_VCARD'); ?></a>
+                </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -165,8 +168,8 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
         <?php echo '<' . $htag2 . '>' . Text::_('COM_CONTACT_OTHER_INFORMATION') . '</' . $htag2 . '>'; ?>
 
         <div class="com-contact__miscinfo contact-miscinfo">
-            <dl class="dl-horizontal">
-                <dt>
+			<div class="d-flex">
+				<div class="me-2">
                     <?php if (!$this->params->get('marker_misc')) : ?>
                         <span class="icon-info-circle" aria-hidden="true"></span>
                         <span class="visually-hidden"><?php echo Text::_('COM_CONTACT_OTHER_INFORMATION'); ?></span>
@@ -175,13 +178,11 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
                             <?php echo $this->params->get('marker_misc'); ?>
                         </span>
                     <?php endif; ?>
-                </dt>
-                <dd>
-                    <span class="contact-misc">
+				</div>
+				<div class="contact-misc">
                         <?php echo $this->item->misc; ?>
-                    </span>
-                </dd>
-            </dl>
+				</div>
+			</div>
         </div>
     <?php endif; ?>
     <?php echo $this->item->event->afterDisplayContent; ?>

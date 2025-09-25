@@ -1,3 +1,5 @@
+const hasChosen = typeof jQuery.fn.chosen === 'function';
+
 var megaMenu = {
 	run() {
 		this.declareDOMVariables();
@@ -46,10 +48,17 @@ var megaMenu = {
 	},
 
 	initChosen() {
-		$('select[data-husearch]').chosen({
-			width: '100%',
-			allow_single_deselect: true,
-			placeholder_text_single: Joomla.Text._('HELIX_ULTIMATE_SELECT_ICON_LABEL'),
+		const $select = jQuery('select[data-husearch]');
+		if (!hasChosen) return;
+
+		$select.each(function () {
+		  const $s = jQuery(this);
+		  if ($s.data('chosen')) $s.chosen('destroy');
+		  $s.chosen({
+		    width: '100%',
+		    allow_single_deselect: true,
+		    placeholder_text_single: Joomla.Text._('HELIX_ULTIMATE_SELECT_ICON_LABEL'),
+		  });
 		});
 	},
 

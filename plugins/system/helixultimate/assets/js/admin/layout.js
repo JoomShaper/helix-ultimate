@@ -6,6 +6,9 @@
  */
 
 jQuery(function ($) {
+
+	const hasChosen = typeof jQuery.fn.chosen === 'function';
+
 	/** Show/hide the column layout */
 	$(document).on('click', '.hu-add-columns', function (event) {
 		event.preventDefault();
@@ -135,20 +138,18 @@ jQuery(function ($) {
 		$parent = $(this).closest('.hu-layout-section');
 		$parent.addClass('row-active');
 
-		$('#hu-row-settings')
-			.find('select.hu-input')
-			.each(function () {
-				$(this).chosen('destroy');
-			});
+		if (hasChosen) {
+  			$('#hu-row-settings').find('select.hu-input').chosen('destroy');
+		}
 
 		var $clone = $('#hu-row-settings').clone(true);
 		$clone.find('.hu-input-color').each(function () {
 			$(this).addClass('minicolors');
 		});
 
-		$clone.find('select.hu-input').each(function () {
-			$(this).chosen({ width: '100%' });
-		});
+		if (hasChosen) {
+  			$clone.find('select.hu-input').chosen({ width: '100%' });
+		}
 
 		$clone = $('.hu-options-modal-inner').html($clone.removeAttr('id').addClass('hu-options-modal-content'));
 
@@ -186,12 +187,9 @@ jQuery(function ($) {
 		$parent = $(this).closest('.hu-layout-column');
 		$parent.addClass('column-active');
 
-		$('#hu-column-settings')
-			.find('select.hu-input')
-			.each(function () {
-				$(this).chosen('destroy');
-			});
-
+		if (hasChosen) {
+  			$('#hu-column-settings').find('select.hu-input').chosen('destroy');
+		}
 		var $clone = $('#hu-column-settings').clone(true);
 		$clone.find('.hu-input-color').each(function () {
 			$(this).addClass('minicolors');
@@ -221,24 +219,26 @@ jQuery(function ($) {
 			}
 		});
 
-		$clone.find('select.hu-input').each(function () {
-			$(this).chosen({ width: '100%' });
-		});
+		if (hasChosen) {
+  			$clone.find('select.hu-input').chosen({ width: '100%' });
+		}
 
 		$clone.initColorPicker();
 
-		var $chosenSelect = $('select[data-attrname="name"]').chosen();
-		// Add change event listener to the Chosen select
-		$chosenSelect.on('change', function () {
-			var selectedValue = $(this).val();
+		if (hasChosen) {
+			var $chosenSelect = $('select[data-attrname="name"]').chosen();
+			// Add change event listener to the Chosen select
+			$chosenSelect.on('change', function () {
+				var selectedValue = $(this).val();
 
-			if (selectedValue == 'right' || selectedValue == 'left') {
-				$(this).closest('.control-group').next().show();
-			} else {
-				$(this).closest('.control-group').next().hide();
-				$(this).closest('.control-group').next().find('.hu-input-sticky_position').prop('checked', false);
-			}
-		});
+				if (selectedValue == 'right' || selectedValue == 'left') {
+					$(this).closest('.control-group').next().show();
+				} else {
+					$(this).closest('.control-group').next().hide();
+					$(this).closest('.control-group').next().find('.hu-input-sticky_position').prop('checked', false);
+				}
+			});
+		}
 	});
 
 	$('.hu-input-column_type').change(function (event) {

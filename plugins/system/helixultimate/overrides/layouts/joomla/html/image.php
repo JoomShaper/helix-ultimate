@@ -1,20 +1,12 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   (C) 2021 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
 
-/**
- * Layout variables
- * -----------------
- * @var   array  $displayData  Array with all the given attributes for the image element.
- *                             Eg: src, class, alt, width, height, loading, decoding, style, data-*
- *                             Note: only the alt and src attributes are escaped by default!
- */
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;

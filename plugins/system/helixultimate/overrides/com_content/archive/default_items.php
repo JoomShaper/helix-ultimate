@@ -21,7 +21,7 @@ $params = $this->params;
 <div id="archive-items" class="com-content-archive__items">
     <?php foreach ($this->items as $i => $item) : ?>
         <?php
-        // In J6 $item->params is a Registry; either $item->params->get(...) or $item->getParams()->get(...) works.
+        
         $info       = $item->params->get('info_block_position', 0);
         $useDefList = (
             $params->get('show_modify_date')

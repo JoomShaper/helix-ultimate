@@ -128,7 +128,7 @@ jQuery(function($) {
 				'helix' : 'ultimate',
 				'request' : 'task',
 				'action' : 'remove-blog-image',
-				'src'	 : $parent.find('.sp-image-upload-wrapper').find('>img').data('src'),
+				'src'	 : $parent.find('.hu-image-upload-wrapper').find('>img').data('src'),
 				'format' : 'json'
 			};
 

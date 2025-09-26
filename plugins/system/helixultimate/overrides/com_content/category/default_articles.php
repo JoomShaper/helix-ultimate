@@ -65,7 +65,7 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 
 <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm" class="com-content-category__articles">
     <?php if ($this->params->get('filter_field') !== 'hide') : ?>
-        <div class="com-content__filter btn-group">
+        <div class="com-content__filter btn-group mb-4">
             <?php if ($this->params->get('filter_field') === 'tag') : ?>
                 <span class="visually-hidden">
                     <label class="filter-search-lbl" for="filter-search">
@@ -324,7 +324,7 @@ $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
     <?php // Add pagination links ?>
     <?php if (!empty($this->items)) : ?>
         <?php if (($this->params->def('show_pagination', 2) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-            <div class="com-content-category__navigation w-100">
+            <div class="com-content-category__navigation w-100 mt-4">
                 <?php if ($this->params->def('show_pagination_results', 1)) : ?>
                     <p class="com-content-category__counter counter float-end pt-3 pe-2">
                         <?php echo $this->pagination->getPagesCounter(); ?>

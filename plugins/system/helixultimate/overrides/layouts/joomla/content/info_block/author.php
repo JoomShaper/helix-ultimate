@@ -1,12 +1,11 @@
 <?php
 
 /**
- * @package     Joomla.Site
- * @subpackage  Layout
- *
- * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
 
 defined('_JEXEC') or die;
 
@@ -14,7 +13,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 ?>
-<dd class="createdby">
+<span class="createdby">
     <span class="icon-user icon-fw" aria-hidden="true"></span>
     <?php $author = ($displayData['item']->created_by_alias ?: $displayData['item']->author); ?>
     <?php $author = '<span>' . $author . '</span>'; ?>
@@ -23,4 +22,4 @@ use Joomla\CMS\Language\Text;
     <?php else : ?>
         <?php echo Text::sprintf('COM_CONTENT_WRITTEN_BY', $author); ?>
     <?php endif; ?>
-</dd>
+</span>

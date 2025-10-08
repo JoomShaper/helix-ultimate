@@ -57,9 +57,7 @@ $useDefList = (
 	<?php echo LayoutHelper::render('joomla.content.intro_image', $this->item); ?>
 <?php endif; ?>
 
-<?
-// Featured badge
-if (!empty($this->item->featured)) : ?>
+<?php if (!empty($this->item->featured)) : ?>
     <span class="badge bg-danger featured-article-badge"><?php echo Text::_('HELIX_ULTIMATE_FEATURED'); ?></span>
 <?php endif; ?>
 

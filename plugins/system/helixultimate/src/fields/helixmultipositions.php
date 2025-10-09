@@ -13,7 +13,6 @@ use Joomla\CMS\HTML\HTMLHelper;
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
 use Joomla\Database\DatabaseInterface;
 
 FormHelper::loadFieldClass('list');

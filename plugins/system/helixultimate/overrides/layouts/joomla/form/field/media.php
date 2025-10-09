@@ -49,6 +49,9 @@ extract($displayData);
  * @var  array    $dataAttributes  Miscellaneous data attribute for eg, data-*
  */
 
+Text::script('JSELECT');
+Text::script('JCLOSE');
+
 $attr = '';
 
 // Initialize some field attributes.

@@ -1,12 +1,10 @@
 <?php
-
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_media
- *
- * @copyright   (C) 2017 Open Source Matters, Inc. <https://www.joomla.org>
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
 
 defined('_JEXEC') or die;
 
@@ -28,11 +26,7 @@ $translationStrings = [
     'COM_MEDIA_CREATE_NEW_FOLDER',
     'COM_MEDIA_CREATE_NEW_FOLDER_ERROR',
     'COM_MEDIA_CREATE_NEW_FOLDER_SUCCESS',
-    'COM_MEDIA_CREATE_NEW_FOLDER_EXISTING_FOLDER_ERROR',
-    'COM_MEDIA_CREATE_NEW_FOLDER_RELATIVE_PATH_ERROR',
-    'COM_MEDIA_CREATE_NEW_FOLDER_UNEXPECTED_CHARACTER',
     'COM_MEDIA_DECREASE_GRID',
-    'COM_MEDIA_DELETE',
     'COM_MEDIA_DELETE_ERROR',
     'COM_MEDIA_DELETE_SUCCESS',
     'COM_MEDIA_DROP_FILE',
@@ -56,6 +50,7 @@ $translationStrings = [
     'COM_MEDIA_MEDIA_SIZE',
     'COM_MEDIA_MEDIA_TYPE',
     'COM_MEDIA_NAME',
+    'COM_MEDIA_OPEN_ITEM_ACTIONS',
     'COM_MEDIA_ORDER_ASC',
     'COM_MEDIA_ORDER_BY',
     'COM_MEDIA_ORDER_DESC',
@@ -80,6 +75,7 @@ $translationStrings = [
     'JACTION_CREATE',
     'JAPPLY',
     'JCANCEL',
+    'JGLOBAL_CONFIRM_DELETE',
     'JGLOBAL_NO_MATCHING_RESULTS',
     'JLIB_FORM_FIELD_REQUIRED_VALUE',
     'MESSAGE',

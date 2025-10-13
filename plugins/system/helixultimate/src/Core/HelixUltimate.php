@@ -605,29 +605,29 @@ private function detectParentTemplate(string $template): ?string
 		else
 		{
 			$childName  = $this->template->template;
-$childFile  = JPATH_SITE . '/templates/' . $childName . '/options.json';
-$layoutJson = null;
+			$childFile  = JPATH_SITE . '/templates/' . $childName . '/options.json';
+			$layoutJson = null;
 
-// 1) Try child options.json first
-if (is_file($childFile)) {
-    $layoutJson = @file_get_contents($childFile);
-} else {
-    // 2) Fallback to parent options.json if child doesn't have one
-    $parentName = $this->detectParentTemplate($childName) ?: 'shaper_helixultimate';
-    $parentFile = JPATH_SITE . '/templates/' . $parentName . '/options.json';
-    if (is_file($parentFile)) {
-        $layoutJson = @file_get_contents($parentFile);
-    }
-}
+			// Try child options.json 
+			if (is_file($childFile)) {
+			    $layoutJson = @file_get_contents($childFile);
+			} else {
+			    // Fallback to parent options.json 
+			    $parentName = $this->detectParentTemplate($childName) ?: 'shaper_helixultimate';
+			    $parentFile = JPATH_SITE . '/templates/' . $parentName . '/options.json';
+			    if (is_file($parentFile)) {
+			        $layoutJson = @file_get_contents($parentFile);
+			    }
+			}
 
-// 3) Decode (with safe default)
-if ($layoutJson) {
-    $layout_data = json_decode($layoutJson) ?: (object) [];
-    $rows = json_decode($layout_data->layout ?? '[]');
-} else {
-    // Final safety: render an empty main area instead of dying
-    $rows = json_decode('[]');
-}
+			// Decode 
+			if ($layoutJson) {
+			    $layout_data = json_decode($layoutJson) ?: (object) [];
+			    $rows = json_decode($layout_data->layout ?? '[]');
+			} else {
+			    // render an empty main area instead of dying
+			    $rows = json_decode('[]');
+			}
 
 		}
 

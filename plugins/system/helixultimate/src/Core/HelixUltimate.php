@@ -569,6 +569,22 @@ class HelixUltimate
 	}
 
 	/**
+ * Detect parent template from a child template's templateDetails.xml
+ */
+private function detectParentTemplate(string $template): ?string
+{
+    $xmlFile = JPATH_SITE . '/templates/' . $template . '/templateDetails.xml';
+    if (is_file($xmlFile)) {
+        $sx = @simplexml_load_file($xmlFile);
+        if ($sx && !empty($sx->parent)) {
+            return (string) $sx->parent;
+        }
+    }
+    return null;
+}
+
+
+	/**
 	 * Render Layout
 	 *
 	 * @return	void
@@ -588,15 +604,31 @@ class HelixUltimate
 		}
 		else
 		{
-			$layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/options.json';
+			$childName  = $this->template->template;
+$childFile  = JPATH_SITE . '/templates/' . $childName . '/options.json';
+$layoutJson = null;
 
-			if (!\file_exists($layout_file))
-			{
-				die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');
-			}
+// 1) Try child options.json first
+if (is_file($childFile)) {
+    $layoutJson = @file_get_contents($childFile);
+} else {
+    // 2) Fallback to parent options.json if child doesn't have one
+    $parentName = $this->detectParentTemplate($childName) ?: 'shaper_helixultimate';
+    $parentFile = JPATH_SITE . '/templates/' . $parentName . '/options.json';
+    if (is_file($parentFile)) {
+        $layoutJson = @file_get_contents($parentFile);
+    }
+}
 
-			$layout_data = json_decode(file_get_contents($layout_file) ?? "");
-			$rows = json_decode($layout_data->layout ?? "");
+// 3) Decode (with safe default)
+if ($layoutJson) {
+    $layout_data = json_decode($layoutJson) ?: (object) [];
+    $rows = json_decode($layout_data->layout ?? '[]');
+} else {
+    // Final safety: render an empty main area instead of dying
+    $rows = json_decode('[]');
+}
+
 		}
 
 		$output = $this->get_recursive_layout($rows);	

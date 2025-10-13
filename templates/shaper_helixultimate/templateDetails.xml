@@ -12,6 +12,7 @@
     <license>http://www.gnu.org/licenses/gpl-2.0.html GPLv2 or later</license>
     <version>2.1.3</version>
     <description>Helix Ultimate - Starter Template of Helix Ultimate Framework</description>
+    <inheritable>1</inheritable>
 
     <updateservers>
         <server type="extension" 

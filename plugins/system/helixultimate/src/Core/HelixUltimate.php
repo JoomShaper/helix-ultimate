@@ -351,6 +351,11 @@ class HelixUltimate
 		{
 			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
 		}
+
+		if (JVERSION >= 6) {
+			$this->doc->addScript(Uri::root(true) . '/plugins/system/helixultimate/assets/js/chosen.jquery.js');
+			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/chosen.css');
+		}
 		
 		if (JVERSION >= 4)
 		{

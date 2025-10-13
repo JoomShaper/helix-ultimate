@@ -24,7 +24,6 @@ use HelixUltimate\Framework\Platform\Platform;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\Filesystem\File;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -71,7 +70,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 	public function onAfterInitialise()
 	{
 		if (JVERSION < 4) {
-			$this->registerBootstrap();	
+			$this->registerBootstrap();
 		}
 	}
 
@@ -563,6 +562,11 @@ class PlgSystemHelixultimate extends CMSPlugin
 			'style' => ['template.atum.base', 'template.atum', 'template.active', 'template.active.language', 'template.user', 'template.atum.ltr', 'template.atum.rtl'],
 			'script' => ['choicesjs', 'dragula']
 		];
+
+		if (JVERSION >= 6) {
+			$doc->addScript(Uri::root(true) . '/plugins/system/helixultimate/assets/js/chosen.jquery.js');
+			$doc->addStyleSheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/chosen.css');
+		}
 
 		foreach ($assets as $type => $names)
 		{

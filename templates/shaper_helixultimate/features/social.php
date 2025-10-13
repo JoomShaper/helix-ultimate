@@ -22,7 +22,21 @@ class HelixUltimateFeatureSocial
 	 * @since	1.0.0
 	 */
 	private $params;
+
+	/**
+	 * Position to load the feature
+	 *
+	 * @var		string	$position	The position name
+	 * @since	1.0.0
+	 */
 	public $position;
+
+	/**
+	 * Load position
+	 *
+	 * @var		string $load_pos	The load position
+	 * @since	1.0.0
+	 */
 	public $load_pos;
 
 	/**

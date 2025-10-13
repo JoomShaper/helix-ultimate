@@ -103,11 +103,16 @@ class HelixUltimateFeatureLogo
 
 		if ($this->params->get('logo_type') === 'image')
 		{
-			$altText = $this->params->get('logo_alt', $sitename);
+			$altText = htmlspecialchars($this->params->get('logo_alt', $sitename), ENT_QUOTES, 'UTF-8');
 
 			if ($this->params->get('logo_image'))
 			{
-				$logoUrl = $this->params->get('logo_custom_link') ?? Uri::base(true) . '/';
+				$customLink = $this->params->get('logo_custom_link');
+				if ($customLink) {
+					$logoUrl = htmlspecialchars($customLink, ENT_QUOTES, 'UTF-8');
+				} else {
+					$logoUrl = Uri::base(true) . '/';
+				}
 
 				$html .= '<div class="logo">';
 				$html .= '<a href="' . $logoUrl . '">';

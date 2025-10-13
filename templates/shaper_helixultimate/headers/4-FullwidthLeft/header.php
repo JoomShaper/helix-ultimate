@@ -37,9 +37,9 @@ $searchModule = Helper::getSearchModule('-header');
 
 ?>
 
-<?php if ($displayData->params->get('sticky_header')): ?>
+<?php if ($displayData->params->get('sticky_header')) : ?>
 	<div class="sticky-header-placeholder"></div>
-<?php endif ?>
+<?php endif; ?>
 <header id="sp-header" class="full-header full-header-left header-has-modules">
 	<div class="container-fluid">
 		<div class="container-inner">
@@ -53,7 +53,7 @@ $searchModule = Helper::getSearchModule('-header');
 						<?php else : ?>
 							<jdoc:include type="modules" name="logo" style="sp_xhtml" />
 							<?php echo $logo->renderFeature(); ?>
-						<?php endif ?>
+						<?php endif; ?>
 					</div>
 				</div>
 
@@ -72,11 +72,11 @@ $searchModule = Helper::getSearchModule('-header');
 					<div class="d-none d-lg-flex header-modules align-items-center">
 							<?php if ($data->params->get('enable_search', 0)): ?>
 								<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>
-							<?php endif ?>
+							<?php endif; ?>
 	
 							<?php if ($data->params->get('enable_login', 0)): ?>
 								<?php echo $menu->renderLogin(); ?>
-							<?php endif ?>
+							<?php endif; ?>
 						</div>
 					
 					<jdoc:include type="modules" name="menu" style="sp_xhtml" />

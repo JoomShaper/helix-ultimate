@@ -112,7 +112,7 @@ class HelixUltimateFeatureMenu
 	 */
 	public function renderLogin()
 	{
-		$user = Factory::getUser();
+		$user = Factory::getApplication()->getIdentity();
 
 		$html = [];
 		$html[] = '<div class="sp-module">';

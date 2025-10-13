@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * Copyright (c) 2010 - 2021 JoomShaper
+ * Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -27,7 +27,21 @@ class HelixUltimateFeatureMenu
 	 * @since	1.0.0
 	 */
 	private $params;
+
+	/**
+	 * Position to load the feature
+	 *
+	 * @var		string	$position	The position name
+	 * @since	1.0.0
+	 */
 	public $position;
+
+	/**
+	 * Load position
+	 *
+	 * @var		string $load_pos	The load position
+	 * @since	1.0.0
+	 */
 	public $load_pos;
 
 	/**

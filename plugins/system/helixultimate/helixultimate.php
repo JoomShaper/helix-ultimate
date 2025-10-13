@@ -108,51 +108,46 @@ class PlgSystemHelixultimate extends CMSPlugin
 	 * @return	void
 	 * @since	1.0.0
 	 */
+
 	public function onContentPrepareForm(Form $form, $data)
 	{
-		$doc = Factory::getDocument();
-		$template = Helper::loadTemplateData();
+	    $doc = Factory::getDocument();
 
-		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
-		$tmpl_path = Uri::root(true) . '/templates/' . $template->template;
+    	$plgPath = Uri::root(true) . '/plugins/system/helixultimate';
 
-		Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
+    	Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
 
-		if ($form->getName() === 'com_menus.item')
-		{
-			HTMLHelper::_('jquery.framework');
-			$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
-			$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
+    	$template = Factory::getApplication()->getTemplate(true);
+    	$tmplUrl  = Uri::root(true) . '/templates/' . $template->template;      
+    	$tmplPath = JPATH_ROOT . '/templates/' . $template->template;       
 
-			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
-			$doc->addStyleSheet($plg_path . '/assets/css/admin/modal.css');
-			$doc->addScript($plg_path . '/assets/js/admin/modal.js');
+    	// Add Font Awesome from template or plugin
+    	if (is_file($tmplPath . '/css/font-awesome.min.css')) {
+    	    $doc->addStyleSheet($tmplUrl . '/css/font-awesome.min.css', ['version' => 'auto', 'relative' => false]);
+    	} elseif (is_file(JPATH_PLUGINS . '/system/helixultimate/assets/css/font-awesome.min.css')) {
+    	    $doc->addStyleSheet($plgPath . '/assets/css/font-awesome.min.css', ['version' => 'auto', 'relative' => false]);
+    	}
 
-			$form->loadFile('megamenu', false);
-		}
+    	// For menu item form
+    	if ($form->getName() === 'com_menus.item') {
+    	    HTMLHelper::_('jquery.framework');
+    	    $doc->addScript($plgPath . '/assets/js/admin/jquery-ui.min.js', ['relative' => false, 'version' => 'auto']);
+    	    $doc->addStyleSheet($plgPath . '/assets/css/admin/modal.css', ['relative' => false, 'version' => 'auto']);
+    	    $doc->addScript($plgPath . '/assets/js/admin/modal.js', ['relative' => false, 'version' => 'auto']);
+    	    $form->loadFile('megamenu', false);
+    	}
 
-		// Article Post format
-		if ($form->getName() === 'com_content.article')
-		{
-			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
-			$tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName()->template;
+    	// For article form
+    	if ($form->getName() === 'com_content.article') {
+    	    HTMLHelper::_('jquery.framework');
+    	    HTMLHelper::_('jquery.token');
+    	    $doc->addStyleSheet($plgPath . '/assets/css/admin/blog-options.css', ['relative' => false, 'version' => 'auto']);
+    	    $doc->addScript($plgPath . '/assets/js/admin/blog-options.js', ['relative' => false, 'version' => 'auto']);
 
-			HTMLHelper::_('jquery.framework');
-			HTMLHelper::_('jquery.token');
-
-			$doc->addStyleSheet($plg_path . '/assets/css/admin/blog-options.css');
-			$doc->addScript($plg_path . '/assets/js/admin/blog-options.js', ['version' => 'auto', 'relative' => false]);
-
-			if (File::exists($tpl_path . '/blog-options.xml'))
-			{
-				Form::addFormPath($tpl_path);
-			}
-			else
-			{
-				Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
-			}
-
-			$form->loadFile('blog-options', false);
+		    if (is_file($tmplPath . '/blog-options.xml')) {
+		        Form::addFormPath($tmplPath);
+		    }
+		    $form->loadFile('blog-options', false);
 		}
 	}
 

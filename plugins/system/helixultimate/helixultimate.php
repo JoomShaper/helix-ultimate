@@ -113,18 +113,15 @@ class PlgSystemHelixultimate extends CMSPlugin
 	{
 	    $doc = Factory::getDocument();
 
-    	// Use absolute base URL for plugin assets (avoid Uri::root(true) here)
     	$plgPath = Uri::root() . 'plugins/system/helixultimate';
 
-    	// Add form path for plugin params
     	Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
 
-    	// Always resolve the SITE template, even from /administrator
     	$template = Factory::getApplication('site')->getTemplate(true);
-    	$tmplUrl  = Uri::root() . 'templates/' . $template->template;          // absolute URL
-    	$tmplPath = JPATH_ROOT . '/templates/' . $template->template;           // filesystem
+    	$tmplUrl  = Uri::root() . 'templates/' . $template->template;       
+    	$tmplPath = JPATH_ROOT . '/templates/' . $template->template;       
 
-    	// Add Font Awesome from template or plugin (absolute + non-relative)
+    	// Add Font Awesome from template or plugin
     	if (is_file($tmplPath . '/css/font-awesome.min.css')) {
     	    $doc->addStyleSheet($tmplUrl . '/css/font-awesome.min.css', ['version' => 'auto', 'relative' => false]);
     	} elseif (is_file(JPATH_PLUGINS . '/system/helixultimate/assets/css/font-awesome.min.css')) {

@@ -113,12 +113,12 @@ class PlgSystemHelixultimate extends CMSPlugin
 	{
 	    $doc = Factory::getDocument();
 
-    	$plgPath = Uri::root() . 'plugins/system/helixultimate';
+    	$plgPath = Uri::root(true) . '/plugins/system/helixultimate';
 
     	Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
 
-    	$template = Factory::getApplication('site')->getTemplate(true);
-    	$tmplUrl  = Uri::root() . 'templates/' . $template->template;       
+    	$template = Factory::getApplication()->getTemplate(true);
+    	$tmplUrl  = Uri::root(true) . '/templates/' . $template->template;      
     	$tmplPath = JPATH_ROOT . '/templates/' . $template->template;       
 
     	// Add Font Awesome from template or plugin

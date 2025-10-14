@@ -52,7 +52,7 @@ a {
 		display: inline-block;
 		a {
 			@if $link_color {
-				background: fadeOut($link_color, 0.9);
+				background: fade-out($link_color, 0.9);
 			}
 
 			color: $link_color;

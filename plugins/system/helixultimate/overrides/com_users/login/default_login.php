@@ -8,6 +8,7 @@
 
 defined('_JEXEC') or die;
 
+use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -25,13 +26,15 @@ $usersConfig = ComponentHelper::getParams('com_users');
 
 ?>
 <div class="com-users-login login">
-    <?php if ($this->params->get('show_page_heading')) : ?>
-    <div class="page-header">
-        <h1>
-            <?php echo $this->escape($this->params->get('page_heading')); ?>
-        </h1>
-    </div>
-    <?php endif; ?>
+	<div class="row justify-content-center">
+		<div class="col-lg-4">
+			<?php if ($this->params->get('show_page_heading')) : ?>
+				<div class="page-header">
+					<h1>
+						<?php echo $this->escape($this->params->get('page_heading')); ?>
+					</h1>
+				</div>
+			<?php endif; ?>
 
     <?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', $this->params->get('login_description', '')) != '') || $this->params->get('login_image') != '') : ?>
     <div class="com-users-login__description login-description">
@@ -51,11 +54,32 @@ $usersConfig = ComponentHelper::getParams('com_users');
 
     <form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="com-users-login__form form-validate form-horizontal well" id="com-users-login__form">
 
-        <fieldset>
-            <?php echo $this->form->renderFieldset('credentials', ['class' => 'com-users-login__input']); ?>
+				<?php foreach ($this->form->getFieldset('credentials') as $field) : ?>
+					<?php
+						$showon = $field->getAttribute('showon');
+						$attribs = '';
+						if ($showon) 
+						{
+							$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
+						}
+						// Enable disable on
+						$enableOn = $field->getAttribute('enableon', '');
+						if ($enableOn)
+						{
+							$attribs .= ' data-enableon="' . $enableOn . '"';
+						}
+					?>
+					<?php if (!$field->hidden) : ?>
+						<div class="mb-3" <?php echo $attribs; ?>>
+							<?php echo $field->label; ?>
+							<?php echo $field->input; ?>
+						</div>
+					<?php endif; ?>
+				<?php endforeach; ?>
+
 
             <?php if (PluginHelper::isEnabled('system', 'remember')) : ?>
-                <div class="com-users-login__remember">
+                <div class="com-users-login__remember mb-3">
                     <div class="form-check">
                         <input class="form-check-input" id="remember" type="checkbox" name="remember" value="yes">
                         <label class="form-check-label" for="remember">
@@ -99,8 +123,8 @@ $usersConfig = ComponentHelper::getParams('com_users');
             <?php endforeach; ?>
 
             <div class="com-users-login__submit control-group">
-                <div class="controls">
-                    <button type="submit" class="btn btn-primary">
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
                         <?php echo Text::_('JLOGIN'); ?>
                     </button>
                 </div>

@@ -68,7 +68,7 @@ $wa->useScript('keepalive')
         <?php endif; ?>
 
         <div class="com-users-profile__edit-submit control-group">
-            <div class="controls">
+            <div class="mb-3">
                 <button type="submit" class="btn btn-primary validate" name="task" value="profile.save">
                     <span class="icon-check" aria-hidden="true"></span>
                     <?php echo Text::_('JSAVE'); ?>

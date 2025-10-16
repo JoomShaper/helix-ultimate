@@ -22,9 +22,9 @@ $authorised = Factory::getUser()->getAuthorisedViewLevels();
         <?php foreach ($displayData as $i => $tag) : ?>
             <?php if (in_array($tag->access, $authorised)) : ?>
                 <?php $tagParams = new Registry($tag->params); ?>
-                <?php $link_class = $tagParams->get('tag_link_class', 'btn-info'); ?>
+                <?php $link_class = $tagParams->get('tag_link_class', ''); ?>
                 <li class="list-inline-item tag-<?php echo $tag->tag_id; ?> tag-list<?php echo $i; ?>">
-                    <a href="<?php echo Route::_(RouteHelper::getComponentTagRoute($tag->tag_id . ':' . $tag->alias, $tag->language)); ?>" class="btn btn-sm <?php echo $link_class; ?>">
+                    <a href="<?php echo Route::_(RouteHelper::getComponentTagRoute($tag->tag_id . ':' . $tag->alias, $tag->language)); ?>" class="<?php echo $link_class; ?>">
                         <?php echo $this->escape($tag->title); ?>
                     </a>
                 </li>

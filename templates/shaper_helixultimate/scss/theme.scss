@@ -2823,3 +2823,7 @@ joomla-dialog.loaded .joomla-dialog-body {
     position: absolute;
   }
 }
+#users-profile-custom-joomlatoken .list-group-item {
+  white-space: nowrap;
+  overflow: auto;
+}

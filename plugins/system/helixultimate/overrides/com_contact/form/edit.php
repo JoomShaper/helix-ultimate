@@ -65,7 +65,7 @@ $this->useCoreUI        = true;
             <input type="hidden" name="return" value="<?php echo $this->return_page; ?>"/>
             <?php echo HTMLHelper::_('form.token'); ?>
         </fieldset>
-        <div class="mb-2">
+        <div class="mb-2 mt-2">
             <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('contact.save')">
                 <span class="icon-check" aria-hidden="true"></span>
                 <?php echo Text::_('JSAVE'); ?>

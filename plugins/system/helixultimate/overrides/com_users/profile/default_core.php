@@ -10,42 +10,44 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;    
 
 ?>
-<fieldset id="users-profile-core" class="com-users-profile__core">
-    <legend>
-        <?php echo Text::_('COM_USERS_PROFILE_CORE_LEGEND'); ?>
-    </legend>
-    <dl class="dl-horizontal">
-        <dt>
-            <?php echo Text::_('COM_USERS_PROFILE_NAME_LABEL'); ?>
-        </dt>
-        <dd>
-            <?php echo $this->escape($this->data->name); ?>
-        </dd>
-        <dt>
-            <?php echo Text::_('COM_USERS_PROFILE_USERNAME_LABEL'); ?>
-        </dt>
-        <dd>
-            <?php echo $this->escape($this->data->username); ?>
-        </dd>
-        <dt>
-            <?php echo Text::_('COM_USERS_PROFILE_REGISTERED_DATE_LABEL'); ?>
-        </dt>
-        <dd>
-            <?php echo HTMLHelper::_('date', $this->data->registerDate, Text::_('DATE_FORMAT_LC1')); ?>
-        </dd>
-        <dt>
-            <?php echo Text::_('COM_USERS_PROFILE_LAST_VISITED_DATE_LABEL'); ?>
-        </dt>
-        <?php if ($this->data->lastvisitDate !== null) : ?>
-            <dd>
-                <?php echo HTMLHelper::_('date', $this->data->lastvisitDate, Text::_('DATE_FORMAT_LC1')); ?>
-            </dd>
-        <?php else : ?>
-            <dd>
-                <?php echo Text::_('COM_USERS_PROFILE_NEVER_VISITED'); ?>
-            </dd>
-        <?php endif; ?>
-    </dl>
-</fieldset>
+
+<div id="users-profile-core">
+	<div class="d-flex mb-3">
+		<div class="me-auto">
+			<strong><?php echo Text::_('COM_USERS_PROFILE_CORE_LEGEND'); ?></strong>
+		</div>
+		<div>
+			<?php if (Factory::getUser()->id == $this->data->id): ?>
+				<a href="<?php echo Route::_('index.php?option=com_users&task=profile.edit&user_id=' . (int) $this->data->id); ?>">
+					<span class="fas fa-user-edit" aria-hidden="true"></span> <?php echo Text::_('COM_USERS_EDIT_PROFILE'); ?>
+				</a>
+			<?php endif;?>
+		</div>
+	</div>
+	<ul class="list-group">
+		<li class="list-group-item">
+			<strong><?php echo Text::_('COM_USERS_PROFILE_NAME_LABEL'); ?></strong>:
+			<?php echo $this->data->name; ?>
+		</li>
+		<li class="list-group-item">
+			<strong><?php echo Text::_('COM_USERS_PROFILE_USERNAME_LABEL'); ?></strong>:
+			<?php echo htmlspecialchars($this->data->username ?? "", ENT_COMPAT, 'UTF-8'); ?>
+		</li>
+		<li class="list-group-item">
+			<strong><?php echo Text::_('COM_USERS_PROFILE_REGISTERED_DATE_LABEL'); ?></strong>:
+			<?php echo HTMLHelper::_('date', $this->data->registerDate, Text::_('DATE_FORMAT_LC1')); ?>
+		</li>
+		<li class="list-group-item">
+			<strong><?php echo Text::_('COM_USERS_PROFILE_LAST_VISITED_DATE_LABEL'); ?></strong>:
+			<?php if ($this->data->lastvisitDate !== null): ?>
+				<?php echo HTMLHelper::_('date', $this->data->lastvisitDate, Text::_('DATE_FORMAT_LC1')); ?>
+			<?php else: ?>
+				<?php echo Text::_('COM_USERS_PROFILE_NEVER_VISITED'); ?>
+			<?php endif;?>
+		</li>
+	</ul>
+</div>

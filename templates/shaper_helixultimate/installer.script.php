@@ -45,7 +45,7 @@ class plgSystemTmp_helixultInstallerScript
 			
 
 			$path = $src.'/plugins/'.$group;
-			if (Folder::exists($src.'/plugins/'.$group.'/'.$name))
+			if (is_dir($src.'/plugins/'.$group.'/'.$name))
 			{
 				$path = $src.'/plugins/'.$group.'/'.$name;
 			}
@@ -71,7 +71,7 @@ class plgSystemTmp_helixultInstallerScript
 					$plg_path = JPATH_PLUGINS;
 					$dir = $plg_path.'/'.$group.'/'.$name.'/overrides/com_finder/tmpl';
 					
-					if (Folder::exists($dir))
+					if (is_dir($dir))
 					{
 						Folder::delete($dir);
 					}
@@ -89,7 +89,7 @@ class plgSystemTmp_helixultInstallerScript
 		$template_path = $src . '/template';
 		$plugin_path = $src . '/plugins/system';
 
-		if (Folder::exists( $template_path ))
+		if (is_dir( $template_path ))
 		{
 			$installer = new Installer;
 			$installer->setDatabase(Factory::getContainer()->get(DatabaseInterface::class));

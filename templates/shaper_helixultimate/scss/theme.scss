@@ -2808,3 +2808,8 @@ joomla-dialog.loaded .joomla-dialog-body {
     height: 90vh;
   }
 }
+
+#users-profile-custom-joomlatoken .list-group-item {
+  white-space: nowrap;
+  overflow: auto;
+}

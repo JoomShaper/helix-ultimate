@@ -2809,6 +2809,20 @@ joomla-dialog.loaded .joomla-dialog-body {
   }
 }
 
+.article-details {
+  .featured-article-badge {
+    position: unset;
+  }
+}
+.article-details:has(.article-full-image) ,
+.article-details:has(.article-featured-image) ,
+.article-details:has(.article-feature-gallery),
+.article-details:has(.article-featured-video),
+.article-details:has(.article-featured-audio) {
+  .featured-article-badge {
+    position: absolute;
+  }
+}
 #users-profile-custom-joomlatoken .list-group-item {
   white-space: nowrap;
   overflow: auto;

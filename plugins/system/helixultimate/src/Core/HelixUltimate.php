@@ -770,7 +770,8 @@ class HelixUltimate
 
 			if (!$has_component)
 			{
-				if (end($row->attr) === $column)
+				$rowAttr = $row->attr;
+				if (end($rowAttr) === $column)
 				{
 					$col_grid_size += $inactive_col;
 				}
@@ -1136,14 +1137,15 @@ class HelixUltimate
 
 
 					$compiledCss = $compiler->compileString('@import "' . $scss . '.scss"');
-					File::write($out, $compiledCss->getCss());
+					$getComplinedCss = $compiledCss->getCss();
+					File::write($out, $getComplinedCss);
 
 					$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 					$scssCache = array();
 					$scssCache['imports'] = $this->parseIncludedFiles($compiledCss->getIncludedFiles());
 					$scssCache['vars'] = $vars;
-
-					File::write($cache_path, json_encode($scssCache));
+					$jsonScssCache = json_encode($scssCache);
+					File::write($cache_path, $jsonScssCache);
 				}
 			}
 		}
@@ -1167,7 +1169,10 @@ class HelixUltimate
 		{
 			if (!empty($file) && \file_exists($file))
 			{
-				$parsedFiles[realpath($file)] = filemtime($file);
+				$realPath = realpath($file);
+				if ($realPath !== false) {
+					$parsedFiles[$realPath] = filemtime($file);
+				}
 			}
 		}
 

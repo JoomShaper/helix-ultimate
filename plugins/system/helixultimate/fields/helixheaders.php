@@ -9,7 +9,7 @@
 use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 
 defined('_JEXEC') or die();
 
@@ -46,7 +46,7 @@ class JFormFieldHelixheaders extends FormField
 
 		$html = '';
 
-		if (Folder::exists($headers_src))
+		if (is_dir($headers_src))
 		{
 			$headers = Folder::folders($headers_src);
 

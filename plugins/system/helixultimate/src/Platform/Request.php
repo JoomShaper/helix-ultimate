@@ -510,7 +510,7 @@ class Request
 			$templateStyle = Helper::getTemplateStyle($this->id);
 			$cache_path    = JPATH_SITE . '/cache/com_templates/templates/' . $templateStyle->template;
 
-			if (Folder::exists($cache_path))
+			if (is_dir($cache_path))
 			{
 				$files = scandir($cache_path);
 
@@ -580,7 +580,7 @@ class Request
 
 		$template_path = JPATH_SITE . '/templates/' . $template . '/webfonts';
 
-		if (!Folder::exists($template_path))
+		if (!is_dir($template_path))
 		{
 			Folder::create($template_path, 0755);
 		}

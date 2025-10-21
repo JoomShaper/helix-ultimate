@@ -201,7 +201,7 @@ class Media
 
 		$absolute_path = JPATH_ROOT . $path . '/' . preg_replace('/\s+/', '-', $folder_name);
 
-		if (Folder::exists($absolute_path))
+		if (is_dir($absolute_path))
 		{
 			$output['message'] = "Folder is already exists.";
 			$output['status'] = false;

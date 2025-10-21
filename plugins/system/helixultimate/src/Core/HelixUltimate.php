@@ -27,7 +27,6 @@ use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\OutputStyle;
-use ScssPhp\ScssPhp\Value\Value;
 use ScssPhp\ScssPhp\ValueConverter;
 
 /**
@@ -1529,7 +1528,7 @@ class HelixUltimate
 			// Compress All scripts
 			if ($minifiedCode)
 			{
-				if (!Folder::exists($cache_path))
+				if (!is_dir($cache_path))
 				{
 					Folder::create($cache_path, 0755);
 				}
@@ -1791,7 +1790,7 @@ class HelixUltimate
 			//Compress All stylesheets
 			if ($minifiedCode)
 			{
-					if (!Folder::exists($cache_path))
+					if (!is_dir($cache_path))
 					{
 							Folder::create($cache_path, 0755);
 					}

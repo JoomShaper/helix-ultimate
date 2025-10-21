@@ -12,6 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use HelixUltimate\Framework\Platform\Helper;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Form field for Helix positions
@@ -42,7 +43,7 @@ class JFormFieldHelixpositions extends FormField
 		$style_id = $input->get('id', 0, 'INT');
 		$style = Helper::getTemplateStyle($style_id);
 
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('position'));
 		$query->from($db->quoteName('#__modules'));

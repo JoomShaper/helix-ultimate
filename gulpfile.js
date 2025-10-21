@@ -14,9 +14,9 @@ const config = {
     srcPath: path.resolve(__dirname),
     buildPath: path.resolve(__dirname, './package/'),
     qsPath: path.resolve(__dirname, './package/helix_ultimate_quickstart/'),
-    qsPackageName: 'helixultimate_quickstart_j5_2.1.3.zip',
-    packageName: 'helixultimate_template_v2.1.3.zip',
-    pluginPackageName: 'plg_system_helixultimate_v2.1.3.zip',
+    qsPackageName: 'helixultimate_quickstart_j5_2.2.0.zip',
+    packageName: 'helixultimate_template_v2.2.0.zip',
+    pluginPackageName: 'plg_system_helixultimate_v2.2.0.zip',
 
     templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css, html',
     pluginFileExtensions: function () {

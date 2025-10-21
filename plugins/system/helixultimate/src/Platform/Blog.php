@@ -13,14 +13,15 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Session\Session;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 use HelixUltimate\Framework\Platform\Classes\Image;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\MediaHelper;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Blog class.
@@ -46,7 +47,7 @@ class Blog
 		$tplParams = $tplRegistry->loadString(self::getTemplate()->params);
 
 		// User is not authorised
-		if (!Factory::getUser()->authorise('core.create', 'com_media'))
+		if (!Factory::getApplication()->getIdentity()->authorise('core.create', 'com_media'))
 		{
 			$report['status'] = false;
 			$report['output'] = Text::_('You are not authorised to upload file.');
@@ -143,7 +144,7 @@ class Blog
 							$sources = Image::createThumbs($dest, $sizes, $folder, $base_name, $ext, $image_quality);
 						}
 
-						if (File::exists(JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))
+						if (\file_exists(JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))
 						{
 							$src = 'images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext;
 						}
@@ -186,7 +187,7 @@ class Blog
 		$report['output'] = 'Invalid Token';
 		Session::checkToken() or die(json_encode($report));
 
-		if (!Factory::getUser()->authorise('core.delete', 'com_media'))
+		if (!Factory::getApplication()->getIdentity()->authorise('core.delete', 'com_media'))
 		{
 			$report['status'] = false;
 			$report['output'] = Text::_('You are not authorised to delete file.');
@@ -199,7 +200,7 @@ class Blog
 
 		$path = JPATH_ROOT . '/' . $src;
 
-		if (File::exists($path))
+		if (\file_exists($path))
 		{
 			if (File::delete($path))
 			{
@@ -209,22 +210,22 @@ class Blog
 				$medium 	= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_medium.' . File::getExt($basename);
 				$large 		= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_large.' . File::getExt($basename);
 
-				if (File::exists($small))
+				if (\file_exists($small))
 				{
 					File::delete($small);
 				}
 
-				if (File::exists($thumbnail))
+				if (\file_exists($thumbnail))
 				{
 					File::delete($thumbnail);
 				}
 
-				if (File::exists($medium))
+				if (\file_exists($medium))
 				{
-					File::delete($medium);
+					\file_exists($medium);
 				}
 
-				if (File::exists($large))
+				if (\file_exists($large))
 				{
 					File::delete($large);
 				}
@@ -254,7 +255,7 @@ class Blog
 	private static function getTemplate()
 	{
 
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 
 		$query->select($db->quoteName(array('template', 'params')));

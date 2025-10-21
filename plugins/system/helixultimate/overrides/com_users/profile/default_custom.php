@@ -6,33 +6,30 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-// HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
-// HTMLHelper::register('users.spacer', array('JHtmlUsers', 'spacer'));
-
 $fieldsets = $this->form->getFieldsets();
 
-if (isset($fieldsets['core']))
-{
-	unset($fieldsets['core']);
+if (isset($fieldsets['core'])) {
+    unset($fieldsets['core']);
 }
 
-if (isset($fieldsets['params']))
-{
-	unset($fieldsets['params']);
+if (isset($fieldsets['params'])) {
+    unset($fieldsets['params']);
 }
 
-$tmp          = isset($this->data->jcfields) ? $this->data->jcfields : array();
-$customFields = array();
+$tmp          = $this->data->jcfields ?? [];
+$customFields = [];
 
-foreach ($tmp as $customField)
-{
-	$customFields[$customField->name] = $customField;
+foreach ($tmp as $customField) {
+    $customFields[$customField->name] = $customField;
 }
+
+unset($tmp);
+
 ?>
 <?php foreach ($fieldsets as $group => $fieldset) : ?>
 	<?php $fields = $this->form->getFieldset($group); ?>
@@ -46,7 +43,7 @@ foreach ($tmp as $customField)
 					<div><?php echo $this->escape(Text::_($fieldset->description)); ?></span>
 				<?php endif; ?>
 			</div>
-			<ul class="list-group">
+			<ul class="list-group ">
 					<?php foreach ($fields as $field) : ?>
 						<?php if (!$field->hidden && $field->type !== 'Spacer') : ?>
 							<li class="list-group-item">

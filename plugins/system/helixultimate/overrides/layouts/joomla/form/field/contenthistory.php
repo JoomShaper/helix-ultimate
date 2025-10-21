@@ -1,12 +1,20 @@
 <?php
-/**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
 
-defined ('JPATH_BASE') or die();
+/**
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2015 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
+
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
+extract($displayData);
 
 /**
  * Layout variables
@@ -37,31 +45,34 @@ defined ('JPATH_BASE') or die();
  * @var   array    $checkedOptions  Options that will be set as checked.
  * @var   boolean  $hasValue        Has this field a value assigned?
  * @var   array    $options         Options available for this field.
- *
  * @var   string   $link            The link for the content history page
  * @var   string   $label           The label text
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attributes for eg, data-*.
  */
-extract($displayData);
+
+echo HTMLHelper::_(
+    'bootstrap.renderModal',
+    'versionsModal',
+    [
+        'url'    => Route::_($link),
+        'title'  => $label,
+        'height' => '100%',
+        'width'  => '100%',
+        'modalWidth'  => '80',
+        'bodyHeight'  => '60',
+        'footer' => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">'
+            . Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
+    ]
+);
 
 ?>
- <div class="modal fade" id="versionsModal" tabindex="-1" >
-	<div class="modal-dialog" role="dialog">
-		<div class="modal-content">
-		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel"><?php echo $label; ?></h5>
-			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-			</button>
-		</div>
-		<div class="modal-body">
-			<iframe height="100%" width="100%" src="<?php echo $link ?>" frameborder="0"></iframe>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-		</div>
-		</div>
-	</div>
-</div>
-
-<div data-bs-target="#versionsModal" class="btn btn-secondary ms-2" data-bs-toggle="modal" title="<?php echo $label; ?>">
-	<span class="fas fa-code-branch" aria-hidden="true"></span> <?php echo $label; ?>
-</div>
+<button
+    type="button"
+    class="btn btn-secondary"
+    data-bs-toggle="modal"
+    data-bs-target="#versionsModal"
+    <?php echo $dataAttribute; ?>>
+        <span class="icon-code-branch" aria-hidden="true"></span>
+        <?php echo $label; ?>
+</button>

@@ -1,14 +1,17 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-use HelixUltimate\Framework\Platform\Helper;
+defined('_JEXEC') or die;
 
-defined ('JPATH_BASE') or die();
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 extract($displayData);
 
@@ -43,30 +46,44 @@ extract($displayData);
  * @var   array    $options         Options available for this field.
  * @var   array    $inputType       Options available for this field.
  * @var   string   $accept          File types that are accepted.
+ * @var   boolean  $charcounter     Does this field support a character counter?
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attribute for eg, data-*.
  */
 
 // Initialize some field attributes.
-$autocomplete = !$autocomplete ? 'autocomplete="off"' : 'autocomplete="' . $autocomplete . '"';
-$autocomplete = $autocomplete == 'autocomplete="on"' ? '' : $autocomplete;
+if ($charcounter) {
+    // Load the js file
+    /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+    $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+    $wa->useScript('short-and-sweet');
 
-$attributes = array(
-	$columns ?: '',
-	$rows ?: '',
-	!empty($class) ? 'class="form-control ' . $class . '"' : 'class="form-control"',
-	strlen(Helper::CheckNull($hint)) ? 'placeholder="' . htmlspecialchars(Helper::CheckNull($hint), ENT_COMPAT, 'UTF-8') . '"' : '',
-	$disabled ? 'disabled' : '',
-	$readonly ? 'readonly' : '',
-	$onchange ? 'onchange="' . $onchange . '"' : '',
-	$onclick ? 'onclick="' . $onclick . '"' : '',
-	$required ? 'required aria-required="true"' : '',
-	$autocomplete,
-	$autofocus ? 'autofocus' : '',
-	$spellcheck ? '' : 'spellcheck="false"',
-	$maxlength ? $maxlength: ''
+    // Set the css class to be used as the trigger
+    $charcounter = ' charcount';
+    // Set the text
+    $counterlabel = 'data-counter-label="' . $this->escape(Text::_('JFIELD_META_DESCRIPTION_COUNTER')) . '"';
+}
 
-);
+$attributes = [
+    $columns ?: '',
+    $rows ?: '',
+    !empty($class) ? 'class="form-control ' . $class . $charcounter . '"' : 'class="form-control' . $charcounter . '"',
+    !empty($description) ? 'aria-describedby="' . ($id ?: $name) . '-desc"' : '',
+    strlen($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : '',
+    $disabled ? 'disabled' : '',
+    $readonly ? 'readonly' : '',
+    $onchange ? 'onchange="' . $onchange . '"' : '',
+    $onclick ? 'onclick="' . $onclick . '"' : '',
+    $required ? 'required' : '',
+    !empty($autocomplete) ? 'autocomplete="' . $autocomplete . '"' : '',
+    $autofocus ? 'autofocus' : '',
+    $spellcheck ? '' : 'spellcheck="false"',
+    $maxlength ?: '',
+    !empty($counterlabel) ? $counterlabel : '',
+    $dataAttribute,
+];
 ?>
 <textarea name="<?php
 echo $name; ?>" id="<?php
 echo $id; ?>" <?php
-echo implode(' ', $attributes); ?> ><?php echo htmlspecialchars($value ?? "", ENT_COMPAT, 'UTF-8'); ?></textarea>
+echo implode(' ', $attributes); ?> ><?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?></textarea>

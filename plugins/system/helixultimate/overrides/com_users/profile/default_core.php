@@ -6,12 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;    
 
 ?>
 
@@ -39,12 +39,12 @@ use Joomla\CMS\Router\Route;
 		</li>
 		<li class="list-group-item">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_REGISTERED_DATE_LABEL'); ?></strong>:
-			<?php echo HTMLHelper::_('date', $this->data->registerDate); ?>
+			<?php echo HTMLHelper::_('date', $this->data->registerDate, Text::_('DATE_FORMAT_LC1')); ?>
 		</li>
 		<li class="list-group-item">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_LAST_VISITED_DATE_LABEL'); ?></strong>:
-			<?php if ($this->data->lastvisitDate != $this->db->getNullDate()): ?>
-				<?php echo HTMLHelper::_('date', $this->data->lastvisitDate); ?>
+			<?php if ($this->data->lastvisitDate !== null): ?>
+				<?php echo HTMLHelper::_('date', $this->data->lastvisitDate, Text::_('DATE_FORMAT_LC1')); ?>
 			<?php else: ?>
 				<?php echo Text::_('COM_USERS_PROFILE_NEVER_VISITED'); ?>
 			<?php endif;?>

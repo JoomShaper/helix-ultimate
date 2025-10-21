@@ -1,27 +1,31 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
+defined('_JEXEC') or die;
 
-defined('JPATH_BASE') or die;
-
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
-HTMLHelper::_('behavior.core');
+// @todo: Deprecate this file since we can use popup button to raise batch modal.
 
-$id    = isset($displayData['id']) ? $displayData['id'] : '';
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = \Joomla\CMS\Factory::getApplication()->getDocument()->getWebAssetManager();
+$wa->useScript('core');
+
+$id    = $displayData['id'] ?? '';
 $title = $displayData['title'];
 Text::script('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST');
 Text::script('ERROR');
-$message = "{'error': [Joomla.JText._('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST')]}";
+$message = "{'error': [Joomla.Text._('JLIB_HTML_PLEASE_MAKE_A_SELECTION_FROM_THE_LIST')]}";
 $alert = "Joomla.renderMessages(" . $message . ")";
 ?>
-<button id="<?php echo $id; ?>" data-bs-toggle="modal" onclick="if (document.adminForm.boxchecked.value==0){<?php echo $alert; ?>}else{jQuery( '#collapseModal' ).modal('show'); return true;}" class="btn btn-outline-primary btn-sm">
-	<span class="icon-checkbox-partial" aria-hidden="true" title="<?php echo $title; ?>"></span>
-	<?php echo $title; ?>
+<button<?php echo $id; ?> type="button" onclick="if (document.adminForm.boxchecked.value==0){<?php echo $alert; ?>}else{document.getElementById('collapseModal').open(); return true;}" class="btn btn-primary">
+    <span class="icon-square" aria-hidden="true"></span>
+    <?php echo $title; ?>
 </button>

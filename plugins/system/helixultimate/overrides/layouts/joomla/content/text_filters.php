@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
@@ -6,34 +7,34 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-use HelixUltimate\Framework\Platform\Settings;
+defined('_JEXEC') or die;
 
-defined ('JPATH_BASE') or die();
+use Joomla\CMS\Language\Text;
+
 ?>
 
 <fieldset class="<?php echo !empty($displayData->formclass) ? $displayData->formclass : 'form-horizontal'; ?>">
-	<legend><?php echo $displayData->name; ?></legend>
-	<?php if (!empty($displayData->description)) : ?>
-		<p><?php echo $displayData->description; ?></p>
-	<?php endif; ?>
-	<?php $fieldsnames = explode(',', $displayData->fieldsname); ?>
-	<?php foreach ($fieldsnames as $fieldname) : ?>
-		<?php foreach ($displayData->form->getFieldset($fieldname) as $field) : ?>
-			<?php
-				$showon = $field->getAttribute('showon');
-				$attribs = '';
-				if ($showon) 
-				{
-					$attribs .= ' data-showon=\'' . json_encode(Settings::parseShowOnConditions($showon, $field->formControl)) . '\'';
-				}
-				// Enable disable on
-				$enableOn = $field->getAttribute('enableon', '');
-				if ($enableOn)
-				{
-					$attribs .= ' data-enableon="' . $enableOn . '"';
-				}
-			?>
-			<div <?php echo $attribs; ?>><?php echo $field->input; ?></div>
-		<?php endforeach; ?>
-	<?php endforeach; ?>
+    <legend><?php echo $displayData->name; ?></legend>
+    <details>
+        <summary class="filter-notes"><?php echo Text::_('COM_CONFIG_TEXT_FILTERS_SUMMARY'); ?></summary>
+        <div class="filter-notes"><?php echo Text::_('COM_CONFIG_TEXT_FILTERS_DESC'); ?></div>
+    </details>
+    <details>
+        <summary class="filter-notes"><?php echo Text::_('JGLOBAL_FILTER_TYPE_LABEL'); ?></summary>
+        <div class="filter-notes"><?php echo Text::_('JGLOBAL_FILTER_TYPE_DESC'); ?></div>
+    </details>
+    <details>
+        <summary class="filter-notes"><?php echo Text::_('JGLOBAL_FILTER_TAGS_LABEL'); ?></summary>
+        <div class="filter-notes"><?php echo Text::_('JGLOBAL_FILTER_TAGS_DESC'); ?></div>
+    </details>
+    <details>
+        <summary class="filter-notes"><?php echo Text::_('JGLOBAL_FILTER_ATTRIBUTES_LABEL'); ?></summary>
+        <div class="filter-notes"><?php echo Text::_('JGLOBAL_FILTER_ATTRIBUTES_DESC'); ?></div>
+    </details>
+    <?php $fieldsnames = explode(',', $displayData->fieldsname); ?>
+    <?php foreach ($fieldsnames as $fieldname) : ?>
+        <?php foreach ($displayData->form->getFieldset($fieldname) as $field) : ?>
+            <div class="table-responsive"><?php echo $field->input; ?></div>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
 </fieldset>

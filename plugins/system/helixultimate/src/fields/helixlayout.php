@@ -10,7 +10,6 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Filesystem\File;
 use HelixUltimate\Framework\Platform\Helper;
 
 /**
@@ -50,7 +49,6 @@ class JFormFieldHelixlayout extends FormField
 		}
 		else
 		{
-			// $layout_file = File::read(JPATH_SITE . '/templates/' . $style->template . '/options.json');
 			$layout_file = file_get_contents(JPATH_SITE . '/templates/' . $style->template . '/options.json');
 			$value = json_decode($layout_file ?? "");
 			$rows = json_decode($value->layout ?? "");

@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * Copyright (c) 2010 - 2021 JoomShaper
+ * Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -27,7 +27,21 @@ class HelixUltimateFeatureLogo
 	 * @since	1.0.0
 	 */
 	private $params;
+
+	/**
+	 * Position to load the feature
+	 *
+	 * @var		string	$position	The position name
+	 * @since	1.0.0
+	 */
 	public $position;
+
+	/**
+	 * Load position
+	 *
+	 * @var		string $load_pos	The load position
+	 * @since	1.0.0
+	 */
 	public $load_pos;
 
 	/**
@@ -89,11 +103,16 @@ class HelixUltimateFeatureLogo
 
 		if ($this->params->get('logo_type') === 'image')
 		{
-			$altText = $this->params->get('logo_alt', $sitename);
+			$altText = htmlspecialchars($this->params->get('logo_alt', $sitename), ENT_QUOTES, 'UTF-8');
 
 			if ($this->params->get('logo_image'))
 			{
-				$logoUrl = $this->params->get('logo_custom_link') ?? Uri::base(true) . '/';
+				$customLink = $this->params->get('logo_custom_link');
+				if ($customLink) {
+					$logoUrl = htmlspecialchars($customLink, ENT_QUOTES, 'UTF-8');
+				} else {
+					$logoUrl = Uri::base(true) . '/';
+				}
 
 				$html .= '<div class="logo">';
 				$html .= '<a href="' . $logoUrl . '">';

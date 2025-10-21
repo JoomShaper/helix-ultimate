@@ -1,12 +1,14 @@
 <?php
-/**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
 
-defined ('JPATH_BASE') or die();
+/**
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2013 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -16,122 +18,171 @@ use Joomla\CMS\Layout\LayoutHelper;
 $app       = Factory::getApplication();
 $form      = $displayData->getForm();
 $fieldSets = $form->getFieldsets();
+$helper    = $displayData->get('useCoreUI', false) ? 'uitab' : 'bootstrap';
 
-if (empty($fieldSets))
-{
-	return;
+if (empty($fieldSets)) {
+    return;
 }
 
-$ignoreFieldsets = $displayData->get('ignore_fieldsets') ?: array();
-$ignoreFields    = $displayData->get('ignore_fields') ?: array();
-$extraFields     = $displayData->get('extra_fields') ?: array();
+$ignoreFieldsets = $displayData->get('ignore_fieldsets') ?: [];
+$outputFieldsets = $displayData->get('output_fieldsets') ?: [];
+$ignoreFieldsetFields = $displayData->get('ignore_fieldset_fields') ?: [];
+$ignoreFields    = $displayData->get('ignore_fields') ?: [];
+$extraFields     = $displayData->get('extra_fields') ?: [];
 $tabName         = $displayData->get('tab_name') ?: 'myTab';
 
-if (!empty($displayData->hiddenFieldsets))
-{
-	// These are required to preserve data on save when fields are not displayed.
-	$hiddenFieldsets = $displayData->hiddenFieldsets ?: array();
-}
+// These are required to preserve data on save when fields are not displayed.
+$hiddenFieldsets = $displayData->get('hiddenFieldsets') ?: [];
 
-if (!empty($displayData->configFieldsets))
-{
-	// These are required to configure showing and hiding fields in the editor.
-	$configFieldsets = $displayData->configFieldsets ?: array();
-}
+// These are required to configure showing and hiding fields in the editor.
+$configFieldsets = $displayData->get('configFieldsets') ?: [];
 
 // Handle the hidden fieldsets when show_options is set false
-if (!$displayData->get('show_options', 1))
-{
-	// The HTML buffer
-	$html   = array();
+if (!$displayData->get('show_options', 1)) {
+    // The HTML buffer
+    $html   = [];
 
-	// Hide the whole buffer
-	$html[] = '<div style="display:none;">';
+    // Loop over the fieldsets
+    foreach ($fieldSets as $name => $fieldSet) {
+        // Check if the fieldset should be ignored
+        if (in_array($name, $ignoreFieldsets, true)) {
+            continue;
+        }
 
-	// Loop over the fieldsets
-	foreach ($fieldSets as $name => $fieldSet)
-	{
-		// Check if the fieldset should be ignored
-		if (in_array($name, $ignoreFieldsets, true))
-		{
-			continue;
-		}
+        // If it is a hidden fieldset, render the inputs
+        if (in_array($name, $hiddenFieldsets)) {
+            // Loop over the fields
+            foreach ($form->getFieldset($name) as $field) {
+                // Add only the input on the buffer
+                $html[] = $field->input;
+            }
 
-		// If it is a hidden fieldset, render the inputs
-		if (in_array($name, $hiddenFieldsets))
-		{
-			// Loop over the fields
-			foreach ($form->getFieldset($name) as $field)
-			{
-				// Add only the input on the buffer
-				$html[] = $field->input;
-			}
+            // Make sure the fieldset is not rendered twice
+            $ignoreFieldsets[] = $name;
+        }
 
-			// Make sure the fieldset is not rendered twice
-			$ignoreFieldsets[] = $name;
-		}
+        // Check if it is the correct fieldset to ignore
+        if (strpos($name, 'basic') === 0) {
+            // Ignore only the fieldsets which are defined by the options not the custom fields ones
+            $ignoreFieldsets[] = $name;
+        }
+    }
 
-		// Check if it is the correct fieldset to ignore
-		if (strpos($name, 'basic') === 0)
-		{
-			// Ignore only the fieldsets which are defined by the options not the custom fields ones
-			$ignoreFieldsets[] = $name;
-		}
-	}
-
-	// Close the container
-	$html[] = '</div>';
-
-	// Echo the hidden fieldsets
-	echo implode('', $html);
+    // Echo the hidden fieldsets
+    echo implode('', $html);
 }
 
+$opentab = false;
+
+$xml = $form->getXml();
+
 // Loop again over the fieldsets
-foreach ($fieldSets as $name => $fieldSet)
-{
-	// Ensure any fieldsets we don't want to show are skipped (including repeating formfield fieldsets)
-	if ((isset($fieldSet->repeat) && $fieldSet->repeat === true)
-		|| in_array($name, $ignoreFieldsets)
-		|| (!empty($configFieldsets) && in_array($name, $configFieldsets, true))
-		|| (!empty($hiddenFieldsets) && in_array($name, $hiddenFieldsets, true))
-	)
-	{
-		continue;
-	}
+foreach ($fieldSets as $name => $fieldSet) {
+    // Ensure any fieldsets we don't want to show are skipped (including repeating formfield fieldsets)
+    if (
+        (isset($fieldSet->repeat) && $fieldSet->repeat === true)
+        || in_array($name, $ignoreFieldsets)
+        || (!empty($configFieldsets) && in_array($name, $configFieldsets, true))
+        || (!empty($hiddenFieldsets) && in_array($name, $hiddenFieldsets, true))
+    ) {
+        continue;
+    }
 
-	// Determine the label
-	if (!empty($fieldSet->label))
-	{
-		$label = Text::_($fieldSet->label);
-	}
-	else
-	{
-		$label = strtoupper('JGLOBAL_FIELDSET_' . $name);
-		if (Text::_($label) === $label)
-		{
-			$label = strtoupper($app->input->get('option') . '_' . $name . '_FIELDSET_LABEL');
-		}
-		$label = Text::_($label);
-	}
+    // Determine the label
+    if (!empty($fieldSet->label)) {
+        $label = Text::_($fieldSet->label);
+    } else {
+        $label = strtoupper('JGLOBAL_FIELDSET_' . $name);
+        if (Text::_($label) === $label) {
+            $label = strtoupper($app->getInput()->get('option') . '_' . $name . '_FIELDSET_LABEL');
+        }
+        $label = Text::_($label);
+    }
 
-	// Start the tab
-	echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.addTab', $tabName, 'attrib-' . $name, $label);
+    $hasChildren  = $xml->xpath('//fieldset[@name="' . $name . '"]//fieldset[not(ancestor::field/form/*)]');
+    $hasParent    = $xml->xpath('//fieldset//fieldset[@name="' . $name . '"]');
+    $isGrandchild = $xml->xpath('//fieldset//fieldset//fieldset[@name="' . $name . '"]');
 
-	// Include the description when available
-	if (isset($fieldSet->description) && trim($fieldSet->description))
-	{
-		echo '<p class="alert alert-info">' . $this->escape(Text::_($fieldSet->description)) . '</p>';
-	}
+    if (!$isGrandchild && $hasParent) {
+        echo '<fieldset id="fieldset-' . $name . '" class="options-form ' . (!empty($fieldSet->class) ? $fieldSet->class : '') . '">';
+        echo '<legend>' . $label . '</legend>';
 
-	// The name of the fieldset to render
-	$displayData->fieldset = $name;
+        // Include the description when available
+        if (!empty($fieldSet->description)) {
+            echo '<div class="alert alert-info">';
+            echo '<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden">' . Text::_('INFO') . '</span> ';
+            echo Text::_($fieldSet->description);
+            echo '</div>';
+        }
 
-	// Force to show the options
-	$displayData->showOptions = true;
+        echo '<div class="form-grid">';
+    } elseif (!$hasParent) {
+        // Tabs
+        if ($opentab) {
+            if ($opentab > 1) {
+                echo '</div>';
+                echo '</fieldset>';
+            }
 
-	// Render the fieldset
-	echo LayoutHelper::render('joomla.edit.fieldset', $displayData);
+            // End previous tab
+            echo HTMLHelper::_($helper . '.endTab');
+        }
 
-	// End the tab
-	echo HTMLHelper::_((JVERSION < 4 ? 'bootstrap' : 'uitab') . '.endTab');
+        // Start the tab
+        echo HTMLHelper::_($helper . '.addTab', $tabName, 'attrib-' . $name, $label);
+
+        $opentab = 1;
+
+        // Directly add a fieldset if we have no children
+        if (!$hasChildren) {
+            echo '<fieldset id="fieldset-' . $name . '" class="options-form ' . (!empty($fieldSet->class) ? $fieldSet->class : '') . '">';
+            echo '<legend>' . $label . '</legend>';
+
+            // Include the description when available
+            if (!empty($fieldSet->description)) {
+                echo '<div class="alert alert-info">';
+                echo '<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden">' . Text::_('INFO') . '</span> ';
+                echo Text::_($fieldSet->description);
+                echo '</div>';
+            }
+
+            echo '<div class="form-grid">';
+
+            $opentab = 2;
+        } elseif (!empty($fieldSet->description)) {
+            // Include the description when available
+            echo '<div class="alert alert-info alert-parent">';
+            echo '<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden">' . Text::_('INFO') . '</span> ';
+            echo Text::_($fieldSet->description);
+            echo '</div>';
+        }
+    }
+
+    // We're on the deepest level => output fields
+    if (!$hasChildren) {
+        // The name of the fieldset to render
+        $displayData->fieldset = $name;
+
+        // Force to show the options
+        $displayData->showOptions = true;
+
+        // Render the fieldset
+        echo LayoutHelper::render('joomla.edit.fieldset', $displayData);
+    }
+
+    // Close open fieldset
+    if (!$isGrandchild && $hasParent) {
+        echo '</div>';
+        echo '</fieldset>';
+    }
+}
+
+if ($opentab) {
+    if ($opentab > 1) {
+        echo '</div>';
+        echo '</fieldset>';
+    }
+
+    // End previous tab
+    echo HTMLHelper::_($helper . '.endTab');
 }

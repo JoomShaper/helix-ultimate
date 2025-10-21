@@ -6,18 +6,22 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
 ?>
-<div class="profile<?php echo $this->pageclass_sfx; ?>">
-	<?php if ($this->params->get('show_page_heading')) : ?>
-		<div class="page-header">
-			<h1>
-				<?php echo $this->escape($this->params->get('page_heading')); ?>
-			</h1>
-		</div>
-	<?php endif; ?>
-	
-	<?php echo $this->loadTemplate('core'); ?>
-	<?php echo $this->loadTemplate('params'); ?>
-	<?php echo $this->loadTemplate('custom'); ?>
+<div class="com-users-profile profile">
+    <?php if ($this->params->get('show_page_heading')) : ?>
+        <div class="page-header">
+            <h1>
+                <?php echo $this->escape($this->params->get('page_heading')); ?>
+            </h1>
+        </div>
+    <?php endif; ?>
+
+    <?php echo $this->loadTemplate('core'); ?>
+    <?php echo $this->loadTemplate('params'); ?>
+    <?php echo $this->loadTemplate('custom'); ?>
 </div>

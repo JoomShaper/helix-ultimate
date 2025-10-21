@@ -10,6 +10,9 @@ defined ('_JEXEC') or die();
 
 use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Registry\Registry;
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $app->getDocument()->getWebAssetManager();
+$wa->registerAndUseScript('mod_menu', 'mod_menu/menu.min.js', [], ['type' => 'module']);
 
 $id = '';
 
@@ -21,11 +24,12 @@ if ($tagId = $params->get('tag_id', ''))
 
 // The menu class is deprecated. Use nav instead
 ?>
-<ul class="menu<?php echo $class_sfx; ?>"<?php echo $id; ?>>
+<ul class="mod-menu mod-list menu<?php echo $class_sfx; ?>"<?php echo $id; ?>>
 <?php foreach ($list as $i => &$item)
 
 {
-	$layout = \json_decode($item->getParams()->get('helixultimatemenulayout', '') ?? "");
+    $itemParams = $item->getParams();
+	$layout = \json_decode($itemParams->get('helixultimatemenulayout', '') ?? "");
 
 	if (\json_last_error() !== JSON_ERROR_NONE)
 	{
@@ -53,7 +57,7 @@ if ($tagId = $params->get('tag_id', ''))
 	}
 	elseif ($item->type === 'alias')
 	{
-		$aliasToId = $item->getParams()->get('aliasoptions');
+		$aliasToId = $itemParams->get('aliasoptions');
 
 		if (count($path) > 0 && $aliasToId == $path[count($path) - 1])
 		{
@@ -67,7 +71,7 @@ if ($tagId = $params->get('tag_id', ''))
 
 	if ($item->type === 'separator')
 	{
-		$class .= ' menu-divider';
+		$class .= ' menu-divider ';
 	}
 
 	if ($item->deeper)
@@ -103,7 +107,7 @@ if ($tagId = $params->get('tag_id', ''))
 	// The next item is deeper.
 	if ($item->deeper)
 	{
-		echo '<ul class="menu-child">';
+		echo '<ul class="mod-menu__sub list-unstyled small menu-child">';
 	}
 	// The next item is shallower.
 	elseif ($item->shallower)

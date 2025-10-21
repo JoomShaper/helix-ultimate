@@ -1,14 +1,14 @@
 <?php
+
 /**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2016 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
-use HelixUltimate\Framework\Platform\Helper;
-
-defined ('JPATH_BASE') or die();
+defined('_JEXEC') or die;
 
 extract($displayData);
 
@@ -43,27 +43,30 @@ extract($displayData);
  * @var   array    $options         Options available for this field.
  * @var   array    $inputType       Options available for this field.
  * @var   string   $accept          File types that are accepted.
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attribute for eg, data-*.
  */
 
 // Initialize some field attributes.
-$attributes = array(
-	$class ? 'class="form-control ' . $class . '"' : 'class="form-control"',
-	$disabled ? 'disabled' : '',
-	$readonly ? 'readonly' : '',
-	!empty($onchange) ? 'onchange="' . $onchange . '"' : '',
-	!empty($max) ? 'max="' . $max . '"' : '',
-	!empty($step) ? 'step="' . $step . '"' : '',
-	!empty($min) ? 'min="' . $min . '"' : '',
-	$autofocus ? 'autofocus' : '',
-);
+$attributes = [
+    $class ? 'class="form-range ' . $class . '"' : 'class="form-range"',
+    !empty($description) ? 'aria-describedby="' . ($id ?: $name) . '-desc"' : '',
+    $disabled ? 'disabled' : '',
+    $readonly ? 'readonly' : '',
+    !empty($onchange) ? 'onchange="' . $onchange . '"' : '',
+    !empty($max) ? 'max="' . $max . '"' : '',
+    !empty($step) ? 'step="' . $step . '"' : '',
+    !empty($min) ? 'min="' . $min . '"' : '',
+    $autofocus ? 'autofocus' : '',
+    $dataAttribute,
+];
 
-$value = (float) $value;
-$value = empty($value) ? $min : $value;
+$value = is_numeric($value) ? (float) $value : $min;
 
 ?>
 <input
-	type="range"
-	name="<?php echo $name; ?>"
-	id="<?php echo $id; ?>"
-	value="<?php echo htmlspecialchars(Helper::CheckNull($value), ENT_COMPAT, 'UTF-8'); ?>"
-	<?php echo implode(' ', $attributes); ?>>
+    type="range"
+    name="<?php echo $name; ?>"
+    id="<?php echo $id; ?>"
+    value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>"
+    <?php echo implode(' ', $attributes); ?>>

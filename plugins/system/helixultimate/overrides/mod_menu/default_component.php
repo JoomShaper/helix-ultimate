@@ -6,48 +6,48 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\HTML\HTMLHelper;
 
-
-$attributes = array();
+$attributes = [];
 $isOffcanvasMenu = $params->get('hu_offcanvas', 0, 'INT') === 1;
 $maxLevel = $params->get('endLevel', 0, 'INT');
 $showToggler = $maxLevel === 0 || $item->level < $maxLevel;
 
-
-if ($item->anchor_title)
-{
-	$attributes['title'] = $item->anchor_title;
+if ($item->anchor_title) {
+    $attributes['title'] = $item->anchor_title;
 }
 
-if ($item->anchor_css)
-{
-	$attributes['class'] = $item->anchor_css;
+if ($item->anchor_css) {
+    $attributes['class'] = $item->anchor_css;
 }
 
-if ($item->anchor_rel)
-{
-	$attributes['rel'] = $item->anchor_rel;
+if ($item->anchor_rel) {
+    $attributes['rel'] = $item->anchor_rel;
+}
+
+// Set aria-current attributes based on item state
+if ($item->id == $active_id) {
+    $attributes['aria-current'] = 'location';
+
+    if ($item->current) {
+        $attributes['aria-current'] = 'page';
+    }
 }
 
 $linktype = $item->title;
 
 if ($item->menu_icon) {
-	if ($item->getParams()->get('menu_text', 1))
-	{
-		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
-	}
-	else
-	{
-		$linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
-	}
-}
-else if ($item->menu_image)
-{
-	// The link is an image, maybe with its own class
+    // The link is an icon
+    if ($itemParams->get('menu_text', 1)) {
+        $linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+    } else {
+        $linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+    }
+} elseif ($item->menu_image) {
+    // The link is an image, maybe with its own class
     $image_attributes = [];
 
     if ($item->menu_image_css) {
@@ -56,26 +56,23 @@ else if ($item->menu_image)
 
     $linktype = HTMLHelper::_('image', $item->menu_image, $item->title, $image_attributes);
 
-    if ($item->getParams()->get('menu_text', 1)) {
+    if ($itemParams->get('menu_text', 1)) {
         $linktype .= '<span class="image-title">' . $item->title . '</span>';
     }
 }
 
-
-if ($item->parent && $showToggler)
-{
-	$linktype .= '<span class="menu-toggler"></span>';
+if ($item->parent && $showToggler) {
+    $linktype .= '<span class="menu-toggler"></span>';
 }
 
-if ($item->browserNav == 1)
-{
-	$attributes['target'] = '_blank';
-}
-elseif ($item->browserNav == 2)
-{
-	$options = 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes';
-
-	$attributes['onclick'] = "window.open(this.href, 'targetWindow', '" . $options . "'); return false;";
+// Handle browser navigation
+if ($item->browserNav == 1) {
+    $attributes['target'] = '_blank';
+} elseif ($item->browserNav == 2) {
+    $options = 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes';
+    $attributes['onclick'] = "window.open(this.href, 'targetWindow', '" . $options . "'); return false;";
 }
 
+// Output the link with the correct attributes and content
 echo HTMLHelper::_('link', OutputFilter::ampReplace(htmlspecialchars($item->flink ?? "", ENT_COMPAT, 'UTF-8', false)), $linktype, $attributes);
+?>

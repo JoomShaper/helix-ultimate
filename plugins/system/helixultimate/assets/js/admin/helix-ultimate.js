@@ -46,7 +46,7 @@ jQuery(function ($) {
     };
 
     /** In case of chosen multi-select not working.  */
-    $('.form-select[multiple]').chosen({ width: '100%' });
+    // $('.form-select[multiple]').chosen({ width: '100%' }); @todo in Joomla 6 crate issue
 
     /**
      * Positioning the toolbar of its previous location.

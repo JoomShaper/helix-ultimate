@@ -9,7 +9,7 @@
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -43,8 +43,6 @@ class JFormFieldHelixgallery extends FormField
 		HTMLHelper::_('jquery.framework');
 		$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
 		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
-
-		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
 
 		$values = json_decode($this->value ?? "");
 

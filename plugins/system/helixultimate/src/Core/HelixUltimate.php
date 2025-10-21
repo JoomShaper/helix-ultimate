@@ -2017,6 +2017,12 @@ class HelixUltimate
 			$scssVars['offcanvas_menu_bg_color'] = $scssVars['menu_dropdown_bg_color'];
 			$scssVars['offcanvas_menu_items_and_items_color'] = $scssVars['menu_dropdown_text_color'];
 			$scssVars['offcanvas_menu_active_menu_item_color'] = $scssVars['menu_text_active_color'];
+
+			foreach ($scssVars as $key => $value) {
+				if ((str_contains($key, 'color') || str_contains($key, '_bg_')) && (empty($value) || is_null($value))) {
+					$scssVars[$key] = 'transparent';
+				}
+			}
 		}
 
 		$scssVars['header_height'] 		= $this->params->get('header_height', '60px');

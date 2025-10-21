@@ -2019,7 +2019,7 @@ class HelixUltimate
 			$scssVars['offcanvas_menu_active_menu_item_color'] = $scssVars['menu_text_active_color'];
 
 			foreach ($scssVars as $key => $value) {
-				if ((str_contains($key, 'color') || str_contains($key, '_bg_')) && (empty($value) || is_null($value))) {
+				if ((strpos($key, 'color') !== false || strpos($key, '_bg_') !== false) && (empty($value) || is_null($value))) {
 					$scssVars[$key] = 'transparent';
 				}
 			}

@@ -35,6 +35,7 @@
     <folder plugin="helixultimate">layout</folder>
     <folder plugin="helixultimate">layouts</folder>
     <folder plugin="helixultimate">overrides</folder>
+    <folder plugin="helixultimate">overrides_legacy</folder>
     <folder plugin="helixultimate">params</folder>
     <folder plugin="helixultimate">src</folder>
     <folder plugin="helixultimate">vendor</folder>

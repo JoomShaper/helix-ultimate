@@ -701,22 +701,14 @@ class HelixUltimate
 				{
 					if (!$this->params->get('predefined_header'))
 					{
-						$header .= $rendered;
+						$output .= $getLayout->render($data);
 					}
 				}
-				elseif ($sematic === 'footer')
-				{
-					$footer .= $rendered;
-				}
 				else
-				{	
-					$rendered_sections[] = $rendered;
+				{
+					$output .= $getLayout->render($data);
 				}
 			}
-		}
-
-		if (!empty($rendered_sections)) {
-        	$output = $header . '<main id="sp-main">' . implode('', $rendered_sections) . '</main>' . $footer;
 		}
 
 		return $output;

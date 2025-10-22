@@ -41,7 +41,7 @@ $doc->addCustomTag('<meta name="twitter:description" content="'. HTMLHelper::_('
 
 if(isset($image) && $image)
 {
-    $doc->addCustomTag('<meta name="twitter:image:src" content="'. Uri::root().ltrim($image, '/') .'" />');
+    $doc->addCustomTag('<meta name="twitter:image:src" content="'. Uri::root(true).ltrim($image, '/') .'" />');
 }
 
 if(isset($twitter_site) && $twitter_site)

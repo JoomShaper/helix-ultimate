@@ -10,13 +10,13 @@
   <license>http://www.gnu.org/licenses/gpl-2.0.html GPLv2 or later</license>
   <authorEmail>support@joomshaper.com</authorEmail>
   <authorUrl>www.joomshaper.com</authorUrl>
-  <version>2.1.3</version>
+  <version>2.2.1</version>
   <description>Helix Ultimate Framework - Joomla Template Framework by JoomShaper</description>
 
   <updateservers>
     <server type="extension" 
       priority="1" 
-      name="System - Helix Ultimate Framework">http://www.joomshaper.com/updates/plg-system-helixultimate.xml</server>
+      name="System - Helix Ultimate Framework">https://www.joomshaper.com/updates/plg-system-helixultimate.xml</server>
   </updateservers>
 
   <languages>
@@ -35,6 +35,7 @@
     <folder plugin="helixultimate">layout</folder>
     <folder plugin="helixultimate">layouts</folder>
     <folder plugin="helixultimate">overrides</folder>
+    <folder plugin="helixultimate">overrides_legacy</folder>
     <folder plugin="helixultimate">params</folder>
     <folder plugin="helixultimate">src</folder>
     <folder plugin="helixultimate">vendor</folder>

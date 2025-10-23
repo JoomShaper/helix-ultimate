@@ -74,5 +74,5 @@ echo LayoutHelper::render('comingsoon', array(
     'params' => $this->params, 
     'login' => true, 
     'login_form' => $login_form,
-    'isOffline' => true)
+  )
 );

@@ -7,7 +7,7 @@
 
 jQuery(function ($) {
 	/** Enable chosen for the font family of the typography panel. */
-	$('.hu-webfont-list').chosen({ width: '100%' });
+	// $('.hu-webfont-list').chosen({ width: '100%' }); @todo in Joomla 6 crate issue
 
 	Joomla.initColorPicker('.hu-font-color-input');
 

@@ -11,25 +11,18 @@ defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use HelixUltimate\Framework\Platform\Helper;
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Version;
+use Joomla\Database\DatabaseInterface;
 
 FormHelper::loadFieldClass('list');
-
-$version = new Version();
-$JoomlaVersion = $version->getShortVersion();
-
-if (version_compare($JoomlaVersion, '4.0.0', '>='))
-{
-	JLoader::registerAlias('JFormFieldList', 'Joomla\CMS\Form\Field\ListField');
-}
 
 /**
  * Form field for Helix positions
  *
  * @since 	1.0.0
  */
-class JFormFieldHelixmultipositions extends JFormFieldList
+class JFormFieldHelixmultipositions extends ListField
 {
 	/**
 	 * Field type
@@ -51,7 +44,7 @@ class JFormFieldHelixmultipositions extends JFormFieldList
 		$style_id = $input->get('id', 0, 'INT');
 		$style = Helper::getTemplateStyle($style_id);
 
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('position'));
 		$query->from($db->quoteName('#__modules'));

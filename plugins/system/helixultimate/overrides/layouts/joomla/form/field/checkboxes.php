@@ -1,12 +1,14 @@
 <?php
-/**
- * @package Helix Ultimate Framework
- * @author JoomShaper https://www.joomshaper.com
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
- * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
-*/
 
-defined ('JPATH_BASE') or die();
+/**
+ * @package     Joomla.Site
+ * @subpackage  Layout
+ *
+ * @copyright   (C) 2015 Open Source Matters, Inc. <https://www.joomla.org>
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
 
 extract($displayData);
 
@@ -39,6 +41,8 @@ extract($displayData);
  * @var   array    $checkedOptions  Options that will be set as checked.
  * @var   boolean  $hasValue        Has this field a value assigned?
  * @var   array    $options         Options available for this field.
+ * @var   string   $dataAttribute   Miscellaneous data attributes preprocessed for HTML output
+ * @var   array    $dataAttributes  Miscellaneous data attributes for eg, data-*.
  */
 
 /**
@@ -55,32 +59,34 @@ $alt = preg_replace('/[^a-zA-Z0-9_\-]/', '_', $name);
 ?>
 
 <fieldset id="<?php echo $id; ?>" class="<?php echo trim($class . ' checkboxes'); ?>"
-	<?php echo $required ? 'required aria-required="true"' : ''; ?>
-	<?php echo $autofocus ? 'autofocus' : ''; ?>>
+    <?php echo $required ? 'required' : ''; ?>
+    <?php echo $autofocus ? 'autofocus' : ''; ?>
+    <?php echo $dataAttribute; ?>>
+    <legend class="visually-hidden"><?php echo $label; ?></legend>
 
-	<?php foreach ($options as $i => $option) : ?>
-		<?php
-			// Initialize some option attributes.
-			$checked = in_array((string) $option->value, $checkedOptions, true) ? 'checked' : '';
+    <?php foreach ($options as $i => $option) : ?>
+        <?php
+            // Initialize some option attributes.
+            $checked = in_array((string) $option->value, $checkedOptions, true) ? 'checked' : '';
 
-			// In case there is no stored value, use the option's default state.
-			$checked     = (!$hasValue && $option->checked) ? 'checked' : $checked;
-			$optionClass = !empty($option->class) ? 'class="form-check-input ' . $option->class . '"' : ' class="form-check-input"';
-			$optionDisabled    = !empty($option->disable) || $disabled ? 'disabled' : '';
+            // In case there is no stored value, use the option's default state.
+            $checked        = (!$hasValue && $option->checked) ? 'checked' : $checked;
+            $optionClass    = !empty($option->class) ? 'class="form-check-input ' . $option->class . '"' : ' class="form-check-input"';
+            $optionDisabled = !empty($option->disable) || $disabled ? 'disabled' : '';
 
-			// Initialize some JavaScript option attributes.
-			$onclick  = !empty($option->onclick) ? 'onclick="' . $option->onclick . '"' : '';
-			$onchange = !empty($option->onchange) ? 'onchange="' . $option->onchange . '"' : '';
+            // Initialize some JavaScript option attributes.
+            $onclick  = !empty($option->onclick) ? 'onclick="' . $option->onclick . '"' : '';
+            $onchange = !empty($option->onchange) ? 'onchange="' . $option->onchange . '"' : '';
 
-			$oid        = $id . $i;
-			$value      = htmlspecialchars($option->value ?? "", ENT_COMPAT, 'UTF-8');
-			$attributes = array_filter(array($checked, $optionClass, $optionDisabled, $onchange, $onclick));
-		?>
-		<div class="form-check form-check-inline">
-			<label for="<?php echo $oid; ?>" class="form-check-label">
-				<?php echo sprintf($format, $oid, $name, $value, implode(' ', $attributes)); ?>
-				<?php echo $option->text; ?>
-			</label>
-		</div>
-	<?php endforeach; ?>
+            $oid        = $id . $i;
+            $value      = htmlspecialchars($option->value, ENT_COMPAT, 'UTF-8');
+            $attributes = array_filter([$checked, $optionClass, $optionDisabled, $onchange, $onclick]);
+        ?>
+        <div class="form-check form-check-inline">
+        <?php echo sprintf($format, $oid, $name, $value, implode(' ', $attributes)); ?>
+            <label for="<?php echo $oid; ?>" class="form-check-label">
+                <?php echo $option->text; ?>
+            </label>
+        </div>
+    <?php endforeach; ?>
 </fieldset>

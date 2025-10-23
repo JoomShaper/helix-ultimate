@@ -12,19 +12,12 @@ namespace HelixUltimate\Framework\HttpResponse;
 use HelixUltimate\Framework\Platform\Builders\MegaMenuBuilder;
 use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\System\JoomlaBridge;
-use Joomla\CMS\Application\ApplicationHelper;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Path;
-use Joomla\CMS\Filter\InputFilter;
-use Joomla\CMS\Form\Form;
-use Joomla\CMS\Language\Associations;
-use Joomla\CMS\Language\LanguageHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Menu\SiteMenu;
 use Joomla\CMS\Table\Table;
-use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 
 defined('_JEXEC') or die();
 
@@ -79,7 +72,7 @@ class Response
 				$db->updateObject('#__menu', $data, 'id');
 
 				$itemModel->rebuild();
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				echo $e->getMessage();
 			}
 		}
@@ -152,7 +145,7 @@ class Response
 		$items = [];
 
 		try {
-			$db 	= Factory::getDbo();
+			$db 	= Factory::getContainer()->get(DatabaseInterface::class);
 			$query 	= $db->getQuery(true);
 
 			$query->select('id, title, menutype, alias, parent_id, level, lft, rgt, published')
@@ -164,7 +157,7 @@ class Response
 			$db->setQuery($query);
 
 			$items = $db->loadObjectList();
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			echo $e->getMessage();
 		}
 
@@ -283,7 +276,7 @@ class Response
 			$db->updateObject('#__menu', $data, 'id', true);
 
 			return true;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			return $e->getMessage();
 		}
 	}

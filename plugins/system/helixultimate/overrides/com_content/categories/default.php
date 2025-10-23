@@ -6,29 +6,24 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 
-HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
-// HTMLHelper::_('behavior.caption');
+// Add strings for translations in Javascript.
+Text::script('JGLOBAL_EXPAND_CATEGORIES');
+Text::script('JGLOBAL_COLLAPSE_CATEGORIES');
 
-Factory::getDocument()->addScriptDeclaration("
-jQuery(function($) {
-	$('.categories-list').find('[id^=category-btn-]').each(function(index, btn) {
-		var btn = $(btn);
-		btn.on('click', function() {
-			btn.find('span').toggleClass('icon-plus');
-			btn.find('span').toggleClass('icon-minus');
-		});
-	});
-});");
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_categories');
+$wa->usePreset('com_categories.shared-categories-accordion');
+
 ?>
-<div class="categories-list<?php echo $this->pageclass_sfx; ?> list-group">
-	<?php
-		echo LayoutHelper::render('joomla.content.categories_default', $this);
-		echo $this->loadTemplate('items');
-	?>
+<div class="com-content-categories categories-list">
+    <?php
+        echo LayoutHelper::render('joomla.content.categories_default', $this);
+        echo $this->loadTemplate('items');
+    ?>
 </div>

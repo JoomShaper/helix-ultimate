@@ -10,19 +10,17 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Version;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
-$version = new Version();
-$JoomlaVersion = $version->getShortVersion();
 ?>
 <?php if ($this->params->get('show_articles')) : ?>
-<div class="contact-articles">
-	<ul class="list-unstyled">
-		<?php foreach ($this->item->articles as $article) : ?>
-			<li>
-				<?php echo HTMLHelper::_('link', Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language) : ContentHelperRoute::getArticleRoute($article->slug, $article->catid, $article->language)), htmlspecialchars($article->title ?? "", ENT_COMPAT, 'UTF-8')); ?>
-			</li>
-		<?php endforeach; ?>
-	</ul>
+<div class="com-contact__articles contact-articles">
+    <ul class="list-unstyled">
+        <?php foreach ($this->item->articles as $article) : ?>
+            <li>
+                <?php echo HTMLHelper::_('link', Route::_(RouteHelper::getArticleRoute($article->slug, $article->catid, $article->language)), htmlspecialchars($article->title, ENT_COMPAT, 'UTF-8')); ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
 </div>
 <?php endif; ?>

@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * Copyright (c) 2010 - 2021 JoomShaper
+ * Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -36,7 +36,7 @@ $menuClass = 'col-auto flex-auto';
  * Get related modules
  * The modules are mod_search
  */
-$searchModule = Helper::getSearchModule();
+$searchModule = Helper::getSearchModule('-header');
 
 ?>
 
@@ -73,7 +73,7 @@ $searchModule = Helper::getSearchModule();
 						</div>
 						
 						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right') : ?>
+						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
 							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">
 							<div class="burger-icon"><span></span><span></span><span></span></div>
 							</a>

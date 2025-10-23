@@ -36,9 +36,9 @@ $menuModule = Helper::createModule('mod_menu', [
 	'name' => 'menu'
 ]);
 
-$searchModule = Helper::getSearchModule();
+$searchModule = Helper::getSearchModule('-canvas');
 ?>
-<div class="offcanvas-menu border-menu center-alignment text-center">
+<div class="offcanvas-menu border-menu center-alignment text-center" tabindex="-1" inert>
 	<div class="d-flex align-items-center p-3 pt-4">
 		<?php
 			if ($params->get('offcanvas_enable_logo', 0)) {

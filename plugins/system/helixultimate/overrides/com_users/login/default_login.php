@@ -8,7 +8,6 @@
 
 defined('_JEXEC') or die;
 
-use HelixUltimate\Framework\Platform\Helper;
 use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -16,13 +15,17 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('behavior.keepalive');
-HTMLHelper::_('behavior.formvalidator');
+/** @var \Joomla\Component\Users\Site\View\Login\HtmlView $cookieLogin */
+
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+    ->useScript('form.validate');
 
 $usersConfig = ComponentHelper::getParams('com_users');
 
 ?>
-<div class="login<?php echo $this->pageclass_sfx; ?>">
+<div class="com-users-login login">
 	<div class="row justify-content-center">
 		<div class="col-lg-4">
 			<?php if ($this->params->get('show_page_heading')) : ?>
@@ -33,23 +36,23 @@ $usersConfig = ComponentHelper::getParams('com_users');
 				</div>
 			<?php endif; ?>
 
-			<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', Helper::CheckNull($this->params->get('login_description'))) != '') || $this->params->get('login_image') != '') : ?>
-				<div class="login-description">
-				<?php endif; ?>
+    <?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', $this->params->get('login_description', '')) != '') || $this->params->get('login_image') != '') : ?>
+    <div class="com-users-login__description login-description">
+    <?php endif; ?>
 
-				<?php if ($this->params->get('logindescription_show') == 1) : ?>
-					<?php echo $this->params->get('login_description'); ?>
-				<?php endif; ?>
+        <?php if ($this->params->get('logindescription_show') == 1) : ?>
+            <?php echo $this->params->get('login_description'); ?>
+        <?php endif; ?>
 
-				<?php if ($this->params->get('login_image') != '') : ?>
-					<img src="<?php echo $this->escape($this->params->get('login_image')); ?>" class="login-image" alt="<?php echo Text::_('COM_USERS_LOGIN_IMAGE_ALT'); ?>">
-				<?php endif; ?>
+        <?php if ($this->params->get('login_image') != '') : ?>
+            <?php echo HTMLHelper::_('image', $this->params->get('login_image'), empty($this->params->get('login_image_alt')) && empty($this->params->get('login_image_alt_empty')) ? false : $this->params->get('login_image_alt'), ['class' => 'com-users-login__image login-image']); ?>
+        <?php endif; ?>
 
-				<?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', Helper::CheckNull($this->params->get('login_description'))) != '') || $this->params->get('login_image') != '') : ?>
-				</div>
-			<?php endif; ?>
+    <?php if (($this->params->get('logindescription_show') == 1 && str_replace(' ', '', $this->params->get('login_description', '')) != '') || $this->params->get('login_image') != '') : ?>
+    </div>
+    <?php endif; ?>
 
-			<form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="form-validate" id="com-users-login__form">
+    <form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="com-users-login__form form-validate form-horizontal well" id="com-users-login__form">
 
 				<?php foreach ($this->form->getFieldset('credentials') as $field) : ?>
 					<?php
@@ -74,83 +77,75 @@ $usersConfig = ComponentHelper::getParams('com_users');
 					<?php endif; ?>
 				<?php endforeach; ?>
 
-				<?php if ($this->tfa) : ?>
-					<div class="mb-3">
-						<?php echo $this->form->getField('secretkey')->label; ?>
-						<?php echo $this->form->getField('secretkey')->input; ?>
-					</div>
-				<?php endif; ?>
 
-				<?php if (PluginHelper::isEnabled('system', 'remember')) : ?>
-					<div class="form-check mb-3">
-						<label class="form-check-label">
-							<input class="form-check-input" type="checkbox" name="remember" id="remember" class="inputbox" value="yes">
-							<?php echo Text::_('COM_USERS_LOGIN_REMEMBER_ME') ?>
-						</label>
-					</div>
-				<?php endif; ?>
+            <?php if (PluginHelper::isEnabled('system', 'remember')) : ?>
+                <div class="com-users-login__remember mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" id="remember" type="checkbox" name="remember" value="yes">
+                        <label class="form-check-label" for="remember">
+                            <?php echo Text::_('COM_USERS_LOGIN_REMEMBER_ME'); ?>
+                        </label>
+                    </div>
+                </div>
+            <?php endif; ?>
 
-				<?php if (isset($this->extraButtons)) :?>
-					<?php foreach ($this->extraButtons as $button) :
-						$dataAttributeKeys = array_filter(array_keys($button), function ($key) {
-							return substr($key, 0, 5) == 'data-';
-						});
-						?>
-						<div class="com-users-login__submit control-group">
-							<div class="controls">
-								<button type="button"
-										class="btn btn-dark w-100 <?php echo $button['class'] ?? '' ?>"
-										<?php foreach ($dataAttributeKeys as $key) : ?>
-											<?php echo $key ?>="<?php echo $button[$key] ?>"
-										<?php endforeach; ?>
-										<?php if ($button['onclick']) : ?>
-										onclick="<?php echo $button['onclick'] ?>"
-										<?php endif; ?>
-										title="<?php echo Text::_($button['label']) ?>"
-										id="<?php echo $button['id'] ?>"
-								>
-									<?php if (!empty($button['icon'])) : ?>
-										<span class="<?php echo $button['icon'] ?>"></span>
-									<?php elseif (!empty($button['image'])) : ?>
-										<?php echo HTMLHelper::_('image', $button['image'], Text::_($button['tooltip'] ?? ''), [
-											'class' => 'icon',
-										], true) ?>
-									<?php elseif (!empty($button['svg'])) : ?>
-										<?php echo $button['svg']; ?>
-									<?php endif; ?>
-									<?php echo Text::_($button['label']) ?>
-								</button>
-							</div>
-						</div>
-					<?php endforeach; ?>
-				<?php endif; ?>
+            <?php foreach ($this->extraButtons as $button) :
+                $dataAttributeKeys = array_filter(array_keys($button), function ($key) {
+                    return substr($key, 0, 5) == 'data-';
+                });
+                ?>
+                <div class="com-users-login__submit control-group">
+                    <div class="controls">
+                        <button type="button"
+                                class="btn btn-secondary w-100 <?php echo $button['class'] ?? '' ?>"
+                                <?php foreach ($dataAttributeKeys as $key) : ?>
+                                    <?php echo $key ?>="<?php echo $button[$key] ?>"
+                                <?php endforeach; ?>
+                                <?php if ($button['onclick']) : ?>
+                                onclick="<?php echo $button['onclick'] ?>"
+                                <?php endif; ?>
+                                title="<?php echo Text::_($button['label']) ?>"
+                                id="<?php echo $button['id'] ?>"
+                        >
+                            <?php if (!empty($button['icon'])) : ?>
+                                <span class="<?php echo $button['icon'] ?>"></span>
+                            <?php elseif (!empty($button['image'])) : ?>
+                                <?php echo HTMLHelper::_('image', $button['image'], Text::_($button['tooltip'] ?? ''), [
+                                    'class' => 'icon',
+                                ], true) ?>
+                            <?php elseif (!empty($button['svg'])) : ?>
+                                <?php echo $button['svg']; ?>
+                            <?php endif; ?>
+                            <?php echo Text::_($button['label']) ?>
+                        </button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
 
-				<div class="mb-3">
-					<button type="submit" class="btn btn-primary btn-lg w-100">
-						<?php echo Text::_('JLOGIN'); ?>
-					</button>
-				</div>
+            <div class="com-users-login__submit control-group">
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <?php echo Text::_('JLOGIN'); ?>
+                    </button>
+                </div>
+            </div>
 
-				<?php $return = $this->form->getValue('return', '', $this->params->get('login_redirect_url', $this->params->get('login_redirect_menuitem'))); ?>
-				<input type="hidden" name="return" value="<?php echo base64_encode(Helper::CheckNull($return)); ?>">
-				<?php echo HTMLHelper::_('form.token'); ?>
-			</form>
-
-			<div>
-				<div class="list-group">
-					<a class="list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=reset'); ?>">
-						<?php echo Text::_('COM_USERS_LOGIN_RESET'); ?>
-					</a>
-					<a class="list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=remind'); ?>">
-						<?php echo Text::_('COM_USERS_LOGIN_REMIND'); ?>
-					</a>
-					<?php if ($usersConfig->get('allowUserRegistration')) : ?>
-						<a class="list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=registration'); ?>">
-							<?php echo Text::_('COM_USERS_LOGIN_REGISTER'); ?>
-						</a>
-					<?php endif; ?>
-				</div>
-			</div>
-		</div>
-	</div>
+            <?php $return = $this->form->getValue('return', '', $this->params->get('login_redirect_url', $this->params->get('login_redirect_menuitem', ''))); ?>
+            <input type="hidden" name="return" value="<?php echo base64_encode($return); ?>">
+            <?php echo HTMLHelper::_('form.token'); ?>
+        </fieldset>
+    </form>
+    <div class="com-users-login__options list-group">
+        <a class="com-users-login__reset list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=reset'); ?>">
+            <?php echo Text::_('COM_USERS_LOGIN_RESET'); ?>
+        </a>
+        <a class="com-users-login__remind list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=remind'); ?>">
+            <?php echo Text::_('COM_USERS_LOGIN_REMIND'); ?>
+        </a>
+        <?php if ($usersConfig->get('allowUserRegistration')) : ?>
+            <a class="com-users-login__register list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=registration'); ?>">
+                <?php echo Text::_('COM_USERS_LOGIN_REGISTER'); ?>
+            </a>
+        <?php endif; ?>
+    </div>
 </div>

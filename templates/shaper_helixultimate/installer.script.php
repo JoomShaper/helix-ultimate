@@ -1,12 +1,14 @@
 <?php
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Installer\Installer;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\Folder;
+
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * Copyright (c) 2010 - 2021 JoomShaper
+ * Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -39,9 +41,11 @@ class plgSystemTmp_helixultInstallerScript
 			$name = (string) $plugin->attributes()->plugin;
 			$group = (string) $plugin->attributes()->group;
 			$installer = new Installer;
+			$installer->setDatabase(Factory::getContainer()->get(DatabaseInterface::class));
+			
 
 			$path = $src.'/plugins/'.$group;
-			if (Folder::exists($src.'/plugins/'.$group.'/'.$name))
+			if (is_dir($src.'/plugins/'.$group.'/'.$name))
 			{
 				$path = $src.'/plugins/'.$group.'/'.$name;
 			}
@@ -67,7 +71,7 @@ class plgSystemTmp_helixultInstallerScript
 					$plg_path = JPATH_PLUGINS;
 					$dir = $plg_path.'/'.$group.'/'.$name.'/overrides/com_finder/tmpl';
 					
-					if (Folder::exists($dir))
+					if (is_dir($dir))
 					{
 						Folder::delete($dir);
 					}
@@ -85,9 +89,10 @@ class plgSystemTmp_helixultInstallerScript
 		$template_path = $src . '/template';
 		$plugin_path = $src . '/plugins/system';
 
-		if (Folder::exists( $template_path ))
+		if (is_dir( $template_path ))
 		{
 			$installer = new Installer;
+			$installer->setDatabase(Factory::getContainer()->get(DatabaseInterface::class));
 			$result = $installer->install($template_path);
 		}
 
@@ -105,7 +110,7 @@ class plgSystemTmp_helixultInstallerScript
 			{
 				$options_default = file_get_contents($template_path .'/options.json');
 
-				$db = Factory::getDBO();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
 				$query = $db->getQuery(true);
 				$fields = array(
 					$db->quoteName('params') . ' = ' . $db->quote($options_default)
@@ -137,7 +142,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function getTemplateInfoByName($name)
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__template_styles'));
@@ -160,7 +165,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function activeInstalledPlugin($name, $group)
 	{
-		$db = Factory::getDBO();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$fields = array(
 			$db->quoteName('enabled') . ' = 1'
@@ -188,7 +193,7 @@ class plgSystemTmp_helixultInstallerScript
 	 */
 	private function getPluginInfoByName($name, $group)
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__extensions'));

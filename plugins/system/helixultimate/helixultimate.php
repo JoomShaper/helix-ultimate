@@ -2,7 +2,7 @@
 /**
  * @package 	Helix_Ultimate_Framework
  * @author 		JoomShaper <joomshaper@js.com>
- * @copyright 	Copyright (c) 2010 - 2018 JoomShaper
+ * @copyright 	Copyright (c) 2010 - 2025 JoomShaper
  * @license 	http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -24,15 +24,14 @@ use HelixUltimate\Framework\Platform\Platform;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
 
 // Constant definition
@@ -71,7 +70,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 	public function onAfterInitialise()
 	{
 		if (JVERSION < 4) {
-			$this->registerBootstrap();	
+			$this->registerBootstrap();
 		}
 	}
 
@@ -108,51 +107,46 @@ class PlgSystemHelixultimate extends CMSPlugin
 	 * @return	void
 	 * @since	1.0.0
 	 */
+
 	public function onContentPrepareForm(Form $form, $data)
 	{
-		$doc = Factory::getDocument();
-		$template = Helper::loadTemplateData();
+	    $doc = Factory::getDocument();
 
-		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
-		$tmpl_path = Uri::root(true) . '/templates/' . $template->template;
+    	$plgPath = Uri::root(true) . '/plugins/system/helixultimate';
 
-		Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
+    	Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
 
-		if ($form->getName() === 'com_menus.item')
-		{
-			HTMLHelper::_('jquery.framework');
-			$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
-			$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
+    	$template = Factory::getApplication()->getTemplate(true);
+    	$tmplUrl  = Uri::root(true) . '/templates/' . $template->template;      
+    	$tmplPath = JPATH_ROOT . '/templates/' . $template->template;       
 
-			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
-			$doc->addStyleSheet($plg_path . '/assets/css/admin/modal.css');
-			$doc->addScript($plg_path . '/assets/js/admin/modal.js');
+    	// Add Font Awesome from template or plugin
+    	if (is_file($tmplPath . '/css/font-awesome.min.css')) {
+    	    $doc->addStyleSheet($tmplUrl . '/css/font-awesome.min.css', ['version' => 'auto', 'relative' => false]);
+    	} elseif (is_file(JPATH_PLUGINS . '/system/helixultimate/assets/css/font-awesome.min.css')) {
+    	    $doc->addStyleSheet($plgPath . '/assets/css/font-awesome.min.css', ['version' => 'auto', 'relative' => false]);
+    	}
 
-			$form->loadFile('megamenu', false);
-		}
+    	// For menu item form
+    	if ($form->getName() === 'com_menus.item') {
+    	    HTMLHelper::_('jquery.framework');
+    	    $doc->addScript($plgPath . '/assets/js/admin/jquery-ui.min.js', ['relative' => false, 'version' => 'auto']);
+    	    $doc->addStyleSheet($plgPath . '/assets/css/admin/modal.css', ['relative' => false, 'version' => 'auto']);
+    	    $doc->addScript($plgPath . '/assets/js/admin/modal.js', ['relative' => false, 'version' => 'auto']);
+    	    $form->loadFile('megamenu', false);
+    	}
 
-		// Article Post format
-		if ($form->getName() === 'com_content.article')
-		{
-			$doc->addStyleSheet($tmpl_path . '/css/font-awesome.min.css');
-			$tpl_path = JPATH_ROOT . '/templates/' . $this->getTemplateName()->template;
+    	// For article form
+    	if ($form->getName() === 'com_content.article') {
+    	    HTMLHelper::_('jquery.framework');
+    	    HTMLHelper::_('jquery.token');
+    	    $doc->addStyleSheet($plgPath . '/assets/css/admin/blog-options.css', ['relative' => false, 'version' => 'auto']);
+    	    $doc->addScript($plgPath . '/assets/js/admin/blog-options.js', ['relative' => false, 'version' => 'auto']);
 
-			HTMLHelper::_('jquery.framework');
-			HTMLHelper::_('jquery.token');
-
-			$doc->addStyleSheet($plg_path . '/assets/css/admin/blog-options.css');
-			$doc->addScript($plg_path . '/assets/js/admin/blog-options.js', ['version' => 'auto', 'relative' => false]);
-
-			if (File::exists($tpl_path . '/blog-options.xml'))
-			{
-				Form::addFormPath($tpl_path);
-			}
-			else
-			{
-				Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
-			}
-
-			$form->loadFile('blog-options', false);
+		    if (is_file($tmplPath . '/blog-options.xml')) {
+		        Form::addFormPath($tmplPath);
+		    }
+		    $form->loadFile('blog-options', false);
 		}
 	}
 
@@ -183,7 +177,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 				$extra_query = 'joomshaper_email=' . urlencode($email);
 				$extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
 
-				$db = Factory::getDbo();
+				$db = Factory::getContainer()->get(DatabaseInterface::class);
 				$fields = array(
 					$db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
 					$db->quoteName('last_check_timestamp') . ' = 0'
@@ -257,7 +251,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 		}
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax'
-			&& $helix === 'ultimate' && !Factory::getUser()->id)
+			&& $helix === 'ultimate' && !Factory::getApplication()->getIdentity()->id)
 		{
 			// Redirect to the login page
 			$return = urlencode(base64_encode('index.php?option=com_ajax&helix=ultimate&id=' . $id));
@@ -265,7 +259,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 		}
 
 		/** If `helixreturn` query exists in the url then redirect to the return url. */
-		if (Factory::getUser()->id && !empty($helixReturn))
+		if (Factory::getApplication()->getIdentity()->id && !empty($helixReturn))
 		{
 			$this->app->redirect(base64_decode($helixReturn));
 		}
@@ -528,6 +522,46 @@ class PlgSystemHelixultimate extends CMSPlugin
 			'style' => ['template.atum.base', 'template.atum', 'template.active', 'template.active.language', 'template.user', 'template.atum.ltr', 'template.atum.rtl'],
 			'script' => ['choicesjs', 'dragula']
 		];
+
+		foreach ($assets as $type => $names)
+		{
+			foreach ($names as $name)
+			{
+				if ($wa->assetExists($type, $name))
+				{
+					$methodName = 'disable' . ucfirst($type);
+					$wa->$methodName($name);
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * Sanitize the assets i.e. scripts and stylesheets before adding to the head.
+	 * This function is applicable for Joomla 4.
+	 * @note This method is using dynamically.
+	 *
+	 * @return	void
+	 * @since	2.2.0
+	 */
+	private function sanitizeAssetsForJ6()
+	{
+		$doc = Factory::getDocument();
+		$wa = $doc->getWebAssetManager();
+
+		/**
+		 * Disable the atum specific styles and scripts.
+		 */
+		$assets = [
+			'style' => ['template.atum.base', 'template.atum', 'template.active', 'template.active.language', 'template.user', 'template.atum.ltr', 'template.atum.rtl'],
+			'script' => ['choicesjs', 'dragula']
+		];
+
+		if (JVERSION >= 6) {
+			$doc->addScript(Uri::root(true) . '/plugins/system/helixultimate/assets/js/chosen.jquery.js');
+			$doc->addStyleSheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/chosen.css');
+		}
 
 		foreach ($assets as $type => $names)
 		{

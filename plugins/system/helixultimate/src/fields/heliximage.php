@@ -12,7 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use Joomla\CMS\HTML\HTMLHelper;
 
 /**
@@ -38,11 +38,7 @@ class JFormFieldHeliximage extends FormField
 	 */
 	protected function getInput()
 	{
-		$doc = Factory::getDocument();
-
 		HTMLHelper::_('jquery.framework');
-
-		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
 
 		$class = ' hu-image-field-empty';
 

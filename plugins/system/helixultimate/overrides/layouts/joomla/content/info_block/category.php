@@ -24,7 +24,7 @@ $JoomlaVersion = $version->getShortVersion();
 ?>
 <span class="category-name" title="<?php echo Text::sprintf('COM_CONTENT_CATEGORY', $title); ?>">
 	<?php if ($displayData['params']->get('link_category') && $displayData['item']->catslug) : ?>
-		<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getCategoryRoute($displayData['item']->catslug) : ContentHelperRoute::getCategoryRoute($displayData['item']->catslug)); ?>"><?php echo $title; ?></a>
+		<a href="<?php echo Route::_(Joomla\Component\Content\Site\Helper\RouteHelper::getCategoryRoute($displayData['item']->catslug)); ?>"><?php echo $title; ?></a>
 	<?php else : ?>
 		<?php echo $title; ?>
 	<?php endif; ?>

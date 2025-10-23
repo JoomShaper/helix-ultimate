@@ -26,7 +26,7 @@ $doc->addCustomTag('<meta property="og:description" content="'. HTMLHelper::_('s
 
 if(isset($image) && $image)
 {
-    $doc->addCustomTag('<meta property="og:image" content="'. Uri::root().ltrim($image, '/') .'" />');
+    $doc->addCustomTag('<meta property="og:image" content="'. Uri::root(true).ltrim($image, '/') .'" />');
 }
 
 if(isset($fb_app_id) && $fb_app_id)
@@ -41,7 +41,7 @@ $doc->addCustomTag('<meta name="twitter:description" content="'. HTMLHelper::_('
 
 if(isset($image) && $image)
 {
-    $doc->addCustomTag('<meta name="twitter:image:src" content="'. Uri::root().ltrim($image, '/') .'" />');
+    $doc->addCustomTag('<meta name="twitter:image:src" content="'. Uri::root(true).ltrim($image, '/') .'" />');
 }
 
 if(isset($twitter_site) && $twitter_site)

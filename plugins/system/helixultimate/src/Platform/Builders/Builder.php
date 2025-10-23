@@ -7,7 +7,7 @@
  */
 namespace HelixUltimate\Framework\Platform\Builders;
 
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 
 /**
  * Base builder class.

@@ -11,7 +11,7 @@
 	],
 	"require": {
 		"tedivm/jshrink": "~1.0",
-		"scssphp/scssphp": "^1.6.0"
+		"scssphp/scssphp": "^2.0.1"
 	},
 	"autoload": {
 		"psr-4": {

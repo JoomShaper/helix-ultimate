@@ -41,7 +41,7 @@ $menuClass = 'col-auto flex-auto';
  * Get related modules
  * The modules are mod_search
  */
-$searchModule = Helper::getSearchModule();
+$searchModule = Helper::getSearchModule('-header');
 ?>
 
 <?php if($displayData->params->get('sticky_header')) { ?>
@@ -111,7 +111,7 @@ $searchModule = Helper::getSearchModule();
 						</div>
 
 						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right') : ?>
+						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
 							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">
 							<div class="burger-icon"><span></span><span></span><span></span></div>
 							</a>

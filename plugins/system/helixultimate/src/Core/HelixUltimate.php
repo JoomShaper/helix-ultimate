@@ -15,19 +15,19 @@ use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Access\Access;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\Path;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
+use Joomla\Filesystem\Path;
 use Joomla\CMS\Filter\OutputFilter;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\OutputStyle;
+use ScssPhp\ScssPhp\ValueConverter;
 
 /**
  * Initiator class for viewing
@@ -350,6 +350,11 @@ class HelixUltimate
 		{
 			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
 		}
+
+		if (JVERSION >= 6) {
+			$this->doc->addScript(Uri::root(true) . '/plugins/system/helixultimate/assets/js/chosen.jquery.js');
+			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/chosen.css');
+		}
 		
 		if (JVERSION >= 4)
 		{
@@ -457,11 +462,11 @@ class HelixUltimate
 				$file_path .= '.' . $folder;
 			}
 
-			if (File::exists($file_path))
+			if (\file_exists($file_path))
 			{
 				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
 			}
-			elseif (File::exists($file))
+			elseif (\file_exists($file))
 			{
 				$file_url = Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder;
 			}
@@ -534,7 +539,7 @@ class HelixUltimate
 	{
 		$folder_path = JPATH_THEMES . '/' . $this->template->template . '/features';
 
-		if (Folder::exists($folder_path))
+		if (is_dir($folder_path))
 		{
 			$files = Folder::files($folder_path, '.php');
 
@@ -584,7 +589,7 @@ class HelixUltimate
 		{
 			$layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/options.json';
 
-			if (!File::exists($layout_file))
+			if (!\file_exists($layout_file))
 			{
 				die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');
 			}
@@ -625,6 +630,10 @@ class HelixUltimate
 		$layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 		$layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 
+		$rendered_sections = [];
+		$header = '';
+		$footer = '';
+
 		foreach ($rows as $key => $row)
 		{
 			$modified_row = $this->get_current_row($row);
@@ -650,8 +659,6 @@ class HelixUltimate
 				$row_class = $this->build_row_class($modified_row->settings);
 				$this->add_row_styles($modified_row->settings, $id);
 				$sematic = (isset($modified_row->settings->name) && $modified_row->settings->name) ? strtolower($modified_row->settings->name) : 'section';
-
-				
 
 				switch ($sematic)
 				{
@@ -681,6 +688,8 @@ class HelixUltimate
 
 				$layout_path  = JPATH_ROOT . '/plugins/system/helixultimate/layouts';
 				$getLayout = new FileLayout('frontend.generate', $layout_path);
+
+				$rendered = $getLayout->render($data);
 
 				/**
 				 * If a section is named as `header` that means the section is for
@@ -752,7 +761,8 @@ class HelixUltimate
 
 			if (!$has_component)
 			{
-				if (end($row->attr) === $column)
+				$rowAttr = $row->attr;
+				if (end($rowAttr) === $column)
 				{
 					$col_grid_size += $inactive_col;
 				}
@@ -1097,20 +1107,36 @@ class HelixUltimate
 					$compiler->setOutputStyle(OutputStyle::COMPRESSED);
 					$compiler->setImportPaths($scss_path);
 
-					if (!empty($vars))
-					{
-						$compiler->addVariables($vars);
+					if (!empty($vars)) {
+					    $converted = [];
+
+					    foreach ($vars as $name => $value) {
+					        if ($value === null || $value === '') {
+					            continue;
+					        }
+					        // If the value is a CSS string with units/colors/etc, parse it;
+					        if (is_string($value)) {
+					            $converted[$name] = ValueConverter::parseValue($value);
+							// otherwise convert from PHP scalar/array/bool/number.
+					        } else {
+					            $converted[$name] = ValueConverter::fromPhp($value);
+					        }
+					    }
+					
+					    $compiler->addVariables($converted); 
 					}
 
+
 					$compiledCss = $compiler->compileString('@import "' . $scss . '.scss"');
-					File::write($out, $compiledCss->getCss());
+					$getComplinedCss = $compiledCss->getCss();
+					File::write($out, $getComplinedCss);
 
 					$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
 					$scssCache = array();
 					$scssCache['imports'] = $this->parseIncludedFiles($compiledCss->getIncludedFiles());
-					$scssCache['vars'] = $compiler->getVariables();
-
-					File::write($cache_path, json_encode($scssCache));
+					$scssCache['vars'] = $vars;
+					$jsonScssCache = json_encode($scssCache);
+					File::write($cache_path, $jsonScssCache);
 				}
 			}
 		}
@@ -1134,7 +1160,10 @@ class HelixUltimate
 		{
 			if (!empty($file) && \file_exists($file))
 			{
-				$parsedFiles[realpath($file)] = filemtime($file);
+				$realPath = realpath($file);
+				if ($realPath !== false) {
+					$parsedFiles[$realPath] = filemtime($file);
+				}
 			}
 		}
 
@@ -1152,50 +1181,72 @@ class HelixUltimate
 	 */
 	public function needScssCompile($scss, $vars = array())
 	{
-		$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
+    	$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
+
+    	// Always work with arrays
+    	if (!is_array($vars)) {
+    	    $vars = [];
+    	}
+
+    	if (!file_exists($cache_path)) {
+    	    return true; 
+    	}
+
+		// unreadable/empty cache
+    	$raw = @file_get_contents($cache_path);
+    	if ($raw === false || $raw === '') {
+    	    return true; 
+    	}
+
+    	$cache_file = json_decode($raw);
+
+    	// If JSON is invalid, recompile
+    	if (!is_object($cache_file)) {
+    	    return true;
+    	}
+
+    	// Imports
+    	$imports = [];
+    	if (isset($cache_file->imports)) {
+    	    if (is_object($cache_file->imports)) {
+    	        $imports = (array) $cache_file->imports;
+    	    } elseif (is_array($cache_file->imports)) {
+    	        $imports = $cache_file->imports;
+    	    }
+    	}
+
+    	// Vars
+    	$cached_vars = [];
+    	if (isset($cache_file->vars)) {
+    	    if (is_object($cache_file->vars)) {
+    	        $cached_vars = (array) $cache_file->vars;
+    	    } elseif (is_array($cache_file->vars)) {
+    	        $cached_vars = $cache_file->vars;
+    	    }
+    	}
+
+    	// If variables changed, recompile
+    	if (!empty(array_diff_assoc((array) $vars, (array) $cached_vars))) {
+    	    return true;
+    	}
+
+    	// If any imported file is missing or modified, recompile
+    	if (!empty($imports)) {
+    	    foreach ($imports as $import => $mtime) {
+    	        if (!file_exists($import)) {
+    	            return true;
+    	        }
+    	        $existModificationTime = filemtime($import);
+    	        if ((int) $existModificationTime !== (int) $mtime) {
+    	            return true;
+    	        }
+    	    }
+    	    return false;
+    	}
 		
-		if (file_exists($cache_path))
-		{
-			$cache_file = json_decode(file_get_contents($cache_path) ?? "");
-			$imports = (isset($cache_file->imports) && $cache_file->imports) ? $cache_file->imports : array();
-			$cached_vars = (isset($cache_file->vars) && $cache_file->vars) ? (array) $cache_file->vars : array();
-
-			if (array_diff_assoc($vars, $cached_vars))
-			{
-				return true;
-			}
-
-			if (!empty($imports))
-			{
-				foreach ($imports as $import => $mtime)
-				{
-					if (file_exists($import))
-					{
-						$existModificationTime = filemtime($import);
-
-						if ($existModificationTime != $mtime)
-						{
-							return true;
-						}
-					}
-					else
-					{
-						return true;
-					}
-				}
-
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-
-			return false;
-		}
-
-		return true;
+    return true;
 	}
+
 
 	/**
 	 * Add google fonts.
@@ -1469,7 +1520,7 @@ class HelixUltimate
 			// Compress All scripts
 			if ($minifiedCode)
 			{
-				if (!Folder::exists($cache_path))
+				if (!is_dir($cache_path))
 				{
 					Folder::create($cache_path, 0755);
 				}
@@ -1597,7 +1648,7 @@ class HelixUltimate
 
 		$tmpl_file_location = JPATH_ROOT . '/templates/' . $template . '/headers';
 
-		if (File::exists($tmpl_file_location . '/' . $header_style . '/header.php'))
+		if (\file_exists($tmpl_file_location . '/' . $header_style . '/header.php'))
 		{
 			$getLayout = new FileLayout($header_style . '.header', $tmpl_file_location);
 
@@ -1731,7 +1782,7 @@ class HelixUltimate
 			//Compress All stylesheets
 			if ($minifiedCode)
 			{
-					if (!Folder::exists($cache_path))
+					if (!is_dir($cache_path))
 					{
 							Folder::create($cache_path, 0755);
 					}
@@ -1957,6 +2008,12 @@ class HelixUltimate
 			$scssVars['offcanvas_menu_bg_color'] = $scssVars['menu_dropdown_bg_color'];
 			$scssVars['offcanvas_menu_items_and_items_color'] = $scssVars['menu_dropdown_text_color'];
 			$scssVars['offcanvas_menu_active_menu_item_color'] = $scssVars['menu_text_active_color'];
+
+			foreach ($scssVars as $key => $value) {
+				if ((strpos($key, 'color') !== false || strpos($key, '_bg_') !== false) && (empty($value) || is_null($value))) {
+					$scssVars[$key] = 'transparent';
+				}
+			}
 		}
 
 		$scssVars['header_height'] 		= $this->params->get('header_height', '60px');

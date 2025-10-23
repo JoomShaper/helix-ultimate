@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * Copyright (c) 2010 - 2021 JoomShaper
+ * Copyright (c) 2010 - 2025 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -55,7 +55,7 @@ if (!$requestFromIframe)
 {
 	$user = Factory::getUser();
 
-	if (!\is_null($this->params->get('comingsoon', null)) && $user->get('id') === 0)
+	if (!\is_null($this->params->get('comingsoon', null)) && !$user->authorise('core.admin'))
 	{
 		header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));
 		exit();
@@ -199,7 +199,7 @@ if ($custom_js = $this->params->get('custom_js', null))
 
 		<!-- Go to top -->
 		<?php if ($this->params->get('goto_top', 0)) : ?>
-			<a href="#" class="sp-scroll-up" aria-label="<?php echo Text::_('HELIX_ULTIMATE_SCROLL_UP_ARIA_LABEL'); ?>"><span class="fas fa-angle-up" aria-hidden="true"></span></a>
+			<a href="#" class="sp-scroll-up" aria-label="<?php echo Text::_('HELIX_ULTIMATE_SCROLL_UP_ARIA_LABEL'); ?>" role="button"><span class="fas fa-angle-up" aria-hidden="true"></span></a>
 		<?php endif; ?>
 		<?php if( $app->input->get('view') === 'article' && $this->params->get('reading_time_progress', 0) ): ?>
 			<div data-position="<?php echo $progress_bar_position; ?>" class="sp-reading-progress-bar"></div>

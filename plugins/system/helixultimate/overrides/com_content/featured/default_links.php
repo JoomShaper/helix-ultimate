@@ -6,19 +6,17 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Version;
+use Joomla\Component\Content\Site\Helper\RouteHelper;
 
-$version = new Version();
-$JoomlaVersion = $version->getShortVersion();
 ?>
-<ol class="nav nav-tabs nav-stacked">
-<?php foreach ($this->link_items as &$item) : ?>
-	<li>
-		<a href="<?php echo Route::_(version_compare($JoomlaVersion, '4.0.0', '>=') ? Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language) : ContentHelperRoute::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
-			<?php echo $item->title; ?></a>
-	</li>
-<?php endforeach; ?>
-</ol>
+<ul class="com-content-blog__links">
+    <?php foreach ($this->link_items as $item) : ?>
+        <li class="com-content-blog__link">
+            <a href="<?php echo Route::_(RouteHelper::getArticleRoute($item->slug, $item->catid, $item->language)); ?>">
+                <?php echo $item->title; ?></a>
+        </li>
+    <?php endforeach; ?>
+</ul>

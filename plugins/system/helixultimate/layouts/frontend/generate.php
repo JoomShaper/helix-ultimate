@@ -8,7 +8,6 @@
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\FileLayout;
-use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die();

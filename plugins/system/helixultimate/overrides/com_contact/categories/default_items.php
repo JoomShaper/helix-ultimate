@@ -6,56 +6,61 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
 */
 
-defined ('_JEXEC') or die();
+defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-
-$lang  = Factory::getLanguage();
+use Joomla\Component\Contact\Site\Helper\RouteHelper;
 
 if ($this->maxLevelcat != 0 && count($this->items[$this->parent->id]) > 0) :
-?>
-	<?php foreach ($this->items[$this->parent->id] as $id => $item) : ?>
-		<?php if ($this->params->get('show_empty_categories_cat') || $item->numitems || count($item->getChildren())) : ?>
-			<div class="list-group-item">
-				<div style="padding-<?php echo $lang->isRtl() ? 'right' : 'left' ?>: <?php echo (int) $this->level * 16; ?>px">
-					<div class="d-flex justify-content-between align-items-center">
-						<h5 class="m-0">
-							<a href="<?php echo Route::_(JVERSION < 4 ? ContactHelperRoute::getCategoryRoute($item->id, $item->language) : Joomla\Component\Contact\Site\Helper\RouteHelper::getCategoryRoute($item->id, $item->language)); ?>">
-								<?php echo $this->escape($item->title); ?>
-							</a>
-						</h5>
+    ?>
+    <?php foreach ($this->items[$this->parent->id] as $id => $item) : ?>
+        <?php if ($this->params->get('show_empty_categories_cat') || $item->numitems || count($item->getChildren())) : ?>
+            <div class="com-contact-categories__items">
+                <h3 class="page-header item-title">
+                    <a href="<?php echo Route::_(RouteHelper::getCategoryRoute($item->id, $item->language)); ?>">
+                    <?php echo $this->escape($item->title); ?></a>
+                    <?php if ($this->params->get('show_cat_items_cat') == 1) :?>
+                        <span class="badge bg-info">
+                            <?php echo Text::_('COM_CONTACT_NUM_ITEMS'); ?>&nbsp;
+                            <?php echo $item->numitems; ?>
+                        </span>
+                    <?php endif; ?>
+                    <?php if ($this->maxLevelcat > 1 && count($item->getChildren()) > 0) : ?>
+                        <button
+                            type="button"
+                            id="category-btn-<?php echo $item->id; ?>"
+                            data-bs-target="#category-<?php echo $item->id; ?>"
+                            data-bs-toggle="collapse"
+                            class="btn btn-secondary btn-sm float-end"
+                            aria-label="<?php echo Text::_('JGLOBAL_EXPAND_CATEGORIES'); ?>"
+                        >
+                            <span class="icon-plus" aria-hidden="true"></span>
+                        </button>
+                    <?php endif; ?>
+                </h3>
+                <?php if ($this->params->get('show_subcat_desc_cat') == 1) : ?>
+                    <?php if ($item->description) : ?>
+                        <div class="category-desc">
+                            <?php echo HTMLHelper::_('content.prepare', $item->description, '', 'com_contact.categories'); ?>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
 
-						<?php if ($this->params->get('show_cat_num_articles_cat') == 1) :?>
-							<span class="badge bg-primary rounded-pill">
-								<?php echo Text::_('COM_CONTENT_NUM_ITEMS'); ?>
-								<?php echo $item->numitems; ?>
-							</span>
-						<?php endif; ?>
-					</div>
-
-					<?php if ($this->params->get('show_subcat_desc_cat') == 1) : ?>
-						<?php if ($item->description) : ?>
-							<div class="mt-2">
-								<?php echo HTMLHelper::_('content.prepare', $item->description, '', 'com_contact.categories'); ?>
-							</div>
-						<?php endif; ?>
-					<?php endif; ?>
-				</div>
-			</div>
-			<?php if (count($item->getChildren()) > 0 && $this->maxLevelcat > 1) : ?>
-				<?php
-					$this->items[$item->id] = $item->getChildren();
-					$this->parent = $item;
-					$this->maxLevelcat--;
-					$this->level++;
-					echo $this->loadTemplate('items');
-					$this->parent = $item->getParent();
-					$this->maxLevelcat++;
-				?>
-			<?php endif; ?>
-		<?php endif; ?>
-	<?php endforeach; ?>
-<?php endif; ?>
+                <?php if ($this->maxLevelcat > 1 && count($item->getChildren()) > 0) : ?>
+                    <div class="collapse fade" id="category-<?php echo $item->id; ?>">
+                        <?php
+                        $this->items[$item->id] = $item->getChildren();
+                        $this->parent = $item;
+                        $this->maxLevelcat--;
+                        echo $this->loadTemplate('items');
+                        $this->parent = $item->getParent();
+                        $this->maxLevelcat++;
+                        ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?><?php
+endif; ?>

@@ -167,13 +167,15 @@ $document->getWebAssetManager()
             <?php echo $dataAttribute ?? ''; ?>
             <?php echo !empty($hint) ? 'placeholder="' . htmlspecialchars($hint, ENT_COMPAT, 'UTF-8') . '"' : ''; ?>
             data-alt-value="<?php echo htmlspecialchars($value, ENT_COMPAT, 'UTF-8'); ?>" autocomplete="off">
-        <button type="button" class="<?php echo ($readonly || $disabled) ? 'hidden ' : ''; ?>btn btn-primary"
-            id="<?php echo $id; ?>_btn"
-            title="<?php echo Text::_('JLIB_HTML_BEHAVIOR_OPEN_CALENDAR'); ?>"
-            <?php echo $calendarAttrsStr; ?>
-        ><span class="icon-calendar" aria-hidden="true"></span>
-        <span class="visually-hidden"><?php echo Text::_('JLIB_HTML_BEHAVIOR_OPEN_CALENDAR'); ?></span>
-        </button>
+            <span class="input-group-text">
+                <button type="button" class="<?php echo ($readonly || $disabled) ? 'hidden ' : ''; ?>btn btn-primary"
+                    id="<?php echo $id; ?>_btn"
+                    title="<?php echo Text::_('JLIB_HTML_BEHAVIOR_OPEN_CALENDAR'); ?>"
+                    <?php echo $calendarAttrsStr; ?>
+                ><span class="fas fa-calendar" aria-hidden="true"></span>
+                <span class="visually-hidden"><?php echo Text::_('JLIB_HTML_BEHAVIOR_OPEN_CALENDAR'); ?></span>
+                </button>
+            </span>
         <?php if (!$readonly && !$disabled) : ?>
     </div>
         <?php endif; ?>

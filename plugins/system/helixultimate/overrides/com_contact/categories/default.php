@@ -22,7 +22,7 @@ $wa->getRegistry()->addExtensionRegistryFile('com_categories');
 $wa->useScript('com_categories.shared-categories-accordion');
 
 ?>
-<div class="com-contact-categories categories-list">
+<div class="com-contact-categories categories-list<?php echo $this->pageclass_sfx; ?> list-group">
     <?php
         echo LayoutHelper::render('joomla.content.categories_default', $this);
         echo $this->loadTemplate('items');

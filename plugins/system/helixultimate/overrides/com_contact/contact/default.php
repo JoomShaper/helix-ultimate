@@ -44,13 +44,7 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
     <?php endif; ?>
 
     <?php if ($canEdit) : ?>
-        <div class="icons">
-            <div class="float-end">
-                <div>
-                    <?php echo HTMLHelper::_('contacticon.edit', $this->item, $tparams); ?>
-                </div>
-            </div>
-        </div>
+        <?php echo HTMLHelper::_('contacticon.edit', $this->item, $tparams); ?>
     <?php endif; ?>
 
     <?php $show_contact_category = $tparams->get('show_contact_category'); ?>
@@ -96,11 +90,36 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
     <?php echo $this->item->event->beforeDisplayContent; ?>
 
     <?php if ($this->params->get('show_info', 1)) : ?>
-        <div class="com-contact__container">
+        <div class="row">
             <?php echo '<' . $htag2 . '>' . Text::_('COM_CONTACT_DETAILS') . '</' . $htag2 . '>'; ?>
 
+            <div class="col">
+                <?php if ($this->item->con_position && $tparams->get('show_position')) : ?>
+                    <div class="contact-position d-flex mb-3">
+                            <div class="me-2 ">
+                                <strong><?php echo Text::_('COM_CONTACT_POSITION'); ?>:</strong>
+                            </div>
+                        <div itemprop="jobTitle">
+                            <?php echo $this->item->con_position; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <div class="contact-info">
+                    <?php echo $this->loadTemplate('address'); ?>
+                    <?php if ($tparams->get('allow_vcard')) : ?>
+                        <div class="mb-4">
+                        <?php echo Text::_('COM_CONTACT_DOWNLOAD_INFORMATION_AS'); ?>
+                        <a href="<?php echo Route::_('index.php?option=com_contact&view=contact&catid=' . $this->item->catslug . '&id=' . $this->item->slug . '&format=vcf'); ?>">
+                        <?php echo Text::_('COM_CONTACT_VCARD'); ?>
+                        </a>
+                    </div>
+                    <?php endif; ?>
+                </div>             
+            </div>
+
             <?php if ($this->item->image && $tparams->get('show_image')) : ?>
-                <div class="com-contact__thumbnail thumbnail float-end">
+                <div class="col-lg-auto">
                     <?php echo LayoutHelper::render(
                         'joomla.html.image',
                         [
@@ -110,28 +129,6 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
                     ); ?>
                 </div>
             <?php endif; ?>
-
-            <?php if ($this->item->con_position && $tparams->get('show_position')) : ?>
-                <div class="contact-position d-flex mb-3">
-						<div class="me-2 ">
-                            <strong><?php echo Text::_('COM_CONTACT_POSITION'); ?>:</strong>
-                        </div>
-                    <div itemprop="jobTitle">
-                        <?php echo $this->item->con_position; ?>
-                    </div>
-                </div>
-            <?php endif; ?>
-
-            <div class="com-contact__info contact-info">
-                <?php echo $this->loadTemplate('address'); ?>
-                <?php if ($tparams->get('allow_vcard')) : ?>
-                	<div class="mb-4">
-                    <?php echo Text::_('COM_CONTACT_DOWNLOAD_INFORMATION_AS'); ?>
-                    <a href="<?php echo Route::_('index.php?option=com_contact&view=contact&catid=' . $this->item->catslug . '&id=' . $this->item->slug . '&format=vcf'); ?>">
-                    <?php echo Text::_('COM_CONTACT_VCARD'); ?></a>
-                </div>
-                <?php endif; ?>
-            </div>
         </div>
 
     <?php endif; ?>
@@ -171,7 +168,7 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
 			<div class="d-flex">
 				<div class="me-2">
                     <?php if (!$this->params->get('marker_misc')) : ?>
-                        <span class="icon-info-circle" aria-hidden="true"></span>
+                        <span class="fas fa-info-circle" aria-hidden="true"></span>
                         <span class="visually-hidden"><?php echo Text::_('COM_CONTACT_OTHER_INFORMATION'); ?></span>
                     <?php else : ?>
                         <span class="<?php echo $this->params->get('marker_class'); ?>">

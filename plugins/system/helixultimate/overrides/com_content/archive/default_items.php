@@ -67,67 +67,61 @@ $params = $this->params;
             </div>
 
             <?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
-                <div class="com-content-archive__info article-info text-muted">
-                    <div class="article-info">
-                        <?php if ($params->get('show_parent_category') && !empty($item->parent_id)) : ?>
-                            <span class="parent-category-name">
-                                <?php $title = $this->escape($item->parent_title); ?>
-                                <?php if ($params->get('link_parent_category') && !empty($item->parent_id)) : ?>
-                                    <?php $url = '<a href="' . Route::_(RouteHelper::getCategoryRoute($item->parent_id, $item->parent_language)) . '">' . $title . '</a>'; ?>
-                                    <?php echo Text::sprintf('COM_CONTENT_PARENT', $url); ?>
-                                <?php else : ?>
-                                    <?php echo Text::sprintf('COM_CONTENT_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
-                                <?php endif; ?>
-                            </span>
-                        <?php endif; ?>
+                <div class="article-info">
+                    <?php if ($params->get('show_parent_category') && !empty($item->parent_id)) : ?>
+                        <span class="parent-category-name">
+                            <?php $title = $this->escape($item->parent_title); ?>
+                            <?php if ($params->get('link_parent_category') && !empty($item->parent_id)) : ?>
+                                <?php $url = '<a href="' . Route::_(RouteHelper::getCategoryRoute($item->parent_id, $item->parent_language)) . '">' . $title . '</a>'; ?>
+                                <?php echo Text::sprintf('COM_CONTENT_PARENT', $url); ?>
+                            <?php else : ?>
+                                <?php echo Text::sprintf('COM_CONTENT_PARENT', '<span itemprop="genre">' . $title . '</span>'); ?>
+                            <?php endif; ?>
+                        </span>
+                    <?php endif; ?>
 
-                        <?php if ($params->get('show_category')) : ?>
-                            <span class="category-name">
-                                <?php $title = $this->escape($item->category_title); ?>
-                                <?php if ($params->get('link_category') && $item->catid) : ?>
-                                    <?php $url = '<a href="' . Route::_(RouteHelper::getCategoryRoute($item->catid, $item->category_language)) . '" itemprop="genre">' . $title . '</a>'; ?>
-                                    <?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
-                                <?php else : ?>
-                                    <?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
-                                <?php endif; ?>
-                            </span>
-                        <?php endif; ?>
+                    <?php if ($params->get('show_category')) : ?>
+                        <span class="category-name">
+                            <?php $title = $this->escape($item->category_title); ?>
+                            <?php if ($params->get('link_category') && $item->catid) : ?>
+                                <?php $url = '<a href="' . Route::_(RouteHelper::getCategoryRoute($item->catid, $item->category_language)) . '" itemprop="genre">' . $title . '</a>'; ?>
+                                <?php echo Text::sprintf('COM_CONTENT_CATEGORY', $url); ?>
+                            <?php else : ?>
+                                <?php echo Text::sprintf('COM_CONTENT_CATEGORY', '<span itemprop="genre">' . $title . '</span>'); ?>
+                            <?php endif; ?>
+                        </span>
+                    <?php endif; ?>
 
-                        <?php if ($params->get('show_publish_date')) : ?>
-                            <span class="published">
-                                <span class="icon-calendar-alt" aria-hidden="true"></span>
-                                <time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
-                                    <?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
+                    <?php if ($params->get('show_publish_date')) : ?>
+                        <span class="published">
+                            <time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
+                                <?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
+                            </time>
+                        </span>
+                    <?php endif; ?>
+
+                    <?php if ($info == 0) : ?>
+                        <?php if ($params->get('show_modify_date')) : ?>
+                            <span class="modified">
+                                <time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
+                                    <?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
                                 </time>
                             </span>
                         <?php endif; ?>
-
-                        <?php if ($info == 0) : ?>
-                            <?php if ($params->get('show_modify_date')) : ?>
-                                <span class="modified">
-                                    <span class="icon-calendar-alt" aria-hidden="true"></span>
-                                    <time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
-                                        <?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
-                                    </time>
-                                </span>
-                            <?php endif; ?>
-                            <?php if ($params->get('show_create_date')) : ?>
-                                <span class="create">
-                                    <span class="icon-calendar-alt" aria-hidden="true"></span>
-                                    <time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
-                                        <?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC3'))); ?>
-                                    </time>
-                                </span>
-                            <?php endif; ?>
-                            <?php if ($params->get('show_hits')) : ?>
-                                <span class="hits">
-                                    <span class="icon-eye" aria-hidden="true"></span>
-                                    <meta content="UserPageVisits:<?php echo (int) $item->hits; ?>" itemprop="interactionCount">
-                                    <?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', (int) $item->hits); ?>
-                                </span>
-                            <?php endif; ?>
+                        <?php if ($params->get('show_create_date')) : ?>
+                            <span class="create">
+                                <time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
+                                    <?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC3'))); ?>
+                                </time>
+                            </span>
                         <?php endif; ?>
-                    </div>
+                        <?php if ($params->get('show_hits')) : ?>
+                            <span class="hits">
+                                <meta content="UserPageVisits:<?php echo (int) $item->hits; ?>" itemprop="interactionCount">
+                                <?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', (int) $item->hits); ?>
+                            </span>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
 
@@ -173,7 +167,6 @@ $params = $this->params;
                         <?php if ($params->get('show_publish_date')) : ?>
 
                             <span class="published">
-                                <span class="icon-calendar-alt" aria-hidden="true"></span>
                                 <time datetime="<?php echo HTMLHelper::_('date', $item->publish_up, 'c'); ?>" itemprop="datePublished">
                                     <?php echo Text::sprintf('COM_CONTENT_PUBLISHED_DATE_ON', HTMLHelper::_('date', $item->publish_up, Text::_('DATE_FORMAT_LC3'))); ?>
                                 </time>
@@ -184,7 +177,6 @@ $params = $this->params;
 
                     <?php if ($params->get('show_create_date')) : ?>
                         <span class="create">
-                            <span class="icon-calendar-alt" aria-hidden="true"></span>
                             <time datetime="<?php echo HTMLHelper::_('date', $item->created, 'c'); ?>" itemprop="dateCreated">
                                 <?php echo Text::sprintf('COM_CONTENT_CREATED_DATE_ON', HTMLHelper::_('date', $item->created, Text::_('DATE_FORMAT_LC3'))); ?>
                             </time>
@@ -194,7 +186,6 @@ $params = $this->params;
 
                     <?php if ($params->get('show_modify_date')) : ?>
                         <span class="modified">
-                            <span class="icon-calendar-alt" aria-hidden="true"></span>
                             <time datetime="<?php echo HTMLHelper::_('date', $item->modified, 'c'); ?>" itemprop="dateModified">
                                 <?php echo Text::sprintf('COM_CONTENT_LAST_UPDATED', HTMLHelper::_('date', $item->modified, Text::_('DATE_FORMAT_LC3'))); ?>
                             </time>
@@ -203,7 +194,6 @@ $params = $this->params;
 
                     <?php if ($params->get('show_hits')) : ?>
                         <span class="hits">
-                            <span class="icon-eye" aria-hidden="true"></span>
                             <meta content="UserPageVisits:<?php echo (int) $item->hits; ?>" itemprop="interactionCount">
                             <?php echo Text::sprintf('COM_CONTENT_ARTICLE_HITS', (int) $item->hits); ?>
                         </span>

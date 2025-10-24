@@ -183,7 +183,7 @@ $useDefList = (
             </div>
         <?php endif; ?>
 
-        <div class="com-content-article__body" itemprop="articleBody">
+        <div itemprop="articleBody">
             <?php echo $this->item->text; ?>
         </div>
 

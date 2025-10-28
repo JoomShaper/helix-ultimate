@@ -68,11 +68,13 @@ if ($displayData['active'])
 
 	if ($app->isClient('administrator'))
 	{
-		$link = 'href="#" onclick="document.adminForm.' . $item->prefix . $limit . '; Joomla.submitform();return false;"';
+		$escapedPrefix = htmlspecialchars($item->prefix, ENT_QUOTES, 'UTF-8');
+		$link = 'href="#" onclick="document.adminForm.' . $escapedPrefix . $limit . '; Joomla.submitform();return false;"';
 	}
 	elseif ($app->isClient('site'))
 	{
-		$link = 'href="' . $item->link . '"';
+		$escapedLink = htmlspecialchars($item->link, ENT_QUOTES, 'UTF-8');
+		$link = 'href="' . $escapedLink . '"';
 	}
 }
 else
@@ -83,17 +85,17 @@ else
 ?>
 <?php if ($displayData['active']) : ?>
 	<li class="page-item">
-		<a aria-label="<?php echo $aria; ?>" <?php echo $link; ?> class="page-link">
-			<?php echo $display; ?>
+		<a aria-label="<?php echo htmlspecialchars($aria, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $link; ?> class="page-link">
+			<?php echo htmlspecialchars($display, ENT_QUOTES, 'UTF-8'); ?>
 		</a>
 	</li>
 <?php elseif (isset($item->active) && $item->active) : ?>
 	<?php $aria = Text::sprintf('JLIB_HTML_PAGE_CURRENT', strtolower($item->text)); ?>
 	<li class="<?php echo $class; ?> page-item">
-		<span aria-current="true" aria-label="<?php echo $aria; ?>" class="page-link"><?php echo $display; ?></span>
+		<span aria-current="true" aria-label="<?php echo htmlspecialchars($aria, ENT_QUOTES, 'UTF-8'); ?>" class="page-link"><?php echo htmlspecialchars($display, ENT_QUOTES, 'UTF-8'); ?></span>
 	</li>
 <?php else : ?>
 	<li class="<?php echo $class; ?> page-item">
-		<span class="page-link" aria-hidden="true"><?php echo $display; ?></span>
+		<span class="page-link" aria-hidden="true"><?php echo htmlspecialchars($display, ENT_QUOTES, 'UTF-8'); ?></span>
 	</li>
 <?php endif; ?>

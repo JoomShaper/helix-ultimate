@@ -124,15 +124,16 @@ $htag = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 		<?php if ($blogListType === 'masonry') : ?>
 			<?php
 			$numCols   = (int) $this->params->get('num_columns', 1);
-			$orderDown = (int) $this->params->get('multi_column_order', 1); // 1 = down → across, 0 = across → down
+			$orderDown = (int) $this->params->get('multi_column_order', 1); // 1 = across, 0 = down
 			$introcount = count($this->intro_items);
 			$numRows   = (int) ceil($introcount / max(1, $numCols));
 			?>
 			<div class="article-list grid <?php echo $blogClass; ?>">
-				<?php for ($row = 0; $row < $numRows; $row++) : ?>
-					<?php for ($col = 0; $col < $numCols; $col++) :
+
+				<?php for ($col = 0; $col < $numCols; $col++) : ?>
+					<?php for ($row = 0; $row < $numRows; $row++) :
 						// Index calc (fixed) for masonry style
-						$index = $orderDown ? ($row + $col * $numRows) : ($row * $numCols + $col);
+						$index = $orderDown ? ($col + $row * $numCols) : ($col * $numRows + $row);
 						if ($index >= $introcount) {
 							continue;
 						}
@@ -140,9 +141,8 @@ $htag = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 					?>
 						<div class="article flow" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
 							<?php
-								$this->item = &$item;
-								// Render a custom layout for masonry cards if you have one; falls back otherwise
-								echo LayoutHelper::render('masonry.bloglist', array($item, ($index + 1)), defined('HELIX_LAYOUTS_PATH') ? HELIX_LAYOUTS_PATH : null);
+							$this->item = &$item;
+							echo LayoutHelper::render('masonry.bloglist', array($item, ($index + 1)), defined('HELIX_LAYOUTS_PATH') ? HELIX_LAYOUTS_PATH : null);
 							?>
 						</div>
 					<?php endfor; ?>
@@ -152,7 +152,7 @@ $htag = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 			<div class="article-list <?php echo $blogClass; ?>">
 				<?php
 				$numCols   = (int) $this->params->get('num_columns', 1);
-				$orderDown = (int) $this->params->get('multi_column_order', 1); // 1 = down → across, 0 = across → down
+				$orderDown = (int) $this->params->get('multi_column_order', 1); // 1 = across, 0 = down
 				$introcount = count($this->intro_items);
 				$numRows   = (int) ceil($introcount / max(1, $numCols));
 				$columnClass = 'col-lg-' . max(1, (12 / max(1, $numCols)));

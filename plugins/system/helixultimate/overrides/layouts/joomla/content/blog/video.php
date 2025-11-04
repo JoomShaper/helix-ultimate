@@ -85,19 +85,27 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 			} else {
 				// Treat as iframe-embeddable (e.g., Facebook embeds)
 				$embed_code = '
-					<iframe src="' . htmlspecialchars($video_url, ENT_QUOTES) . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:400px;"></iframe>';
+					<iframe src="' . htmlspecialchars($video_url, ENT_QUOTES) . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
 			}
 			break;
 	}
-	// If we have a video source, create the embed code
-	if (!$embed_code && $video_src) {
-		$embed_code = '<iframe src="' . $video_src . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:400px;"></iframe>';
-	}
 
-	// Final Output
 	if ($embed_code) {
-		echo '<div class="article-featured-video">';
-		echo $embed_code;
-		echo '</div>';
+?>
+		<div class="article-featured-video">
+			<div class="ratio ratio-16x9">
+				<?php echo $embed_code; ?>
+			</div>
+		</div>
+
+	<?php
+	} elseif ($video_src) {
+	?>
+		<div class="article-featured-video">
+			<div class="ratio ratio-16x9">
+				<iframe src="<?php echo htmlspecialchars($video_src, ENT_QUOTES); ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			</div>
+		</div>
+<?php
 	}
 }

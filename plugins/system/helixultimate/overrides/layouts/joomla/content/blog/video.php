@@ -91,7 +91,7 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 	}
 
 	if ($embed_code) {
-?>
+	?>
 		<div class="article-featured-video">
 			<div class="ratio ratio-16x9">
 				<?php echo $embed_code; ?>
@@ -106,6 +106,6 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 				<iframe src="<?php echo htmlspecialchars($video_src, ENT_QUOTES); ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 			</div>
 		</div>
-<?php
+	<?php
 	}
 }

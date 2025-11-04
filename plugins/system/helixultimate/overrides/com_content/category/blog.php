@@ -132,7 +132,7 @@ $htag = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 
 				<?php for ($col = 0; $col < $numCols; $col++) : ?>
 					<?php for ($row = 0; $row < $numRows; $row++) :
-						// Index calc (fixed) for masonry style
+						// Index calc for masonry style
 						$index = $orderDown ? ($col + $row * $numCols) : ($col * $numRows + $row);
 						if ($index >= $introcount) {
 							continue;
@@ -160,7 +160,7 @@ $htag = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 				for ($row = 0; $row < $numRows; $row++) : ?>
 					<div class="row">
 						<?php for ($col = 0; $col < $numCols; $col++) :
-							// Index calc (fixed) for grid style
+							// Index calc for grid style
 							$index = $orderDown ? ($row * $numCols + $col) : ($row + $col * $numRows);
 							if ($index >= $introcount) {
 								continue;

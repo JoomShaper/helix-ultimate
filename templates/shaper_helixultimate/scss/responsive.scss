@@ -18,11 +18,10 @@
 	}
 }
 
-@media (min-width: 992px) {
-	#sp-header.header-with-modal-menu #offcanvas-toggler.offcanvas {
-		display: none !important;
-	}
-}
+/* ❗ Removed brittle desktop toggler rules that conflicted with PHP-driven d-classes */
+/* @media (min-width: 992px) { #sp-header.header-with-modal-menu #offcanvas-toggler.offcanvas { display:none!important; } } */
+
+
 @media (max-width: 991px) {
 	:root {
 		--header_height: $header_height_sm;
@@ -41,31 +40,12 @@
 			height: $header_height_sm;
 		}
 		&.header-with-modal-menu {
-			#offcanvas-toggler {
-				display: flex !important;
-			}
 			#modal-menu-toggler {
 				display: none;
 			}
 		}
-		&.full-header-center,
-		&.header-with-modal-menu,
-		&.full-header-left,
-		&.lg-header,
-		&.header-with-social {
-			#offcanvas-toggler.mega {
-				display: flex !important;
-			}
-		}
-		&.lg-header {
-			#offcanvas-toggler.mega {
-				display: none !important;
-			}
-			.offcanvas-toggler-left.offcanvas {
-				display: flex !important;
-			}
-		}
 	}
+
 	#sp-header-topbar {
 		.container-inner {
 			> .row {

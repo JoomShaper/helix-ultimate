@@ -249,7 +249,7 @@ div.mod-languages {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
   animation: spFadeIn 0.5s;
 
-  /* Hide any legacy/default Helix togglers; keep only our custom one */
+  // Hide any legacy/default Helix togglers 
   a#offcanvas-toggler:not(.offcanvas-toggler-secondary) { 
     display: none !important; 
   }
@@ -259,9 +259,6 @@ div.mod-languages {
     align-items: center; 
   }
 
-  /* Neutralize legacy mode-based visibility rules */
-  #offcanvas-toggler.offcanvas,
-  #offcanvas-toggler.mega { }
 
   &.full-header {
     padding-left: 45px;

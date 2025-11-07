@@ -36,16 +36,33 @@ $social 	= new HelixUltimateFeatureSocial($data->params);
  * Get related modules
  * The modules are mod_search
  */
-$searchModule = Helper::getSearchModule('-header');
+$searchModule    = Helper::getSearchModule('-header');
+$visibilityClass = ($menu_type === 'mega') ? 'd-flex d-lg-none' : 'd-flex';
+$sideClass       = ($offcanvas_position === 'left') ? 'offcanvas-toggler-left' : 'offcanvas-toggler-right';
+$togglerHtml     = '
+  <a id="offcanvas-toggler"
+     class="offcanvas-toggler-secondary ' . $sideClass . ' ' . $visibilityClass . ' align-items-center"
+     href="#"
+     aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"
+     title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '">
+     <div class="burger-icon"><span></span><span></span><span></span></div>
+  </a>';
 ?>
-
-<?php if( $displayData->params->get('sticky_header')) { ?>
+<?php if ($data->params->get('sticky_header')): ?>
 	<div class="sticky-header-placeholder"></div>
-<?php } ?>
+<?php endif; ?>
 <header id="sp-header" class="header-with-social">
 	<div class="container">
 		<div class="container-inner">
-			<div class="row">
+			<div class="row align-items-center">
+
+				<!-- Left toggler  -->
+				<?php if ($offcanvas_position === 'left' ): ?>
+					<div class="col-auto d-flex align-items-center">
+						<?php echo $togglerHtml; ?>
+					</div>
+				<?php endif; ?>
+
 				<!-- Logo -->
 				<div id="sp-logo" class="has-border col-auto">
 					<div class="sp-column">
@@ -83,11 +100,9 @@ $searchModule = Helper::getSearchModule('-header');
 							<?php echo $social->renderFeature(); ?>
 						</div>
 
-						<!-- if offcanvas position right -->
-						<?php if($offcanvas_position === 'right' && $menu_type === 'mega_offcanvas') : ?>
-							<a id="offcanvas-toggler"  aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>"  class="<?php echo $menu_type; ?> offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">
-							<div class="burger-icon"><span></span><span></span><span></span></div>
-							</a>
+						<!-- Right toggler) -->
+						<?php if ($offcanvas_position === 'right' ): ?>
+							<?php echo $togglerHtml; ?>
 						<?php endif; ?>
 					</div>
 				</div>

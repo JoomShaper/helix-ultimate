@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Helix Ultimate Framework
  * @author JoomShaper https://www.joomshaper.com
@@ -94,7 +95,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
                     return substr($key, 0, 5) == 'data-';
                 });
                 ?>
-                <div class="com-users-login__submit control-group">
+                <div class="com-users-login__submit control-group mb-3">
                     <div class="controls">
                         <button type="button"
                                 class="btn btn-secondary w-100 <?php echo $button['class'] ?? '' ?>"

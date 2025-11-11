@@ -118,18 +118,18 @@ Text::script('JHIDEPASSWORD');
             <button type="submit" name="Submit" id="btn-login-submit" class="btn btn-primary w-100 btn-lg"><?php echo Text::_('JLOGIN'); ?></button>
         </div>
 
-
         <?php $usersConfig = ComponentHelper::getParams('com_users'); ?>
         <div class="mod-login__options  list-group">
             <a class="mod-login__reset list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=reset'); ?>">
-                <?php echo Text::_('COM_USERS_LOGIN_RESET'); ?>
+                <?php echo Text::_('MOD_LOGIN_FORGOT_YOUR_PASSWORD'); ?>
             </a>
             <a class="mod-login__remind list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=remind'); ?>">
-                <?php echo Text::_('COM_USERS_LOGIN_REMIND'); ?>
+                <?php echo Text::_('MOD_LOGIN_FORGOT_YOUR_USERNAME'); ?>
             </a>
             <?php if ($usersConfig->get('allowUserRegistration')) : ?>
                 <a class="mod-login__register list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=registration'); ?>">
-                    <?php echo Text::_('COM_USERS_LOGIN_REGISTER'); ?>
+                    <?php echo Text::_('MOD_LOGIN_REGISTER'); ?>	               
+                    <span class="icon-register" aria-hidden="true"></span>
                 </a>
             <?php endif; ?>
         </div>

@@ -1955,6 +1955,8 @@ class HelixUltimate
 
 		if($custom_style || !$preset)
 		{
+			$preset = json_decode($preset, true);
+
 			$scssVars = ['preset' => 'default'];
 			$customElements = [];
 
@@ -1999,7 +2001,16 @@ class HelixUltimate
 					$scssVars[$customElement] = $this->params->get($customElement);
 				}
 			}
-		}
+
+	        // check preset values and add them if missing in scssVars
+	        if ($preset && is_array($preset)) {
+	            foreach ($preset as $key => $value) {
+	                if (!isset($scssVars[$key]) && $key !== 'preset') {
+	                    $scssVars[$key] = $value;
+	                }
+	            }
+	        }
+	    }
 		else
 		{
 			$scssVars = (array) json_decode($this->params->get('preset') ?? "");

@@ -1,4 +1,11 @@
 <?php
+/**
+ * @package Helix Ultimate Framework
+ * @author JoomShaper https://www.joomshaper.com
+ * @copyright Copyright (c) 2010 - 2025 JoomShaper
+ * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
+*/
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
@@ -6,41 +13,33 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\String\PunycodeHelper;
 
-if (PluginHelper::isEnabled('user', 'profile')) :
+?>
+<?php if (PluginHelper::isEnabled('user', 'profile')) :
     $fields = $this->item->profile->getFieldset('profile'); ?>
     <div class="com-contact__profile contact-profile" id="users-profile-custom">
         <dl class="dl-horizontal">
             <?php foreach ($fields as $profile) :
-                if ($profile->value !== '' && $profile->value !== null) :
-
-                    // Never write back to $profile (avoids dynamic properties on PHP 8.2+)
-                    $raw   = (string) $profile->value;
-                    $label = $profile->label;
-                    echo '<dt>' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '</dt>';
+                if ($profile->value) :
+                    echo '<dt>' . $profile->label . '</dt>';
+                    $profile->text = htmlspecialchars($profile->value, ENT_COMPAT, 'UTF-8');
 
                     switch ($profile->id) :
                         case 'profile_website':
-                            // Keep raw for href, but escape attribute; show punycode-decoded text safely
-                            $href = strncasecmp($raw, 'http', 4) === 0 ? $raw : 'http://' . $raw;
+                            $v_http = substr($profile->value, 0, 4);
 
-                            // Display text: convert to UTF-8 host for readability, then escape
-                            $display = PunycodeHelper::urlToUTF8($href);
-
-                            echo '<dd><a href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '">'
-                                . htmlspecialchars($display, ENT_QUOTES, 'UTF-8')
-                                . '</a></dd>';
+                            if ($v_http === 'http') :
+                                echo '<dd><a href="' . $profile->text . '">' . PunycodeHelper::urlToUTF8($profile->text) . '</a></dd>';
+                            else :
+                                echo '<dd><a href="http://' . $profile->text . '">' . PunycodeHelper::urlToUTF8($profile->text) . '</a></dd>';
+                            endif;
                             break;
 
                         case 'profile_dob':
-                            // Format date first, then escape for output
-                            $formatted = HTMLHelper::_('date', $raw, Text::_('DATE_FORMAT_LC4'), false);
-                            echo '<dd>' . htmlspecialchars($formatted, ENT_QUOTES, 'UTF-8') . '</dd>';
+                            echo '<dd>' . HTMLHelper::_('date', $profile->text, Text::_('DATE_FORMAT_LC4'), false) . '</dd>';
                             break;
 
                         default:
-                            // Generic text fields
-                            $text = htmlspecialchars($raw, ENT_QUOTES, 'UTF-8');
-                            echo '<dd>' . $text . '</dd>';
+                            echo '<dd>' . $profile->text . '</dd>';
                             break;
                     endswitch;
                 endif;

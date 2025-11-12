@@ -21,7 +21,7 @@ if ($this->maxLevelcat != 0 && count($this->items[$this->parent->id]) > 0) :
     <?php foreach ($this->items[$this->parent->id] as $id => $item) : ?>
         <?php if ($this->params->get('show_empty_categories_cat') || $item->numitems || count($item->getChildren())) : ?>
             <div class="list-group-item">
-                <div class="com-contact-categories__item-title-wrapper padding">
+                <div class="com-contact-categories__item-title-wrapper">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="m-0">
                             <a href="<?php echo Route::_(RouteHelper::getCategoryRoute($item->id, $item->language)); ?>">

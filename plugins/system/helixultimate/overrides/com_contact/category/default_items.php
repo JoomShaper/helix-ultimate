@@ -44,7 +44,7 @@ $listDirn   = $this->escape($this->state->get('list.direction'));
 <div class="com-contact-category__items">
     <form action="<?php echo htmlspecialchars(Uri::getInstance()->toString()); ?>" method="post" name="adminForm" id="adminForm">
         <?php if ($this->params->get('filter_field')) : ?>
-            <div class="com-contact-category__filter btn-group">
+            <div class="com-contact-category__filter btn-group mb-3">
                 <label class="filter-search-lbl visually-hidden" for="filter-search">
                     <?php echo Text::_('COM_CONTACT_FILTER_SEARCH_DESC'); ?>
                 </label>

@@ -1955,7 +1955,7 @@ class HelixUltimate
 
 		if($custom_style || !$preset)
 		{
-			$preset = json_decode($preset, true);
+			$preset = !empty($preset) ? json_decode($preset, true) : [];
 
 			$scssVars = ['preset' => 'default'];
 			$customElements = [];
@@ -2003,7 +2003,7 @@ class HelixUltimate
 			}
 
 	        // check preset values and add them if missing in scssVars
-	        if ($preset && is_array($preset)) {
+	        if ($preset && is_array($preset) && !empty($preset)) {
 	            foreach ($preset as $key => $value) {
 	                if (!isset($scssVars[$key]) && $key !== 'preset') {
 	                    $scssVars[$key] = $value;

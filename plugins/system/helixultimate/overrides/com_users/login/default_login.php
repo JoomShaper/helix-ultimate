@@ -94,7 +94,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
                     });
                 ?>
                     <div class="com-users-login__submit control-group mb-3">
-                        <div class="controls">
+                        <div class="mb-3">
                             <button type="button"
                                 class="btn btn-secondary w-100 <?php echo $button['class'] ?? '' ?>"
                                 <?php foreach ($dataAttributeKeys as $key) : ?>

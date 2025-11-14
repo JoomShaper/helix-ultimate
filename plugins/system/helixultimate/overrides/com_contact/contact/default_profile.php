@@ -19,30 +19,35 @@ use Joomla\CMS\String\PunycodeHelper;
     <div class="com-contact__profile contact-profile" id="users-profile-custom">
         <dl class="dl-horizontal">
             <?php foreach ($fields as $profile) :
-                if ($profile->value) :
-                    echo '<dt>' . $profile->label . '</dt>';
-                    $profile->text = htmlspecialchars($profile->value, ENT_COMPAT, 'UTF-8');
+                // Skip empty values
+                if (!$profile->value) {
+                    continue;
+                }
 
-                    switch ($profile->id) :
-                        case 'profile_website':
-                            $v_http = substr($profile->value, 0, 4);
+                $label = $profile->label; 
+                $rawValue = (string) $profile->value;
+                $text = htmlspecialchars($rawValue, ENT_QUOTES, 'UTF-8');
 
-                            if ($v_http === 'http') :
-                                echo '<dd><a href="' . $profile->text . '">' . PunycodeHelper::urlToUTF8($profile->text) . '</a></dd>';
-                            else :
-                                echo '<dd><a href="http://' . $profile->text . '">' . PunycodeHelper::urlToUTF8($profile->text) . '</a></dd>';
-                            endif;
-                            break;
+                echo '<dt>' . $label . '</dt>';
 
-                        case 'profile_dob':
-                            echo '<dd>' . HTMLHelper::_('date', $profile->text, Text::_('DATE_FORMAT_LC4'), false) . '</dd>';
-                            break;
+                switch ($profile->id) {
+                    case 'profile_website':
+                        $hasScheme = preg_match('#^https?://#i', $rawValue) === 1;
+                        $href = $hasScheme ? $rawValue : ('http://' . $rawValue);
+                        $hrefEsc = htmlspecialchars($href, ENT_QUOTES, 'UTF-8');
+                        $display = PunycodeHelper::urlToUTF8($href);
+                        $displayEsc = htmlspecialchars($display, ENT_QUOTES, 'UTF-8');
+                        echo '<dd><a href="' . $hrefEsc . '">' . $displayEsc . '</a></dd>';
+                        break;
 
-                        default:
-                            echo '<dd>' . $profile->text . '</dd>';
-                            break;
-                    endswitch;
-                endif;
+                    case 'profile_dob':
+                        echo '<dd>' . HTMLHelper::_('date', $rawValue, Text::_('DATE_FORMAT_LC4'), false) . '</dd>';
+                        break;
+
+                    default:
+                        echo '<dd>' . $text . '</dd>';
+                        break;
+                }
             endforeach; ?>
         </dl>
     </div>

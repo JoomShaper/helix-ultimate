@@ -152,7 +152,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 	}
 	
 	
-		public function onContentBeforeSave(string $typeAlias, $table, bool $isNew, $data = [])
+	public function onContentBeforeSave(string $typeAlias, $table, bool $isNew, $data = [])
 	{
 	    //Only handle com_content form type
 	    if ($typeAlias !== 'com_content.form') {

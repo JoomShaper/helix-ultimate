@@ -170,7 +170,6 @@ class PlgSystemHelixultimate extends CMSPlugin
 	        return true;
 	    }
 	
-	    /** @var \JTableContent $old */
 	    $old = Table::getInstance('content');
 	    $old->load($table->id);
 	
@@ -193,6 +192,34 @@ class PlgSystemHelixultimate extends CMSPlugin
 	    $table->attribs = json_encode($merged);
 	
 	    return true;
+	}
+
+	/**
+	 * On Saving extensions logging method
+	 * Method is called when an extension is being saved
+	 *
+	 * @param   string   $context  The extension
+	 * @param   JTable   $table    DataBase Table object
+	 * @param   boolean  $isNew    If the extension is new or not
+	 *
+	 * @return	void
+	 * @since	2.2.2
+	 */
+	public function onExtensionBeforeSave($context, $table, $isNew)
+	{
+		if ($context === 'com_templates.style' && !empty($table->id))
+		{
+			$params = $this->getTemplateStyleParams($table->id);
+			$table->params = $params;
+		}
+
+		if ($context === 'com_templates.style' && $isNew)
+		{
+			$app = Factory::getApplication();
+			$id = $app->input->get('id', 0);
+			$params = $this->getTemplateStyleParams($id);
+			$table->params = $params;
+		}
 	}
 
 
@@ -237,6 +264,28 @@ class PlgSystemHelixultimate extends CMSPlugin
 				$db->execute();
 			}
 		}
+	}
+
+	/**
+	 * Get the template style params
+	 *
+	 * @param   int  $id  The template style id
+	 *
+	 * @return  string  The template style params
+	 * @since   2.2.2
+	 */
+	public function getTemplateStyleParams($id)
+	{
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('params'))
+			->from($db->quoteName('#__template_styles'))
+			->where($db->quoteName('id') . ' = ' . $db->quote($id));
+
+		$db->setQuery($query);
+		$tparams = $db->loadResult();
+
+		return $tparams;
 	}
 
 	/**

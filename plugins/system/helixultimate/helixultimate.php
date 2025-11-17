@@ -33,6 +33,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Table\Table;
 
 // Constant definition
 define('HELIX_LAYOUTS_PATH', JPATH_PLUGINS . '/system/helixultimate/layouts');
@@ -149,6 +150,51 @@ class PlgSystemHelixultimate extends CMSPlugin
 		    $form->loadFile('blog-options', false);
 		}
 	}
+	
+	
+	public function onContentBeforeSave(string $typeAlias, $table, bool $isNew, $data = [])
+	{
+	    //Only handle com_content form type
+	    if ($typeAlias !== 'com_content.form') {
+	        return true;
+	    }
+	
+	    // Only update existing articles 
+	    if ($isNew || empty($table->id)) {
+	        return true;
+	    }
+	
+	    // Only when saving from the frontend
+	    $app = Factory::getApplication();
+	    if (!$app->isClient('site')) {
+	        return true;
+	    }
+	
+	    /** @var \JTableContent $old */
+	    $old = Table::getInstance('content');
+	    $old->load($table->id);
+	
+	    $oldAttribs = json_decode($old->attribs ?: '{}', true);
+	    if (!is_array($oldAttribs)) {
+	        $oldAttribs = [];
+	    }
+	
+	    // Decode new attribs coming from the frontend form
+	    $newAttribs = json_decode($table->attribs ?: '{}', true);
+	    if (!is_array($newAttribs)) {
+	        $newAttribs = [];
+	    }
+	
+	    $merged = $oldAttribs;
+	    foreach ($newAttribs as $key => $value) {
+	        $merged[$key] = $value;
+	    }
+
+	    $table->attribs = json_encode($merged);
+	
+	    return true;
+	}
+
 
 	/**
 	 * On Saving extensions logging method

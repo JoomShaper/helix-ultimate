@@ -245,12 +245,11 @@ $useDefList = (
 
     <?php echo LayoutHelper::render('joomla.content.blog.author_info', $this->item); ?>
 
-    <?php
-    // Pagination bottom (relative)
-    if (!empty($this->item->pagination) && $this->item->pagination && $this->item->paginationposition && $this->item->paginationrelative) {
-        echo $this->item->pagination;
-    }
-    ?>
+   <?php
+	if (!empty($this->item->pagination) && $this->item->pagination && $this->item->paginationposition) :
+		echo $this->item->pagination;
+	?>
+	<?php endif; ?>
 
     <?php if (empty($this->print)) : ?>
         <?php echo LayoutHelper::render('joomla.content.blog.comments.comments', $this->item); ?>

@@ -95,8 +95,9 @@ $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article
 				$layoutAttr = [
 					'src' => $introImage,
 					'alt' => empty($displayData->title) ? false : htmlspecialchars($displayData->title ?? "", ENT_COMPAT, 'UTF-8'),
+					'itemprop' => 'thumbnailUrl',
 				];
-				echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+				echo LayoutHelper::render('joomla.html.image', $layoutAttr);
 			?>
 			
 		</div>
@@ -116,13 +117,14 @@ $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article
                         $layoutAttr = [
 							'src' => htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'),
 							'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt ?? "", ENT_COMPAT, 'UTF-8'),
+							'itemprop' => 'thumbnailUrl',
 						];
 						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 						{
 							$layoutAttr['class'] = 'caption';
-							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption ?? "");
+							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption ?? "", ENT_COMPAT, 'UTF-8');
 						}
-						echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+						echo LayoutHelper::render('joomla.html.image', $layoutAttr);
 						// Image Caption 
 						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 						{ ?>
@@ -136,13 +138,14 @@ $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article
 				$layoutAttr = [
 						'src' => htmlspecialchars($images->image_intro ?? "", ENT_COMPAT, 'UTF-8'),
 						'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'),
+						'itemprop' => 'thumbnailUrl',
 					];
 					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 					{
 						$layoutAttr['class'] = 'caption';
 						$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption ?? "", ENT_COMPAT, 'UTF-8');
 					}
-					echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+					echo LayoutHelper::render('joomla.html.image', $layoutAttr);
 					// Image Caption 
 					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 					{ ?>

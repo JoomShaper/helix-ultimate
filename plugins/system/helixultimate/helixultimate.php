@@ -492,7 +492,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 			if ($params->get('compress_css'))
 			{
-				$theme->compress_css();
+				$theme->compress_css($params->get('exclude_css'));
 			}
 
 			if ($params->get('compress_js'))

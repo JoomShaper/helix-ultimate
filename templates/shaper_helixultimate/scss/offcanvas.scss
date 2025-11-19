@@ -140,7 +140,6 @@
         -ms-flex-direction: column;
         flex-direction: column;
         padding: 0;
-        margin: 0;
         margin: 0 0 15px 0;
         list-style: none;
       }
@@ -367,6 +366,124 @@ body {
 
             ul {
               margin-left: 10px;
+            }
+          }
+        }
+      }
+    }
+
+    /* RIGHT ALIGN STYLE (right-1) */
+    .offcanvas-menu.right-1 {
+      .offcanvas-inner {
+        text-align: right;
+
+        .header-modules {
+          justify-content: flex-end;
+        }
+
+        .finder,
+        .sp-sign-in,
+        .sp-profile-wrapper,
+        .sp-contact-info,
+        .social-icons,
+        .sp-module,
+        .sp-module-title {
+          text-align: right;
+        }
+
+        .social-icons {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .sp-contact-info {
+          li {
+            text-align: right;
+          }
+        }
+
+        ul.menu {
+          > li {
+            text-align: right;
+
+            > a,
+            > span,
+            > .menu-separator,
+            > .nav-header {
+              padding-right: 0;
+              padding-left: 30px; 
+            }
+
+            ul {
+              margin-right: 10px;
+              margin-left: 0;
+            }
+
+            &.menu-parent {
+              > a,
+              > .menu-separator {
+                > .menu-toggler {
+                  left: 0;
+                  right: auto;
+                  padding: 10px;
+                  transform: translateY(-50%);
+                  -webkit-transform: translateY(-50%);
+
+                  &:after {
+                    font-family: $font_awesome_font_family;
+                    content: "\f104"; // angle-left 
+                    font-weight: 900;
+                  }
+                }
+              }
+
+              > .nav-header > .menu-toggler {
+                left: 0;
+                right: auto;
+
+                &:after {
+                  font-family: $font_awesome_font_family;
+                  content: "\f104"; // angle-left
+                  font-weight: 900;
+                }
+              }
+
+              &.menu-parent-open {
+                > a,
+                > .menu-separator,
+                > .nav-header {
+                  > .menu-toggler {
+                    &:after {
+                      content: "\f107"; // angle-down when open
+                    }
+                  }
+                }
+              }
+
+              // nested parents
+              ul li.menu-parent {
+                .menu-toggler {
+                  left: 0;
+                  right: auto;
+                  padding: 2px 10px;
+                  transform: translateY(-50%);
+                  -webkit-transform: translateY(-50%);
+
+                  &:after {
+                    font-family: $font_awesome_font_family;
+                    content: "\f104"; 
+                    font-weight: 900;
+                  }
+                }
+
+                &.menu-parent-open {
+                  .menu-toggler {
+                    &:after {
+                      content: "\f107"; 
+                    }
+                  }
+                }
+              }
             }
           }
         }

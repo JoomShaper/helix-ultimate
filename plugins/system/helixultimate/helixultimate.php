@@ -150,8 +150,18 @@ class PlgSystemHelixultimate extends CMSPlugin
 		    $form->loadFile('blog-options', false);
 		}
 	}
-	
-	
+		
+	/**
+	 * The content before save event.
+	 *
+	 * @param	string	$typeAlias	Form type alias.
+	 * @param	Table	$table		Table object.
+	 * @param	bool	$isNew		True if new.
+	 * @param	array	$data		Data array.
+	 *
+	 * @return	bool
+	 * @since	2.2.2
+	 */
 	public function onContentBeforeSave(string $typeAlias, $table, bool $isNew, $data = [])
 	{
 	    //Only handle com_content form type
@@ -276,7 +286,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 	 */
 	public function getTemplateStyleParams($id)
 	{
-		$db = Factory::getDbo();
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('params'))
 			->from($db->quoteName('#__template_styles'))

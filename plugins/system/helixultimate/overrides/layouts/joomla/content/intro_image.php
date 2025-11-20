@@ -56,7 +56,6 @@ if (!empty($attribs->helix_ultimate_image)) {
 }
 
 $altText         = $titleForAlt !== '' ? htmlspecialchars($titleForAlt, ENT_COMPAT, 'UTF-8') : false;
-// 3 Following vars is no used
 $canView         = ($params && ($params->get('access-view') || $params->get('show_noauth', '0') == '1'));
 $linkIntroImage  = $params ? ( (int)$params->get('link_intro_image') === 1 || ( (int)$params->get('link_titles') === 1 ) ) : false;
 $shouldLink      = $linkIntroImage && $canView;

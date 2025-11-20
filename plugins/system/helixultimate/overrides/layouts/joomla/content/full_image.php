@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\HTML\HTMLHelper;
 
 $params   = $displayData->params ?? null;
 $images   = json_decode($displayData->images ?? '');
@@ -109,6 +110,7 @@ $figureClass = trim('article-full-image item-image ' . $imgfloat);
     <?php
     $ogImage = $fullImage ?: (!empty($images->image_fulltext) ? $images->image_fulltext : ($images->image_intro ?? ''));
     $ogImage = $toAbsolute($ogImage);
+    $ogImage = HTMLHelper::cleanImageURL($ogImage)->url;
 
     echo LayoutHelper::render('joomla.content.open_graph', [
         'image'        => $ogImage,

@@ -1871,6 +1871,12 @@
 			default="0" 
 			label="HELIX_ULTIMATE_CSS_COMPRESS" 
 			description="HELIX_ULTIMATE_CSS_COMPRESS_DESC" />
+		<field name="exclude_css" 
+			helixgroup="compression" 
+			type="textarea" 
+			label="HELIX_ULTIMATE_EXCLUDE_CSS" 
+			description="HELIX_ULTIMATE_EXCLUDE_CSS_DESC" 
+			showon="compress_css:1" />
 		<field name="compress_js" 
 			helixgroup="compression" 
 			type="checkbox" 

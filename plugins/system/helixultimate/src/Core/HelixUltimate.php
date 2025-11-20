@@ -1386,6 +1386,36 @@ class HelixUltimate
 	}
 
 	/**
+	 * Exclude css files and return the other css.
+	 *
+	 * @param	string	$key		The key
+	 * @param	string	$excludes	The files to exclude, comma separated.
+	 *
+	 * @return	boolean
+	 * @since	2.0.0
+	 */
+	private function exclude_css($key, $excludes)
+	{
+		$match = false;
+
+		if ($excludes)
+		{
+			$excludes = explode(',', $excludes);
+
+			foreach ($excludes as $exclude)
+			{
+				if (basename($key) == trim($exclude))
+				{
+					$match = true;
+				}
+			}
+		}
+
+		return $match;
+	}
+
+
+	/**
 	 * Check if the contents of the assets are changed.
 	 * If the contents are changed then the filesize must be changed.
 	 *
@@ -1719,10 +1749,11 @@ class HelixUltimate
 	/**
 	 * Compress css files.
 	 *
+	 * @param	string	$excludes If any css to exclude from compressing.
 	 * @return	void
 	 * @since	1.0.0
 	 */
-	public function compress_css()
+	public function compress_css($excludes = '')
 	{
 			$app             = Factory::getApplication();
 			$cachetime       = $app->get('cachetime', 15);
@@ -1753,6 +1784,12 @@ class HelixUltimate
 
 				if (\file_exists($css_file))
 				{
+					// skip excluded css files by basename
+					if ($this->exclude_css($key, $excludes))
+					{
+						continue;
+					}
+
 					$stylesheets[] = $key;
 					$md5sum .= md5($key);
 					$compressed = $this->minifyCss(\file_get_contents($css_file));

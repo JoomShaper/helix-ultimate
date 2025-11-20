@@ -1145,7 +1145,8 @@ body.view-article.remove-container {
 
     .article-header {
       h1,
-      h2 {
+      h2,
+      h4 {
         font-size: 1.375rem;
         margin: 0 0 1.25rem 0;
 
@@ -1313,7 +1314,8 @@ body.view-article.remove-container {
   .article-header {
     position: relative;
     h1,
-    h2 {
+    h2,
+    h4 {
       font-size: 2.25rem;
     }
   }
@@ -1389,7 +1391,8 @@ body.view-article.remove-container {
     li {
       margin-bottom: 10px;
       .article-header {
-        h2 {
+        h2,
+        h4 {
           font-size: 1.2rem;
           a {
             color: #252525;

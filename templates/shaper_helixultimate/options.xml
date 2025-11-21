@@ -1257,6 +1257,19 @@
 			<option value="9">9</option>
 			<option value="10">10</option>
 		</field>
+		<field
+		    name="offcanvas_arrow_position"
+		    helixgroup="offcanvas"
+		    type="list"
+		    class="form-select"
+		    default="right"
+		    label="HELIX_ULTIMATE_OFFCANVAS_ARROW_POSITION"
+		    description="HELIX_ULTIMATE_OFFCANVAS_ARROW_POSITION_DESC">
+			
+		    <option value="right">HELIX_ULTIMATE_OFFCANVAS_ARROW_POSITION_RIGHT</option>
+		    <option value="left">HELIX_ULTIMATE_OFFCANVAS_ARROW_POSITION_LEFT</option>
+		</field>
+
 		<field name="offcanvas_enable_logo" 
 			type="checkbox" 
 			helixgroup="offcanvas" 

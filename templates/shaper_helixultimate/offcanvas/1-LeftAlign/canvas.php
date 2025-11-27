@@ -30,6 +30,10 @@ $hasModMenu = array_search('mod_menu', array_column(ModuleHelper::getModules('of
 $menuType = $params->get('offcanvas_menu', 'mainmenu', 'STRING');
 $maxLevel = $params->get('offcanvas_max_level', 0, 'INT');
 
+//arrow position param
+$arrowPos   = $params->get('offcanvas_arrow_position', 'right');
+$arrowClass = $arrowPos === 'left' ? 'offcanvas-arrow-left' : 'offcanvas-arrow-right';
+
 $menuModule = Helper::createModule('mod_menu', [
 	'title' => 'Main Menu',
 	'params' => '{"menutype":"' . $menuType . '","base":"","startLevel":1,"endLevel":' . $maxLevel . ',"showAllChildren":1,"tag_id":"","class_sfx":" nav-pills","window_open":"","layout":"_:default","moduleclass_sfx":"","cache":"1","cache_time":"900","cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0", "hu_offcanvas": 1}',
@@ -38,8 +42,8 @@ $menuModule = Helper::createModule('mod_menu', [
 
 $searchModule = Helper::getSearchModule('-canvas');
 ?>
-<div class="offcanvas-menu left-1" tabindex="-1" inert>
-	<div class="d-flex align-items-center p-3 pt-4">
+<div class="offcanvas-menu left-1 <?php echo $arrowClass; ?>" tabindex="-1" inert>
+	<div class="d-flex align-items-center justify-content-between p-3 pt-4">
 		<?php 
 			if ($params->get('offcanvas_enable_logo', 0)) {
 				echo $logo->renderFeature(false);

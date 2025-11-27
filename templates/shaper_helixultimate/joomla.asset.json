@@ -1,0 +1,33 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "shaper_helixultimate",
+    "version": "2.0.0",
+    "description": "This file contains details of the assets used by Shaper Helix Ultimate, the default template for Helix Ultimate framework site template.",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+        {
+            "name": "template.shaper_helixultimate.ltr",
+            "description": "The css file to be used when the site is left to right (LTR).",
+            "type": "style",
+            "uri": "template.min.css",
+            "dependencies": [
+                "fontawesome"
+            ]
+        },
+        {
+            "name": "template.shaper_helixultimate.rtl",
+            "description": "The css file to be used when the site is right to left (RTL).",
+            "type": "style",
+            "uri": "template-rtl.min.css",
+            "dependencies": [
+                "fontawesome"
+            ]
+        },
+        {
+            "name": "template.shaper_helixultimate.offline",
+            "description": "The css file to be used when the site is offline and offline.php is being used.",
+            "type": "style",
+            "uri": "offline.css"
+        }
+    ]    
+}

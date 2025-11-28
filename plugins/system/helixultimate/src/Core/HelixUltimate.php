@@ -2066,7 +2066,7 @@ class HelixUltimate
 
 		$scssVars['header_height'] 		= $this->params->get('header_height', '60px');
 		$scssVars['header_height_sm'] 	= $this->params->get('header_height_sm', '60px');
-		$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '50px');
+		$scssVars['header_height_xs'] 	= $this->params->get('header_height_xs', '55px');
 		$scssVars['offcanvas_width'] 	= $this->params->get('offcanvas_width', '300') . 'px';
 		
 		

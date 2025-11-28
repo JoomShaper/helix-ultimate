@@ -13,6 +13,8 @@ use HelixUltimate\Framework\Platform\Settings;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Factory;
 
 extract($displayData);
 
@@ -34,10 +36,10 @@ extract($displayData);
 		if ($multiple === 'true' || $multiple === 'on')
 		{
 			/** @var \Joomla\CMS\Document\HtmlDocument $doc */
-			$doc = \Joomla\CMS\Factory::getDocument();
-			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::root() . 'media/vendor/choicesjs/css/choices.min.css');
-			$doc->addStyleSheet(\Joomla\CMS\Uri\Uri::root() . 'plugins/system/helixultimate/assets/css/choices.css');
-			$doc->addScript(\Joomla\CMS\Uri\Uri::root() . 'media/vendor/choicesjs/js/choices.min.js');
+			$doc = Factory::getDocument();
+			$doc->addStyleSheet(Uri::root() . 'media/vendor/choicesjs/css/choices.min.css');
+			$doc->addStyleSheet(Uri::root() . 'plugins/system/helixultimate/assets/css/choices.css');
+			$doc->addScript(Uri::root() . 'media/vendor/choicesjs/js/choices.min.js');
 
 			$doc->addScriptDeclaration("
 				document.addEventListener('DOMContentLoaded', function() {

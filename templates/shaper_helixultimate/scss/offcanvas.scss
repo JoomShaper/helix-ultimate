@@ -182,7 +182,6 @@
               padding: 10px;
               &:after {
                 font-family: $font_awesome_font_family;
-                content: "\f105";
                 font-weight: 900;
               }
             }
@@ -205,15 +204,7 @@
               padding: 2px 10px;
               &:after {
                 font-family: $font_awesome_font_family;
-                content: "\f105";
                 font-weight: 900;
-              }
-            }
-            &.menu-parent-open {
-              .menu-toggler {
-                &:after {
-                  content: "\f107";
-                }
               }
             }
           }
@@ -249,7 +240,6 @@
               -webkit-transform: translateY(-50%);
               &:after {
                 font-family: $font_awesome_font_family;
-                content: "\f105";
                 font-weight: 900;
               }
             }
@@ -382,7 +372,7 @@ body.ltr {
       ul.menu {
         > li {
 
-          /* TOP-LEVEL ITEMS */
+          /* top level item */
           > a,
           > span,
           > .nav-header {
@@ -404,7 +394,7 @@ body.ltr {
             margin-left: 10px;
 
             > li {
-              /* NESTED ITEMS */
+              /* nested items */
               > a,
               > span,
               > .nav-header {
@@ -424,8 +414,21 @@ body.ltr {
         }
       }
     }
-
   }
 }
 
+/* Default show closed arrow */
+.offcanvas-menu .menu-toggler::after {
+  content: "\f105"; 
+}
+
+/* down arrow when submenu is open */ 
+.offcanvas-menu li.menu-parent.menu-parent-open > a > .menu-toggler::after,
+.offcanvas-menu li.menu-parent.menu-parent-open > .menu-separator > .menu-toggler::after,
+.offcanvas-menu li.menu-parent.menu-parent-open > .nav-header > .menu-toggler::after,
+.offcanvas-menu li.menu-parent[aria-expanded="true"] > a > .menu-toggler::after,
+.offcanvas-menu li.menu-parent[aria-expanded="true"] > .menu-separator > .menu-toggler::after,
+.offcanvas-menu li.menu-parent[aria-expanded="true"] > .nav-header > .menu-toggler::after {
+  content: "\f107"; 
+}
 

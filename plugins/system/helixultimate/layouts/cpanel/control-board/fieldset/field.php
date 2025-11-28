@@ -13,6 +13,8 @@ use HelixUltimate\Framework\Platform\Settings;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Factory;
 
 extract($displayData);
 
@@ -26,6 +28,30 @@ extract($displayData);
 	if (JoomlaBridge::getVersion('major') < 4)
 	{
 		HTMLHelper::_('formbehavior.chosen', 'select[multiple]');
+	}
+	else
+	{
+		$multiple = $field->getAttribute('multiple');
+		
+		if ($multiple === 'true' || $multiple === 'on')
+		{
+			/** @var \Joomla\CMS\Document\HtmlDocument $doc */
+			$doc = Factory::getDocument();
+			$doc->addStyleSheet(Uri::root() . 'media/vendor/choicesjs/css/choices.min.css');
+			$doc->addStyleSheet(Uri::root() . 'plugins/system/helixultimate/assets/css/choices.css');
+			$doc->addScript(Uri::root() . 'media/vendor/choicesjs/js/choices.min.js');
+
+			$doc->addScriptDeclaration("
+				document.addEventListener('DOMContentLoaded', function() {
+					if (document.getElementById('" . $field->id . "')) {
+						const choices = new Choices('#" . $field->id . "', {
+							removeItemButton: true,
+							itemSelectText: '',
+						});
+					}
+				});
+			");
+		}
 	}
 
 	$showon = $field->getAttribute('showon');

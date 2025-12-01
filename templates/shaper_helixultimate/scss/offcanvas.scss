@@ -266,7 +266,8 @@
       > li {
         border-bottom: 1px solid rgba(32, 31, 31, 0.1);
         margin-bottom: 0;
-        > a {
+        >a,
+        >.nav-header {
           padding: 15px 30px 15px 10px;
         }
       }
@@ -395,10 +396,8 @@ body.ltr {
 
             > li {
               /* nested items */
-              > a,
-              > span,
-              > .nav-header {
-                padding-left: 32px;  
+              > a {
+                padding-left: 32px;
               }
 
               &.menu-parent {
@@ -410,6 +409,24 @@ body.ltr {
                 }
               }
             }
+          }
+
+        }
+      }
+    }
+  }
+
+  .offcanvas-menu.center-alignment {
+    .offcanvas-inner {
+      ul.menu {
+        > li {
+
+          ul {
+            > li > a {
+              padding-left: 0 !important;
+              
+            }
+            
           }
         }
       }

@@ -18,6 +18,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Session\Session;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\Path;
 use HelixUltimate\Framework\Platform\Classes\Image;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\MediaHelper;
@@ -62,6 +63,7 @@ class Blog
 				$error = false;
 
 				$params = ComponentHelper::getParams('com_media');
+				$image_path = $params->get('image_path', 'images');
 
 				$contentLength 	= (int) $_SERVER['CONTENT_LENGTH'];
 				$mediaHelper 	= new MediaHelper;
@@ -91,9 +93,33 @@ class Blog
 					$date = Factory::getDate();
 					$folder = HTMLHelper::_('date', $date, 'Y') . '/' . HTMLHelper::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
 
-					if (!file_exists(JPATH_ROOT . '/images/' . $folder))
+					$target_folder = Path::clean(JPATH_ROOT . '/' . $image_path . '/' . $folder);
+
+					if (!file_exists($target_folder))
 					{
-						Folder::create(\JPATH_ROOT . '/images/' . $folder, 0755);
+						try
+						{
+							Folder::create($target_folder, 0755);
+						}
+						catch (\Throwable $e)
+						{
+							// Fallback to native mkdir
+							if (!file_exists($target_folder))
+							{
+								if (!@mkdir($target_folder, 0755, true))
+								{
+									$error = error_get_last();
+									$report['status'] = false;
+									$report['output'] = Text::_('Failed to create directory. ');
+									$report['output'] .= 'Path: ' . $target_folder;
+									$report['output'] .= ' | Native Error: ' . ($error['message'] ?? 'Unknown');
+									$report['output'] .= ' | Joomla Error: ' . $e->getMessage();
+									
+									echo json_encode($report);
+									die();
+								}
+							}
+						}
 					}
 
 					$name = $image['name'];
@@ -109,9 +135,9 @@ class Blog
 						$ext        = $file['extension'];
 						$image_name = $base_name . "." . $ext;
 						$i++;
-						$dest = JPATH_ROOT . '/images/' . $folder . '/' . $image_name;
-						$src = 'images/' . $folder . '/' . $image_name;
-						$data_src = 'images/' . $folder . '/' . $image_name;
+						$dest = Path::clean(JPATH_ROOT . '/' . $image_path . '/' . $folder . '/' . $image_name);
+						$src = Path::clean($image_path . '/' . $folder . '/' . $image_name, '/');
+						$data_src = Path::clean($image_path . '/' . $folder . '/' . $image_name, '/');
 					}
 					while (file_exists($dest));
 
@@ -144,9 +170,9 @@ class Blog
 							$sources = Image::createThumbs($dest, $sizes, $folder, $base_name, $ext, $image_quality);
 						}
 
-						if (\file_exists(JPATH_ROOT . '/images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))
+						if (\file_exists(Path::clean(JPATH_ROOT . '/' . $image_path . '/' . $folder . '/' . $base_name . '_thumbnail.' . $ext)))
 						{
-							$src = 'images/' . $folder . '/' . $base_name . '_thumbnail.' . $ext;
+							$src = Path::clean($image_path . '/' . $folder . '/' . $base_name . '_thumbnail.' . $ext, '/');
 						}
 
 						$report['status'] = true;

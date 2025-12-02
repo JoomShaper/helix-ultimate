@@ -14,9 +14,9 @@ const config = {
     srcPath: path.resolve(__dirname),
     buildPath: path.resolve(__dirname, './package/'),
     qsPath: path.resolve(__dirname, './package/helix_ultimate_quickstart/'),
-    qsPackageName: 'helixultimate_quickstart_j5_2.2.1.zip',
-    packageName: 'helixultimate_template_v2.2.1.zip',
-    pluginPackageName: 'plg_system_helixultimate_v2.2.1.zip',
+    qsPackageName: 'helixultimate_quickstart_j5_2.2.2.zip',
+    packageName: 'helixultimate_template_v2.2.2.zip',
+    pluginPackageName: 'plg_system_helixultimate_v2.2.2.zip',
 
     templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css, html',
     pluginFileExtensions: function () {
@@ -94,9 +94,9 @@ function templateStreamTask() {
 function pluginStreamTask() {
     return src([
         path.resolve(config.srcPath, './plugins/system/helixultimate') +
-            '/**/*.{' +
-            config.parseExtensions('pluginFileExtensions') +
-            '}',
+        '/**/*.{' +
+        config.parseExtensions('pluginFileExtensions') +
+        '}',
     ]).pipe(dest(path.resolve(config.buildPath, './plugins/system/'), config.destOptions));
 }
 

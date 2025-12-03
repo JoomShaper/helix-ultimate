@@ -22,12 +22,19 @@ if ((string) $module->content === '') {
     return;
 }
 
-$moduleTag              = htmlspecialchars($params->get('module_tag', 'div'), ENT_QUOTES, 'UTF-8');
+$allowedTags = ['div', 'article', 'section', 'aside', 'main'];
+$moduleTagInput = $params->get('module_tag', 'div');
+
+$moduleTag              = in_array($moduleTagInput, $allowedTags, true) ? $moduleTagInput : 'div';
 $moduleAttribs          = [];
 $moduleAttribs['class'] = 'moduletable ' . htmlspecialchars($params->get('moduleclass_sfx', ''), ENT_QUOTES, 'UTF-8');
 $bootstrapSize          = (int) $params->get('bootstrap_size', 0);
 $moduleAttribs['class'] .= $bootstrapSize !== 0 ? ' col-md-' . $bootstrapSize : '';
-$headerTag              = htmlspecialchars($params->get('header_tag', 'h3'), ENT_QUOTES, 'UTF-8');
+
+$allowedHeaderTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+$headerTagInput = $params->get('header_tag', 'h3');
+$headerTag = in_array($headerTagInput, $allowedHeaderTags, true) ? $headerTagInput : 'h3';
+
 $headerClass            = htmlspecialchars($params->get('header_class', ''), ENT_QUOTES, 'UTF-8');
 $headerAttribs          = [];
 
@@ -41,17 +48,20 @@ if (!empty($attribs['class'])) {
     $moduleAttribs['class'] .= ' ' . htmlspecialchars($attribs['class'], ENT_QUOTES, 'UTF-8');
 }
 
+$moduleId = htmlspecialchars($module->id, ENT_QUOTES, 'UTF-8');
+$escapedTitle = htmlspecialchars($escapedTitle, ENT_QUOTES, 'UTF-8');
+
 // Only add aria if the moduleTag is not a div
 if ($moduleTag !== 'div') {
     if ($module->showtitle) :
-        $moduleAttribs['aria-labelledby'] = 'mod-' . $module->id;
-        $headerAttribs['id']              = 'mod-' . $module->id;
+        $moduleAttribs['aria-labelledby'] = 'mod-' . $moduleId;
+        $headerAttribs['id']              = 'mod-' . $moduleId;
     else :
-        $moduleAttribs['aria-label'] = $module->title;
+        $moduleAttribs['aria-label'] = $escapedTitle;
     endif;
 }
 
-$header = '<' . $headerTag . ' ' . ArrayHelper::toString($headerAttribs) . '>' . $module->title . '</' . $headerTag . '>';
+$header = '<' . $headerTag . ' ' . ArrayHelper::toString($headerAttribs) . '>' . $escapedTitle . '</' . $headerTag . '>';
 ?>
 <<?php echo $moduleTag; ?> <?php echo ArrayHelper::toString($moduleAttribs); ?>>
     <?php if ((bool) $module->showtitle) : ?>

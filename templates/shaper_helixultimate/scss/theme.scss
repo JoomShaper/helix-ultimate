@@ -248,22 +248,18 @@ div.mod-languages {
   z-index: 99;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
   animation: spFadeIn 0.5s;
-  #offcanvas-toggler.offcanvas,
-  #offcanvas-toggler.mega {
-    display: none !important;
+
+  // Hide any legacy/default Helix togglers 
+  a#offcanvas-toggler:not(.offcanvas-toggler-secondary) { 
+    display: none !important; 
   }
-  &.full-header-left,
-  &.full-header-center,
-  &.header-with-modal-menu,
-  &.lg-header,
-  &.header-with-social {
-    #offcanvas-toggler.offcanvas {
-      display: flex !important;
-    }
-    .menu-with-offcanvas #offcanvas-toggler {
-      display: none !important;
-    }
+
+  .offcanvas-toggler-secondary { 
+    display: inline-flex; 
+    align-items: center; 
   }
+
+
   &.full-header {
     padding-left: 45px;
     padding-right: 45px;
@@ -276,9 +272,6 @@ div.mod-languages {
     #offcanvas-toggler {
       margin-right: 20px;
       margin-left: 0px;
-      &.offcanvas-toggler-right.offcanvas {
-        display: none !important;
-      }
     }
     .sp-column {
       height: 100%;
@@ -311,9 +304,6 @@ div.mod-languages {
           margin-right: 5px;
         }
       }
-    }
-    #offcanvas-toggler {
-      display: none !important;
     }
     &.center-layout {
       .modules-wrapper {
@@ -449,15 +439,20 @@ div.mod-languages {
     width: 100%;
     animation: spFadeInDown 0.5s;
   }
-  .sp-module {
-    margin-left: 20px;
-  }
-  nav.sp-megamenu-wrapper {
-    #offcanvas-toggler {
-      display: none;
-    }
-  }
+
+  .sp-module { margin-left: 20px; }
+
+  nav.sp-megamenu-wrapper { #offcanvas-toggler { display: none; } }
 }
+
+/* Custom toggler sizing + side spacing */
+#offcanvas-toggler {
+  height: var(--header_height);
+  line-height: var(--header_height);
+  .burger-icon { display: inline-block; }
+}
+.offcanvas-toggler-left  { margin-right: 10px; }
+.offcanvas-toggler-right { margin-left: 10px; }
 
 #sp-header-topbar {
   position: relative;
@@ -1150,7 +1145,8 @@ body.view-article.remove-container {
 
     .article-header {
       h1,
-      h2 {
+      h2,
+      h4 {
         font-size: 1.375rem;
         margin: 0 0 1.25rem 0;
 
@@ -1318,7 +1314,8 @@ body.view-article.remove-container {
   .article-header {
     position: relative;
     h1,
-    h2 {
+    h2,
+    h4 {
       font-size: 2.25rem;
     }
   }
@@ -1394,7 +1391,8 @@ body.view-article.remove-container {
     li {
       margin-bottom: 10px;
       .article-header {
-        h2 {
+        h2,
+        h4 {
           font-size: 1.2rem;
           a {
             color: #252525;

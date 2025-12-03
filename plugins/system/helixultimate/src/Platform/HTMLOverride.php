@@ -153,7 +153,7 @@ final class HTMLOverride
 		$staticHtmlPath = self::parsePath(self::$htmlPath);
 		$staticOverridePath = self::parsePath(self::$overridePath);
 
-		if (JVERSION < 4) {
+		if (JVERSION < 5) {
 			$staticOverridePath = self::parsePath(self::$overridePathLegacy);
 		}
 		

@@ -79,7 +79,7 @@ if (!empty($this->item->featured)) : ?>
 
     <?php if ($useDefList && ($info == 0 || $info == 2)) : ?>
         <?php echo LayoutHelper::render('joomla.content.info_block', ['item' => $this->item, 'params' => $params, 'position' => 'above', 'intro' => true]); ?>
-        <?php if ($info == 0 && $params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
+        <?php if ($params->get('show_tags', 1) && !empty($this->item->tags->itemTags)) : ?>
             <?php if (!($tmplParams && $tmplParams->get('show_list_tags', 0))) : ?>
                 <?php $this->item->tagLayout = new FileLayout('joomla.content.tags'); ?>
                 <?php echo $this->item->tagLayout->render($this->item->tags->itemTags); ?>

@@ -66,43 +66,21 @@ class HelixUltimateFeatureMenu
 	 */
 	public function renderFeature()
 	{
-		$menu_type = $this->params->get('menu_type');
-		$offcanvas_position = $this->params->get('offcanvas_position', 'right');
+	    $menu_type = $this->params->get('menu_type'); 
 
-		$output = '';
+	    if ($menu_type === 'mega_offcanvas' || $menu_type === 'mega')
+	    {
+	        $output  = '<nav class="sp-megamenu-wrapper d-flex" role="navigation" aria-label="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
+	        $menu    = new HelixultimateMenu('d-none d-lg-block', ''); // desktop only
+	        $output .= $menu->render();
+	        $output .= '</nav>';
 
-		if ($menu_type === 'mega_offcanvas')
-		{
-			$output .= '<nav class="sp-megamenu-wrapper d-flex" role="navigation" aria-label="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
-			$menu = new HelixultimateMenu('d-none d-lg-block', '');
-			$output .= $menu->render();
-			
-			$output .= '</nav>';
-		}
-		elseif ($menu_type === 'mega')
-		{
-			$output .= '<nav class="sp-megamenu-wrapper d-flex" role="navigation" aria-label="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
+	        return $output;
+	    }
 
-			if ($offcanvas_position === 'right')
-			{
-				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-flex d-lg-none" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div></a>';
-			}
-
-			$menu = new HelixultimateMenu('d-none d-lg-block', '');
-			$output .= $menu->render();
-			$output .= '</nav>';
-		}
-		else
-		{
-			if($offcanvas_position === 'right')
-			{
-				$output .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"  class="offcanvas-toggler-right" href="#"><div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div></a>';
-			}
-		}
-
-		return $output;
-
+	    return '';
 	}
+
 
 	/**
 	 * Render login/sign in option in header

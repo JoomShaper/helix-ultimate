@@ -8,19 +8,30 @@
 
 defined ('JPATH_BASE') or die();
 
+use Joomla\CMS\Uri\Uri;
+
+$displayData = (array) ($displayData ?? []);
 extract($displayData);
-?>
 
-<?php if(isset($attribs->helix_ultimate_gallery) && $attribs->helix_ultimate_gallery) : ?>
-	<?php $gallery = json_decode($attribs->helix_ultimate_gallery ?? ""); ?>
-	<?php $images = (isset($gallery->helix_ultimate_gallery_images) && $gallery->helix_ultimate_gallery_images) ? $gallery->helix_ultimate_gallery_images : array(); ?>
+if (isset($attribs->helix_ultimate_gallery) && $attribs->helix_ultimate_gallery) :
+	$gallery = json_decode($attribs->helix_ultimate_gallery ?? "");
+	$images = (isset($gallery->helix_ultimate_gallery_images) && $gallery->helix_ultimate_gallery_images) ? $gallery->helix_ultimate_gallery_images : array();
 
-	<?php if(count((array)$images)) : ?>
+	// Filter only images that actually exist
+	$validImages = [];
+	foreach ((array) $images as $img) {
+		$relativePath = str_replace(Uri::root(true), JPATH_ROOT . '/', $img);
+		if (is_file($relativePath)) {
+			$validImages[] = $img;
+		}
+	}
+
+	if (count($validImages)) : ?>
 		<div class="article-feature-gallery">
 			<div id="article-feature-gallery-<?php echo $id; ?>" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner" role="listbox">
-					<?php foreach ( $images as $key => $image ) : ?>
-						<div class="carousel-item<?php echo ($key===0) ? ' active': ''; ?>">
+					<?php foreach ($validImages as $key => $image) : ?>
+						<div class="carousel-item<?php echo ($key === 0) ? ' active' : ''; ?>">
 							<img src="<?php echo $image; ?>" <?php echo !empty($attribs->helix_ultimate_image_alt_txt) ? "alt='" . $attribs->helix_ultimate_image_alt_txt . "'" : '' ?>>
 						</div>
 					<?php endforeach; ?>
@@ -37,5 +48,6 @@ extract($displayData);
 				</button>
 			</div>
 		</div>
-	<?php endif; ?>
-<?php endif; ?>
+	<?php endif;
+endif;
+?>

@@ -33,6 +33,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
+use Joomla\CMS\Table\Table;
 
 // Constant definition
 define('HELIX_LAYOUTS_PATH', JPATH_PLUGINS . '/system/helixultimate/layouts');
@@ -149,6 +150,88 @@ class PlgSystemHelixultimate extends CMSPlugin
 		    $form->loadFile('blog-options', false);
 		}
 	}
+		
+	/**
+	 * The content before save event.
+	 *
+	 * @param	string	$typeAlias	Form type alias.
+	 * @param	Table	$table		Table object.
+	 * @param	bool	$isNew		True if new.
+	 * @param	array	$data		Data array.
+	 *
+	 * @return	bool
+	 * @since	2.2.2
+	 */
+	public function onContentBeforeSave(string $typeAlias, $table, bool $isNew, $data = [])
+	{
+	    //Only handle com_content form type
+	    if ($typeAlias !== 'com_content.form') {
+	        return true;
+	    }
+	
+	    // Only update existing articles 
+	    if ($isNew || empty($table->id)) {
+	        return true;
+	    }
+	
+	    // Only when saving from the frontend
+	    $app = Factory::getApplication();
+	    if (!$app->isClient('site')) {
+	        return true;
+	    }
+	
+	    $old = Table::getInstance('content');
+	    $old->load($table->id);
+	
+	    $oldAttribs = json_decode($old->attribs ?: '{}', true);
+	    if (!is_array($oldAttribs)) {
+	        $oldAttribs = [];
+	    }
+	
+	    // Decode new attribs coming from the frontend form
+	    $newAttribs = json_decode($table->attribs ?: '{}', true);
+	    if (!is_array($newAttribs)) {
+	        $newAttribs = [];
+	    }
+	
+	    $merged = $oldAttribs;
+	    foreach ($newAttribs as $key => $value) {
+	        $merged[$key] = $value;
+	    }
+
+	    $table->attribs = json_encode($merged);
+	
+	    return true;
+	}
+
+	/**
+	 * On Saving extensions logging method
+	 * Method is called when an extension is being saved
+	 *
+	 * @param   string   $context  The extension
+	 * @param   JTable   $table    DataBase Table object
+	 * @param   boolean  $isNew    If the extension is new or not
+	 *
+	 * @return	void
+	 * @since	2.2.2
+	 */
+	public function onExtensionBeforeSave($context, $table, $isNew)
+	{
+		if ($context === 'com_templates.style' && !empty($table->id))
+		{
+			$params = $this->getTemplateStyleParams($table->id);
+			$table->params = $params;
+		}
+
+		if ($context === 'com_templates.style' && $isNew)
+		{
+			$app = Factory::getApplication();
+			$id = $app->input->get('id', 0);
+			$params = $this->getTemplateStyleParams($id);
+			$table->params = $params;
+		}
+	}
+
 
 	/**
 	 * On Saving extensions logging method
@@ -191,6 +274,28 @@ class PlgSystemHelixultimate extends CMSPlugin
 				$db->execute();
 			}
 		}
+	}
+
+	/**
+	 * Get the template style params
+	 *
+	 * @param   int  $id  The template style id
+	 *
+	 * @return  string  The template style params
+	 * @since   2.2.2
+	 */
+	public function getTemplateStyleParams($id)
+	{
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('params'))
+			->from($db->quoteName('#__template_styles'))
+			->where($db->quoteName('id') . ' = ' . $db->quote($id));
+
+		$db->setQuery($query);
+		$tparams = $db->loadResult();
+
+		return $tparams;
 	}
 
 	/**
@@ -397,7 +502,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 			if ($params->get('compress_css'))
 			{
-				$theme->compress_css();
+				$theme->compress_css($params->get('exclude_css'));
 			}
 
 			if ($params->get('compress_js'))

@@ -56,11 +56,11 @@ class JFormFieldHeliximage extends FormField
 			$src = Uri::root(true) . '/' . $data_src;
 
 			$basename = basename($data_src);
-			$thumbnail = JPATH_ROOT . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
+			$thumbnail = JPATH_ROOT . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . $this->getExt($basename);
 
 			if (file_exists($thumbnail))
 			{
-				$src = Uri::root(true) . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
+				$src = Uri::root(true) . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . $this->getExt($basename);
 			}
 
 			$output .= '<img src="' . $src . '" data-src="' . $data_src . '" alt="">';
@@ -78,4 +78,32 @@ class JFormFieldHeliximage extends FormField
 
 		return $output;
 	}
+
+	/**
+     * Gets the extension of a file name
+     *
+     * @param   string  $file  The file name
+     *
+     * @return  string  The file extension
+     *
+     * @since   3.0.0
+     */
+    public function getExt($file)
+    {
+        // String manipulation should be faster than pathinfo() on newer PHP versions.
+        $dot = strrpos($file, '.');
+
+        if ($dot === false) {
+            return '';
+        }
+
+        $ext = substr($file, $dot + 1);
+
+        // Extension cannot contain slashes.
+        if (strpos($ext, '/') !== false || (DIRECTORY_SEPARATOR === '\\' && strpos($ext, '\\') !== false)) {
+            return '';
+        }
+
+        return $ext;
+    }
 }

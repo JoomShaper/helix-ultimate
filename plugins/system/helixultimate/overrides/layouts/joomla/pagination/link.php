@@ -13,87 +13,102 @@ use Joomla\CMS\Language\Text;
 
 $item    = $displayData['data'];
 $display = $item->text;
-$app = Factory::getApplication();
+$app     = Factory::getApplication();
+
+$iconClass = null;
+$aria      = '';
 
 switch ((string) $item->text)
 {
-	// Check for "Start" item
-	case Text::_('JLIB_HTML_START') :
-		$icon = $app->getLanguage()->isRtl() ? 'fas fa-angle-double-right' : 'fas fa-angle-double-left';
-		$aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-		break;
+    // Start
+    case Text::_('JLIB_HTML_START'):
+        $iconClass = $app->getLanguage()->isRtl()
+            ? 'fas fa-angle-double-right'
+            : 'fas fa-angle-double-left';
+        $aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
+        break;
 
-	// Check for "Prev" item
-	case $item->text === Text::_('JPREV') :
-		$item->text = Text::_('JPREVIOUS');
-		$icon = $app->getLanguage()->isRtl() ? 'fas fa-angle-right' : 'fas fa-angle-left';
-		$aria =Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-		break;
+    // Previous
+    case Text::_('JPREV'):
+        $item->text = Text::_('JPREVIOUS');
+        $iconClass = $app->getLanguage()->isRtl()
+            ? 'fas fa-angle-right'
+            : 'fas fa-angle-left';
+        $aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
+        break;
 
-	// Check for "Next" item
-	case Text::_('JNEXT') :
-		$icon = $app->getLanguage()->isRtl() ? 'fas fa-angle-left' : 'fas fa-angle-right';
-		$aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-		break;
+    // Next
+    case Text::_('JNEXT'):
+        $iconClass = $app->getLanguage()->isRtl()
+            ? 'fas fa-angle-left'
+            : 'fas fa-angle-right';
+        $aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
+        break;
 
-	// Check for "End" item
-	case Text::_('JLIB_HTML_END') :
-		$icon = $app->getLanguage()->isRtl() ? 'fas fa-angle-double-left' : 'fas fa-angle-double-right';
-		$aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
-		break;
+    // End
+    case Text::_('JLIB_HTML_END'):
+        $iconClass = $app->getLanguage()->isRtl()
+            ? 'fas fa-angle-double-left'
+            : 'fas fa-angle-double-right';
+        $aria = Text::sprintf('JLIB_HTML_GOTO_POSITION', strtolower($item->text));
+        break;
 
-	default:
-		$icon = null;
-		$aria = Text::sprintf('JLIB_HTML_GOTO_PAGE', strtolower($item->text));
-		break;
+    default:
+        $aria = Text::sprintf('JLIB_HTML_GOTO_PAGE', strtolower($item->text));
+        break;
 }
 
-if ($icon !== null)
-{
-	$display = '<span class="' . $icon . '" aria-hidden="true"></span>';
-}
-
+// Build link & class for active items
 if ($displayData['active'])
 {
-	if ($item->base > 0)
-	{
-		$limit = 'limitstart.value=' . $item->base;
-	}
-	else
-	{
-		$limit = 'limitstart.value=0';
-	}
+    $limit = ($item->base > 0) ? ('limitstart.value=' . (int) $item->base) : 'limitstart.value=0';
+    $class = 'active';
 
-	$class = 'active';
-
-	if ($app->isClient('administrator'))
-	{
-		$link = 'href="#" onclick="document.adminForm.' . $item->prefix . $limit . '; Joomla.submitform();return false;"';
-	}
-	elseif ($app->isClient('site'))
-	{
-		$link = 'href="' . $item->link . '"';
-	}
+    if ($app->isClient('administrator'))
+    {
+        $escapedPrefix = htmlspecialchars($item->prefix ?? '', ENT_QUOTES, 'UTF-8');
+        $link = 'href="#" onclick="document.adminForm.' . $escapedPrefix . $limit . '; Joomla.submitform();return false;"';
+    }
+    elseif ($app->isClient('site'))
+    {
+        $escapedLink = htmlspecialchars($item->link ?? '', ENT_QUOTES, 'UTF-8');
+        $link = 'href="' . $escapedLink . '"';
+    }
 }
 else
 {
-	$class = (property_exists($item, 'active') && $item->active) ? 'active' : 'disabled';
+    $class = (property_exists($item, 'active') && $item->active) ? 'active' : 'disabled';
 }
-
 ?>
 <?php if ($displayData['active']) : ?>
-	<li class="page-item">
-		<a aria-label="<?php echo $aria; ?>" <?php echo $link; ?> class="page-link">
-			<?php echo $display; ?>
-		</a>
-	</li>
+    <li class="page-item">
+        <a aria-label="<?php echo htmlspecialchars($aria, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $link; ?> class="page-link">
+            <?php if ($iconClass): ?>
+                <span class="<?php echo $iconClass; ?>" aria-hidden="true"></span>
+            <?php else: ?>
+                <?php echo htmlspecialchars($display, ENT_QUOTES, 'UTF-8'); ?>
+            <?php endif; ?>
+        </a>
+    </li>
 <?php elseif (isset($item->active) && $item->active) : ?>
-	<?php $aria = Text::sprintf('JLIB_HTML_PAGE_CURRENT', strtolower($item->text)); ?>
-	<li class="<?php echo $class; ?> page-item">
-		<span aria-current="true" aria-label="<?php echo $aria; ?>" class="page-link"><?php echo $display; ?></span>
-	</li>
+    <?php $aria = Text::sprintf('JLIB_HTML_PAGE_CURRENT', strtolower($item->text)); ?>
+    <li class="<?php echo $class; ?> page-item">
+        <span aria-current="true" aria-label="<?php echo htmlspecialchars($aria, ENT_QUOTES, 'UTF-8'); ?>" class="page-link">
+            <?php if ($iconClass): ?>
+                <span class="<?php echo $iconClass; ?>" aria-hidden="true"></span>
+            <?php else: ?>
+                <?php echo htmlspecialchars($display, ENT_QUOTES, 'UTF-8'); ?>
+            <?php endif; ?>
+        </span>
+    </li>
 <?php else : ?>
-	<li class="<?php echo $class; ?> page-item">
-		<span class="page-link" aria-hidden="true"><?php echo $display; ?></span>
-	</li>
+    <li class="<?php echo $class; ?> page-item">
+        <span class="page-link" aria-hidden="true">
+            <?php if ($iconClass): ?>
+                <span class="<?php echo $iconClass; ?>" aria-hidden="true"></span>
+            <?php else: ?>
+                <?php echo htmlspecialchars($display, ENT_QUOTES, 'UTF-8'); ?>
+            <?php endif; ?>
+        </span>
+    </li>
 <?php endif; ?>

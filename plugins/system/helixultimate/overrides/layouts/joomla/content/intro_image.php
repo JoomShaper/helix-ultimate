@@ -29,6 +29,7 @@ $leading = !empty($displayData->leading);
 
 // Preferred size from template params
 $blogListSize = 'thumbnail';
+$titleForAlt = '';
 
 if ($tplParams) {
     $blogListSize = $leading
@@ -49,21 +50,12 @@ if (!empty($attribs->helix_ultimate_image)) {
         if (file_exists($listImage)) {
             $introImage = Uri::root(true) . '/' . $dirname . '/' . $name . '_' . $blogListSize . '.' . $ext;
         }
-
     }
+
+	$titleForAlt     = !empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : ($displayData->title ?? '');
 }
 
-if (empty($introImage) && !empty($images->image_intro)) {
-    $introImage = $images->image_intro;
-}
-
-if (empty($introImage)) {
-    return;
-}
-
-$titleForAlt     = !empty($images->image_intro_alt) ? $images->image_intro_alt : ($displayData->title ?? '');
 $altText         = $titleForAlt !== '' ? htmlspecialchars($titleForAlt, ENT_COMPAT, 'UTF-8') : false;
-$captionText     = isset($images->image_intro_caption) ? $images->image_intro_caption : '';
 $canView         = ($params && ($params->get('access-view') || $params->get('show_noauth', '0') == '1'));
 $linkIntroImage  = $params ? ( (int)$params->get('link_intro_image') === 1 || ( (int)$params->get('link_titles') === 1 ) ) : false;
 $shouldLink      = $linkIntroImage && $canView;
@@ -77,11 +69,6 @@ $layoutAttr = [
     'itemprop' => 'thumbnailUrl',
 ];
 
-if ($captionText !== '') {
-    $layoutAttr['class'] = 'caption';
-    $layoutAttr['title'] = htmlspecialchars($captionText, ENT_COMPAT, 'UTF-8');
-}
-
 $imgfloat  = !empty($images->float_intro) ? $images->float_intro : ($params ? $params->get('float_intro') : '');
 $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article-intro-image');
 ?>
@@ -92,11 +79,7 @@ $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article
 		<?php endif; ?>
 		<div class="article-intro-image">
 			<?php 
-				$layoutAttr = [
-					'src' => $introImage,
-					'alt' => empty($displayData->title) ? false : htmlspecialchars($displayData->title ?? "", ENT_COMPAT, 'UTF-8'),
-				];
-				echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
+				echo LayoutHelper::render('joomla.html.image', $layoutAttr);
 			?>
 			
 		</div>
@@ -105,7 +88,6 @@ $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article
 	<?php endif; ?>
 <?php else : ?>
 
-	<?php $images = json_decode($displayData->images ?? ""); ?>
 	<?php if (isset($images->image_intro) && !empty($images->image_intro)) : ?>
 		<?php $imgfloat = empty($images->float_intro) ? $params->get('float_intro') : $images->float_intro; ?>
 		<div class="article-intro-image float-<?php echo htmlspecialchars($imgfloat, ENT_COMPAT, 'UTF-8'); ?>">
@@ -114,13 +96,13 @@ $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article
 				<a href="<?php echo Route::_(Joomla\Component\Content\Site\Helper\RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language)); ?>">
 					<?php
                         $layoutAttr = [
-							'src' => htmlspecialchars($images->image_intro, ENT_COMPAT, 'UTF-8'),
-							'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt ?? "", ENT_COMPAT, 'UTF-8'),
+							'src' => htmlspecialchars($images->image_intro ?? "", ENT_COMPAT, 'UTF-8'),
+							'alt' => !empty($images->image_intro_alt) ? htmlspecialchars($images->image_intro_alt ?? "", ENT_COMPAT, 'UTF-8') : ($displayData->title ?? ''),
 						];
 						if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 						{
 							$layoutAttr['class'] = 'caption';
-							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption ?? "");
+							$layoutAttr['title'] = htmlspecialchars($images->image_intro_caption ?? "", ENT_COMPAT, 'UTF-8');
 						}
 						echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
 						// Image Caption 
@@ -133,9 +115,9 @@ $imgClass  = trim(($imgfloat ? 'float-' . $imgfloat : '') . ' item-image article
 				</a>
 			<?php else : ?>
 				<?php 
-				$layoutAttr = [
+					$layoutAttr = [
 						'src' => htmlspecialchars($images->image_intro ?? "", ENT_COMPAT, 'UTF-8'),
-						'alt' => empty($images->image_intro_alt) ? false : htmlspecialchars($images->image_intro_alt, ENT_COMPAT, 'UTF-8'),
+						'alt' => !empty($images->image_intro_alt) ? htmlspecialchars($images->image_intro_alt ?? "", ENT_COMPAT, 'UTF-8') : ($displayData->title ?? ''),
 					];
 					if (isset($images->image_intro_caption) && $images->image_intro_caption !== '') 
 					{

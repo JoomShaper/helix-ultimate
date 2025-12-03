@@ -16,15 +16,17 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
 $params = $this->params;
 ?>
-<div class="com-content-archive archive<?php echo $this->pageclass_sfx; ?>">
+<div class="archive<?php echo $this->pageclass_sfx; ?>">
     <?php if ($params->get('show_page_heading')) : ?>
         <div class="page-header">
-            <h1><?php echo $this->escape($params->get('page_heading')); ?></h1>
+            <h1>
+                <?php echo $this->escape($params->get('page_heading')); ?>
+            </h1>
         </div>
     <?php endif; ?>
 
-    <form id="adminForm" action="<?php echo Route::_('index.php'); ?>" method="post" class="com-content-archive__form">
-        <fieldset class="com-content-archive__filters filters">
+    <form id="adminForm" action="<?php echo Route::_('index.php'); ?>" method="post">
+        <fieldset class="filters">
             <legend class="visually-hidden">
                 <?php echo Text::_('COM_CONTENT_FORM_FILTER_LEGEND'); ?>
             </legend>
@@ -40,7 +42,7 @@ $params = $this->params;
                             name="filter-search"
                             id="filter-search"
                             value="<?php echo $this->escape($this->filter); ?>"
-                            class="form-control"
+                            class="form-control inputbox col-lg-2"
                             onchange="document.getElementById('adminForm').submit();"
                             placeholder="<?php echo Text::_('COM_CONTENT_TITLE_FILTER_LABEL'); ?>">
                     </div>

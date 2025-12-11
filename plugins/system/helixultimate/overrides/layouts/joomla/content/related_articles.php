@@ -42,7 +42,8 @@ $tmpl_params = $template->params;
 	<?php if( $tmpl_params->get('related_article_view_type') === 'list' ): ?> 
 		<ul class="article-list related-article-list">
 			<?php foreach( $articles as $item ): ?> 
-				<li class="related-article-list-item">     
+				<li class="related-article-list-item">
+					<?php $item->heading = 'h4'; ?> 
 					<?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $item); ?>
 					<?php echo LayoutHelper::render('joomla.content.info_block.publish_date', array('item' => $item, 'params' => $item->params,'articleView'=>'intro')); ?>
 				</li>

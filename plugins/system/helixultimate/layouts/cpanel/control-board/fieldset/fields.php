@@ -8,7 +8,6 @@
 
 defined('_JEXEC') or die();
 
-use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 

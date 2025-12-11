@@ -24,7 +24,7 @@ $link = RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $d
 <?php if ($displayData->state == 0 || $params->get('show_title') || ($params->get('show_author') && !empty($displayData->author))) : ?>
     <div class="article-header">
         <?php if ($params->get('show_title')) : ?>
-            <h4>
+            <h2>
                 <?php if ($params->get('link_titles') && ($params->get('access-view') || $params->get('show_noauth', '0') == '1')) : ?>
                     <a href="<?php echo Route::_($link); ?>">
                         <?php echo $this->escape($displayData->title); ?>
@@ -32,7 +32,7 @@ $link = RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $d
                 <?php else : ?>
                     <?php echo $this->escape($displayData->title); ?>
                 <?php endif; ?>
-            </h4>
+            </h2>
         <?php endif; ?>
 
         <?php if ($displayData->state == 0) : ?>

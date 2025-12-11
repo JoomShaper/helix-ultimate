@@ -17,6 +17,7 @@ use Joomla\Component\Content\Site\Helper\RouteHelper;
 // Create a shortcut for params.
 $params  = $displayData->params;
 $canEdit = $displayData->params->get('access-edit');
+$heading = $displayData->heading ?? 'h2';
 
 $currentDate = Factory::getDate()->format('Y-m-d H:i:s');
 $link = RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $displayData->language);
@@ -24,7 +25,7 @@ $link = RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $d
 <?php if ($displayData->state == 0 || $params->get('show_title') || ($params->get('show_author') && !empty($displayData->author))) : ?>
     <div class="article-header">
         <?php if ($params->get('show_title')) : ?>
-            <h2>
+            <<?php echo $heading; ?>>
                 <?php if ($params->get('link_titles') && ($params->get('access-view') || $params->get('show_noauth', '0') == '1')) : ?>
                     <a href="<?php echo Route::_($link); ?>">
                         <?php echo $this->escape($displayData->title); ?>
@@ -32,7 +33,7 @@ $link = RouteHelper::getArticleRoute($displayData->slug, $displayData->catid, $d
                 <?php else : ?>
                     <?php echo $this->escape($displayData->title); ?>
                 <?php endif; ?>
-            </h2>
+            </<?php echo $heading; ?>>
         <?php endif; ?>
 
         <?php if ($displayData->state == 0) : ?>

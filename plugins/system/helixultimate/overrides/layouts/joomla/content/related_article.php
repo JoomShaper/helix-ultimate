@@ -22,6 +22,8 @@ $attribs = json_decode($item->attribs ?? "");
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';
 
+$item->heading = 'h4';
+
 $version = new Version();
 $JoomlaVersion = $version->getShortVersion();
 ?>
@@ -38,7 +40,7 @@ $JoomlaVersion = $version->getShortVersion();
         </a>
     <?php endif; ?>
 
-    <?php echo LayoutHelper::render('joomla.content.blog_style_related_item_title', $item); ?>
+    <?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $item); ?>
 
     <div class="article-info">
         <?php if ($params->get('show_author') && !empty($item->author )) : ?>

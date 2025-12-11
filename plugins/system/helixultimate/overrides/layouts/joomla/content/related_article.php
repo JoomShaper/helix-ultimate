@@ -38,7 +38,7 @@ $JoomlaVersion = $version->getShortVersion();
         </a>
     <?php endif; ?>
 
-    <?php echo LayoutHelper::render('joomla.content.blog_style_default_item_title', $item); ?>
+    <?php echo LayoutHelper::render('joomla.content.blog_style_related_item_title', $item); ?>
 
     <div class="article-info">
         <?php if ($params->get('show_author') && !empty($item->author )) : ?>

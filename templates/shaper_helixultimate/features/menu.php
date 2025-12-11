@@ -67,18 +67,34 @@ class HelixUltimateFeatureMenu
 	public function renderFeature()
 	{
 	    $menu_type = $this->params->get('menu_type'); 
+		$offcanvas_position = $this->params->get('offcanvas_position', 'right');
+		$html = '';
+		if ($offcanvas_position === 'right')
+		{
+			if ($menu_type === 'mega')
+			{
+				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right offcanvas-toggler-custom d-lg-none" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
+			}
+			else
+			{
+				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right offcanvas-toggler-custom align-items-center" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
+			}
+		}
+
 
 	    if ($menu_type === 'mega_offcanvas' || $menu_type === 'mega')
 	    {
 	        $output  = '<nav class="sp-megamenu-wrapper d-flex" role="navigation" aria-label="' . Text::_('HELIX_ULTIMATE_AIRA_NAVIGATION') . '">';
 	        $menu    = new HelixultimateMenu('d-none d-lg-block', ''); // desktop only
 	        $output .= $menu->render();
+			$output .= $html;
 	        $output .= '</nav>';
+			
 
 	        return $output;
 	    }
-
-	    return '';
+		
+	    return $html;
 	}
 
 

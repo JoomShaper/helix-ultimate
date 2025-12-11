@@ -249,9 +249,8 @@ div.mod-languages {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
   animation: spFadeIn 0.5s;
 
-  // Hide any legacy/default Helix togglers 
-  a#offcanvas-toggler:not(.offcanvas-toggler-secondary) { 
-    display: none !important; 
+  .offcanvas-toggler-custom { 
+    display: none ; 
   }
 
   .offcanvas-toggler-secondary { 

@@ -73,11 +73,11 @@ class HelixUltimateFeatureMenu
 		{
 			if ($menu_type === 'mega')
 			{
-				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-flex d-lg-none" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
+				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right offcanvas-toggler-custom d-lg-none" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
 			}
 			else
 			{
-				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right d-flex align-items-center" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
+				$html .= '<a id="offcanvas-toggler" aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '" class="offcanvas-toggler-right offcanvas-toggler-custom align-items-center" href="#" aria-hidden="true" title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"><div class="burger-icon"><span></span><span></span><span></span></div></a>';
 			}
 		}
 

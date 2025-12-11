@@ -69,7 +69,10 @@ class HelixUltimateFeatureMenu
 	    $menu_type = $this->params->get('menu_type'); 
 		$offcanvas_position = $this->params->get('offcanvas_position', 'right');
 		$html = '';
-		if ($offcanvas_position === 'right')
+
+		$predefinedHeader = $this->params->get('predefined_header', 'none');
+
+		if ($offcanvas_position === 'right' && $predefinedHeader === 'none' && $menu_type !== 'mega_offcanvas')
 		{
 			if ($menu_type === 'mega')
 			{

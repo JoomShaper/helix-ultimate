@@ -249,10 +249,6 @@ div.mod-languages {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
   animation: spFadeIn 0.5s;
 
-  .offcanvas-toggler-custom { 
-    display: none ; 
-  }
-
   .offcanvas-toggler-secondary { 
     display: inline-flex; 
     align-items: center; 
@@ -441,7 +437,7 @@ div.mod-languages {
 
   .sp-module { margin-left: 20px; }
 
-  nav.sp-megamenu-wrapper { #offcanvas-toggler { display: none; } }
+  // nav.sp-megamenu-wrapper { #offcanvas-toggler { display: none; } }
 }
 
 /* Custom toggler sizing + side spacing */

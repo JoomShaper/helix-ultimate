@@ -81,7 +81,9 @@ class HelixUltimateFeatureLogo
 
 		$html = '';
 
-		if ($isToggle && $offcanvas_position === 'left')
+		$predefinedHeader = $this->params->get('predefined_header', 'none');
+
+		if ($isToggle && $offcanvas_position === 'left' && $predefinedHeader === 'none')
 		{
 			if ($menu_type === 'mega')
 			{

@@ -1889,6 +1889,7 @@ class HelixUltimate
 				->select('id')
 				->from($db->quoteName('#__content'))
 				->where($db->quoteName('catid') . " = " . $catId)
+				->where($db->quoteName('state') . ' = 1')
 				->setLimit($maximum + 1);
 
 			$db->setQuery($catQuery);

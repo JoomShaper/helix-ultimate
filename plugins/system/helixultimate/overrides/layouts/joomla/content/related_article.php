@@ -22,6 +22,8 @@ $attribs = json_decode($item->attribs ?? "");
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $article_format = (isset($attribs->helix_ultimate_article_format) && $attribs->helix_ultimate_article_format) ? $attribs->helix_ultimate_article_format : 'standard';
 
+$item->heading = 'h4';
+
 $version = new Version();
 $JoomlaVersion = $version->getShortVersion();
 ?>

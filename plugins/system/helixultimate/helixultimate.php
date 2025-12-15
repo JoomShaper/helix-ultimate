@@ -227,6 +227,10 @@ class PlgSystemHelixultimate extends CMSPlugin
 		{
 			$app = Factory::getApplication();
 			$id = $app->input->get('id', 0);
+			if (!$id)
+			{
+				return true;
+			}
 			$params = $this->getTemplateStyleParams($id);
 			$table->params = $params;
 		}

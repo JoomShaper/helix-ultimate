@@ -313,9 +313,31 @@ class HelixUltimate
 		}
 
 		// Favicon
-		if ($favicon = $this->params->get('favicon'))
+		$favicon = $this->params->get('favicon');
+		if ($favicon)
 		{
-			$this->doc->addFavicon(Uri::base(true) . '/' . $favicon);
+			$url = Uri::base(true) . '/' . $favicon;
+			$ext = strtolower(pathinfo($url, PATHINFO_EXTENSION));
+
+			switch ($ext)
+			{
+				case 'svg':
+					$type = 'image/svg+xml';
+					break;
+				case 'gif':
+					$type = 'image/gif';
+				case 'png':
+					$type = 'image/png';
+					break;
+				case 'jpg':
+				case 'jpeg':
+					$type = 'image/jpeg';
+					break;
+				default:
+					$type = 'image/vnd.microsoft.icon';
+					break;
+			}
+			 $this->doc->addFavicon($url, $type);
 		}
 		else
 		{
@@ -1889,6 +1911,7 @@ class HelixUltimate
 				->select('id')
 				->from($db->quoteName('#__content'))
 				->where($db->quoteName('catid') . " = " . $catId)
+				->where($db->quoteName('state') . ' = 1')
 				->setLimit($maximum + 1);
 
 			$db->setQuery($catQuery);

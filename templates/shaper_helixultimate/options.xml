@@ -400,12 +400,6 @@
 			label="HELIX_ULTIMATE_SOCIAL_ICON_FLICKR" 
 			hint="https://www.flickr.com/photos/user" 
 			showon="show_social_icons:1" />
-		<field name="skype" 
-			helixgroup="social_icons" 
-			type="text" 
-			label="HELIX_ULTIMATE_SOCIAL_ICON_SKYPE" 
-			hint="username" 
-			showon="show_social_icons:1" />
 		<field name="whatsapp" 
 			helixgroup="social_icons" 
 			type="text" 

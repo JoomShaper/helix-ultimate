@@ -54,7 +54,7 @@ if ($isHeader && $hasOffcanvas && $options->name === 'menu')
         if ($menuType !== 'offcanvas')
         {
             $output .= '<a id="offcanvas-toggler"  aria-label="'. Text::_('HELIX_ULTIMATE_NAVIGATION') . '" title="'. Text::_('HELIX_ULTIMATE_NAVIGATION') . '"  class="offcanvas-toggler-secondary offcanvas-toggler-right d-flex align-items-center" href="#">';
-            $output .= '<div class="burger-icon"><span></span><span></span><span></span></div>';
+            $output .= '<div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div>';
             $output .= '</a>';
         }
     }

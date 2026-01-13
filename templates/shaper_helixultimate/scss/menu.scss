@@ -266,8 +266,14 @@ $menu_font_size: 14px;
   .offcanvas-inner {
 		ul.menu {
       li.active {
-        a {
+        > a {
           color: $offcanvas_menu_active_menu_item_color;
+        }
+
+        ul {
+          li.active > a {
+            color: $offcanvas_menu_active_menu_item_color;
+          }
         }
       }
     }

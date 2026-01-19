@@ -43,6 +43,16 @@
 			separator="true"
 			showon="logo_type:image[AND]logo_image!:" />
 		
+		<field name="sticky_logo" helixgroup="logo" type="helixmedia" preview="true"
+			label="HELIX_ULTIMATE_STICKY_LOGO"
+			description="HELIX_ULTIMATE_STICKY_LOGO_DESC"
+			showon="logo_type:image[AND]logo_image!:[AND]sticky_header:1" />
+
+		<field name="sticky_logo_height" helixgroup="logo" type="helixUnit" display="inline"
+			label="HELIX_ULTIMATE_STICKY_LOGO_HEIGHT"
+			description="HELIX_ULTIMATE_STICKY_LOGO_HEIGHT_DESC"
+			showon="logo_type:image[AND]sticky_logo!:[AND]sticky_header:1" />
+
 		<field name="logo_alt"
 			helixgroup="logo"
 			type="text"

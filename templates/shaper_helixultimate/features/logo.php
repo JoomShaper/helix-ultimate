@@ -137,8 +137,16 @@ class HelixUltimateFeatureLogo
 				$logoWithUrl = Uri::root() . $defaultLogo;
 				$attrLogoHeightRaw = $this->params->get('logo_height', '');
 				$attrLogoHeight = (int) filter_var($attrLogoHeightRaw, FILTER_SANITIZE_NUMBER_INT);
+			
+				// Add sticky logo class if sticky logo exists
+				$mainLogoClass = 'logo-image';
+				if ($this->params->get('sticky_logo'))
+				{
+					$mainLogoClass .= ' logo-default';
+				}
+				
 				$siteLogo = "
-				<img class='logo-image {$custom_logo_class}'
+				<img class='{$mainLogoClass} {$custom_logo_class}'
 					srcset='{$srcset}'
 					src='{$logoWithUrl}'
 					height='{$attrLogoHeight}'
@@ -147,6 +155,23 @@ class HelixUltimateFeatureLogo
 				";
 
 				$html .= $siteLogo;
+
+				// Add sticky logo if set
+				if ($this->params->get('sticky_logo'))
+				{
+					$stickyLogo = $this->params->get('sticky_logo', null);
+					$stickyLogoWithUrl = Uri::root() . $stickyLogo;
+					$attrStickyLogoHeightRaw = $this->params->get('sticky_logo_height', '');
+					$attrStickyLogoHeight = (int) filter_var($attrStickyLogoHeightRaw, FILTER_SANITIZE_NUMBER_INT);
+					
+					// Use default logo height if sticky logo height is not set
+					if (empty($attrStickyLogoHeight))
+					{
+						$attrStickyLogoHeight = $attrLogoHeight;
+					}
+					
+					$html .= "<img class='logo-image logo-sticky {$custom_logo_class}' src='{$stickyLogoWithUrl}' height='{$attrStickyLogoHeight}' alt='{$altText}' />";
+				}
 
 				if ($this->params->get('mobile_logo'))
 				{
@@ -186,6 +211,16 @@ class HelixUltimateFeatureLogo
 				$doc->addStyleDeclaration($logoStyle);
 			}
 
+			// Add sticky logo height if set
+			if ($sticky_logo_height = $this->params->get('sticky_logo_height', ''))
+			{
+				$sticky_logo_height = preg_match("@(px|em|rem|%)$@", $sticky_logo_height) ? $sticky_logo_height : $sticky_logo_height . 'px';
+
+				$stickyLogoStyle = '.header-sticky .logo-sticky {height:' . $sticky_logo_height . ';}';
+
+				$doc->addStyleDeclaration($stickyLogoStyle);
+			}
+
 			/**
 			 * If responsive logo height is provided then add the height
 			 * to the media query.
@@ -212,6 +247,27 @@ class HelixUltimateFeatureLogo
 				$logoStyleXs .= '}';
 
 				$doc->addStyleDeclaration($logoStyleXs);
+			}
+			// Add responsive sticky logo height if sticky logo height is set
+			if ($this->params->get('sticky_logo') && $this->params->get('sticky_logo_height'))
+			{
+				if ($logo_height_sm)
+				{
+					$logoStyleSm = '@media(max-width: 992px) {';
+					$logoStyleSm .= '.header-sticky .logo-sticky {height: ' . $logo_height_sm . ';}';
+					$logoStyleSm .= '}';
+
+					$doc->addStyleDeclaration($logoStyleSm);
+				}
+				
+				if ($logo_height_xs)
+				{
+					$logoStyleXs = '@media(max-width: 576px) {';
+					$logoStyleXs .= '.header-sticky .logo-sticky {height: ' . $logo_height_xs . ';}';
+					$logoStyleXs .= '}';
+
+					$doc->addStyleDeclaration($logoStyleXs);
+				}
 			}
 		}
 		else

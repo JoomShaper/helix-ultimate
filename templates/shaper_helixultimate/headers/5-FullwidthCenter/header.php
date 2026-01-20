@@ -40,7 +40,7 @@ $togglerHtml    = '
   	   href="#"
   	   aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"
   	   title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '">
-  	   <div class="burger-icon"><span></span><span></span><span></span></div>
+  	   <div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div>
   	</a>';
 ?>
 <?php if ($data->params->get('sticky_header')): ?>

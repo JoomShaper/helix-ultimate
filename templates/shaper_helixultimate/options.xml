@@ -26,6 +26,30 @@
 			label="HELIX_ULTIMATE_LOGO" 
 			showon="logo_type:image" />
 
+		<field name="logo_height" 
+			helixgroup="logo" 
+			type="helixUnit"
+			display="inline" 
+			default="30" 
+			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
+			showon="logo_type:image" />
+
+		<field name="logo_height_sm" 
+			helixgroup="logo" 
+			type="helixUnit"
+			display="inline" 
+			className="field-hidden"
+			label="HELIX_ULTIMATE_LOGO_HEIGHT_SM" 
+			showon="logo_type:image" />
+
+		<field name="logo_height_xs" 
+			helixgroup="logo" 
+			type="helixUnit"
+			display="inline" 
+			className="field-hidden"
+			label="HELIX_ULTIMATE_LOGO_HEIGHT_XS" 
+			showon="logo_type:image" />
+
 		<field name="retina_logo" 
 			helixgroup="logo" 
 			type="helixmedia" 
@@ -66,31 +90,6 @@
 			label="HELIX_ULTIMATE_LOGO_CUSTOM_LINK"
 			description="HELIX_ULTIMATE_LOGO_CUSTOM_LINK_DESC"
 			showon="logo_type:image" />
-
-		<field name="logo_height" 
-			helixgroup="logo" 
-			type="helixUnit"
-			display="inline" 
-			default="30" 
-			label="HELIX_ULTIMATE_LOGO_HEIGHT" 
-			showon="logo_type:image" />
-
-		<field name="logo_height_sm" 
-			helixgroup="logo" 
-			type="helixUnit"
-			display="inline" 
-			className="field-hidden"
-			label="HELIX_ULTIMATE_LOGO_HEIGHT_SM" 
-			showon="logo_type:image" />
-
-		<field name="logo_height_xs" 
-			helixgroup="logo" 
-			type="helixUnit"
-			display="inline" 
-			className="field-hidden"
-			label="HELIX_ULTIMATE_LOGO_HEIGHT_XS" 
-			showon="logo_type:image" />
-
 
 		<field name="logo_text" 
 			helixgroup="logo" 

@@ -70,7 +70,6 @@ class HelixUltimateFeatureSocial
 			'dribbble' 	=> $this->params->get('dribbble'),
 			'instagram' => $this->params->get('instagram'),
 			'behance' 	=> $this->params->get('behance'),
-			'skype' 	=> $this->params->get('skype'),
 			'whatsapp' 	=> $this->params->get('whatsapp'),
 			'flickr' 	=> $this->params->get('flickr'),
 			'vk' 		=> $this->params->get('vk'),
@@ -99,10 +98,6 @@ class HelixUltimateFeatureSocial
 
 					switch($name)
 					{
-						case 'skype':
-							$link = 'skype:' . $link . '?chat';
-						break;
-
 						case 'whatsapp':
 							$link = 'https://wa.me/' . $link . '?text=Hi';
 						break;

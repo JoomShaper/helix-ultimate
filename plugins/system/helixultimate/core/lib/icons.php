@@ -561,7 +561,6 @@ class FontawesomeIcons
 		'fa-simplybuilt',
 		'fa-sitemap',
 		'fa-skyatlas',
-		'fa-skype',
 		'fa-slack',
 		'fa-sliders-h',
 		'fa-slideshare',

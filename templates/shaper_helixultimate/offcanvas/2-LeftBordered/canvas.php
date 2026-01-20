@@ -58,7 +58,7 @@ $searchModule = Helper::getSearchModule('-canvas');
 			</div>
 		</a>
 	</div>
-	<div class="offcanvas-inner">
+	<div class="offcanvas-inner"> 
 		<div class="d-flex header-modules mb-3">
 			<?php if ($params->get('offcanvas_enable_search', 0)): ?>
 				<?php echo ModuleHelper::renderModule($searchModule, ['style' => 'sp_xhtml']); ?>

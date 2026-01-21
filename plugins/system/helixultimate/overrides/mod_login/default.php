@@ -46,7 +46,6 @@ Text::script('JHIDEPASSWORD');
                     name="username"
                     class="form-control"
                     required="required"
-                    autofocus
                     autocomplete="username">
             </div>
         </div>

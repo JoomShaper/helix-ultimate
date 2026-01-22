@@ -8,16 +8,18 @@ $menu_font_size: 14px;
   display: block;
   float: right;
   position: relative;
+
   .sp-menu-item {
-    > a,
-    > span {
+
+    >a,
+    >span {
       img {
         display: inline-block;
       }
     }
   }
 
-  > li {
+  >li {
     display: inline-block;
     position: relative;
     padding: 0;
@@ -26,8 +28,8 @@ $menu_font_size: 14px;
       position: static;
     }
 
-    > a,
-    > span {
+    >a,
+    >span {
       display: inline-block;
       padding: 0 15px;
       line-height: $header_height;
@@ -36,12 +38,12 @@ $menu_font_size: 14px;
     }
 
     &:last-child {
-      > a {
+      >a {
         padding: 0px 0px 0px 15px;
       }
     }
 
-    &.active > a {
+    &.active>a {
       font-weight: 500;
     }
 
@@ -68,7 +70,7 @@ $menu_font_size: 14px;
     padding: 0;
     margin: 0;
 
-    > li > a {
+    >li>a {
       display: block;
       text-transform: uppercase;
       font-size: $menu_font_size;
@@ -93,7 +95,7 @@ $menu_font_size: 14px;
       box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
       padding: 20px;
 
-      > .row:not(:first-child) {
+      >.row:not(:first-child) {
         margin-top: 20px;
       }
     }
@@ -123,7 +125,7 @@ $menu_font_size: 14px;
       padding: 0;
       position: relative;
 
-      > a,
+      >a,
       span:not(.sp-menu-badge) {
         font-size: $menu_font_size;
         line-height: 1;
@@ -141,6 +143,7 @@ $menu_font_size: 14px;
     // Module
     .sp-module {
       padding: 0;
+
       .sp-module-title {
         font-size: $menu_font_size;
         margin: 0 0 15px;
@@ -150,12 +153,15 @@ $menu_font_size: 14px;
 
       .latestnews {
         margin: 0;
-        > li {
+
+        >li {
           &:not(:last-child) {
             margin: 0 0 15px;
           }
+
           a {
             font-size: 14px;
+
             span {
               opacity: 0.8;
             }
@@ -166,12 +172,14 @@ $menu_font_size: 14px;
   }
 
   .sp-dropdown-mega {
-    > .row {
+    >.row {
       margin-top: 30px;
+
       &:first-child {
         margin-top: 0;
       }
     }
+
     .sp-module {
       margin-left: 0px !important;
     }
@@ -180,7 +188,7 @@ $menu_font_size: 14px;
   //Has Child
   .sp-has-child {
     &:hover {
-      > .sp-dropdown {
+      >.sp-dropdown {
         display: block;
       }
     }
@@ -190,7 +198,7 @@ $menu_font_size: 14px;
   &.menu-animation-fade {
     .sp-has-child {
       &:hover {
-        > .sp-dropdown {
+        >.sp-dropdown {
           animation: spFadeIn 600ms;
         }
       }
@@ -201,7 +209,7 @@ $menu_font_size: 14px;
   &.menu-animation-fade-up {
     .sp-has-child {
       &:hover {
-        > .sp-dropdown {
+        >.sp-dropdown {
           animation: spFadeInUp 400ms ease-in;
         }
       }
@@ -212,7 +220,7 @@ $menu_font_size: 14px;
   &.menu-animation-fade-down {
     .sp-has-child {
       &:hover {
-        > .sp-dropdown {
+        >.sp-dropdown {
           animation: spFadeInDown 400ms ease-in;
         }
       }
@@ -223,7 +231,7 @@ $menu_font_size: 14px;
   &.menu-animation-zoom {
     .sp-has-child {
       &:hover {
-        > .sp-dropdown {
+        >.sp-dropdown {
           animation: spZoomIn 300ms;
         }
       }
@@ -234,7 +242,7 @@ $menu_font_size: 14px;
   &.menu-animation-rotate {
     .sp-has-child {
       &:hover {
-        > .sp-dropdown {
+        >.sp-dropdown {
           animation: spRotateIn 300ms;
         }
       }
@@ -245,7 +253,7 @@ $menu_font_size: 14px;
   &.menu-animation-pulse {
     .sp-has-child {
       &:hover {
-        > .sp-dropdown {
+        >.sp-dropdown {
           animation: spPulse 300ms;
         }
       }
@@ -259,15 +267,32 @@ $menu_font_size: 14px;
     display: none !important;
   }
 
-  .fa, .fab, .far, .fas {
+  .fa,
+  .fab,
+  .far,
+  .fas {
     color: $offcanvas_menu_items_and_items_color;
   }
 
   .offcanvas-inner {
-		ul.menu {
+    ul.menu {
       li.active {
-        a {
+
+        >a,
+        >.nav-header,
+        >.mod-menu__heading {
           color: $offcanvas_menu_active_menu_item_color;
+        }
+
+        ul {
+          li.active {
+
+            >a,
+            >.nav-header,
+            >.mod-menu__heading {
+              color: $offcanvas_menu_active_menu_item_color;
+            }
+          }
         }
       }
     }
@@ -278,9 +303,10 @@ $menu_font_size: 14px;
 body {
   &.ltr {
     .sp-megamenu-parent {
-      > li {
-        &.sp-has-child > a:after,
-        &.sp-has-child > span:after {
+      >li {
+
+        &.sp-has-child>a:after,
+        &.sp-has-child>span:after {
           font-family: $font_awesome_font_family;
           content: "\f107";
           float: right;
@@ -301,7 +327,7 @@ body {
 
       .sp-dropdown {
         .sp-dropdown-items {
-          .sp-has-child > a:after {
+          .sp-has-child>a:after {
             font-family: $font_awesome_font_family;
             content: "\f105";
             float: right;
@@ -360,6 +386,7 @@ body {
     width: 1140px;
   }
 }
+
 @media (min-width: 1400px) {
   .sp-menu-full.container {
     width: 1320px;

@@ -47,7 +47,7 @@ $togglerHtml    = '
      href="#"
      aria-label="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '"
      title="' . Text::_('HELIX_ULTIMATE_NAVIGATION') . '">
-     <div class="burger-icon"><span></span><span></span><span></span></div>
+     <div class="burger-icon" aria-hidden="true"><span></span><span></span><span></span></div>
   </a>';
 ?>
 <?php if ($data->params->get('sticky_header')): ?>
@@ -99,7 +99,7 @@ $togglerHtml    = '
 					<!-- Modal menu toggler -->
 					<?php if (in_array($menu_type, ['mega_offcanvas', 'mega'], true)): ?>
 						<a id="modal-menu-toggler" aria-label="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" title="<?php echo Text::_('HELIX_ULTIMATE_NAVIGATION'); ?>" class="<?php echo $menu_type; ?> ms-3" href="#">
-							<div class="burger-icon">
+							<div class="burger-icon" aria-hidden="true">
 								<span></span>
 								<span></span>
 								<span></span>

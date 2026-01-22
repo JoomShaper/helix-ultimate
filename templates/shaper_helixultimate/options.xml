@@ -26,37 +26,6 @@
 			label="HELIX_ULTIMATE_LOGO" 
 			showon="logo_type:image" />
 
-		<field name="retina_logo" 
-			helixgroup="logo" 
-			type="helixmedia" 
-			preview="true" 
-			label="HELIX_ULTIMATE_MOBILE_LOGO_RETINA" 
-			description="HELIX_ULTIMATE_MOBILE_LOGO_RETINA_DESC"
-			showon="logo_type:image[AND]logo_image!:" />
-
-		<field name="mobile_logo" 
-			helixgroup="logo" 
-			type="helixmedia" 
-			preview="true" 
-			label="HELIX_ULTIMATE_MOBILE_LOGO" 
-			description="HELIX_ULTIMATE_MOBILE_LOGO_DESC" 
-			separator="true"
-			showon="logo_type:image[AND]logo_image!:" />
-		
-		<field name="logo_alt"
-			helixgroup="logo"
-			type="text"
-			label="HELIX_ULTIMATE_LOGO_ALT_TEXT"
-			description="HELIX_ULTIMATE_LOGO_ALT_TEXT_DESC"
-			showon="logo_type:image" />
-		
-		<field name="logo_custom_link"
-			helixgroup="logo"
-			type="text"
-			label="HELIX_ULTIMATE_LOGO_CUSTOM_LINK"
-			description="HELIX_ULTIMATE_LOGO_CUSTOM_LINK_DESC"
-			showon="logo_type:image" />
-
 		<field name="logo_height" 
 			helixgroup="logo" 
 			type="helixUnit"
@@ -81,6 +50,46 @@
 			label="HELIX_ULTIMATE_LOGO_HEIGHT_XS" 
 			showon="logo_type:image" />
 
+		<field name="retina_logo" 
+			helixgroup="logo" 
+			type="helixmedia" 
+			preview="true" 
+			label="HELIX_ULTIMATE_MOBILE_LOGO_RETINA" 
+			description="HELIX_ULTIMATE_MOBILE_LOGO_RETINA_DESC"
+			showon="logo_type:image[AND]logo_image!:" />
+
+		<field name="mobile_logo" 
+			helixgroup="logo" 
+			type="helixmedia" 
+			preview="true" 
+			label="HELIX_ULTIMATE_MOBILE_LOGO" 
+			description="HELIX_ULTIMATE_MOBILE_LOGO_DESC" 
+			separator="true"
+			showon="logo_type:image[AND]logo_image!:" />
+		
+		<field name="sticky_logo" helixgroup="logo" type="helixmedia" preview="true"
+			label="HELIX_ULTIMATE_STICKY_LOGO"
+			description="HELIX_ULTIMATE_STICKY_LOGO_DESC"
+			showon="logo_type:image[AND]logo_image!:[AND]sticky_header:1" />
+
+		<field name="sticky_logo_height" helixgroup="logo" type="helixUnit" display="inline"
+			label="HELIX_ULTIMATE_STICKY_LOGO_HEIGHT"
+			description="HELIX_ULTIMATE_STICKY_LOGO_HEIGHT_DESC"
+			showon="logo_type:image[AND]sticky_logo!:[AND]sticky_header:1" />
+
+		<field name="logo_alt"
+			helixgroup="logo"
+			type="text"
+			label="HELIX_ULTIMATE_LOGO_ALT_TEXT"
+			description="HELIX_ULTIMATE_LOGO_ALT_TEXT_DESC"
+			showon="logo_type:image" />
+		
+		<field name="logo_custom_link"
+			helixgroup="logo"
+			type="text"
+			label="HELIX_ULTIMATE_LOGO_CUSTOM_LINK"
+			description="HELIX_ULTIMATE_LOGO_CUSTOM_LINK_DESC"
+			showon="logo_type:image" />
 
 		<field name="logo_text" 
 			helixgroup="logo" 
@@ -399,12 +408,6 @@
 			type="text" 
 			label="HELIX_ULTIMATE_SOCIAL_ICON_FLICKR" 
 			hint="https://www.flickr.com/photos/user" 
-			showon="show_social_icons:1" />
-		<field name="skype" 
-			helixgroup="social_icons" 
-			type="text" 
-			label="HELIX_ULTIMATE_SOCIAL_ICON_SKYPE" 
-			hint="username" 
 			showon="show_social_icons:1" />
 		<field name="whatsapp" 
 			helixgroup="social_icons" 

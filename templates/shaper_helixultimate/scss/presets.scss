@@ -12,8 +12,9 @@ body,
 }
 
 .sp-preloader {
-	> div {
+	>div {
 		background: $link_color;
+
 		&:after {
 			background: $bg_color;
 		}
@@ -32,30 +33,37 @@ body,
 #sp-header {
 	background: $header_bg_color;
 }
+
 #sp-menu ul.social-icons {
+
 	a:hover,
 	a:focus {
 		color: $link_color;
 	}
 }
+
 // Anchor
 a {
 	color: $link_color;
+
 	&:hover,
 	&:focus,
 	&:active {
 		color: $link_hover_color;
 	}
 }
+
 .tags {
-	> li {
+	>li {
 		display: inline-block;
+
 		a {
 			@if $link_color {
 				background: fade-out($link_color, 0.9);
 			}
 
 			color: $link_color;
+
 			&:hover {
 				background: $link_hover_color;
 			}
@@ -69,6 +77,7 @@ a {
 			li {
 				a {
 					color: $text_color;
+
 					&:hover,
 					&:focus {
 						background: $link_color;
@@ -80,30 +89,32 @@ a {
 }
 
 .pager {
-	> li {
+	>li {
 		a {
 			border: 1px solid #ededed;
 			color: $text_color;
 		}
 	}
 }
+
 // Reading Progress Bar Color
 .sp-reading-progress-bar {
 	background-color: $link_color;
 }
+
 // Megamenu
 .sp-megamenu-parent {
-	> li {
-		> a {
+	>li {
+		>a {
 			color: $menu_text_color;
 		}
 
-		&:hover > a {
+		&:hover>a {
 			color: $menu_text_hover_color;
 		}
 
-		&.active > a,
-		&.active:hover > a {
+		&.active>a,
+		&.active:hover>a {
 			color: $menu_text_active_color;
 		}
 	}
@@ -114,21 +125,23 @@ a {
 		}
 
 		li.sp-menu-item {
-			> a {
+			>a {
 				color: $menu_dropdown_text_color;
+
 				&:hover {
 					color: $menu_dropdown_text_hover_color;
 				}
 			}
-			&.active > a {
+
+			&.active>a {
 				color: $menu_dropdown_text_active_color;
 			}
 		}
 	}
 
 	.sp-mega-group {
-		> li {
-			> a {
+		>li {
+			>a {
 				color: $menu_dropdown_text_color;
 			}
 		}
@@ -137,8 +150,9 @@ a {
 
 // Off Canvas
 #offcanvas-toggler {
-	> .fa {
+	>.fa {
 		color: $menu_text_color;
+
 		&:hover,
 		&:focus,
 		&:active {
@@ -146,8 +160,9 @@ a {
 		}
 	}
 
-	> .fas {
+	>.fas {
 		color: $menu_text_color;
+
 		&:hover,
 		&:focus,
 		&:active {
@@ -155,8 +170,9 @@ a {
 		}
 	}
 
-	> .far {
+	>.far {
 		color: $menu_text_color;
+
 		&:hover,
 		&:focus,
 		&:active {
@@ -168,20 +184,29 @@ a {
 .offcanvas-menu {
 	background-color: $offcanvas_menu_bg_color;
 	color: $menu_dropdown_text_color;
+
+	.logo-sticky {
+		display: none !important;
+	}
+
 	.offcanvas-inner {
 		a {
 			color: $offcanvas_menu_items_and_items_color;
+
 			&:hover,
 			&:focus,
 			&:active {
 				color: $link_color;
 			}
 		}
+
 		ul.menu {
-			> li {
+			>li {
+
 				a,
 				span {
 					color: $offcanvas_menu_items_and_items_color;
+
 					&:hover,
 					&:focus {
 						color: $menu_dropdown_text_hover_color;
@@ -189,20 +214,23 @@ a {
 				}
 
 				&.menu-parent {
-					> a,
-					> .menu-separator {
-						> .menu-toggler {
+
+					>a,
+					>.menu-separator {
+						>.menu-toggler {
 							@if $offcanvas_menu_items_and_items_color {
 								color: fade-out($offcanvas_menu_items_and_items_color, 0.5);
 							}
 						}
 					}
+
 					.menu-toggler {
 						@if $offcanvas_menu_items_and_items_color {
 							color: fade-out($offcanvas_menu_items_and_items_color, 0.5);
 						}
 					}
 				}
+
 				li {
 					a {
 						@if $offcanvas_menu_items_and_items_color {
@@ -220,6 +248,7 @@ a {
 .sppb-btn-primary {
 	border-color: $link_color;
 	background-color: $link_color;
+
 	&:hover {
 		border-color: $link_hover_color;
 		background-color: $link_hover_color;
@@ -228,7 +257,7 @@ a {
 
 // Topbar Social
 ul.social-icons {
-	> li {
+	>li {
 		a {
 			&:hover {
 				color: $link_color;
@@ -251,9 +280,10 @@ ul.social-icons {
 // Module
 .sp-module {
 	ul {
-		> li {
-			> a {
+		>li {
+			>a {
 				color: $text_color;
+
 				&:hover {
 					color: $link_color;
 				}
@@ -262,9 +292,10 @@ ul.social-icons {
 	}
 
 	.latestnews {
-		> div {
-			> a {
+		>div {
+			>a {
 				color: $text_color;
+
 				&:hover {
 					color: $link_color;
 				}
@@ -295,6 +326,7 @@ ul.social-icons {
 #sp-bottom {
 	background: $footer_bg_color;
 	color: $footer_text_color;
+
 	a {
 		color: $footer_link_color;
 
@@ -309,9 +341,9 @@ ul.social-icons {
 #sp-bottom {
 	.sp-module-content {
 		.latestnews {
-			> li {
-				> a {
-					> span {
+			>li {
+				>a {
+					>span {
 						color: $footer_text_color;
 					}
 				}
@@ -326,19 +358,21 @@ ul.social-icons {
 }
 
 // Pagination
-.pagination > li > a,
-.pagination > li > span {
+.pagination>li>a,
+.pagination>li>span {
 	color: $text_color;
+
 	&:hover,
 	&:focus {
 		color: $text_color;
 	}
 }
 
-.pagination > .active > a,
-.pagination > .active > span {
+.pagination>.active>a,
+.pagination>.active>span {
 	border-color: $link_color;
 	background-color: $link_color;
+
 	&:hover,
 	&:focus {
 		border-color: $link_color;

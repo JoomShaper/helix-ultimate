@@ -207,23 +207,39 @@ class PlgSystemHelixultimate extends CMSPlugin
 	/**
 	 * On Saving extensions logging method
 	 * Method is called when an extension is being saved
+	 * @param   BeforeSaveEvent  $event  Event instance.
 	 *
-	 * @param   string   $context  The extension
-	 * @param   JTable   $table    DataBase Table object
-	 * @param   boolean  $isNew    If the extension is new or not
-	 *
-	 * @return	void
+	 * @throws \Exception
 	 * @since	2.2.2
 	 */
-	public function onExtensionBeforeSave($context, $table, $isNew)
+	public function onExtensionBeforeSave(\Joomla\CMS\Event\Model\BeforeSaveEvent $event)
 	{
-		if ($context === 'com_templates.style' && !empty($table->id))
+		$context = $event->getArgument('context');
+        $table   = $event->getArgument('subject');
+		$isNew = $event->getArgument('isNew');
+
+		// Only handle template styles
+		if ($context !== 'com_templates.style')
+		{
+			return true;
+		}
+
+		// Check if this template uses Helix Ultimate framework
+		if (!$this->isHelixTemplate($table->template))
+		{
+			return true;
+		}
+
+		$data = new Registry($table->params);
+
+		if (!empty($table->id))
 		{
 			$params = $this->getTemplateStyleParams($table->id);
 			$table->params = $params;
+			return true;
 		}
 
-		if ($context === 'com_templates.style' && $isNew)
+		if ($isNew)
 		{
 			$app = Factory::getApplication();
 			$id = $app->input->get('id', 0);
@@ -234,6 +250,43 @@ class PlgSystemHelixultimate extends CMSPlugin
 			$params = $this->getTemplateStyleParams($id);
 			$table->params = $params;
 		}
+	}
+
+	/**
+	 * Check if template uses the Helix Ultimate framework
+	 *
+	 * @param   string  $templateName  The template name
+	 *
+	 * @return  bool  True if the template uses Helix Ultimate, false otherwise
+	 * @since   2.2.2
+	 */
+	private function isHelixTemplate($templateName)
+	{
+		if (empty($templateName))
+		{
+			return false;
+		}
+
+		$templatePath = JPATH_SITE . '/templates/' . $templateName;
+
+		// Check if the template has an options.json file (Helix Ultimate indicator)
+		if (file_exists($templatePath . '/options.json'))
+		{
+			return true;
+		}
+
+		// Check if the template's index.php includes the Helix Ultimate bootstrap
+		$indexPath = $templatePath . '/index.php';
+		if (file_exists($indexPath))
+		{
+			$content = @file_get_contents($indexPath);
+			if ($content !== false && strpos($content, 'helixultimate/bootstrap.php') !== false)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 
@@ -294,6 +347,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 		$query = $db->getQuery(true);
 		$query->select($db->quoteName('params'))
 			->from($db->quoteName('#__template_styles'))
+			//->where($db->quoteName('client_id') . ' = 0')
 			->where($db->quoteName('id') . ' = ' . $db->quote($id));
 
 		$db->setQuery($query);

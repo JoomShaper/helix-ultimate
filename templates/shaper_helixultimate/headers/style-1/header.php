@@ -100,7 +100,7 @@ $togglerHtml     = '
 
 				<!-- Left toggler if left/offcanvas -->
 				<?php if ($offcanvas_position === 'left' ): ?>
-					<div class="col-auto d-flex align-items-center">
+					<div class="col-auto align-items-center <?php echo $visibilityClass; ?>">
 						<?php echo $togglerHtml; ?>
 					</div>
 				<?php endif; ?>

@@ -47,6 +47,8 @@ if (file_exists($bootstrap_path)) {
 }
 
 $theme = new HelixUltimate;
+$custom_style = $params->get('custom_style');
+$preset = ($custom_style) ? 'default' : json_decode($params->get('preset', '{"preset":"preset1"}'))->preset;
 ?>
 
 <!doctype html>
@@ -60,7 +62,7 @@ $theme = new HelixUltimate;
 	$theme->add_js('custom.js');
 	$theme->add_css('font-awesome.min.css');
 	$theme->add_css('template.css');
-	$theme->add_css('presets/' . $params->get('preset', 'preset1') . '.css');
+	$theme->add_css('presets/' . $preset . '.css');
 	$theme->add_css('custom.css');
 
 	//Custom CSS

@@ -60,7 +60,9 @@ $togglerHtml    = '
 
 				<!-- Left toggler if left -->
 				<?php if ($offcanvas_position === 'left'): ?>
-					<div class="col-auto align-items-center <?= $visibilityClass; ?>"><?= $togglerHtml; ?></div>
+					<div class="col-auto align-items-center <?php echo $visibilityClass; ?>">
+						<?php echo $togglerHtml; ?>
+					</div>
 				<?php endif; ?>
 
 				<!-- Logo -->

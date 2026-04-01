@@ -1012,11 +1012,17 @@
 
     Chosen.prototype.set_tab_index = function(el) {
       var ti;
-      if (this.form_field.tabIndex) {
-        ti = this.form_field.tabIndex;
-        this.form_field.tabIndex = -1;
-        return this.search_field[0].tabIndex = ti;
+      ti = this.form_field.tabIndex;
+
+      if (ti === -1) {
+        ti = -1;
+      } else {
+        ti = 0;   
       }
+    
+      this.form_field.tabIndex = -1;
+      this.search_field[0].tabIndex = ti;
+      return this.search_field[0].tabIndex;
     };
 
     Chosen.prototype.set_label_behavior = function() {

@@ -260,13 +260,6 @@ jQuery(function ($) {
 		}
 	});
 
-	// Load inert polyfill if needed
-	if (!('inert' in document.createElement('div'))) {
-		const inertPolyfill = document.createElement('script');
-		inertPolyfill.src = 'https://cdn.jsdelivr.net/npm/inert-polyfill@3.1.1/inert.min.js';
-		document.head.appendChild(inertPolyfill);
-	}
-
 	// Modal Menu
 	if ($('#modal-menu').length > 0) {
 		let $modalToggler = $('#modal-menu-toggler');

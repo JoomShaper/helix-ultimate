@@ -257,6 +257,8 @@ class Request
 			'id' => $this->id
 		];
 
+		Helper::saveLicenseInfo($inputs);
+
 		$key = Helper::generateKey($keyOptions);
 		$cache = new HelixCache($key);
 

@@ -209,9 +209,8 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 		<link href="<?php echo $theme_url . '/css/font-awesome.min.css'; ?>" rel="stylesheet">
 		<link href="<?php echo $theme_url . '/css/template.css'; ?>" rel="stylesheet">
 		<?php
-			// Fix the preset loading
-			$presetData = json_decode($params->get('preset', '{"preset":"preset1"}'));
-			$preset = isset($presetData->preset) ? $presetData->preset : 'default';
+			$custom_style = $params->get('custom_style');
+			$preset = ($custom_style) ? 'default' : json_decode($params->get('preset', '{"preset":"preset1"}'))->preset;
 		?>
 
 		<link href="<?php echo $theme_url . '/css/presets/' . htmlspecialchars($preset, ENT_QUOTES, 'UTF-8') . '.css'; ?>" rel="stylesheet">

@@ -209,66 +209,71 @@ class Blog
 	public static function remove_image()
 	{
 		$report = array();
-		$report['status'] = false;
-		$report['output'] = 'Invalid Token';
-		Session::checkToken() or die(json_encode($report));
+	    $report['status'] = false;
+	    $report['output'] = 'Invalid Token';
+	    Session::checkToken() or die(json_encode($report));
+	
+	    if (!Factory::getApplication()->getIdentity()->authorise('core.delete', 'com_media'))
+	    {
+	        $report['status'] = false;
+	        $report['output'] = Text::_('You are not authorised to delete file.');
+	        echo json_encode($report);
+	        die();
+	    }
+	
+	    $input = Factory::getApplication()->input;
+	    $src = $input->post->get('src', '', 'STRING');
+	    $articleId = $input->get('id', 0, 'INT');
+	
+	    $path = JPATH_ROOT . '/' . $src;
+	
+	    if (\file_exists($path))
+	    {
+	        $db = Factory::getContainer()->get(DatabaseInterface::class);
+	
+	        $query = $db->getQuery(true)
+	            ->select($db->quoteName('attribs'))
+	            ->from($db->quoteName('#__content'))
+	            ->where('id = ' . $db->quote($articleId));
+	        $db->setQuery($query);
+	        $attribs = $db->loadResult();
+	
+		    $attribsDecoded = json_decode($attribs, true);
 
-		if (!Factory::getApplication()->getIdentity()->authorise('core.delete', 'com_media'))
-		{
-			$report['status'] = false;
-			$report['output'] = Text::_('You are not authorised to delete file.');
-			echo json_encode($report);
-			die();
-		}
-
-		$input = Factory::getApplication()->input;
-		$src = $input->post->get('src', '', 'STRING');
-
-		$path = JPATH_ROOT . '/' . $src;
-
-		if (\file_exists($path))
-		{
-			if (File::delete($path))
-			{
-				$basename 	= basename($src);
-				$small 		= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_small.' . File::getExt($basename);
-				$thumbnail 	= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
-				$medium 	= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_medium.' . File::getExt($basename);
-				$large 		= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_large.' . File::getExt($basename);
-
-				if (\file_exists($small))
-				{
-					File::delete($small);
-				}
-
-				if (\file_exists($thumbnail))
-				{
-					File::delete($thumbnail);
-				}
-
-				if (\file_exists($medium))
-				{
-					\file_exists($medium);
-				}
-
-				if (\file_exists($large))
-				{
-					File::delete($large);
-				}
-
-				$report['status'] = true;
-			}
-			else
-			{
-				$report['status'] = false;
-				$report['output'] = Text::_('Delete failed');
-			}
+		    if (isset($attribsDecoded['helix_ultimate_image']) && $attribsDecoded['helix_ultimate_image'] === $src) {
+		        $attribsDecoded['helix_ultimate_image'] = "";
+		    }
+		    
+		    if (isset($attribsDecoded['helix_ultimate_gallery'])) {
+		        $galleryImages = json_decode($attribsDecoded['helix_ultimate_gallery'], true);
+		        if (is_array($galleryImages['helix_ultimate_gallery_images'])) {
+		            foreach ($galleryImages['helix_ultimate_gallery_images'] as $key => $image) {
+		                if ($image === $src) {
+		                    unset($galleryImages['helix_ultimate_gallery_images'][$key]);
+		                }
+		            }
+		    
+		            $attribsDecoded['helix_ultimate_gallery'] = json_encode($galleryImages);
+		        }
+		    }
+		
+		    $updateQuery = $db->getQuery(true)
+		        ->update($db->quoteName('#__content'))
+		        ->set($db->quoteName('attribs') . ' = ' . $db->quote(json_encode($attribsDecoded)))
+		        ->where('id = ' . $db->quote($articleId));
+		    $db->setQuery($updateQuery);
+		    if ($db->execute()) {
+		        $report['status'] = true;
+		    } else {
+		        $report['status'] = false;
+		        $report['output'] = Text::_('Database update failed');
+		    }
 		}
 		else
 		{
-			$report['status'] = true;
+		    $report['status'] = false;
+		    $report['output'] = Text::_('Delete failed');
 		}
-
 		die(json_encode($report));
 	}
 

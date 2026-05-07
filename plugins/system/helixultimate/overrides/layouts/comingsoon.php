@@ -173,7 +173,8 @@ $preset = ($custom_style) ? 'default' : json_decode($params->get('preset', '{"pr
 			$behance 	= $params->get('behance');
 			$flickr 	= $params->get('flickr');
 			$vk 		= $params->get('vk');
-			$whatsapp 	= $params->get('whatsapp');
+			$whatsappInput 	= $params->get('whatsapp');
+			$whatsapp = !empty($whatsappInput) ? 'https://wa.me/' . $whatsappInput . '?text=Hi' : '';
 
 			if ($params->get('comingsoon_social_icons') && ($facebook || $instagram || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $flickr || $vk || $whatsapp)) {
 				$social_output  = '<ul class="social-icons">';

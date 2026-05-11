@@ -28,6 +28,7 @@ use Joomla\Utilities\ArrayHelper;
 use ScssPhp\ScssPhp\Compiler;
 use ScssPhp\ScssPhp\OutputStyle;
 use ScssPhp\ScssPhp\ValueConverter;
+use Joomla\CMS\Language\Text;
 
 /**
  * Initiator class for viewing
@@ -311,6 +312,10 @@ class HelixUltimate
 		{
 			$webfonts[$this->params->get('custom_font_selectors')] = $this->params->get('custom_font');
 		}
+		if (file_exists(JPATH_THEMES . '/' . $this->template->template . '/js/inert.min.js'))
+		{
+			$this->add_js('inert.min.js');
+		}
 
 		// Favicon
 		$favicon = $this->params->get('favicon');
@@ -348,12 +353,12 @@ class HelixUltimate
 
 		$this->doc->addScriptdeclaration('template="' . $this->template->template . '";');
 
-		// $generatorText = Text::_('HELIX_ULTIMATE_GENERATOR_TEXT');
+		$generatorText = Text::_('HELIX_ULTIMATE_GENERATOR_TEXT');
 
-		// if (!empty($generatorText))
-		// {
-		// 	$this->doc->setGenerator($generatorText);
-		// }
+		if (!empty($generatorText))
+		{
+			$this->doc->setGenerator($generatorText);
+		}
 
 		if (JVERSION < 4)
 		{

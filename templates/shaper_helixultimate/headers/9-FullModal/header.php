@@ -60,11 +60,13 @@ $togglerHtml    = '
 
 				<!-- Left toggler if left -->
 				<?php if ($offcanvas_position === 'left'): ?>
-					<div class="col-auto d-flex align-items-center"><?= $togglerHtml; ?></div>
+					<div class="col-auto align-items-center <?php echo $visibilityClass; ?>">
+						<?php echo $togglerHtml; ?>
+					</div>
 				<?php endif; ?>
 
 				<!-- Logo -->
-				<div id="sp-logo" class="has-border col-auto">
+				<div id="sp-logo" class="has-border col-auto me-auto">
 					<div class="sp-column">
 						<?php if (isset($logo->load_pos) && $logo->load_pos === 'before') : ?>
 							<?php echo $logo->renderFeature(); ?>

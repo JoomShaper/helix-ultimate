@@ -336,8 +336,8 @@ abstract class HelixBootstrap
 			HTMLHelper::_('bootstrap.framework');
 
 			// Setup options object
-			$opt['animation'] = isset($params['animation']) ? (boolean) $params['animation'] : null;
-			$opt['html']      = isset($params['html']) ? (boolean) $params['html'] : true;
+			$opt['animation'] = isset($params['animation']) ? (bool) $params['animation'] : null;
+			$opt['html']      = isset($params['html']) ? (bool) $params['html'] : true;
 			$opt['placement'] = isset($params['placement']) ? (string) $params['placement'] : null;
 			$opt['selector']  = isset($params['selector']) ? (string) $params['selector'] : null;
 			$opt['title']     = isset($params['title']) ? (string) $params['title'] : null;
@@ -437,7 +437,7 @@ abstract class HelixBootstrap
 
 		// Setup options object
 		$opt['parent'] = isset($params['parent']) ? ($params['parent'] == true ? '#' . $selector : $params['parent']) : '';
-		$opt['toggle'] = isset($params['toggle']) ? (boolean) $params['toggle'] : !($opt['parent'] === false || isset($params['active']));
+		$opt['toggle'] = isset($params['toggle']) ? (bool) $params['toggle'] : !($opt['parent'] === false || isset($params['active']));
 		$opt['onShow'] = isset($params['onShow']) ? (string) $params['onShow'] : null;
 		$opt['onShown'] = isset($params['onShown']) ? (string) $params['onShown'] : null;
 		$opt['onHide'] = isset($params['onHide']) ? (string) $params['onHide'] : null;

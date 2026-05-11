@@ -207,17 +207,16 @@ class PlgSystemHelixultimate extends CMSPlugin
 	/**
 	 * On Saving extensions logging method
 	 * Method is called when an extension is being saved
-	 * @param   BeforeSaveEvent  $event  Event instance.
-	 *
+	 * 
+	 * @param   string   $context  The extension
+	 * @param   JTable   $table    DataBase Table object
+	 * @param   boolean  $isNew    If the extension is new or not
+	 * 
 	 * @throws \Exception
 	 * @since	2.2.2
 	 */
-	public function onExtensionBeforeSave(\Joomla\CMS\Event\Model\BeforeSaveEvent $event)
+	public function onExtensionBeforeSave($context, $table, $isNew)
 	{
-		$context = $event->getArgument('context');
-        $table   = $event->getArgument('subject');
-		$isNew = $event->getArgument('isNew');
-
 		// Only handle template styles
 		if ($context !== 'com_templates.style')
 		{

@@ -59,7 +59,15 @@ if ($html !== false) {
     ];
 
     if ($tabindex) {
-        $iconAttribs['tabindex'] = $tabindex;
+        $tabindex = (int) $tabindex;
+
+        if ($tabindex > 0) {
+            $tabindex = 0;
+        }
+
+        if ($tabindex === 0 || $tabindex === -1) {
+            $iconAttribs['tabindex'] = (string) $tabindex;
+        }
     }
 
     if ($title) {

@@ -168,8 +168,10 @@ $theme = new HelixUltimate;
 			$behance 	= $params->get('behance');
 			$flickr 	= $params->get('flickr');
 			$vk 		= $params->get('vk');
+			$whatsappInput 	= $params->get('whatsapp');
+			$whatsapp = !empty($whatsappInput) ? 'https://wa.me/' . $whatsappInput . '?text=Hi' : '';
 
-			if ($params->get('comingsoon_social_icons') && ($facebook || $instagram || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $flickr || $vk)) {
+			if ($params->get('comingsoon_social_icons') && ($facebook || $instagram || $twitter || $pinterest || $youtube || $linkedin || $dribbble || $behance || $flickr || $vk || $whatsapp)) {
 				$social_output  = '<ul class="social-icons">';
 
 				if ($facebook) {
@@ -198,6 +200,9 @@ $theme = new HelixUltimate;
 				}
 				if ($flickr) {
 					$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="' . $flickr . '"><i class="fab fa-flickr" aria-hidden="true"></i></a></li>';
+				}
+				if ($whatsapp) {
+					$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="' . $whatsapp . '"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>';
 				}
 				if ($vk) {
 					$social_output .= '<li><a target="_blank" rel="noopener noreferrer" href="' . $vk . '"><i class="fab fa-vk" aria-hidden="true"></i></a></li>';

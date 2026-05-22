@@ -118,11 +118,12 @@ class PlgSystemHelixultimate extends CMSPlugin
     	Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
 
     	$template = Factory::getApplication()->getTemplate(true);
-    	$tmplUrl  = Uri::root(true) . '/templates/' . $template->template;      
-    	$tmplPath = JPATH_ROOT . '/templates/' . $template->template;       
 
     	// Add Font Awesome from template or plugin
-    	if (is_file($tmplPath . '/css/font-awesome.min.css')) {
+		$fontAwesomePath = Helper::resolveTemplateFilePath('css/font-awesome.min.css', $template);
+    	if ($fontAwesomePath) {
+			$templateName = strpos($fontAwesomePath, '/templates/' . $template->template . '/') !== false ? $template->template : $template->parent;
+			$tmplUrl  = Uri::root(true) . '/templates/' . $templateName;
     	    $doc->addStyleSheet($tmplUrl . '/css/font-awesome.min.css', ['version' => 'auto', 'relative' => false]);
     	} elseif (is_file(JPATH_PLUGINS . '/system/helixultimate/assets/css/font-awesome.min.css')) {
     	    $doc->addStyleSheet($plgPath . '/assets/css/font-awesome.min.css', ['version' => 'auto', 'relative' => false]);
@@ -144,8 +145,9 @@ class PlgSystemHelixultimate extends CMSPlugin
     	    $doc->addStyleSheet($plgPath . '/assets/css/admin/blog-options.css', ['relative' => false, 'version' => 'auto']);
     	    $doc->addScript($plgPath . '/assets/js/admin/blog-options.js', ['relative' => false, 'version' => 'auto']);
 
-		    if (is_file($tmplPath . '/blog-options.xml')) {
-		        Form::addFormPath($tmplPath);
+			$blogOptionsPath = Helper::resolveTemplateFilePath('blog-options.xml', $template);
+		    if ($blogOptionsPath) {
+		        Form::addFormPath(dirname($blogOptionsPath));
 		    }
 		    $form->loadFile('blog-options', false);
 		}
@@ -268,6 +270,18 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 		$templatePath = JPATH_SITE . '/templates/' . $templateName;
 
+		// Check if it's a child template
+		$xmlPath = $templatePath . '/templateDetails.xml';
+		if (file_exists($xmlPath))
+		{
+			$xml = @simplexml_load_file($xmlPath);
+			if ($xml && isset($xml->parent))
+			{
+				$parentTemplate = (string) $xml->parent;
+				return $this->isHelixTemplate($parentTemplate);
+			}
+		}
+
 		// Check if the template has an options.json file (Helix Ultimate indicator)
 		if (file_exists($templatePath . '/options.json'))
 		{
@@ -371,10 +385,12 @@ class PlgSystemHelixultimate extends CMSPlugin
 			? Helper::getTemplateStyle($activeMenu->template_style_id)
 			: Helper::loadTemplateData();
 
-		$webAssetUri = '/templates/' . $template->template . '/joomla.asset.json';
+		$webAssetPath = Helper::resolveTemplateFilePath('joomla.asset.json', $template);
 
-		if(JVERSION >= 4 && \file_exists(JPATH_ROOT . $webAssetUri))
+		if(JVERSION >= 4 && $webAssetPath)
 		{
+			$templateName = strpos($webAssetPath, '/templates/' . $template->template . '/') !== false ? $template->template : $template->parent;
+			$webAssetUri = '/templates/' . $templateName . '/joomla.asset.json';
 			Factory::getDocument()->getWebAssetManager()->getRegistry()->addRegistryFile($webAssetUri);
 		}
 	}

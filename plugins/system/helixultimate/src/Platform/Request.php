@@ -633,10 +633,10 @@ class Request
 		$template   = $tmpl_style->template;
 		$font_name  = $this->data['fontName'];
 
-		$template_path = JPATH_SITE . '/templates/' . $template . '/webfonts/webfonts.json';
+		$template_path = Helper::resolveTemplateFilePath('webfonts/webfonts.json', $tmpl_style);
 		$plugin_path   = JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
 
-		if (\file_exists($template_path))
+		if ($template_path)
 		{
 			// $json = File::read($template_path);
 			$json = file_get_contents($template_path);

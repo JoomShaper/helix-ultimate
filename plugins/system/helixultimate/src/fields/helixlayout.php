@@ -49,7 +49,8 @@ class JFormFieldHelixlayout extends FormField
 		}
 		else
 		{
-			$layout_file = file_get_contents(JPATH_SITE . '/templates/' . $style->template . '/options.json');
+			$layoutPath = Helper::resolveTemplateFilePath('options.json', $style);
+			$layout_file = $layoutPath ? file_get_contents($layoutPath) : '';
 			$value = json_decode($layout_file ?? "");
 			$rows = json_decode($value->layout ?? "");
 		}

@@ -56,7 +56,7 @@ class JFormFieldHelixmultipositions extends ListField
 		$dbpositions = $db->loadObjectList();
 
 		$templateXML = JPATH_SITE . '/templates/' . $style->template . '/templateDetails.xml';
-		$template = simplexml_load_file($templateXML);
+		$template = @simplexml_load_file($templateXML);
 		$options = array();
 
 		foreach ($dbpositions as $positions)
@@ -68,9 +68,28 @@ class JFormFieldHelixmultipositions extends ListField
 			$options[] = $positions->position;
 		}
 
-		foreach ($template->positions[0] as $position)
+		if ($template && isset($template->positions[0]))
 		{
-			$options[] = (string) $position;
+			foreach ($template->positions[0] as $position)
+			{
+				$options[] = (string) $position;
+			}
+		}
+
+		if (!empty($style->parent))
+		{
+			$parentXMLPath = JPATH_SITE . '/templates/' . $style->parent . '/templateDetails.xml';
+			if (file_exists($parentXMLPath))
+			{
+				$parentTemplate = @simplexml_load_file($parentXMLPath);
+				if ($parentTemplate && isset($parentTemplate->positions[0]))
+				{
+					foreach ($parentTemplate->positions[0] as $position)
+					{
+						$options[] = (string) $position;
+					}
+				}
+			}
 		}
 
 		ksort($options);

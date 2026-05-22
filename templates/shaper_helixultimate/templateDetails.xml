@@ -4,6 +4,7 @@
     client="site" 
     method="upgrade">
     <name>shaper_helixultimate</name>
+    <inheritable>1</inheritable>
     <creationDate>Feb 2018</creationDate>
     <author>JoomShaper.com</author>
     <authorEmail>support@joomshaper.com</authorEmail>

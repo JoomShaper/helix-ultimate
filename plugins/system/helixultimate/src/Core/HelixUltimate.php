@@ -312,7 +312,7 @@ class HelixUltimate
 		{
 			$webfonts[$this->params->get('custom_font_selectors')] = $this->params->get('custom_font');
 		}
-		if (file_exists(JPATH_THEMES . '/' . $this->template->template . '/js/inert.min.js'))
+		if (Helper::resolveTemplateFilePath('js/inert.min.js', $this->template))
 		{
 			$this->add_js('inert.min.js');
 		}
@@ -389,14 +389,14 @@ class HelixUltimate
 		}
 		else
 		{
-			$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
-			$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
+			$bsBundleJSPath = Helper::resolveTemplateFilePath('js/bootstrap.bundle.min.js', $this->template);
+			$bsJsPath = Helper::resolveTemplateFilePath('js/bootstrap.min.js', $this->template);
 			
-			if (\file_exists($bsBundleJSPath))
+			if ($bsBundleJSPath)
 			{
 				$this->add_js('bootstrap.bundle.min.js');
 			}
-			elseif (\file_exists($bsJsPath))
+			elseif ($bsJsPath)
 			{
 				$this->add_js('popper.min.js, bootstrap.min.js');
 			}
@@ -482,20 +482,17 @@ class HelixUltimate
 			}
 
 			$file = trim($file);
-			$file_path = $asset_path . $file;
+			$fileName = Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder;
+			$file_path = Helper::resolveTemplateFilePath($folder . '/' . $fileName, $this->template);
 
-			if (!Helper::endsWith($file_path, $folder))
+			if ($file_path)
 			{
-				$file_path .= '.' . $folder;
-			}
-
-			if (\file_exists($file_path))
-			{
-				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
+				$template_name = strpos($file_path, '/templates/' . $this->template->template . '/') !== false ? $this->template->template : $this->template->parent;
+				$file_url = Uri::base(true) . '/templates/' . $template_name . '/' . $folder . '/' . $fileName;
 			}
 			elseif (\file_exists($file))
 			{
-				$file_url = Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder;
+				$file_url = $fileName;
 			}
 			else
 			{
@@ -564,6 +561,20 @@ class HelixUltimate
 	 */
 	private function include_features()
 	{
+		$featureFiles = [];
+
+		if (!empty($this->template->parent)) {
+			$parent_folder_path = JPATH_THEMES . '/' . $this->template->parent . '/features';
+			if (is_dir($parent_folder_path)) {
+				$files = Folder::files($parent_folder_path, '.php');
+				if (!empty($files)) {
+					foreach ($files as $file) {
+						$featureFiles[$file] = $parent_folder_path . '/' . $file;
+					}
+				}
+			}
+		}
+
 		$folder_path = JPATH_THEMES . '/' . $this->template->template . '/features';
 
 		if (is_dir($folder_path))
@@ -572,23 +583,31 @@ class HelixUltimate
 
 			if (!empty($files))
 			{
-				foreach ($files as $key => $file)
+				foreach ($files as $file)
 				{
-					include_once $folder_path . '/' . $file;
+					$featureFiles[$file] = $folder_path . '/' . $file;
+				}
+			}
+		}
 
-					$file_name = File::stripExt($file);
-					$class = 'HelixUltimateFeature' . ucfirst($file_name);
-					$feature_obj = new $class($this->params);
-					$position = $feature_obj->position;
-					$load_pos = (isset($feature_obj->load_pos) && $feature_obj->load_pos) ? $feature_obj->load_pos : '';
+		if (!empty($featureFiles))
+		{
+			foreach ($featureFiles as $file => $filePath)
+			{
+				include_once $filePath;
 
-					$this->in_positions[] = $position;
+				$file_name = File::stripExt($file);
+				$class = 'HelixUltimateFeature' . ucfirst($file_name);
+				$feature_obj = new $class($this->params);
+				$position = $feature_obj->position;
+				$load_pos = (isset($feature_obj->load_pos) && $feature_obj->load_pos) ? $feature_obj->load_pos : '';
 
-					if (!empty($position))
-					{
-						$this->loadFeature[$position][$key]['feature'] = $feature_obj->renderFeature();
-						$this->loadFeature[$position][$key]['load_pos'] = $load_pos;
-					}
+				$this->in_positions[] = $position;
+
+				if (!empty($position))
+				{
+					$this->loadFeature[$position][$file_name]['feature'] = $feature_obj->renderFeature();
+					$this->loadFeature[$position][$file_name]['load_pos'] = $load_pos;
 				}
 			}
 		}
@@ -614,9 +633,9 @@ class HelixUltimate
 		}
 		else
 		{
-			$layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/options.json';
+			$layout_file = Helper::resolveTemplateFilePath('options.json', $this->template);
 
-			if (!\file_exists($layout_file))
+			if (!$layout_file)
 			{
 				die('Default Layout file is not exists! Please goto to template manager and create a new layout first.');
 			}
@@ -1124,15 +1143,26 @@ class HelixUltimate
 			if ($forceCompile || $needsCompile)
 			{
 				$compiler = new Compiler;
-				$template = Helper::loadTemplateData()->template;
+				$templateData = Helper::loadTemplateData();
+				$template = $templateData->template;
 				$scss_path = JPATH_THEMES . '/' . $template . '/scss';
 				$css_path = JPATH_THEMES . '/' . $template . '/css';
+
+				$importPaths = [$scss_path];
+				if (!empty($templateData->parent)) {
+					$parent_scss_path = JPATH_THEMES . '/' . $templateData->parent . '/scss';
+					$importPaths[] = $parent_scss_path;
+					
+					if (!file_exists($scss_path . '/' . $scss . '.scss')) {
+						$scss_path = $parent_scss_path;
+					}
+				}
 
 				if (file_exists($scss_path . '/' . $scss . '.scss'))
 				{
 					$out = $css_path . '/' . $css;
 					$compiler->setOutputStyle(OutputStyle::COMPRESSED);
-					$compiler->setImportPaths($scss_path);
+					$compiler->setImportPaths($importPaths);
 
 					if (!empty($vars)) {
 					    $converted = [];
@@ -1701,12 +1731,11 @@ class HelixUltimate
 		$options = new \stdClass;
 		$options->template 	= $this->template;
 		$options->params 	= $this->params;
-		$template 			= $options->template->template;
+		$header_path = Helper::resolveTemplateFilePath('headers/' . $header_style . '/header.php', $options->template);
 
-		$tmpl_file_location = JPATH_ROOT . '/templates/' . $template . '/headers';
-
-		if (\file_exists($tmpl_file_location . '/' . $header_style . '/header.php'))
+		if ($header_path)
 		{
+			$tmpl_file_location = dirname($header_path);
 			$getLayout = new FileLayout($header_style . '.header', $tmpl_file_location);
 
 			return $getLayout->render($options);
@@ -1731,12 +1760,11 @@ class HelixUltimate
 		$options = new \stdClass;
 		$options->template 	= $this->template;
 		$options->params 	= $this->params;
-		$template 			= $options->template->template;
+		$canvas_path = Helper::resolveTemplateFilePath('offcanvas/' . $offCanvasStyle . '/canvas.php', $options->template);
 
-		$offCanvasDirectory = JPATH_ROOT . '/templates/' . $template . '/offcanvas';
-
-		if (\file_exists($offCanvasDirectory . '/' . $offCanvasStyle . '/canvas.php'))
+		if ($canvas_path)
 		{
+			$offCanvasDirectory = dirname($canvas_path);
 			$getLayout = new FileLayout($offCanvasStyle . '.canvas', $offCanvasDirectory);
 
 			return $getLayout->render($options);
@@ -2028,7 +2056,10 @@ class HelixUltimate
 			// Read Custom Style data from XML to set custom $scssVars
 			$template = Helper::loadTemplateData();
 			$form = new Form('custom');
-			$form->loadFile(JPATH_ROOT . '/templates/' . $template->template . '/options.xml');
+			$optionsXmlPath = Helper::resolveTemplateFilePath('options.xml', $template);
+			if ($optionsXmlPath) {
+				$form->loadFile($optionsXmlPath);
+			}
 			$formXml = $form->getXml();
 
 			if (!empty($formXml))

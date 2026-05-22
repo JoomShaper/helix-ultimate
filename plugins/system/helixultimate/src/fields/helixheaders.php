@@ -39,10 +39,17 @@ class JFormFieldHelixheaders extends FormField
 	{
 		$input  = Factory::getApplication()->input;
 		$id = $input->get('id', 0, 'INT');
-		$template = $this->getTemplateName($id);
+		$style = Helper::getTemplateStyle($id);
 
-		$headers_src = JPATH_ROOT . '/templates/' . $template . '/headers';
-		$thumb_url = Uri::root() . 'templates/' . $template . '/headers';
+		$headers_src = JPATH_ROOT . '/templates/' . $style->template . '/headers';
+		$thumb_url = Uri::root() . 'templates/' . $style->template . '/headers';
+
+		$headersPath = Helper::resolveTemplateFilePath('headers', $style);
+		if ($headersPath && is_dir($headersPath)) {
+			$headers_src = $headersPath;
+			$templateName = strpos($headersPath, '/templates/' . $style->template . '/') !== false ? $style->template : $style->parent;
+			$thumb_url = Uri::root() . 'templates/' . $templateName . '/headers';
+		}
 
 		$html = '';
 		$fallbackRegex = "@^style-(\d+)@i";

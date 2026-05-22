@@ -45,6 +45,13 @@ class JFormFieldHelixOffcanvas extends FormField
 		$offCanvasDir = JPATH_ROOT . '/templates/' . $templateName . '/offcanvas';
 		$thumb_url = Uri::root() . 'templates/' . $templateName . '/offcanvas';
 
+		$canvasPath = Helper::resolveTemplateFilePath('offcanvas', $template);
+		if ($canvasPath && is_dir($canvasPath)) {
+			$offCanvasDir = $canvasPath;
+			$resolvedName = strpos($canvasPath, '/templates/' . $templateName . '/') !== false ? $templateName : $template->parent;
+			$thumb_url = Uri::root() . 'templates/' . $resolvedName . '/offcanvas';
+		}
+
 		$html = '';
 
 		if (is_dir($offCanvasDir))

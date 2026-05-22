@@ -162,7 +162,10 @@ class Settings
 	{
 		$templateStyle = Helper::getTemplateStyle($this->id);
 
-		$this->form->loadFile(JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.xml');
+		$optionsXmlPath = Helper::resolveTemplateFilePath('options.xml', $templateStyle);
+		if ($optionsXmlPath) {
+			$this->form->loadFile($optionsXmlPath);
+		}
 
 		/**
 		 * Get the xml form of the form.
@@ -217,10 +220,10 @@ class Settings
 
 		if (empty($formData))
 		{
-			$optionsPath = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.json';
+			$optionsPath = Helper::resolveTemplateFilePath('options.json', $templateStyle);
 			$optionDefaults = [];
 
-			if (\file_exists($optionsPath))
+			if ($optionsPath)
 			{
 				$optionDefaults = \json_decode(\file_get_contents($optionsPath) ?? "");
 			}
@@ -295,9 +298,9 @@ class Settings
 		$template = Helper::loadTemplateData();
 		$presetForm = new Form('preset');
 		$presetFormPath = JPATH_PLUGINS . '/system/helixultimate/src/form/preset.xml';
-		$templatePresetFormPath = JPATH_ROOT . '/templates/' . $template->template . '/preset.xml';
+		$templatePresetFormPath = Helper::resolveTemplateFilePath('preset.xml', $template);
 
-		if (\file_exists($templatePresetFormPath))
+		if ($templatePresetFormPath)
 		{
 			$presetFormPath = $templatePresetFormPath;
 		}

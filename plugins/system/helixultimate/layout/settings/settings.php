@@ -10,6 +10,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use HelixUltimate\Framework\Platform\Helper;
 
 function column_grid_system($device = 'lg')
 {
@@ -497,20 +498,47 @@ class RowColumnSettings
 		$db->setQuery($query);
 		$dbpositions = $db->loadObjectList();
 
-		$template  = self::getTemplateName();
+		$app = Factory::getApplication();
+		$input = $app->input;
+		$style_id = $input->get('id', 0, 'INT');
+		if ($style_id) {
+			$style = Helper::getTemplateStyle($style_id);
+		} else {
+			$style = Helper::loadTemplateData();
+		}
 
-		$templateXML = JPATH_SITE . '/templates/' . $template . '/templateDetails.xml';
-		$templateXml = simplexml_load_file($templateXML);
+		$templateXML = JPATH_SITE . '/templates/' . $style->template . '/templateDetails.xml';
+		$templateXml = @simplexml_load_file($templateXML);
 		$options = array();
 
 		foreach ($dbpositions as $positions)
 		{
+			if (empty($positions->position)) continue;
 			$options[] = $positions->position;
 		}
 
-		foreach ($templateXml->positions[0] as $position)
+		if ($templateXml && isset($templateXml->positions[0]))
 		{
-			$options[] = (string) $position;
+			foreach ($templateXml->positions[0] as $position)
+			{
+				$options[] = (string) $position;
+			}
+		}
+
+		if (!empty($style->parent))
+		{
+			$parentXMLPath = JPATH_SITE . '/templates/' . $style->parent . '/templateDetails.xml';
+			if (file_exists($parentXMLPath))
+			{
+				$parentTemplate = @simplexml_load_file($parentXMLPath);
+				if ($parentTemplate && isset($parentTemplate->positions[0]))
+				{
+					foreach ($parentTemplate->positions[0] as $position)
+					{
+						$options[] = (string) $position;
+					}
+				}
+			}
 		}
 
 		ksort($options);

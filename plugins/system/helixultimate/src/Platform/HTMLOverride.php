@@ -160,15 +160,26 @@ final class HTMLOverride
 		$templateOverrideUri = self::parsePath(self::$tmplOverridePath);
 		$webAssetUri = self::parsePath('/templates/{{template}}/joomla.asset.json');
 
+		$templateData = Helper::loadTemplateData();
+		$parentStaticHtmlPath = '';
+		if (!empty($templateData->parent)) {
+			$parentPathRaw = \preg_replace("@\{\{template\}\}@", $templateData->parent, self::$htmlPath);
+			$parentStaticHtmlPath = Path::clean($parentPathRaw);
+		}
+
 		$relativePath = '';
 		$overridePath = '';
 
 		/**
-		 * If the callee file is in the template's html directory.
+		 * If the callee file is in the template's html directory (child or parent).
 		 */
 		if (\strpos($callPath, $staticHtmlPath) === 0)
 		{
 			$relativePath = \substr($callPath, \strlen($staticHtmlPath));
+		}
+		elseif (!empty($parentStaticHtmlPath) && \strpos($callPath, $parentStaticHtmlPath) === 0)
+		{
+			$relativePath = \substr($callPath, \strlen($parentStaticHtmlPath));
 		}
 
 		/** If no relative path extracted. */

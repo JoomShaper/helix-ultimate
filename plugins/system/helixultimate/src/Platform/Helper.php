@@ -338,7 +338,11 @@ class Helper
                 }
                 else
                 {
-                    $template = self::getTemplateStyle($templateId);        
+                    $template = self::getTemplateStyle($templateId);
+					if (isset($currentTemplate) && isset($currentTemplate->parent))
+					{
+						$template->parent = $currentTemplate->parent;
+					}
                 }
             }
 
@@ -356,9 +360,9 @@ class Helper
 				 */
 				elseif (empty($template->params))
 				{
-					$filePath = JPATH_ROOT  . '/templates/' . $template->template . '/' . 'options.json';
+					$filePath = self::resolveTemplateFilePath('options.json', $template);
 
-					if (\file_exists($filePath))
+					if ($filePath)
 					{
 						$defaultParams = \file_get_contents($filePath);
 						$template->params = new Registry($defaultParams);
@@ -379,6 +383,37 @@ class Helper
 
         return $template;
     }
+
+	/**
+	 * Resolve template file path with child template fallback support.
+	 *
+	 * @param	string	$relativePath	The relative path to the file (e.g. 'options.json')
+	 * @param	object	$template		The template object.
+	 *
+	 * @return	string	The resolved absolute path, or empty string if not found.
+	 * @since	2.0.0
+	 */
+	public static function resolveTemplateFilePath($relativePath, $template)
+	{
+		$childPath = JPATH_ROOT . '/templates/' . $template->template . '/' . ltrim($relativePath, '/');
+		
+		if (\file_exists($childPath))
+		{
+			return $childPath;
+		}
+
+		if (!empty($template->parent))
+		{
+			$parentPath = JPATH_ROOT . '/templates/' . $template->parent . '/' . ltrim($relativePath, '/');
+			
+			if (\file_exists($parentPath))
+			{
+				return $parentPath;
+			}
+		}
+
+		return '';
+	}
 
 	/**
 	 * Flush settings data towards the javascript using addScriptOptions

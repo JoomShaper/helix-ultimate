@@ -111,6 +111,10 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 	public function onContentPrepareForm(Form $form, $data)
 	{
+		if(\Joomla\CMS\Factory::getApplication()->isClient('api'))
+		{
+			return true;
+		}
 	    $doc = Factory::getDocument();
 
     	$plgPath = Uri::root(true) . '/plugins/system/helixultimate';

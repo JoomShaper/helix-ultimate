@@ -111,7 +111,8 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 	public function onContentPrepareForm(Form $form, $data)
 	{
-		if(\Joomla\CMS\Factory::getApplication()->isClient('api'))
+		$app = \Joomla\CMS\Factory::getApplication();
+		if ($app->isClient('api') || $app->isClient('console') || !method_exists($app, 'getTemplate'))
 		{
 			return true;
 		}

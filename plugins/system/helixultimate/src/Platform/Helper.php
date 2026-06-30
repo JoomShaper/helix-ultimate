@@ -795,4 +795,29 @@ class Helper
 				$db->execute();
 		}
 	}
+
+	/**
+	 * Validate a base64-encoded internal redirect URL.
+	 *
+	 * @param   string  $encoded  Base64-encoded URL.
+	 *
+	 * @return  string|null  Safe internal URL or null.
+	 * @since   2.2.3
+	 */
+	public static function validateInternalRedirect(string $encoded): ?string
+	{
+		$decoded = base64_decode($encoded, true);
+
+		if ($decoded === false || $decoded === '')
+		{
+			return null;
+		}
+
+		if (!Uri::isInternal($decoded))
+		{
+			return null;
+		}
+
+		return $decoded;
+	}
 }

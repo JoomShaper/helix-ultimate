@@ -428,7 +428,12 @@ class PlgSystemHelixultimate extends CMSPlugin
 		/** If `helixreturn` query exists in the url then redirect to the return url. */
 		if (Factory::getApplication()->getIdentity()->id && !empty($helixReturn))
 		{
-			$this->app->redirect(base64_decode($helixReturn));
+			$redirectUrl = Helper::validateInternalRedirect($helixReturn);
+
+			if ($redirectUrl !== null)
+			{
+				$this->app->redirect($redirectUrl);
+			}
 		}
 
 		if ($this->app->isClient('administrator'))

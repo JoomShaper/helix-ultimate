@@ -41,9 +41,16 @@ class Media
 
 		$input 	= Factory::getApplication()->input;
 		$path 	= $input->post->get('path', '/images', 'PATH');
+		$absolutePath = Helper::resolveMediaPath($path);
 
-		$images 	= Folder::files(JPATH_ROOT . $path, '.png|.jpg|.jpeg|.gif|.svg|.ico|.webp', false, true);
-		$folders 	= Folder::folders(JPATH_ROOT . $path, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs'));
+		if ($absolutePath === null || !is_dir($absolutePath))
+		{
+			$media['message'] = 'Invalid media path';
+			die(json_encode($media));
+		}
+
+		$images 	= Folder::files($absolutePath, '.png|.jpg|.jpeg|.gif|.svg|.ico|.webp', false, true);
+		$folders 	= Folder::folders($absolutePath, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs'));
 
 		$crumbs = explode('/', ltrim($path, '/'));
 		$crumb_url = '';
@@ -158,10 +165,17 @@ class Media
 		$input 	= Factory::getApplication()->input;
 		$path 	= $input->post->get('path', '/images', 'PATH');
 		$type	= $input->post->get('type', 'file', 'STRING');
+		$absolutePath = Helper::resolveMediaPath($path);
+
+		if ($absolutePath === null)
+		{
+			$output['message'] = 'Invalid media path';
+			die(json_encode($output));
+		}
 
 		if ($type === 'file')
 		{
-			if (File::delete(JPATH_ROOT . '/' . $path))
+			if (is_file($absolutePath) && File::delete($absolutePath))
 			{
 				$output['status'] = true;
 			}
@@ -173,7 +187,7 @@ class Media
 		}
 		else
 		{
-			if (Folder::delete(JPATH_ROOT . '/' . $path))
+			if (is_dir($absolutePath) && Folder::delete($absolutePath))
 			{
 				$output['status'] = true;
 			}
@@ -198,8 +212,33 @@ class Media
 		$input 	= Factory::getApplication()->input;
 		$path 	= $input->post->get('path', '/images', 'PATH');
 		$folder_name 	= $input->post->get('folder_name', '', 'STRING');
+		$parentPath = Helper::resolveMediaPath($path);
 
-		$absolute_path = JPATH_ROOT . $path . '/' . preg_replace('/\s+/', '-', $folder_name);
+		if ($parentPath === null || !is_dir($parentPath))
+		{
+			$output['message'] = 'Invalid media path';
+			die(json_encode($output));
+		}
+
+		$safeFolderName = preg_replace('/[^A-Za-z0-9_-]+/', '-', trim($folder_name));
+
+		if ($safeFolderName === '')
+		{
+			$output['message'] = 'Invalid folder name';
+			die(json_encode($output));
+		}
+
+		$absolute_path = $parentPath . '/' . $safeFolderName;
+
+		try
+		{
+			\Joomla\Filesystem\Path::check($absolute_path);
+		}
+		catch (\Exception $e)
+		{
+			$output['message'] = 'Invalid folder path';
+			die(json_encode($output));
+		}
 
 		if (is_dir($absolute_path))
 		{

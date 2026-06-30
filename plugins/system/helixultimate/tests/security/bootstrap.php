@@ -9,6 +9,55 @@ declare(strict_types=1);
 
 define('_JEXEC', 1);
 
+if (!defined('JPATH_ROOT'))
+{
+	define('JPATH_ROOT', sys_get_temp_dir() . '/helix-security-test');
+}
+
+if (!is_dir(JPATH_ROOT . '/images'))
+{
+	mkdir(JPATH_ROOT . '/images', 0777, true);
+}
+
+if (!class_exists('Joomla\\Filesystem\\Path'))
+{
+	class JoomlaFilesystemPathStub
+	{
+		public static function clean(string $path): string
+		{
+			return preg_replace('#/+#', '/', str_replace('\\', '/', $path)) ?? $path;
+		}
+
+		public static function check(string $path): void
+		{
+			if (str_contains($path, '..'))
+			{
+				throw new \RuntimeException('Path traversal detected.');
+			}
+		}
+	}
+
+	class_alias(JoomlaFilesystemPathStub::class, 'Joomla\\Filesystem\\Path');
+}
+
+if (!class_exists('Joomla\\CMS\\Component\\ComponentHelper'))
+{
+	class JoomlaComponentHelperStub
+	{
+		public static function getParams(string $component): object
+		{
+			return new class {
+				public function get(string $key, $default = null)
+				{
+					return $key === 'image_path' ? 'images' : $default;
+				}
+			};
+		}
+	}
+
+	class_alias(JoomlaComponentHelperStub::class, 'Joomla\\CMS\\Component\\ComponentHelper');
+}
+
 if (!class_exists('Joomla\\CMS\\Uri\\Uri'))
 {
 	/**

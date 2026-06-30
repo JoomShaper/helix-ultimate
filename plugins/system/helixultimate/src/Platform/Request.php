@@ -424,7 +424,11 @@ class Request
 	 */
 	private function copyTemplateLayout()
 	{
-		$this->setLayoutParams();
+		if (!$this->setLayoutParams())
+		{
+			return;
+		}
+
 		$content = '';
 
 		if (isset($this->data['content']))
@@ -454,7 +458,10 @@ class Request
 	 */
 	private function renderTemplateLayout()
 	{
-		$this->setLayoutParams();
+		if (!$this->setLayoutParams())
+		{
+			return;
+		}
 
 		if (file_exists($this->layout_file_path))
 		{
@@ -479,7 +486,10 @@ class Request
 	 */
 	private function removeLayoutFile()
 	{
-		$this->setLayoutParams();
+		if (!$this->setLayoutParams())
+		{
+			return;
+		}
 
 		if (file_exists($this->layout_file_path))
 		{
@@ -680,7 +690,7 @@ class Request
 	/**
 	 * Set layout params.
 	 *
-	 * @return	void
+	 * @return	bool
 	 * @since	1.0.0
 	 */
 	private function setLayoutParams()
@@ -690,11 +700,33 @@ class Request
 
 		if (isset($this->data['layoutName']))
 		{
-			$this->layout_name = $this->data['layoutName'];
+			$this->layout_name = Helper::sanitizeLayoutName((string) $this->data['layoutName']);
+		}
+
+		if (empty($this->layout_name))
+		{
+			$this->report['status'] = false;
+			$this->report['message'] = 'Invalid layout name';
+
+			return false;
 		}
 
 		$this->layouts_folder_path  = JPATH_SITE . '/templates/' . $this->template . '/layout/';
 		$this->layout_file_path     = $this->layouts_folder_path . $this->layout_name;
+
+		try
+		{
+			\Joomla\Filesystem\Path::check($this->layout_file_path);
+		}
+		catch (\Exception $e)
+		{
+			$this->report['status'] = false;
+			$this->report['message'] = 'Invalid layout path';
+
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

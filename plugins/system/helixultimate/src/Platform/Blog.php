@@ -224,56 +224,62 @@ class Blog
 	    $input = Factory::getApplication()->input;
 	    $src = $input->post->get('src', '', 'STRING');
 	    $articleId = $input->get('id', 0, 'INT');
-	
-	    $path = JPATH_ROOT . '/' . $src;
-	
-	    if (\file_exists($path))
-	    {
-	        $db = Factory::getContainer()->get(DatabaseInterface::class);
-	
-	        $query = $db->getQuery(true)
-	            ->select($db->quoteName('attribs'))
-	            ->from($db->quoteName('#__content'))
-	            ->where('id = ' . $db->quote($articleId));
-	        $db->setQuery($query);
-	        $attribs = $db->loadResult();
-	
-		    $attribsDecoded = json_decode($attribs, true);
 
-		    if (isset($attribsDecoded['helix_ultimate_image']) && $attribsDecoded['helix_ultimate_image'] === $src) {
-		        $attribsDecoded['helix_ultimate_image'] = "";
-		    }
-		    
-		    if (isset($attribsDecoded['helix_ultimate_gallery'])) {
-		        $galleryImages = json_decode($attribsDecoded['helix_ultimate_gallery'], true);
-		        if (is_array($galleryImages['helix_ultimate_gallery_images'])) {
-		            foreach ($galleryImages['helix_ultimate_gallery_images'] as $key => $image) {
-		                if ($image === $src) {
-		                    unset($galleryImages['helix_ultimate_gallery_images'][$key]);
-		                }
-		            }
-		    
-		            $attribsDecoded['helix_ultimate_gallery'] = json_encode($galleryImages);
-		        }
-		    }
-		
-		    $updateQuery = $db->getQuery(true)
-		        ->update($db->quoteName('#__content'))
-		        ->set($db->quoteName('attribs') . ' = ' . $db->quote(json_encode($attribsDecoded)))
-		        ->where('id = ' . $db->quote($articleId));
-		    $db->setQuery($updateQuery);
-		    if ($db->execute()) {
-		        $report['status'] = true;
-		    } else {
-		        $report['status'] = false;
-		        $report['output'] = Text::_('Database update failed');
-		    }
-		}
-		else
-		{
-		    $report['status'] = false;
-		    $report['output'] = Text::_('Delete failed');
-		}
+	    if (!Helper::canEditArticle($articleId))
+	    {
+	        $report['output'] = Text::_('JERROR_ALERTNOAUTHOR');
+	        echo json_encode($report);
+	        die();
+	    }
+
+	    $absolutePath = Helper::resolveMediaPath($src);
+
+	    if ($absolutePath === null || !\file_exists($absolutePath))
+	    {
+	        $report['output'] = Text::_('Delete failed');
+	        die(json_encode($report));
+	    }
+
+	    $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+	    $query = $db->getQuery(true)
+	        ->select($db->quoteName('attribs'))
+	        ->from($db->quoteName('#__content'))
+	        ->where('id = ' . $db->quote($articleId));
+	    $db->setQuery($query);
+	    $attribs = $db->loadResult();
+
+	    $attribsDecoded = json_decode($attribs, true);
+
+	    if (isset($attribsDecoded['helix_ultimate_image']) && $attribsDecoded['helix_ultimate_image'] === $src) {
+	        $attribsDecoded['helix_ultimate_image'] = "";
+	    }
+
+	    if (isset($attribsDecoded['helix_ultimate_gallery'])) {
+	        $galleryImages = json_decode($attribsDecoded['helix_ultimate_gallery'], true);
+	        if (is_array($galleryImages['helix_ultimate_gallery_images'])) {
+	            foreach ($galleryImages['helix_ultimate_gallery_images'] as $key => $image) {
+	                if ($image === $src) {
+	                    unset($galleryImages['helix_ultimate_gallery_images'][$key]);
+	                }
+	            }
+
+	            $attribsDecoded['helix_ultimate_gallery'] = json_encode($galleryImages);
+	        }
+	    }
+
+	    $updateQuery = $db->getQuery(true)
+	        ->update($db->quoteName('#__content'))
+	        ->set($db->quoteName('attribs') . ' = ' . $db->quote(json_encode($attribsDecoded)))
+	        ->where('id = ' . $db->quote($articleId));
+	    $db->setQuery($updateQuery);
+
+	    if ($db->execute()) {
+	        $report['status'] = true;
+	    } else {
+	        $report['output'] = Text::_('Database update failed');
+	    }
+
 		die(json_encode($report));
 	}
 

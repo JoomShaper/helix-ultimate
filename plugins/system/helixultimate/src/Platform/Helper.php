@@ -11,6 +11,7 @@ namespace HelixUltimate\Framework\Platform;
 use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Multilanguage;
@@ -961,6 +962,118 @@ class Helper
 		{
 			die(json_encode($report));
 		}
+	}
+
+	/**
+	 * Sanitize a layout file name for template layout JSON storage.
+	 *
+	 * @param   string  $name  Layout name from request data.
+	 *
+	 * @return  string|null  Safe filename including .json extension.
+	 * @since   2.2.3
+	 */
+	public static function sanitizeLayoutName(string $name): ?string
+	{
+		$name = basename(str_replace('\\', '/', $name));
+		$name = preg_replace('/\.json$/i', '', $name);
+
+		if ($name === null || !preg_match('/^[A-Za-z0-9_-]+$/', $name))
+		{
+			return null;
+		}
+
+		return $name . '.json';
+	}
+
+	/**
+	 * Resolve and validate a media path under the configured media/image root.
+	 *
+	 * @param   string  $path  Relative path (with or without leading slash).
+	 *
+	 * @return  string|null  Absolute filesystem path or null if invalid.
+	 * @since   2.2.3
+	 */
+	public static function resolveMediaPath(string $path): ?string
+	{
+		$path = trim(str_replace('\\', '/', $path));
+
+		if ($path === '' || strpos($path, '..') !== false)
+		{
+			return null;
+		}
+
+		$path = ltrim($path, '/');
+		$params = ComponentHelper::getParams('com_media');
+		$mediaRoot = trim($params->get('image_path', 'images'), '/');
+		$allowedRoots = array_unique([$mediaRoot, 'images']);
+
+		$fullPath = Path::clean(JPATH_ROOT . '/' . $path);
+		$isAllowed = false;
+
+		foreach ($allowedRoots as $root)
+		{
+			$allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
+
+			if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0)
+			{
+				$isAllowed = true;
+				break;
+			}
+		}
+
+		if (!$isAllowed)
+		{
+			return null;
+		}
+
+		try
+		{
+			Path::check($fullPath);
+		}
+		catch (\Exception $e)
+		{
+			return null;
+		}
+
+		return $fullPath;
+	}
+
+	/**
+	 * Check whether the current user may edit a content article.
+	 *
+	 * @param   int  $articleId  Article ID.
+	 *
+	 * @return  bool
+	 * @since   2.2.3
+	 */
+	public static function canEditArticle(int $articleId): bool
+	{
+		$user = Factory::getApplication()->getIdentity();
+
+		if (!$user || !$user->id || $articleId <= 0)
+		{
+			return false;
+		}
+
+		if ($user->authorise('core.edit', 'com_content'))
+		{
+			return true;
+		}
+
+		if (!$user->authorise('core.edit.own', 'com_content'))
+		{
+			return false;
+		}
+
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true)
+			->select($db->quoteName('created_by'))
+			->from($db->quoteName('#__content'))
+			->where($db->quoteName('id') . ' = ' . (int) $articleId);
+
+		$db->setQuery($query);
+
+		return (int) $db->loadResult() === (int) $user->id;
 	}
 
 	/**

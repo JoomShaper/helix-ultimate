@@ -13,6 +13,7 @@ use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
@@ -1099,5 +1100,30 @@ class Helper
 		}
 
 		return $decoded;
+	}
+
+	/**
+	 * Sanitize embed HTML using an allowlist of safe tags and attributes.
+	 *
+	 * @param   string  $html  Raw embed HTML.
+	 *
+	 * @return  string
+	 * @since   2.2.3
+	 */
+	public static function sanitizeEmbed(string $html): string
+	{
+		if ($html === '')
+		{
+			return '';
+		}
+
+		$filter = InputFilter::getInstance(
+			['iframe', 'audio', 'video', 'source', 'a', 'img'],
+			['src', 'href', 'type', 'controls', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'alt', 'class', 'style'],
+			1,
+			1
+		);
+
+		return $filter->clean($html, 'html');
 	}
 }

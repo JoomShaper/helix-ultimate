@@ -670,13 +670,15 @@ class Request
 				// Variants
 				foreach ($item->variants as $variant)
 				{
-					$fontVariants .= '<option value="' . $variant . '">' . $variant . '</option>';
+					$safeVariant = htmlspecialchars((string) $variant, ENT_QUOTES, 'UTF-8');
+					$fontVariants .= '<option value="' . $safeVariant . '">' . $safeVariant . '</option>';
 				}
 
 				// Subsets
 				foreach ($item->subsets as $subset)
 				{
-					$fontSubsets .= '<option value="' . $subset . '">' . $subset . '</option>';
+					$safeSubset = htmlspecialchars((string) $subset, ENT_QUOTES, 'UTF-8');
+					$fontSubsets .= '<option value="' . $safeSubset . '">' . $safeSubset . '</option>';
 				}
 
 				$this->report['status']     = true;
@@ -872,7 +874,9 @@ class Request
 		{
 			foreach ($config as $key => $value)
 			{
-				$data .= ' data-' . $key . '="' . $value . '"';
+				$safeKey = preg_replace('/[^a-z0-9_-]/i', '', (string) $key);
+				$safeValue = htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
+				$data .= ' data-' . $safeKey . '="' . $safeValue . '"';
 			}
 		}
 

@@ -58,6 +58,38 @@ if (!class_exists('Joomla\\CMS\\Component\\ComponentHelper'))
 	class_alias(JoomlaComponentHelperStub::class, 'Joomla\\CMS\\Component\\ComponentHelper');
 }
 
+if (!class_exists('Joomla\\CMS\\Filter\\InputFilter'))
+{
+	class JoomlaInputFilterStub
+	{
+		private array $allowedTags;
+
+		public function __construct(array $allowedTags)
+		{
+			$this->allowedTags = $allowedTags;
+		}
+
+		public static function getInstance(array $tags, array $attributes, int $tagsFlag, int $attrFlag): self
+		{
+			return new self($tags);
+		}
+
+		public function clean(string $source, string $type = 'html'): string
+		{
+			if ($type !== 'html')
+			{
+				return $source;
+			}
+
+			$pattern = '#<(?!/?(' . implode('|', $this->allowedTags) . ')\b)[^>]+>#i';
+
+			return preg_replace($pattern, '', $source) ?? '';
+		}
+	}
+
+	class_alias(JoomlaInputFilterStub::class, 'Joomla\\CMS\\Filter\\InputFilter');
+}
+
 if (!class_exists('Joomla\\CMS\\Uri\\Uri'))
 {
 	/**

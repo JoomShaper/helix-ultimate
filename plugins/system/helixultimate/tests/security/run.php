@@ -14,6 +14,7 @@ $tests = [
 	'Phase02CsrfAclTest.php',
 	'Phase03PathTraversalTest.php',
 	'Phase04UploadHardeningTest.php',
+	'Phase05XssSanitizeTest.php',
 ];
 
 $allFailures = [];

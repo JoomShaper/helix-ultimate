@@ -511,7 +511,7 @@ class Request
 	{
 		try
 		{
-			$data = $_POST;
+			$data = $this->app->input->post->getArray();
 			$inputs = $this->filterInputs($data);
 
 			if (!$this->id || !is_int($this->id))

@@ -800,6 +800,24 @@ class Helper
 	}
 
 	/**
+	 * Helix article attribs keys allowed to merge on frontend save.
+	 *
+	 * @return  array<string>
+	 * @since   2.2.3
+	 */
+	public static function getHelixAttribKeys(): array
+	{
+		return [
+			'helix_ultimate_image',
+			'helix_ultimate_image_alt_txt',
+			'helix_ultimate_article_format',
+			'helix_ultimate_audio',
+			'helix_ultimate_gallery',
+			'helix_ultimate_video',
+		];
+	}
+
+	/**
 	 * Map Helix AJAX actions to required Joomla permissions (administrator).
 	 *
 	 * @return  array<string, array<string, string>>

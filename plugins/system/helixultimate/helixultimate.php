@@ -27,6 +27,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
@@ -200,8 +201,13 @@ class PlgSystemHelixultimate extends CMSPlugin
 	    }
 	
 	    $merged = $oldAttribs;
-	    foreach ($newAttribs as $key => $value) {
-	        $merged[$key] = $value;
+
+	    foreach ($newAttribs as $key => $value)
+	    {
+	        if (in_array($key, Helper::getHelixAttribKeys(), true))
+	        {
+	            $merged[$key] = $value;
+	        }
 	    }
 
 	    $table->attribs = json_encode($merged);
@@ -405,6 +411,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 		$this->attachWebAsset();
 
+		// Legacy framework identifier consumed by downstream Helix scripts.
 		$this->app->input->set('helix_id', 9);
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
@@ -444,6 +451,13 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 				if ($task === 'export' && !empty($id))
 				{
+					$user = Factory::getApplication()->getIdentity();
+
+					if (!$user->authorise('core.edit', 'com_templates'))
+					{
+						throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+					}
+
 					$template = $this->getTemplateName($id);
 
 					header('Content-Description: File Transfer');

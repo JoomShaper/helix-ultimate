@@ -15,6 +15,7 @@ $tests = [
 	'Phase03PathTraversalTest.php',
 	'Phase04UploadHardeningTest.php',
 	'Phase05XssSanitizeTest.php',
+	'Phase06RemainingHardeningTest.php',
 ];
 
 $allFailures = [];

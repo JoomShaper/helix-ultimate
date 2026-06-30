@@ -480,6 +480,8 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 			if ($option === 'com_ajax' && $helix === 'ultimate' && $request === 'task' && $action !== '')
 			{
+				Helper::guardAjaxRequest($action);
+
 				switch ($action)
 				{
 					case 'upload-blog-image':

@@ -107,6 +107,15 @@ class Request
 	 */
 	public function initialize()
 	{
+		if (empty($this->action))
+		{
+			echo json_encode($this->report);
+
+			return;
+		}
+
+		Helper::guardAjaxRequest($this->action);
+
 		switch ($this->action)
 		{
 			case 'save-tmpl-style':
@@ -224,14 +233,9 @@ class Request
 	 */
 	private function saveTemplateStyle()
 	{
-		$this->report['status'] = false;
-		$this->report['message'] = Text::_('JINVALID_TOKEN');
+		$data = $this->app->input->post->getArray();
 
-		Session::checkToken() or die(json_encode($this->report));
-
-		$data = $_POST;
-
-		$data['comingsoon_date'] = date('Y-m-d H:i:s', strtotime($data['comingsoon_date']));
+		$data['comingsoon_date'] = date('Y-m-d H:i:s', strtotime($data['comingsoon_date'] ?? 'now'));
 		$dateStatus = $this->validateDate($data['comingsoon_date'], 'Y-m-d H:i:s');
 
 		if (!$dateStatus) {
@@ -284,12 +288,7 @@ class Request
 
 	private function draftTemplateStyle()
 	{
-		$this->report['status'] = false;
-		$this->report['message'] = Text::_('JINVALID_TOKEN');
-
-		Session::checkToken() or die(json_encode($this->report));
-
-		$data = $_POST;
+		$data = $this->app->input->post->getArray();
 		$inputs = $this->filterInputs($data);
 
 		$storeData = array();

@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
@@ -793,6 +794,172 @@ class Helper
 					->where($db->quoteName('name') . ' = ' . $db->quote($template));
 				$db->setQuery($query);
 				$db->execute();
+		}
+	}
+
+	/**
+	 * Map Helix AJAX actions to required Joomla permissions (administrator).
+	 *
+	 * @return  array<string, array<string, string>>
+	 * @since   2.2.3
+	 */
+	public static function getActionPermissions(): array
+	{
+		$templateActions = [
+			'save-tmpl-style',
+			'draft-tmpl-style',
+			'reset-drafted-settings',
+			'save-layout',
+			'render-layout',
+			'remove-layout-file',
+			'purge-css-file',
+			'import-tmpl-style',
+			'update-font-list',
+			'fontVariants',
+			'view-media',
+			'delete-media',
+			'create-folder',
+			'upload-media',
+		];
+
+		$menuActions = [
+			'getMenuItems',
+			'parentAdoption',
+			'rebuildMenu',
+			'generateMegaMenuBody',
+			'saveMegaMenuSettings',
+			'updateRowLayout',
+			'generateRow',
+			'generatePopoverContents',
+			'generateNewCell',
+			'getModuleList',
+		];
+
+		$blogActions = [
+			'upload-blog-image',
+			'remove-blog-image',
+		];
+
+		$permissions = [];
+
+		foreach ($templateActions as $action)
+		{
+			$permissions[$action] = ['com_templates' => 'core.edit'];
+		}
+
+		foreach ($menuActions as $action)
+		{
+			$permissions[$action] = ['com_menus' => 'core.edit'];
+		}
+
+		foreach ($blogActions as $action)
+		{
+			$permissions[$action] = ['com_content' => 'core.edit'];
+		}
+
+		return $permissions;
+	}
+
+	/**
+	 * Site-client permission overrides for frontend AJAX actions.
+	 *
+	 * @return  array<string, array<string, string>>
+	 * @since   2.2.3
+	 */
+	public static function getSiteActionPermissions(): array
+	{
+		return [
+			'upload-blog-image' => [
+				'com_content' => 'core.edit',
+				'com_media'   => 'core.create',
+			],
+			'remove-blog-image' => [
+				'com_content' => 'core.edit',
+				'com_media'   => 'core.delete',
+			],
+			'view-media' => [
+				'com_media' => 'core.create',
+			],
+			'delete-media' => [
+				'com_media' => 'core.delete',
+			],
+			'upload-media' => [
+				'com_media' => 'core.create',
+			],
+		];
+	}
+
+	/**
+	 * Check whether the current user may execute a Helix AJAX action.
+	 *
+	 * @param   string  $action  Action name.
+	 *
+	 * @return  bool
+	 * @since   2.2.3
+	 */
+	public static function authorizeAction(string $action): bool
+	{
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if (!$user || !$user->id)
+		{
+			return false;
+		}
+
+		$map = $app->isClient('site')
+			? self::getSiteActionPermissions()
+			: self::getActionPermissions();
+
+		if (!isset($map[$action]))
+		{
+			return false;
+		}
+
+		foreach ($map[$action] as $asset => $permission)
+		{
+			if (!$user->authorise($permission, $asset))
+			{
+				if ($asset === 'com_content' && $permission === 'core.edit'
+					&& $user->authorise('core.edit.own', 'com_content'))
+				{
+					continue;
+				}
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Enforce CSRF token and ACL for a Helix AJAX action.
+	 *
+	 * @param   string  $action  Action name.
+	 *
+	 * @return  void
+	 * @since   2.2.3
+	 */
+	public static function guardAjaxRequest(string $action): void
+	{
+		$report = [
+			'status'  => false,
+			'message' => Text::_('JINVALID_TOKEN'),
+			'output'  => Text::_('JINVALID_TOKEN'),
+		];
+
+		if (!Session::checkToken())
+		{
+			die(json_encode($report));
+		}
+
+		$report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+		$report['output']  = Text::_('JERROR_ALERTNOAUTHOR');
+
+		if (!self::authorizeAction($action))
+		{
+			die(json_encode($report));
 		}
 	}
 

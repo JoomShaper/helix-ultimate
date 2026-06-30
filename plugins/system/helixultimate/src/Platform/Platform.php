@@ -162,6 +162,14 @@ class Platform
 	 */
 	public function handleRequests()
 	{
+		if (!$this->user->id)
+		{
+			die(json_encode([
+				'status'  => false,
+				'message' => Text::_('JERROR_ALERTNOAUTHOR'),
+			]));
+		}
+
 		$request = new Request;
 
 		if ($this->option === 'com_ajax' && $this->helix === 'ultimate' && $this->request === 'task')

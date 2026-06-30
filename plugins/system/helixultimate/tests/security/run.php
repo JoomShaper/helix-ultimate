@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 $tests = [
 	'Phase01OpenRedirectTest.php',
+	'Phase02CsrfAclTest.php',
 ];
 
 $allFailures = [];

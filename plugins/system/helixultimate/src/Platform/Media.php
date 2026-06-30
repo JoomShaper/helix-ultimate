@@ -269,21 +269,23 @@ class Media
 		$dir 	= $input->post->get('path', '/images', 'PATH');
 		$index 	= $input->post->get('index', '', 'STRING');
 		$file 	= $input->files->get('file');
-		$authorised = $user->authorise('core.edit', 'com_templates');
+		$uploadDir = Helper::resolveMediaPath($dir);
 
 		$report = array();
 		$report['status'] = false;
-		$report['message'] = Text::_('JINVALID_TOKEN');
+		$report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
 		$report['index'] = $index;
 
-		Session::checkToken() or die(json_encode($report));
-
-		if ($authorised !== true)
+		if ($uploadDir === null || !is_dir($uploadDir))
 		{
-			$report['status'] = false;
-			$report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
-			echo json_encode($report);
-			die();
+			$report['message'] = 'Invalid upload path';
+			die(json_encode($report));
+		}
+
+		if ($user->authorise('core.edit', 'com_templates') !== true
+			&& !($user->authorise('core.create', 'com_media') && Factory::getApplication()->isClient('site')))
+		{
+			die(json_encode($report));
 		}
 
 		if (!empty($file))
@@ -318,19 +320,19 @@ class Media
 					$error = true;
 				}
 
-				// File formats
-				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'ico');
+				// File formats (svg/ico excluded to reduce stored XSS risk)
+				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'webp');
 
 				// Upload if no error found
 				if (!$error)
 				{
 					$file_ext = strtolower(File::getExt($file['name']));
 
-					if (in_array($file_ext, $accepted_file_formats))
+					if (in_array($file_ext, $accepted_file_formats, true))
 					{
 						$name = $file['name'];
 						$source_path = $file['tmp_name'];
-						$folder = ltrim($dir, '/');
+						$folder = ltrim(str_replace(JPATH_ROOT . '/', '', $uploadDir), '/');
 
 						// Do no override existing file
 						$media_file = preg_replace('#\s+#', "-", File::makeSafe(basename(strtolower($name))));
@@ -342,7 +344,7 @@ class Media
 							$ext        = File::getExt($media_file);
 							$media_name = $base_name . '.' . $ext;
 							$i++;
-							$dest       = \JPATH_ROOT . '/' . $folder . '/' . $media_name;
+							$dest       = $uploadDir . '/' . $media_name;
 							$src        = $folder . '/' . $media_name;
 						}
 						while (file_exists($dest));

@@ -156,6 +156,7 @@ class Request
 
 			case 'upload-media':
 				Media::uploadMedia();
+				break;
 
 			case 'import-tmpl-style':
 				$this->importTemplateStyle();

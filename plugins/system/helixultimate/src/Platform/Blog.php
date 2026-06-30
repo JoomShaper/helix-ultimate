@@ -90,6 +90,15 @@ class Blog
 
 				if (!$error)
 				{
+					$acceptedImageFormats = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+					$file_ext = strtolower(File::getExt($image['name']));
+
+					if (!in_array($file_ext, $acceptedImageFormats, true))
+					{
+						$report['output'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
+						die(json_encode($report));
+					}
+
 					$date = Factory::getDate();
 					$folder = HTMLHelper::_('date', $date, 'Y') . '/' . HTMLHelper::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
 
@@ -108,13 +117,8 @@ class Blog
 							{
 								if (!@mkdir($target_folder, 0755, true))
 								{
-									$error = error_get_last();
 									$report['status'] = false;
-									$report['output'] = Text::_('Failed to create directory. ');
-									$report['output'] .= 'Path: ' . $target_folder;
-									$report['output'] .= ' | Native Error: ' . ($error['message'] ?? 'Unknown');
-									$report['output'] .= ' | Joomla Error: ' . $e->getMessage();
-									
+									$report['output'] = Text::_('Failed to create directory.');
 									echo json_encode($report);
 									die();
 								}
@@ -122,26 +126,22 @@ class Blog
 						}
 					}
 
-					$name = $image['name'];
-					$path = $image['tmp_name'];
-
-					// Do no override existing file
-					$file = pathinfo($name);
+					$safeBaseName = File::stripExt(File::makeSafe(basename(strtolower($image['name']))));
+					$ext = $file_ext;
 					$i = 0;
 
 					do
 					{
-						$base_name  = $file['filename'] . ($i ? "$i" : "");
-						$ext        = $file['extension'];
-						$image_name = $base_name . "." . $ext;
+						$base_name  = $safeBaseName . ($i ? (string) $i : '');
+						$image_name = $base_name . '.' . $ext;
 						$i++;
 						$dest = Path::clean(JPATH_ROOT . '/' . $image_path . '/' . $folder . '/' . $image_name);
 						$src = Path::clean($image_path . '/' . $folder . '/' . $image_name, '/');
-						$data_src = Path::clean($image_path . '/' . $folder . '/' . $image_name, '/');
+						$data_src = $src;
 					}
 					while (file_exists($dest));
 
-					if (File::upload($path, $dest))
+					if (File::upload($image['tmp_name'], $dest))
 					{
 						$image_quality = $tplParams->get('image_crop_quality', '100');
 

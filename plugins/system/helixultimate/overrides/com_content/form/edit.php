@@ -29,6 +29,9 @@ $wa->useScript('keepalive')
 // Helix frontend editor CSS
 $doc->addStylesheet(Uri::base() . 'plugins/system/helixultimate/assets/css/frontend-editor.css');
 
+HTMLHelper::_('jquery.framework');
+HTMLHelper::_('jquery.token');
+
 // Tabs & form config
 $this->tab_name          = 'com-content-form';
 $this->ignore_fieldsets  = ['image-intro', 'image-full', 'jmetadata', 'item_associations'];

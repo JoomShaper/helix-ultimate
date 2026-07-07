@@ -27,6 +27,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
@@ -111,6 +112,11 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 	public function onContentPrepareForm(Form $form, $data)
 	{
+		$app = \Joomla\CMS\Factory::getApplication();
+		if ($app->isClient('api') || $app->isClient('console') || !method_exists($app, 'getTemplate'))
+		{
+			return true;
+		}
 	    $doc = Factory::getDocument();
 
     	$plgPath = Uri::root(true) . '/plugins/system/helixultimate';
@@ -141,6 +147,12 @@ class PlgSystemHelixultimate extends CMSPlugin
     	if ($form->getName() === 'com_content.article') {
     	    HTMLHelper::_('jquery.framework');
     	    HTMLHelper::_('jquery.token');
+    	    Text::script('JGLOBAL_CONFIRM_DELETE');
+    	    Text::script('HELIX_ULTIMATE_UPLOAD_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_REMOVE_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_UPLOAD_GALLERY_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_REMOVE_GALLERY_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_UPLOAD_PROGRESS_NOT_SUPPORTED');
     	    $doc->addStyleSheet($plgPath . '/assets/css/admin/blog-options.css', ['relative' => false, 'version' => 'auto']);
     	    $doc->addScript($plgPath . '/assets/js/admin/blog-options.js', ['relative' => false, 'version' => 'auto']);
 
@@ -195,8 +207,13 @@ class PlgSystemHelixultimate extends CMSPlugin
 	    }
 	
 	    $merged = $oldAttribs;
-	    foreach ($newAttribs as $key => $value) {
-	        $merged[$key] = $value;
+
+	    foreach ($newAttribs as $key => $value)
+	    {
+	        if (in_array($key, Helper::getHelixAttribKeys(), true))
+	        {
+	            $merged[$key] = $value;
+	        }
 	    }
 
 	    $table->attribs = json_encode($merged);
@@ -400,6 +417,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 		$this->attachWebAsset();
 
+		// Legacy framework identifier consumed by downstream Helix scripts.
 		$this->app->input->set('helix_id', 9);
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
@@ -423,7 +441,12 @@ class PlgSystemHelixultimate extends CMSPlugin
 		/** If `helixreturn` query exists in the url then redirect to the return url. */
 		if (Factory::getApplication()->getIdentity()->id && !empty($helixReturn))
 		{
-			$this->app->redirect(base64_decode($helixReturn));
+			$redirectUrl = Helper::validateInternalRedirect($helixReturn);
+
+			if ($redirectUrl !== null)
+			{
+				$this->app->redirect($redirectUrl);
+			}
 		}
 
 		if ($this->app->isClient('administrator'))
@@ -434,6 +457,13 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 				if ($task === 'export' && !empty($id))
 				{
+					$user = Factory::getApplication()->getIdentity();
+
+					if (!$user->authorise('core.edit', 'com_templates'))
+					{
+						throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+					}
+
 					$template = $this->getTemplateName($id);
 
 					header('Content-Description: File Transfer');
@@ -470,6 +500,8 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 			if ($option === 'com_ajax' && $helix === 'ultimate' && $request === 'task' && $action !== '')
 			{
+				Helper::guardAjaxRequest($action);
+
 				switch ($action)
 				{
 					case 'upload-blog-image':
@@ -993,6 +1025,8 @@ class PlgSystemHelixultimate extends CMSPlugin
 			echo new JsonResponse('Method "' . $method . '" inside the class "' . $class . '" does not exist!');
 			$app->close();
 		}
+
+		Helper::guardAjaxRequest($method);
 
 		// $instance = new $class();
 		$response = $class::$method();

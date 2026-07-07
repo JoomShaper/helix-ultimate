@@ -7,6 +7,70 @@
 
 jQuery(function($) {
 
+	function huText(key, fallback) {
+		if (typeof Joomla !== 'undefined' && Joomla.Text) {
+			return Joomla.Text._(key, fallback);
+		}
+
+		return fallback;
+	}
+
+	function getCsrfTokenData() {
+		var tokenData = {};
+		var token = typeof Joomla !== 'undefined' ? Joomla.getOptions('csrf.token') : null;
+
+		if (token) {
+			tokenData[token] = 1;
+			return tokenData;
+		}
+
+		$('#adminForm input[type="hidden"]').each(function() {
+			if (this.value === '1' && /^[a-f0-9]{32}$/i.test(this.name)) {
+				tokenData[this.name] = '1';
+			}
+		});
+
+		return tokenData;
+	}
+
+	function parseAjaxResponse(response) {
+		if (response && typeof response === 'object') {
+			return response;
+		}
+
+		if (typeof response !== 'string' || !response.length) {
+			return null;
+		}
+
+		try {
+			return JSON.parse(response);
+		} catch (e) {
+			return null;
+		}
+	}
+
+	function getArticleId() {
+		var $idField = $('#jform_id');
+
+		if ($idField.length) {
+			var fieldId = parseInt($idField.val(), 10);
+
+			if (fieldId > 0) {
+				return fieldId;
+			}
+		}
+
+		var match = window.location.search.match(/(?:[?&](?:id|a_id)=)(\d+)/);
+
+		return match ? parseInt(match[1], 10) : 0;
+	}
+
+	function clearFeaturedImageField($field) {
+		$field.find('.hu-image-upload-wrapper').empty();
+		$field.removeClass('hu-image-field-has-image').addClass('hu-image-field-empty');
+		$field.find('#jform_attribs_helix_ultimate_image').val('');
+	}
+
 	$(document).ready(function() {
 		var first_tab = $('#myTabTabs').find('>li').first();
 		$('a[href="#attrib-helix_ultimate_blog_options"]').parent().insertAfter(first_tab);
@@ -42,11 +106,17 @@ jQuery(function($) {
 			var file = $(this).prop('files')[0];
 
 			var data = new FormData();
+			var tokenData = getCsrfTokenData();
+
 			data.append('option', 'com_ajax');
 			data.append('helix', 'ultimate');
 			data.append('request', 'task');
 			data.append('action', 'upload-blog-image');
 			data.append('format', 'json');
+
+			Object.keys(tokenData).forEach(function(key) {
+				data.append(key, tokenData[key]);
+			});
 
 			if (file.type.match(/image.*/)) {
 				data.append('image', file);
@@ -54,6 +124,7 @@ jQuery(function($) {
 				$.ajax({
 					type: "POST",
 					data: data,
+					dataType: 'json',
 					contentType: false,
 					cache: false,
 					processData:false,
@@ -65,8 +136,13 @@ jQuery(function($) {
 					},
 					success: function(response)
 					{
+						var data = parseAjaxResponse(response);
 
-						var data = $.parseJSON(response);
+						if (!data) {
+							$field.find('.hu-image-upload-wrapper').removeClass('loading').empty();
+							alert(huText('HELIX_ULTIMATE_UPLOAD_IMAGE_FAILED', 'Unable to upload image. Please try again.'));
+							return;
+						}
 
 						if(data.status) {
 							$field.find('.hu-image-upload-wrapper').removeClass('loading').empty().html(data.output);
@@ -96,7 +172,7 @@ jQuery(function($) {
 								$('#upload-image-progress').find('.bar').css('width', Math.floor(evt.loaded / evt.total *100) + '%');
 							}, false);
 						} else {
-							alert('Uploadress is not supported.');
+							alert(huText('HELIX_ULTIMATE_UPLOAD_PROGRESS_NOT_SUPPORTED', 'Upload progress is not supported.'));
 						}
 						return myXhr;
 					},
@@ -121,31 +197,45 @@ jQuery(function($) {
 
 		var $this = $(this);
 		var $parent = $this.closest('.hu-image-field');
+		var articleId = getArticleId();
 
-		if (confirm("You are about to delete this item permanently. 'Cancel' to stop, 'OK' to delete.") == true) {
-		    var request = {
+		if (confirm(huText('JGLOBAL_CONFIRM_DELETE', 'Are you sure you want to delete?')) === true) {
+			if (articleId <= 0) {
+				clearFeaturedImageField($parent);
+				return;
+			}
+
+		    var request = $.extend({
 				'option' : 'com_ajax',
 				'helix' : 'ultimate',
 				'request' : 'task',
 				'action' : 'remove-blog-image',
-				'src'	 : $parent.find('.hu-image-upload-wrapper').find('>img').data('src'),
+				'id'     : articleId,
+				'src'	 : $parent.find('.hu-image-upload-wrapper').find('>img').attr('data-src') || $parent.find('.hu-image-upload-wrapper').find('>img').data('src'),
 				'format' : 'json'
-			};
+			}, getCsrfTokenData());
 
 			$.ajax({
 				type: "POST",
 				data   : request,
+				dataType: 'json',
 				success: function(response)
 				{
-					var data = $.parseJSON(response);
-					if(data.status) {
-						$parent.find('.hu-image-upload-wrapper').empty();
-						$('.hu-image-field').removeClass('hu-image-field-has-image').addClass('hu-image-field-empty');
-						$parent.find('#jform_attribs_helix_ultimate_image').val('');
+					var data = parseAjaxResponse(response);
 
-					} else {
-						alert(data.output);
+					if (!data) {
+						alert(huText('HELIX_ULTIMATE_REMOVE_IMAGE_FAILED', 'Unable to remove image. Please try again.'));
+						return;
 					}
+
+					if(data.status) {
+						clearFeaturedImageField($parent);
+					} else {
+						alert(data.output || huText('HELIX_ULTIMATE_REMOVE_IMAGE_FAILED', 'Unable to remove image. Please try again.'));
+					}
+				},
+				error: function() {
+					alert(huText('HELIX_ULTIMATE_REMOVE_IMAGE_FAILED', 'Unable to remove image. Please try again.'));
 				}
 			});
 		}
@@ -172,6 +262,8 @@ jQuery(function($) {
 				let gallery_id = 'gallery-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1);
 				
 				var data = new FormData();
+				var tokenData = getCsrfTokenData();
+
 				data.append('option', 'com_ajax');
 				data.append('helix', 'ultimate');
 				data.append('request', 'task');
@@ -181,9 +273,14 @@ jQuery(function($) {
 				data.append('gallery', true);
 				data.append('format', 'json');
 
+				Object.keys(tokenData).forEach(function(key) {
+					data.append(key, tokenData[key]);
+				});
+
 				$.ajax({
 					type: "POST",
 					data: data,
+					dataType: 'json',
 					contentType: false,
 					cache: false,
 					processData:false,
@@ -193,8 +290,13 @@ jQuery(function($) {
 					},
 					success: function(response)
 					{
+						var data = parseAjaxResponse(response);
 
-						var data = $.parseJSON(response);
+						if (!data) {
+							$('#' + gallery_id).remove();
+							alert(huText('HELIX_ULTIMATE_UPLOAD_GALLERY_IMAGE_FAILED', 'Unable to upload gallery image. Please try again.'));
+							return;
+						}
 
 						if(data.status) {
 							$('#' + gallery_id).attr('data-src', data.data_src).removeClass('loading').empty().html(data.output);
@@ -218,7 +320,7 @@ jQuery(function($) {
 								$('#' + gallery_id).find('.bar').css('width', Math.floor(evt.loaded / evt.total *100) + '%');
 							}, false);
 						} else {
-							console.log('Uploadress is not supported.');
+							console.log(huText('HELIX_ULTIMATE_UPLOAD_PROGRESS_NOT_SUPPORTED', 'Upload progress is not supported.'));
 						}
 						return myXhr;
 					}
@@ -247,37 +349,59 @@ jQuery(function($) {
 	$(document).on('click', '.btn-hu-remove-gallery-image', function(event) {
 		event.preventDefault();
 		var $this = $(this);
-		if (confirm("You are about to delete this item permanently. 'Cancel' to stop, 'OK' to delete.") == true) {
-		    var request = {
+		var $galleryItem = $this.parent();
+		var articleId = getArticleId();
+
+		if (confirm(huText('JGLOBAL_CONFIRM_DELETE', 'Are you sure you want to delete?')) === true) {
+			var updateGalleryField = function() {
+				$galleryItem.remove();
+
+				let images = [];
+
+				$('.hu-gallery-item').each(function( index, value ) {
+					images.push( '"' + $(value).data('src') + '"' );
+				});
+
+				let output = '{"helix_ultimate_gallery_images":['+ images +']}';
+				$('#jform_attribs_helix_ultimate_gallery').val(output);
+			};
+
+			if (articleId <= 0) {
+				updateGalleryField();
+				return;
+			}
+
+		    var request = $.extend({
 				'option' : 'com_ajax',
 				'helix' : 'ultimate',
 				'request' : 'task',
 				'action' : 'remove-blog-image',
-				'src'	 : $this.parent().data('src'),
+				'id'     : articleId,
+				'src'	 : $galleryItem.attr('data-src') || $galleryItem.data('src'),
 				'format' : 'json'
-			};
+			}, getCsrfTokenData());
 
 			$.ajax({
 				type: "POST",
 				data   : request,
+				dataType: 'json',
 				success: function(response)
 				{
-					var data = $.parseJSON(response);
-					if(data.status) {
-						$this.parent().remove();
+					var data = parseAjaxResponse(response);
 
-						let images = [];
-
-						$('.hu-gallery-item').each(function( index, value ) {
-							images.push( '"' + $(value).data('src') + '"' );
-						});
-
-						let output = '{"helix_ultimate_gallery_images":['+ images +']}';
-						$('#jform_attribs_helix_ultimate_gallery').val(output);
-
-					} else {
-						alert(data.output);
+					if (!data) {
+						alert(huText('HELIX_ULTIMATE_REMOVE_GALLERY_IMAGE_FAILED', 'Unable to remove gallery image. Please try again.'));
+						return;
 					}
+
+					if(data.status) {
+						updateGalleryField();
+					} else {
+						alert(data.output || huText('HELIX_ULTIMATE_REMOVE_GALLERY_IMAGE_FAILED', 'Unable to remove gallery image. Please try again.'));
+					}
+				},
+				error: function() {
+					alert(huText('HELIX_ULTIMATE_REMOVE_GALLERY_IMAGE_FAILED', 'Unable to remove gallery image. Please try again.'));
 				}
 			});
 		}

@@ -14,9 +14,9 @@ const config = {
     srcPath: path.resolve(__dirname),
     buildPath: path.resolve(__dirname, './package/'),
     qsPath: path.resolve(__dirname, './package/helix_ultimate_quickstart/'),
-    qsPackageName: 'helixultimate_quickstart_j5_2.2.6.zip',
-    packageName: 'helixultimate_template_v2.2.6.zip',
-    pluginPackageName: 'plg_system_helixultimate_v2.2.6.zip',
+    qsPackageName: 'helixultimate_quickstart_j5_2.2.7.zip',
+    packageName: 'helixultimate_template_v2.2.7.zip',
+    pluginPackageName: 'plg_system_helixultimate_v2.2.7.zip',
 
     templateFileExtensions: 'xml, json, php, png, scss, js, ico, svg, jpg, eot, ttf, woff, woff2, otf, css, html',
     pluginFileExtensions: function () {
@@ -92,11 +92,11 @@ function templateStreamTask() {
 }
 
 function pluginStreamTask() {
+    const pluginPath = path.resolve(config.srcPath, './plugins/system/helixultimate');
+
     return src([
-        path.resolve(config.srcPath, './plugins/system/helixultimate') +
-        '/**/*.{' +
-        config.parseExtensions('pluginFileExtensions') +
-        '}',
+        pluginPath + '/**/*.{' + config.parseExtensions('pluginFileExtensions') + '}',
+        '!' + pluginPath + '/tests/**',
     ]).pipe(dest(path.resolve(config.buildPath, './plugins/system/'), config.destOptions));
 }
 
@@ -183,7 +183,13 @@ function QSDirectories(done) {
 
     for (const dir of directories) {
         const task = taskDone => {
-            src(`${config.srcPath}/${dir}/**/*.*`).pipe(dest(`${config.qsPath}/${dir}/`));
+            const srcGlobs = [`${config.srcPath}/${dir}/**/*.*`];
+
+            if (dir === 'plugins') {
+                srcGlobs.push(`!${config.srcPath}/plugins/system/helixultimate/tests/**`);
+            }
+
+            src(srcGlobs).pipe(dest(`${config.qsPath}/${dir}/`));
             taskDone();
         };
         tasks.push(task);

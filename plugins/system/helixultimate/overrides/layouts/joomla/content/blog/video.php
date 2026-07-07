@@ -9,6 +9,8 @@
 
 defined('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
+
 extract($displayData);
 
 if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
@@ -83,9 +85,9 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 						Your browser does not support the video tag.
 					</video>';
 			} else {
-				// Treat as iframe-embeddable (e.g., Facebook embeds)
-				$embed_code = '
-					<iframe src="' . htmlspecialchars($video_url, ENT_QUOTES) . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+				$embed_code = Helper::sanitizeEmbed(
+					'<iframe src="' . htmlspecialchars($video_url, ENT_QUOTES) . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>'
+				);
 			}
 			break;
 	}

@@ -23,6 +23,7 @@ use HelixUltimate\Framework\Platform\Classes\Image;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 
 /**
  * Blog class.
@@ -223,7 +224,7 @@ class Blog
 	
 	    $input = Factory::getApplication()->input;
 	    $src = $input->post->get('src', '', 'STRING');
-	    $articleId = $input->get('id', 0, 'INT');
+	    $articleId = (int) $input->get('id', 0, 'INT');
 
 	    if (!Helper::canEditArticle($articleId))
 	    {
@@ -234,7 +235,7 @@ class Blog
 
 	    if ($src === '' || Helper::resolveMediaPath($src) === null)
 	    {
-	        $report['output'] = Text::_('Delete failed');
+	        $report['output'] = Text::_('HELIX_ULTIMATE_DELETE_FAILED');
 	        die(json_encode($report));
 	    }
 
@@ -243,8 +244,9 @@ class Blog
 	    $query = $db->getQuery(true)
 	        ->select($db->quoteName('attribs'))
 	        ->from($db->quoteName('#__content'))
-	        ->where('id = ' . $db->quote($articleId));
+	        ->where($db->quoteName('id') . ' = :articleId');
 	    $db->setQuery($query);
+	    $db->bind(':articleId', $articleId, ParameterType::INTEGER);
 	    $attribs = $db->loadResult();
 
 	    $attribsDecoded = json_decode($attribs ?? '', true);
@@ -278,11 +280,15 @@ class Blog
 	        }
 	    }
 
+	    $attribsJson = json_encode($attribsDecoded);
+
 	    $updateQuery = $db->getQuery(true)
 	        ->update($db->quoteName('#__content'))
-	        ->set($db->quoteName('attribs') . ' = ' . $db->quote(json_encode($attribsDecoded)))
-	        ->where('id = ' . $db->quote($articleId));
+	        ->set($db->quoteName('attribs') . ' = :attribs')
+	        ->where($db->quoteName('id') . ' = :articleId');
 	    $db->setQuery($updateQuery);
+	    $db->bind(':attribs', $attribsJson, ParameterType::STRING);
+	    $db->bind(':articleId', $articleId, ParameterType::INTEGER);
 
 	    if ($db->execute()) {
 	        $report['status'] = true;

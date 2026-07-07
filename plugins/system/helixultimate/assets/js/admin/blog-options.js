@@ -7,6 +7,28 @@
 
 jQuery(function($) {
 
+	function getArticleId() {
+		var $idField = $('#jform_id');
+
+		if ($idField.length) {
+			var fieldId = parseInt($idField.val(), 10);
+
+			if (fieldId > 0) {
+				return fieldId;
+			}
+		}
+
+		var match = window.location.search.match(/(?:[?&](?:id|a_id)=)(\d+)/);
+
+		return match ? parseInt(match[1], 10) : 0;
+	}
+
+	function clearFeaturedImageField($field) {
+		$field.find('.hu-image-upload-wrapper').empty();
+		$field.removeClass('hu-image-field-has-image').addClass('hu-image-field-empty');
+		$field.find('#jform_attribs_helix_ultimate_image').val('');
+	}
+
 	$(document).ready(function() {
 		var first_tab = $('#myTabTabs').find('>li').first();
 		$('a[href="#attrib-helix_ultimate_blog_options"]').parent().insertAfter(first_tab);
@@ -121,13 +143,20 @@ jQuery(function($) {
 
 		var $this = $(this);
 		var $parent = $this.closest('.hu-image-field');
+		var articleId = getArticleId();
 
 		if (confirm("You are about to delete this item permanently. 'Cancel' to stop, 'OK' to delete.") == true) {
+			if (articleId <= 0) {
+				clearFeaturedImageField($parent);
+				return;
+			}
+
 		    var request = {
 				'option' : 'com_ajax',
 				'helix' : 'ultimate',
 				'request' : 'task',
 				'action' : 'remove-blog-image',
+				'id'     : articleId,
 				'src'	 : $parent.find('.hu-image-upload-wrapper').find('>img').data('src'),
 				'format' : 'json'
 			};
@@ -139,13 +168,13 @@ jQuery(function($) {
 				{
 					var data = $.parseJSON(response);
 					if(data.status) {
-						$parent.find('.hu-image-upload-wrapper').empty();
-						$('.hu-image-field').removeClass('hu-image-field-has-image').addClass('hu-image-field-empty');
-						$parent.find('#jform_attribs_helix_ultimate_image').val('');
-
+						clearFeaturedImageField($parent);
 					} else {
 						alert(data.output);
 					}
+				},
+				error: function() {
+					alert('Unable to remove image. Please try again.');
 				}
 			});
 		}
@@ -247,13 +276,35 @@ jQuery(function($) {
 	$(document).on('click', '.btn-hu-remove-gallery-image', function(event) {
 		event.preventDefault();
 		var $this = $(this);
+		var $galleryItem = $this.parent();
+		var articleId = getArticleId();
+
 		if (confirm("You are about to delete this item permanently. 'Cancel' to stop, 'OK' to delete.") == true) {
+			var updateGalleryField = function() {
+				$galleryItem.remove();
+
+				let images = [];
+
+				$('.hu-gallery-item').each(function( index, value ) {
+					images.push( '"' + $(value).data('src') + '"' );
+				});
+
+				let output = '{"helix_ultimate_gallery_images":['+ images +']}';
+				$('#jform_attribs_helix_ultimate_gallery').val(output);
+			};
+
+			if (articleId <= 0) {
+				updateGalleryField();
+				return;
+			}
+
 		    var request = {
 				'option' : 'com_ajax',
 				'helix' : 'ultimate',
 				'request' : 'task',
 				'action' : 'remove-blog-image',
-				'src'	 : $this.parent().data('src'),
+				'id'     : articleId,
+				'src'	 : $galleryItem.data('src'),
 				'format' : 'json'
 			};
 
@@ -264,20 +315,13 @@ jQuery(function($) {
 				{
 					var data = $.parseJSON(response);
 					if(data.status) {
-						$this.parent().remove();
-
-						let images = [];
-
-						$('.hu-gallery-item').each(function( index, value ) {
-							images.push( '"' + $(value).data('src') + '"' );
-						});
-
-						let output = '{"helix_ultimate_gallery_images":['+ images +']}';
-						$('#jform_attribs_helix_ultimate_gallery').val(output);
-
+						updateGalleryField();
 					} else {
 						alert(data.output);
 					}
+				},
+				error: function() {
+					alert('Unable to remove gallery image. Please try again.');
 				}
 			});
 		}

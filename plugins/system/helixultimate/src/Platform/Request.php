@@ -234,10 +234,10 @@ class Request
 	 */
 	private function saveTemplateStyle()
 	{
-		$data = $this->app->input->post->getArray();
+		$inputs = $this->getPostedTemplateInputs();
 
-		$data['comingsoon_date'] = date('Y-m-d H:i:s', strtotime($data['comingsoon_date'] ?? 'now'));
-		$dateStatus = $this->validateDate($data['comingsoon_date'], 'Y-m-d H:i:s');
+		$inputs['comingsoon_date'] = date('Y-m-d H:i:s', strtotime($inputs['comingsoon_date'] ?? 'now'));
+		$dateStatus = $this->validateDate($inputs['comingsoon_date'], 'Y-m-d H:i:s');
 
 		if (!$dateStatus) {
 			$this->report['status'] = false;
@@ -245,8 +245,6 @@ class Request
 			$this->report['isDrafted'] = Helper::isDrafted();
 			return;
 		}
-		
-		$inputs = $this->filterInputs($data);
 
 		if (!$this->id || !is_int($this->id))
 		{
@@ -289,8 +287,7 @@ class Request
 
 	private function draftTemplateStyle()
 	{
-		$data = $this->app->input->post->getArray();
-		$inputs = $this->filterInputs($data);
+		$inputs = $this->getPostedTemplateInputs();
 
 		$storeData = array();
 
@@ -394,6 +391,41 @@ class Request
 			$this->report['message'] = $e->getMessage();
 			$this->report['isDrafted'] = Helper::isDrafted();
 		}
+	}
+
+	/**
+	 * Custom code fields that must bypass Joomla's default input filter.
+	 *
+	 * @var array<int, string>
+	 * @since 2.2.8
+	 */
+	private const RAW_TEMPLATE_FIELDS = [
+		'before_head',
+		'after_body',
+		'before_body',
+		'custom_css',
+		'custom_js',
+	];
+
+	/**
+	 * Get posted template style inputs, preserving raw HTML/JS in custom code fields.
+	 *
+	 * @return	array
+	 * @since	2.2.8
+	 */
+	private function getPostedTemplateInputs()
+	{
+		$data = $this->app->input->post->getArray();
+
+		foreach (self::RAW_TEMPLATE_FIELDS as $field)
+		{
+			if ($this->app->input->post->exists($field))
+			{
+				$data[$field] = $this->app->input->post->get($field, '', 'RAW');
+			}
+		}
+
+		return $this->filterInputs($data);
 	}
 
 	/**

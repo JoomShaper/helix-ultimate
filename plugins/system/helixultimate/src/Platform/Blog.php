@@ -232,9 +232,7 @@ class Blog
 	        die();
 	    }
 
-	    $absolutePath = Helper::resolveMediaPath($src);
-
-	    if ($absolutePath === null || !\file_exists($absolutePath))
+	    if ($src === '' || Helper::resolveMediaPath($src) === null)
 	    {
 	        $report['output'] = Text::_('Delete failed');
 	        die(json_encode($report));
@@ -249,21 +247,33 @@ class Blog
 	    $db->setQuery($query);
 	    $attribs = $db->loadResult();
 
-	    $attribsDecoded = json_decode($attribs, true);
+	    $attribsDecoded = json_decode($attribs ?? '', true);
 
-	    if (isset($attribsDecoded['helix_ultimate_image']) && $attribsDecoded['helix_ultimate_image'] === $src) {
-	        $attribsDecoded['helix_ultimate_image'] = "";
+	    if (!\is_array($attribsDecoded))
+	    {
+	        $attribsDecoded = [];
 	    }
 
-	    if (isset($attribsDecoded['helix_ultimate_gallery'])) {
+	    if (($attribsDecoded['helix_ultimate_image'] ?? '') === $src)
+	    {
+	        $attribsDecoded['helix_ultimate_image'] = '';
+	    }
+
+	    if (!empty($attribsDecoded['helix_ultimate_gallery']))
+	    {
 	        $galleryImages = json_decode($attribsDecoded['helix_ultimate_gallery'], true);
-	        if (is_array($galleryImages['helix_ultimate_gallery_images'])) {
-	            foreach ($galleryImages['helix_ultimate_gallery_images'] as $key => $image) {
-	                if ($image === $src) {
+
+	        if (\is_array($galleryImages) && \is_array($galleryImages['helix_ultimate_gallery_images'] ?? null))
+	        {
+	            foreach ($galleryImages['helix_ultimate_gallery_images'] as $key => $image)
+	            {
+	                if ($image === $src)
+	                {
 	                    unset($galleryImages['helix_ultimate_gallery_images'][$key]);
 	                }
 	            }
 
+	            $galleryImages['helix_ultimate_gallery_images'] = array_values($galleryImages['helix_ultimate_gallery_images']);
 	            $attribsDecoded['helix_ultimate_gallery'] = json_encode($galleryImages);
 	        }
 	    }

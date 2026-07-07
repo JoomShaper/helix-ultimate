@@ -147,6 +147,12 @@ class PlgSystemHelixultimate extends CMSPlugin
     	if ($form->getName() === 'com_content.article') {
     	    HTMLHelper::_('jquery.framework');
     	    HTMLHelper::_('jquery.token');
+    	    Text::script('JGLOBAL_CONFIRM_DELETE');
+    	    Text::script('HELIX_ULTIMATE_UPLOAD_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_REMOVE_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_UPLOAD_GALLERY_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_REMOVE_GALLERY_IMAGE_FAILED');
+    	    Text::script('HELIX_ULTIMATE_UPLOAD_PROGRESS_NOT_SUPPORTED');
     	    $doc->addStyleSheet($plgPath . '/assets/css/admin/blog-options.css', ['relative' => false, 'version' => 'auto']);
     	    $doc->addScript($plgPath . '/assets/js/admin/blog-options.js', ['relative' => false, 'version' => 'auto']);
 

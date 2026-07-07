@@ -21,7 +21,7 @@ extract($displayData);
 				<div class="carousel-inner" role="listbox">
 					<?php foreach ( $images as $key => $image ) : ?>
 						<div class="carousel-item<?php echo ($key===0) ? ' active': ''; ?>">
-							<img src="<?php echo $image; ?>" <?php echo !empty($attribs->helix_ultimate_image_alt_txt) ? "alt='" . $attribs->helix_ultimate_image_alt_txt . "'" : '' ?>>
+							<img src="<?php echo htmlspecialchars((string) $image, ENT_QUOTES, 'UTF-8'); ?>"<?php echo !empty($attribs->helix_ultimate_image_alt_txt) ? ' alt="' . htmlspecialchars((string) $attribs->helix_ultimate_image_alt_txt, ENT_QUOTES, 'UTF-8') . '"' : ''; ?>>
 						</div>
 					<?php endforeach; ?>
 				</div>

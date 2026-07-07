@@ -8,13 +8,15 @@
 
 defined ('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
+
 extract($displayData);
 ?>
 
 <?php if(isset($attribs->helix_ultimate_audio) && $attribs->helix_ultimate_audio) : ?>
 	<div class="article-featured-audio">
 		<div class="ratio ratio-16x9">
-			<?php echo $attribs->helix_ultimate_audio; ?>
+			<?php echo Helper::sanitizeEmbed($attribs->helix_ultimate_audio); ?>
 		</div>
 	</div>
 <?php endif; ?>

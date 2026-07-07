@@ -11,10 +11,13 @@ namespace HelixUltimate\Framework\Platform;
 use HelixUltimate\Framework\System\HelixCache;
 use HelixUltimate\Framework\System\JoomlaBridge;
 use Joomla\CMS\Application\ApplicationHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Filter\InputFilter;
 use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Registry\Registry;
@@ -794,5 +797,633 @@ class Helper
 				$db->setQuery($query);
 				$db->execute();
 		}
+	}
+
+	/**
+	 * Helix article attribs keys allowed to merge on frontend save.
+	 *
+	 * @return  array<string>
+	 * @since   2.2.3
+	 */
+	public static function getHelixAttribKeys(): array
+	{
+		return [
+			'helix_ultimate_image',
+			'helix_ultimate_image_alt_txt',
+			'helix_ultimate_article_format',
+			'helix_ultimate_audio',
+			'helix_ultimate_gallery',
+			'helix_ultimate_video',
+		];
+	}
+
+	/**
+	 * Map Helix AJAX actions to required Joomla permissions (administrator).
+	 *
+	 * @return  array<string, array<string, string>>
+	 * @since   2.2.3
+	 */
+	public static function getActionPermissions(): array
+	{
+		$templateActions = [
+			'save-tmpl-style',
+			'draft-tmpl-style',
+			'reset-drafted-settings',
+			'save-layout',
+			'render-layout',
+			'remove-layout-file',
+			'purge-css-file',
+			'import-tmpl-style',
+			'update-font-list',
+			'fontVariants',
+			'view-media',
+			'delete-media',
+			'create-folder',
+			'upload-media',
+		];
+
+		$menuActions = [
+			'getMenuItems',
+			'parentAdoption',
+			'rebuildMenu',
+			'generateMegaMenuBody',
+			'saveMegaMenuSettings',
+			'updateRowLayout',
+			'generateRow',
+			'generatePopoverContents',
+			'generateNewCell',
+			'getModuleList',
+		];
+
+		$blogActions = [
+			'upload-blog-image',
+			'remove-blog-image',
+		];
+
+		$permissions = [];
+
+		foreach ($templateActions as $action)
+		{
+			$permissions[$action] = ['com_templates' => 'core.edit'];
+		}
+
+		foreach ($menuActions as $action)
+		{
+			$permissions[$action] = ['com_menus' => 'core.edit'];
+		}
+
+		foreach ($blogActions as $action)
+		{
+			$permissions[$action] = ['com_content' => 'core.edit'];
+		}
+
+		return $permissions;
+	}
+
+	/**
+	 * Site-client permission overrides for frontend AJAX actions.
+	 *
+	 * @return  array<string, array<string, string>>
+	 * @since   2.2.3
+	 */
+	public static function getSiteActionPermissions(): array
+	{
+		return [
+			'upload-blog-image' => [
+				'com_content' => 'core.edit',
+				'com_media'   => 'core.create',
+			],
+			'remove-blog-image' => [
+				'com_content' => 'core.edit',
+				'com_media'   => 'core.delete',
+			],
+			'view-media' => [
+				'com_media' => 'core.create',
+			],
+			'delete-media' => [
+				'com_media' => 'core.delete',
+			],
+			'upload-media' => [
+				'com_media' => 'core.create',
+			],
+		];
+	}
+
+	/**
+	 * Check whether the current user may execute a Helix AJAX action.
+	 *
+	 * @param   string  $action  Action name.
+	 *
+	 * @return  bool
+	 * @since   2.2.3
+	 */
+	public static function authorizeAction(string $action): bool
+	{
+		$app = Factory::getApplication();
+		$user = $app->getIdentity();
+
+		if (!$user || !$user->id)
+		{
+			return false;
+		}
+
+		$map = $app->isClient('site')
+			? self::getSiteActionPermissions()
+			: self::getActionPermissions();
+
+		if (!isset($map[$action]))
+		{
+			return false;
+		}
+
+		foreach ($map[$action] as $asset => $permission)
+		{
+			if (!$user->authorise($permission, $asset))
+			{
+				if ($asset === 'com_content' && $permission === 'core.edit'
+					&& $user->authorise('core.edit.own', 'com_content'))
+				{
+					continue;
+				}
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Enforce CSRF token and ACL for a Helix AJAX action.
+	 *
+	 * @param   string  $action  Action name.
+	 *
+	 * @return  void
+	 * @since   2.2.3
+	 */
+	public static function guardAjaxRequest(string $action): void
+	{
+		$report = [
+			'status'  => false,
+			'message' => Text::_('JINVALID_TOKEN'),
+			'output'  => Text::_('JINVALID_TOKEN'),
+		];
+
+		if (!Session::checkToken())
+		{
+			die(json_encode($report));
+		}
+
+		$report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+		$report['output']  = Text::_('JERROR_ALERTNOAUTHOR');
+
+		if (!self::authorizeAction($action))
+		{
+			die(json_encode($report));
+		}
+	}
+
+	/**
+	 * Sanitize a layout file name for template layout JSON storage.
+	 *
+	 * @param   string  $name  Layout name from request data.
+	 *
+	 * @return  string|null  Safe filename including .json extension.
+	 * @since   2.2.3
+	 */
+	public static function sanitizeLayoutName(string $name): ?string
+	{
+		$name = basename(str_replace('\\', '/', $name));
+		$name = preg_replace('/\.json$/i', '', $name);
+
+		if ($name === null || !preg_match('/^[A-Za-z0-9_-]+$/', $name))
+		{
+			return null;
+		}
+
+		return $name . '.json';
+	}
+
+	/**
+	 * Resolve and validate a media path under the configured media/image root.
+	 *
+	 * @param   string  $path  Relative path (with or without leading slash).
+	 *
+	 * @return  string|null  Absolute filesystem path or null if invalid.
+	 * @since   2.2.3
+	 */
+	public static function resolveMediaPath(string $path): ?string
+	{
+		$path = trim(str_replace('\\', '/', $path));
+
+		if ($path === '' || strpos($path, '..') !== false)
+		{
+			return null;
+		}
+
+		$path = ltrim($path, '/');
+		$params = ComponentHelper::getParams('com_media');
+		$mediaRoot = trim($params->get('image_path', 'images'), '/');
+		$allowedRoots = array_unique([$mediaRoot, 'images']);
+
+		$fullPath = Path::clean(JPATH_ROOT . '/' . $path);
+		$isAllowed = false;
+
+		foreach ($allowedRoots as $root)
+		{
+			$allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
+
+			if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0)
+			{
+				$isAllowed = true;
+				break;
+			}
+		}
+
+		if (!$isAllowed)
+		{
+			return null;
+		}
+
+		try
+		{
+			Path::check($fullPath);
+		}
+		catch (\Exception $e)
+		{
+			return null;
+		}
+
+		return $fullPath;
+	}
+
+	/**
+	 * Check whether the current user may edit a content article.
+	 *
+	 * @param   int  $articleId  Article ID.
+	 *
+	 * @return  bool
+	 * @since   2.2.3
+	 */
+	public static function canEditArticle(int $articleId): bool
+	{
+		$user = Factory::getApplication()->getIdentity();
+
+		if (!$user || !$user->id || $articleId <= 0)
+		{
+			return false;
+		}
+
+		if ($user->authorise('core.edit', 'com_content'))
+		{
+			return true;
+		}
+
+		if (!$user->authorise('core.edit.own', 'com_content'))
+		{
+			return false;
+		}
+
+		$db = Factory::getContainer()->get(DatabaseInterface::class);
+		$query = $db->getQuery(true)
+			->select($db->quoteName('created_by'))
+			->from($db->quoteName('#__content'))
+			->where($db->quoteName('id') . ' = ' . (int) $articleId);
+
+		$db->setQuery($query);
+
+		return (int) $db->loadResult() === (int) $user->id;
+	}
+
+	/**
+	 * Validate a base64-encoded internal redirect URL.
+	 *
+	 * @param   string  $encoded  Base64-encoded URL.
+	 *
+	 * @return  string|null  Safe internal URL or null.
+	 * @since   2.2.3
+	 */
+	public static function validateInternalRedirect(string $encoded): ?string
+	{
+		$decoded = base64_decode($encoded, true);
+
+		if ($decoded === false || $decoded === '')
+		{
+			return null;
+		}
+
+		if (!Uri::isInternal($decoded))
+		{
+			return null;
+		}
+
+		return $decoded;
+	}
+
+	/**
+	 * Sanitize embed HTML using an allowlist of safe tags and attributes.
+	 *
+	 * @param   string  $html  Raw embed HTML.
+	 *
+	 * @return  string
+	 * @since   2.2.3
+	 */
+	public static function sanitizeEmbed(string $html): string
+	{
+		if ($html === '')
+		{
+			return '';
+		}
+
+		$filter = InputFilter::getInstance(
+			['iframe', 'audio', 'video', 'source', 'a', 'img'],
+			['src', 'href', 'type', 'controls', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'alt', 'class', 'style'],
+			1,
+			1
+		);
+
+		return $filter->clean($html, 'html');
+	}
+
+	/**
+	 * Sanitize mega menu settings before persisting to menu item params.
+	 *
+	 * @param   array  $settings  Raw settings from request.
+	 *
+	 * @return  array
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuSettings(array $settings): array
+	{
+		$clean = [];
+
+		$clean['megamenu'] = !empty($settings['megamenu']) ? 1 : 0;
+		$clean['showtitle'] = !empty($settings['showtitle']) ? 1 : 0;
+
+		$clean['menualign'] = self::sanitizeMegaMenuEnum(
+			$settings['menualign'] ?? '',
+			['left', 'center', 'right', 'full'],
+			'full'
+		);
+		$clean['dropdown'] = self::sanitizeMegaMenuEnum(
+			$settings['dropdown'] ?? '',
+			['left', 'right'],
+			'right'
+		);
+		$clean['badge_position'] = self::sanitizeMegaMenuEnum(
+			$settings['badge_position'] ?? '',
+			['left', 'right'],
+			'right'
+		);
+
+		$clean['width'] = self::sanitizeMegaMenuWidth($settings['width'] ?? '600px');
+		$clean['customclass'] = self::sanitizeMegaMenuCustomClass($settings['customclass'] ?? '');
+		$clean['faicon'] = self::sanitizeMegaMenuFaIcon($settings['faicon'] ?? '');
+		$clean['badge'] = self::sanitizeMegaMenuBadge($settings['badge'] ?? '');
+		$clean['badge_bg_color'] = self::sanitizeMegaMenuColor($settings['badge_bg_color'] ?? '');
+		$clean['badge_text_color'] = self::sanitizeMegaMenuColor($settings['badge_text_color'] ?? '');
+
+		$layout = $settings['layout'] ?? [];
+
+		if (!\is_array($layout))
+		{
+			$layout = [];
+		}
+
+		$clean['layout'] = self::sanitizeMegaMenuLayout($layout);
+
+		return $clean;
+	}
+
+	/**
+	 * Sanitize a mega menu CSS class string.
+	 *
+	 * @param   mixed  $value  Raw custom class value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuCustomClass($value): string
+	{
+		$value = (string) $value;
+
+		if (preg_match('/[<>"\'=]/', $value))
+		{
+			return '';
+		}
+
+		$value = strip_tags($value);
+		$value = preg_replace('/[^a-zA-Z0-9_\-\s]/', '', $value) ?? '';
+
+		return trim(preg_replace('/\s+/', ' ', $value) ?? '');
+	}
+
+	/**
+	 * Sanitize a Font Awesome icon class string.
+	 *
+	 * @param   mixed  $value  Raw icon value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuFaIcon($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if ($value === '')
+		{
+			return '';
+		}
+
+		if (!preg_match('/^fa[sbr]?\s+fa-[a-z0-9-]+$/i', $value))
+		{
+			return '';
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Sanitize mega menu badge text.
+	 *
+	 * @param   mixed  $value  Raw badge value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuBadge($value): string
+	{
+		return trim(strip_tags((string) $value));
+	}
+
+	/**
+	 * Sanitize a hex color value.
+	 *
+	 * @param   mixed  $value  Raw color value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuColor($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if ($value === '')
+		{
+			return '';
+		}
+
+		if (!preg_match('/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $value))
+		{
+			return '';
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Sanitize a mega menu width value.
+	 *
+	 * @param   mixed  $value  Raw width value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuWidth($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if (preg_match('/^[0-9]+(px|%|em|rem)$/', $value))
+		{
+			return $value;
+		}
+
+		return '600px';
+	}
+
+	/**
+	 * Sanitize a mega menu enum field.
+	 *
+	 * @param   mixed   $value    Raw value.
+	 * @param   array   $allowed  Allowed values.
+	 * @param   string  $default  Default value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuEnum($value, array $allowed, string $default): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		return \in_array($value, $allowed, true) ? $value : $default;
+	}
+
+	/**
+	 * Recursively sanitize mega menu layout rows/columns/cells.
+	 *
+	 * @param   array  $layout  Raw layout array.
+	 *
+	 * @return  array
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuLayout(array $layout): array
+	{
+		$clean = [];
+
+		foreach ($layout as $row)
+		{
+			if (!\is_array($row) && !\is_object($row))
+			{
+				continue;
+			}
+
+			$row = (array) $row;
+			$cleanRow = [
+				'type' => 'row',
+				'attr' => [],
+			];
+
+			$columns = $row['attr'] ?? [];
+
+			if (!\is_array($columns))
+			{
+				$columns = [];
+			}
+
+			foreach ($columns as $column)
+			{
+				if (!\is_array($column) && !\is_object($column))
+				{
+					continue;
+				}
+
+				$column = (array) $column;
+				$cleanColumn = [
+					'type' => 'column',
+					'colGrid' => self::sanitizeMegaMenuColGrid($column['colGrid'] ?? '12'),
+					'menuParentId' => (string) (int) ($column['menuParentId'] ?? 0),
+					'moduleId' => (string) (int) ($column['moduleId'] ?? 0),
+					'items' => [],
+				];
+
+				$items = $column['items'] ?? [];
+
+				if (\is_array($items))
+				{
+					foreach ($items as $cell)
+					{
+						if (!\is_array($cell) && !\is_object($cell))
+						{
+							continue;
+						}
+
+						$cell = (array) $cell;
+						$type = ($cell['type'] ?? '') === 'module' ? 'module' : 'menu';
+						$cleanCell = [
+							'type' => $type,
+							'id' => (string) (int) ($cell['id'] ?? 0),
+						];
+
+						if ($type === 'module')
+						{
+							$cleanCell['moduleId'] = (string) (int) ($cell['moduleId'] ?? $cell['id'] ?? 0);
+						}
+
+						$cleanColumn['items'][] = $cleanCell;
+					}
+				}
+
+				$cleanRow['attr'][] = $cleanColumn;
+			}
+
+			$clean[] = $cleanRow;
+		}
+
+		return $clean;
+	}
+
+	/**
+	 * Sanitize a bootstrap column grid value.
+	 *
+	 * @param   mixed  $value  Raw column grid value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuColGrid($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if (preg_match('/^[0-9]{1,2}$/', $value))
+		{
+			$grid = (int) $value;
+
+			if ($grid >= 1 && $grid <= 12)
+			{
+				return (string) $grid;
+			}
+		}
+
+		return '12';
 	}
 }

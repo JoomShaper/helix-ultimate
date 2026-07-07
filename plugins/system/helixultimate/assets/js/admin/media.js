@@ -385,15 +385,24 @@ jQuery(function ($) {
 		var files = $(this).prop('files');
 
 		for (i = 0; i < files.length; i++) {
-			var file_ext = files[i].name.split('.').pop();
+			var file_ext = files[i].name.split('.').pop().toLowerCase();
+
+			if (file_ext === 'svg') {
+				alert(
+					Joomla.Text._(
+						'HELIX_ULTIMATE_MEDIA_SVG_NOT_SUPPORTED_FOR_UPLOAD',
+						'SVG is not supported for upload. Upload via Joomla Media, then select the file here.'
+					)
+				);
+				continue;
+			}
+
 			var allowed =
 				file_ext == 'png' ||
 				file_ext == 'jpg' ||
 				file_ext == 'jpeg' ||
 				file_ext == 'webp' ||
-				file_ext == 'gif' ||
-				file_ext == 'svg' ||
-				file_ext == 'ico';
+				file_ext == 'gif';
 			if (allowed) {
 				var formdata = new FormData();
 				formdata.append('file', files[i]);
@@ -403,6 +412,13 @@ jQuery(function ($) {
 					data: formdata,
 					index: 'media-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1),
 				});
+			} else {
+				alert(
+					Joomla.Text._(
+						'COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED',
+						'File not supported'
+					)
+				);
 			}
 		}
 

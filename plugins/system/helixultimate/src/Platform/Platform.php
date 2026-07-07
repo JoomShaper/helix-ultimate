@@ -162,6 +162,14 @@ class Platform
 	 */
 	public function handleRequests()
 	{
+		if (!$this->user->id)
+		{
+			die(json_encode([
+				'status'  => false,
+				'message' => Text::_('JERROR_ALERTNOAUTHOR'),
+			]));
+		}
+
 		$request = new Request;
 
 		if ($this->option === 'com_ajax' && $this->helix === 'ultimate' && $this->request === 'task')
@@ -279,5 +287,7 @@ class Platform
 	private static function registerLanguageScripts()
 	{
 		Text::script('HELIX_ULTIMATE_SELECT_ICON_LABEL');
+		Text::script('HELIX_ULTIMATE_MEDIA_SVG_NOT_SUPPORTED_FOR_UPLOAD');
+		Text::script('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
 	}
 }

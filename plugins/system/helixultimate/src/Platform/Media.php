@@ -374,7 +374,9 @@ class Media
 					else
 					{
 						$report['status'] = false;
-						$report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
+						$report['message'] = $file_ext === 'svg'
+							? Text::_('HELIX_ULTIMATE_MEDIA_SVG_NOT_SUPPORTED_FOR_UPLOAD')
+							: Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
 					}
 				}
 			}

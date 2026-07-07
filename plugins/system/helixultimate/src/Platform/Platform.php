@@ -287,5 +287,7 @@ class Platform
 	private static function registerLanguageScripts()
 	{
 		Text::script('HELIX_ULTIMATE_SELECT_ICON_LABEL');
+		Text::script('HELIX_ULTIMATE_MEDIA_SVG_NOT_SUPPORTED_FOR_UPLOAD');
+		Text::script('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
 	}
 }

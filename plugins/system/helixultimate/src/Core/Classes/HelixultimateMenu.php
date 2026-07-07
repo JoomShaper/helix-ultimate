@@ -615,12 +615,12 @@ class HelixultimateMenu
 
 		if (isset($layout->customclass) && ($layout->customclass))
 		{
-			$class .= ' ' . $layout->customclass;
+			$class .= ' ' . Helper::sanitizeMegaMenuCustomClass($layout->customclass);
 		}
 
 		$class .= $item->class;
 
-		return '<li class="' . $class . '">';
+		return '<li class="' . htmlspecialchars($class, ENT_QUOTES, 'UTF-8') . '">';
 	}
 
 	/**
@@ -689,11 +689,11 @@ class HelixultimateMenu
 		$layout = json_decode(Helper::CheckNull($item->getParams()->get('helixultimatemenulayout')));
 
 		$showmenutitle = (isset($layout->showtitle)) ? $layout->showtitle : 1;
-		$icon = (isset($layout->faicon)) ? $layout->faicon : '';
+		$icon = Helper::sanitizeMegaMenuFaIcon(isset($layout->faicon) ? $layout->faicon : '');
 
 		if (!empty($icon) && !preg_match("@^fa[sbr]@", $icon))
 		{
-			$icon = 'fas ' . $icon;
+			$icon = Helper::sanitizeMegaMenuFaIcon('fas ' . $icon);
 		}
 		
 
@@ -705,13 +705,15 @@ class HelixultimateMenu
 		// Add Menu Icon
 		if ($icon)
 		{
+			$iconClass = htmlspecialchars($icon, ENT_QUOTES, 'UTF-8');
+
 			if ($showmenutitle)
 			{
-				$linktitle = '<span class="' . $icon . '"></span> ' . $linktitle;
+				$linktitle = '<span class="' . $iconClass . '"></span> ' . $linktitle;
 			}
 			else
 			{
-				$linktitle = '<span class="' . $icon . '"></span>';
+				$linktitle = '<span class="' . $iconClass . '"></span>';
 			}
 		}
 
@@ -725,15 +727,18 @@ class HelixultimateMenu
 		{
 			$badge_style = '';
 			$badge_class = 'sp-menu-badge sp-menu-badge-right';
+			$badgeText = Helper::sanitizeMegaMenuBadge($layout->badge);
+			$badgeBgColor = Helper::sanitizeMegaMenuColor($layout->badge_bg_color ?? '');
+			$badgeTextColor = Helper::sanitizeMegaMenuColor($layout->badge_text_color ?? '');
 
-			if (isset($layout->badge_bg_color) && $layout->badge_bg_color)
+			if ($badgeBgColor)
 			{
-				$badge_style .= 'background-color: ' . $layout->badge_bg_color . ';';
+				$badge_style .= 'background-color: ' . $badgeBgColor . ';';
 			}
 
-			if (isset($layout->badge_text_color) && $layout->badge_text_color)
+			if ($badgeTextColor)
 			{
-				$badge_style .= 'color: ' . $layout->badge_text_color . ';';
+				$badge_style .= 'color: ' . $badgeTextColor . ';';
 			}
 
 			if (isset($layout->badge_position) && $layout->badge_position === 'left')
@@ -741,7 +746,7 @@ class HelixultimateMenu
 				$badge_class = 'sp-menu-badge sp-menu-badge-left';
 			}
 
-			$badge_html = '<span class="' . $badge_class . '" style="' . $badge_style . '">' . $layout->badge . '</span>';
+			$badge_html = '<span class="' . $badge_class . '" style="' . htmlspecialchars($badge_style, ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($badgeText, ENT_QUOTES, 'UTF-8') . '</span>';
 		}
 
 		$output = '';

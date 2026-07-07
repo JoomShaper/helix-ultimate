@@ -1020,6 +1020,8 @@ class PlgSystemHelixultimate extends CMSPlugin
 			$app->close();
 		}
 
+		Helper::guardAjaxRequest($method);
+
 		// $instance = new $class();
 		$response = $class::$method();
 

@@ -320,7 +320,7 @@ class Media
 					$error = true;
 				}
 
-				// File formats (svg/ico excluded to reduce stored XSS risk)
+				// File formats (vector/icon types excluded to reduce stored XSS risk)
 				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'webp');
 
 				// Upload if no error found
@@ -374,9 +374,7 @@ class Media
 					else
 					{
 						$report['status'] = false;
-						$report['message'] = $file_ext === 'svg'
-							? Text::_('HELIX_ULTIMATE_MEDIA_SVG_NOT_SUPPORTED_FOR_UPLOAD')
-							: Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
+						$report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
 					}
 				}
 			}

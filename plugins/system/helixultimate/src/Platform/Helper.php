@@ -1144,4 +1144,286 @@ class Helper
 
 		return $filter->clean($html, 'html');
 	}
+
+	/**
+	 * Sanitize mega menu settings before persisting to menu item params.
+	 *
+	 * @param   array  $settings  Raw settings from request.
+	 *
+	 * @return  array
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuSettings(array $settings): array
+	{
+		$clean = [];
+
+		$clean['megamenu'] = !empty($settings['megamenu']) ? 1 : 0;
+		$clean['showtitle'] = !empty($settings['showtitle']) ? 1 : 0;
+
+		$clean['menualign'] = self::sanitizeMegaMenuEnum(
+			$settings['menualign'] ?? '',
+			['left', 'center', 'right', 'full'],
+			'full'
+		);
+		$clean['dropdown'] = self::sanitizeMegaMenuEnum(
+			$settings['dropdown'] ?? '',
+			['left', 'right'],
+			'right'
+		);
+		$clean['badge_position'] = self::sanitizeMegaMenuEnum(
+			$settings['badge_position'] ?? '',
+			['left', 'right'],
+			'right'
+		);
+
+		$clean['width'] = self::sanitizeMegaMenuWidth($settings['width'] ?? '600px');
+		$clean['customclass'] = self::sanitizeMegaMenuCustomClass($settings['customclass'] ?? '');
+		$clean['faicon'] = self::sanitizeMegaMenuFaIcon($settings['faicon'] ?? '');
+		$clean['badge'] = self::sanitizeMegaMenuBadge($settings['badge'] ?? '');
+		$clean['badge_bg_color'] = self::sanitizeMegaMenuColor($settings['badge_bg_color'] ?? '');
+		$clean['badge_text_color'] = self::sanitizeMegaMenuColor($settings['badge_text_color'] ?? '');
+
+		$layout = $settings['layout'] ?? [];
+
+		if (!\is_array($layout))
+		{
+			$layout = [];
+		}
+
+		$clean['layout'] = self::sanitizeMegaMenuLayout($layout);
+
+		return $clean;
+	}
+
+	/**
+	 * Sanitize a mega menu CSS class string.
+	 *
+	 * @param   mixed  $value  Raw custom class value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuCustomClass($value): string
+	{
+		$value = (string) $value;
+
+		if (preg_match('/[<>"\'=]/', $value))
+		{
+			return '';
+		}
+
+		$value = strip_tags($value);
+		$value = preg_replace('/[^a-zA-Z0-9_\-\s]/', '', $value) ?? '';
+
+		return trim(preg_replace('/\s+/', ' ', $value) ?? '');
+	}
+
+	/**
+	 * Sanitize a Font Awesome icon class string.
+	 *
+	 * @param   mixed  $value  Raw icon value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuFaIcon($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if ($value === '')
+		{
+			return '';
+		}
+
+		if (!preg_match('/^fa[sbr]?\s+fa-[a-z0-9-]+$/i', $value))
+		{
+			return '';
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Sanitize mega menu badge text.
+	 *
+	 * @param   mixed  $value  Raw badge value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuBadge($value): string
+	{
+		return trim(strip_tags((string) $value));
+	}
+
+	/**
+	 * Sanitize a hex color value.
+	 *
+	 * @param   mixed  $value  Raw color value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	public static function sanitizeMegaMenuColor($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if ($value === '')
+		{
+			return '';
+		}
+
+		if (!preg_match('/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $value))
+		{
+			return '';
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Sanitize a mega menu width value.
+	 *
+	 * @param   mixed  $value  Raw width value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuWidth($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if (preg_match('/^[0-9]+(px|%|em|rem)$/', $value))
+		{
+			return $value;
+		}
+
+		return '600px';
+	}
+
+	/**
+	 * Sanitize a mega menu enum field.
+	 *
+	 * @param   mixed   $value    Raw value.
+	 * @param   array   $allowed  Allowed values.
+	 * @param   string  $default  Default value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuEnum($value, array $allowed, string $default): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		return \in_array($value, $allowed, true) ? $value : $default;
+	}
+
+	/**
+	 * Recursively sanitize mega menu layout rows/columns/cells.
+	 *
+	 * @param   array  $layout  Raw layout array.
+	 *
+	 * @return  array
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuLayout(array $layout): array
+	{
+		$clean = [];
+
+		foreach ($layout as $row)
+		{
+			if (!\is_array($row) && !\is_object($row))
+			{
+				continue;
+			}
+
+			$row = (array) $row;
+			$cleanRow = [
+				'type' => 'row',
+				'attr' => [],
+			];
+
+			$columns = $row['attr'] ?? [];
+
+			if (!\is_array($columns))
+			{
+				$columns = [];
+			}
+
+			foreach ($columns as $column)
+			{
+				if (!\is_array($column) && !\is_object($column))
+				{
+					continue;
+				}
+
+				$column = (array) $column;
+				$cleanColumn = [
+					'type' => 'column',
+					'colGrid' => self::sanitizeMegaMenuColGrid($column['colGrid'] ?? '12'),
+					'menuParentId' => (string) (int) ($column['menuParentId'] ?? 0),
+					'moduleId' => (string) (int) ($column['moduleId'] ?? 0),
+					'items' => [],
+				];
+
+				$items = $column['items'] ?? [];
+
+				if (\is_array($items))
+				{
+					foreach ($items as $cell)
+					{
+						if (!\is_array($cell) && !\is_object($cell))
+						{
+							continue;
+						}
+
+						$cell = (array) $cell;
+						$type = ($cell['type'] ?? '') === 'module' ? 'module' : 'menu';
+						$cleanCell = [
+							'type' => $type,
+							'id' => (string) (int) ($cell['id'] ?? 0),
+						];
+
+						if ($type === 'module')
+						{
+							$cleanCell['moduleId'] = (string) (int) ($cell['moduleId'] ?? $cell['id'] ?? 0);
+						}
+
+						$cleanColumn['items'][] = $cleanCell;
+					}
+				}
+
+				$cleanRow['attr'][] = $cleanColumn;
+			}
+
+			$clean[] = $cleanRow;
+		}
+
+		return $clean;
+	}
+
+	/**
+	 * Sanitize a bootstrap column grid value.
+	 *
+	 * @param   mixed  $value  Raw column grid value.
+	 *
+	 * @return  string
+	 * @since   2.2.7
+	 */
+	private static function sanitizeMegaMenuColGrid($value): string
+	{
+		$value = trim(strip_tags((string) $value));
+
+		if (preg_match('/^[0-9]{1,2}$/', $value))
+		{
+			$grid = (int) $value;
+
+			if ($grid >= 1 && $grid <= 12)
+			{
+				return (string) $grid;
+			}
+		}
+
+		return '12';
+	}
 }

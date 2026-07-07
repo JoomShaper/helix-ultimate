@@ -252,7 +252,7 @@ class Response
 	public static function saveMegaMenuSettings()
 	{
 		$input = Factory::getApplication()->input;
-		$settings = $input->post->get('settings', [], 'ARRAY');
+		$settings = Helper::sanitizeMegaMenuSettings($input->post->get('settings', [], 'ARRAY'));
 		$itemId = $input->post->get('id', 0, 'INT');
 
 		$menu = new SiteMenu;

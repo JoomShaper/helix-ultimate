@@ -394,7 +394,7 @@ class Request
 	}
 
 	/**
-	 * Custom code fields that must bypass Joomla's default input filter.
+	 * Template fields that must bypass Joomla's default input filter.
 	 *
 	 * @var array<int, string>
 	 * @since 2.2.8
@@ -405,10 +405,12 @@ class Request
 		'before_body',
 		'custom_css',
 		'custom_js',
+		'copyright',
+		'comingsoon_content',
 	];
 
 	/**
-	 * Get posted template style inputs, preserving raw HTML/JS in custom code fields.
+	 * Get posted template style inputs, preserving raw HTML in custom code, copyright, and coming soon content fields.
 	 *
 	 * @return	array
 	 * @since	2.2.8

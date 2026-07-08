@@ -496,6 +496,13 @@ class HelixultimateMenu
 
 					foreach ($col->items as $builder_item)
 					{
+						$cellItemId = (int) ($builder_item->item_id ?? $builder_item->id ?? 0);
+
+						if ($cellItemId === 0)
+						{
+							continue;
+						}
+
 						$li_head = '';
 
 						if ($builder_item->type === 'menu_item')
@@ -504,7 +511,7 @@ class HelixultimateMenu
 						}
 
 						$item_class = array(
-							'item-' . $builder_item->item_id,
+							'item-' . $cellItemId,
 							$builder_item->type,
 							$li_head
 						);
@@ -513,14 +520,14 @@ class HelixultimateMenu
 
 						if ($builder_item->type === 'module')
 						{
-							$this->menu .= $this->load_module($builder_item->item_id);
+							$this->menu .= $this->load_module($cellItemId);
 						}
 						elseif ($builder_item->type === 'menu_item')
 						{
-							if (!empty($this->_items[$builder_item->item_id]))
+							if (!empty($this->_items[$cellItemId]))
 							{
-								$item 	= $this->_items[$builder_item->item_id];
-								$items  = isset($this->children[$builder_item->item_id]) ? $this->children[$builder_item->item_id] : array();
+								$item 	= $this->_items[$cellItemId];
+								$items  = isset($this->children[$cellItemId]) ? $this->children[$cellItemId] : array();
 
 								$firstitem = count($items) ? $items[0]->id : 0;
 

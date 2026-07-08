@@ -124,6 +124,43 @@ final class Phase07MegaMenuSecurityTest
 			$failures[] = 'sanitizeMegaMenuSettings should preserve valid layout structure.';
 		}
 
+		$jsLayout = Helper::sanitizeMegaMenuSettings([
+			'layout' => [
+				[
+					'type' => 'row',
+					'attr' => [
+						[
+							'type' => 'column',
+							'colGrid' => '6',
+							'items' => [
+								[
+									'type' => 'menu_item',
+									'item_id' => '2933',
+								],
+								[
+									'type' => 'module',
+									'item_id' => '311',
+								],
+							],
+						],
+					],
+				],
+			],
+		]);
+
+		$menuCell = $jsLayout['layout'][0]['attr'][0]['items'][0] ?? [];
+		$moduleCell = $jsLayout['layout'][0]['attr'][0]['items'][1] ?? [];
+
+		if (($menuCell['type'] ?? null) !== 'menu_item' || ($menuCell['item_id'] ?? null) !== '2933')
+		{
+			$failures[] = 'sanitizeMegaMenuSettings should preserve menu_item cells with item_id from the builder payload.';
+		}
+
+		if (($moduleCell['type'] ?? null) !== 'module' || ($moduleCell['item_id'] ?? null) !== '311' || ($moduleCell['moduleId'] ?? null) !== '311')
+		{
+			$failures[] = 'sanitizeMegaMenuSettings should preserve module cells with item_id and moduleId from the builder payload.';
+		}
+
 		return $failures;
 	}
 }

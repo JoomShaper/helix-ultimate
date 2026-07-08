@@ -56,7 +56,10 @@ body.rtl {
 			}
 
 			&.sp-menu-center {
-				margin-right: 45px;
+				left: auto;
+				right: 50%;
+				margin-left: 0;
+				margin-right: calc(var(--mega-width, 0px) / -2);
 			}
 
 			&.sp-dropdown-main {
@@ -154,6 +157,21 @@ body.rtl {
 						ul {
 							margin-right: 10px;
 						}
+					}
+				}
+			}
+		}
+	}
+
+	#sp-header.header-with-modal-menu.center-layout {
+		.sp-megamenu-wrapper {
+			.sp-megamenu-parent>li {
+				>.sp-dropdown.sp-dropdown-main {
+					&.sp-menu-center {
+						left: auto !important;
+						right: 50% !important;
+						margin-left: 0;
+						margin-right: calc(var(--mega-width, 0px) / -2);
 					}
 				}
 			}

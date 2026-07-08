@@ -402,8 +402,16 @@ div.mod-languages {
           >a,
           >span {
             padding: 0;
+            position: relative;
 
             &:after {
+              content: "" !important;
+              float: none !important;
+              font-family: inherit !important;
+              font-weight: normal !important;
+              display: block;
+              position: absolute;
+              background-color: $link_color;
               top: 100%;
               width: 2px;
               height: 20px;
@@ -437,9 +445,28 @@ div.mod-languages {
             top: 100%;
             padding-top: 50px;
             padding-left: 0;
-            left: auto !important;
-            right: 0px;
             transition: 0.35s;
+
+            &.sp-menu-center {
+              left: 50% !important;
+              right: auto !important;
+              margin-left: calc(var(--mega-width, 0px) / -2);
+            }
+
+            &.sp-menu-right {
+              left: 0 !important;
+              right: auto !important;
+            }
+
+            &.sp-menu-left {
+              right: 0 !important;
+              left: auto !important;
+            }
+
+            &.sp-menu-full {
+              left: auto !important;
+              right: 0 !important;
+            }
 
             li.sp-menu-item>a,
             li.sp-menu-item>span {

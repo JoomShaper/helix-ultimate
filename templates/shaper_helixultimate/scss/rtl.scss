@@ -177,4 +177,15 @@ body.rtl {
 			}
 		}
 	}
+
+	#modal-menu {
+		ul.sp-megamenu-parent li.sp-has-child {
+
+			>a:after,
+			>span:after {
+				margin-left: 0;
+				margin-right: 0.35em;
+			}
+		}
+	}
 }

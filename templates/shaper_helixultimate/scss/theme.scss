@@ -797,13 +797,18 @@ body.modal-menu-active {
       >a,
       >span {
         position: relative;
+        display: inline-flex;
+        align-items: center;
 
         &:after {
           content: "\f105";
           font-family: $font_awesome_font_family;
-          float: right;
-          position: absolute;
-          top: 2px;
+          font-weight: 900;
+          float: none;
+          position: static;
+          margin-left: 0.35em;
+          line-height: 1;
+          transition: 0.3s;
         }
       }
 

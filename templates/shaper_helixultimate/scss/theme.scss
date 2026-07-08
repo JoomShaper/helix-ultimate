@@ -392,6 +392,8 @@ div.mod-languages {
 
       .sp-megamenu-wrapper {
         justify-content: center;
+        position: relative;
+        width: 100%;
 
         ul.sp-megamenu-parent {
           flex-direction: row;
@@ -403,29 +405,37 @@ div.mod-languages {
           >span {
             padding: 0;
             position: relative;
-
-            &:after {
-              content: "" !important;
-              float: none !important;
-              font-family: inherit !important;
-              font-weight: normal !important;
-              display: block;
-              position: absolute;
-              background-color: $link_color;
-              top: 100%;
-              width: 2px;
-              height: 20px;
-              left: 50%;
-              transform: translateX(-50%);
-              margin: 10px 0 0 0;
-            }
           }
 
           &.sp-has-child {
 
+            >a,
+            >span {
+              &:after {
+                content: "" !important;
+                float: none !important;
+                font-family: inherit !important;
+                font-weight: normal !important;
+                display: block;
+                position: absolute;
+                background-color: $link_color;
+                top: 100%;
+                width: 2px;
+                height: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                margin: 10px 0 0 0;
+                opacity: 0;
+                transition: height 0.3s, opacity 0.3s;
+              }
+            }
+
             &:hover>a:after,
-            &:hover>span:after {
-              height: 30px;
+            &:hover>span:after,
+            &.active>a:after,
+            &.active>span:after {
+              height: 50px;
+              opacity: 1;
             }
 
             >.sp-dropdown {
@@ -447,18 +457,24 @@ div.mod-languages {
             padding-left: 0;
             transition: 0.35s;
 
-            &.sp-menu-center {
+            &.sp-dropdown-mega {
+              left: 50% !important;
+              right: auto !important;
+              margin-left: calc(var(--mega-width, 0px) / -2) !important;
+            }
+
+            &.sp-menu-center:not(.sp-dropdown-mega) {
               left: 50% !important;
               right: auto !important;
               margin-left: calc(var(--mega-width, 0px) / -2);
             }
 
-            &.sp-menu-right {
+            &.sp-menu-right:not(.sp-dropdown-mega) {
               left: 0 !important;
               right: auto !important;
             }
 
-            &.sp-menu-left {
+            &.sp-menu-left:not(.sp-dropdown-mega) {
               right: 0 !important;
               left: auto !important;
             }
@@ -466,6 +482,7 @@ div.mod-languages {
             &.sp-menu-full {
               left: auto !important;
               right: 0 !important;
+              margin-left: 0 !important;
             }
 
             li.sp-menu-item>a,

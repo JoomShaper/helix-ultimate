@@ -167,6 +167,57 @@ jQuery(function ($) {
 		$(this).parent().addClass('menu-justify');
 	});
 
+	// Center-layout modal: keep mega dropdown centered and within viewport
+	if ($('#sp-header.header-with-modal-menu.center-layout').length) {
+		const adjustCenterLayoutMega = function ($dropdown) {
+			const $li = $dropdown.parent('li');
+
+			if (!$li.length) {
+				return;
+			}
+
+			const dropdownWidth = $dropdown.outerWidth();
+			const liWidth = $li.outerWidth();
+			let left = (liWidth / 2) - (dropdownWidth / 2);
+			const liOffset = $li.offset();
+			const viewportPadding = 15;
+			const viewportWidth = $(window).width();
+			let absLeft = liOffset.left + left;
+
+			if (absLeft < viewportPadding) {
+				left += viewportPadding - absLeft;
+				absLeft = viewportPadding;
+			}
+
+			const absRight = absLeft + dropdownWidth;
+
+			if (absRight > viewportWidth - viewportPadding) {
+				left -= absRight - (viewportWidth - viewportPadding);
+			}
+
+			$dropdown.css({
+				left: left + 'px',
+				right: 'auto',
+				marginLeft: 0
+			});
+		};
+
+		$('#sp-header.header-with-modal-menu.center-layout')
+			.find('.sp-megamenu-parent > li')
+			.has('.sp-dropdown-mega')
+			.on('mouseenter focusin', function () {
+				adjustCenterLayoutMega($(this).children('.sp-dropdown-mega'));
+			});
+
+		$(window).on('resize', function () {
+			$('#sp-header.header-with-modal-menu.center-layout')
+				.find('.sp-megamenu-parent > li:hover .sp-dropdown-mega')
+				.each(function () {
+					adjustCenterLayoutMega($(this));
+				});
+		});
+	}
+
 
 
 	$('#offcanvas-toggler, .offcanvas-toggler-secondary, .offcanvas-toggler-full').on('click', function (event) {

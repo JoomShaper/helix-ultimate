@@ -167,7 +167,8 @@ body.rtl {
 		.sp-megamenu-wrapper {
 			.sp-megamenu-parent>li {
 				>.sp-dropdown.sp-dropdown-main {
-					&.sp-menu-center {
+					&.sp-dropdown-mega,
+					&.sp-menu-center:not(.sp-dropdown-mega) {
 						left: auto !important;
 						right: 50% !important;
 						margin-left: 0;

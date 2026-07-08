@@ -168,6 +168,13 @@ class MegaMenuBuilder extends Builder
 	 */
 	public function getTitle($item)
 	{
+		$itemId = (int) ($item->item_id ?? $item->id ?? 0);
+
+		if ($itemId === 0)
+		{
+			return '';
+		}
+
 		$element = null;
 
 		if ($item->type === 'module')
@@ -176,7 +183,7 @@ class MegaMenuBuilder extends Builder
 
 			foreach ($modules as $mod)
 			{
-				if ((int) $mod->id === (int) $item->item_id)
+				if ((int) $mod->id === $itemId)
 				{
 					$element = $mod;
 					break;
@@ -186,7 +193,7 @@ class MegaMenuBuilder extends Builder
 		else
 		{
 			$menu = new SiteMenu;
-			$element = $menu->getItem($item->item_id);
+			$element = $menu->getItem($itemId);
 		}
 
 		return !empty($element) ? $element->title : '';

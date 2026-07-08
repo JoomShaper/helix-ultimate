@@ -1378,15 +1378,16 @@ class Helper
 						}
 
 						$cell = (array) $cell;
-						$type = ($cell['type'] ?? '') === 'module' ? 'module' : 'menu';
+						$type = ($cell['type'] ?? '') === 'module' ? 'module' : 'menu_item';
+						$cellId = (string) (int) ($cell['item_id'] ?? $cell['id'] ?? 0);
 						$cleanCell = [
 							'type' => $type,
-							'id' => (string) (int) ($cell['id'] ?? 0),
+							'item_id' => $cellId,
 						];
 
 						if ($type === 'module')
 						{
-							$cleanCell['moduleId'] = (string) (int) ($cell['moduleId'] ?? $cell['id'] ?? 0);
+							$cleanCell['moduleId'] = (string) (int) ($cell['moduleId'] ?? $cell['item_id'] ?? $cell['id'] ?? 0);
 						}
 
 						$cleanColumn['items'][] = $cleanCell;

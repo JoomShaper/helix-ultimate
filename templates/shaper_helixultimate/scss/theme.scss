@@ -409,7 +409,6 @@ div.mod-languages {
               height: 20px;
               left: 50%;
               transform: translateX(-50%);
-              margin: 10px 0 0 0;
             }
           }
 
@@ -774,9 +773,6 @@ body.modal-menu-active {
         &:after {
           content: "\f105";
           font-family: $font_awesome_font_family;
-          float: right;
-          position: absolute;
-          top: 2px;
         }
       }
 

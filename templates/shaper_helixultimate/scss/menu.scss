@@ -309,7 +309,6 @@ body {
         &.sp-has-child>span:after {
           font-family: $font_awesome_font_family;
           content: "\f107";
-          float: right;
           margin-left: 7px;
           font-weight: 900;
         }
@@ -330,7 +329,6 @@ body {
           .sp-has-child>a:after {
             font-family: $font_awesome_font_family;
             content: "\f105";
-            float: right;
             margin-left: 7px;
             font-weight: 900;
           }

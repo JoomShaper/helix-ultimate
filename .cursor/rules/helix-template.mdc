@@ -1,0 +1,43 @@
+---
+description: shaper_helixultimate template — index, features, JS, options
+globs: templates/shaper_helixultimate/**/*
+alwaysApply: false
+---
+
+# Template (`shaper_helixultimate`)
+
+## Entry (`index.php`)
+
+```php
+require_once JPATH_PLUGINS . '/system/helixultimate/bootstrap.php';
+$theme = new HelixUltimate\Framework\Core\HelixUltimate;
+// load params via Helper::loadTemplateData()
+$theme->add_scss('master', $scssVars, 'template');
+$theme->render_layout();
+```
+
+Do not skip bootstrap. Prefer `Helper::loadTemplateData()` / `flushSettingsDataToJs()` for params → frontend (`Joomla.getOptions('data')`).
+
+## Features
+
+- File: `features/{name}.php` → class `HelixUltimateFeature{Name}`
+- Required: `$position`, `$load_pos`, `renderFeature()`
+- Loaded by `HelixUltimate::include_features()` scanning `features/*.php`
+
+## Assets
+
+- Styles: SCSS via `$theme->add_scss()` (see helix-scss rule). Avoid one-off root CSS.
+- Scripts: `js/` — Vanilla ES6, `DOMContentLoaded`, `fetch` (not jQuery.ajax).
+- Prefer `data-*` hooks over hard-coded selectors.
+- Custom dirs auto-scanned: `css/custom/`, `js/custom/`, `scss/custom/`.
+
+## Config
+
+- Positions / manifest: `templateDetails.xml`
+- Full options UI: `options.xml` (`addfieldpath` → plugin `src/fields`)
+- Defaults / layout JSON: `options.json`
+- Headers / offcanvas: `headers/`, `offcanvas/`
+
+## Overrides
+
+Site view changes → `html/` (Joomla hierarchy). Framework-wide → plugin `overrides/`. Never core.

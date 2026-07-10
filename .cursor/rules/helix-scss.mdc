@@ -1,0 +1,32 @@
+---
+description: Helix Ultimate SCSS — master entry, presets, Bootstrap 5
+globs: templates/shaper_helixultimate/scss/**/*.scss
+alwaysApply: false
+---
+
+# Template SCSS
+
+Entry: `scss/master.scss` (imports theme, menu, offcanvas, animation, responsive, etc.).
+
+## Rules
+
+- Write new styles in `scss/`, not compiled `css/` (generated / often gitignored).
+- Import new partials from `master.scss` (or an existing imported partial).
+- Use Bootstrap 5 variables/mixins and Helix preset vars (`$bg_color`, `$link_color`, … from `$theme->getSCSSVariables()`).
+- Preset colors live in `presets.scss` / runtime `add_scss('presets', ...)`.
+- Prefer Bootstrap utilities in markup; keep SCSS scoped to avoid global clashes.
+- Site-specific extras: `scss/custom.scss` or `css/custom.css` — do not fork `theme.scss` lightly.
+
+## Compile path
+
+`$theme->add_scss('master', $scssVars, 'template')` → `scssphp` → `css/` + cache under `cache/com_templates/templates/{template}/`.
+
+```scss
+// ✅ Use variables / nesting
+.sp-page-title {
+  background: $bg_color;
+  a { color: $link_color; }
+}
+
+// ❌ Avoid dumping unscoped raw CSS that bypasses the pipeline
+```

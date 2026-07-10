@@ -1,0 +1,33 @@
+---
+description: Joomla / Helix override hierarchy — html, overrides, overrides_legacy
+globs: templates/shaper_helixultimate/html/**/*,templates/shaper_helixultimate/overrides/**/*,plugins/system/helixultimate/overrides/**/*,plugins/system/helixultimate/overrides_legacy/**/*,plugins/system/helixultimate/html/**/*
+alwaysApply: false
+---
+
+# Override Hierarchy
+
+Resolved by `HelixUltimate\Framework\Platform\HTMLOverride::loadTemplate()`:
+
+1. `templates/{template}/overrides/` — template-specific framework override
+2. `plugins/system/helixultimate/overrides/` (J5+) or `overrides_legacy/` (J4)
+3. Core Joomla extension path
+
+Standard Joomla template overrides also live in:
+
+`templates/shaper_helixultimate/html/{extension}/{view}/{layout}.php`
+
+## Where to put changes
+
+| Goal | Location |
+|------|----------|
+| This site’s view tweak | `templates/shaper_helixultimate/html/` |
+| All Helix templates | `plugins/system/helixultimate/overrides/` |
+| J4-only plugin override | `overrides_legacy/` |
+| Layout builder partial | Prefer `html/layouts/helixultimate/...` then plugin `layouts/` |
+
+## Rules
+
+- Never patch `components/`, `modules/`, or `plugins/` outside Helix.
+- Keep override views thin — business logic stays in framework classes.
+- In J4+ layouts, prefer `WebAssetManager` (`registerAndUseScript` / `usePreset`) when adding assets.
+- Match existing override structure (copy from core, then edit) so Joomla can find the layout.

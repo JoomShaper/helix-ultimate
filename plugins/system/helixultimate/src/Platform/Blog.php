@@ -244,9 +244,10 @@ class Blog
 	    $query = $db->getQuery(true)
 	        ->select($db->quoteName('attribs'))
 	        ->from($db->quoteName('#__content'))
-	        ->where($db->quoteName('id') . ' = :articleId');
+	        ->where($db->quoteName('id') . ' = :articleId')
+			->bind(':articleId', $articleId, ParameterType::INTEGER);
+
 	    $db->setQuery($query);
-	    $db->bind(':articleId', $articleId, ParameterType::INTEGER);
 	    $attribs = $db->loadResult();
 
 	    $attribsDecoded = json_decode($attribs ?? '', true);
@@ -285,10 +286,11 @@ class Blog
 	    $updateQuery = $db->getQuery(true)
 	        ->update($db->quoteName('#__content'))
 	        ->set($db->quoteName('attribs') . ' = :attribs')
-	        ->where($db->quoteName('id') . ' = :articleId');
+	        ->where($db->quoteName('id') . ' = :articleId')
+			->bind(':attribs', $attribsJson, ParameterType::STRING)
+			->bind(':articleId', $articleId, ParameterType::INTEGER);
+
 	    $db->setQuery($updateQuery);
-	    $db->bind(':attribs', $attribsJson, ParameterType::STRING);
-	    $db->bind(':articleId', $articleId, ParameterType::INTEGER);
 
 	    if ($db->execute()) {
 	        $report['status'] = true;

@@ -16,7 +16,7 @@
     <updateservers>
         <server type="extension" 
             priority="1" 
-            name="shaper_helixultimate">https://raw.githubusercontent.com/JoomShaper/helix-ultimate/security/j3-eol-security-fixes/packages/helixultimate-j3-security/update.xml</server>
+            name="shaper_helixultimate">https://raw.githubusercontent.com/JoomShaper/helix-ultimate/security/j3-eol-security-fixes-v2.1.3/packages/helixultimate-j3-security/update.xml</server>
     </updateservers>
 
     <languages>

@@ -68,7 +68,7 @@ The package zips are compiled automatically via GitHub Actions.
    git add packages/helixultimate-j3-security/update.xml
    git commit -m "Update download URLs for j3-security-v1.0.0"
    git tag j3-security-v1.0.0
-   git push origin security/j3-eol-security-fixes --tags
+   git push origin security/j3-eol-security-fixes-v2.1.3 --tags
    ```
 3. **Download Artifacts**:
    Wait for the **Helix J3 Security Release** workflow to finish in GitHub Actions, then download the `helix-j3-security` artifact package.

@@ -10,13 +10,13 @@
     <authorUrl>http://www.joomshaper.com</authorUrl>
     <copyright>Copyright (C) 2010 - 2025 JoomShaper.com. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GPLv2 or later</license>
-    <version>2.1.3</version>
-    <description>Helix Ultimate - Starter Template of Helix Ultimate Framework</description>
+    <version>2.1.4-j3sec</version>
+    <description>Helix Ultimate - Starter Template (Joomla 3 security release)</description>
 
     <updateservers>
         <server type="extension" 
             priority="1" 
-            name="shaper_helixultimate">https://www.joomshaper.com/updates/shaper-helixultimate.xml</server>
+            name="shaper_helixultimate">https://raw.githubusercontent.com/JoomShaper/helix-ultimate/security/j3-eol-security-fixes/packages/helixultimate-j3-security/update.xml</server>
     </updateservers>
 
     <languages>

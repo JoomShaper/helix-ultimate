@@ -85,7 +85,7 @@ if ($tagId = $params->get('tag_id', ''))
 		$class .= ' ' . $customClass;
 	}
 
-	echo '<li class="' . $class . '">';
+	echo '<li class="' . htmlspecialchars($class, ENT_QUOTES, 'UTF-8') . '">';
 
 	switch ($item->type) :
 		case 'separator':

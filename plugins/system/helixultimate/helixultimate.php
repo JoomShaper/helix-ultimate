@@ -28,6 +28,7 @@ use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\MediaHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Router\Route;
@@ -200,6 +201,67 @@ class PlgSystemHelixultimate extends CMSPlugin
 	}
 
 	/**
+	 * Restrict frontend article attribs merge to Helix keys only.
+	 *
+	 * @param   string   $context  The extension context.
+	 * @param   object   $table    Table object.
+	 * @param   boolean  $isNew    True if new record.
+	 *
+	 * @return  boolean
+	 * @since   2.0.19-j3sec
+	 */
+	public function onContentBeforeSave($context, $table, $isNew)
+	{
+		if (!in_array($context, array('com_content.form', 'com_content.article'), true))
+		{
+			return true;
+		}
+
+		if ($isNew || empty($table->id))
+		{
+			return true;
+		}
+
+		$app = Factory::getApplication();
+
+		if (!$app->isClient('site'))
+		{
+			return true;
+		}
+
+		$old = Table::getInstance('Content');
+		$old->load($table->id);
+
+		$oldAttribs = json_decode($old->attribs ? $old->attribs : '{}', true);
+
+		if (!is_array($oldAttribs))
+		{
+			$oldAttribs = array();
+		}
+
+		$newAttribs = json_decode($table->attribs ? $table->attribs : '{}', true);
+
+		if (!is_array($newAttribs))
+		{
+			$newAttribs = array();
+		}
+
+		$merged = $oldAttribs;
+
+		foreach ($newAttribs as $key => $value)
+		{
+			if (in_array($key, Helper::getHelixAttribKeys(), true))
+			{
+				$merged[$key] = $value;
+			}
+		}
+
+		$table->attribs = json_encode($merged);
+
+		return true;
+	}
+
+	/**
 	 * Attach the joomla web asset JSON file to the registry.
 	 * From Joomla!4, the new web asset manager comes into the account.
 	 * The templates might contains a joomla.asset.json file for managing
@@ -267,7 +329,12 @@ class PlgSystemHelixultimate extends CMSPlugin
 		/** If `helixreturn` query exists in the url then redirect to the return url. */
 		if (Factory::getUser()->id && !empty($helixReturn))
 		{
-			$this->app->redirect(base64_decode($helixReturn));
+			$redirectUrl = Helper::validateInternalRedirect($helixReturn);
+
+			if ($redirectUrl !== null)
+			{
+				$this->app->redirect($redirectUrl);
+			}
 		}
 
 		if ($this->app->isClient('administrator'))
@@ -278,6 +345,13 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 				if ($task === 'export' && !empty($id))
 				{
+					$user = Factory::getUser();
+
+					if (!$user->authorise('core.edit', 'com_templates'))
+					{
+						throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+					}
+
 					$template = $this->getTemplateName($id);
 
 					header('Content-Description: File Transfer');
@@ -314,6 +388,8 @@ class PlgSystemHelixultimate extends CMSPlugin
 
 			if ($option === 'com_ajax' && $helix === 'ultimate' && $request === 'task' && $action !== '')
 			{
+				Helper::guardAjaxRequest($action);
+
 				switch ($action)
 				{
 					case 'upload-blog-image':
@@ -797,6 +873,8 @@ class PlgSystemHelixultimate extends CMSPlugin
 			echo new JsonResponse('Method "' . $method . '" inside the class "' . $class . '" does not exist!');
 			$app->close();
 		}
+
+		Helper::guardAjaxRequest($method);
 
 		// $instance = new $class();
 		$response = $class::$method();

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="file" method="upgrade">
+	<name>Helix Ultimate J3 Security Fixes</name>
+	<author>JoomShaper</author>
+	<authorEmail>support@joomshaper.com</authorEmail>
+	<authorUrl>https://www.joomshaper.com</authorUrl>
+	<creationDate>July 2026</creationDate>
+	<copyright>Copyright (C) 2010 - 2026 JoomShaper.com. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later</license>
+	<version>1.0.0</version>
+	<description>Helix Ultimate security hardening for Joomla 3.10.x sites running Helix 2.0.x. Self-uninstalls after applying patched plugin and template files.</description>
+	<scriptfile>script.php</scriptfile>
+	<updateservers>
+		<server type="extension" priority="1" name="Helix Ultimate J3 Security Fixes Updates">https://raw.githubusercontent.com/JoomShaper/helix-ultimate/security/j3-eol-security-fixes/packages/helixultimate-j3-security/update.xml</server>
+	</updateservers>
+	<fileset>
+		<files folder="files">
+			<folder>plugins</folder>
+			<folder>templates</folder>
+		</files>
+	</fileset>
+</extension>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<updates>
+	<!-- Security Hardening Patch Package -->
+	<update>
+		<name>Helix Ultimate J3 Security Fixes</name>
+		<description>Helix Ultimate security hardening for Joomla 3.10.x sites running Helix 2.0.x. Self-uninstalls after applying patched plugin and template files.</description>
+		<element>helixultimatej3securityfixes</element>
+		<type>file</type>
+		<version>1.0.0</version>
+		<client>site</client>
+		<infourl title="Helix Ultimate J3 Security Fixes">https://github.com/JoomShaper/helix-ultimate/releases/tag/j3-security-v1.0.0</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/JoomShaper/helix-ultimate/releases/download/j3-security-v1.0.0/helixultimate_j3_security_fixes_v1.0.0.zip</downloadurl>
+		</downloads>
+		<targetplatform name="joomla" version="3\.[0-9].*"/>
+	</update>
+
+	<!-- System Plugin -->
+	<update>
+		<name>System - Helix Ultimate Framework</name>
+		<description>Helix Ultimate Framework - Joomla Template Framework by JoomShaper (Joomla 3 security release)</description>
+		<element>helixultimate</element>
+		<type>plugin</type>
+		<folder>system</folder>
+		<version>2.1.4-j3sec</version>
+		<client>site</client>
+		<infourl title="Helix Ultimate J3 Security Updates">https://github.com/JoomShaper/helix-ultimate/releases/tag/j3-security-v1.0.0</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/JoomShaper/helix-ultimate/releases/download/j3-security-v1.0.0/plg_system_helixultimate_j3_v2.1.4-j3sec.zip</downloadurl>
+		</downloads>
+		<targetplatform name="joomla" version="3\.[0-9].*"/>
+	</update>
+
+	<!-- Template -->
+	<update>
+		<name>shaper_helixultimate</name>
+		<description>Helix Ultimate - Starter Template (Joomla 3 security release)</description>
+		<element>shaper_helixultimate</element>
+		<type>template</type>
+		<version>2.1.4-j3sec</version>
+		<client>site</client>
+		<infourl title="Helix Ultimate J3 Security Updates">https://github.com/JoomShaper/helix-ultimate/releases/tag/j3-security-v1.0.0</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/JoomShaper/helix-ultimate/releases/download/j3-security-v1.0.0/helixultimate_j3_template_v2.1.4-j3sec.zip</downloadurl>
+		</downloads>
+		<targetplatform name="joomla" version="3\.[0-9].*"/>
+	</update>
+</updates>

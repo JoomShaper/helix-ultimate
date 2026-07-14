@@ -1,0 +1,38 @@
+name: Helix J3 Security Release
+
+on:
+  push:
+    tags:
+      - 'j3-security-v*'
+  workflow_dispatch:
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          coverage: none
+
+      - name: Install Composer dependencies
+        working-directory: plugins/system/helixultimate
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run Helix security tests
+        run: php plugins/system/helixultimate/tests/security/run.php
+
+      - name: Build J3 security patch zip
+        run: php packages/helixultimate-j3-security/build/build-j3-security.php
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: helix-j3-security
+          path: |
+            packages/helixultimate-j3-security/dist/*.zip
+            packages/helixultimate-j3-security/dist/SHA256SUMS
+            packages/helixultimate-j3-security/manifest.json

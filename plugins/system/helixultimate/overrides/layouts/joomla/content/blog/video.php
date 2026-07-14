@@ -9,6 +9,8 @@
 
 defined('JPATH_BASE') or die();
 
+use HelixUltimate\Framework\Platform\Helper;
+
 extract($displayData);
 
 if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
@@ -97,7 +99,7 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 	// Final Output
 	if ($embed_code) {
 		echo '<div class="article-featured-video">';
-		echo $embed_code;
+		echo Helper::sanitizeEmbed($embed_code);
 		echo '</div>';
 	}
 }

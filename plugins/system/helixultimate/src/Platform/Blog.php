@@ -19,6 +19,7 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Uri\Uri;
 use HelixUltimate\Framework\Platform\Classes\Image;
+use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Helper\MediaHelper;
 
@@ -67,7 +68,7 @@ class Blog
 				$postMaxSize 	= $mediaHelper->toBytes(ini_get('post_max_size'));
 				$memoryLimit 	= $mediaHelper->toBytes(ini_get('memory_limit'));
 
-				if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit > 0 && $contentLength > $memoryLimit)) 
+				if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit > 0 && $contentLength > $memoryLimit))
 				{
 					$report['status'] = false;
 					$report['output'] = Text::_('Total size of upload exceeds the limit.');
@@ -87,6 +88,15 @@ class Blog
 
 				if (!$error)
 				{
+					$acceptedImageFormats = array('jpg', 'jpeg', 'png', 'gif', 'webp');
+					$file_ext = strtolower(File::getExt($image['name']));
+
+					if (!in_array($file_ext, $acceptedImageFormats, true))
+					{
+						$report['output'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
+						die(json_encode($report));
+					}
+
 					$date = Factory::getDate();
 					$folder = HTMLHelper::_('date', $date, 'Y') . '/' . HTMLHelper::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
 
@@ -95,26 +105,22 @@ class Blog
 						Folder::create(\JPATH_ROOT . '/images/' . $folder, 0755);
 					}
 
-					$name = $image['name'];
-					$path = $image['tmp_name'];
-
-					// Do no override existing file
-					$file = pathinfo($name);
+					$safeBaseName = File::stripExt(File::makeSafe(basename(strtolower($image['name']))));
+					$ext = $file_ext;
 					$i = 0;
 
 					do
 					{
-						$base_name  = $file['filename'] . ($i ? "$i" : "");
-						$ext        = $file['extension'];
-						$image_name = $base_name . "." . $ext;
+						$base_name  = $safeBaseName . ($i ? (string) $i : '');
+						$image_name = $base_name . '.' . $ext;
 						$i++;
 						$dest = JPATH_ROOT . '/images/' . $folder . '/' . $image_name;
 						$src = 'images/' . $folder . '/' . $image_name;
-						$data_src = 'images/' . $folder . '/' . $image_name;
+						$data_src = $src;
 					}
 					while (file_exists($dest));
 
-					if (File::upload($path, $dest))
+					if (File::upload($image['tmp_name'], $dest))
 					{
 						$image_quality = $tplParams->get('image_crop_quality', '100');
 
@@ -197,17 +203,21 @@ class Blog
 		$input = Factory::getApplication()->input;
 		$src = $input->post->get('src', '', 'STRING');
 
-		$path = JPATH_ROOT . '/' . $src;
+		$absolutePath = Helper::resolveMediaPath($src);
 
-		if (File::exists($path))
+		if ($absolutePath === null || !File::exists($absolutePath))
 		{
-			if (File::delete($path))
-			{
-				$basename 	= basename($src);
-				$small 		= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_small.' . File::getExt($basename);
-				$thumbnail 	= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
-				$medium 	= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_medium.' . File::getExt($basename);
-				$large 		= JPATH_ROOT . '/' . dirname($src) . '/' . File::stripExt($basename) . '_large.' . File::getExt($basename);
+			$report['status'] = true;
+			die(json_encode($report));
+		}
+
+		if (File::delete($absolutePath))
+		{
+			$basename 	= basename($src);
+			$small 		= dirname($absolutePath) . '/' . File::stripExt($basename) . '_small.' . File::getExt($basename);
+			$thumbnail 	= dirname($absolutePath) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
+			$medium 	= dirname($absolutePath) . '/' . File::stripExt($basename) . '_medium.' . File::getExt($basename);
+			$large 		= dirname($absolutePath) . '/' . File::stripExt($basename) . '_large.' . File::getExt($basename);
 
 				if (File::exists($small))
 				{
@@ -229,17 +239,12 @@ class Blog
 					File::delete($large);
 				}
 
-				$report['status'] = true;
-			}
-			else
-			{
-				$report['status'] = false;
-				$report['output'] = Text::_('Delete failed');
-			}
+			$report['status'] = true;
 		}
 		else
 		{
-			$report['status'] = true;
+			$report['status'] = false;
+			$report['output'] = Text::_('Delete failed');
 		}
 
 		die(json_encode($report));

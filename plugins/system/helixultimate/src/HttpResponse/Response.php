@@ -1,12 +1,10 @@
 <?php
-
 /**
  * @package 	Helix_Ultimate_Framework
  * @author 		JoomShaper <joomshaper@js.com>
- * @copyright 	Copyright (c) 2010 - 2020 JoomShaper
+ * @copyright 	Copyright (c) 2010 - 2025 JoomShaper
  * @license 	http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
-
 namespace HelixUltimate\Framework\HttpResponse;
 
 use HelixUltimate\Framework\Platform\Builders\MegaMenuBuilder;
@@ -68,18 +66,22 @@ class Response
 		$itemId = $input->post->get('id', 0, 'INT');
 		$parentId = $input->post->get('parent', 0, 'INT');
 
-		if ($itemId > 0 && $parentId > 0) {
+		if ($itemId > 0 && $parentId > 0)
+		{
 			$data = new \stdClass;
 			$data->id = $itemId;
 			$data->parent_id = $parentId;
 
-			try {
+			try
+			{
 				$itemModel = self::getMenuItemModel();
 				$db = Factory::getDbo();
 				$db->updateObject('#__menu', $data, 'id');
 
 				$itemModel->rebuild();
-			} catch (Exception $e) {
+			}
+			catch (Exception $e)
+			{
 				echo $e->getMessage();
 			}
 		}
@@ -98,13 +100,16 @@ class Response
 	 */
 	private static function getMenuItemModel()
 	{
-		if (JoomlaBridge::getVersion('major') < 4) {
+		if (JoomlaBridge::getVersion('major') < 4)
+		{
 			$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/item.php';
 			$tablePath = JPATH_ADMINISTRATOR . '/components/com_menus/tables';
 		}
 
-		if (JoomlaBridge::getVersion('major') < 4) {
-			if (!\class_exists('MenusModelItem') && \file_exists($classUrl)) {
+		if (JoomlaBridge::getVersion('major') < 4)
+		{
+			if (!\class_exists('MenusModelItem') && \file_exists($classUrl))
+			{
 				require_once $classUrl;
 			}
 
@@ -125,10 +130,13 @@ class Response
 	 */
 	public static function rebuildMenu()
 	{
-		try {
+		try
+		{
 			$itemModel = self::getMenuItemModel();
 			$itemModel->rebuild();
-		} catch (\Exception $e) {
+		}
+		catch (\Exception $e)
+		{
 			return [
 				'status' => false,
 				'message' => $e->getMessage()
@@ -151,7 +159,8 @@ class Response
 	{
 		$items = [];
 
-		try {
+		try
+		{
 			$db 	= Factory::getDbo();
 			$query 	= $db->getQuery(true);
 
@@ -164,7 +173,9 @@ class Response
 			$db->setQuery($query);
 
 			$items = $db->loadObjectList();
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			echo $e->getMessage();
 		}
 
@@ -183,7 +194,8 @@ class Response
 	{
 		$html = [];
 
-		if (!empty($items)) {
+		if (!empty($items))
+		{
 			$editSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>';
 
 			$deleteSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg>';
@@ -195,23 +207,27 @@ class Response
 			$html[] = '<ul id="hu-menu-tree">';
 			$count = count($items) ?? 0;
 
-			foreach ($items as $key => $item) {
-				$html[] = '<li class="hu-menu-tree-branch hu-branch-level-' . $item->level . ' ' . ((int) $item->published === 0 ? 'hu-megamenu-branch-muted' : '') . '" data-alias="' .  $item->alias . '" data-itemid="' . $item->id . '" data-parent="' . $item->parent_id . '" style="z-index: ' . (max(1, $count - $key)) . '" >';
+			foreach ($items as $key => $item)
+			{
+				$safeTitle = htmlspecialchars($item->title, ENT_QUOTES, 'UTF-8');
+				$safeAlias = htmlspecialchars($item->alias, ENT_QUOTES, 'UTF-8');
+				$html[] = '<li class="hu-menu-tree-branch hu-branch-level-' . $item->level . ' ' . ((int) $item->published === 0 ? 'hu-megamenu-branch-muted' : '') . '" data-alias="' .  $safeAlias . '" data-itemid="' . $item->id . '" data-parent="' . $item->parent_id . '" style="z-index: ' . (max(1, $count - $key)) . '" >';
 				$html[] = '	<div class="hu-menu-tree-contents">';
 				$html[] = '		<span class="hu-menu-branch-path"></span>';
 				$html[] = '		<div class="hu-branch-drag-handler">';
 				$html[] = '			<span class="hu-branch-icon"><svg width="6" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx=".904" cy=".904" r=".904" /><circle cx=".904" cy="4.7" r=".904" /><circle cx=".904" cy="8.496" r=".904" /><circle cx="4.7" cy=".904" r=".904" /><circle cx="4.7" cy="4.7" r=".904" /><circle cx="4.7" cy="8.496" r=".904" /></svg></span>';
-				$html[] = '			<span class="hu-branch-title">' . $item->title . '</span>';
+				$html[] = '			<span class="hu-branch-title">' . $safeTitle . '</span>';
 
-				if ((int) $item->published === 0) {
+				if ((int) $item->published === 0)
+				{
 					$html[] = '<span class="hu-branch-unpublished far fa-eye-slash" title="' . Text::_('Unpublished') . '"></span>';
 				}
 
 				$html[] = '			<div class="hu-branch-tools">';
 				$html[] = '				<ul class="hu-branch-tools-list">';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit" aria-label="' . Text::_('HELIX_ULTIMATE_MENU_EDIT') . '" title="' . Text::_('HELIX_ULTIMATE_MENU_EDIT') . '">' . $editSvg . '</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete" aira-label="' . Text::_('HELIX_ULTIMATE_MENU_DELETE') . '" title="' . Text::_('HELIX_ULTIMATE_MENU_DELETE') . '">' . $deleteSvg . '</a></li>';
-				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu disabled" aria-label="' . Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS' : 'HELIX_ULTIMATE_MENU_MEGAMENU') . '" title="' . Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS' : 'HELIX_ULTIMATE_MENU_MEGAMENU') . '"> ' . ($item->parent_id > 1 ? $settingsSvg  : $megaSvg) . '</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-edit" aria-label="' . Text::_('HELIX_ULTIMATE_MENU_EDIT') .'" title="' . Text::_('HELIX_ULTIMATE_MENU_EDIT') .'">'. $editSvg .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-delete" aira-label="'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'" title="'. Text::_('HELIX_ULTIMATE_MENU_DELETE') .'">'. $deleteSvg .'</a></li>';
+				$html[] = '					<li><a href="#" class="hu-branch-tools-list-megamenu disabled" aria-label="'. Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS': 'HELIX_ULTIMATE_MENU_MEGAMENU') .'" title="'. Text::_($item->parent_id > 1 ? 'HELIX_ULTIMATE_MENU_OPTIONS': 'HELIX_ULTIMATE_MENU_MEGAMENU') .'"> ' . ($item->parent_id > 1 ? $settingsSvg  : $megaSvg ) .'</a></li>';
 				$html[] = '				</ul>';
 				$html[] = '			</div>';
 
@@ -257,7 +273,7 @@ class Response
 	public static function saveMegaMenuSettings()
 	{
 		$input = Factory::getApplication()->input;
-		$settings = $input->post->get('settings', [], 'ARRAY');
+		$settings = Helper::sanitizeMegaMenuSettings($input->post->get('settings', array(), 'ARRAY'));
 		$itemId = $input->post->get('id', 0, 'INT');
 
 		$menu = new SiteMenu;
@@ -275,7 +291,8 @@ class Response
 
 	private static function updateMenuItem($itemId, $params)
 	{
-		try {
+		try
+		{
 			$data = new \stdClass;
 			$data->id = $itemId;
 			$data->params = $params->toString();
@@ -283,7 +300,9 @@ class Response
 			$db->updateObject('#__menu', $data, 'id', true);
 
 			return true;
-		} catch (Exception $e) {
+		}
+		catch (Exception $e)
+		{
 			return $e->getMessage();
 		}
 	}
@@ -308,10 +327,14 @@ class Response
 
 		$columns = [];
 
-		foreach ($layoutArray as $key => $col) {
-			if (isset($rowData->attr[$key])) {
+		foreach ($layoutArray as $key => $col)
+		{
+			if (isset($rowData->attr[$key]))
+			{
 				$tmp = $rowData->attr[$key];
-			} else {
+			}
+			else
+			{
 				$tmp = new \stdClass;
 				$tmp->menuParentId = '';
 				$tmp->moduleId = '';
@@ -331,7 +354,8 @@ class Response
 
 		$html = [];
 
-		foreach ($columns as $key => $column) {
+		foreach ($columns as $key => $column)
+		{
 			$html[] = $columnLayout->render([
 				'itemId' => $itemId,
 				'builder' => $builder,
@@ -369,8 +393,10 @@ class Response
 		$rowData->type = 'row';
 		$rowData->attr = [];
 
-		if (!empty($layoutArray)) {
-			foreach ($layoutArray as $column) {
+		if (!empty($layoutArray))
+		{
+			foreach ($layoutArray as $column)
+			{
 				$item = new \stdClass;
 				$item->type = 'column';
 				$item->colGrid = $column;
@@ -388,17 +414,21 @@ class Response
 		 * If no row exists before, then get the child items of the item
 		 *
 		 */
-		if ($isNew) {
+		if ($isNew)
+		{
 			$children = $builder->getItemChildren();
-
-			if (!empty($children)) {
+			
+			if (!empty($children))
+			{
 				$perColumn = ceil(\count($children) / \count($layoutArray));
 				$chunks = \array_chunk($children, $perColumn);
 
-				foreach ($chunks as $key => $children) {
+				foreach ($chunks as $key => $children)
+				{
 					$cells = [];
 
-					foreach ($children as $child) {
+					foreach ($children as $child)
+					{
 						$tmp = new \stdClass;
 						$tmp->type = 'menu_item';
 						$tmp->item_id = $child->id;
@@ -407,6 +437,8 @@ class Response
 
 					$rowData->attr[$key]->items = $cells;
 				}
+
+
 			}
 		}
 
@@ -435,32 +467,37 @@ class Response
 	public static function generatePopoverContents()
 	{
 		$input = Factory::getApplication()->input;
-
+		
 		// The menu item id
 		$itemId = $input->post->get('itemId', 0, 'INT');
 		$type = $input->post->get('type', 'module', 'STRING');
 
-		$builder = new MegaMenuBuilder($itemId);
+		$builder = new MegaMenuBuilder($itemId); 
 
 		$html = [];
 
-		if ($type === 'module') {
+		if ($type === 'module')
+		{
 			$modules = Helper::getModules();
 			$html = [];
 			$html[] = '<select class="hu-input hu-megamenu-module" data-type="module" data-husearch="1">';
 			$html[] = '<option value="">Select Module</option>';
-			foreach ($modules as $module) {
+			foreach ($modules as $module)
+			{
 				$html[] = '<option value="' . $module->id . '">' . $module->title . '</option>';
 			}
 
 			$html[] = '</select>';
-		} elseif ($type === 'menu') {
+		}
+		elseif ($type === 'menu')
+		{
 			$children = $builder->getItemChildren();
 			$html = [];
 			$html[] = '<select class="hu-input hu-megamenu-menuitem" data-type="menu_item">';
 			$html[] = '<option value="">Select Menu Item</option>';
 
-			foreach ($children as $child) {
+			foreach ($children as $child)
+			{
 				$html[] = '<option value="' . $child->id . '">' . $child->title . '</option>';
 			}
 
@@ -470,14 +507,14 @@ class Response
 
 		return [
 			'status' => true,
-			'html' => implode("\n", $html)
+			'html' => implode("\n", $html)		
 		];
 	}
 
 	public static function generateNewCell()
 	{
 		$input = Factory::getApplication()->input;
-
+		
 		$itemId 	= $input->post->get('itemId', 0, 'INT');
 		$type 		= $input->post->get('type', 'module', 'STRING');
 		$elementId 	= $input->post->get('item_id', 0, 'INT');
@@ -539,8 +576,7 @@ class Response
 			'html' => $moduleLayout->render([
 				'keyword' => $keyword,
 				'children' => $children
-			]),
-
+			])
 		];
 	}
 }

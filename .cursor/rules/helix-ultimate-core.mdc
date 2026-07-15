@@ -1,0 +1,39 @@
+---
+description: Helix Ultimate core architecture — plugin + template model for Joomla 4/5/6
+alwaysApply: true
+---
+
+# Helix Ultimate Core
+
+Two components, one framework:
+
+| Component | Path | Role |
+|-----------|------|------|
+| System plugin | `plugins/system/helixultimate/` | Framework logic, AJAX, fields, overrides |
+| Template | `templates/shaper_helixultimate/` | Frontend consumer (features, SCSS, `html/`) |
+
+Before architectural changes, read `AGENTS.md` and `SOUL.md`.
+
+## Hard rules
+
+- Never edit Joomla core (`components/`, `modules/`, `libraries/`). Use overrides.
+- Prefer `HelixUltimate\Framework\Platform\Helper` over reinventing utilities.
+- Joomla 4+: namespaced CMS APIs (`Joomla\CMS\Factory`). No `JFactory`.
+- New styles → SCSS. New scripts → Vanilla JS (ES6). No new jQuery.
+- Bootstrap 5 utilities for layout before custom CSS.
+
+## Boot chain
+
+```
+templates/shaper_helixultimate/index.php
+  → require plugins/system/helixultimate/bootstrap.php
+  → new HelixUltimate\Framework\Core\HelixUltimate
+```
+
+PSR-4: `HelixUltimate\Framework\` → `plugins/system/helixultimate/src/`
+
+## Where to put work
+
+- Framework / AJAX / fields → plugin `src/`
+- Site look & features → template `features/`, `scss/`, `js/`
+- View changes → `templates/shaper_helixultimate/html/` (or plugin `overrides/` for all Helix sites)

@@ -1,0 +1,39 @@
+---
+description: Helix Ultimate AJAX security — CSRF, ACL, RAW fields, path checks
+globs: plugins/system/helixultimate/src/Platform/**/*.php,plugins/system/helixultimate/src/HttpResponse/**/*.php,plugins/system/helixultimate/helixultimate.php
+alwaysApply: false
+---
+
+# AJAX & Security
+
+Every AJAX entry must call `Helper::guardAjaxRequest($action)` before work (CSRF + ACL).
+
+## Entry points
+
+1. Admin: `Platform::handleRequests()` → `Request::initialize()`
+2. Site `onAfterRoute` task switch
+3. `onAjaxHelixultimate` → `HttpResponse\{Class}::{method}()`
+
+URL shape: `option=com_ajax&helix=ultimate&action={action}`
+
+## Must follow
+
+- Register new actions in `Helper::getActionPermissions()` / `authorizeAction()`.
+- File I/O: `Helper::sanitizeLayoutName()` + `\Joomla\Filesystem\Path::check()`.
+- Media: `Helper::resolveMediaPath()` — reject `..`, stay under media root.
+- Redirects: `Helper::validateInternalRedirect()` for `helixreturn`.
+- Article attribs (frontend save): merge only `Helper::getHelixAttribKeys()`.
+- Embeds: `Helper::sanitizeEmbed()` — never echo raw iframe HTML.
+- No direct `$_POST` / `$_GET` — use `$app->input` with typed filters.
+
+## RAW template fields
+
+Allowlist in `Request::RAW_TEMPLATE_FIELDS` (admin-trusted HTML only):
+
+`before_head`, `after_body`, `before_body`, `custom_css`, `custom_js`, `copyright`, `comingsoon_content`
+
+Never use `RAW` on unauthenticated or site-public input. Add fields to both `Request.php` and the cpanel `$invalidDataFields` list when extending.
+
+## Tests
+
+New endpoints → add coverage under `plugins/system/helixultimate/tests/security/`.

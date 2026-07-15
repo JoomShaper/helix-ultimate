@@ -2,7 +2,7 @@
 /**
  * @package Helix_Ultimate_Framework
  * @author JoomShaper <support@joomshaper.com>
- * @copyright Copyright (c) 2010 - 2025 JoomShaper
+ * @copyright Copyright (c) 2010 - 2026 JoomShaper
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or Later
  */
 
@@ -114,7 +114,7 @@ extract($displayData);
 
 	$listStyle = $field->getAttribute('style');
 	$display = $field->getAttribute('display', '');
-	$invalidDataFields = ['before_head', 'after_body', 'before_body', 'custom_css', 'custom_js'];
+	$invalidDataFields = ['before_head', 'after_body', 'before_body', 'custom_css', 'custom_js', 'copyright', 'comingsoon_content'];
 	$isValidDataField = !\in_array($field->name, $invalidDataFields);
 ?>
 

@@ -1,0 +1,37 @@
+---
+description: Helix Ultimate system plugin PHP conventions and namespaces
+globs: plugins/system/helixultimate/**/*.php
+alwaysApply: false
+---
+
+# System Plugin PHP
+
+Namespace root: `HelixUltimate\Framework\` under `src/`.
+
+| Area | Namespace / path |
+|------|------------------|
+| Theme engine | `Core\HelixUltimate` |
+| Helpers / AJAX / media | `Platform\` (`Helper`, `Request`, `Blog`, `Media`) |
+| Builders | `Platform\Builders\` |
+| com_ajax handlers | `HttpResponse\Response` |
+| Cache / document | `System\` |
+| Form fields | `src/fields/` only (`JFormFieldHelix*`) |
+
+## Conventions
+
+- Bootstrap via `bootstrap.php` (Composer autoload). Do not reimplement autoloading.
+- Plugin entry: `helixultimate.php` (CMSPlugin events). Extend events there; put logic in `src/`.
+- New form fields → `src/fields/`. Legacy `fields/` is deprecated — do not add there.
+- Params XML → `params/` (e.g. `megamenu.xml`, `blog-options.xml`); load via `Form::addFormPath`.
+- Layouts → `layouts/` (cpanel, frontend builder). Constants: `HELIX_LAYOUTS_PATH`, `HELIX_LAYOUT_PATH`.
+- Prefer DI / injected services over `Factory::getDbo()` in new code.
+- Escape output; use language strings (`Text::_()`), not hard-coded UI copy.
+
+```php
+// ✅ Framework usage
+use HelixUltimate\Framework\Platform\Helper;
+$style = Helper::loadTemplateData();
+
+// ❌ Avoid
+$dbo = \JFactory::getDbo();
+```

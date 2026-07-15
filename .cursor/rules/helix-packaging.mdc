@@ -1,0 +1,36 @@
+---
+description: Helix Ultimate release packaging — Composer vendor, gulp zips
+globs: gulpfile.js,plugins/system/helixultimate/composer.json,plugins/system/helixultimate/composer.lock,plugins/system/helixultimate/helixultimate.xml,package.json
+alwaysApply: false
+---
+
+# Packaging & Dependencies
+
+## Composer (plugin)
+
+- Deps: `scssphp/scssphp`, `tedivm/jshrink` (+ transitive).
+- `vendor/` is **gitignored** but **must ship** inside the plugin zip (`helixultimate.xml`).
+- Updating `composer.lock` alone is not enough — run `composer install` in `plugins/system/helixultimate/` before building.
+
+```bash
+cd plugins/system/helixultimate && composer install
+# Verify lock == installed:
+# vendor/composer/installed.json versions match composer.lock
+```
+
+## Gulp
+
+- Root `gulpfile.js` copies the local plugin tree (including `vendor/`) into `package/`.
+- Outputs: `helixultimate_template_vX.Y.Z.zip`, `plg_system_helixultimate_vX.Y.Z.zip`.
+- Excludes plugin `tests/**` from the zip.
+- `package/` and `node_modules/` are gitignored.
+
+## Release checklist
+
+1. Bump versions in `helixultimate.xml`, `templateDetails.xml`, `gulpfile.js`
+2. `composer install` (sync vendor to lock)
+3. Diff key packages vs previous release (avoid accidental vendor downgrades)
+4. `npx gulp` (or project build task)
+5. Confirm zip contains `vendor/` with expected versions
+
+Hotfix zips must be built from the current 2.x tree after vendor sync — never rebuild from an older vendor tree and only bump the version label.

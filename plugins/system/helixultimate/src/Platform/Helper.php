@@ -14,12 +14,12 @@ use Joomla\CMS\Application\ApplicationHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filter\InputFilter;
-use Joomla\Filesystem\Path;
 use Joomla\CMS\Language\Multilanguage;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
 
@@ -32,285 +32,262 @@ defined('_JEXEC') or die();
  */
 class Helper
 {
-	/**
-	 * Get template styles from Database.
-	 *
-	 * @param	integer		$id		The template ID.
-	 *
-	 * @return	object		Template data object.
-	 * @since	1.0.0
-	 */
-	public static function getTemplateStyle($id = 0)
-	{
-		static $cache = [];
-		if (isset($cache[$id])) {
-			return $cache[$id];
-		}
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
-
-		$query->select(array('*'));
-		$query->from($db->quoteName('#__template_styles'));
-
-		$query->where($db->quoteName('client_id') . ' = 0');
-		$query->where($db->quoteName('id') . ' = ' . $db->quote($id));
-
-		$db->setQuery($query);
-
-		$cache[$id] = $db->loadObject();
-
-		return $cache[$id];
-	}
-
-	/**
-	 * Get template ID by template name.
-	 *
-	 * @param	string	$template	Template name.
-	 *
-	 * @return	integer				Template ID.
-	 * @since	2.0.0
-	 */
-	public static function getTemplateId($template) : int
-	{
-		try
-		{
-			$db 	= Factory::getContainer()->get(DatabaseInterface::class);
-			$query 	= $db->getQuery(true);
-
-			$query->select('id')
-				->from($db->quoteName('#__template_styles'))
-				->where($db->quoteName('template') . ' = ' . $db->quote($template));
-
-			if (Multilanguage::isEnabled())
-			{
-				$query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', ' . $db->quote('1', false));
-			}
-
-			$db->setQuery($query);
-
-			return (int) $db->loadResult();
-		}
-		catch (\Exception $e)
-		{
-			return 0;
-		}
-	}
-
-	/**
-	 * Update Helix template styles.
-	 *
-	 * @param	integer		$id		The helix template ID.
-	 * @param	object		$data	The updated contents.
-	 *
-	 * @return	void
-	 * @since	1.0.0
-	 */
-	public static function updateTemplateStyle($id = 0, $data = null)
-	{
-		if (empty($data))
-		{
-			return;
-		}
-
-		$keyOptions = [
-			'option' => 'com_ajax',
-			'helix' => 'ultimate',
-			'status' => 'init',
-			'id' => $id
-		];
-
-		$key = self::generateKey($keyOptions);
-		$cache = new HelixCache($key);
-
-		// If cache contains for the $key generated before
-		if ($cache->contains())
-		{
-			$cachedData = $cache->loadData();
-			$cachedData->params = new Registry($data);
-			$cache->removeCache()->storeCache($cachedData);
-		}
-
-		$data = json_encode($data);
-
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
-
-		$fields = array($db->quoteName('params') . ' = ' . $db->quote($data));
-		$conditions = array(
-			$db->quoteName('id') . ' = ' . $db->quote($id),
-			$db->quoteName('client_id') . ' = 0'
-		);
-
-		$query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
-		$db->setQuery($query);
-
-		return $db->execute();
-	}
-
-	/**
-	 * Get Helix Template version.
-	 *
-	 * @return	string	The version number.
-	 * @since	1.0.0
-	 */
-	public static function getVersion()
-	{
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true);
-
-		$query->select(array('*'));
-		$query->from($db->quoteName('#__extensions'));
-
-		$query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
-			->where($db->quoteName('element') . ' = ' . $db->quote('helixultimate'))
-			->where($db->quoteName('folder') . ' = ' . $db->quote('system'));
-
-		$db->setQuery($query);
-		$result = $db->loadObject();
-
-		$manifest_cache = json_decode($result->manifest_cache ?? "");
-
-		if (isset($manifest_cache->version))
-		{
-			return $manifest_cache->version;
-		}
-
-		return;
-	}
-
-	/**
-	 * Check if the data drafted or not.
-	 *
-	 * @return 	boolean	True if the data is drafted, false otherwise
-	 * @since	2.0.0
-	 */
-	public static function isDrafted()
-	{
-		$app = Factory::getApplication();
-		$template = $app->getTemplate(true);
-		$templateId = 0;
-
-		if ($app->isClient('site'))
-		{
-			$templateId = $template->id;
-		}
-		else
-		{
-			if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate')
-			{
-				$templateId = $app->input->get('id', 0, 'INT');
-			}
-		}
-
-		$draftKeyOptions = [
-			'option' => 'com_ajax',
-			'helix' => 'ultimate',
-			'status' => 'draft',
-			'id' => $templateId
-		];
-
-		$key = self::generateKey($draftKeyOptions);
-		$cache = new HelixCache($key);
-
-		return $cache->contains();
-	}
-
-	/**
-	 * Generate a md5 cache key from option(s)
-	 *
-	 * @param	mixed	$options	string or array.
-	 *
-	 * @return	string	Cache key.
-	 * @since	2.0.0
-	 */
-	public static function generateKey($options)
-	{
-		if (is_array($options))
-		{
-			$string = '';
-
-			foreach ($options as $key => $option)
-			{
-				$string .= $key . ':' . $option . ';';
-			}
-		}
-		elseif (is_string($options))
-		{
-			$string = $options;
-		}
-		else
-		{
-			$string = 'helixultimate';
-		}
-
-		return md5($string);
-	}
-
-	private static function checkTemplateStyleValidity(int $id) : bool
-	{
-		$db 	= Factory::getContainer()->get(DatabaseInterface::class);
-		$query 	= $db->getQuery(true);
-		$query->select('id')->from($db->quoteName('#__template_styles'))
-			->where($db->quoteName('id') . ' = ' . $id);
-		$db->setQuery($query);
-		$result = $db->loadResult();
-
-		return isset($result);
-	}
-
-	/**
-	 * Load template data from cache or database.
-	 *
-	 * @return	object	Template style object
-	 * @since	2.0.0
-	 */
-	public static function loadTemplateData()
+    /**
+     * Get template styles from Database.
+     *
+     * @param    integer        $id        The template ID.
+     *
+     * @return    object        Template data object.
+     * @since    1.0.0
+     */
+    public static function getTemplateStyle($id = 0)
     {
-        $templateId = 0;
-        $app = Factory::getApplication();
-
-        if ($app->isClient('site'))
-        {
-            $currentTemplate = $app->getTemplate(true);
-            $templateId = $currentTemplate->id ?? 0;
-
-			/**
-			 * If a page/menu is assigned to a specific template
-			 * then get the template ID.
-			 */
-			$activeMenu = $app->getMenu()->getActive();
-
-			if (!empty($activeMenu) && !empty($activeMenu->template_style_id))
-			{
-				$templateId = $activeMenu->template_style_id;
-			}
+        static $cache = [];
+        if (isset($cache[$id])) {
+            return $cache[$id];
         }
-        else
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+
+        $query->select(['*']);
+        $query->from($db->quoteName('#__template_styles'));
+
+        $query->where($db->quoteName('client_id') . ' = 0');
+        $query->where($db->quoteName('id') . ' = ' . $db->quote($id));
+
+        $db->setQuery($query);
+
+        $cache[$id] = $db->loadObject();
+
+        return $cache[$id];
+    }
+
+    /**
+     * Get template ID by template name.
+     *
+     * @param    string    $template    Template name.
+     *
+     * @return    integer                Template ID.
+     * @since    2.0.0
+     */
+    public static function getTemplateId($template): int
+    {
+        try
         {
-            if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate')
-            {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true);
+
+            $query->select('id')
+                ->from($db->quoteName('#__template_styles'))
+                ->where($db->quoteName('template') . ' = ' . $db->quote($template));
+
+            if (Multilanguage::isEnabled()) {
+                $query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', ' . $db->quote('1', false));
+            }
+
+            $db->setQuery($query);
+
+            return (int) $db->loadResult();
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
+
+    /**
+     * Update Helix template styles.
+     *
+     * @param    integer        $id        The helix template ID.
+     * @param    object        $data    The updated contents.
+     *
+     * @return    void
+     * @since    1.0.0
+     */
+    public static function updateTemplateStyle($id = 0, $data = null)
+    {
+        if (empty($data)) {
+            return;
+        }
+
+        $keyOptions = [
+            'option' => 'com_ajax',
+            'helix'  => 'ultimate',
+            'status' => 'init',
+            'id'     => $id,
+        ];
+
+        $key   = self::generateKey($keyOptions);
+        $cache = new HelixCache($key);
+
+        // If cache contains for the $key generated before
+        if ($cache->contains()) {
+            $cachedData         = $cache->loadData();
+            $cachedData->params = new Registry($data);
+            $cache->removeCache()->storeCache($cachedData);
+        }
+
+        $data = json_encode($data);
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+
+        $fields     = [$db->quoteName('params') . ' = ' . $db->quote($data)];
+        $conditions = [
+            $db->quoteName('id') . ' = ' . $db->quote($id),
+            $db->quoteName('client_id') . ' = 0',
+        ];
+
+        $query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
+        $db->setQuery($query);
+
+        return $db->execute();
+    }
+
+    /**
+     * Get Helix Template version.
+     *
+     * @return    string    The version number.
+     * @since    1.0.0
+     */
+    public static function getVersion()
+    {
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+
+        $query->select(['*']);
+        $query->from($db->quoteName('#__extensions'));
+
+        $query->where($db->quoteName('type') . ' = ' . $db->quote('plugin'))
+            ->where($db->quoteName('element') . ' = ' . $db->quote('helixultimate'))
+            ->where($db->quoteName('folder') . ' = ' . $db->quote('system'));
+
+        $db->setQuery($query);
+        $result = $db->loadObject();
+
+        $manifest_cache = json_decode($result->manifest_cache ?? "");
+
+        if (isset($manifest_cache->version)) {
+            return $manifest_cache->version;
+        }
+
+        return;
+    }
+
+    /**
+     * Check if the data drafted or not.
+     *
+     * @return     boolean    True if the data is drafted, false otherwise
+     * @since    2.0.0
+     */
+    public static function isDrafted()
+    {
+        $app        = Factory::getApplication();
+        $template   = $app->getTemplate(true);
+        $templateId = 0;
+
+        if ($app->isClient('site')) {
+            $templateId = $template->id;
+        } else {
+            if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate') {
                 $templateId = $app->input->get('id', 0, 'INT');
             }
         }
 
-		if (empty($templateId))
-		{
-			$templateId = $app->input->get('helix_id', 0, 'INT');
-		}
+        $draftKeyOptions = [
+            'option' => 'com_ajax',
+            'helix'  => 'ultimate',
+            'status' => 'draft',
+            'id'     => $templateId,
+        ];
 
-        if($templateId)
-        {
+        $key   = self::generateKey($draftKeyOptions);
+        $cache = new HelixCache($key);
+
+        return $cache->contains();
+    }
+
+    /**
+     * Generate a md5 cache key from option(s)
+     *
+     * @param    mixed    $options    string or array.
+     *
+     * @return    string    Cache key.
+     * @since    2.0.0
+     */
+    public static function generateKey($options)
+    {
+        if (is_array($options)) {
+            $string = '';
+
+            foreach ($options as $key => $option) {
+                $string .= $key . ':' . $option . ';';
+            }
+        } elseif (is_string($options)) {
+            $string = $options;
+        } else {
+            $string = 'helixultimate';
+        }
+
+        return md5($string);
+    }
+
+    private static function checkTemplateStyleValidity(int $id): bool
+    {
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        $query->select('id')->from($db->quoteName('#__template_styles'))
+            ->where($db->quoteName('id') . ' = ' . $id);
+        $db->setQuery($query);
+        $result = $db->loadResult();
+
+        return isset($result);
+    }
+
+    /**
+     * Load template data from cache or database.
+     *
+     * @return    object    Template style object
+     * @since    2.0.0
+     */
+    public static function loadTemplateData()
+    {
+        $templateId = 0;
+        $app        = Factory::getApplication();
+
+        if ($app->isClient('site')) {
+            $currentTemplate = $app->getTemplate(true);
+            $templateId      = $currentTemplate->id ?? 0;
+
+            /**
+             * If a page/menu is assigned to a specific template
+             * then get the template ID.
+             */
+            $activeMenu = $app->getMenu()->getActive();
+
+            if (! empty($activeMenu) && ! empty($activeMenu->template_style_id)) {
+                $templateId = $activeMenu->template_style_id;
+            }
+        } else {
+            if ($app->input->get('option') === 'com_ajax' && $app->input->get('helix') === 'ultimate') {
+                $templateId = $app->input->get('id', 0, 'INT');
+            }
+        }
+
+        if (empty($templateId)) {
+            $templateId = $app->input->get('helix_id', 0, 'INT');
+        }
+
+        if ($templateId) {
             $template = [];
 
             $draftKeyOptions = [
                 'option' => 'com_ajax',
-                'helix' => 'ultimate',
+                'helix'  => 'ultimate',
                 'status' => 'draft',
-                'id' => $templateId
+                'id'     => $templateId,
             ];
 
             $draftKey = self::generateKey($draftKeyOptions);
-            $cache = new HelixCache($draftKey);
+            $cache    = new HelixCache($draftKey);
 
             /**
              * Check the fetch destination. If it is iframe then load the settings
@@ -318,1113 +295,1057 @@ class Helper
              * comes from the original site visit. So load from saved cache.
              */
             $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
-    
-            if ($cache->contains() && $requestFromIframe)
-            {
+
+            if ($cache->contains() && $requestFromIframe) {
                 $template = $cache->loadData();
-            }
-            else
-            {
+            } else {
                 $keyOptions = [
                     'option' => 'com_ajax',
-                    'helix' => 'ultimate',
+                    'helix'  => 'ultimate',
                     'status' => 'init',
-                    'id' => $templateId
+                    'id'     => $templateId,
                 ];
-    
+
                 $key = self::generateKey($keyOptions);
                 $cache->setCacheKey($key);
-    
-                if ($cache->contains())
-                {
+
+                if ($cache->contains()) {
                     $template = $cache->loadData();
-                }
-                else
-                {
-                    $template = self::getTemplateStyle($templateId);        
+                } else {
+                    $template = self::getTemplateStyle($templateId);
                 }
             }
 
-			if (isset($template->template) && !empty($template->template))
-			{
-				if (!empty($template->params) && \is_string($template->params))
-				{
-					$template->params = new Registry($template->params);
-				}
+            if (isset($template->template) && ! empty($template->template)) {
+                if (! empty($template->params) && \is_string($template->params)) {
+                    $template->params = new Registry($template->params);
+                }
 
-				/**
-				 * If params field is found empty in the database or cache then
-				 * read the default options.json file from the template and assign
-				 * the options as template params.
-				 */
-				elseif (empty($template->params))
-				{
-					$filePath = JPATH_ROOT  . '/templates/' . $template->template . '/' . 'options.json';
+                /**
+                 * If params field is found empty in the database or cache then
+                 * read the default options.json file from the template and assign
+                 * the options as template params.
+                 */
+                elseif (empty($template->params)) {
+                    $filePath = JPATH_ROOT . '/templates/' . $template->template . '/' . 'options.json';
 
-					if (\file_exists($filePath))
-					{
-						$defaultParams = \file_get_contents($filePath);
-						$template->params = new Registry($defaultParams);
-					}
-					else
-					{
-						$template->params = new Registry;
-					}
-				}
+                    if (\file_exists($filePath)) {
+                        $defaultParams    = \file_get_contents($filePath);
+                        $template->params = new Registry($defaultParams);
+                    } else {
+                        $template->params = new Registry;
+                    }
+                }
 
-				return $template;
-			}
+                return $template;
+            }
         }
 
-        $template = new \stdClass;
+        $template           = new \stdClass;
         $template->template = 'system';
-        $template->params = new Registry;
+        $template->params   = new Registry;
 
         return $template;
     }
 
-	/**
-	 * Flush settings data towards the javascript using addScriptOptions
-	 *
-	 * @return	void
-	 * @since	2.0.0
-	 */
-	public static function flushSettingsDataToJs()
-	{
-		$doc = Factory::getDocument();
-		
-		$loadTemplateData = self::loadTemplateData();
-		$stickyOffset	= $loadTemplateData->params->get('sticky_offset', '100');
-
-		$data = array(
-			'breakpoints' => array(
-				'tablet' => 991,
-				'mobile' => 480
-			),
-			'header' => array(
-				'stickyOffset' => $stickyOffset
-			)
-			// 'topbarHeight' => 40
-		);
-
-		$doc->addScriptOptions('data', $data);
-	}
-
-	public static function getModules($keyword = '')
-	{
-		$modules = [];
-
-		if (!empty($keyword))
-		{
-			$keyword = preg_replace("@\s+@", ' ', trim($keyword));
-			$keyword = implode('|', explode(' ', $keyword));
-		}
-
-		try
-		{
-			$db = Factory::getDbo();
-			$query = $db->getQuery(true);
-			$query->select('DISTINCT m.id, m.title, m.module, m.position, m.params, e.manifest_cache')
-				->from($db->quoteName('#__modules', 'm'))
-				->where($db->quoteName('m.client_id') . ' = 0');
-			$query->join('LEFT', $db->quoteName('#__extensions', 'e') . ' ON (' . $db->quoteName('e.element') . ' = ' . $db->quoteName('m.module') . ')');
-			
-			if (!empty($keyword))
-			{
-				$query->where($db->quoteName('m.title') . ' REGEXP ' . $db->quote($keyword));
-			}
-
-			$query->order($db->quoteName('m.title') . ' ASC');
-			$db->setQuery($query);
-
-			$modules = $db->loadObjectList();
-		}
-		catch (\Exception $e)
-		{
-			return [];
-		}
-
-		$lang = Factory::getApplication()->getLanguage();
-		$client = ApplicationHelper::getClientInfo(0);
-
-		if (!empty($modules))
-		{
-			foreach ($modules as &$module)
-			{
-				$module->desc = '';
-
-				if (isset($module->manifest_cache) && \is_string($module->manifest_cache))
-				{
-					// $lang->load($module->module . '.sys', $client->path, null, false, true)
-					// 	|| $lang->load($module->module . '.sys', $client->path . '/modules/' . $module->module, null, false, true);
-
-					$module->manifest_cache = \json_decode($module->manifest_cache ?? "");
-					
-					if (!empty($module->manifest_cache->description))
-					{
-						// $module->desc = Text::_($module->manifest_cache->description);
-					}
-					else
-					{
-						// $module->desc = Text::_('COM_MODULES_NODESCRIPTION');
-					}
-				}
-			}
-
-			unset($module);
-		}
-
-		return $modules;
-	}
-
-	/**
-	 * Get template position
-	 */
-	public static function getTemplatePositions()
-	{
-		$positions = array();
-		$template = self::loadTemplateData();
-
-		$templateBaseDir = JPATH_SITE;
-		$filePath = Path::clean($templateBaseDir . '/templates/' . $template->template . '/templateDetails.xml');
-
-		if (is_file($filePath))
-		{
-			// Read the file to see if it's a valid component XML file
-			$xml = simplexml_load_file($filePath);
-
-			if (!$xml)
-			{
-				return false;
-			}
-
-			// Check for a valid XML root tag.
-			// Extensions use 'extension' as the root tag.  Languages use 'metafile' instead
-			if ($xml->getName() != 'extension' && $xml->getName() != 'metafile')
-			{
-				unset($xml);
-
-				return false;
-			}
-
-			$positions = (array) $xml->positions;
-
-			if (isset($positions['position']))
-			{
-				$positions = (array) $positions['position'];
-			}
-			else
-			{
-				$positions = array();
-			}
-		}
-
-		return $positions;
-	}
-
-	public static function getMenuItems($parentId, &$menuItemList)
-	{
-		$elements = [];
-
-		try
-		{
-			$db 	= Factory::getContainer()->get(DatabaseInterface::class);
-			$query 	= $db->getQuery(true);
-			$query->select('id, title, parent_id, level')
-				->from($db->quoteName('#__menu'))
-				->where($db->quoteName('parent_id') . ' = ' . (int) $parentId)
-				->where($db->quoteName('published') . ' = 1')
-				->where($db->quoteName('client_id') . ' = 0');
-			$db->setQuery($query);
-
-			$elements = $db->loadObjectList();
-		}
-		catch (\Exception $e)
-		{
-			return [];
-		}
-
-		if (!empty($elements))
-		{
-			foreach ($elements as $element)
-			{
-				if (isset($menuItemList->$parentId))
-				{
-					$menuItemList->$parentId->children[] = $element->id;
-				}
-
-				$elementId = $element->id;
-				$temp = new \stdClass;
-				$temp->id = $element->id;
-				$temp->title = $element->title;
-				$temp->level = $element->level;
-				$temp->children = [];
-				$menuItemList->$elementId = $temp;
-
-				self::getMenuItems($element->id, $menuItemList);
-			}
-		}
-	}
-
-	/**
-	 * Get the search module for the pre-defined headers.
-	 *
-	 * @return	Object	The module object.
-	 * @since	2.0.0
-	 */
-	public static function getSearchModule($idSuffix = '')
-	{
-		$version = JoomlaBridge::getVersion('major');
-		$name = $version < 4 ? 'mod_search' : 'mod_finder';
-
-		$module = self::createModule($name, [
-			'title' => 'Search',
-			'params' => '{"show_label": 0, "label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}'
-		], $idSuffix);
-
-		return $module;
-	}
-
-	/**
-	 * Create a module object which is not created or published.
-	 *
-	 * @param	string	$name		The module name with mod_ prefixed.
-	 * @param	array	$options	The module options.
-	 *
-	 * @return	object	The module object.
-	 * @since	2.0.0
-	 */
-	public static function createModule($name, $options = [], $idSuffix = '0')
-	{
-		if (empty($name))
-		{
-			throw new \Exception(\sprintf('%s method expect the module $name as first argument!', __METHOD__));
-		}
-
-		if (!empty($options) && \is_object($options))
-		{
-			$options = (array) $options;
-		}
-
-		$defaultOptions = ['id' => $idSuffix, 'title' => '', 'module' => $name, 'position' => '', 'content' => '', 'showtitle' => 0, 'control' => '', 'params' => '', 'menuid' => 0, 'style' => ''];
-
-		return ArrayHelper::toObject(\array_merge($defaultOptions, $options));
-	}
-
-	/**
-	 * Check a string ends with a needle or not.
-	 *
-	 * @param	string	$haystack	The main string.
-	 * @param	string	$needle		The needle to search at the end.
-	 *
-	 * @return	bool	True if find at the end, false otherwise.
-	 * @since 	2.0.2
-	 */
-	public static function endsWith(string $haystack, string $needle): bool
-	{
-		$isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
-		$length = strlen($needle);
-
-		if ($isEight)
-		{
-			return \str_ends_with($haystack, $needle);
-		}
-
-		return !$length ? true : substr($haystack, -$length) === $needle;
-	}
-
-	/**
-	 * Check a string starts with a needle or not.
-	 *
-	 * @param	string	$haystack	The main string.
-	 * @param	string	$needle		The needle to search at the beginning.
-	 *
-	 * @return	bool	True if find at the starting position, false otherwise.
-	 * @since 	2.0.2
-	 */
-	public static function startsWith(string $haystack, string $needle): bool
-	{
-		$isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
-		$length = strlen($needle);
-
-		if ($isEight)
-		{
-			return \str_starts_with($haystack, $needle);
-		}
-
-		return substr($haystack, 0, $length) === $needle;
-	}
-
-	private static function getMenuAliasById(int $pageId)
-	{
-		$db 	= Factory::getContainer()->get(DatabaseInterface::class);
-		$query 	= $db->getQuery(true);
-		$query->select('alias')
-			->from($db->quoteName('#__menu'))
-			->where($db->quoteName('link') . ' = ' . $db->quote('index.php?option=com_sppagebuilder&view=page&id=' . $pageId));
-		$db->setQuery($query);
-
-		try
-		{
-			return $db->loadResult();
-		}
-		catch (\Exception $e)
-		{
-			Factory::getApplication()->enqueueMessage($e->getMessage());
-			return '404';
-		}
-
-		return '404';
-	}
-	
-	public static function renderPage(string $code, int $pageId)
-	{
-		$app = Factory::getApplication();
-		$config = $app->getConfig();
-		$sef = $config->get('sef');
-		$sef_rewrite = $config->get('sef_rewrite');
-		$sef_suffix = $config->get('sef_suffix');
-
-		$redirect_url = Uri::base();
-
-		if(!$sef_rewrite)
-		{
-			$redirect_url .= 'index.php/';
-		}
-
-		$redirect_url .= self::getMenuAliasById($pageId);
-
-		if($sef_suffix)
-		{
-			$redirect_url .= '.html';
-		}
-
-		// If sef is turned off
-		if(!$sef)
-		{
-			$redirect_url = 'index.php?option=com_sppagebuilder&view=page&id=' . $pageId;
-		}
-
-		if ($code == '404')
-		{
-			header('Location: ' . $redirect_url, true, 301);
-			exit;
-		}
-	}
-
-	/**
-	 * Function to set default column
-	 *
-	 * @param integer $num_columns
-	 * @param integer $default
-	 * @return integer
-	 */
-	public static function SetColumn($num_columns, $default = 3)
-	{
-		return empty($num_columns) ? $default : $num_columns;
-	}
-
-	/**
-	 * Function to check if Null then replace with empty string [for php 8.1 fix]
-	 *
-	 * @return string
-	 */
-	public static function CheckNull($value = null)
-	{
-		return ($value == null) ? '' : $value;
-	}
-
-	/**
-	 * Count read time buy content text
-	 *
-	 * @param string $text
-	 * @return string
-	 */
-	public static function getReadTime($text)
-	{
-		$words_per_minute 	= 200;
-		$word_count 		= str_word_count(strip_tags($text));
-		$read_time			= ceil($word_count / $words_per_minute);
-
-		if ($read_time == 1) { //grammar conversion
-			$label = Text::_('HELIX_ULTIMATE_BLOG_MINUTE_READ');
-		} else {
-			$label = Text::_('HELIX_ULTIMATE_BLOG_MINUTES_READ');
-		}
-			
-		$totalString = $read_time . " " . $label; //adds time with minute/minutes label
-
-		return $totalString;
-	}
-
-	/**
-	 * Save license data
-	 *
-	 * @param  array $inputs
-	 * @return mixed
-	 */
-	public static function saveLicenseInfo(array $inputs)
-	{
-		if (empty($inputs)) {
-			return;
-		}
-
-		$validKeys = ['template', 'joomshaper_email', 'joomshaper_license_key'];
-
-		// check $validKeys are exist in $inputs and not empty
-		if (array_diff($validKeys, array_keys($inputs))) {
-			return;
-		}
-
-		$template = $inputs['template'];
-		$email = $inputs['joomshaper_email'] ?? '';
-		$license_key = $inputs['joomshaper_license_key'] ?? '';
-
-		if (!empty($template)) {
-			$extra_query = 'joomshaper_email=' . urlencode($email);
-				$extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
-
-				$db = Factory::getContainer()->get(DatabaseInterface::class);
-				$fields = array(
-					$db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
-					$db->quoteName('last_check_timestamp') . ' = 0'
-				);
-
-				$query = $db->getQuery(true)
-					->update($db->quoteName('#__update_sites'))
-					->set($fields)
-					->where($db->quoteName('name') . ' = ' . $db->quote($template));
-				$db->setQuery($query);
-				$db->execute();
-		}
-	}
-
-	/**
-	 * Helix article attribs keys allowed to merge on frontend save.
-	 *
-	 * @return  array<string>
-	 * @since   2.2.3
-	 */
-	public static function getHelixAttribKeys(): array
-	{
-		return [
-			'helix_ultimate_image',
-			'helix_ultimate_image_alt_txt',
-			'helix_ultimate_article_format',
-			'helix_ultimate_audio',
-			'helix_ultimate_gallery',
-			'helix_ultimate_video',
-		];
-	}
-
-	/**
-	 * Map Helix AJAX actions to required Joomla permissions (administrator).
-	 *
-	 * @return  array<string, array<string, string>>
-	 * @since   2.2.3
-	 */
-	public static function getActionPermissions(): array
-	{
-		$templateActions = [
-			'save-tmpl-style',
-			'draft-tmpl-style',
-			'reset-drafted-settings',
-			'save-layout',
-			'render-layout',
-			'remove-layout-file',
-			'purge-css-file',
-			'import-tmpl-style',
-			'update-font-list',
-			'fontVariants',
-			'view-media',
-			'delete-media',
-			'create-folder',
-			'upload-media',
-		];
-
-		$menuActions = [
-			'getMenuItems',
-			'parentAdoption',
-			'rebuildMenu',
-			'generateMegaMenuBody',
-			'saveMegaMenuSettings',
-			'updateRowLayout',
-			'generateRow',
-			'generatePopoverContents',
-			'generateNewCell',
-			'getModuleList',
-		];
-
-		$blogActions = [
-			'upload-blog-image',
-			'remove-blog-image',
-		];
-
-		$permissions = [];
-
-		foreach ($templateActions as $action)
-		{
-			$permissions[$action] = ['com_templates' => 'core.edit'];
-		}
-
-		foreach ($menuActions as $action)
-		{
-			$permissions[$action] = ['com_menus' => 'core.edit'];
-		}
-
-		foreach ($blogActions as $action)
-		{
-			$permissions[$action] = ['com_content' => 'core.edit'];
-		}
-
-		return $permissions;
-	}
-
-	/**
-	 * Site-client permission overrides for frontend AJAX actions.
-	 *
-	 * @return  array<string, array<string, string>>
-	 * @since   2.2.3
-	 */
-	public static function getSiteActionPermissions(): array
-	{
-		return [
-			'upload-blog-image' => [
-				'com_content' => 'core.edit',
-				'com_media'   => 'core.create',
-			],
-			'remove-blog-image' => [
-				'com_content' => 'core.edit',
-				'com_media'   => 'core.delete',
-			],
-			'view-media' => [
-				'com_media' => 'core.create',
-			],
-			'delete-media' => [
-				'com_media' => 'core.delete',
-			],
-			'upload-media' => [
-				'com_media' => 'core.create',
-			],
-		];
-	}
-
-	/**
-	 * Check whether the current user may execute a Helix AJAX action.
-	 *
-	 * @param   string  $action  Action name.
-	 *
-	 * @return  bool
-	 * @since   2.2.3
-	 */
-	public static function authorizeAction(string $action): bool
-	{
-		$app = Factory::getApplication();
-		$user = $app->getIdentity();
-
-		if (!$user || !$user->id)
-		{
-			return false;
-		}
-
-		$map = $app->isClient('site')
-			? self::getSiteActionPermissions()
-			: self::getActionPermissions();
-
-		if (!isset($map[$action]))
-		{
-			return false;
-		}
-
-		foreach ($map[$action] as $asset => $permission)
-		{
-			if (!$user->authorise($permission, $asset))
-			{
-				if ($asset === 'com_content' && $permission === 'core.edit'
-					&& $user->authorise('core.edit.own', 'com_content'))
-				{
-					continue;
-				}
-
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Enforce CSRF token and ACL for a Helix AJAX action.
-	 *
-	 * @param   string  $action  Action name.
-	 *
-	 * @return  void
-	 * @since   2.2.3
-	 */
-	public static function guardAjaxRequest(string $action): void
-	{
-		$report = [
-			'status'  => false,
-			'message' => Text::_('JINVALID_TOKEN'),
-			'output'  => Text::_('JINVALID_TOKEN'),
-		];
-
-		if (!Session::checkToken())
-		{
-			die(json_encode($report));
-		}
-
-		$report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
-		$report['output']  = Text::_('JERROR_ALERTNOAUTHOR');
-
-		if (!self::authorizeAction($action))
-		{
-			die(json_encode($report));
-		}
-	}
-
-	/**
-	 * Sanitize a layout file name for template layout JSON storage.
-	 *
-	 * @param   string  $name  Layout name from request data.
-	 *
-	 * @return  string|null  Safe filename including .json extension.
-	 * @since   2.2.3
-	 */
-	public static function sanitizeLayoutName(string $name): ?string
-	{
-		$name = basename(str_replace('\\', '/', $name));
-		$name = preg_replace('/\.json$/i', '', $name);
-
-		if ($name === null || !preg_match('/^[A-Za-z0-9_-]+$/', $name))
-		{
-			return null;
-		}
-
-		return $name . '.json';
-	}
-
-	/**
-	 * Resolve and validate a media path under the configured media/image root.
-	 *
-	 * @param   string  $path  Relative path (with or without leading slash).
-	 *
-	 * @return  string|null  Absolute filesystem path or null if invalid.
-	 * @since   2.2.3
-	 */
-	public static function resolveMediaPath(string $path): ?string
-	{
-		$path = trim(str_replace('\\', '/', $path));
-
-		if ($path === '' || strpos($path, '..') !== false)
-		{
-			return null;
-		}
-
-		$path = ltrim($path, '/');
-		$params = ComponentHelper::getParams('com_media');
-		$mediaRoot = trim($params->get('image_path', 'images'), '/');
-		$allowedRoots = array_unique([$mediaRoot, 'images']);
-
-		$fullPath = Path::clean(JPATH_ROOT . '/' . $path);
-		$isAllowed = false;
-
-		foreach ($allowedRoots as $root)
-		{
-			$allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
-
-			if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0)
-			{
-				$isAllowed = true;
-				break;
-			}
-		}
-
-		if (!$isAllowed)
-		{
-			return null;
-		}
-
-		try
-		{
-			Path::check($fullPath);
-		}
-		catch (\Exception $e)
-		{
-			return null;
-		}
-
-		return $fullPath;
-	}
-
-	/**
-	 * Check whether the current user may edit a content article.
-	 *
-	 * @param   int  $articleId  Article ID.
-	 *
-	 * @return  bool
-	 * @since   2.2.3
-	 */
-	public static function canEditArticle(int $articleId): bool
-	{
-		$user = Factory::getApplication()->getIdentity();
-
-		if (!$user || !$user->id || $articleId <= 0)
-		{
-			return false;
-		}
-
-		if ($user->authorise('core.edit', 'com_content'))
-		{
-			return true;
-		}
-
-		if (!$user->authorise('core.edit.own', 'com_content'))
-		{
-			return false;
-		}
-
-		$db = Factory::getContainer()->get(DatabaseInterface::class);
-		$query = $db->getQuery(true)
-			->select($db->quoteName('created_by'))
-			->from($db->quoteName('#__content'))
-			->where($db->quoteName('id') . ' = ' . (int) $articleId);
-
-		$db->setQuery($query);
-
-		return (int) $db->loadResult() === (int) $user->id;
-	}
-
-	/**
-	 * Validate a base64-encoded internal redirect URL.
-	 *
-	 * @param   string  $encoded  Base64-encoded URL.
-	 *
-	 * @return  string|null  Safe internal URL or null.
-	 * @since   2.2.3
-	 */
-	public static function validateInternalRedirect(string $encoded): ?string
-	{
-		$decoded = base64_decode($encoded, true);
-
-		if ($decoded === false || $decoded === '')
-		{
-			return null;
-		}
-
-		if (!Uri::isInternal($decoded))
-		{
-			return null;
-		}
-
-		return $decoded;
-	}
-
-	/**
-	 * Sanitize embed HTML using an allowlist of safe tags and attributes.
-	 *
-	 * @param   string  $html  Raw embed HTML.
-	 *
-	 * @return  string
-	 * @since   2.2.3
-	 */
-	public static function sanitizeEmbed(string $html): string
-	{
-		if ($html === '')
-		{
-			return '';
-		}
-
-		$filter = InputFilter::getInstance(
-			['iframe', 'audio', 'video', 'source', 'a', 'img'],
-			['src', 'href', 'type', 'controls', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'alt', 'class', 'style'],
-			1,
-			1
-		);
-
-		return $filter->clean($html, 'html');
-	}
-
-	/**
-	 * Sanitize mega menu settings before persisting to menu item params.
-	 *
-	 * @param   array  $settings  Raw settings from request.
-	 *
-	 * @return  array
-	 * @since   2.2.7
-	 */
-	public static function sanitizeMegaMenuSettings(array $settings): array
-	{
-		$clean = [];
-
-		$clean['megamenu'] = !empty($settings['megamenu']) ? 1 : 0;
-		$clean['showtitle'] = !empty($settings['showtitle']) ? 1 : 0;
-
-		$clean['menualign'] = self::sanitizeMegaMenuEnum(
-			$settings['menualign'] ?? '',
-			['left', 'center', 'right', 'full'],
-			'full'
-		);
-		$clean['dropdown'] = self::sanitizeMegaMenuEnum(
-			$settings['dropdown'] ?? '',
-			['left', 'right'],
-			'right'
-		);
-		$clean['badge_position'] = self::sanitizeMegaMenuEnum(
-			$settings['badge_position'] ?? '',
-			['left', 'right'],
-			'right'
-		);
-
-		$clean['width'] = self::sanitizeMegaMenuWidth($settings['width'] ?? '600px');
-		$clean['customclass'] = self::sanitizeMegaMenuCustomClass($settings['customclass'] ?? '');
-		$clean['faicon'] = self::sanitizeMegaMenuFaIcon($settings['faicon'] ?? '');
-		$clean['badge'] = self::sanitizeMegaMenuBadge($settings['badge'] ?? '');
-		$clean['badge_bg_color'] = self::sanitizeMegaMenuColor($settings['badge_bg_color'] ?? '');
-		$clean['badge_text_color'] = self::sanitizeMegaMenuColor($settings['badge_text_color'] ?? '');
-
-		$layout = $settings['layout'] ?? [];
-
-		if (!\is_array($layout))
-		{
-			$layout = [];
-		}
-
-		$clean['layout'] = self::sanitizeMegaMenuLayout($layout);
-
-		return $clean;
-	}
-
-	/**
-	 * Sanitize a mega menu CSS class string.
-	 *
-	 * @param   mixed  $value  Raw custom class value.
-	 *
-	 * @return  string
-	 * @since   2.2.7
-	 */
-	public static function sanitizeMegaMenuCustomClass($value): string
-	{
-		$value = (string) $value;
-
-		if (preg_match('/[<>"\'=]/', $value))
-		{
-			return '';
-		}
-
-		$value = strip_tags($value);
-		$value = preg_replace('/[^a-zA-Z0-9_\-\s]/', '', $value) ?? '';
-
-		return trim(preg_replace('/\s+/', ' ', $value) ?? '');
-	}
-
-	/**
-	 * Sanitize a Font Awesome icon class string.
-	 *
-	 * @param   mixed  $value  Raw icon value.
-	 *
-	 * @return  string
-	 * @since   2.2.7
-	 */
-	public static function sanitizeMegaMenuFaIcon($value): string
-	{
-		$value = trim(strip_tags((string) $value));
-
-		if ($value === '')
-		{
-			return '';
-		}
-
-		if (!preg_match('/^fa[sbr]?\s+fa-[a-z0-9-]+$/i', $value))
-		{
-			return '';
-		}
-
-		return $value;
-	}
-
-	/**
-	 * Sanitize mega menu badge text.
-	 *
-	 * @param   mixed  $value  Raw badge value.
-	 *
-	 * @return  string
-	 * @since   2.2.7
-	 */
-	public static function sanitizeMegaMenuBadge($value): string
-	{
-		return trim(strip_tags((string) $value));
-	}
-
-	/**
-	 * Sanitize a hex color value.
-	 *
-	 * @param   mixed  $value  Raw color value.
-	 *
-	 * @return  string
-	 * @since   2.2.7
-	 */
-	public static function sanitizeMegaMenuColor($value): string
-	{
-		$value = trim(strip_tags((string) $value));
-
-		if ($value === '')
-		{
-			return '';
-		}
-
-		if (!preg_match('/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $value))
-		{
-			return '';
-		}
-
-		return $value;
-	}
-
-	/**
-	 * Sanitize a mega menu width value.
-	 *
-	 * @param   mixed  $value  Raw width value.
-	 *
-	 * @return  string
-	 * @since   2.2.7
-	 */
-	private static function sanitizeMegaMenuWidth($value): string
-	{
-		$value = trim(strip_tags((string) $value));
-
-		if (preg_match('/^[0-9]+(px|%|em|rem)$/', $value))
-		{
-			return $value;
-		}
-
-		return '600px';
-	}
-
-	/**
-	 * Sanitize a mega menu enum field.
-	 *
-	 * @param   mixed   $value    Raw value.
-	 * @param   array   $allowed  Allowed values.
-	 * @param   string  $default  Default value.
-	 *
-	 * @return  string
-	 * @since   2.2.7
-	 */
-	private static function sanitizeMegaMenuEnum($value, array $allowed, string $default): string
-	{
-		$value = trim(strip_tags((string) $value));
-
-		return \in_array($value, $allowed, true) ? $value : $default;
-	}
-
-	/**
-	 * Recursively sanitize mega menu layout rows/columns/cells.
-	 *
-	 * @param   array  $layout  Raw layout array.
-	 *
-	 * @return  array
-	 * @since   2.2.7
-	 */
-	private static function sanitizeMegaMenuLayout(array $layout): array
-	{
-		$clean = [];
-
-		foreach ($layout as $row)
-		{
-			if (!\is_array($row) && !\is_object($row))
-			{
-				continue;
-			}
-
-			$row = (array) $row;
-			$cleanRow = [
-				'type' => 'row',
-				'attr' => [],
-			];
-
-			$columns = $row['attr'] ?? [];
-
-			if (!\is_array($columns))
-			{
-				$columns = [];
-			}
-
-			foreach ($columns as $column)
-			{
-				if (!\is_array($column) && !\is_object($column))
-				{
-					continue;
-				}
-
-				$column = (array) $column;
-				$cleanColumn = [
-					'type' => 'column',
-					'colGrid' => self::sanitizeMegaMenuColGrid($column['colGrid'] ?? '12'),
-					'menuParentId' => (string) (int) ($column['menuParentId'] ?? 0),
-					'moduleId' => (string) (int) ($column['moduleId'] ?? 0),
-					'items' => [],
-				];
-
-				$items = $column['items'] ?? [];
-
-				if (\is_array($items))
-				{
-					foreach ($items as $cell)
-					{
-						if (!\is_array($cell) && !\is_object($cell))
-						{
-							continue;
-						}
-
-						$cell = (array) $cell;
-						$type = ($cell['type'] ?? '') === 'module' ? 'module' : 'menu_item';
-						$cellId = (string) (int) ($cell['item_id'] ?? $cell['id'] ?? 0);
-						$cleanCell = [
-							'type' => $type,
-							'item_id' => $cellId,
-						];
-
-						if ($type === 'module')
-						{
-							$cleanCell['moduleId'] = (string) (int) ($cell['moduleId'] ?? $cell['item_id'] ?? $cell['id'] ?? 0);
-						}
-
-						$cleanColumn['items'][] = $cleanCell;
-					}
-				}
-
-				$cleanRow['attr'][] = $cleanColumn;
-			}
-
-			$clean[] = $cleanRow;
-		}
-
-		return $clean;
-	}
-
-	/**
-	 * Sanitize a bootstrap column grid value.
-	 *
-	 * @param   mixed  $value  Raw column grid value.
-	 *
-	 * @return  string
-	 * @since   2.2.7
-	 */
-	private static function sanitizeMegaMenuColGrid($value): string
-	{
-		$value = trim(strip_tags((string) $value));
-
-		if (preg_match('/^[0-9]{1,2}$/', $value))
-		{
-			$grid = (int) $value;
-
-			if ($grid >= 1 && $grid <= 12)
-			{
-				return (string) $grid;
-			}
-		}
-
-		return '12';
-	}
+    /**
+     * Flush settings data towards the javascript using addScriptOptions
+     *
+     * @return    void
+     * @since    2.0.0
+     */
+    public static function flushSettingsDataToJs()
+    {
+        $doc = Factory::getDocument();
+
+        $loadTemplateData = self::loadTemplateData();
+        $stickyOffset     = $loadTemplateData->params->get('sticky_offset', '100');
+
+        $data = [
+            'breakpoints' => [
+                'tablet' => 991,
+                'mobile' => 480,
+            ],
+            'header'      => [
+                'stickyOffset' => $stickyOffset,
+            ],
+            // 'topbarHeight' => 40
+        ];
+
+        $doc->addScriptOptions('data', $data);
+    }
+
+    public static function getModules($keyword = '')
+    {
+        $modules = [];
+
+        if (! empty($keyword)) {
+            $keyword = preg_replace("@\s+@", ' ', trim($keyword));
+            $keyword = implode('|', explode(' ', $keyword));
+        }
+
+        try
+        {
+            $db    = Factory::getDbo();
+            $query = $db->getQuery(true);
+            $query->select('DISTINCT m.id, m.title, m.module, m.position, m.params, e.manifest_cache')
+                ->from($db->quoteName('#__modules', 'm'))
+                ->where($db->quoteName('m.client_id') . ' = 0');
+            $query->join('LEFT', $db->quoteName('#__extensions', 'e') . ' ON (' . $db->quoteName('e.element') . ' = ' . $db->quoteName('m.module') . ')');
+
+            if (! empty($keyword)) {
+                $query->where($db->quoteName('m.title') . ' REGEXP ' . $db->quote($keyword));
+            }
+
+            $query->order($db->quoteName('m.title') . ' ASC');
+            $db->setQuery($query);
+
+            $modules = $db->loadObjectList();
+        } catch (\Exception $e) {
+            return [];
+        }
+
+        $lang   = Factory::getApplication()->getLanguage();
+        $client = ApplicationHelper::getClientInfo(0);
+
+        if (! empty($modules)) {
+            foreach ($modules as &$module) {
+                $module->desc = '';
+
+                if (isset($module->manifest_cache) && \is_string($module->manifest_cache)) {
+                    // $lang->load($module->module . '.sys', $client->path, null, false, true)
+                    // 	|| $lang->load($module->module . '.sys', $client->path . '/modules/' . $module->module, null, false, true);
+
+                    $module->manifest_cache = \json_decode($module->manifest_cache ?? "");
+
+                    if (! empty($module->manifest_cache->description)) {
+                        // $module->desc = Text::_($module->manifest_cache->description);
+                    } else {
+                        // $module->desc = Text::_('COM_MODULES_NODESCRIPTION');
+                    }
+                }
+            }
+
+            unset($module);
+        }
+
+        return $modules;
+    }
+
+    /**
+     * Get template position
+     */
+    public static function getTemplatePositions()
+    {
+        $positions = [];
+        $template  = self::loadTemplateData();
+
+        $templateBaseDir = JPATH_SITE;
+        $filePath        = Path::clean($templateBaseDir . '/templates/' . $template->template . '/templateDetails.xml');
+
+        if (is_file($filePath)) {
+            // Read the file to see if it's a valid component XML file
+            $xml = simplexml_load_file($filePath);
+
+            if (! $xml) {
+                return false;
+            }
+
+            // Check for a valid XML root tag.
+            // Extensions use 'extension' as the root tag.  Languages use 'metafile' instead
+            if ($xml->getName() != 'extension' && $xml->getName() != 'metafile') {
+                unset($xml);
+
+                return false;
+            }
+
+            $positions = (array) $xml->positions;
+
+            if (isset($positions['position'])) {
+                $positions = (array) $positions['position'];
+            } else {
+                $positions = [];
+            }
+        }
+
+        return $positions;
+    }
+
+    public static function getMenuItems($parentId, &$menuItemList)
+    {
+        $elements = [];
+
+        try
+        {
+            $db    = Factory::getContainer()->get(DatabaseInterface::class);
+            $query = $db->getQuery(true);
+            $query->select('id, title, parent_id, level')
+                ->from($db->quoteName('#__menu'))
+                ->where($db->quoteName('parent_id') . ' = ' . (int) $parentId)
+                ->where($db->quoteName('published') . ' = 1')
+                ->where($db->quoteName('client_id') . ' = 0');
+            $db->setQuery($query);
+
+            $elements = $db->loadObjectList();
+        } catch (\Exception $e) {
+            return [];
+        }
+
+        if (! empty($elements)) {
+            foreach ($elements as $element) {
+                if (isset($menuItemList->$parentId)) {
+                    $menuItemList->$parentId->children[] = $element->id;
+                }
+
+                $elementId                = $element->id;
+                $temp                     = new \stdClass;
+                $temp->id                 = $element->id;
+                $temp->title              = $element->title;
+                $temp->level              = $element->level;
+                $temp->children           = [];
+                $menuItemList->$elementId = $temp;
+
+                self::getMenuItems($element->id, $menuItemList);
+            }
+        }
+    }
+
+    /**
+     * Get the search module for the pre-defined headers.
+     *
+     * @return    Object    The module object.
+     * @since    2.0.0
+     */
+    public static function getSearchModule($idSuffix = '')
+    {
+        $version = JoomlaBridge::getVersion('major');
+        $name    = $version < 4 ? 'mod_search' : 'mod_finder';
+
+        $module = self::createModule($name, [
+            'title'  => 'Search',
+            'params' => '{"show_label": 0, "label":"","width":20,"text":"","button":0,"button_pos":"right","imagebutton":0,"button_text":"","opensearch":1,"opensearch_title":"","set_itemid":0,"layout":"_:default","moduleclass_sfx":"","cache":1,"cache_time":900,"cachemode":"itemid","module_tag":"div","bootstrap_size":"0","header_tag":"h3","header_class":"","style":"0"}',
+        ], $idSuffix);
+
+        return $module;
+    }
+
+    /**
+     * Create a module object which is not created or published.
+     *
+     * @param    string    $name        The module name with mod_ prefixed.
+     * @param    array    $options    The module options.
+     *
+     * @return    object    The module object.
+     * @since    2.0.0
+     */
+    public static function createModule($name, $options = [], $idSuffix = '0')
+    {
+        if (empty($name)) {
+            throw new \Exception(\sprintf('%s method expect the module $name as first argument!', __METHOD__));
+        }
+
+        if (! empty($options) && \is_object($options)) {
+            $options = (array) $options;
+        }
+
+        $defaultOptions = ['id' => $idSuffix, 'title' => '', 'module' => $name, 'position' => '', 'content' => '', 'showtitle' => 0, 'control' => '', 'params' => '', 'menuid' => 0, 'style' => ''];
+
+        return ArrayHelper::toObject(\array_merge($defaultOptions, $options));
+    }
+
+    /**
+     * Check a string ends with a needle or not.
+     *
+     * @param    string    $haystack    The main string.
+     * @param    string    $needle        The needle to search at the end.
+     *
+     * @return    bool    True if find at the end, false otherwise.
+     * @since     2.0.2
+     */
+    public static function endsWith(string $haystack, string $needle): bool
+    {
+        $isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
+        $length  = strlen($needle);
+
+        if ($isEight) {
+            return \str_ends_with($haystack, $needle);
+        }
+
+        return ! $length ? true : substr($haystack, -$length) === $needle;
+    }
+
+    /**
+     * Check a string starts with a needle or not.
+     *
+     * @param    string    $haystack    The main string.
+     * @param    string    $needle        The needle to search at the beginning.
+     *
+     * @return    bool    True if find at the starting position, false otherwise.
+     * @since     2.0.2
+     */
+    public static function startsWith(string $haystack, string $needle): bool
+    {
+        $isEight = \version_compare(PHP_VERSION, '8.0.0') >= 0;
+        $length  = strlen($needle);
+
+        if ($isEight) {
+            return \str_starts_with($haystack, $needle);
+        }
+
+        return substr($haystack, 0, $length) === $needle;
+    }
+
+    private static function getMenuAliasById(int $pageId)
+    {
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        $query->select('alias')
+            ->from($db->quoteName('#__menu'))
+            ->where($db->quoteName('link') . ' = ' . $db->quote('index.php?option=com_sppagebuilder&view=page&id=' . $pageId));
+        $db->setQuery($query);
+
+        try
+        {
+            return $db->loadResult();
+        } catch (\Exception $e) {
+            Factory::getApplication()->enqueueMessage($e->getMessage());
+            return '404';
+        }
+
+        return '404';
+    }
+
+    public static function renderPage(string $code, int $pageId)
+    {
+        $app         = Factory::getApplication();
+        $config      = $app->getConfig();
+        $sef         = $config->get('sef');
+        $sef_rewrite = $config->get('sef_rewrite');
+        $sef_suffix  = $config->get('sef_suffix');
+
+        $redirect_url = Uri::base();
+
+        if (! $sef_rewrite) {
+            $redirect_url .= 'index.php/';
+        }
+
+        $redirect_url .= self::getMenuAliasById($pageId);
+
+        if ($sef_suffix) {
+            $redirect_url .= '.html';
+        }
+
+        // If sef is turned off
+        if (! $sef) {
+            $redirect_url = 'index.php?option=com_sppagebuilder&view=page&id=' . $pageId;
+        }
+
+        if ($code == '404') {
+            header('Location: ' . $redirect_url, true, 301);
+            exit;
+        }
+    }
+
+    /**
+     * Function to set default column
+     *
+     * @param integer $num_columns
+     * @param integer $default
+     * @return integer
+     */
+    public static function SetColumn($num_columns, $default = 3)
+    {
+        return empty($num_columns) ? $default : $num_columns;
+    }
+
+    /**
+     * Function to check if Null then replace with empty string [for php 8.1 fix]
+     *
+     * @return string
+     */
+    public static function CheckNull($value = null)
+    {
+        return ($value == null) ? '' : $value;
+    }
+
+    /**
+     * Count read time buy content text
+     *
+     * @param string $text
+     * @return string
+     */
+    public static function getReadTime($text)
+    {
+        $words_per_minute = 200;
+        $word_count       = str_word_count(strip_tags($text));
+        $read_time        = ceil($word_count / $words_per_minute);
+
+        if ($read_time == 1) { //grammar conversion
+            $label = Text::_('HELIX_ULTIMATE_BLOG_MINUTE_READ');
+        } else {
+            $label = Text::_('HELIX_ULTIMATE_BLOG_MINUTES_READ');
+        }
+
+        $totalString = $read_time . " " . $label; //adds time with minute/minutes label
+
+        return $totalString;
+    }
+
+    /**
+     * Save license data
+     *
+     * @param  array $inputs
+     * @return mixed
+     */
+    public static function saveLicenseInfo(array $inputs)
+    {
+        if (empty($inputs)) {
+            return;
+        }
+
+        $validKeys = ['template', 'joomshaper_email', 'joomshaper_license_key'];
+
+        // check $validKeys are exist in $inputs and not empty
+        if (array_diff($validKeys, array_keys($inputs))) {
+            return;
+        }
+
+        $template    = $inputs['template'];
+        $email       = $inputs['joomshaper_email'] ?? '';
+        $license_key = $inputs['joomshaper_license_key'] ?? '';
+
+        if (! empty($template)) {
+            $extra_query  = 'joomshaper_email=' . urlencode($email);
+            $extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
+
+            $db     = Factory::getContainer()->get(DatabaseInterface::class);
+            $fields = [
+                $db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
+                $db->quoteName('last_check_timestamp') . ' = 0',
+            ];
+
+            $query = $db->getQuery(true)
+                ->update($db->quoteName('#__update_sites'))
+                ->set($fields)
+                ->where($db->quoteName('name') . ' = ' . $db->quote($template));
+            $db->setQuery($query);
+            $db->execute();
+        }
+    }
+
+    /**
+     * Helix article attribs keys allowed to merge on frontend save.
+     *
+     * @return  array<string>
+     * @since   2.2.3
+     */
+    public static function getHelixAttribKeys(): array
+    {
+        return [
+            'helix_ultimate_image',
+            'helix_ultimate_image_alt_txt',
+            'helix_ultimate_article_format',
+            'helix_ultimate_audio',
+            'helix_ultimate_gallery',
+            'helix_ultimate_video',
+        ];
+    }
+
+    /**
+     * Map Helix AJAX actions to required Joomla permissions (administrator).
+     *
+     * @return  array<string, array<string, string>>
+     * @since   2.2.3
+     */
+    public static function getActionPermissions(): array
+    {
+        $templateActions = [
+            'save-tmpl-style',
+            'draft-tmpl-style',
+            'reset-drafted-settings',
+            'save-layout',
+            'render-layout',
+            'remove-layout-file',
+            'purge-css-file',
+            'import-tmpl-style',
+            'update-font-list',
+            'fontVariants',
+            'view-media',
+            'delete-media',
+            'create-folder',
+            'upload-media',
+        ];
+
+        $menuActions = [
+            'getMenuItems',
+            'parentAdoption',
+            'rebuildMenu',
+            'generateMegaMenuBody',
+            'saveMegaMenuSettings',
+            'updateRowLayout',
+            'generateRow',
+            'generatePopoverContents',
+            'generateNewCell',
+            'getModuleList',
+        ];
+
+        $blogActions = [
+            'upload-blog-image',
+            'remove-blog-image',
+        ];
+
+        $permissions = [];
+
+        foreach ($templateActions as $action) {
+            $permissions[$action] = ['com_templates' => 'core.edit'];
+        }
+
+        foreach ($menuActions as $action) {
+            $permissions[$action] = ['com_menus' => 'core.edit'];
+        }
+
+        foreach ($blogActions as $action) {
+            $permissions[$action] = ['com_content' => 'core.edit'];
+        }
+
+        return $permissions;
+    }
+
+    /**
+     * Site-client permission overrides for frontend AJAX actions.
+     *
+     * @return  array<string, array<string, string>>
+     * @since   2.2.3
+     */
+    public static function getSiteActionPermissions(): array
+    {
+        return [
+            'upload-blog-image' => [
+                'com_content' => 'core.edit',
+                'com_media'   => 'core.create',
+            ],
+            'remove-blog-image' => [
+                'com_content' => 'core.edit',
+                'com_media'   => 'core.delete',
+            ],
+            'view-media'        => [
+                'com_media' => 'core.create',
+            ],
+            'delete-media'      => [
+                'com_media' => 'core.delete',
+            ],
+            'upload-media'      => [
+                'com_media' => 'core.create',
+            ],
+        ];
+    }
+
+    /**
+     * Check whether the current user may execute a Helix AJAX action.
+     *
+     * @param   string  $action  Action name.
+     *
+     * @return  bool
+     * @since   2.2.3
+     */
+    public static function authorizeAction(string $action): bool
+    {
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
+
+        if (! $user || ! $user->id) {
+            return false;
+        }
+
+        $map = $app->isClient('site')
+            ? self::getSiteActionPermissions()
+            : self::getActionPermissions();
+
+        if (! isset($map[$action])) {
+            return false;
+        }
+
+        foreach ($map[$action] as $asset => $permission) {
+            if (! $user->authorise($permission, $asset)) {
+                if ($asset === 'com_content' && $permission === 'core.edit'
+                    && $user->authorise('core.edit.own', 'com_content')) {
+                    continue;
+                }
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Enforce CSRF token and ACL for a Helix AJAX action.
+     *
+     * @param   string  $action  Action name.
+     *
+     * @return  void
+     * @since   2.2.3
+     */
+    public static function guardAjaxRequest(string $action): void
+    {
+        $report = [
+            'status'  => false,
+            'message' => Text::_('JINVALID_TOKEN'),
+            'output'  => Text::_('JINVALID_TOKEN'),
+        ];
+
+        if (! Session::checkToken()) {
+            die(json_encode($report));
+        }
+
+        $report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+        $report['output']  = Text::_('JERROR_ALERTNOAUTHOR');
+
+        if (! self::authorizeAction($action)) {
+            die(json_encode($report));
+        }
+    }
+
+    /**
+     * Sanitize a layout file name for template layout JSON storage.
+     *
+     * @param   string  $name  Layout name from request data.
+     *
+     * @return  string|null  Safe filename including .json extension.
+     * @since   2.2.3
+     */
+    public static function sanitizeLayoutName(string $name): ?string
+    {
+        $name = basename(str_replace('\\', '/', $name));
+        $name = preg_replace('/\.json$/i', '', $name);
+
+        if ($name === null || ! preg_match('/^[A-Za-z0-9_-]+$/', $name)) {
+            return null;
+        }
+
+        return $name . '.json';
+    }
+
+    /**
+     * Resolve and validate a media path under the configured media/image root.
+     *
+     * @param   string  $path  Relative path (with or without leading slash).
+     *
+     * @return  string|null  Absolute filesystem path or null if invalid.
+     * @since   2.2.3
+     */
+    public static function resolveMediaPath(string $path): ?string
+    {
+        $path = trim(str_replace('\\', '/', $path));
+
+        if ($path === '' || strpos($path, '..') !== false) {
+            return null;
+        }
+
+        $path         = ltrim($path, '/');
+        $params       = ComponentHelper::getParams('com_media');
+        $mediaRoot    = trim($params->get('image_path', 'images'), '/');
+        $allowedRoots = array_unique([$mediaRoot, 'images']);
+
+        $fullPath  = Path::clean(JPATH_ROOT . '/' . $path);
+        $isAllowed = false;
+
+        foreach ($allowedRoots as $root) {
+            $allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
+
+            if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0) {
+                $isAllowed = true;
+                break;
+            }
+        }
+
+        if (! $isAllowed) {
+            return null;
+        }
+
+        try
+        {
+            Path::check($fullPath);
+        } catch (\Exception $e) {
+            return null;
+        }
+
+        return $fullPath;
+    }
+
+    /**
+     * Check whether the current user may edit a content article.
+     *
+     * @param   int  $articleId  Article ID.
+     *
+     * @return  bool
+     * @since   2.2.3
+     */
+    public static function canEditArticle(int $articleId): bool
+    {
+        $user = Factory::getApplication()->getIdentity();
+
+        if (! $user || ! $user->id || $articleId <= 0) {
+            return false;
+        }
+
+        if ($user->authorise('core.edit', 'com_content')) {
+            return true;
+        }
+
+        if (! $user->authorise('core.edit.own', 'com_content')) {
+            return false;
+        }
+
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true)
+            ->select($db->quoteName('created_by'))
+            ->from($db->quoteName('#__content'))
+            ->where($db->quoteName('id') . ' = ' . (int) $articleId);
+
+        $db->setQuery($query);
+
+        return (int) $db->loadResult() === (int) $user->id;
+    }
+
+    /**
+     * Validate a base64-encoded internal redirect URL.
+     *
+     * @param   string  $encoded  Base64-encoded URL.
+     *
+     * @return  string|null  Safe internal URL or null.
+     * @since   2.2.3
+     */
+    public static function validateInternalRedirect(string $encoded): ?string
+    {
+        $decoded = base64_decode($encoded, true);
+
+        if ($decoded === false || $decoded === '') {
+            return null;
+        }
+
+        if (! Uri::isInternal($decoded)) {
+            return null;
+        }
+
+        return $decoded;
+    }
+
+    /**
+     * Sanitize embed HTML using an allowlist of safe tags and attributes.
+     *
+     * @param   string  $html  Raw embed HTML.
+     *
+     * @return  string
+     * @since   2.2.3
+     */
+    public static function sanitizeEmbed(string $html): string
+    {
+        if ($html === '') {
+            return '';
+        }
+
+        $filter = InputFilter::getInstance(
+            ['iframe', 'audio', 'video', 'source', 'a', 'img'],
+            ['src', 'href', 'type', 'controls', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'alt', 'class', 'style'],
+            1,
+            1
+        );
+
+        return $filter->clean($html, 'html');
+    }
+
+    /**
+     * Sanitize mega menu settings before persisting to menu item params.
+     *
+     * @param   array  $settings  Raw settings from request.
+     *
+     * @return  array
+     * @since   2.2.7
+     */
+    public static function sanitizeMegaMenuSettings(array $settings): array
+    {
+        $clean = [];
+
+        $clean['megamenu']  = ! empty($settings['megamenu']) ? 1 : 0;
+        $clean['showtitle'] = ! empty($settings['showtitle']) ? 1 : 0;
+
+        $clean['menualign'] = self::sanitizeMegaMenuEnum(
+            $settings['menualign'] ?? '',
+            ['left', 'center', 'right', 'full'],
+            'full'
+        );
+        $clean['dropdown'] = self::sanitizeMegaMenuEnum(
+            $settings['dropdown'] ?? '',
+            ['left', 'right'],
+            'right'
+        );
+        $clean['badge_position'] = self::sanitizeMegaMenuEnum(
+            $settings['badge_position'] ?? '',
+            ['left', 'right'],
+            'right'
+        );
+
+        $clean['width']            = self::sanitizeMegaMenuWidth($settings['width'] ?? '600px');
+        $clean['customclass']      = self::sanitizeMegaMenuCustomClass($settings['customclass'] ?? '');
+        $clean['faicon']           = self::sanitizeMegaMenuFaIcon($settings['faicon'] ?? '');
+        $clean['badge']            = self::sanitizeMegaMenuBadge($settings['badge'] ?? '');
+        $clean['badge_bg_color']   = self::sanitizeMegaMenuColor($settings['badge_bg_color'] ?? '');
+        $clean['badge_text_color'] = self::sanitizeMegaMenuColor($settings['badge_text_color'] ?? '');
+
+        $layout = $settings['layout'] ?? [];
+
+        if (! \is_array($layout)) {
+            $layout = [];
+        }
+
+        $clean['layout'] = self::sanitizeMegaMenuLayout($layout);
+
+        return $clean;
+    }
+
+    /**
+     * Sanitize a mega menu CSS class string.
+     *
+     * @param   mixed  $value  Raw custom class value.
+     *
+     * @return  string
+     * @since   2.2.7
+     */
+    public static function sanitizeMegaMenuCustomClass($value): string
+    {
+        $value = (string) $value;
+
+        if (preg_match('/[<>"\'=]/', $value)) {
+            return '';
+        }
+
+        $value = strip_tags($value);
+        $value = preg_replace('/[^a-zA-Z0-9_\-\s]/', '', $value) ?? '';
+
+        return trim(preg_replace('/\s+/', ' ', $value) ?? '');
+    }
+
+    /**
+     * Sanitize a Font Awesome icon class string.
+     *
+     * @param   mixed  $value  Raw icon value.
+     *
+     * @return  string
+     * @since   2.2.7
+     */
+    public static function sanitizeMegaMenuFaIcon($value): string
+    {
+        $value = trim(strip_tags((string) $value));
+
+        if ($value === '') {
+            return '';
+        }
+
+        if (! preg_match('/^fa[sbr]?\s+fa-[a-z0-9-]+$/i', $value)) {
+            return '';
+        }
+
+        return $value;
+    }
+
+    /**
+     * Sanitize mega menu badge text.
+     *
+     * @param   mixed  $value  Raw badge value.
+     *
+     * @return  string
+     * @since   2.2.7
+     */
+    public static function sanitizeMegaMenuBadge($value): string
+    {
+        return trim(strip_tags((string) $value));
+    }
+
+    /**
+     * Sanitize a hex color value.
+     *
+     * @param   mixed  $value  Raw color value.
+     *
+     * @return  string
+     * @since   2.2.7
+     */
+    public static function sanitizeMegaMenuColor($value): string
+    {
+        $value = trim(strip_tags((string) $value));
+
+        if ($value === '') {
+            return '';
+        }
+
+        if (! preg_match('/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $value)) {
+            return '';
+        }
+
+        return $value;
+    }
+
+    /**
+     * Sanitize a mega menu width value.
+     *
+     * @param   mixed  $value  Raw width value.
+     *
+     * @return  string
+     * @since   2.2.7
+     */
+    private static function sanitizeMegaMenuWidth($value): string
+    {
+        $value = trim(strip_tags((string) $value));
+
+        if (preg_match('/^[0-9]+(px|%|em|rem)$/', $value)) {
+            return $value;
+        }
+
+        return '600px';
+    }
+
+    /**
+     * Sanitize a mega menu enum field.
+     *
+     * @param   mixed   $value    Raw value.
+     * @param   array   $allowed  Allowed values.
+     * @param   string  $default  Default value.
+     *
+     * @return  string
+     * @since   2.2.7
+     */
+    private static function sanitizeMegaMenuEnum($value, array $allowed, string $default): string
+    {
+        $value = trim(strip_tags((string) $value));
+
+        return \in_array($value, $allowed, true) ? $value : $default;
+    }
+
+    /**
+     * Recursively sanitize mega menu layout rows/columns/cells.
+     *
+     * @param   array  $layout  Raw layout array.
+     *
+     * @return  array
+     * @since   2.2.7
+     */
+    private static function sanitizeMegaMenuLayout(array $layout): array
+    {
+        $clean = [];
+
+        foreach ($layout as $row) {
+            if (! \is_array($row) && ! \is_object($row)) {
+                continue;
+            }
+
+            $row      = (array) $row;
+            $cleanRow = [
+                'type' => 'row',
+                'attr' => [],
+            ];
+
+            $columns = $row['attr'] ?? [];
+
+            if (! \is_array($columns)) {
+                $columns = [];
+            }
+
+            foreach ($columns as $column) {
+                if (! \is_array($column) && ! \is_object($column)) {
+                    continue;
+                }
+
+                $column      = (array) $column;
+                $cleanColumn = [
+                    'type'         => 'column',
+                    'colGrid'      => self::sanitizeMegaMenuColGrid($column['colGrid'] ?? '12'),
+                    'menuParentId' => (string) (int) ($column['menuParentId'] ?? 0),
+                    'moduleId'     => (string) (int) ($column['moduleId'] ?? 0),
+                    'items'        => [],
+                ];
+
+                $items = $column['items'] ?? [];
+
+                if (\is_array($items)) {
+                    foreach ($items as $cell) {
+                        if (! \is_array($cell) && ! \is_object($cell)) {
+                            continue;
+                        }
+
+                        $cell      = (array) $cell;
+                        $type      = ($cell['type'] ?? '') === 'module' ? 'module' : 'menu_item';
+                        $cellId    = (string) (int) ($cell['item_id'] ?? $cell['id'] ?? 0);
+                        $cleanCell = [
+                            'type'    => $type,
+                            'item_id' => $cellId,
+                        ];
+
+                        if ($type === 'module') {
+                            $cleanCell['moduleId'] = (string) (int) ($cell['moduleId'] ?? $cell['item_id'] ?? $cell['id'] ?? 0);
+                        }
+
+                        $cleanColumn['items'][] = $cleanCell;
+                    }
+                }
+
+                $cleanRow['attr'][] = $cleanColumn;
+            }
+
+            $clean[] = $cleanRow;
+        }
+
+        return $clean;
+    }
+
+    /**
+     * Sanitize a bootstrap column grid value.
+     *
+     * @param   mixed  $value  Raw column grid value.
+     *
+     * @return  string
+     * @since   2.2.7
+     */
+    private static function sanitizeMegaMenuColGrid($value): string
+    {
+        $value = trim(strip_tags((string) $value));
+
+        if (preg_match('/^[0-9]{1,2}$/', $value)) {
+            $grid = (int) $value;
+
+            if ($grid >= 1 && $grid <= 12) {
+                return (string) $grid;
+            }
+        }
+
+        return '12';
+    }
+
+    /**
+     * Gets the extension of a file name
+     *
+     * @param   string  $file  The file name
+     *
+     * @return  string  The file extension
+     *
+     * @since   3.0.0
+     */
+    public static function getExt($file)
+    {
+        // String manipulation should be faster than pathinfo() on newer PHP versions.
+        $dot = strrpos($file, '.');
+
+        if ($dot === false) {
+            return '';
+        }
+
+        $ext = substr($file, $dot + 1);
+
+        // Extension cannot contain slashes.
+        if (strpos($ext, '/') !== false || (DIRECTORY_SEPARATOR === '\\' && strpos($ext, '\\') !== false)) {
+            return '';
+        }
+
+        return $ext;
+    }
 }

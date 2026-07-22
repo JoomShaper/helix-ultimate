@@ -30,7 +30,7 @@ class HelixultimateFieldSelect
 	{
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
 
-		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$value = !empty($attr['value']) ? htmlspecialchars((string) $attr['value'], ENT_QUOTES, 'UTF-8') : '';
 		$options = !empty($attr['options']) ? $attr['options'] : (!empty($attr['values']) ? $attr['values'] : []);
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 		$className = $attr['class'] ?? '';

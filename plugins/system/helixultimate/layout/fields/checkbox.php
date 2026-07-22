@@ -27,7 +27,7 @@ class HelixultimateFieldCheckbox
 	public static function getInput($key, $attr)
 	{
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
-		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$value = !empty($attr['value']) ? htmlspecialchars((string) $attr['value'], ENT_QUOTES, 'UTF-8') : '';
 		$dataAttrs = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
 		$className = $attr['class'] ?? '';

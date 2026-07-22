@@ -31,7 +31,7 @@ class HelixultimateFieldUnit
 		$attributes = (isset($attr['placeholder']) && $attr['placeholder']) ? 'placeholder="' . $attr['placeholder'] . '"' : '';
 		$className = $attr['class'] ?? '';
 
-		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$value = !empty($attr['value']) ? htmlspecialchars((string) $attr['value'], ENT_QUOTES, 'UTF-8') : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 		$dataAttrs = '';
 		$dataShowon = '';

@@ -17,5 +17,8 @@
 		"psr-4": {
 			"HelixUltimate\\Framework\\": "./src/"
 		}
+	},
+	"config": {
+		"platform-check": false
 	}
 }

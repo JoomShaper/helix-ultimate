@@ -132,7 +132,7 @@ class HelixultimateFieldMenuHierarchy
 					$html[] = '<li class="hu-menu-hierarchy-item level-' . $level . '">';
 					$html[] = '	<label class="hu-menu-item-title">';
 					$html[] = '		<input type="checkbox" class="hu-input hu-menu-item-selector level-' . $level . $internal . '" value="' . $val . '" data-level="' . $level . '" ' . $check . ' />';
-					$html[] = '		<span style="margin-left: ' . $margin . 'px;">' . $menuElements->$child->title . '</span>';
+					$html[] = '		<span style="margin-left: ' . $margin . 'px;">' . htmlspecialchars($menuElements->$child->title, ENT_QUOTES, 'UTF-8') . '</span>';
 					$html[] = '	</label>';
 					$html[] = '</li>';
 

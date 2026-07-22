@@ -26,7 +26,7 @@ class HelixultimateFieldAlignment
 	 */
 	public static function getInput($key, $attr)
 	{
-		$value = !empty($attr['value']) ? $attr['value'] : (isset($attr['default']) ? $attr['default'] : '');
+		$value = !empty($attr['value']) ? htmlspecialchars((string) $attr['value'], ENT_QUOTES, 'UTF-8') : (isset($attr['default']) ? htmlspecialchars((string) $attr['default'], ENT_QUOTES, 'UTF-8') : '');
 		$dataAttrs = '';
 		$internal = !empty($attr['internal']) ? ' internal-use-only' : '';
 		$className = $attr['class'] ?? '';

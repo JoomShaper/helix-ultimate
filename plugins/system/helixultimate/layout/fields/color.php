@@ -30,7 +30,7 @@ class HelixultimateFieldColor
 	public static function getInput($key, $attr)
 	{
 		$isMenuBuilder = isset($attr['menu-builder']) && $attr['menu-builder'] === true;
-		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$value = !empty($attr['value']) ? htmlspecialchars((string) $attr['value'], ENT_QUOTES, 'UTF-8') : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 		$className = $attr['class'] ?? '';
 		$dataAttrs = '';

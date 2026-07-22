@@ -236,6 +236,16 @@ class Request
 	{
 		$data = $this->app->input->post->getArray();
 
+		$rawFields = array('before_head', 'after_body', 'before_body', 'custom_css', 'custom_js');
+
+		foreach ($rawFields as $field)
+		{
+			if ($this->app->input->post->get($field, null) !== null)
+			{
+				$data[$field] = $this->app->input->post->get($field, '', 'raw');
+			}
+		}
+
 		$data['comingsoon_date'] = date('Y-m-d H:i:s', strtotime(isset($data['comingsoon_date']) ? $data['comingsoon_date'] : 'now'));
 		$dateStatus = $this->validateDate($data['comingsoon_date'], 'Y-m-d H:i:s');
 
@@ -288,6 +298,17 @@ class Request
 	private function draftTemplateStyle()
 	{
 		$data = $this->app->input->post->getArray();
+
+		$rawFields = array('before_head', 'after_body', 'before_body', 'custom_css', 'custom_js');
+
+		foreach ($rawFields as $field)
+		{
+			if ($this->app->input->post->get($field, null) !== null)
+			{
+				$data[$field] = $this->app->input->post->get($field, '', 'raw');
+			}
+		}
+
 		$inputs = $this->filterInputs($data);
 
 		$storeData = array();

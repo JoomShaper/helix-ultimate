@@ -30,6 +30,14 @@ $patchedFiles = array(
 	'plugins/system/helixultimate/overrides/layouts/joomla/content/blog/video.php',
 	'plugins/system/helixultimate/overrides/mod_menu/default.php',
 	'templates/shaper_helixultimate/templateDetails.xml',
+	'plugins/system/helixultimate/layout/fields/alignment.php',
+	'plugins/system/helixultimate/layout/fields/checkbox.php',
+	'plugins/system/helixultimate/layout/fields/color.php',
+	'plugins/system/helixultimate/layout/fields/menuHierarchy.php',
+	'plugins/system/helixultimate/layout/fields/menutype.php',
+	'plugins/system/helixultimate/layout/fields/select.php',
+	'plugins/system/helixultimate/layout/fields/text.php',
+	'plugins/system/helixultimate/layout/fields/unit.php',
 );
 
 if (!is_dir($packageDir))

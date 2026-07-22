@@ -70,7 +70,7 @@ class Response
                 $db->updateObject('#__menu', $data, 'id');
 
                 $itemModel->rebuild();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 echo $e->getMessage();
             }
         }

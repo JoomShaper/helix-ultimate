@@ -1160,7 +1160,7 @@ class Helper
      */
     public static function sanitizeMegaMenuBadge($value): string
     {
-        return trim(strip_tags((string) $value));
+        return htmlspecialchars(trim(strip_tags((string) $value)), ENT_QUOTES, 'UTF-8');
     }
 
     /**
@@ -1173,7 +1173,7 @@ class Helper
      */
     public static function sanitizeMegaMenuColor($value): string
     {
-        $value = trim(strip_tags((string) $value));
+        $value = htmlspecialchars(trim(strip_tags((string) $value)), ENT_QUOTES, 'UTF-8');
 
         if ($value === '') {
             return '';
@@ -1196,7 +1196,7 @@ class Helper
      */
     private static function sanitizeMegaMenuWidth($value): string
     {
-        $value = trim(strip_tags((string) $value));
+        $value = htmlspecialchars(trim(strip_tags((string) $value)), ENT_QUOTES, 'UTF-8');
 
         if (preg_match('/^[0-9]+(px|%|em|rem)$/', $value)) {
             return $value;
@@ -1217,7 +1217,7 @@ class Helper
      */
     private static function sanitizeMegaMenuEnum($value, array $allowed, string $default): string
     {
-        $value = trim(strip_tags((string) $value));
+        $value = htmlspecialchars(trim(strip_tags((string) $value)), ENT_QUOTES, 'UTF-8');
 
         return \in_array($value, $allowed, true) ? $value : $default;
     }
@@ -1308,7 +1308,7 @@ class Helper
      */
     private static function sanitizeMegaMenuColGrid($value): string
     {
-        $value = trim(strip_tags((string) $value));
+        $value = htmlspecialchars(trim(strip_tags((string) $value)), ENT_QUOTES, 'UTF-8');
 
         if (preg_match('/^[0-9]{1,2}$/', $value)) {
             $grid = (int) $value;

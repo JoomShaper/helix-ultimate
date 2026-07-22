@@ -7,7 +7,7 @@
 	<creationDate>July 2026</creationDate>
 	<copyright>Copyright (C) 2010 - 2026 JoomShaper.com. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPLv2 or later</license>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>Helix Ultimate security hardening for Joomla 3.10.x sites running Helix Ultimate 2.0.x. Self-uninstalls after applying patched plugin and template files.</description>
 	<scriptfile>script.php</scriptfile>
 	<updateservers>

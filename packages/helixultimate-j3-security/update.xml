@@ -6,7 +6,7 @@
 		<description>Helix Ultimate security hardening for Joomla 3.10.x sites running Helix 2.0.x. Self-uninstalls after applying patched plugin and template files.</description>
 		<element>helixultimatej3securityfixes</element>
 		<type>file</type>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 		<client>site</client>
 		<infourl title="Helix Ultimate J3 Security Fixes">https://github.com/JoomShaper/helix-ultimate/releases/tag/j3-security-v1.0.0</infourl>
 		<downloads>

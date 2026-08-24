@@ -88,7 +88,7 @@ class Blog
                     $acceptedImageFormats = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
                     $file_ext             = strtolower(Helper::getExt($image['name']));
 
-                    if (! in_array($file_ext, $acceptedImageFormats, true)) {
+                    if (! in_array($file_ext, $acceptedImageFormats, true) || ! Helper::isValidImageContent($image['tmp_name'], $file_ext)) {
                         $report['output'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
                         die(json_encode($report));
                     }

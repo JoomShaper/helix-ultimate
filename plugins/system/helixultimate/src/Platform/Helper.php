@@ -1363,4 +1363,83 @@ class Helper
 
         return $ext;
     }
+
+    /**
+     * Verify whether an uploaded file is a genuine and permitted raster image.
+     *
+     * @param   string  $filePath   Absolute path to the temporary or stored file.
+     * @param   string  $extension  Expected file extension (e.g. 'jpg', 'png', 'webp').
+     *
+     * @return  bool  True if the file is a valid, supported raster image.
+     * @since   2.2.9
+     */
+    public static function isValidImageContent(string $filePath, string $extension = ''): bool
+    {
+        if (! is_file($filePath) || filesize($filePath) === 0) {
+            return false;
+        }
+
+        $allowedMimes = [
+            'jpg'  => ['image/jpeg', 'image/pjpeg'],
+            'jpeg' => ['image/jpeg', 'image/pjpeg'],
+            'png'  => ['image/png', 'image/x-png'],
+            'gif'  => ['image/gif'],
+            'webp' => ['image/webp'],
+        ];
+
+        $detectedMime = '';
+
+        if (function_exists('getimagesize')) {
+            $imageInfo = @getimagesize($filePath);
+
+            if ($imageInfo === false || empty($imageInfo[0]) || empty($imageInfo[1])) {
+                return false;
+            }
+
+            $detectedMime = strtolower($imageInfo['mime'] ?? '');
+        }
+
+        // Additional MIME check using fileinfo if available
+        if (function_exists('finfo_open')) {
+            $finfo = @finfo_open(FILEINFO_MIME_TYPE);
+
+            if ($finfo) {
+                $finfoMime = @finfo_file($finfo, $filePath);
+
+                if ($finfoMime && ! in_array($finfoMime, ['image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png', 'image/gif', 'image/webp'], true)) {
+                    return false;
+                }
+
+                if ($detectedMime === '' && $finfoMime) {
+                    $detectedMime = strtolower($finfoMime);
+                }
+            }
+        }
+
+        if ($detectedMime !== '') {
+            if ($extension !== '') {
+                $normalizedExt = strtolower(ltrim($extension, '.'));
+
+                if (! isset($allowedMimes[$normalizedExt])) {
+                    return false;
+                }
+
+                if (! in_array($detectedMime, $allowedMimes[$normalizedExt], true)) {
+                    return false;
+                }
+            } else {
+                $allPermitted = [];
+
+                foreach ($allowedMimes as $mimes) {
+                    $allPermitted = array_merge($allPermitted, $mimes);
+                }
+
+                if (! in_array($detectedMime, $allPermitted, true)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
 }

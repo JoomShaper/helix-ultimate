@@ -236,8 +236,7 @@ class Media
             $output['status']  = false;
         } else {
             if (Folder::create($absolute_path, 0755)) {
-                $output['output'] = self::getFolders();
-                $output['status'] = true;
+                self::getFolders();
             } else {
                 $output['message'] = "Unable to create folder.";
                 $output['status']  = false;
@@ -305,7 +304,7 @@ class Media
                 if (! $error) {
                     $file_ext = strtolower(Helper::getExt($file['name']));
 
-                    if (in_array($file_ext, $accepted_file_formats, true)) {
+                    if (in_array($file_ext, $accepted_file_formats, true) && Helper::isValidImageContent($file['tmp_name'], $file_ext)) {
                         $name        = $file['name'];
                         $source_path = $file['tmp_name'];
                         $folder      = ltrim(str_replace(JPATH_ROOT . '/', '', $uploadDir), '/');
@@ -324,7 +323,7 @@ class Media
                         } while (file_exists($dest));
 
                         // End Do not override
-                        if (File::upload($source_path, $dest, false, true)) {
+                        if (File::upload($source_path, $dest, false)) {
                             $report['src']    = Uri::root(true) . '/' . $src;
                             $report['status'] = true;
                             $report['title']  = $media_name;

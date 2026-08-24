@@ -109,29 +109,41 @@ class plgSystemTmp_helixultInstallerScript
 		foreach($templates as $key => $template)
 		{
 			$tmpl_name = (string) $template->attributes()->name;
-			$tmpl_info = $this->getTemplateInfoByName($tmpl_name);
+			$tmpl_styles = $this->getTemplateStylesByName($tmpl_name);
 
-			$params = json_decode($tmpl_info->params ?? "");
-			$params_array = (array) $params;
+			$options_file = $template_path . '/options.json';
+			$options_default = file_exists($options_file) ? file_get_contents($options_file) : '';
 
-			if(empty($params_array))
+			if (!empty($options_default) && !empty($tmpl_styles))
 			{
-				$options_default = file_get_contents($template_path .'/options.json');
+				foreach ($tmpl_styles as $tmpl_style)
+				{
+					$style_id = (int) ($tmpl_style->id ?? 0);
+					if ($style_id <= 0)
+					{
+						continue;
+					}
 
-				$db = Factory::getContainer()->get(DatabaseInterface::class);
-				$query = $db->getQuery(true);
-				$fields = array(
-					$db->quoteName('params') . ' = ' . $db->quote($options_default)
-				);
+					$params = json_decode($tmpl_style->params ?? '');
+					$params_array = (array) $params;
 
-				$conditions = array(
-					$db->quoteName('client_id') . ' = 0',
-					$db->quoteName('template') . ' = ' . $db->quote($tmpl_name)
-				);
+					if (empty($params_array))
+					{
+						$db = Factory::getContainer()->get(DatabaseInterface::class);
+						$query = $db->getQuery(true);
+						$fields = array(
+							$db->quoteName('params') . ' = ' . $db->quote($options_default)
+						);
 
-				$query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
-				$db->setQuery($query);
-				$db->execute();
+						$conditions = array(
+							$db->quoteName('id') . ' = ' . $style_id
+						);
+
+						$query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
+						$db->setQuery($query);
+						$db->execute();
+					}
+				}
 			}
 		}
 
@@ -141,25 +153,39 @@ class plgSystemTmp_helixultInstallerScript
 	}
 
 	/**
-	 * Get template information by name
+	 * Get template styles by template name
 	 *
 	 * @param	string	$name	Template name
 	 *
-	 * @return	object
-	 * @since	1.0.0
+	 * @return	array
+	 * @since	2.2.10
 	 */
-	private function getTemplateInfoByName($name)
+	private function getTemplateStylesByName($name)
 	{
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__template_styles'));
 		$query->where($db->quoteName('client_id') . ' = 0');
-		$query->where($db->quoteName('template') . ' = ' . $db->quote( $name ));
+		$query->where($db->quoteName('template') . ' = ' . $db->quote($name));
 
 		$db->setQuery($query);
 
-		return $db->loadObject();
+		return $db->loadObjectList() ?: [];
+	}
+
+	/**
+	 * Get template information by name
+	 *
+	 * @param	string	$name	Template name
+	 *
+	 * @return	object|null
+	 * @since	1.0.0
+	 */
+	private function getTemplateInfoByName($name)
+	{
+		$styles = $this->getTemplateStylesByName($name);
+		return !empty($styles) ? $styles[0] : null;
 	}
 
 	/**

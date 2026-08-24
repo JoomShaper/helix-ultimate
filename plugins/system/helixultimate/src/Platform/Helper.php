@@ -954,7 +954,7 @@ class Helper
     {
         $path = trim(str_replace('\\', '/', $path));
 
-        if ($path === '' || strpos($path, '..') !== false) {
+        if ($path === '' || strpos($path, '..') !== false || strpos($path, "\0") !== false) {
             return null;
         }
 
@@ -970,8 +970,28 @@ class Helper
             $allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
 
             if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0) {
-                $isAllowed = true;
-                break;
+                // Canonical symlink containment check
+                $realAllowedRoot = is_dir($allowedPath) ? realpath($allowedPath) : false;
+
+                if ($realAllowedRoot !== false) {
+                    $targetPath = $fullPath;
+
+                    // If target doesn't exist yet, traverse up to the nearest existing parent directory
+                    while (! file_exists($targetPath) && $targetPath !== dirname($targetPath)) {
+                        $targetPath = dirname($targetPath);
+                    }
+
+                    $realTarget = realpath($targetPath);
+
+                    if ($realTarget !== false && ($realTarget === $realAllowedRoot || strpos($realTarget, $realAllowedRoot . DIRECTORY_SEPARATOR) === 0 || strpos($realTarget, $realAllowedRoot . '/') === 0)) {
+                        $isAllowed = true;
+                        break;
+                    }
+                } else {
+                    // Fallback to lexical containment if root directory is not yet created on filesystem
+                    $isAllowed = true;
+                    break;
+                }
             }
         }
 

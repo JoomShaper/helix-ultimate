@@ -47,7 +47,7 @@ if (!class_exists('MegaFields'))
             </div>
         </div>
     </div>
-	<input type="hidden" id="hu-megamenu-layout-settings" value='<?php echo json_encode($settings); ?>' />
+	<input type="hidden" id="hu-megamenu-layout-settings" value="<?php echo htmlspecialchars(json_encode($settings), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); ?>" />
 	<input type="hidden" id="hu-base-url" value="<?php echo Uri::root(); ?>" />
 	<input type="hidden" id="hu-menu-itemid" value="<?php echo $itemId; ?>" />
 </div>

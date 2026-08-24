@@ -82,7 +82,15 @@ class plgSystemTmp_helixultInstallerScript
 
 			if ($result)
 			{
-				$this->activeInstalledPlugin($name, $group);
+				// Only activate plugin on fresh install or if it was already enabled
+				if (!$plugin_info || strtolower($type) === 'install')
+				{
+					$this->activeInstalledPlugin($name, $group);
+				}
+				elseif ($plugin_info && (int) ($plugin_info->enabled ?? 0) === 1)
+				{
+					$this->activeInstalledPlugin($name, $group);
+				}
 			}
 		}
 

@@ -65,17 +65,13 @@ class HelixUltimateFeatureTitle
 
 			$params = $menuitem->getParams();
 
-			if($params->get('helixultimate_enable_page_title', 0))
+			if ($params->get('helixultimate_enable_page_title', 0))
 			{
+				$rawHeading      = strtolower(trim((string) $params->get('helixultimate_page_title_heading', 'h2')));
+				$allowedHeadings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'];
+				$page_heading    = in_array($rawHeading, $allowedHeadings, true) ? $rawHeading : 'h2';
 
-				$page_title 		 = $menuitem->title;
-				$page_heading 	 	 = $params->get('helixultimate_page_title_heading', 'h2');
-				$page_title_alt 	 = $params->get('helixultimate_page_title_alt');
-				$page_subtitle 		 = $params->get('helixultimate_page_subtitle');
-				$page_title_bg_color = $params->get('helixultimate_page_title_bg_color');
-				$page_title_bg_image = $params->get('helixultimate_page_title_bg_image');
-
-				if($page_heading == 'h1')
+				if ($page_heading === 'h1')
 				{
 					$page_sub_heading = 'h2';
 				}
@@ -84,50 +80,84 @@ class HelixUltimateFeatureTitle
 					$page_sub_heading = 'h3';
 				}
 
-				$style = '';
+				$page_title     = (string) $menuitem->title;
+				$page_title_alt = $params->get('helixultimate_page_title_alt');
 
-				if($page_title_bg_color)
+				if (!empty($page_title_alt))
 				{
-					$style .= 'background-color: ' . $page_title_bg_color . ';';
+					$page_title = (string) $page_title_alt;
 				}
 
-				if($page_title_bg_image)
+				$page_title = htmlspecialchars($page_title, ENT_QUOTES, 'UTF-8');
+
+				$page_subtitle = $params->get('helixultimate_page_subtitle');
+
+				if (!empty($page_subtitle))
 				{
-					$style .= 'background-image: url(' . Uri::root(true) . '/' . $page_title_bg_image . ');';
+					$page_subtitle = htmlspecialchars((string) $page_subtitle, ENT_QUOTES, 'UTF-8');
 				}
 
-				if($style)
+				// Validate background color
+				$rawBgColor  = trim((string) $params->get('helixultimate_page_title_bg_color'));
+				$safeBgColor = '';
+
+				if ($rawBgColor !== '')
 				{
-					$style = 'style="' . $style . '"';
+					if (preg_match('/^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/', $rawBgColor)
+						|| preg_match('/^(rgb|rgba|hsl|hsla)\(\s*[\d\.\%,\s\/]+\s*\)$/i', $rawBgColor)
+						|| preg_match('/^[a-zA-Z]+$/', $rawBgColor))
+					{
+						$safeBgColor = $rawBgColor;
+					}
 				}
 
-				if($page_title_alt)
+				// Validate background image
+				$rawBgImage     = trim((string) $params->get('helixultimate_page_title_bg_image'));
+				$safeBgImageUrl = '';
+
+				if ($rawBgImage !== '')
 				{
-					$page_title 	 = $page_title_alt;
+					if (strpos($rawBgImage, '..') === false && strpos($rawBgImage, "\0") === false && !preg_match('/["\'<>]/', $rawBgImage))
+					{
+						$safeBgImageUrl = Uri::root(true) . '/' . ltrim($rawBgImage, '/');
+					}
+				}
+
+				$styleDeclarations = [];
+
+				if ($safeBgColor !== '')
+				{
+					$styleDeclarations[] = 'background-color: ' . $safeBgColor . ';';
+				}
+
+				if ($safeBgImageUrl !== '')
+				{
+					$styleDeclarations[] = 'background-image: url(' . htmlspecialchars($safeBgImageUrl, ENT_QUOTES, 'UTF-8') . ');';
+				}
+
+				$styleAttr = '';
+
+				if (!empty($styleDeclarations))
+				{
+					$styleAttr = ' style="' . htmlspecialchars(implode(' ', $styleDeclarations), ENT_QUOTES, 'UTF-8') . '"';
 				}
 
 				$output = '';
-
-				$output .= '<div class="sp-page-title"'. $style .'>';
+				$output .= '<div class="sp-page-title"' . $styleAttr . '>';
 				$output .= '<div class="container">';
+				$output .= '<' . $page_heading . ' class="sp-page-title-heading">' . $page_title . '</' . $page_heading . '>';
 
-				$output .= '<'. $page_heading .' class="sp-page-title-heading">'. $page_title .'</'. $page_heading .'>';
-
-				if($page_subtitle)
+				if (!empty($page_subtitle))
 				{
-					$output .= '<'. $page_sub_heading .' class="sp-page-title-sub-heading">'. $page_subtitle .'</'. $page_sub_heading .'>';
+					$output .= '<' . $page_sub_heading . ' class="sp-page-title-sub-heading">' . $page_subtitle . '</' . $page_sub_heading . '>';
 				}
 
 				$output .= '<jdoc:include type="modules" name="breadcrumb" style="none" />';
-
 				$output .= '</div>';
 				$output .= '</div>';
 
 				return $output;
-
 			}
-
 		}
-
 	}
 }

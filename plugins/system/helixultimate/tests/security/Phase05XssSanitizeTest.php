@@ -36,6 +36,23 @@ final class Phase05XssSanitizeTest
 			$failures[] = 'Audio layout should sanitize embed output.';
 		}
 
+		$titleFeaturePath = dirname(__DIR__, 4) . '/templates/shaper_helixultimate/features/title.php';
+		if (is_file($titleFeaturePath))
+		{
+			$titleSource = file_get_contents($titleFeaturePath);
+			if ($titleSource !== false)
+			{
+				if (!str_contains($titleSource, '$allowedHeadings'))
+				{
+					$failures[] = 'title.php should enforce allowedHeadings allowlist.';
+				}
+				if (!str_contains($titleSource, 'htmlspecialchars($page_title'))
+				{
+					$failures[] = 'title.php should htmlspecialchars-encode $page_title.';
+				}
+			}
+		}
+
 		return $failures;
 	}
 }

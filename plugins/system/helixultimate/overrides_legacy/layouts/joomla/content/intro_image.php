@@ -61,7 +61,7 @@
                     echo LayoutHelper::render('joomla.html.image', array_merge($layoutAttr, ['itemprop' => 'thumbnailUrl']));
                 } else {
                 ?>
-				<img src="<?php echo $intro_image; ?>" alt="<?php echo htmlspecialchars($displayData->title ?? "", ENT_COMPAT, 'UTF-8'); ?>">
+				<img src="<?php echo htmlspecialchars($intro_image, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($displayData->title ?? "", ENT_COMPAT, 'UTF-8'); ?>">
 			<?php
                 }
             ?>

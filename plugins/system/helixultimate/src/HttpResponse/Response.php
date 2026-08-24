@@ -251,20 +251,72 @@ class Response
 	 */
 	public static function saveMegaMenuSettings()
 	{
-		$input = Factory::getApplication()->input;
-		$settings = Helper::sanitizeMegaMenuSettings($input->post->get('settings', [], 'ARRAY'));
+		$user   = Factory::getApplication()->getIdentity();
+		$input  = Factory::getApplication()->input;
 		$itemId = $input->post->get('id', 0, 'INT');
+
+		if (!$user || !$user->id || $itemId <= 0) {
+			return [
+				'status'  => false,
+				'message' => Text::_('JERROR_ALERTNOAUTHOR')
+			];
+		}
 
 		$menu = new SiteMenu;
 		$item = $menu->getItem($itemId);
-		$params = $item->getParams();
+
+		if (!$item || empty($item->id)) {
+			return [
+				'status'  => false,
+				'message' => 'Menu item not found'
+			];
+		}
+
+		// Enforce menu type asset authority (com_menus.menu.<id>)
+		$canEdit = false;
+
+		if ($user->authorise('core.admin')) {
+			$canEdit = true;
+		} else {
+			$menuTypeId = 0;
+
+			if (!empty($item->menutype)) {
+				try {
+					$db = Factory::getContainer()->get(DatabaseInterface::class);
+					$query = $db->getQuery(true)
+						->select($db->quoteName('id'))
+						->from($db->quoteName('#__menu_types'))
+						->where($db->quoteName('menutype') . ' = ' . $db->quote($item->menutype));
+					$db->setQuery($query);
+					$menuTypeId = (int) $db->loadResult();
+				} catch (\Throwable $e) {
+					$menuTypeId = 0;
+				}
+			}
+
+			if ($menuTypeId > 0 && $user->authorise('core.edit', 'com_menus.menu.' . $menuTypeId)) {
+				$canEdit = true;
+			} elseif ($user->authorise('core.edit', 'com_menus')) {
+				$canEdit = true;
+			}
+		}
+
+		if (!$canEdit) {
+			return [
+				'status'  => false,
+				'message' => Text::_('JERROR_ALERTNOAUTHOR')
+			];
+		}
+
+		$settings = Helper::sanitizeMegaMenuSettings($input->post->get('settings', [], 'ARRAY'));
+		$params   = $item->getParams();
 		$params->set('helixultimatemenulayout', \json_encode($settings));
 
 		$response = self::updateMenuItem($itemId, $params);
 
 		return [
 			'status' => true,
-			'data' => $response
+			'data'   => $response
 		];
 	}
 

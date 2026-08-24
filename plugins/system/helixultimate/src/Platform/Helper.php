@@ -770,10 +770,13 @@ class Helper
             'import-tmpl-style',
             'update-font-list',
             'fontVariants',
-            'view-media',
-            'delete-media',
-            'create-folder',
-            'upload-media',
+        ];
+
+        $mediaActions = [
+            'view-media'   => ['com_media' => 'core.manage'],
+            'create-folder'=> ['com_media' => 'core.create'],
+            'upload-media' => ['com_media' => 'core.create'],
+            'delete-media' => ['com_media' => 'core.delete'],
         ];
 
         $menuActions = [
@@ -798,6 +801,10 @@ class Helper
 
         foreach ($templateActions as $action) {
             $permissions[$action] = ['com_templates' => 'core.edit'];
+        }
+
+        foreach ($mediaActions as $action => $perms) {
+            $permissions[$action] = $perms;
         }
 
         foreach ($menuActions as $action) {
@@ -829,6 +836,9 @@ class Helper
                 'com_media'   => 'core.delete',
             ],
             'view-media'        => [
+                'com_media' => 'core.manage',
+            ],
+            'create-folder'     => [
                 'com_media' => 'core.create',
             ],
             'delete-media'      => [
@@ -869,6 +879,11 @@ class Helper
             if (! $user->authorise($permission, $asset)) {
                 if ($asset === 'com_content' && $permission === 'core.edit'
                     && $user->authorise('core.edit.own', 'com_content')) {
+                    continue;
+                }
+
+                if ($asset === 'com_media' && $permission === 'core.manage'
+                    && ($user->authorise('core.create', 'com_media') || $user->authorise('core.edit', 'com_media') || $user->authorise('core.admin'))) {
                     continue;
                 }
 

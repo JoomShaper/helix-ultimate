@@ -39,6 +39,13 @@ class Media
 
         Session::checkToken() or die(json_encode($media));
 
+        $user = Factory::getApplication()->getIdentity();
+
+        if (! $user || (! $user->authorise('core.manage', 'com_media') && ! $user->authorise('core.create', 'com_media') && ! $user->authorise('core.admin'))) {
+            $media['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($media));
+        }
+
         $input        = Factory::getApplication()->input;
         $path         = $input->post->get('path', '/images', 'PATH');
         $absolutePath = Helper::resolveMediaPath($path);
@@ -146,6 +153,13 @@ class Media
 
         Session::checkToken() or die(json_encode($output));
 
+        $user = Factory::getApplication()->getIdentity();
+
+        if (! $user || ! $user->authorise('core.delete', 'com_media')) {
+            $output['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($output));
+        }
+
         $input        = Factory::getApplication()->input;
         $path         = $input->post->get('path', '/images', 'PATH');
         $type         = $input->post->get('type', 'file', 'STRING');
@@ -182,6 +196,13 @@ class Media
         $output['message'] = Text::_('JINVALID_TOKEN');
 
         Session::checkToken() or die(json_encode($output));
+
+        $user = Factory::getApplication()->getIdentity();
+
+        if (! $user || ! $user->authorise('core.create', 'com_media')) {
+            $output['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($output));
+        }
 
         $input       = Factory::getApplication()->input;
         $path        = $input->post->get('path', '/images', 'PATH');
@@ -245,8 +266,7 @@ class Media
             die(json_encode($report));
         }
 
-        if ($user->authorise('core.edit', 'com_templates') !== true
-            && ! ($user->authorise('core.create', 'com_media') && Factory::getApplication()->isClient('site'))) {
+        if (! $user || ! $user->authorise('core.create', 'com_media')) {
             die(json_encode($report));
         }
 

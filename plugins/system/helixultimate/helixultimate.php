@@ -191,7 +191,12 @@ class PlgSystemHelixultimate extends CMSPlugin
 	    if (!$app->isClient('site')) {
 	        return true;
 	    }
-	
+
+	    // Enforce object-level edit authority on the target article
+	    if (!Helper::canEditArticle((int) $table->id)) {
+	        return true;
+	    }
+
 	    $old = Table::getInstance('content');
 	    $old->load($table->id);
 	

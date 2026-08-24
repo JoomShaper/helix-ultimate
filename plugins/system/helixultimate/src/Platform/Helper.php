@@ -1079,11 +1079,11 @@ class Helper
             return false;
         }
 
-        if ($user->authorise('core.edit', 'com_content')) {
+        if ($user->authorise('core.edit', 'com_content.article.' . $articleId) || $user->authorise('core.edit', 'com_content')) {
             return true;
         }
 
-        if (! $user->authorise('core.edit.own', 'com_content')) {
+        if (! $user->authorise('core.edit.own', 'com_content.article.' . $articleId) && ! $user->authorise('core.edit.own', 'com_content')) {
             return false;
         }
 

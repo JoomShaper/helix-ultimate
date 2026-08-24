@@ -706,7 +706,7 @@ class Helper
 
         $validKeys = ['template', 'joomshaper_email', 'joomshaper_license_key'];
 
-        // check $validKeys are exist in $inputs and not empty
+        // check $validKeys exist in $inputs and not empty
         if (array_diff($validKeys, array_keys($inputs))) {
             return;
         }
@@ -715,22 +715,75 @@ class Helper
         $email       = $inputs['joomshaper_email'] ?? '';
         $license_key = $inputs['joomshaper_license_key'] ?? '';
 
-        if (! empty($template)) {
+        $cleanTemplate = preg_replace('/[^A-Za-z0-9_-]+/', '', (string) $template);
+
+        if ($cleanTemplate === '') {
+            return;
+        }
+
+        try {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+            // Find the extension ID for the installed Helix Ultimate package, template, or system plugin
+            $query = $db->getQuery(true)
+                ->select($db->quoteName('e.extension_id'))
+                ->from($db->quoteName('#__extensions', 'e'))
+                ->where(
+                    '(' . $db->quoteName('e.element') . ' = ' . $db->quote($cleanTemplate) . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('template') . ')'
+                    . ' OR (' . $db->quoteName('e.element') . ' = ' . $db->quote('helixultimate') . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('plugin') . ' AND ' . $db->quoteName('e.folder') . ' = ' . $db->quote('system') . ')'
+                    . ' OR (' . $db->quoteName('e.element') . ' = ' . $db->quote('pkg_helixultimate') . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('package') . ')'
+                );
+
+            $db->setQuery($query);
+            $extensionIds = $db->loadColumn();
+
+            $updateSiteIds = [];
+
+            if (! empty($extensionIds)) {
+                // Resolve update_site_id linked to the verified extension(s)
+                $useQuery = $db->getQuery(true)
+                    ->select('DISTINCT ' . $db->quoteName('update_site_id'))
+                    ->from($db->quoteName('#__update_sites_extensions'))
+                    ->whereIn($db->quoteName('extension_id'), array_map('intval', $extensionIds));
+
+                $db->setQuery($useQuery);
+                $updateSiteIds = $db->loadColumn();
+            }
+
+            // Fallback: If no mapping in #__update_sites_extensions, check #__update_sites where location contains 'joomshaper.com'
+            if (empty($updateSiteIds)) {
+                $siteQuery = $db->getQuery(true)
+                    ->select($db->quoteName('update_site_id'))
+                    ->from($db->quoteName('#__update_sites'))
+                    ->where($db->quoteName('name') . ' = ' . $db->quote($cleanTemplate))
+                    ->where($db->quoteName('location') . ' LIKE ' . $db->quote('%joomshaper.com%'));
+
+                $db->setQuery($siteQuery);
+                $updateSiteIds = $db->loadColumn();
+            }
+
+            if (empty($updateSiteIds)) {
+                return;
+            }
+
             $extra_query  = 'joomshaper_email=' . urlencode($email);
             $extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
 
-            $db     = Factory::getContainer()->get(DatabaseInterface::class);
             $fields = [
                 $db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
                 $db->quoteName('last_check_timestamp') . ' = 0',
             ];
 
-            $query = $db->getQuery(true)
+            $updateQuery = $db->getQuery(true)
                 ->update($db->quoteName('#__update_sites'))
                 ->set($fields)
-                ->where($db->quoteName('name') . ' = ' . $db->quote($template));
-            $db->setQuery($query);
+                ->whereIn($db->quoteName('update_site_id'), array_map('intval', $updateSiteIds));
+
+            $db->setQuery($updateQuery);
             $db->execute();
+        } catch (\Throwable $e) {
+            // Fail closed gracefully without throwing exceptions
+            return;
         }
     }
 

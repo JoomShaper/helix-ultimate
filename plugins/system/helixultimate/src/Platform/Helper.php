@@ -290,11 +290,12 @@ class Helper
             $cache    = new HelixCache($draftKey);
 
             /**
-             * Check the fetch destination. If it is iframe then load the settings
-             * from draft, otherwise if it is document that means this request
-             * comes from the original site visit. So load from saved cache.
+             * Check the fetch destination. If it is iframe and the user is authorized,
+             * then load the settings from draft. Otherwise load from saved cache or database.
              */
-            $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
+            $user              = $app->getIdentity();
+            $canPreviewDraft   = $user && $user->id && ($user->authorise('core.edit', 'com_templates') || $user->authorise('core.admin'));
+            $requestFromIframe = ($app->input->get('helixMode', '') === 'edit') && $canPreviewDraft;
 
             if ($cache->contains() && $requestFromIframe) {
                 $template = $cache->loadData();

@@ -48,13 +48,12 @@ $this->params = $template->params;
 /** Load needed data for javascript */
 Helper::flushSettingsDataToJs();
 
-$requestFromIframe = $app->input->get('helixMode', '') === 'edit';
+$user = Factory::getUser();
+$isAuthorizedPreview = ($app->input->get('helixMode', '') === 'edit') && ($user->authorise('core.edit', 'com_templates') || $user->authorise('core.admin'));
 
 // Coming Soon
-if (!$requestFromIframe) 
+if (!$isAuthorizedPreview) 
 {
-	$user = Factory::getUser();
-
 	if (!\is_null($this->params->get('comingsoon', null)) && !$user->authorise('core.admin'))
 	{
 		header("Location: " . Route::_(Uri::root(true) . "/index.php?templateStyle={$template->id}&tmpl=comingsoon", false));

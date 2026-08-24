@@ -53,6 +53,19 @@ final class Phase05XssSanitizeTest
 			}
 		}
 
+		$socialShareLayout = file_get_contents(dirname(__DIR__, 2) . '/overrides/layouts/joomla/content/social_share.php');
+		if ($socialShareLayout !== false)
+		{
+			if (!str_contains($socialShareLayout, 'http_build_query'))
+			{
+				$failures[] = 'social_share.php should use http_build_query for safe URL parameter encoding.';
+			}
+			if (str_contains($socialShareLayout, 'str_replace(" ", "%20"'))
+			{
+				$failures[] = 'social_share.php should not use insecure str_replace for title encoding.';
+			}
+		}
+
 		return $failures;
 	}
 }

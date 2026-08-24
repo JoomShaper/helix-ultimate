@@ -851,7 +851,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 					
 					if (preg_match("@(^images\/|^\/+images\/).*$@", $match))
 					{
-						$update = Uri::base() . $_match;
+						$update = rtrim(Uri::base(), '/') . '/' . ltrim($_match, '/');
 						$regex = "@" . \preg_quote($match, '/') . "@";
 						$matches[0][$key] = preg_replace($regex, $update, $matches[0][$key]);
 					}
@@ -876,7 +876,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 					 */
 					if (preg_match("@src=[\"\']([^\"\']*)[\"\']@", $imageElement))
 					{
-						$imageElement = preg_replace("@src(?=\=[\"\']([^\"\']*)[\"\'])@", "data-src", $imageElement);
+						$imageElement = preg_replace("@(?<![\w-])src(?=\=[\"\']([^\"\']*)[\"\'])@", "data-src", $imageElement);
 					}
 
 					/**

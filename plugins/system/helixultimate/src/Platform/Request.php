@@ -287,47 +287,37 @@ class Request
 
 	private function draftTemplateStyle()
 	{
-		$inputs = $this->getPostedTemplateInputs();
-
-		$storeData = array();
-
-		if (isset($inputs['id']))
-		{
-			$storeData['id'] = (int) $inputs['id'];
-			unset($inputs['id']);
-		}
-
-		if (isset($inputs['template']))
-		{
-			$storeData['template'] = $inputs['template'];
-			unset($inputs['template']);
-		}
-
-		if (isset($inputs['client_id']))
-		{
-			$storeData['client_id'] = (int) $inputs['client_id'];
-			unset($inputs['client_id']);
-		}
-
-		if (isset($inputs['home']))
-		{
-			$storeData['home'] = (int) $inputs['home'];
-			unset($inputs['home']);
-		}
-
-		if (isset($inputs['title']))
-		{
-			$storeData['title'] = $inputs['title'];
-			unset($inputs['title']);
-		}
-
-		$params = new Registry($inputs);
-		$storeData['params'] = $params;
-
 		if (!$this->id || !is_int($this->id))
 		{
 			return;
 		}
+
+		$style = Helper::getTemplateStyle($this->id);
+
+		if (!$style || empty($style->template))
+		{
+			$this->report['status']    = false;
+			$this->report['message']   = 'Invalid template style ID';
+			$this->report['isDrafted'] = Helper::isDrafted();
+			return;
+		}
+
+		$inputs = $this->getPostedTemplateInputs();
+
+		$storeData = array();
+		$storeData['id']        = (int) $this->id;
+		$storeData['client_id'] = 0;
+		$storeData['home']      = (int) ($style->home ?? 0);
+		$storeData['title']     = (string) ($style->title ?? '');
+
+		// Derive template name strictly from trusted database record
+		$cleanTemplate = preg_replace('/[^A-Za-z0-9_-]+/', '', (string) $style->template);
+		$storeData['template'] = !empty($cleanTemplate) ? $cleanTemplate : 'shaper_helixultimate';
+
+		unset($inputs['id'], $inputs['template'], $inputs['client_id'], $inputs['home'], $inputs['title']);
+
+		$params = new Registry($inputs);
+		$storeData['params'] = $params;
 
 		$keyOptions = [
 			'option' => 'com_ajax',

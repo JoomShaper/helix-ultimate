@@ -766,21 +766,47 @@ class Helper
                 return;
             }
 
-            $extra_query  = 'joomshaper_email=' . urlencode($email);
-            $extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
+            // Verify update site location belongs to joomshaper.com
+            $validSiteQuery = $db->getQuery(true)
+                ->select([$db->quoteName('update_site_id'), $db->quoteName('extra_query')])
+                ->from($db->quoteName('#__update_sites'))
+                ->whereIn($db->quoteName('update_site_id'), array_map('intval', $updateSiteIds))
+                ->where($db->quoteName('location') . ' LIKE ' . $db->quote('%joomshaper.com%'));
 
-            $fields = [
-                $db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
-                $db->quoteName('last_check_timestamp') . ' = 0',
-            ];
+            $db->setQuery($validSiteQuery);
+            $sites = $db->loadObjectList();
 
-            $updateQuery = $db->getQuery(true)
-                ->update($db->quoteName('#__update_sites'))
-                ->set($fields)
-                ->whereIn($db->quoteName('update_site_id'), array_map('intval', $updateSiteIds));
+            if (empty($sites)) {
+                return;
+            }
 
-            $db->setQuery($updateQuery);
-            $db->execute();
+            foreach ($sites as $site) {
+                $siteId = (int) $site->update_site_id;
+                $existingQuery = (string) ($site->extra_query ?? '');
+
+                $params = [];
+                if (!empty($existingQuery)) {
+                    parse_str(str_replace('&amp;', '&', $existingQuery), $params);
+                }
+
+                $params['joomshaper_email'] = $email;
+                $params['joomshaper_license_key'] = $license_key;
+
+                $newExtraQuery = http_build_query($params, '', '&amp;');
+
+                $fields = [
+                    $db->quoteName('extra_query') . ' = ' . $db->quote($newExtraQuery),
+                    $db->quoteName('last_check_timestamp') . ' = 0',
+                ];
+
+                $updateQuery = $db->getQuery(true)
+                    ->update($db->quoteName('#__update_sites'))
+                    ->set($fields)
+                    ->where($db->quoteName('update_site_id') . ' = ' . $siteId);
+
+                $db->setQuery($updateQuery);
+                $db->execute();
+            }
         } catch (\Throwable $e) {
             // Fail closed gracefully without throwing exceptions
             return;
@@ -936,11 +962,6 @@ class Helper
                     continue;
                 }
 
-                if ($asset === 'com_media' && $permission === 'core.manage'
-                    && ($user->authorise('core.create', 'com_media') || $user->authorise('core.edit', 'com_media') || $user->authorise('core.admin'))) {
-                    continue;
-                }
-
                 return false;
             }
         }
@@ -1079,11 +1100,15 @@ class Helper
             return false;
         }
 
-        if ($user->authorise('core.edit', 'com_content.article.' . $articleId) || $user->authorise('core.edit', 'com_content')) {
+        if ($user->authorise('core.admin')) {
             return true;
         }
 
-        if (! $user->authorise('core.edit.own', 'com_content.article.' . $articleId) && ! $user->authorise('core.edit.own', 'com_content')) {
+        if ($user->authorise('core.edit', 'com_content.article.' . $articleId)) {
+            return true;
+        }
+
+        if (! $user->authorise('core.edit.own', 'com_content.article.' . $articleId)) {
             return false;
         }
 
@@ -1490,28 +1515,44 @@ class Helper
             }
         }
 
-        if ($detectedMime !== '') {
-            if ($extension !== '') {
-                $normalizedExt = strtolower(ltrim($extension, '.'));
+        // Fail closed if no MIME was detected
+        if ($detectedMime === '') {
+            return false;
+        }
 
-                if (! isset($allowedMimes[$normalizedExt])) {
-                    return false;
-                }
+        if ($extension !== '') {
+            $normalizedExt = strtolower(ltrim($extension, '.'));
 
-                if (! in_array($detectedMime, $allowedMimes[$normalizedExt], true)) {
-                    return false;
-                }
-            } else {
-                $allPermitted = [];
-
-                foreach ($allowedMimes as $mimes) {
-                    $allPermitted = array_merge($allPermitted, $mimes);
-                }
-
-                if (! in_array($detectedMime, $allPermitted, true)) {
-                    return false;
-                }
+            if (! isset($allowedMimes[$normalizedExt])) {
+                return false;
             }
+
+            if (! in_array($detectedMime, $allowedMimes[$normalizedExt], true)) {
+                return false;
+            }
+        } else {
+            $allPermitted = [];
+
+            foreach ($allowedMimes as $mimes) {
+                $allPermitted = array_merge($allPermitted, $mimes);
+            }
+
+            if (! in_array($detectedMime, $allPermitted, true)) {
+                return false;
+            }
+        }
+
+        // Full raster decode validation when GD is available
+        if (function_exists('imagecreatefromstring')) {
+            $rawContent = @file_get_contents($filePath);
+            if ($rawContent === false || $rawContent === '') {
+                return false;
+            }
+            $img = @imagecreatefromstring($rawContent);
+            if ($img === false) {
+                return false;
+            }
+            unset($img);
         }
 
         return true;

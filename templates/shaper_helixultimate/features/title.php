@@ -132,7 +132,7 @@ class HelixUltimateFeatureTitle
 
 				if ($safeBgImageUrl !== '')
 				{
-					$styleDeclarations[] = 'background-image: url(' . htmlspecialchars($safeBgImageUrl, ENT_QUOTES, 'UTF-8') . ');';
+					$styleDeclarations[] = 'background-image: url(\'' . addcslashes($safeBgImageUrl, "'\\") . '\');';
 				}
 
 				$styleAttr = '';

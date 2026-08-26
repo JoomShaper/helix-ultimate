@@ -296,8 +296,6 @@ class Response
 
 			if ($menuTypeId > 0 && $user->authorise('core.edit', 'com_menus.menu.' . $menuTypeId)) {
 				$canEdit = true;
-			} elseif ($user->authorise('core.edit', 'com_menus')) {
-				$canEdit = true;
 			}
 		}
 

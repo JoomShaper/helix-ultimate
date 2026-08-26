@@ -82,6 +82,8 @@ class plgSystemTmp_helixultInstallerScript
 
 			if ($result)
 			{
+				$this->cleanObsoleteVendorFiles($group, $name);
+
 				// Only activate plugin on fresh install or if it was already enabled
 				if (!$plugin_info || strtolower($type) === 'install')
 				{
@@ -238,6 +240,45 @@ class plgSystemTmp_helixultInstallerScript
 		$db->setQuery($query);
 
 		return $db->loadObject();
+	}
+
+	/**
+	 * Clean obsolete vendor files and directories from previous installations.
+	 *
+	 * @param	string	$group	Plugin group
+	 * @param	string	$name	Plugin name
+	 *
+	 * @return	void
+	 * @since	2.2.10
+	 */
+	private function cleanObsoleteVendorFiles($group, $name)
+	{
+		$vendorPath = JPATH_PLUGINS . '/' . $group . '/' . $name . '/vendor';
+
+		if (!is_dir($vendorPath))
+		{
+			return;
+		}
+
+		// Obsolete SCSSPHP 2.x directories left over from older installations
+		$obsoleteDirs = [
+			$vendorPath . '/scssphp/scssphp/src/Ast',
+			$vendorPath . '/scssphp/scssphp/src/Evaluation',
+			$vendorPath . '/scssphp/scssphp/src/Parser',
+			$vendorPath . '/scssphp/scssphp/src/Serializer',
+			$vendorPath . '/scssphp/scssphp/src/Syntax',
+			$vendorPath . '/scssphp/scssphp/src/Util',
+			$vendorPath . '/scssphp/scssphp/src/Value',
+			$vendorPath . '/scssphp/scssphp/src/Logger',
+		];
+
+		foreach ($obsoleteDirs as $dir)
+		{
+			if (is_dir($dir))
+			{
+				Folder::delete($dir);
+			}
+		}
 	}
 
 	/**

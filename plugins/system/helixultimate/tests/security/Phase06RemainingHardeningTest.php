@@ -53,6 +53,10 @@ final class Phase06RemainingHardeningTest
 			{
 				$failures[] = 'installer.script.php should update styles strictly by primary key id.';
 			}
+			if (!str_contains($installerSource, 'cleanObsoleteVendorFiles'))
+			{
+				$failures[] = 'installer.script.php should clean obsolete vendor directories on update.';
+			}
 		}
 
 		$helperSource = file_get_contents(dirname(__DIR__, 2) . '/src/Platform/Helper.php');
@@ -62,9 +66,17 @@ final class Phase06RemainingHardeningTest
 			{
 				$failures[] = 'Helper::saveLicenseInfo should resolve update site via #__update_sites_extensions.';
 			}
+			if (!str_contains($helperSource, 'joomshaper.com'))
+			{
+				$failures[] = 'Helper::saveLicenseInfo should verify update site location belongs to joomshaper.com.';
+			}
 			if (!str_contains($helperSource, '$canPreviewDraft'))
 			{
 				$failures[] = 'Helper::loadTemplateData should enforce $canPreviewDraft.';
+			}
+			if (str_contains($helperSource, "authorise('core.create', 'com_media') || \$user->authorise('core.edit', 'com_media')"))
+			{
+				$failures[] = 'Helper::authorizeAction should not fall back to core.create for core.manage media operations.';
 			}
 		}
 
@@ -74,6 +86,19 @@ final class Phase06RemainingHardeningTest
 			if (!str_contains($responseSource, 'com_menus.menu.'))
 			{
 				$failures[] = 'Response::saveMegaMenuSettings should enforce com_menus.menu asset authority.';
+			}
+			if (str_contains($responseSource, "authorise('core.edit', 'com_menus')"))
+			{
+				$failures[] = 'Response::saveMegaMenuSettings should not fall back to broad com_menus authority.';
+			}
+		}
+
+		$titleSource = file_get_contents(dirname(__DIR__, 5) . '/templates/shaper_helixultimate/features/title.php');
+		if ($titleSource !== false)
+		{
+			if (!str_contains($titleSource, "background-image: url(\\'") && !str_contains($titleSource, "background-image: url('"))
+			{
+				$failures[] = 'title.php should use quoted CSS url syntax for background images.';
 			}
 		}
 

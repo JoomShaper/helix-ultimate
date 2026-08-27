@@ -82,7 +82,17 @@ class plgSystemTmp_helixultInstallerScript
 
 			if ($result)
 			{
-				$this->activeInstalledPlugin($name, $group);
+				$this->cleanObsoleteVendorFiles($group, $name);
+
+				// Only activate plugin on fresh install or if it was already enabled
+				if (!$plugin_info || strtolower($type) === 'install')
+				{
+					$this->activeInstalledPlugin($name, $group);
+				}
+				elseif ($plugin_info && (int) ($plugin_info->enabled ?? 0) === 1)
+				{
+					$this->activeInstalledPlugin($name, $group);
+				}
 			}
 		}
 
@@ -101,29 +111,41 @@ class plgSystemTmp_helixultInstallerScript
 		foreach($templates as $key => $template)
 		{
 			$tmpl_name = (string) $template->attributes()->name;
-			$tmpl_info = $this->getTemplateInfoByName($tmpl_name);
+			$tmpl_styles = $this->getTemplateStylesByName($tmpl_name);
 
-			$params = json_decode($tmpl_info->params ?? "");
-			$params_array = (array) $params;
+			$options_file = $template_path . '/options.json';
+			$options_default = file_exists($options_file) ? file_get_contents($options_file) : '';
 
-			if(empty($params_array))
+			if (!empty($options_default) && !empty($tmpl_styles))
 			{
-				$options_default = file_get_contents($template_path .'/options.json');
+				foreach ($tmpl_styles as $tmpl_style)
+				{
+					$style_id = (int) ($tmpl_style->id ?? 0);
+					if ($style_id <= 0)
+					{
+						continue;
+					}
 
-				$db = Factory::getContainer()->get(DatabaseInterface::class);
-				$query = $db->getQuery(true);
-				$fields = array(
-					$db->quoteName('params') . ' = ' . $db->quote($options_default)
-				);
+					$params = json_decode($tmpl_style->params ?? '');
+					$params_array = (array) $params;
 
-				$conditions = array(
-					$db->quoteName('client_id') . ' = 0',
-					$db->quoteName('template') . ' = ' . $db->quote($tmpl_name)
-				);
+					if (empty($params_array))
+					{
+						$db = Factory::getContainer()->get(DatabaseInterface::class);
+						$query = $db->getQuery(true);
+						$fields = array(
+							$db->quoteName('params') . ' = ' . $db->quote($options_default)
+						);
 
-				$query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
-				$db->setQuery($query);
-				$db->execute();
+						$conditions = array(
+							$db->quoteName('id') . ' = ' . $style_id
+						);
+
+						$query->update($db->quoteName('#__template_styles'))->set($fields)->where($conditions);
+						$db->setQuery($query);
+						$db->execute();
+					}
+				}
 			}
 		}
 
@@ -133,25 +155,39 @@ class plgSystemTmp_helixultInstallerScript
 	}
 
 	/**
-	 * Get template information by name
+	 * Get template styles by template name
 	 *
 	 * @param	string	$name	Template name
 	 *
-	 * @return	object
-	 * @since	1.0.0
+	 * @return	array
+	 * @since	2.2.10
 	 */
-	private function getTemplateInfoByName($name)
+	private function getTemplateStylesByName($name)
 	{
 		$db = Factory::getContainer()->get(DatabaseInterface::class);
 		$query = $db->getQuery(true);
 		$query->select('*');
 		$query->from($db->quoteName('#__template_styles'));
 		$query->where($db->quoteName('client_id') . ' = 0');
-		$query->where($db->quoteName('template') . ' = ' . $db->quote( $name ));
+		$query->where($db->quoteName('template') . ' = ' . $db->quote($name));
 
 		$db->setQuery($query);
 
-		return $db->loadObject();
+		return $db->loadObjectList() ?: [];
+	}
+
+	/**
+	 * Get template information by name
+	 *
+	 * @param	string	$name	Template name
+	 *
+	 * @return	object|null
+	 * @since	1.0.0
+	 */
+	private function getTemplateInfoByName($name)
+	{
+		$styles = $this->getTemplateStylesByName($name);
+		return !empty($styles) ? $styles[0] : null;
 	}
 
 	/**
@@ -204,6 +240,42 @@ class plgSystemTmp_helixultInstallerScript
 		$db->setQuery($query);
 
 		return $db->loadObject();
+	}
+
+	/**
+	 * Clean obsolete vendor files and directories from previous installations.
+	 *
+	 * @param	string	$group	Plugin group
+	 * @param	string	$name	Plugin name
+	 *
+	 * @return	void
+	 * @since	2.2.10
+	 */
+	private function cleanObsoleteVendorFiles($group, $name)
+	{
+		$vendorPath = JPATH_PLUGINS . '/' . $group . '/' . $name . '/vendor';
+
+		if (!is_dir($vendorPath))
+		{
+			return;
+		}
+
+		// Obsolete SCSSPHP 1.x directories left over from older installations
+		$obsoleteDirs = [
+			$vendorPath . '/scssphp/scssphp/src/Formatter',
+			$vendorPath . '/scssphp/scssphp/src/Base',
+			$vendorPath . '/scssphp/scssphp/src/Block',
+			$vendorPath . '/scssphp/scssphp/src/Cache',
+			$vendorPath . '/scssphp/scssphp/src/Range',
+		];
+
+		foreach ($obsoleteDirs as $dir)
+		{
+			if (is_dir($dir))
+			{
+				Folder::delete($dir);
+			}
+		}
 	}
 
 	/**

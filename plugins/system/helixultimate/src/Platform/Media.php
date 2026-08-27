@@ -39,6 +39,13 @@ class Media
 
         Session::checkToken() or die(json_encode($media));
 
+        $user = Factory::getApplication()->getIdentity();
+
+        if (! $user || (! $user->authorise('core.manage', 'com_media') && ! $user->authorise('core.create', 'com_media') && ! $user->authorise('core.admin'))) {
+            $media['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($media));
+        }
+
         $input        = Factory::getApplication()->input;
         $path         = $input->post->get('path', '/images', 'PATH');
         $absolutePath = Helper::resolveMediaPath($path);
@@ -146,6 +153,13 @@ class Media
 
         Session::checkToken() or die(json_encode($output));
 
+        $user = Factory::getApplication()->getIdentity();
+
+        if (! $user || ! $user->authorise('core.delete', 'com_media')) {
+            $output['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($output));
+        }
+
         $input        = Factory::getApplication()->input;
         $path         = $input->post->get('path', '/images', 'PATH');
         $type         = $input->post->get('type', 'file', 'STRING');
@@ -183,6 +197,13 @@ class Media
 
         Session::checkToken() or die(json_encode($output));
 
+        $user = Factory::getApplication()->getIdentity();
+
+        if (! $user || ! $user->authorise('core.create', 'com_media')) {
+            $output['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($output));
+        }
+
         $input       = Factory::getApplication()->input;
         $path        = $input->post->get('path', '/images', 'PATH');
         $folder_name = $input->post->get('folder_name', '', 'STRING');
@@ -215,8 +236,7 @@ class Media
             $output['status']  = false;
         } else {
             if (Folder::create($absolute_path, 0755)) {
-                $output['output'] = self::getFolders();
-                $output['status'] = true;
+                self::getFolders();
             } else {
                 $output['message'] = "Unable to create folder.";
                 $output['status']  = false;
@@ -245,8 +265,7 @@ class Media
             die(json_encode($report));
         }
 
-        if ($user->authorise('core.edit', 'com_templates') !== true
-            && ! ($user->authorise('core.create', 'com_media') && Factory::getApplication()->isClient('site'))) {
+        if (! $user || ! $user->authorise('core.create', 'com_media')) {
             die(json_encode($report));
         }
 
@@ -285,7 +304,7 @@ class Media
                 if (! $error) {
                     $file_ext = strtolower(Helper::getExt($file['name']));
 
-                    if (in_array($file_ext, $accepted_file_formats, true)) {
+                    if (in_array($file_ext, $accepted_file_formats, true) && Helper::isValidImageContent($file['tmp_name'], $file_ext)) {
                         $name        = $file['name'];
                         $source_path = $file['tmp_name'];
                         $folder      = ltrim(str_replace(JPATH_ROOT . '/', '', $uploadDir), '/');
@@ -304,7 +323,7 @@ class Media
                         } while (file_exists($dest));
 
                         // End Do not override
-                        if (File::upload($source_path, $dest, false, true)) {
+                        if (File::upload($source_path, $dest, false)) {
                             $report['src']    = Uri::root(true) . '/' . $src;
                             $report['status'] = true;
                             $report['title']  = $media_name;

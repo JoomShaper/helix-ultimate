@@ -161,6 +161,13 @@ final class Phase07MegaMenuSecurityTest
 			$failures[] = 'sanitizeMegaMenuSettings should preserve module cells with item_id and moduleId from the builder payload.';
 		}
 
+		$containerSource = file_get_contents(dirname(__DIR__, 2) . '/layout/megaMenu/container.php');
+
+		if ($containerSource === false || !str_contains($containerSource, 'htmlspecialchars(json_encode($settings)'))
+		{
+			$failures[] = 'container.php should htmlspecialchars-encode json_encode($settings) in value attribute.';
+		}
+
 		return $failures;
 	}
 }

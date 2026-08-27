@@ -50,7 +50,7 @@
                 echo LayoutHelper::render('joomla.html.image', $layoutAttr);
             } else {
             ?>
-			<img src="<?php echo $full_image; ?>" alt="<?php echo htmlspecialchars(! empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
+			<img src="<?php echo htmlspecialchars($full_image, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars(! empty($attribs->helix_ultimate_image_alt_txt) ? $attribs->helix_ultimate_image_alt_txt : $displayData->title, ENT_COMPAT, 'UTF-8'); ?>" itemprop="image">
 		<?php
             }
         ?>

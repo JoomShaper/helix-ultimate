@@ -290,11 +290,12 @@ class Helper
             $cache    = new HelixCache($draftKey);
 
             /**
-             * Check the fetch destination. If it is iframe then load the settings
-             * from draft, otherwise if it is document that means this request
-             * comes from the original site visit. So load from saved cache.
+             * Check the fetch destination. If it is iframe and the user is authorized,
+             * then load the settings from draft. Otherwise load from saved cache or database.
              */
-            $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
+            $user              = $app->getIdentity();
+            $canPreviewDraft   = $user && $user->id && ($user->authorise('core.edit', 'com_templates') || $user->authorise('core.admin'));
+            $requestFromIframe = ($app->input->get('helixMode', '') === 'edit') && $canPreviewDraft;
 
             if ($cache->contains() && $requestFromIframe) {
                 $template = $cache->loadData();
@@ -705,7 +706,7 @@ class Helper
 
         $validKeys = ['template', 'joomshaper_email', 'joomshaper_license_key'];
 
-        // check $validKeys are exist in $inputs and not empty
+        // check $validKeys exist in $inputs and not empty
         if (array_diff($validKeys, array_keys($inputs))) {
             return;
         }
@@ -714,22 +715,101 @@ class Helper
         $email       = $inputs['joomshaper_email'] ?? '';
         $license_key = $inputs['joomshaper_license_key'] ?? '';
 
-        if (! empty($template)) {
-            $extra_query  = 'joomshaper_email=' . urlencode($email);
-            $extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
+        $cleanTemplate = preg_replace('/[^A-Za-z0-9_-]+/', '', (string) $template);
 
-            $db     = Factory::getContainer()->get(DatabaseInterface::class);
-            $fields = [
-                $db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
-                $db->quoteName('last_check_timestamp') . ' = 0',
-            ];
+        if ($cleanTemplate === '') {
+            return;
+        }
 
+        try {
+            $db = Factory::getContainer()->get(DatabaseInterface::class);
+
+            // Find the extension ID for the installed Helix Ultimate package, template, or system plugin
             $query = $db->getQuery(true)
-                ->update($db->quoteName('#__update_sites'))
-                ->set($fields)
-                ->where($db->quoteName('name') . ' = ' . $db->quote($template));
+                ->select($db->quoteName('e.extension_id'))
+                ->from($db->quoteName('#__extensions', 'e'))
+                ->where(
+                    '(' . $db->quoteName('e.element') . ' = ' . $db->quote($cleanTemplate) . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('template') . ')'
+                    . ' OR (' . $db->quoteName('e.element') . ' = ' . $db->quote('helixultimate') . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('plugin') . ' AND ' . $db->quoteName('e.folder') . ' = ' . $db->quote('system') . ')'
+                    . ' OR (' . $db->quoteName('e.element') . ' = ' . $db->quote('pkg_helixultimate') . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('package') . ')'
+                );
+
             $db->setQuery($query);
-            $db->execute();
+            $extensionIds = $db->loadColumn();
+
+            $updateSiteIds = [];
+
+            if (! empty($extensionIds)) {
+                // Resolve update_site_id linked to the verified extension(s)
+                $useQuery = $db->getQuery(true)
+                    ->select('DISTINCT ' . $db->quoteName('update_site_id'))
+                    ->from($db->quoteName('#__update_sites_extensions'))
+                    ->whereIn($db->quoteName('extension_id'), array_map('intval', $extensionIds));
+
+                $db->setQuery($useQuery);
+                $updateSiteIds = $db->loadColumn();
+            }
+
+            // Fallback: If no mapping in #__update_sites_extensions, check #__update_sites where location contains 'joomshaper.com'
+            if (empty($updateSiteIds)) {
+                $siteQuery = $db->getQuery(true)
+                    ->select($db->quoteName('update_site_id'))
+                    ->from($db->quoteName('#__update_sites'))
+                    ->where($db->quoteName('name') . ' = ' . $db->quote($cleanTemplate))
+                    ->where($db->quoteName('location') . ' LIKE ' . $db->quote('%joomshaper.com%'));
+
+                $db->setQuery($siteQuery);
+                $updateSiteIds = $db->loadColumn();
+            }
+
+            if (empty($updateSiteIds)) {
+                return;
+            }
+
+            // Verify update site location belongs to joomshaper.com
+            $validSiteQuery = $db->getQuery(true)
+                ->select([$db->quoteName('update_site_id'), $db->quoteName('extra_query')])
+                ->from($db->quoteName('#__update_sites'))
+                ->whereIn($db->quoteName('update_site_id'), array_map('intval', $updateSiteIds))
+                ->where($db->quoteName('location') . ' LIKE ' . $db->quote('%joomshaper.com%'));
+
+            $db->setQuery($validSiteQuery);
+            $sites = $db->loadObjectList();
+
+            if (empty($sites)) {
+                return;
+            }
+
+            foreach ($sites as $site) {
+                $siteId = (int) $site->update_site_id;
+                $existingQuery = (string) ($site->extra_query ?? '');
+
+                $params = [];
+                if (!empty($existingQuery)) {
+                    parse_str(str_replace('&amp;', '&', $existingQuery), $params);
+                }
+
+                $params['joomshaper_email'] = $email;
+                $params['joomshaper_license_key'] = $license_key;
+
+                $newExtraQuery = http_build_query($params, '', '&amp;');
+
+                $fields = [
+                    $db->quoteName('extra_query') . ' = ' . $db->quote($newExtraQuery),
+                    $db->quoteName('last_check_timestamp') . ' = 0',
+                ];
+
+                $updateQuery = $db->getQuery(true)
+                    ->update($db->quoteName('#__update_sites'))
+                    ->set($fields)
+                    ->where($db->quoteName('update_site_id') . ' = ' . $siteId);
+
+                $db->setQuery($updateQuery);
+                $db->execute();
+            }
+        } catch (\Throwable $e) {
+            // Fail closed gracefully without throwing exceptions
+            return;
         }
     }
 
@@ -770,10 +850,13 @@ class Helper
             'import-tmpl-style',
             'update-font-list',
             'fontVariants',
-            'view-media',
-            'delete-media',
-            'create-folder',
-            'upload-media',
+        ];
+
+        $mediaActions = [
+            'view-media'   => ['com_media' => 'core.manage'],
+            'create-folder'=> ['com_media' => 'core.create'],
+            'upload-media' => ['com_media' => 'core.create'],
+            'delete-media' => ['com_media' => 'core.delete'],
         ];
 
         $menuActions = [
@@ -798,6 +881,10 @@ class Helper
 
         foreach ($templateActions as $action) {
             $permissions[$action] = ['com_templates' => 'core.edit'];
+        }
+
+        foreach ($mediaActions as $action => $perms) {
+            $permissions[$action] = $perms;
         }
 
         foreach ($menuActions as $action) {
@@ -829,6 +916,9 @@ class Helper
                 'com_media'   => 'core.delete',
             ],
             'view-media'        => [
+                'com_media' => 'core.manage',
+            ],
+            'create-folder'     => [
                 'com_media' => 'core.create',
             ],
             'delete-media'      => [
@@ -939,7 +1029,7 @@ class Helper
     {
         $path = trim(str_replace('\\', '/', $path));
 
-        if ($path === '' || strpos($path, '..') !== false) {
+        if ($path === '' || strpos($path, '..') !== false || strpos($path, "\0") !== false) {
             return null;
         }
 
@@ -955,8 +1045,28 @@ class Helper
             $allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
 
             if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0) {
-                $isAllowed = true;
-                break;
+                // Canonical symlink containment check
+                $realAllowedRoot = is_dir($allowedPath) ? realpath($allowedPath) : false;
+
+                if ($realAllowedRoot !== false) {
+                    $targetPath = $fullPath;
+
+                    // If target doesn't exist yet, traverse up to the nearest existing parent directory
+                    while (! file_exists($targetPath) && $targetPath !== dirname($targetPath)) {
+                        $targetPath = dirname($targetPath);
+                    }
+
+                    $realTarget = realpath($targetPath);
+
+                    if ($realTarget !== false && ($realTarget === $realAllowedRoot || strpos($realTarget, $realAllowedRoot . DIRECTORY_SEPARATOR) === 0 || strpos($realTarget, $realAllowedRoot . '/') === 0)) {
+                        $isAllowed = true;
+                        break;
+                    }
+                } else {
+                    // Fallback to lexical containment if root directory is not yet created on filesystem
+                    $isAllowed = true;
+                    break;
+                }
             }
         }
 
@@ -990,11 +1100,15 @@ class Helper
             return false;
         }
 
-        if ($user->authorise('core.edit', 'com_content')) {
+        if ($user->authorise('core.admin')) {
             return true;
         }
 
-        if (! $user->authorise('core.edit.own', 'com_content')) {
+        if ($user->authorise('core.edit', 'com_content.article.' . $articleId)) {
+            return true;
+        }
+
+        if (! $user->authorise('core.edit.own', 'com_content.article.' . $articleId)) {
             return false;
         }
 
@@ -1347,5 +1461,100 @@ class Helper
         }
 
         return $ext;
+    }
+
+    /**
+     * Verify whether an uploaded file is a genuine and permitted raster image.
+     *
+     * @param   string  $filePath   Absolute path to the temporary or stored file.
+     * @param   string  $extension  Expected file extension (e.g. 'jpg', 'png', 'webp').
+     *
+     * @return  bool  True if the file is a valid, supported raster image.
+     * @since   2.2.9
+     */
+    public static function isValidImageContent(string $filePath, string $extension = ''): bool
+    {
+        if (! is_file($filePath) || filesize($filePath) === 0) {
+            return false;
+        }
+
+        $allowedMimes = [
+            'jpg'  => ['image/jpeg', 'image/pjpeg'],
+            'jpeg' => ['image/jpeg', 'image/pjpeg'],
+            'png'  => ['image/png', 'image/x-png'],
+            'gif'  => ['image/gif'],
+            'webp' => ['image/webp'],
+        ];
+
+        $detectedMime = '';
+
+        if (function_exists('getimagesize')) {
+            $imageInfo = @getimagesize($filePath);
+
+            if ($imageInfo === false || empty($imageInfo[0]) || empty($imageInfo[1])) {
+                return false;
+            }
+
+            $detectedMime = strtolower($imageInfo['mime'] ?? '');
+        }
+
+        // Additional MIME check using fileinfo if available
+        if (function_exists('finfo_open')) {
+            $finfo = @finfo_open(FILEINFO_MIME_TYPE);
+
+            if ($finfo) {
+                $finfoMime = @finfo_file($finfo, $filePath);
+
+                if ($finfoMime && ! in_array($finfoMime, ['image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png', 'image/gif', 'image/webp'], true)) {
+                    return false;
+                }
+
+                if ($detectedMime === '' && $finfoMime) {
+                    $detectedMime = strtolower($finfoMime);
+                }
+            }
+        }
+
+        // Fail closed if no MIME was detected
+        if ($detectedMime === '') {
+            return false;
+        }
+
+        if ($extension !== '') {
+            $normalizedExt = strtolower(ltrim($extension, '.'));
+
+            if (! isset($allowedMimes[$normalizedExt])) {
+                return false;
+            }
+
+            if (! in_array($detectedMime, $allowedMimes[$normalizedExt], true)) {
+                return false;
+            }
+        } else {
+            $allPermitted = [];
+
+            foreach ($allowedMimes as $mimes) {
+                $allPermitted = array_merge($allPermitted, $mimes);
+            }
+
+            if (! in_array($detectedMime, $allPermitted, true)) {
+                return false;
+            }
+        }
+
+        // Full raster decode validation when GD is available
+        if (function_exists('imagecreatefromstring')) {
+            $rawContent = @file_get_contents($filePath);
+            if ($rawContent === false || $rawContent === '') {
+                return false;
+            }
+            $img = @imagecreatefromstring($rawContent);
+            if ($img === false) {
+                return false;
+            }
+            unset($img);
+        }
+
+        return true;
     }
 }

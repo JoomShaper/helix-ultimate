@@ -260,16 +260,13 @@ class plgSystemTmp_helixultInstallerScript
 			return;
 		}
 
-		// Obsolete SCSSPHP 2.x directories left over from older installations
+		// Obsolete SCSSPHP 1.x directories left over from older installations
 		$obsoleteDirs = [
-			$vendorPath . '/scssphp/scssphp/src/Ast',
-			$vendorPath . '/scssphp/scssphp/src/Evaluation',
-			$vendorPath . '/scssphp/scssphp/src/Parser',
-			$vendorPath . '/scssphp/scssphp/src/Serializer',
-			$vendorPath . '/scssphp/scssphp/src/Syntax',
-			$vendorPath . '/scssphp/scssphp/src/Util',
-			$vendorPath . '/scssphp/scssphp/src/Value',
-			$vendorPath . '/scssphp/scssphp/src/Logger',
+			$vendorPath . '/scssphp/scssphp/src/Formatter',
+			$vendorPath . '/scssphp/scssphp/src/Base',
+			$vendorPath . '/scssphp/scssphp/src/Block',
+			$vendorPath . '/scssphp/scssphp/src/Cache',
+			$vendorPath . '/scssphp/scssphp/src/Range',
 		];
 
 		foreach ($obsoleteDirs as $dir)

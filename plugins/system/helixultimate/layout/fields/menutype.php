@@ -31,7 +31,7 @@ class HelixultimateFieldMenuType
 	{
 		$attributes = (isset($attr['placeholder']) && $attr['placeholder']) ? 'placeholder="' . $attr['placeholder'] . '"' : '';
 
-		$value = !empty($attr['value']) ? $attr['value'] : '';
+		$value = !empty($attr['value']) ? htmlspecialchars((string) $attr['value'], ENT_QUOTES, 'UTF-8') : '';
 		$depend = isset($attr['depend']) ? $attr['depend'] : false;
 		$className = $attr['class'] ?? '';
 		$dataAttrs = '';
@@ -103,8 +103,8 @@ class HelixultimateFieldMenuType
 						$menuType = base64_encode(json_encode($menuType));
 
 						$html[] = '<li><a class="hu-dropdown-item hu-menu-type-item" href="javascript:" data-menutype="' . $menuType . '" >';
-						$html[] = '<h4 class="hu-menu-item-title">' . Text::_($child->title) . '</h4>';
-						$html[] = '<span class="text-mute">' . Text::_($child->description) . '</span>';
+						$html[] = '<h4 class="hu-menu-item-title">' . htmlspecialchars(Text::_($child->title), ENT_QUOTES, 'UTF-8') . '</h4>';
+						$html[] = '<span class="text-mute">' . htmlspecialchars(Text::_($child->description), ENT_QUOTES, 'UTF-8') . '</span>';
 						$html[] = '</a></li>';
 					}
 

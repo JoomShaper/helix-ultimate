@@ -9,14 +9,14 @@ namespace HelixUltimate\Framework\Platform;
 
 defined('_JEXEC') or die();
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Language\Text;
-use Joomla\Filesystem\File;
-use Joomla\CMS\Session\Session;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\Helper\MediaHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 
 /**
  * Media helper class.
@@ -25,366 +25,332 @@ use Joomla\CMS\Helper\MediaHelper;
  */
 class Media
 {
-	/**
-	 * Get Folders.
-	 *
-	 * @return  void
-	 * @since   1.0.0
-	 */
-	public static function getFolders()
-	{
-		$media = array();
-		$media['status'] = false;
-		$media['output'] = Text::_('JINVALID_TOKEN');
+    /**
+     * Get Folders.
+     *
+     * @return  void
+     * @since   1.0.0
+     */
+    public static function getFolders()
+    {
+        $media           = [];
+        $media['status'] = false;
+        $media['output'] = Text::_('JINVALID_TOKEN');
 
-		Session::checkToken() or die(json_encode($media));
+        Session::checkToken() or die(json_encode($media));
 
-		$input 	= Factory::getApplication()->input;
-		$path 	= $input->post->get('path', '/images', 'PATH');
-		$absolutePath = Helper::resolveMediaPath($path);
+        $user = Factory::getApplication()->getIdentity();
 
-		if ($absolutePath === null || !is_dir($absolutePath))
-		{
-			$media['message'] = 'Invalid media path';
-			die(json_encode($media));
-		}
+        if (! $user || (! $user->authorise('core.manage', 'com_media') && ! $user->authorise('core.create', 'com_media') && ! $user->authorise('core.admin'))) {
+            $media['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($media));
+        }
 
-		$images 	= Folder::files($absolutePath, '.png|.jpg|.jpeg|.gif|.svg|.ico|.webp', false, true);
-		$folders 	= Folder::folders($absolutePath, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs'));
+        $input        = Factory::getApplication()->input;
+        $path         = $input->post->get('path', '/images', 'PATH');
+        $absolutePath = Helper::resolveMediaPath($path);
 
-		$crumbs = explode('/', ltrim($path, '/'));
-		$crumb_url = '';
+        if ($absolutePath === null || ! is_dir($absolutePath)) {
+            $media['message'] = 'Invalid media path';
+            die(json_encode($media));
+        }
 
-		$breadcrumb = '<ul class="hu-media-breadcrumb">';
+        $images  = Folder::files($absolutePath, '.png|.jpg|.jpeg|.gif|.svg|.ico|.webp', false, true);
+        $folders = Folder::folders($absolutePath, '.', false, false, ['.svn', 'CVS', '.DS_Store', '__MACOSX', '_spmedia_thumbs']);
 
-		foreach ($crumbs as $key => $crumb)
-		{
-			$crumb_url .= '/' . $crumb;
+        $crumbs    = explode('/', ltrim($path, '/'));
+        $crumb_url = '';
 
-			if (count($crumbs) === ($key + 1))
-			{
-				$breadcrumb .= '<li class="hu-media-breadcrumb-item active" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</li>';
-			}
-			else
-			{
-				$breadcrumb .= '<li class="hu-media-breadcrumb-item" data-path="' . $crumb_url . '"><a href="#" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</a></li>';
-			}
-		}
+        $breadcrumb = '<ul class="hu-media-breadcrumb">';
 
-		$breadcrumb .= '</ul>';
+        foreach ($crumbs as $key => $crumb) {
+            $crumb_url .= '/' . $crumb;
 
-		$media['breadcrumbs'] = $breadcrumb;
-		$media['path'] = $path;
-		$files = array();
+            if (count($crumbs) === ($key + 1)) {
+                $breadcrumb .= '<li class="hu-media-breadcrumb-item active" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</li>';
+            } else {
+                $breadcrumb .= '<li class="hu-media-breadcrumb-item" data-path="' . $crumb_url . '"><a href="#" data-path="' . $crumb_url . '">' . preg_replace('/[-_]+/', ' ', $crumb) . '</a></li>';
+            }
+        }
 
-		$media['images'] = $images;
-		$media['folders'] = $folders;
+        $breadcrumb .= '</ul>';
 
-		$output = '<div id="hu-media-manager">';
-		$output .= '<ul class="hu-media clearfix">';
+        $media['breadcrumbs']  = $breadcrumb;
+        $media['path']         = $path;
+        $files                 = [];
 
-		if (!empty($folders))
-		{
-			foreach ($folders as $folder)
-			{
-				$files[$folder] = array(
-					'type' => 'folder',
-					'folder' => $path . '/' . $folder,
-					'name' => $folder
-				);
-			}
-		}
+        $media['images']  = $images;
+        $media['folders'] = $folders;
 
-		if (!empty($images))
-		{
-			foreach ($images as $image)
-			{
-				$image 			= str_replace('\\', '/', $image);
-				$root_path 		= str_replace('\\', '/', JPATH_ROOT);
-				$path 			= str_replace($root_path . '/', '', $image);
+        $output = '<div id="hu-media-manager">';
+        $output .= '<ul class="hu-media clearfix">';
 
-				$files[basename($path)] = array(
-					'type' => 'image',
-					'path' => $path,
-					'name' => basename($path),
-					'preview' => Uri::root() . $path
-				);
-			}
-		}
+        if (! empty($folders)) {
+            foreach ($folders as $folder) {
+                $files[$folder] = [
+                    'type'   => 'folder',
+                    'folder' => $path . '/' . $folder,
+                    'name'   => $folder,
+                ];
+            }
+        }
 
-		if (!empty($files))
-		{
-			ksort($files);
+        if (! empty($images)) {
+            foreach ($images as $image) {
+                $image     = str_replace('\\', '/', $image);
+                $root_path = str_replace('\\', '/', JPATH_ROOT);
+                $path      = str_replace($root_path . '/', '', $image);
 
-			foreach ($files as $key => $file)
-			{
-				if ($file['type'] === 'folder')
-				{
-					$output .= '<li class="hu-media-folder" data-path="' . $file['folder'] . '">';
-					$output .= '<div class="hu-media-thumb">';
-					$output .= '<svg width="160" height="160" viewBox="0 0 160 160"><g fill="none" fill-rule="evenodd"><path d="M77.955 53h50.04A3.002 3.002 0 0 1 131 56.007v58.988a4.008 4.008 0 0 1-4.003 4.005H39.003A4.002 4.002 0 0 1 35 114.995V45.99c0-2.206 1.79-3.99 3.997-3.99h26.002c1.666 0 3.667 1.166 4.49 2.605l3.341 5.848s1.281 2.544 5.12 2.544l.005.003z" fill="#71B9F4"></path><path d="M77.955 52h50.04A3.002 3.002 0 0 1 131 55.007v58.988a4.008 4.008 0 0 1-4.003 4.005H39.003A4.002 4.002 0 0 1 35 113.995V44.99c0-2.206 1.79-3.99 3.997-3.99h26.002c1.666 0 3.667 1.166 4.49 2.605l3.341 5.848s1.281 2.544 5.12 2.544l.005.003z" fill="#92CEFF"></path></g></svg>';
-					$output .= '</div>';
-					$output .= '<span class="hu-media-select"><span class="fas fa-check" aria-hidden="true"></span></span>';
-					$output .= '<div class="hu-media-label">' . $file['name'] . '</div>';
-					$output .= '</li>';
-				}
-				else
-				{
-					$output .= '<li class="hu-media-image" data-path="' . $file['path'] . '" data-preview="' . $file['preview'] . '">';
-					$output .= '<div class="hu-media-thumb">';
-					$output .= '<img src="' . $file['preview'] . '" alt="">';
-					$output .= '</div>';
-					$output .= '<span class="hu-media-select"><span class="fas fa-check" aria-hidden="true"></span></span>';
-					$output .= '<div class="hu-media-label">' . $file['name'] . '</div>';
-					$output .= '</li>';
-				}
-			}
-		}
-		else
-		{
-			// $output .= '<li class="hu-media-folder-empty"></li>';
-		}
+                $files[basename($path)] = [
+                    'type'    => 'image',
+                    'path'    => $path,
+                    'name'    => basename($path),
+                    'preview' => Uri::root() . $path,
+                ];
+            }
+        }
 
-		$output .= '</ul>';
-		$output .= '</div>';
+        if (! empty($files)) {
+            ksort($files);
 
-		$media['status'] = true;
-		$media['output'] = $output;
+            foreach ($files as $key => $file) {
+                if ($file['type'] === 'folder') {
+                    $output .= '<li class="hu-media-folder" data-path="' . $file['folder'] . '">';
+                    $output .= '<div class="hu-media-thumb">';
+                    $output .= '<svg width="160" height="160" viewBox="0 0 160 160"><g fill="none" fill-rule="evenodd"><path d="M77.955 53h50.04A3.002 3.002 0 0 1 131 56.007v58.988a4.008 4.008 0 0 1-4.003 4.005H39.003A4.002 4.002 0 0 1 35 114.995V45.99c0-2.206 1.79-3.99 3.997-3.99h26.002c1.666 0 3.667 1.166 4.49 2.605l3.341 5.848s1.281 2.544 5.12 2.544l.005.003z" fill="#71B9F4"></path><path d="M77.955 52h50.04A3.002 3.002 0 0 1 131 55.007v58.988a4.008 4.008 0 0 1-4.003 4.005H39.003A4.002 4.002 0 0 1 35 113.995V44.99c0-2.206 1.79-3.99 3.997-3.99h26.002c1.666 0 3.667 1.166 4.49 2.605l3.341 5.848s1.281 2.544 5.12 2.544l.005.003z" fill="#92CEFF"></path></g></svg>';
+                    $output .= '</div>';
+                    $output .= '<span class="hu-media-select"><span class="fas fa-check" aria-hidden="true"></span></span>';
+                    $output .= '<div class="hu-media-label">' . $file['name'] . '</div>';
+                    $output .= '</li>';
+                } else {
+                    $output .= '<li class="hu-media-image" data-path="' . $file['path'] . '" data-preview="' . $file['preview'] . '">';
+                    $output .= '<div class="hu-media-thumb">';
+                    $output .= '<img src="' . $file['preview'] . '" alt="">';
+                    $output .= '</div>';
+                    $output .= '<span class="hu-media-select"><span class="fas fa-check" aria-hidden="true"></span></span>';
+                    $output .= '<div class="hu-media-label">' . $file['name'] . '</div>';
+                    $output .= '</li>';
+                }
+            }
+        } else {
+            // $output .= '<li class="hu-media-folder-empty"></li>';
+        }
 
-		die(json_encode($media));
-	}
+        $output .= '</ul>';
+        $output .= '</div>';
 
-	public static function deleteMedia()
-	{
-		$output = array();
-		$output['status'] = false;
-		$output['message'] = Text::_('JINVALID_TOKEN');
+        $media['status'] = true;
+        $media['output'] = $output;
 
-		Session::checkToken() or die(json_encode($output));
+        die(json_encode($media));
+    }
 
-		$input 	= Factory::getApplication()->input;
-		$path 	= $input->post->get('path', '/images', 'PATH');
-		$type	= $input->post->get('type', 'file', 'STRING');
-		$absolutePath = Helper::resolveMediaPath($path);
+    public static function deleteMedia()
+    {
+        $output            = [];
+        $output['status']  = false;
+        $output['message'] = Text::_('JINVALID_TOKEN');
 
-		if ($absolutePath === null)
-		{
-			$output['message'] = 'Invalid media path';
-			die(json_encode($output));
-		}
+        Session::checkToken() or die(json_encode($output));
 
-		if ($type === 'file')
-		{
-			if (is_file($absolutePath) && File::delete($absolutePath))
-			{
-				$output['status'] = true;
-			}
-			else
-			{
-				$output['message'] = "Unable to delete file";
-				$output['status'] = false;
-			}
-		}
-		else
-		{
-			if (is_dir($absolutePath) && Folder::delete($absolutePath))
-			{
-				$output['status'] = true;
-			}
-			else
-			{
-				$output['message'] = "Unable to delete folder";
-				$output['status'] = false;
-			}
-		}
+        $user = Factory::getApplication()->getIdentity();
 
-		die(json_encode($output));
-	}
+        if (! $user || ! $user->authorise('core.delete', 'com_media')) {
+            $output['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($output));
+        }
 
-	public static function createFolder()
-	{
-		$output = array();
-		$output['status'] = false;
-		$output['message'] = Text::_('JINVALID_TOKEN');
+        $input        = Factory::getApplication()->input;
+        $path         = $input->post->get('path', '/images', 'PATH');
+        $type         = $input->post->get('type', 'file', 'STRING');
+        $absolutePath = Helper::resolveMediaPath($path);
 
-		Session::checkToken() or die(json_encode($output));
+        if ($absolutePath === null) {
+            $output['message'] = 'Invalid media path';
+            die(json_encode($output));
+        }
 
-		$input 	= Factory::getApplication()->input;
-		$path 	= $input->post->get('path', '/images', 'PATH');
-		$folder_name 	= $input->post->get('folder_name', '', 'STRING');
-		$parentPath = Helper::resolveMediaPath($path);
+        if ($type === 'file') {
+            if (is_file($absolutePath) && File::delete($absolutePath)) {
+                $output['status'] = true;
+            } else {
+                $output['message'] = "Unable to delete file";
+                $output['status']  = false;
+            }
+        } else {
+            if (is_dir($absolutePath) && Folder::delete($absolutePath)) {
+                $output['status'] = true;
+            } else {
+                $output['message'] = "Unable to delete folder";
+                $output['status']  = false;
+            }
+        }
 
-		if ($parentPath === null || !is_dir($parentPath))
-		{
-			$output['message'] = 'Invalid media path';
-			die(json_encode($output));
-		}
+        die(json_encode($output));
+    }
 
-		$safeFolderName = preg_replace('/[^A-Za-z0-9_-]+/', '-', trim($folder_name));
+    public static function createFolder()
+    {
+        $output            = [];
+        $output['status']  = false;
+        $output['message'] = Text::_('JINVALID_TOKEN');
 
-		if ($safeFolderName === '')
-		{
-			$output['message'] = 'Invalid folder name';
-			die(json_encode($output));
-		}
+        Session::checkToken() or die(json_encode($output));
 
-		$absolute_path = $parentPath . '/' . $safeFolderName;
+        $user = Factory::getApplication()->getIdentity();
 
-		try
-		{
-			\Joomla\Filesystem\Path::check($absolute_path);
-		}
-		catch (\Exception $e)
-		{
-			$output['message'] = 'Invalid folder path';
-			die(json_encode($output));
-		}
+        if (! $user || ! $user->authorise('core.create', 'com_media')) {
+            $output['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+            die(json_encode($output));
+        }
 
-		if (is_dir($absolute_path))
-		{
-			$output['message'] = "Folder is already exists.";
-			$output['status'] = false;
-		}
-		else
-		{
-			if (Folder::create($absolute_path, 0755))
-			{
-				$output['output'] = self::getFolders();
-				$output['status'] = true;
-			}
-			else
-			{
-				$output['message'] = "Unable to create folder.";
-				$output['status'] = false;
-			}
-		}
+        $input       = Factory::getApplication()->input;
+        $path        = $input->post->get('path', '/images', 'PATH');
+        $folder_name = $input->post->get('folder_name', '', 'STRING');
+        $parentPath  = Helper::resolveMediaPath($path);
 
-		die(json_encode($output));
-	}
+        if ($parentPath === null || ! is_dir($parentPath)) {
+            $output['message'] = 'Invalid media path';
+            die(json_encode($output));
+        }
 
-	public static function uploadMedia()
-	{
-		$user   = Factory::getApplication()->getIdentity();
-		$input 	= Factory::getApplication()->input;
-		$dir 	= $input->post->get('path', '/images', 'PATH');
-		$index 	= $input->post->get('index', '', 'STRING');
-		$file 	= $input->files->get('file');
-		$uploadDir = Helper::resolveMediaPath($dir);
+        $safeFolderName = preg_replace('/[^A-Za-z0-9_-]+/', '-', trim($folder_name));
 
-		$report = array();
-		$report['status'] = false;
-		$report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
-		$report['index'] = $index;
+        if ($safeFolderName === '') {
+            $output['message'] = 'Invalid folder name';
+            die(json_encode($output));
+        }
 
-		if ($uploadDir === null || !is_dir($uploadDir))
-		{
-			$report['message'] = 'Invalid upload path';
-			die(json_encode($report));
-		}
+        $absolute_path = $parentPath . '/' . $safeFolderName;
 
-		if ($user->authorise('core.edit', 'com_templates') !== true
-			&& !($user->authorise('core.create', 'com_media') && Factory::getApplication()->isClient('site')))
-		{
-			die(json_encode($report));
-		}
+        try
+        {
+            \Joomla\Filesystem\Path::check($absolute_path);
+        } catch (\Exception $e) {
+            $output['message'] = 'Invalid folder path';
+            die(json_encode($output));
+        }
 
-		if (!empty($file))
-		{
-			if ($file['error'] === UPLOAD_ERR_OK)
-			{
-				$error = false;
-				$params 		= ComponentHelper::getParams('com_media');
-				$contentLength 	= (int) $_SERVER['CONTENT_LENGTH'];
+        if (is_dir($absolute_path)) {
+            $output['message'] = "Folder is already exists.";
+            $output['status']  = false;
+        } else {
+            if (Folder::create($absolute_path, 0755)) {
+                self::getFolders();
+            } else {
+                $output['message'] = "Unable to create folder.";
+                $output['status']  = false;
+            }
+        }
 
-				$mediaHelper = new MediaHelper;
-				$postMaxSize = $mediaHelper->toBytes(ini_get('post_max_size'));
-				$memoryLimit = $mediaHelper->toBytes(ini_get('memory_limit'));
+        die(json_encode($output));
+    }
 
-				// Check for the total size of post back data.
-				if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit !== -1 && $contentLength > $memoryLimit))
-				{
-					$report['status'] = false;
-					$report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_MEDIA_TOTAL_SIZE_EXCEEDS');
-					$error = true;
-					echo json_encode($report);
-					die();
-				}
+    public static function uploadMedia()
+    {
+        $user      = Factory::getApplication()->getIdentity();
+        $input     = Factory::getApplication()->input;
+        $dir       = $input->post->get('path', '/images', 'PATH');
+        $index     = $input->post->get('index', '', 'STRING');
+        $file      = $input->files->get('file');
+        $uploadDir = Helper::resolveMediaPath($dir);
 
-				$uploadMaxSize = $params->get('upload_maxsize', 0) * 1024 * 1024;
-				$uploadMaxFileSize = $mediaHelper->toBytes(ini_get('upload_max_filesize'));
+        $report            = [];
+        $report['status']  = false;
+        $report['message'] = Text::_('JERROR_ALERTNOAUTHOR');
+        $report['index']   = $index;
 
-				if (($file['error'] === 1) || ($uploadMaxSize > 0 && $file['size'] > $uploadMaxSize) || ($uploadMaxFileSize > 0 && $file['size'] > $uploadMaxFileSize))
-				{
-					$report['status'] = false;
-					$report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_MEDIA_LARGE');
-					$error = true;
-				}
+        if ($uploadDir === null || ! is_dir($uploadDir)) {
+            $report['message'] = 'Invalid upload path';
+            die(json_encode($report));
+        }
 
-				// File formats (vector/icon types excluded to reduce stored XSS risk)
-				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'webp');
+        if (! $user || ! $user->authorise('core.create', 'com_media')) {
+            die(json_encode($report));
+        }
 
-				// Upload if no error found
-				if (!$error)
-				{
-					$file_ext = strtolower(File::getExt($file['name']));
+        if (! empty($file)) {
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                $error         = false;
+                $params        = ComponentHelper::getParams('com_media');
+                $contentLength = (int) $_SERVER['CONTENT_LENGTH'];
 
-					if (in_array($file_ext, $accepted_file_formats, true))
-					{
-						$name = $file['name'];
-						$source_path = $file['tmp_name'];
-						$folder = ltrim(str_replace(JPATH_ROOT . '/', '', $uploadDir), '/');
+                $mediaHelper = new MediaHelper;
+                $postMaxSize = $mediaHelper->toBytes(ini_get('post_max_size'));
+                $memoryLimit = $mediaHelper->toBytes(ini_get('memory_limit'));
 
-						// Do no override existing file
-						$media_file = preg_replace('#\s+#', "-", File::makeSafe(basename(strtolower($name))));
-						$i = 0;
+                // Check for the total size of post back data.
+                if (($postMaxSize > 0 && $contentLength > $postMaxSize) || ($memoryLimit !== -1 && $contentLength > $memoryLimit)) {
+                    $report['status']  = false;
+                    $report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_MEDIA_TOTAL_SIZE_EXCEEDS');
+                    $error             = true;
+                    echo json_encode($report);
+                    die();
+                }
 
-						do
-						{
-							$base_name  = File::stripExt($media_file) . ($i ? "$i" : "");
-							$ext        = File::getExt($media_file);
-							$media_name = $base_name . '.' . $ext;
-							$i++;
-							$dest       = $uploadDir . '/' . $media_name;
-							$src        = $folder . '/' . $media_name;
-						}
-						while (file_exists($dest));
+                $uploadMaxSize     = $params->get('upload_maxsize', 0) * 1024 * 1024;
+                $uploadMaxFileSize = $mediaHelper->toBytes(ini_get('upload_max_filesize'));
 
-						// End Do not override
-						if (File::upload($source_path, $dest, false, true))
-						{
-							$report['src'] = Uri::root(true) . '/' . $src;
-							$report['status'] = true;
-							$report['title'] = $media_name;
-							$report['path'] = $src;
+                if (($file['error'] === 1) || ($uploadMaxSize > 0 && $file['size'] > $uploadMaxSize) || ($uploadMaxFileSize > 0 && $file['size'] > $uploadMaxFileSize)) {
+                    $report['status']  = false;
+                    $report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_MEDIA_LARGE');
+                    $error             = true;
+                }
 
-							$output = '<div class="hu-media-thumb">';
-							$output .= '<img src="' . $report['src'] . '" alt="">';
-							$output .= '</div>';
-							$output .= '<span class="hu-media-select"><span class="fas fa-check" aria-hidden="true"></span></span>';
-							$output .= '<div class="hu-media-label">' . $report['title'] . '</div>';
+                // File formats (vector/icon types excluded to reduce stored XSS risk)
+                $accepted_file_formats = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 
-							$report['output'] = $output;
-						}
-						else
-						{
-							$report['status'] = false;
-							$report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_UPLOAD_FAILED');
-						}
-					}
-					else
-					{
-						$report['status'] = false;
-						$report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
-					}
-				}
-			}
-		}
-		else
-		{
-			$report['status'] = false;
-			$report['message'] = Text::_('File not found');
-		}
+                // Upload if no error found
+                if (! $error) {
+                    $file_ext = strtolower(Helper::getExt($file['name']));
 
-		die(json_encode($report));
-	}
+                    if (in_array($file_ext, $accepted_file_formats, true) && Helper::isValidImageContent($file['tmp_name'], $file_ext)) {
+                        $name        = $file['name'];
+                        $source_path = $file['tmp_name'];
+                        $folder      = ltrim(str_replace(JPATH_ROOT . '/', '', $uploadDir), '/');
+
+                        // Do no override existing file
+                        $media_file = preg_replace('#\s+#', "-", File::makeSafe(basename(strtolower($name))));
+                        $i          = 0;
+
+                        do {
+                            $base_name  = File::stripExt($media_file) . ($i ? "$i" : "");
+                            $ext        = Helper::getExt($media_file);
+                            $media_name = $base_name . '.' . $ext;
+                            $i++;
+                            $dest = $uploadDir . '/' . $media_name;
+                            $src  = $folder . '/' . $media_name;
+                        } while (file_exists($dest));
+
+                        // End Do not override
+                        if (File::upload($source_path, $dest, false)) {
+                            $report['src']    = Uri::root(true) . '/' . $src;
+                            $report['status'] = true;
+                            $report['title']  = $media_name;
+                            $report['path']   = $src;
+
+                            $output  = '<div class="hu-media-thumb">';
+                            $output .= '<img src="' . $report['src'] . '" alt="">';
+                            $output .= '</div>';
+                            $output .= '<span class="hu-media-select"><span class="fas fa-check" aria-hidden="true"></span></span>';
+                            $output .= '<div class="hu-media-label">' . $report['title'] . '</div>';
+
+                            $report['output'] = $output;
+                        } else {
+                            $report['status']  = false;
+                            $report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_UPLOAD_FAILED');
+                        }
+                    } else {
+                        $report['status']  = false;
+                        $report['message'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
+                    }
+                }
+            }
+        } else {
+            $report['status']  = false;
+            $report['message'] = Text::_('File not found');
+        }
+
+        die(json_encode($report));
+    }
 }

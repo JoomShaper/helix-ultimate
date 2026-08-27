@@ -42,6 +42,51 @@ final class Phase04UploadHardeningTest
 			$failures[] = 'Blog upload should sanitize filenames with File::makeSafe().';
 		}
 
+		// Helper::isValidImageContent tests
+		// 1. Text file renamed as .jpg
+		$tmpText = tempnam(sys_get_temp_dir(), 'test_text');
+		file_put_contents($tmpText, "<?php echo 'hello'; ?>");
+		if (\HelixUltimate\Framework\Platform\Helper::isValidImageContent($tmpText, 'jpg'))
+		{
+			$failures[] = 'isValidImageContent should reject plain text file disguised as jpg.';
+		}
+		@unlink($tmpText);
+
+		// 2. Valid minimal 1x1 PNG
+		$validPngData = base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==');
+		$tmpPng = tempnam(sys_get_temp_dir(), 'test_png');
+		file_put_contents($tmpPng, $validPngData);
+		if (!\HelixUltimate\Framework\Platform\Helper::isValidImageContent($tmpPng, 'png'))
+		{
+			$failures[] = 'isValidImageContent should accept valid PNG file.';
+		}
+
+		// 3. Valid PNG with mismatched extension .jpg
+		if (\HelixUltimate\Framework\Platform\Helper::isValidImageContent($tmpPng, 'jpg'))
+		{
+			$failures[] = 'isValidImageContent should reject PNG file when expected extension is jpg.';
+		}
+		@unlink($tmpPng);
+
+		// 4. Valid minimal 1x1 GIF
+		$validGifData = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+		$tmpGif = tempnam(sys_get_temp_dir(), 'test_gif');
+		file_put_contents($tmpGif, $validGifData);
+		if (!\HelixUltimate\Framework\Platform\Helper::isValidImageContent($tmpGif, 'gif'))
+		{
+			$failures[] = 'isValidImageContent should accept valid GIF file.';
+		}
+		@unlink($tmpGif);
+
+		// 5. Empty file
+		$tmpEmpty = tempnam(sys_get_temp_dir(), 'test_empty');
+		file_put_contents($tmpEmpty, '');
+		if (\HelixUltimate\Framework\Platform\Helper::isValidImageContent($tmpEmpty, 'png'))
+		{
+			$failures[] = 'isValidImageContent should reject empty file.';
+		}
+		@unlink($tmpEmpty);
+
 		return $failures;
 	}
 }

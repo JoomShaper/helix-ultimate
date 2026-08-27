@@ -36,6 +36,36 @@ final class Phase05XssSanitizeTest
 			$failures[] = 'Audio layout should sanitize embed output.';
 		}
 
+		$titleFeaturePath = dirname(__DIR__, 4) . '/templates/shaper_helixultimate/features/title.php';
+		if (is_file($titleFeaturePath))
+		{
+			$titleSource = file_get_contents($titleFeaturePath);
+			if ($titleSource !== false)
+			{
+				if (!str_contains($titleSource, '$allowedHeadings'))
+				{
+					$failures[] = 'title.php should enforce allowedHeadings allowlist.';
+				}
+				if (!str_contains($titleSource, 'htmlspecialchars($page_title'))
+				{
+					$failures[] = 'title.php should htmlspecialchars-encode $page_title.';
+				}
+			}
+		}
+
+		$socialShareLayout = file_get_contents(dirname(__DIR__, 2) . '/overrides/layouts/joomla/content/social_share.php');
+		if ($socialShareLayout !== false)
+		{
+			if (!str_contains($socialShareLayout, 'http_build_query'))
+			{
+				$failures[] = 'social_share.php should use http_build_query for safe URL parameter encoding.';
+			}
+			if (str_contains($socialShareLayout, 'str_replace(" ", "%20"'))
+			{
+				$failures[] = 'social_share.php should not use insecure str_replace for title encoding.';
+			}
+		}
+
 		return $failures;
 	}
 }

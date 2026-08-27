@@ -24,26 +24,31 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 
 	switch ($host) {
 		case 'youtu.be':
-			$video_id = trim($video['path'], '/');
-			$video_src = '//www.youtube.com/embed/' . $video_id;
+			$rawId = trim($video['path'] ?? '', '/');
+			$video_id = preg_replace('/[^A-Za-z0-9_-]/', '', $rawId);
+			if ($video_id !== '') {
+				$video_src = '//www.youtube.com/embed/' . $video_id;
+			}
 			break;
 
 		case 'www.youtube.com':
 		case 'youtube.com':
 		case 'www.youtube-nocookie.com':
 		case 'youtube-nocookie.com':
-			if (strpos($video['path'], '/embed/') === 0) {
-				// Already an embed URL
-				$video_src = '//www.youtube.com' . $video['path'];
-				if (!empty($video['query'])) {
-					$video_src .= '?' . $video['query'];
+			$path = $video['path'] ?? '';
+			if (strpos($path, '/embed/') === 0) {
+				$rawId = substr($path, 7);
+				$video_id = preg_replace('/[^A-Za-z0-9_-]/', '', $rawId);
+				if ($video_id !== '') {
+					$video_src = '//www.youtube.com/embed/' . $video_id;
 				}
 			} else {
-				// Handle standard YouTube watch URL
-				parse_str($video['query'], $query);
+				parse_str($video['query'] ?? '', $query);
 				if (isset($query['v'])) {
-					$video_id = $query['v'];
-					$video_src = '//www.youtube.com/embed/' . $video_id;
+					$video_id = preg_replace('/[^A-Za-z0-9_-]/', '', (string) $query['v']);
+					if ($video_id !== '') {
+						$video_src = '//www.youtube.com/embed/' . $video_id;
+					}
 				}
 			}
 			break;
@@ -51,28 +56,34 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 		case 'vimeo.com':
 		case 'www.vimeo.com':
 		case 'player.vimeo.com':
-			$path = trim($video['path'], '/');
+			$path = trim($video['path'] ?? '', '/');
 			if (strpos($path, 'video/') === 0) {
 				$path = substr($path, 6);
 			}
-			$video_id = explode('?', $path)[0];
-			$video_src = '//player.vimeo.com/video/' . $video_id;
+			$rawId = explode('?', $path)[0];
+			$video_id = preg_replace('/[^0-9]/', '', $rawId);
+			if ($video_id !== '') {
+				$video_src = '//player.vimeo.com/video/' . $video_id;
+			}
 			break;
 
 		case 'dailymotion.com':
 		case 'www.dailymotion.com':
-			$path = trim($video['path'], '/');
+			$path = trim($video['path'] ?? '', '/');
 			if (strpos($path, 'video/') === 0) {
 				$path = substr($path, 6);
 			}
-			$video_id = explode('_', $path)[0];
-			$video_src = '//www.dailymotion.com/embed/video/' . $video_id;
+			$rawId = explode('_', $path)[0];
+			$video_id = preg_replace('/[^A-Za-z0-9_-]/', '', $rawId);
+			if ($video_id !== '') {
+				$video_src = '//www.dailymotion.com/embed/video/' . $video_id;
+			}
 			break;
 
 		case 'dai.ly':
-			$path = trim($video['path'], '/');
-			if ($path) {
-				$video_id = $path;
+			$path = trim($video['path'] ?? '', '/');
+			$video_id = preg_replace('/[^A-Za-z0-9_-]/', '', $path);
+			if ($video_id !== '') {
 				$video_src = '//www.dailymotion.com/embed/video/' . $video_id;
 			}
 			break;
@@ -81,19 +92,21 @@ if (isset($attribs->helix_ultimate_video) && $attribs->helix_ultimate_video) {
 			if ($ext === 'mp4') {
 				$embed_code = '
 					<video controls width="100%">
-						<source src="' . htmlspecialchars($video_url, ENT_QUOTES) . '" type="video/mp4">
+						<source src="' . htmlspecialchars($video_url, ENT_QUOTES, 'UTF-8') . '" type="video/mp4">
 						Your browser does not support the video tag.
 					</video>';
+			} elseif (strpos($video_url, '<iframe') !== false || strpos($video_url, '<video') !== false) {
+				$embed_code = Helper::sanitizeEmbed($video_url);
 			} else {
 				$embed_code = Helper::sanitizeEmbed(
-					'<iframe src="' . htmlspecialchars($video_url, ENT_QUOTES) . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:400px;"></iframe>'
+					'<iframe src="' . htmlspecialchars($video_url, ENT_QUOTES, 'UTF-8') . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:400px;"></iframe>'
 				);
 			}
 			break;
 	}
 	// If we have a video source, create the embed code
 	if (!$embed_code && $video_src) {
-		$embed_code = '<iframe src="' . $video_src . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:400px;"></iframe>';
+		$embed_code = '<iframe src="' . htmlspecialchars($video_src, ENT_QUOTES, 'UTF-8') . '" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%; height:400px;"></iframe>';
 	}
 
 	// Final Output

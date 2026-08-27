@@ -20,9 +20,13 @@ final class Phase02CsrfAclTest
 		$siteMap = Helper::getSiteActionPermissions();
 
 		$requiredAdmin = [
-			'save-tmpl-style' => 'com_templates',
-			'parentAdoption' => 'com_menus',
+			'save-tmpl-style'   => 'com_templates',
+			'parentAdoption'    => 'com_menus',
 			'upload-blog-image' => 'com_content',
+			'view-media'        => 'com_media',
+			'delete-media'      => 'com_media',
+			'create-folder'     => 'com_media',
+			'upload-media'      => 'com_media',
 		];
 
 		foreach ($requiredAdmin as $action => $asset)

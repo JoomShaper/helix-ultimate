@@ -11,7 +11,7 @@
     $root       = realpath(__DIR__ . '/../../..');
     $packageDir = $root . '/packages/helixultimate-j3-security';
     $filesDir   = $packageDir . '/files';
-    $version    = '1.0.1';
+    $version    = '1.0.2';
     $outputZip  = $packageDir . '/dist/helixultimate_j3_security_fixes_v' . $version . '.zip';
 
     $patchedFiles = [
@@ -29,7 +29,6 @@
     'plugins/system/helixultimate/overrides/layouts/joomla/content/blog/gallery.php',
     'plugins/system/helixultimate/overrides/layouts/joomla/content/blog/video.php',
     'plugins/system/helixultimate/overrides/mod_menu/default.php',
-    'templates/shaper_helixultimate/templateDetails.xml',
     'plugins/system/helixultimate/layout/fields/alignment.php',
     'plugins/system/helixultimate/layout/fields/checkbox.php',
     'plugins/system/helixultimate/layout/fields/color.php',
@@ -38,6 +37,12 @@
     'plugins/system/helixultimate/layout/fields/select.php',
     'plugins/system/helixultimate/layout/fields/text.php',
     'plugins/system/helixultimate/layout/fields/unit.php',
+    'plugins/system/helixultimate/layout/megaMenu/container.php',
+    'plugins/system/helixultimate/src/fields/helixmegamenu.php',
+    'templates/shaper_helixultimate/templateDetails.xml',
+    'templates/shaper_helixultimate/installer.script.php',
+    'templates/shaper_helixultimate/features/title.php',
+    'templates/shaper_helixultimate/index.php',
     ];
 
     if (! is_dir($packageDir)) {

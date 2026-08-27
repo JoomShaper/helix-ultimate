@@ -282,8 +282,7 @@ class Media
 			die(json_encode($report));
 		}
 
-		if ($user->authorise('core.edit', 'com_templates') !== true
-			&& !($user->authorise('core.create', 'com_media') && Factory::getApplication()->isClient('site')))
+		if (!$user || !$user->authorise('core.create', 'com_media'))
 		{
 			die(json_encode($report));
 		}
@@ -320,15 +319,15 @@ class Media
 					$error = true;
 				}
 
-				// File formats (svg/ico excluded to reduce stored XSS risk)
+				// File formats (vector/icon types excluded to reduce stored XSS risk)
 				$accepted_file_formats = array('jpg', 'jpeg', 'png', 'gif', 'webp');
 
 				// Upload if no error found
 				if (!$error)
 				{
-					$file_ext = strtolower(File::getExt($file['name']));
+					$file_ext = strtolower(Helper::getExt($file['name']));
 
-					if (in_array($file_ext, $accepted_file_formats, true))
+					if (in_array($file_ext, $accepted_file_formats, true) && Helper::isValidImageContent($file['tmp_name'], $file_ext))
 					{
 						$name = $file['name'];
 						$source_path = $file['tmp_name'];
@@ -341,7 +340,7 @@ class Media
 						do
 						{
 							$base_name  = File::stripExt($media_file) . ($i ? "$i" : "");
-							$ext        = File::getExt($media_file);
+							$ext        = Helper::getExt($media_file);
 							$media_name = $base_name . '.' . $ext;
 							$i++;
 							$dest       = $uploadDir . '/' . $media_name;

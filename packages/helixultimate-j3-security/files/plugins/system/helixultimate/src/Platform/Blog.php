@@ -89,9 +89,9 @@ class Blog
 				if (!$error)
 				{
 					$acceptedImageFormats = array('jpg', 'jpeg', 'png', 'gif', 'webp');
-					$file_ext = strtolower(File::getExt($image['name']));
+					$file_ext = strtolower(Helper::getExt($image['name']));
 
-					if (!in_array($file_ext, $acceptedImageFormats, true))
+					if (!in_array($file_ext, $acceptedImageFormats, true) || !Helper::isValidImageContent($image['tmp_name'], $file_ext))
 					{
 						$report['output'] = Text::_('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
 						die(json_encode($report));
@@ -202,6 +202,14 @@ class Blog
 
 		$input = Factory::getApplication()->input;
 		$src = $input->post->get('src', '', 'STRING');
+		$articleId = (int) $input->get('id', 0, 'INT');
+
+		if (!Helper::canEditArticle($articleId))
+		{
+			$report['output'] = Text::_('JERROR_ALERTNOAUTHOR');
+			echo json_encode($report);
+			die();
+		}
 
 		$absolutePath = Helper::resolveMediaPath($src);
 
@@ -214,10 +222,10 @@ class Blog
 		if (File::delete($absolutePath))
 		{
 			$basename 	= basename($src);
-			$small 		= dirname($absolutePath) . '/' . File::stripExt($basename) . '_small.' . File::getExt($basename);
-			$thumbnail 	= dirname($absolutePath) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
-			$medium 	= dirname($absolutePath) . '/' . File::stripExt($basename) . '_medium.' . File::getExt($basename);
-			$large 		= dirname($absolutePath) . '/' . File::stripExt($basename) . '_large.' . File::getExt($basename);
+			$small 		= dirname($absolutePath) . '/' . File::stripExt($basename) . '_small.' . Helper::getExt($basename);
+			$thumbnail 	= dirname($absolutePath) . '/' . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
+			$medium 	= dirname($absolutePath) . '/' . File::stripExt($basename) . '_medium.' . Helper::getExt($basename);
+			$large 		= dirname($absolutePath) . '/' . File::stripExt($basename) . '_large.' . Helper::getExt($basename);
 
 				if (File::exists($small))
 				{

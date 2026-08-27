@@ -253,9 +253,28 @@ class Response
         $input    = Factory::getApplication()->input;
         $settings = Helper::sanitizeMegaMenuSettings($input->post->get('settings', [], 'ARRAY'));
         $itemId   = $input->post->get('id', 0, 'INT');
+        $user     = Factory::getUser();
+
+        if ($itemId <= 0 || !$user || !$user->id)
+        {
+            Response::sendResponse(Text::_('JERROR_ALERTNOAUTHOR'), false);
+        }
 
         $menu   = new SiteMenu;
         $item   = $menu->getItem($itemId);
+
+        if (!$item || empty($item->id))
+        {
+            Response::sendResponse(Text::_('JERROR_ALERTNOAUTHOR'), false);
+        }
+
+        $menutype = preg_replace('/[^a-zA-Z0-9_\-]/', '', (string) ($item->menutype ?? ''));
+
+        if ($menutype !== '' && !$user->authorise('core.edit', 'com_menus.menu.' . $menutype))
+        {
+            Response::sendResponse(Text::_('JERROR_ALERTNOAUTHOR'), false);
+        }
+
         $params = $item->getParams();
         $params->set('helixultimatemenulayout', \json_encode($settings));
 

@@ -12,7 +12,7 @@ use Joomla\CMS\Installer\Installer;
 
 class Helixultimatej3securityfixesInstallerScript
 {
-    const PACKAGE_VERSION = '1.0.0';
+    const PACKAGE_VERSION = '1.0.2';
 
     const HELIX_BASELINE = '2.1.4-j3sec';
 
@@ -34,7 +34,6 @@ class Helixultimatej3securityfixesInstallerScript
         'plugins/system/helixultimate/overrides/layouts/joomla/content/blog/gallery.php',
         'plugins/system/helixultimate/overrides/layouts/joomla/content/blog/video.php',
         'plugins/system/helixultimate/overrides/mod_menu/default.php',
-        'templates/shaper_helixultimate/templateDetails.xml',
         'plugins/system/helixultimate/layout/fields/alignment.php',
         'plugins/system/helixultimate/layout/fields/checkbox.php',
         'plugins/system/helixultimate/layout/fields/color.php',
@@ -43,6 +42,12 @@ class Helixultimatej3securityfixesInstallerScript
         'plugins/system/helixultimate/layout/fields/select.php',
         'plugins/system/helixultimate/layout/fields/text.php',
         'plugins/system/helixultimate/layout/fields/unit.php',
+        'plugins/system/helixultimate/layout/megaMenu/container.php',
+        'plugins/system/helixultimate/src/fields/helixmegamenu.php',
+        'templates/shaper_helixultimate/templateDetails.xml',
+        'templates/shaper_helixultimate/installer.script.php',
+        'templates/shaper_helixultimate/features/title.php',
+        'templates/shaper_helixultimate/index.php',
     ];
 
     public function preflight($type, $parent)

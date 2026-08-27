@@ -311,12 +311,15 @@ class Helper
             $draftKey = self::generateKey($draftKeyOptions);
             $cache = new HelixCache($draftKey);
 
+            $user = Factory::getUser();
+            $canPreviewDraft = $user && ($user->authorise('core.edit', 'com_templates') || $user->authorise('core.admin'));
+
             /**
              * Check the fetch destination. If it is iframe then load the settings
              * from draft, otherwise if it is document that means this request
              * comes from the original site visit. So load from saved cache.
              */
-            $requestFromIframe = $app->input->get('helixMode', '') === 'edit';
+            $requestFromIframe = ($app->input->get('helixMode', '') === 'edit') && $canPreviewDraft;
     
             if ($cache->contains() && $requestFromIframe)
             {
@@ -341,6 +344,35 @@ class Helper
                 else
                 {
                     $template = self::getTemplateStyle($templateId);        
+                }
+            }
+
+            if (!is_object($template))
+            {
+                $template = self::getTemplateStyle($templateId);
+            }
+
+            // Verify template style belongs to installed Helix template
+            $dbTemplate = self::getTemplateStyle($templateId);
+            if (!is_object($dbTemplate) || empty($dbTemplate->template))
+            {
+                $template = $dbTemplate;
+            }
+            else
+            {
+                if (!is_object($template))
+                {
+                    $template = new \stdClass;
+                }
+                $template->id       = (int) $dbTemplate->id;
+                $template->template = preg_replace('/[^a-zA-Z0-9_\-]/', '', (string) $dbTemplate->template);
+                if (empty($template->home))
+                {
+                    $template->home = $dbTemplate->home;
+                }
+                if (empty($template->title))
+                {
+                    $template->title = $dbTemplate->title;
                 }
             }
 
@@ -752,6 +784,111 @@ class Helper
 	}
 
 	/**
+	 * Save JoomShaper license information into Joomla update sites.
+	 *
+	 * @param   array  $inputs  Input parameters containing template, joomshaper_email, and joomshaper_license_key.
+	 *
+	 * @return  void
+	 * @since   2.0.19-j3sec
+	 */
+	public static function saveLicenseInfo(array $inputs)
+	{
+		if (empty($inputs))
+		{
+			return;
+		}
+
+		$validKeys = array('template', 'joomshaper_email', 'joomshaper_license_key');
+
+		if (array_diff($validKeys, array_keys($inputs)))
+		{
+			return;
+		}
+
+		$template    = $inputs['template'];
+		$email       = isset($inputs['joomshaper_email']) ? $inputs['joomshaper_email'] : '';
+		$license_key = isset($inputs['joomshaper_license_key']) ? $inputs['joomshaper_license_key'] : '';
+
+		$cleanTemplate = preg_replace('/[^A-Za-z0-9_-]+/', '', (string) $template);
+
+		if ($cleanTemplate === '')
+		{
+			return;
+		}
+
+		try
+		{
+			$db = Factory::getDbo();
+
+			// Find the extension ID for the installed Helix Ultimate package, template, or system plugin
+			$query = $db->getQuery(true)
+				->select($db->quoteName('e.extension_id'))
+				->from($db->quoteName('#__extensions', 'e'))
+				->where(
+					'(' . $db->quoteName('e.element') . ' = ' . $db->quote($cleanTemplate) . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('template') . ')'
+					. ' OR (' . $db->quoteName('e.element') . ' = ' . $db->quote('helixultimate') . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('plugin') . ' AND ' . $db->quoteName('e.folder') . ' = ' . $db->quote('system') . ')'
+					. ' OR (' . $db->quoteName('e.element') . ' = ' . $db->quote('pkg_helixultimate') . ' AND ' . $db->quoteName('e.type') . ' = ' . $db->quote('package') . ')'
+				);
+
+			$db->setQuery($query);
+			$extensionIds = $db->loadColumn();
+
+			$updateSiteIds = array();
+
+			if (!empty($extensionIds))
+			{
+				$cleanIds = array_map('intval', $extensionIds);
+				$useQuery = $db->getQuery(true)
+					->select('DISTINCT ' . $db->quoteName('update_site_id'))
+					->from($db->quoteName('#__update_sites_extensions'))
+					->where($db->quoteName('extension_id') . ' IN (' . implode(',', $cleanIds) . ')');
+
+				$db->setQuery($useQuery);
+				$updateSiteIds = $db->loadColumn();
+			}
+
+			// Fallback: If no mapping in #__update_sites_extensions, check #__update_sites where location contains 'joomshaper.com'
+			if (empty($updateSiteIds))
+			{
+				$siteQuery = $db->getQuery(true)
+					->select($db->quoteName('update_site_id'))
+					->from($db->quoteName('#__update_sites'))
+					->where($db->quoteName('name') . ' = ' . $db->quote($cleanTemplate))
+					->where($db->quoteName('location') . ' LIKE ' . $db->quote('%joomshaper.com%'));
+
+				$db->setQuery($siteQuery);
+				$updateSiteIds = $db->loadColumn();
+			}
+
+			if (empty($updateSiteIds))
+			{
+				return;
+			}
+
+			$extra_query  = 'joomshaper_email=' . urlencode($email);
+			$extra_query .= '&amp;joomshaper_license_key=' . urlencode($license_key);
+
+			$fields = array(
+				$db->quoteName('extra_query') . ' = ' . $db->quote($extra_query),
+				$db->quoteName('last_check_timestamp') . ' = 0',
+			);
+
+			$cleanSiteIds = array_map('intval', $updateSiteIds);
+			$updateQuery = $db->getQuery(true)
+				->update($db->quoteName('#__update_sites'))
+				->set($fields)
+				->where($db->quoteName('update_site_id') . ' IN (' . implode(',', $cleanSiteIds) . ')');
+
+			$db->setQuery($updateQuery);
+			$db->execute();
+		}
+		catch (\Exception $e)
+		{
+			return;
+		}
+	}
+
+	/**
 	 * Map Helix AJAX actions to required Joomla permissions (administrator).
 	 *
 	 * @return  array
@@ -801,6 +938,23 @@ class Helper
 			$permissions[$action] = array('com_templates' => 'core.edit');
 		}
 
+		$permissions['view-media'] = array(
+			'com_templates' => 'core.edit',
+			'com_media'     => 'core.manage',
+		);
+		$permissions['upload-media'] = array(
+			'com_templates' => 'core.edit',
+			'com_media'     => 'core.create',
+		);
+		$permissions['delete-media'] = array(
+			'com_templates' => 'core.edit',
+			'com_media'     => 'core.delete',
+		);
+		$permissions['create-folder'] = array(
+			'com_templates' => 'core.edit',
+			'com_media'     => 'core.create',
+		);
+
 		foreach ($menuActions as $action)
 		{
 			$permissions[$action] = array('com_menus' => 'core.edit');
@@ -832,13 +986,20 @@ class Helper
 				'com_media'   => 'core.delete',
 			),
 			'view-media' => array(
-				'com_media' => 'core.create',
+				'com_templates' => 'core.edit',
+				'com_media'     => 'core.manage',
 			),
 			'delete-media' => array(
-				'com_media' => 'core.delete',
+				'com_templates' => 'core.edit',
+				'com_media'     => 'core.delete',
 			),
 			'upload-media' => array(
-				'com_media' => 'core.create',
+				'com_templates' => 'core.edit',
+				'com_media'     => 'core.create',
+			),
+			'create-folder' => array(
+				'com_templates' => 'core.edit',
+				'com_media'     => 'core.create',
 			),
 		);
 	}
@@ -948,6 +1109,11 @@ class Helper
 	 */
 	public static function resolveMediaPath($path)
 	{
+		if (strpos($path, "\0") !== false)
+		{
+			return null;
+		}
+
 		$path = trim(str_replace('\\', '/', $path));
 
 		if ($path === '' || strpos($path, '..') !== false)
@@ -961,13 +1127,19 @@ class Helper
 		$allowedRoots = array_unique(array($mediaRoot, 'images'));
 
 		$fullPath = Path::clean(JPATH_ROOT . '/' . $path);
+
+		$realFullPath = realpath($fullPath);
+		$checkPath    = $realFullPath !== false ? $realFullPath : $fullPath;
+
 		$isAllowed = false;
 
 		foreach ($allowedRoots as $root)
 		{
 			$allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
+			$realRoot    = realpath($allowedPath);
+			$targetRoot  = $realRoot !== false ? $realRoot : $allowedPath;
 
-			if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0)
+			if ($checkPath === $targetRoot || strpos($checkPath, $targetRoot . DIRECTORY_SEPARATOR) === 0 || strpos($checkPath, $targetRoot . '/') === 0)
 			{
 				$isAllowed = true;
 				break;
@@ -1297,25 +1469,172 @@ class Helper
 	}
 
 	/**
+	 * Gets the extension of a file name
+	 *
+	 * @param   string  $file  The file name
+	 *
+	 * @return  string  The file extension
+	 *
+	 * @since   3.0.0
+	 */
+	public static function getExt($file)
+	{
+		$dot = strrpos($file, '.');
+
+		if ($dot === false)
+		{
+			return '';
+		}
+
+		$ext = substr($file, $dot + 1);
+
+		if (strpos($ext, '/') !== false || (DIRECTORY_SEPARATOR === '\\' && strpos($ext, '\\') !== false))
+		{
+			return '';
+		}
+
+		return $ext;
+	}
+
+	/**
+	 * Verify whether an uploaded file is a genuine and permitted raster image.
+	 *
+	 * @param   string  $filePath   Absolute path to the temporary or stored file.
+	 * @param   string  $extension  Expected file extension (e.g. 'jpg', 'png', 'webp').
+	 *
+	 * @return  bool  True if the file is a valid, supported raster image.
+	 * @since   2.0.19-j3sec
+	 */
+	public static function isValidImageContent($filePath, $extension = '')
+	{
+		if (!is_file($filePath) || filesize($filePath) === 0)
+		{
+			return false;
+		}
+
+		$allowedMimes = array(
+			'jpg'  => array('image/jpeg', 'image/pjpeg'),
+			'jpeg' => array('image/jpeg', 'image/pjpeg'),
+			'png'  => array('image/png', 'image/x-png'),
+			'gif'  => array('image/gif'),
+			'webp' => array('image/webp'),
+		);
+
+		$detectedMime = '';
+
+		if (function_exists('getimagesize'))
+		{
+			$imageInfo = @getimagesize($filePath);
+
+			if ($imageInfo === false || empty($imageInfo[0]) || empty($imageInfo[1]))
+			{
+				return false;
+			}
+
+			$detectedMime = isset($imageInfo['mime']) ? strtolower($imageInfo['mime']) : '';
+		}
+
+		if (function_exists('finfo_open'))
+		{
+			$finfo = @finfo_open(FILEINFO_MIME_TYPE);
+
+			if ($finfo)
+			{
+				$finfoMime = @finfo_file($finfo, $filePath);
+
+				if ($finfoMime && !in_array($finfoMime, array('image/jpeg', 'image/pjpeg', 'image/png', 'image/x-png', 'image/gif', 'image/webp'), true))
+				{
+					return false;
+				}
+
+				if ($detectedMime === '' && $finfoMime)
+				{
+					$detectedMime = strtolower($finfoMime);
+				}
+			}
+		}
+
+		if ($detectedMime === '')
+		{
+			return false;
+		}
+
+		if ($extension !== '')
+		{
+			$normalizedExt = strtolower(ltrim($extension, '.'));
+
+			if (!isset($allowedMimes[$normalizedExt]))
+			{
+				return false;
+			}
+
+			if (!in_array($detectedMime, $allowedMimes[$normalizedExt], true))
+			{
+				return false;
+			}
+		}
+		else
+		{
+			$allPermitted = array();
+
+			foreach ($allowedMimes as $mimes)
+			{
+				$allPermitted = array_merge($allPermitted, $mimes);
+			}
+
+			if (!in_array($detectedMime, $allPermitted, true))
+			{
+				return false;
+			}
+		}
+
+		if (function_exists('imagecreatefromstring'))
+		{
+			$rawContent = @file_get_contents($filePath);
+			if ($rawContent === false || $rawContent === '')
+			{
+				return false;
+			}
+			$img = @imagecreatefromstring($rawContent);
+			if ($img === false)
+			{
+				return false;
+			}
+			if (is_resource($img) || (is_object($img) && $img instanceof \GdImage))
+			{
+				if (function_exists('imagedestroy') && is_resource($img))
+				{
+					@imagedestroy($img);
+				}
+			}
+			unset($img);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Count read time buy content text
 	 *
-	 * @param string $text
-	 * @return string
+	 * @param   string  $text
+	 *
+	 * @return  string
 	 */
 	public static function getReadTime($text)
 	{
-		$words_per_minute 	= 200;
-		$word_count 		= str_word_count(strip_tags($text));
-		$read_time			= ceil($word_count / $words_per_minute);
+		$words_per_minute = 200;
+		$word_count       = str_word_count(strip_tags($text));
+		$read_time        = ceil($word_count / $words_per_minute);
 
-		if ($read_time == 1) { //grammar conversion
+		if ($read_time == 1)
+		{
 			$label = Text::_('HELIX_ULTIMATE_BLOG_MINUTE_READ');
-		} else {
+		}
+		else
+		{
 			$label = Text::_('HELIX_ULTIMATE_BLOG_MINUTES_READ');
 		}
-			
-		$totalString = $read_time . " " . $label; //adds time with minute/minutes label
 
-		return $totalString;
+		return $read_time . " " . $label;
 	}
 }

@@ -12,7 +12,7 @@ use Joomla\CMS\Installer\Installer;
 
 class Helixultimatej3securityfixesInstallerScript
 {
-    const PACKAGE_VERSION = '1.0.2';
+    const PACKAGE_VERSION = '1.0.3';
 
     const HELIX_BASELINE = '2.1.4-j3sec';
 

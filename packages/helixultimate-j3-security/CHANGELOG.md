@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.3 — 2026-08-31
+
+- Bound blog image removal authorization to the specific article's attributes (`helix_ultimate_image` / `helix_ultimate_gallery`) to prevent arbitrary file deletion under the media root
+- Updated deletion failure responses to use localized `HELIX_ULTIMATE_DELETE_FAILED` language string
+
 ## 1.0.2 — 2026-08-27
 
 - Backported security hardening from Helix Ultimate 2.2.10

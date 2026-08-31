@@ -11,7 +11,7 @@
     $root       = realpath(__DIR__ . '/../../..');
     $packageDir = $root . '/packages/helixultimate-j3-security';
     $filesDir   = $packageDir . '/files';
-    $version    = '1.0.2';
+    $version    = '1.0.3';
     $outputZip  = $packageDir . '/dist/helixultimate_j3_security_fixes_v' . $version . '.zip';
 
     $patchedFiles = [

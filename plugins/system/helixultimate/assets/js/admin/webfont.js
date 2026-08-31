@@ -100,14 +100,17 @@ jQuery(function ($) {
 				fontName: fontName,
 			};
 
-			var request = {
-				action: 'fontVariants',
-				option: 'com_ajax',
-				helix: 'ultimate',
-				request: 'task',
-				data: data,
-				format: 'json',
-			};
+			var request = $.extend(
+				{
+					action: 'fontVariants',
+					option: 'com_ajax',
+					helix: 'ultimate',
+					request: 'task',
+					data: data,
+					format: 'json',
+				},
+				Joomla.utils.getCsrfTokenData()
+			);
 
 			$.ajax({
 				type: 'POST',
@@ -216,14 +219,17 @@ jQuery(function ($) {
 		event.preventDefault();
 
 		var $that = $(this);
-		var request = {
-			action: 'update-font-list',
-			option: 'com_ajax',
-			helix: 'ultimate',
-			request: 'task',
-			data: {},
-			format: 'json',
-		};
+		var request = $.extend(
+			{
+				action: 'update-font-list',
+				option: 'com_ajax',
+				helix: 'ultimate',
+				request: 'task',
+				data: {},
+				format: 'json',
+			},
+			Joomla.utils.getCsrfTokenData()
+		);
 
 		$.ajax({
 			type: 'POST',

@@ -186,7 +186,7 @@ var megaMenu = {
 			$.ajax({
 				method: 'POST',
 				url,
-				data,
+				data: Object.assign({}, data, Joomla.utils.getCsrfTokenData()),
 				success(res) {
 					res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
 					resolve(res);
@@ -263,7 +263,7 @@ var megaMenu = {
 			$.ajax({
 				method: 'GET',
 				url,
-				data,
+				data: Object.assign({}, data, Joomla.utils.getCsrfTokenData()),
 				success(res) {
 					res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
 					resolve(res);
@@ -409,7 +409,7 @@ var megaMenu = {
 			$.ajax({
 				method: 'POST',
 				url,
-				data,
+				data: Object.assign({}, data, Joomla.utils.getCsrfTokenData()),
 				success(res) {
 					res = typeof res === 'string' && res.length ? JSON.parse(res) : false;
 					resolve(res);
@@ -488,7 +488,7 @@ var megaMenu = {
 			$.ajax({
 				method: 'POST',
 				url,
-				data,
+				data: Object.assign({}, data, Joomla.utils.getCsrfTokenData()),
 				success(res) {
 					res = typeof res === 'string' && res.length ? JSON.parse(res) : false;
 					resolve(res);
@@ -619,7 +619,7 @@ var megaMenu = {
 		$.ajax({
 			method: 'POST',
 			url,
-			data,
+			data: Object.assign({}, data, Joomla.utils.getCsrfTokenData()),
 			success(res) {
 				res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
 				if (res.status) Joomla.reloadPreview();

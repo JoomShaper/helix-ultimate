@@ -5,6 +5,10 @@
   "repository": "git@github.com:JoomShaper/helix-ultimate.git",
   "author": "JoomShaper <support@joomshaper.com>",
   "license": "GNU/GPLv2",
+  "scripts": {
+    "test:e2e": "php tests/e2e/test-media-csrf.php",
+    "test:security": "php plugins/system/helixultimate/tests/security/run.php"
+  },
   "devDependencies": {
     "del": "^6.1.1",
     "gulp": "^4.0.2",

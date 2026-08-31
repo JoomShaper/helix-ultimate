@@ -959,6 +959,7 @@ jQuery(function ($) {
     });
 
     window.purgeCss = function (self = null) {
+        const tokenData = (typeof Joomla !== 'undefined' && Joomla.utils && Joomla.utils.getCsrfTokenData) ? Joomla.utils.getCsrfTokenData() : {};
         $.ajax({
             type: 'POST',
             url:
@@ -966,7 +967,7 @@ jQuery(function ($) {
                 helixUltimateStyleId +
                 '&action=purge-css-file&format=json&helix_id=' +
                 helixUltimateStyleId,
-            data: {},
+            data: tokenData,
             beforeSend: function () {
                 self && self.append('<span class="fas fa-circle-notch fa-spin" aria-hidden="true"></span>');
             },
@@ -995,8 +996,8 @@ jQuery(function ($) {
     });
 
     // Import helix settings.
-    $('#btn-hu-import-settings').on('click', function (event) {
-        event.preventDefault();
+    $('#helix-import-settings').on('click', function (e) {
+        e.preventDefault();
         $('#helix-import-file').click();
     });
 
@@ -1005,15 +1006,19 @@ jQuery(function ($) {
         reader.onload = function (event) {
             const settings = JSON.parse(event.target.result);
             var data = { settings: event.target.result };
+            const tokenData = (typeof Joomla !== 'undefined' && Joomla.utils && Joomla.utils.getCsrfTokenData) ? Joomla.utils.getCsrfTokenData() : {};
 
-            var request = {
-                action: 'import-tmpl-style',
-                option: 'com_ajax',
-                helix: 'ultimate',
-                request: 'task',
-                data: data,
-                format: 'json',
-            };
+            var request = $.extend(
+                {
+                    action: 'import-tmpl-style',
+                    option: 'com_ajax',
+                    helix: 'ultimate',
+                    request: 'task',
+                    data: data,
+                    format: 'json',
+                },
+                tokenData
+            );
 
             $.ajax({
                 type: 'POST',

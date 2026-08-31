@@ -289,7 +289,7 @@ jQuery(function ($) {
 			$.ajax({
 				method: 'POST',
 				url,
-				data,
+				data: Object.assign({}, data, Joomla.utils.getCsrfTokenData()),
 				success(response) {
 					response = typeof response === 'string' && response.length > 0 ? JSON.parse(response) : response;
 					resolve(response);

@@ -26,13 +26,16 @@ jQuery(function ($) {
 			target: target,
 		});
 
-		var request = {
-			action: 'view-media',
-			option: 'com_ajax',
-			helix: 'ultimate',
-			request: 'task',
-			format: 'json',
-		};
+		var request = $.extend(
+			{
+				action: 'view-media',
+				option: 'com_ajax',
+				helix: 'ultimate',
+				request: 'task',
+				format: 'json',
+			},
+				Joomla.utils.getCsrfTokenData()
+		);
 
 		$.ajax({
 			type: 'POST',
@@ -62,14 +65,17 @@ jQuery(function ($) {
 		e.preventDefault();
 		var self = this;
 
-		var request = {
-			action: 'view-media',
-			option: 'com_ajax',
-			helix: 'ultimate',
-			request: 'task',
-			path: $(self).data('path'),
-			format: 'json',
-		};
+		var request = $.extend(
+			{
+				action: 'view-media',
+				option: 'com_ajax',
+				helix: 'ultimate',
+				request: 'task',
+				path: $(self).data('path'),
+				format: 'json',
+			},
+				Joomla.utils.getCsrfTokenData()
+		);
 
 		$.ajax({
 			type: 'POST',
@@ -101,14 +107,17 @@ jQuery(function ($) {
 		e.preventDefault();
 		var self = this;
 
-		var request = {
-			action: 'view-media',
-			option: 'com_ajax',
-			helix: 'ultimate',
-			request: 'task',
-			path: $(self).data('path'),
-			format: 'json',
-		};
+		var request = $.extend(
+			{
+				action: 'view-media',
+				option: 'com_ajax',
+				helix: 'ultimate',
+				request: 'task',
+				path: $(self).data('path'),
+				format: 'json',
+			},
+				Joomla.utils.getCsrfTokenData()
+		);
 
 		$.ajax({
 			type: 'POST',
@@ -235,15 +244,18 @@ jQuery(function ($) {
 		}
 
 		if (confirm('Are you sure you want to delete this ' + deleteType + '?')) {
-			var request = {
-				action: 'delete-media',
-				option: 'com_ajax',
-				helix: 'ultimate',
-				request: 'task',
-				type: deleteType,
-				path: $('.hu-media-selected').data('path'),
-				format: 'json',
-			};
+			var request = $.extend(
+				{
+					action: 'delete-media',
+					option: 'com_ajax',
+					helix: 'ultimate',
+					request: 'task',
+					type: deleteType,
+					path: $('.hu-media-selected').data('path'),
+					format: 'json',
+				},
+					Joomla.utils.getCsrfTokenData()
+			);
 
 			$.ajax({
 				type: 'POST',
@@ -273,15 +285,18 @@ jQuery(function ($) {
 
 		if (folder_name == null || folder_name == '') {
 		} else {
-			var request = {
-				action: 'create-folder',
-				option: 'com_ajax',
-				helix: 'ultimate',
-				request: 'task',
-				folder_name: folder_name,
-				path: $('.hu-media-breadcrumb-item.active').data('path'),
-				format: 'json',
-			};
+			var request = $.extend(
+				{
+					action: 'create-folder',
+					option: 'com_ajax',
+					helix: 'ultimate',
+					request: 'task',
+					folder_name: folder_name,
+					path: $('.hu-media-breadcrumb-item.active').data('path'),
+					format: 'json',
+				},
+					Joomla.utils.getCsrfTokenData()
+			);
 
 			$.ajax({
 				type: 'POST',
@@ -405,9 +420,16 @@ jQuery(function ($) {
 				file_ext == 'gif';
 			if (allowed) {
 				var formdata = new FormData();
+				var tokenData = Joomla.utils.getCsrfTokenData();
+
 				formdata.append('file', files[i]);
 				formdata.append('path', $('.hu-media-breadcrumb-item.active').data('path'));
 				formdata.append('index', 'media-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1));
+
+				Object.keys(tokenData).forEach(function (key) {
+					formdata.append(key, tokenData[key]);
+				});
+
 				$(this).uploadMedia({
 					data: formdata,
 					index: 'media-id-' + Math.floor(Math.random() * (1e6 - 1 + 1) + 1),

@@ -10,6 +10,7 @@ defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 
 extract($displayData);
@@ -34,6 +35,7 @@ $sidebar = new Settings;
 					<input type="hidden" name="client_id" value="<?php echo $style->client_id; ?>">
 					<input type="hidden" name="home" value="<?php echo $style->home; ?>">
 					<input type="hidden" name="title" value="<?php echo $style->title; ?>">
+					<?php echo HTMLHelper::_('form.token'); ?>
 				</form>
 			</div>
 		</div>

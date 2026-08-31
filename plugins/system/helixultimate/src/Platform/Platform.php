@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 
 /**
@@ -274,6 +275,7 @@ class Platform
 		);
 
 		$doc->addScriptOptions('meta', $meta);
+		$doc->addScriptOptions('csrf.token', Session::getFormToken());
 		$doc->setBuffer((new self)->initialize(), 'component');
 	}
 

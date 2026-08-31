@@ -152,6 +152,11 @@ function calculateSiblingDistances() {
 	});
 }
 
+const getCsrfTokenData = () => {
+	const token = typeof Joomla !== 'undefined' && Joomla.getOptions ? Joomla.getOptions('csrf.token') : null;
+	return token ? { [token]: '1' } : {};
+};
+
 Joomla.utils = {
 	asciiToHex,
 	getCurrentTimeString,
@@ -163,4 +168,5 @@ Joomla.utils = {
 	debounce,
 	getDistance,
 	calculateSiblingDistances,
+	getCsrfTokenData,
 };

@@ -1578,6 +1578,18 @@ class HelixUltimate
 				}
 			}
 
+			// Extract custom.js to ensure it loads after compressed JS files
+			$customScripts = [];
+			foreach ($this->doc->_scripts as $url => $options)
+			{
+				$filePath = parse_url($url, PHP_URL_PATH) ?: $url;
+				if (basename($filePath) === 'custom.js')
+				{
+					$customScripts[$url] = $options;
+					unset($this->doc->_scripts[$url]);
+				}
+			}
+
 			// Compress All scripts
 			if ($minifiedCode)
 			{
@@ -1585,23 +1597,22 @@ class HelixUltimate
 				{
 					Folder::create($cache_path, 0755);
 				}
+
+				$file = $cache_path . '/' . md5($md5sum) . '.js';
+
+				if (!\file_exists($file))
+				{
+					File::write($file, $minifiedCode);
+				}
 				else
 				{
-					$file = $cache_path . '/' . md5($md5sum) . '.js';
-
-					if (!\file_exists($file))
+					if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
 					{
 						File::write($file, $minifiedCode);
 					}
-					else
-					{
-						if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
-						{
-							File::write($file, $minifiedCode);
-						}
-					}
-					$this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
 				}
+
+				$this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
 			}
 
 			$excludedScriptPaths = array_merge($excludedScriptPaths, $remoteScripts);
@@ -1618,8 +1629,16 @@ class HelixUltimate
 						$path = str_replace(JPATH_ROOT, '', $path);
 					}
 
-					$this->doc->addScript(Uri::root(true) . $path);
+					$path = Uri::root(true) . $path;
+
+					$this->doc->addScript($path);
 				}
+			}
+
+			// Restore custom.js so it loads after compressed JS
+			foreach ($customScripts as $url => $options)
+			{
+				$this->doc->_scripts[$url] = $options;
 			}
 
 			return;
@@ -1856,30 +1875,47 @@ class HelixUltimate
 				}
 			}
 
-			//Compress All stylesheets
+			// Extract custom.css to ensure it loads after compressed CSS files
+			$customStylesheets = [];
+			foreach ($this->doc->_styleSheets as $url => $options)
+			{
+				$filePath = parse_url($url, PHP_URL_PATH) ?: $url;
+				if (basename($filePath) === 'custom.css')
+				{
+					$customStylesheets[$url] = $options;
+					unset($this->doc->_styleSheets[$url]);
+				}
+			}
+
+			// Compress All stylesheets
 			if ($minifiedCode)
 			{
-					if (!is_dir($cache_path))
-					{
-							Folder::create($cache_path, 0755);
-					}
-					else
-					{
-							$file = $cache_path . '/' . md5($md5sum) . '.css';
+				if (!is_dir($cache_path))
+				{
+					Folder::create($cache_path, 0755);
+				}
 
-							if (!\file_exists($file))
-							{
-									File::write($file, $minifiedCode);
-							}
-							else
-							{
-									if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
-									{
-											File::write($file, $minifiedCode);
-									}
-							}
-							$this->doc->addStylesheet(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
+				$file = $cache_path . '/' . md5($md5sum) . '.css';
+
+				if (!\file_exists($file))
+				{
+					File::write($file, $minifiedCode);
+				}
+				else
+				{
+					if (filesize($file) == 0 || ((filemtime($file) + $cachetime * 60) < time()))
+					{
+						File::write($file, $minifiedCode);
 					}
+				}
+
+				$this->doc->addStylesheet(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
+			}
+
+			// Restore custom.css so it loads after compressed CSS
+			foreach ($customStylesheets as $url => $options)
+			{
+				$this->doc->_styleSheets[$url] = $options;
 			}
 
 			return;

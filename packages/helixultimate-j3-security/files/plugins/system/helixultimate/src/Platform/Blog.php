@@ -204,7 +204,7 @@ class Blog
 		$src = $input->post->get('src', '', 'STRING');
 		$articleId = (int) $input->get('id', 0, 'INT');
 
-		if (!Helper::canEditArticle($articleId))
+		if ($articleId <= 0 || !Helper::canEditArticle($articleId))
 		{
 			$report['output'] = Text::_('JERROR_ALERTNOAUTHOR');
 			echo json_encode($report);
@@ -213,9 +213,60 @@ class Blog
 
 		$absolutePath = Helper::resolveMediaPath($src);
 
-		if ($absolutePath === null || !File::exists($absolutePath))
+		if ($src === '' || $absolutePath === null || !File::exists($absolutePath))
 		{
-			$report['status'] = true;
+			$report['status'] = false;
+			$report['output'] = Text::_('HELIX_ULTIMATE_DELETE_FAILED');
+			die(json_encode($report));
+		}
+
+		$db = Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select($db->quoteName('attribs'))
+			->from($db->quoteName('#__content'))
+			->where($db->quoteName('id') . ' = ' . (int) $articleId);
+		$db->setQuery($query);
+		$attribs = $db->loadResult();
+
+		$attribsDecoded = json_decode($attribs ?? '', true);
+
+		if (!\is_array($attribsDecoded))
+		{
+			$attribsDecoded = [];
+		}
+
+		$isReferenced = false;
+
+		if (($attribsDecoded['helix_ultimate_image'] ?? '') === $src)
+		{
+			$attribsDecoded['helix_ultimate_image'] = '';
+			$isReferenced = true;
+		}
+
+		if (!empty($attribsDecoded['helix_ultimate_gallery']))
+		{
+			$galleryImages = json_decode($attribsDecoded['helix_ultimate_gallery'], true);
+
+			if (\is_array($galleryImages) && \is_array($galleryImages['helix_ultimate_gallery_images'] ?? null))
+			{
+				foreach ($galleryImages['helix_ultimate_gallery_images'] as $key => $image)
+				{
+					if ($image === $src)
+					{
+						unset($galleryImages['helix_ultimate_gallery_images'][$key]);
+						$isReferenced = true;
+					}
+				}
+
+				$galleryImages['helix_ultimate_gallery_images'] = array_values($galleryImages['helix_ultimate_gallery_images']);
+				$attribsDecoded['helix_ultimate_gallery']       = json_encode($galleryImages);
+			}
+		}
+
+		if (!$isReferenced)
+		{
+			$report['status'] = false;
+			$report['output'] = Text::_('HELIX_ULTIMATE_DELETE_FAILED');
 			die(json_encode($report));
 		}
 
@@ -227,32 +278,41 @@ class Blog
 			$medium 	= dirname($absolutePath) . '/' . File::stripExt($basename) . '_medium.' . Helper::getExt($basename);
 			$large 		= dirname($absolutePath) . '/' . File::stripExt($basename) . '_large.' . Helper::getExt($basename);
 
-				if (File::exists($small))
-				{
-					File::delete($small);
-				}
+			if (File::exists($small))
+			{
+				File::delete($small);
+			}
 
-				if (File::exists($thumbnail))
-				{
-					File::delete($thumbnail);
-				}
+			if (File::exists($thumbnail))
+			{
+				File::delete($thumbnail);
+			}
 
-				if (File::exists($medium))
-				{
-					File::delete($medium);
-				}
+			if (File::exists($medium))
+			{
+				File::delete($medium);
+			}
 
-				if (File::exists($large))
-				{
-					File::delete($large);
-				}
+			if (File::exists($large))
+			{
+				File::delete($large);
+			}
+
+			$attribsJson = json_encode($attribsDecoded);
+
+			$updateQuery = $db->getQuery(true)
+				->update($db->quoteName('#__content'))
+				->set($db->quoteName('attribs') . ' = ' . $db->quote($attribsJson))
+				->where($db->quoteName('id') . ' = ' . (int) $articleId);
+			$db->setQuery($updateQuery);
+			$db->execute();
 
 			$report['status'] = true;
 		}
 		else
 		{
 			$report['status'] = false;
-			$report['output'] = Text::_('Delete failed');
+			$report['output'] = Text::_('HELIX_ULTIMATE_DELETE_FAILED');
 		}
 
 		die(json_encode($report));

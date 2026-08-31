@@ -1398,11 +1398,13 @@ class HelixUltimate
 
 		if ($excludes)
 		{
+			$filePath = parse_url($key, PHP_URL_PATH) ?: $key;
+			$fileName = basename($filePath);
 			$excludes = explode(',', $excludes);
 
 			foreach ($excludes as $exclude)
 			{
-				if (basename($key) == trim($exclude))
+				if ($fileName == trim($exclude))
 				{
 					$match = true;
 				}
@@ -1427,11 +1429,13 @@ class HelixUltimate
 
 		if ($excludes)
 		{
+			$filePath = parse_url($key, PHP_URL_PATH) ?: $key;
+			$fileName = basename($filePath);
 			$excludes = explode(',', $excludes);
 
 			foreach ($excludes as $exclude)
 			{
-				if (basename($key) == trim($exclude))
+				if ($fileName == trim($exclude))
 				{
 					$match = true;
 				}
@@ -1806,8 +1810,17 @@ class HelixUltimate
 					$css_file = \JPATH_ROOT . $key;
 				}
 
+				if (\stripos($css_file, '?') !== false)
+				{
+					$css_file = \substr($css_file, 0, \stripos($css_file, '?'));
+				}
+
 				global $absolute_url;
-				$absolute_url = $key;            
+				$absolute_url = $key;
+				if (\stripos($absolute_url, '?') !== false)
+				{
+					$absolute_url = \substr($absolute_url, 0, \stripos($absolute_url, '?'));
+				}            
 
 				if (\file_exists($css_file))
 				{

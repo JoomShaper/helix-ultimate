@@ -74,7 +74,7 @@ if (isset($row->settings->name))
 	$name = $row->settings->name;
 }
 
-$layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+$layout_path  = JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'layouts';
 $layout_column = new FileLayout('backend.column', $layout_path );
 
 $output = '';

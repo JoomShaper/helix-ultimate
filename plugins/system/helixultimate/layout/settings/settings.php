@@ -499,7 +499,7 @@ class RowColumnSettings
 
 		$template  = self::getTemplateName();
 
-		$templateXML = JPATH_SITE . '/templates/' . $template . '/templateDetails.xml';
+		$templateXML = JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'templateDetails.xml';
 		$templateXml = simplexml_load_file($templateXML);
 		$options = array();
 

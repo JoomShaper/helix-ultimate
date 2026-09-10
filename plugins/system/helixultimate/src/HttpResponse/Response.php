@@ -92,8 +92,8 @@ class Response
 	private static function getMenuItemModel()
 	{
 		if (JoomlaBridge::getVersion('major') < 4) {
-			$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/item.php';
-			$tablePath = JPATH_ADMINISTRATOR . '/components/com_menus/tables';
+			$classUrl = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_menus' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'item.php';
+			$tablePath = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_menus' . DIRECTORY_SEPARATOR . 'tables';
 		}
 
 		if (JoomlaBridge::getVersion('major') < 4) {

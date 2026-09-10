@@ -36,7 +36,7 @@ if (version_compare(JVERSION, '4.2.0', '<')) {
  *
  * @since	2.0.0
  */
-$bootstrap_path = JPATH_PLUGINS . '/system/helixultimate/bootstrap.php';
+$bootstrap_path = JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 if (file_exists($bootstrap_path)) {
 

@@ -108,14 +108,14 @@ final class HTMLOverride
 				\array_splice($path, 1, 0, ['tmpl']);
 			}
 
-			return JPATH_ROOT . '/components/' . \implode('/', $path);
+			return JPATH_ROOT . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . \implode('/', $path);
 		}
 		/** If the extension path is for a module- */
 		elseif (\strpos($extension, 'mod_') === 0)
 		{
 			\array_splice($path, 1, 0, ['tmpl']);
 
-			return JPATH_ROOT . '/modules/' . \implode('/', $path);
+			return JPATH_ROOT . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . \implode('/', $path);
 		}
 		/** If the extension path is for a plugin- */
 		elseif (\strpos($extension, 'plg_') === 0)
@@ -129,12 +129,12 @@ final class HTMLOverride
 			\array_push($pluginPath, 'tmpl');
 
 			\array_splice($path, 0, 1, $pluginPath);
-			return JPATH_ROOT . '/plugins/' . \implode('/', $path);
+			return JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . \implode('/', $path);
 		}
 		/** If the path is for the layouts */
 		elseif ($extension === 'layouts')
 		{
-			return JPATH_ROOT . '/' . \implode('/', $path);
+			return JPATH_ROOT . DIRECTORY_SEPARATOR . \implode('/', $path);
 		}
 
 		return \implode('/', $path);

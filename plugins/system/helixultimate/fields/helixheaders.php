@@ -41,8 +41,8 @@ class JFormFieldHelixheaders extends FormField
 		$id = $input->get('id', 0, 'INT');
 		$template = $this->getTemplateName($id);
 
-		$headers_src = JPATH_ROOT . '/templates/' . $template . '/headers';
-		$thumb_url = Uri::root() . 'templates/' . $template . '/headers';
+		$headers_src = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'headers';
+		$thumb_url = Uri::root() . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'headers';
 
 		$html = '';
 
@@ -59,13 +59,13 @@ class JFormFieldHelixheaders extends FormField
 				{
 					$html .= '<li class="hu-header-item' . (($this->value === $header) ? ' active' : '') . '" data-style="' . $header . '">';
 
-					if (file_exists($headers_src . '/' . $header . '/thumb.svg'))
+					if (file_exists($headers_src . DIRECTORY_SEPARATOR . $header . DIRECTORY_SEPARATOR . 'thumb.svg'))
 					{
-						$html .= '<span><img src="' . $thumb_url . '/' . $header . '/thumb.svg" alt="' . $header . '"</span>';
+						$html .= '<span><img src="' . $thumb_url . DIRECTORY_SEPARATOR . $header . DIRECTORY_SEPARATOR . 'thumb.svg" alt="' . $header . '"</span>';
 					}
 					else
 					{
-						$html .= '<span><img src="' . $thumb_url . '/' . $header . '/thumb.jpg" alt="' . $header . '"</span>';
+						$html .= '<span><img src="' . $thumb_url . DIRECTORY_SEPARATOR . $header . DIRECTORY_SEPARATOR . 'thumb.jpg" alt="' . $header . '"</span>';
 					}
 
 					$html .= '</li>';

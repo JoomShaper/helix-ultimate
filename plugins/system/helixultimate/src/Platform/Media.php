@@ -307,7 +307,7 @@ class Media
                     if (in_array($file_ext, $accepted_file_formats, true) && Helper::isValidImageContent($file['tmp_name'], $file_ext)) {
                         $name        = $file['name'];
                         $source_path = $file['tmp_name'];
-                        $folder      = ltrim(str_replace(JPATH_ROOT . '/', '', $uploadDir), '/');
+                        $folder      = ltrim(str_replace(JPATH_ROOT . DIRECTORY_SEPARATOR, '', $uploadDir), '/');
 
                         // Do no override existing file
                         $media_file = preg_replace('#\s+#', "-", File::makeSafe(basename(strtolower($name))));

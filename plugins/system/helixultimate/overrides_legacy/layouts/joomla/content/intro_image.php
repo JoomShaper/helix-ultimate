@@ -40,9 +40,9 @@
     } else {
         $intro_image = $attribs->helix_ultimate_image;
         $basename    = basename($intro_image);
-        $list_image  = JPATH_ROOT . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . Helper::getExt($basename);
+        $list_image  = JPATH_ROOT . DIRECTORY_SEPARATOR . dirname($intro_image) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_' . $blog_list_image . '.' . Helper::getExt($basename);
         if (\file_exists($list_image)) {
-            $intro_image = Uri::root(true) . '/' . dirname($intro_image) . '/' . File::stripExt($basename) . '_' . $blog_list_image . '.' . Helper::getExt($basename);
+            $intro_image = Uri::root(true) . DIRECTORY_SEPARATOR . dirname($intro_image) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_' . $blog_list_image . '.' . Helper::getExt($basename);
         }
     }
     }

@@ -54,7 +54,7 @@ class JFormFieldHelixpositions extends FormField
 		$db->setQuery($query);
 		$dbpositions = $db->loadObjectList();
 
-		$templateXML = JPATH_SITE . '/templates/' . $style->template . '/templateDetails.xml';
+		$templateXML = JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $style->template . DIRECTORY_SEPARATOR . 'templateDetails.xml';
 		$template = simplexml_load_file($templateXML);
 		$options = array();
 

@@ -10,7 +10,7 @@ defined ('_JEXEC') or die();
 
 $data = $displayData;
 
-$feature_folder_path     = JPATH_THEMES . '/' . $data->template->template . '/features/';
+$feature_folder_path     = JPATH_THEMES . DIRECTORY_SEPARATOR . $data->template->template . DIRECTORY_SEPARATOR . 'features' . DIRECTORY_SEPARATOR;
 
 include_once $feature_folder_path.'logo.php';
 include_once $feature_folder_path.'social.php';

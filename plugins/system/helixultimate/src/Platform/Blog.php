@@ -94,9 +94,9 @@ class Blog
                     }
 
                     $date   = Factory::getDate();
-                    $folder = HTMLHelper::_('date', $date, 'Y') . '/' . HTMLHelper::_('date', $date, 'm') . '/' . HTMLHelper::_('date', $date, 'd');
+                    $folder = HTMLHelper::_('date', $date, 'Y') . DIRECTORY_SEPARATOR . HTMLHelper::_('date', $date, 'm') . DIRECTORY_SEPARATOR . HTMLHelper::_('date', $date, 'd');
 
-                    $target_folder = Path::clean(JPATH_ROOT . '/' . $image_path . '/' . $folder);
+                    $target_folder = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $image_path . DIRECTORY_SEPARATOR . $folder);
 
                     if (! file_exists($target_folder)) {
                         try
@@ -123,8 +123,8 @@ class Blog
                         $base_name  = $safeBaseName . ($i ? (string) $i : '');
                         $image_name = $base_name . '.' . $ext;
                         $i++;
-                        $dest     = Path::clean(JPATH_ROOT . '/' . $image_path . '/' . $folder . '/' . $image_name);
-                        $src      = Path::clean($image_path . '/' . $folder . '/' . $image_name, '/');
+                        $dest     = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $image_path . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $image_name);
+                        $src      = Path::clean($image_path . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $image_name, '/');
                         $data_src = $src;
                     } while (file_exists($dest));
 
@@ -150,19 +150,18 @@ class Blog
                         if (! empty($sizes)) {
                             $sources = Image::createThumbs($dest, $sizes, $folder, $base_name, $ext, $image_quality);
                         }
-
-                        if (\file_exists(Path::clean(JPATH_ROOT . '/' . $image_path . '/' . $folder . '/' . $base_name . '_thumbnail.' . $ext))) {
-                            $src = Path::clean($image_path . '/' . $folder . '/' . $base_name . '_thumbnail.' . $ext, '/');
+                        if (\file_exists(Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $image_path . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $base_name . '_thumbnail.' . $ext))) {
+                            $src = Path::clean($image_path . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $base_name . '_thumbnail.' . $ext, DIRECTORY_SEPARATOR);
                         }
 
                         $report['status'] = true;
                         $report['index']  = $index;
 
                         if ($gallery) {
-                            $report['output']   = '<a href="#" class="btn btn-mini btn-danger btn-hu-remove-gallery-image"><span class="fas fa-times" aria-hidden="true"></span></a><img src="' . URI::root(true) . '/' . $src . '" alt="">';
+                            $report['output']   = '<a href="#" class="btn btn-mini btn-danger btn-hu-remove-gallery-image"><span class="fas fa-times" aria-hidden="true"></span></a><img src="' . URI::root(true) . DIRECTORY_SEPARATOR . $src . '" alt="">';
                             $report['data_src'] = $data_src;
                         } else {
-                            $report['output'] = '<img src="' . Uri::root(true) . '/' . $src . '" data-src="' . $data_src . '" alt="">';
+                            $report['output'] = '<img src="' . Uri::root(true) . DIRECTORY_SEPARATOR . $src . '" data-src="' . $data_src . '" alt="">';
                         }
                     }
                 }

@@ -45,10 +45,10 @@ if (!empty($attribs->helix_ultimate_image)) {
         $dirname = dirname($introImage);
         $ext = pathinfo($basename, PATHINFO_EXTENSION);
         $name = pathinfo($basename, PATHINFO_FILENAME);
-        $listImage = JPATH_ROOT . '/' . $dirname . '/' . $name . '_' . $blogListSize . '.' . $ext;
+        $listImage = JPATH_ROOT . DIRECTORY_SEPARATOR . ($dirname ? $dirname . DIRECTORY_SEPARATOR : '') . $name . '_' . $blogListSize . '.' . $ext;
 
         if (file_exists($listImage)) {
-            $introImage = Uri::root(true) . '/' . $dirname . '/' . $name . '_' . $blogListSize . '.' . $ext;
+            $introImage = Uri::root(true) . DIRECTORY_SEPARATOR . ($dirname ? $dirname . DIRECTORY_SEPARATOR : '') . $name . '_' . $blogListSize . '.' . $ext;
         }
     }
 

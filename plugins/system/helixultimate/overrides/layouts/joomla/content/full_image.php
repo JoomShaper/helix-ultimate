@@ -39,10 +39,10 @@ if (!empty($attribs->helix_ultimate_image)) {
         $ext      = pathinfo($basename, PATHINFO_EXTENSION);
         $name     = pathinfo($basename, PATHINFO_FILENAME);
 
-        $variantFsPath = JPATH_ROOT . '/' . ($dirname ? $dirname . '/' : '') . $name . '_' . $blogImageSize . '.' . $ext;
+        $variantFsPath = JPATH_ROOT . DIRECTORY_SEPARATOR . ($dirname ? $dirname . DIRECTORY_SEPARATOR : '') . $name . '_' . $blogImageSize . '.' . $ext;
 
         if (file_exists($variantFsPath)) {
-            $fullImage = Uri::root(true) . '/' . ($dirname ? $dirname . '/' : '') . $name . '_' . $blogImageSize . '.' . $ext;
+            $fullImage = Uri::root(true) . DIRECTORY_SEPARATOR . ($dirname ? $dirname . DIRECTORY_SEPARATOR : '') . $name . '_' . $blogImageSize . '.' . $ext;
         }
     }
 }

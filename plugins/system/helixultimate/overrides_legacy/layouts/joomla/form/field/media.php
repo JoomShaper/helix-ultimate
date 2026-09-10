@@ -10,9 +10,9 @@ defined ('JPATH_BASE') or die();
 
 if (JVERSION < 4)
 {
-    require \JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/form/field/media_j3.php';
+    require \JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'form' . DIRECTORY_SEPARATOR . 'field' . DIRECTORY_SEPARATOR . 'media_j3.php';
 }
 else
 {
-    require \JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/form/field/media.php';
+    require \JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'form' . DIRECTORY_SEPARATOR . 'field' . DIRECTORY_SEPARATOR . 'media.php';
 }

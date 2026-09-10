@@ -114,7 +114,7 @@ class HelixCache
 
 		$options = [
 			'caching' 	=> true,
-			'cachebase' => $config->get('cache_path', JPATH_ROOT . '/cache'),
+			'cachebase' => $config->get('cache_path', JPATH_ROOT . DIRECTORY_SEPARATOR . 'cache'),
 			'lifetime' 	=> $lifetime
 		];
 

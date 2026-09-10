@@ -20,7 +20,7 @@ if (isset($attribs->helix_ultimate_gallery) && $attribs->helix_ultimate_gallery)
 	// Filter only images that actually exist
 	$validImages = [];
 	foreach ((array) $images as $img) {
-		$relativePath = str_replace(Uri::root(true), JPATH_ROOT . '/', $img);
+		$relativePath = str_replace(Uri::root(true), JPATH_ROOT . DIRECTORY_SEPARATOR, $img);
 		if (is_file($relativePath)) {
 			$validImages[] = $img;
 		}

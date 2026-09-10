@@ -41,8 +41,8 @@ class JFormFieldHelixfont extends FormField
 		$style_id = $input->get('id', 0, 'INT');
 		$style = Helper::getTemplateStyle($style_id);
 
-		$template_path = JPATH_SITE . '/templates/' . $style->template . '/webfonts/webfonts.json';
-		$plugin_path   = JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
+		$template_path = JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $style->template . DIRECTORY_SEPARATOR . 'webfonts' . DIRECTORY_SEPARATOR . 'webfonts.json';
+		$plugin_path   = JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'webfonts' . DIRECTORY_SEPARATOR . 'webfonts.json';
 
 		if (file_exists($template_path))
 		{

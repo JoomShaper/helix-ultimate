@@ -23,7 +23,7 @@
  *
  * @since    2.0.0
  */
-    $bootstrap_path = JPATH_PLUGINS . '/system/helixultimate/bootstrap.php';
+    $bootstrap_path = JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
     if (file_exists($bootstrap_path)) {
     require_once $bootstrap_path;
@@ -111,7 +111,7 @@
             /**
              * Add custom.js for user
              */
-            if (file_exists(JPATH_THEMES . '/' . $template->template . '/js/custom.js')) {
+            if (file_exists(JPATH_THEMES . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR . 'custom.js')) {
                 $theme->add_js('custom.js');
             }
 
@@ -125,11 +125,11 @@
 
             $theme->add_scss('custom', $scssVars, 'custom-compiled');
 
-            $customCssPath = JPATH_THEMES . '/' . $template->template . '/css/custom.css';
+            $customCssPath = JPATH_THEMES . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'custom.css';
 
             if (is_file($customCssPath)) {
                 $this->addStyleSheet(
-                    Uri::root(true) . '/templates/' . $template->template . '/css/custom.css?v=' . filemtime($customCssPath)
+                    Uri::root(true) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'custom.css?v=' . filemtime($customCssPath)
                 );
             }
 

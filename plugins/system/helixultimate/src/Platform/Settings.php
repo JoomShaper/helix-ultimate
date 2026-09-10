@@ -162,7 +162,7 @@ class Settings
 	{
 		$templateStyle = Helper::getTemplateStyle($this->id);
 
-		$this->form->loadFile(JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.xml');
+		$this->form->loadFile(JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $templateStyle->template . DIRECTORY_SEPARATOR . 'options.xml');
 
 		/**
 		 * Get the xml form of the form.
@@ -217,7 +217,7 @@ class Settings
 
 		if (empty($formData))
 		{
-			$optionsPath = JPATH_ROOT . '/templates/' . $templateStyle->template . '/options.json';
+			$optionsPath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $templateStyle->template . DIRECTORY_SEPARATOR . 'options.json';
 			$optionDefaults = [];
 
 			if (\file_exists($optionsPath))
@@ -294,8 +294,8 @@ class Settings
 	{
 		$template = Helper::loadTemplateData();
 		$presetForm = new Form('preset');
-		$presetFormPath = JPATH_PLUGINS . '/system/helixultimate/src/form/preset.xml';
-		$templatePresetFormPath = JPATH_ROOT . '/templates/' . $template->template . '/preset.xml';
+		$presetFormPath = JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'form' . DIRECTORY_SEPARATOR . 'preset.xml';
+		$templatePresetFormPath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'preset.xml';
 
 		if (\file_exists($templatePresetFormPath))
 		{

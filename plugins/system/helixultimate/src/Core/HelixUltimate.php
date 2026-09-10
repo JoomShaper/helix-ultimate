@@ -87,6 +87,41 @@ class HelixUltimate
 	public $template_folder_url;
 
 	/**
+	 * Template physical directory.
+	 *
+	 * @var		string
+	 */
+	private $template_path;
+
+	/**
+	 * Helix Ultimate plugin physical directory.
+	 *
+	 * @var		string
+	 */
+	private $helix_plugin_path;
+
+	/**
+	 * Helix Ultimate assets physical directory.
+	 *
+	 * @var		string
+	 */
+	private $helix_assets_path;
+
+	/**
+	 * Helix Ultimate layouts physical directory.
+	 *
+	 * @var		string
+	 */
+	private $helix_layouts_path;
+
+	/**
+	 * Template cache physical directory.
+	 *
+	 * @var		string
+	 */
+	private $template_cache_path;
+
+	/**
 	 * In positions
 	 *
 	 * @var		array
@@ -119,6 +154,33 @@ class HelixUltimate
 		 */
 		$this->template = Helper::loadTemplateData();
 		$this->params   = $this->template->params;
+
+		$template = $this->template->template;
+		$ds = DIRECTORY_SEPARATOR;
+
+		/**
+		 * Common filesystem paths.
+		 */
+		$this->template_path = JPATH_THEMES
+			. $ds . $template;
+
+		$this->helix_plugin_path = JPATH_ROOT
+			. $ds . 'plugins'
+			. $ds . 'system'
+			. $ds . 'helixultimate';
+
+		$this->helix_assets_path = $this->helix_plugin_path
+			. $ds . 'assets';
+
+		$this->helix_layouts_path = $this->helix_plugin_path
+			. $ds . 'layouts';
+
+		$this->template_cache_path = JPATH_ROOT
+			. $ds . 'cache'
+			. $ds . 'com_templates'
+			. $ds . 'templates'
+			. $ds . $template;
+
 		$this->get_template_uri();
 	}
 
@@ -248,20 +310,24 @@ class HelixUltimate
 		$option = $this->input->get('option', '', 'STRING');
 		$view 	= $this->input->get('view', '', 'STRING');
 		$layout = $this->input->get('layout', 'default', 'STRING');
+		$bootstrapMinJS = DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'jui' . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR . 'bootstrap.min.js';
+		$bootstraptooltipMinJS = DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'jui' . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR . 'bootstrap-tooltip-extended.min.js';
+		$assetJS = DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR;
+		$assetCSS = DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR;
 
 		HTMLHelper::_('jquery.framework');
 		HTMLHelper::_('bootstrap.framework');
 
 		if (JVERSION < 4)
 		{
-			if(isset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']))
+			if(isset($this->doc->_scripts[Uri::base(true) . $bootstrapMinJS]))
 			{
-				unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap.min.js']);
+				unset($this->doc->_scripts[Uri::base(true) . $bootstrapMinJS]);
 			}
 
-			if(isset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap-tooltip-extended.min.js']))
+			if(isset($this->doc->_scripts[Uri::base(true) . $bootstraptooltipMinJS]))
 			{
-				unset($this->doc->_scripts[Uri::base(true) . '/media/jui/js/bootstrap-tooltip-extended.min.js']);
+				unset($this->doc->_scripts[Uri::base(true) . $bootstraptooltipMinJS]);
 			}
 		}
 
@@ -312,7 +378,11 @@ class HelixUltimate
 		{
 			$webfonts[$this->params->get('custom_font_selectors')] = $this->params->get('custom_font');
 		}
-		if (file_exists(JPATH_THEMES . '/' . $this->template->template . '/js/inert.min.js'))
+		$inertPath = $this->template_path
+			. DIRECTORY_SEPARATOR . 'js'
+			. DIRECTORY_SEPARATOR . 'inert.min.js';
+
+		if (file_exists($inertPath))
 		{
 			$this->add_js('inert.min.js');
 		}
@@ -331,6 +401,7 @@ class HelixUltimate
 					break;
 				case 'gif':
 					$type = 'image/gif';
+					break;
 				case 'png':
 					$type = 'image/png';
 					break;
@@ -375,12 +446,12 @@ class HelixUltimate
 
 		if ($view === 'form' && $layout === 'edit')
 		{
-			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/frontend-edit.css');
+			$this->doc->addStylesheet(Uri::root(true) . $assetCSS . 'frontend-edit.css');
 		}
 
 		if (JVERSION >= 6) {
-			$this->doc->addScript(Uri::root(true) . '/plugins/system/helixultimate/assets/js/chosen.jquery.js');
-			$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/chosen.css');
+			$this->doc->addScript(Uri::root(true) . $assetJS . 'chosen.jquery.js');
+			$this->doc->addStylesheet(Uri::root(true) . $assetCSS . 'chosen.css');
 		}
 		
 		if (JVERSION >= 4)
@@ -389,8 +460,12 @@ class HelixUltimate
 		}
 		else
 		{
-			$bsBundleJSPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.bundle.min.js';
-			$bsJsPath = JPATH_ROOT . '/templates/' . $this->template->template . '/js/bootstrap.min.js';
+			$jsPath = $this->template_path
+				. DIRECTORY_SEPARATOR . 'js'
+				. DIRECTORY_SEPARATOR;
+
+			$bsBundleJSPath = $jsPath . 'bootstrap.bundle.min.js';
+			$bsJsPath = $jsPath . 'bootstrap.min.js';
 			
 			if (\file_exists($bsBundleJSPath))
 			{
@@ -409,7 +484,7 @@ class HelixUltimate
 			$this->add_css('system-j4.min.css');
 			if ($user->id)
 			{
-				$this->doc->addStylesheet(Uri::root(true) . '/plugins/system/helixultimate/assets/css/choices.css');
+				$this->doc->addStylesheet(Uri::root(true) . $assetCSS . 'choices.css');
 			}
 		}
 		else
@@ -471,7 +546,9 @@ class HelixUltimate
 	 */
 	private function put_css_js_file($files = array(), $folder = '')
 	{
-		$asset_path = JPATH_THEMES . "/{$this->template->template}/{$folder}/";
+		$asset_path = $this->template_path
+			. DIRECTORY_SEPARATOR . $folder
+			. DIRECTORY_SEPARATOR;
 		$file_list = explode(',', $files['resource']);
 
 		foreach ($file_list as $file)
@@ -491,7 +568,7 @@ class HelixUltimate
 
 			if (\file_exists($file_path))
 			{
-				$file_url = Uri::base(true) . '/templates/' . $this->template->template . '/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
+				$file_url = Uri::base(true) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->template->template . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
 			}
 			elseif (\file_exists($file))
 			{
@@ -499,8 +576,9 @@ class HelixUltimate
 			}
 			else
 			{
+				$folder_path = DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR;
 				/** If asset not exists inside the template path then try to load from plugin's asset path. */
-				$uri = '/plugins/system/helixultimate/assets/' . $folder . '/' . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
+				$uri = $folder_path . (Helper::endsWith($file, $folder) ? $file : $file . '.' . $folder);
 
 				if (\file_exists(JPATH_ROOT . $uri))
 				{
@@ -540,7 +618,7 @@ class HelixUltimate
 			}
 			else
 			{
-				$this->doc->addStyleSheet(Uri::root(true) . '/media/system/css/joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
+				$this->doc->addStyleSheet(Uri::root(true) . DIRECTORY_SEPARATOR . 'media' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'joomla-fontawesome.min.css', ['relative' => false, 'version' => 'auto']);
 			}
 		}
 	}
@@ -553,7 +631,7 @@ class HelixUltimate
 	 */
 	private function get_template_uri()
 	{
-		$this->template_folder_url = Uri::base(true) . '/templates/' . $this->template->template;
+		$this->template_folder_url = Uri::base(true) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->template->template;
 	}
 
 	/**
@@ -564,7 +642,8 @@ class HelixUltimate
 	 */
 	private function include_features()
 	{
-		$folder_path = JPATH_THEMES . '/' . $this->template->template . '/features';
+		$folder_path = $this->template_path
+			. DIRECTORY_SEPARATOR . 'features';
 
 		if (is_dir($folder_path))
 		{
@@ -574,7 +653,9 @@ class HelixUltimate
 			{
 				foreach ($files as $key => $file)
 				{
-					include_once $folder_path . '/' . $file;
+					include_once $folder_path
+						. DIRECTORY_SEPARATOR
+						. $file;
 
 					$file_name = File::stripExt($file);
 					$class = 'HelixUltimateFeature' . ucfirst($file_name);
@@ -614,7 +695,8 @@ class HelixUltimate
 		}
 		else
 		{
-			$layout_file = JPATH_SITE . '/templates/' . $this->template->template . '/options.json';
+			$layout_file = $this->template_path
+				. DIRECTORY_SEPARATOR . 'options.json';
 
 			if (!\file_exists($layout_file))
 			{
@@ -649,13 +731,28 @@ class HelixUltimate
 			$pagebuilder = true;
 		}
 
-		$themepath      = JPATH_THEMES . '/' . $this->template->template;
-		$carea_file     = $themepath . '/html/layouts/helixultimate/frontend/conponentarea.php';
-		$module_file    = $themepath . '/html/layouts/helixultimate/frontend/modules.php';
-		$lyt_thm_path   = $themepath . '/html/layouts/helixultimate/';
+		$ds = DIRECTORY_SEPARATOR;
 
-		$layout_path_carea  = (file_exists($carea_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
-		$layout_path_module = (file_exists($module_file)) ? $lyt_thm_path : JPATH_ROOT . '/plugins/system/helixultimate/layouts';
+		$lyt_thm_path = $this->template_path
+			. $ds . 'html'
+			. $ds . 'layouts'
+			. $ds . 'helixultimate';
+
+		$carea_file = $lyt_thm_path
+			. $ds . 'frontend'
+			. $ds . 'conponentarea.php';
+
+		$module_file = $lyt_thm_path
+			. $ds . 'frontend'
+			. $ds . 'modules.php';
+
+		$layout_path_carea = file_exists($carea_file)
+			? $lyt_thm_path
+			: $this->helix_layouts_path;
+
+		$layout_path_module = file_exists($module_file)
+			? $lyt_thm_path
+			: $this->helix_layouts_path;
 
 		$rendered_sections = [];
 		$header = '';
@@ -713,7 +810,7 @@ class HelixUltimate
 					'loadFeature'       => $this->loadFeature
 				);
 
-				$layout_path  = JPATH_ROOT . '/plugins/system/helixultimate/layouts';
+				$layout_path = $this->helix_layouts_path;
 				$getLayout = new FileLayout('frontend.generate', $layout_path);
 
 				$rendered = $getLayout->render($data);
@@ -858,7 +955,7 @@ class HelixUltimate
 
 		if (isset($options->background_image) && $options->background_image)
 		{
-			$row_css .= 'background-image:url("' . Uri::base(true) . '/' . $options->background_image . '");';
+			$row_css .= 'background-image:url("' . Uri::base(true) . DIRECTORY_SEPARATOR . $options->background_image . '");';
 
 			if (isset($options->background_repeat) && $options->background_repeat)
 			{
@@ -1125,12 +1222,19 @@ class HelixUltimate
 			{
 				$compiler = new Compiler;
 				$template = Helper::loadTemplateData()->template;
-				$scss_path = JPATH_THEMES . '/' . $template . '/scss';
-				$css_path = JPATH_THEMES . '/' . $template . '/css';
+				$scss_path = JPATH_THEMES . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'scss';
+				$css_path = JPATH_THEMES . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'css';
 
-				if (file_exists($scss_path . '/' . $scss . '.scss'))
+				$scssFile = $scss_path
+					. DIRECTORY_SEPARATOR
+					. $scss
+					. '.scss';
+
+				if (file_exists($scssFile))
 				{
-					$out = $css_path . '/' . $css;
+					$out = $css_path
+						. DIRECTORY_SEPARATOR
+						. $css;
 					$compiler->setOutputStyle(OutputStyle::COMPRESSED);
 					$compiler->setImportPaths($scss_path);
 
@@ -1158,7 +1262,10 @@ class HelixUltimate
 					$getComplinedCss = $compiledCss->getCss();
 					File::write($out, $getComplinedCss);
 
-					$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $template . '/' . $scss . '.scss.cache';
+					$cache_path = $this->template_cache_path
+						. DIRECTORY_SEPARATOR
+						. $scss
+						. '.scss.cache';
 					$scssCache = array();
 					$scssCache['imports'] = $this->parseIncludedFiles($compiledCss->getIncludedFiles());
 					$scssCache['vars'] = $vars;
@@ -1208,7 +1315,10 @@ class HelixUltimate
 	 */
 	public function needScssCompile($scss, $vars = array())
 	{
-    	$cache_path = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template . '/' . $scss . '.scss.cache';
+    	$cache_path = $this->template_cache_path
+    		. DIRECTORY_SEPARATOR
+    		. $scss
+    		. '.scss.cache';
 
     	// Always work with arrays
     	if (!is_array($vars)) {
@@ -1514,7 +1624,7 @@ class HelixUltimate
 			$cachetime = $app->get('cachetime', 15);
 
 			$all_scripts  = $this->doc->_scripts;
-			$cache_path   = JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
+			$cache_path   = $this->template_cache_path;
 			$scripts      = array();
 			$root_url     = Uri::root(true);
 			$minifiedCode = '';
@@ -1598,7 +1708,7 @@ class HelixUltimate
 					Folder::create($cache_path, 0755);
 				}
 
-				$file = $cache_path . '/' . md5($md5sum) . '.js';
+				$file = $cache_path . DIRECTORY_SEPARATOR . md5($md5sum) . '.js';
 
 				if (!\file_exists($file))
 				{
@@ -1612,7 +1722,8 @@ class HelixUltimate
 					}
 				}
 
-				$this->doc->addScript(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.js');
+				$cacheTemplatePath = DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'com_templates' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->template->template . DIRECTORY_SEPARATOR . md5($md5sum) . '.js';
+				$this->doc->addScript(Uri::root(true) . $cacheTemplatePath);
 			}
 
 			$excludedScriptPaths = array_merge($excludedScriptPaths, $remoteScripts);
@@ -1726,9 +1837,13 @@ class HelixUltimate
 		$options->params 	= $this->params;
 		$template 			= $options->template->template;
 
-		$tmpl_file_location = JPATH_ROOT . '/templates/' . $template . '/headers';
+		$tmpl_file_location = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'headers';
 
-		if (\file_exists($tmpl_file_location . '/' . $header_style . '/header.php'))
+		$headerFile = $tmpl_file_location
+			. DIRECTORY_SEPARATOR . $header_style
+			. DIRECTORY_SEPARATOR . 'header.php';
+
+		if (\file_exists($headerFile))
 		{
 			$getLayout = new FileLayout($header_style . '.header', $tmpl_file_location);
 
@@ -1754,11 +1869,16 @@ class HelixUltimate
 		$options = new \stdClass;
 		$options->template 	= $this->template;
 		$options->params 	= $this->params;
+
 		$template 			= $options->template->template;
 
-		$offCanvasDirectory = JPATH_ROOT . '/templates/' . $template . '/offcanvas';
+		$offCanvasDirectory = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'offcanvas';
 
-		if (\file_exists($offCanvasDirectory . '/' . $offCanvasStyle . '/canvas.php'))
+		$canvasFile = $offCanvasDirectory
+			. DIRECTORY_SEPARATOR . $offCanvasStyle
+			. DIRECTORY_SEPARATOR . 'canvas.php';
+
+		if (\file_exists($canvasFile))
 		{
 			$getLayout = new FileLayout($offCanvasStyle . '.canvas', $offCanvasDirectory);
 
@@ -1808,7 +1928,7 @@ class HelixUltimate
 			$app             = Factory::getApplication();
 			$cachetime       = $app->get('cachetime', 15);
 			$all_stylesheets = $this->doc->_styleSheets;
-			$cache_path      = \JPATH_ROOT . '/cache/com_templates/templates/' . $this->template->template;
+			$cache_path      = $this->template_cache_path;
 			$stylesheets     = [];
 			$root_url        = Uri::root(true);
 			$minifiedCode    = '';
@@ -1895,7 +2015,7 @@ class HelixUltimate
 					Folder::create($cache_path, 0755);
 				}
 
-				$file = $cache_path . '/' . md5($md5sum) . '.css';
+				$file = $cache_path . DIRECTORY_SEPARATOR . md5($md5sum) . '.css';
 
 				if (!\file_exists($file))
 				{
@@ -1909,7 +2029,8 @@ class HelixUltimate
 					}
 				}
 
-				$this->doc->addStylesheet(Uri::root(true) . '/cache/com_templates/templates/' . $this->template->template . '/' . md5($md5sum) . '.css');
+				$cacheTemplatePath = DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'com_templates' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->template->template . DIRECTORY_SEPARATOR . md5($md5sum) . '.js';
+				$this->doc->addStylesheet(Uri::root(true) . $cacheTemplatePath);
 			}
 
 			// Restore custom.css so it loads after compressed CSS
@@ -2077,7 +2198,7 @@ class HelixUltimate
 			// Read Custom Style data from XML to set custom $scssVars
 			$template = Helper::loadTemplateData();
 			$form = new Form('custom');
-			$form->loadFile(JPATH_ROOT . '/templates/' . $template->template . '/options.xml');
+			$form->loadFile(JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'options.xml');
 			$formXml = $form->getXml();
 
 			if (!empty($formXml))
@@ -2169,8 +2290,9 @@ class HelixUltimate
 	public function addCustomAssets($type)
 	{
 		$template = Helper::loadTemplateData()->template;
-		$directory = JPATH_ROOT . '/templates/' . $template . '/' . strtolower($type) . '/custom';
-		$path = Uri::root(true) . '/templates/' . $template . '/' . strtolower($type) . '/custom';
+		$templateCustom = DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . strtolower($type) . DIRECTORY_SEPARATOR . 'custom';
+		$directory = JPATH_ROOT . $templateCustom;
+		$path = Uri::root(true) . $templateCustom;
 
 		if (!\file_exists($directory) || !\is_dir($directory))
 		{
@@ -2187,7 +2309,7 @@ class HelixUltimate
 				{
 					if (preg_match("@\.css$@", $file))
 					{
-						$this->doc->addStylesheet($path . '/' . $file);
+						$this->doc->addStylesheet($path . DIRECTORY_SEPARATOR . $file);
 					}
 				}
 				elseif ($type === 'scss')
@@ -2202,7 +2324,7 @@ class HelixUltimate
 				{
 					if (preg_match("@\.js$@", $file))
 					{
-						$this->doc->addScript($path . '/' . $file, [], ['defer' => true]);
+						$this->doc->addScript($path . DIRECTORY_SEPARATOR . $file, [], ['defer' => true]);
 					}
 				}
 			}

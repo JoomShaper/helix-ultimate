@@ -42,8 +42,8 @@ class JFormFieldHelixOffcanvas extends FormField
 		$template = Helper::loadTemplateData();
 		$templateName = $template->template;
 
-		$offCanvasDir = JPATH_ROOT . '/templates/' . $templateName . '/offcanvas';
-		$thumb_url = Uri::root() . 'templates/' . $templateName . '/offcanvas';
+		$offCanvasDir = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $templateName . DIRECTORY_SEPARATOR . 'offcanvas';
+		$thumb_url = Uri::root() . 'templates' . DIRECTORY_SEPARATOR . $templateName . DIRECTORY_SEPARATOR . 'offcanvas';
 
 		$html = '';
 
@@ -64,13 +64,13 @@ class JFormFieldHelixOffcanvas extends FormField
 
 					$html .= '<li class="hu-offcanvas-item' . (($this->value === $canvas) ? ' active' : '') . '" data-style="' . $canvas . '">';
 
-					if (file_exists($offCanvasDir . '/' . $canvas . '/thumb.svg'))
+					if (file_exists($offCanvasDir . DIRECTORY_SEPARATOR . $canvas . DIRECTORY_SEPARATOR . 'thumb.svg'))
 					{
-						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $canvas . '/thumb.svg" alt="' . $canvas . '"></span>';
+						$html .= '<span class="img-wrap"><img src="' . $thumb_url . DIRECTORY_SEPARATOR . $canvas . DIRECTORY_SEPARATOR . 'thumb.svg" alt="' . $canvas . '"></span>';
 					}
 					else
 					{
-						$html .= '<span class="img-wrap"><img src="' . $thumb_url . '/' . $canvas . '/thumb.jpg" alt="' . $canvas . '"></span>';
+						$html .= '<span class="img-wrap"><img src="' . $thumb_url . DIRECTORY_SEPARATOR . $canvas . DIRECTORY_SEPARATOR . 'thumb.jpg" alt="' . $canvas . '"></span>';
 					}
 
 					$html .= '<span class="hu-predefined-offcanvas-title">' . $canvasName . '</span>';

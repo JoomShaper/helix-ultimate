@@ -42,7 +42,7 @@ class JFormFieldHelixlayout extends FormField
 		$style_id 	= $input->get('id', 0, 'INT');
 		$style 		= Helper::getTemplateStyle($style_id);
 
-		$helix_layout_path = JPATH_SITE . '/plugins/system/helixultimate/layout/';
+		$helix_layout_path = JPATH_SITE . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'layout';
 
 		$json = json_decode($this->value ?? "");
 
@@ -53,7 +53,7 @@ class JFormFieldHelixlayout extends FormField
 		else
 		{
 			// $layout_file = File::read(JPATH_SITE . '/templates/' . $style->template . '/options.json');
-			$layout_file = file_get_contents(JPATH_SITE . '/templates/' . $style->template . '/options.json');
+			$layout_file = file_get_contents(JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $style->template . DIRECTORY_SEPARATOR . 'options.json');
 			$value = json_decode($layout_file ?? "");
 			$rows = json_decode($value->layout ?? "");
 		}

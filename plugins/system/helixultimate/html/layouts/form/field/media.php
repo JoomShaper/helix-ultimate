@@ -78,7 +78,7 @@ if ($showPreview)
 {
 	$cleanValue = MediaHelper::getCleanMediaFieldValue($value);
 
-	if ($cleanValue && file_exists(JPATH_ROOT . '/' . $cleanValue))
+	if ($cleanValue && file_exists(JPATH_ROOT . DIRECTORY_SEPARATOR . $cleanValue))
 	{
 		$src = Uri::root() . $value;
 	}

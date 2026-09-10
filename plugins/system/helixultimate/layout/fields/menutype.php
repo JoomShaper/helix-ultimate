@@ -125,8 +125,8 @@ class HelixultimateFieldMenuType
 
 	public static function getMenuTypes()
 	{
-		$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/menutypes.php';
-		$helperUrl = JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+		$classUrl = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_menus' . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'menutypes.php';
+		$helperUrl = JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_menus' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'menus.php';
 
 		if (!\class_exists('MenusModelMenutypes'))
 		{

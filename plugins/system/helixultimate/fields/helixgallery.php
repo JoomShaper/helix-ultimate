@@ -42,10 +42,8 @@ class JFormFieldHelixgallery extends FormField
 		$doc = Factory::getDocument();
 
 		HTMLHelper::_('jquery.framework');
-		$helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
-		$doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
-
-		$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
+		$helix_plg_url = Uri::root(true) . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate';
+		$doc->addScript($helix_plg_url . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY_SEPARATOR . 'jquery-ui.min.js');
 
 		$values = json_decode($this->value ?? "");
 
@@ -68,20 +66,20 @@ class JFormFieldHelixgallery extends FormField
 			{
 				$data_src = $value;
 
-				$src = Uri::root(true) . '/' . $value;
+				$src = Uri::root(true) . DIRECTORY_SEPARATOR . $value;
 
 				$basename = basename($src);
 
-				$thumbnail = JPATH_ROOT . '/' . dirname($value) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
-				$small_size = JPATH_ROOT . '/' . dirname($value) . '/' . File::stripExt($basename) . '_small.' . File::getExt($basename);
+				$thumbnail = JPATH_ROOT . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
+				$small_size = JPATH_ROOT . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_small.' . File::getExt($basename);
 
 				if (file_exists($thumbnail))
 				{
-					$src = Uri::root(true) . '/' . dirname($value) . '/' . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
+					$src = Uri::root(true) . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_thumbnail.' . File::getExt($basename);
 				}
 				elseif (file_exists($small_size))
 				{
-					$src = Uri::root(true) . '/' . dirname($value) . '/' . File::stripExt($basename) . '_small.' . File::getExt($basename);
+					$src = Uri::root(true) . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_small.' . File::getExt($basename);
 				}
 
 				$output .= '<li class="hu-gallery-item" data-src="' . $data_src . '"><a href="#" class="btn btn-mini btn-danger btn-hu-remove-gallery-image"><span class="fas fa-times" aria-hidden="true"></span></a><img src="' . $src . '" alt=""></li>';

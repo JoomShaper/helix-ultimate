@@ -10,8 +10,8 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Layout\FileLayout;
 
-$layout_path_carea  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
-$layout_path_module = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+$layout_path_carea  = JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'layouts';
+$layout_path_module = JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'layouts';
 
 $data = $displayData;
 $section_sematic = $data['sematic'];

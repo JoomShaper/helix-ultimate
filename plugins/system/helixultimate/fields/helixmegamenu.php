@@ -61,7 +61,7 @@ class JFormFieldHelixmegamenu extends FormField
 	 */
 	public function getMegaSettings()
 	{
-		$mega_menu_path = JPATH_SITE . '/plugins/system/helixultimate/fields/';
+		$mega_menu_path = JPATH_SITE . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'fields/';
 		$menu_data = json_decode($this->value ?? "");
 		$menu_item = $this->form->getData()->toObject();
 

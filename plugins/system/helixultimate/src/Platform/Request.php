@@ -544,7 +544,7 @@ class Request
 			}
 
 			$templateStyle = Helper::getTemplateStyle($this->id);
-			$cache_path    = JPATH_SITE . '/cache/com_templates/templates/' . $templateStyle->template;
+			$cache_path    = JPATH_SITE . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'com_templates' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $templateStyle->template;
 
 			if (is_dir($cache_path))
 			{
@@ -559,7 +559,7 @@ class Request
 
 						if (end($ext) === 'css' || $cache === 'scss')
 						{
-							File::delete($cache_path . '/' . $file);
+							File::delete($cache_path . DIRECTORY_SEPARATOR . $file);
 						}
 					}
 				}
@@ -614,7 +614,7 @@ class Request
 		$tmpl_style = Helper::loadTemplateData();
 		$template   = $tmpl_style->template;
 
-		$template_path = JPATH_SITE . '/templates/' . $template . '/webfonts';
+		$template_path = JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'webfonts';
 
 		if (!is_dir($template_path))
 		{
@@ -667,8 +667,8 @@ class Request
 		$template   = $tmpl_style->template;
 		$font_name  = $this->data['fontName'];
 
-		$template_path = JPATH_SITE . '/templates/' . $template . '/webfonts/webfonts.json';
-		$plugin_path   = JPATH_PLUGINS . '/system/helixultimate/assets/webfonts/webfonts.json';
+		$template_path = JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'webfonts' . DIRECTORY_SEPARATOR . 'webfonts.json';
+		$plugin_path   = JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . 'webfonts' . DIRECTORY_SEPARATOR . 'webfonts.json';
 
 		if (\file_exists($template_path))
 		{
@@ -738,7 +738,7 @@ class Request
 			return false;
 		}
 
-		$this->layouts_folder_path  = JPATH_SITE . '/templates/' . $this->template . '/layout/';
+		$this->layouts_folder_path  = JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->template . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR;
 		$this->layout_file_path     = $this->layouts_folder_path . $this->layout_name;
 
 		try

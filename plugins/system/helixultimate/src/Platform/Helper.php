@@ -328,7 +328,7 @@ class Helper
                  * the options as template params.
                  */
                 elseif (empty($template->params)) {
-                    $filePath = JPATH_ROOT . '/templates/' . $template->template . '/' . 'options.json';
+                    $filePath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'options.json';
 
                     if (\file_exists($filePath)) {
                         $defaultParams    = \file_get_contents($filePath);
@@ -442,7 +442,7 @@ class Helper
         $template  = self::loadTemplateData();
 
         $templateBaseDir = JPATH_SITE;
-        $filePath        = Path::clean($templateBaseDir . '/templates/' . $template->template . '/templateDetails.xml');
+        $filePath        = Path::clean($templateBaseDir . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'templateDetails.xml');
 
         if (is_file($filePath)) {
             // Read the file to see if it's a valid component XML file
@@ -1038,11 +1038,11 @@ class Helper
         $mediaRoot    = trim($params->get('image_path', 'images'), '/');
         $allowedRoots = array_unique([$mediaRoot, 'images']);
 
-        $fullPath  = Path::clean(JPATH_ROOT . '/' . $path);
+        $fullPath  = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $path);
         $isAllowed = false;
 
         foreach ($allowedRoots as $root) {
-            $allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
+            $allowedPath = Path::clean(JPATH_ROOT . DIRECTORY_SEPARATOR . $root);
 
             if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0) {
                 // Canonical symlink containment check

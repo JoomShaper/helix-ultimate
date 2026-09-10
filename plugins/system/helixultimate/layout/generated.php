@@ -23,7 +23,7 @@ require_once 'settings/settings.php';
 echo RowColumnSettings::getRowSettings($rowSettings);
 echo RowColumnSettings::getColumnSettings($columnSettings);
 
-$layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+$layout_path  = JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'layouts';
 ?>
 
 <div class="hidden">

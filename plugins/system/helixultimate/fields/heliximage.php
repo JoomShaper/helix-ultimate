@@ -57,13 +57,13 @@ class JFormFieldHeliximage extends FormField
 
         if ($this->value) {
             $data_src = $this->value;
-            $src      = Uri::root(true) . '/' . $data_src;
+            $src      = Uri::root(true) . DIRECTORY_SEPARATOR . $data_src;
 
             $basename  = basename($data_src);
-            $thumbnail = JPATH_ROOT . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
+            $thumbnail = JPATH_ROOT . DIRECTORY_SEPARATOR . dirname($data_src) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
 
             if (file_exists($thumbnail)) {
-                $src = Uri::root(true) . '/' . dirname($data_src) . '/' . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
+                $src = Uri::root(true) . DIRECTORY_SEPARATOR . dirname($data_src) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
             }
 
             $output .= '<img src="' . $src . '" data-src="' . $data_src . '" alt="">';

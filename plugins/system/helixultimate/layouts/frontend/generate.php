@@ -12,12 +12,12 @@ use Joomla\CMS\Uri\Uri;
 
 defined('_JEXEC') or die();
 
-$layout_path  = JPATH_ROOT .'/plugins/system/helixultimate/layouts';
+$layout_path  = JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'layouts';
 
 $data = $displayData;
 
 $doc = Factory::getDocument();
-$plg_path = Uri::root(true) . '/plugins/system/helixultimate';
+$plg_path = Uri::root(true) . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate';
 
 $app = Factory::getApplication();
 $template = $app->getTemplate(true);

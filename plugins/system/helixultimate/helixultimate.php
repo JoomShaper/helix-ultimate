@@ -37,8 +37,9 @@ use Joomla\Registry\Registry;
 use Joomla\CMS\Table\Table;
 
 // Constant definition
-define('HELIX_LAYOUTS_PATH', JPATH_PLUGINS . '/system/helixultimate/layouts');
-define('HELIX_LAYOUT_PATH', JPATH_PLUGINS . '/system/helixultimate/layout');
+$PluginPath = JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR;
+define('HELIX_LAYOUTS_PATH', $PluginPath . 'layouts');
+define('HELIX_LAYOUT_PATH', $PluginPath . 'layout');
 
 /**
  * Class for System Plugin HelixUltimate.
@@ -84,7 +85,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 	 */
 	private function registerBootstrap()
 	{
-		$bootstrapPath = JPATH_ROOT . '/plugins/system/helixultimate/html/layouts/libraries/cms/html/bootstrap.php';
+		$bootstrapPath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . 'libraries' . DIRECTORY_SEPARATOR . 'cms' . DIRECTORY_SEPARATOR . 'html' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 		if ($this->app->isClient('site') && \file_exists($bootstrapPath))
 		{
@@ -119,13 +120,13 @@ class PlgSystemHelixultimate extends CMSPlugin
 		}
 	    $doc = Factory::getDocument();
 
-    	$plgPath = Uri::root(true) . '/plugins/system/helixultimate';
+    	$plgPath = Uri::root(true) . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate';
 
-    	Form::addFormPath(JPATH_PLUGINS . '/system/helixultimate/params');
+    	Form::addFormPath(JPATH_PLUGINS . DIRECTORY_SEPARATOR . 'system' . DIRECTORY_SEPARATOR . 'helixultimate' . DIRECTORY_SEPARATOR . 'params');
 
     	$template = Factory::getApplication()->getTemplate(true);
-    	$tmplUrl  = Uri::root(true) . '/templates/' . $template->template;      
-    	$tmplPath = JPATH_ROOT . '/templates/' . $template->template;       
+    	$tmplUrl  = Uri::root(true) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template;      
+    	$tmplPath = JPATH_ROOT . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template;       
 
     	// Add Font Awesome from template or plugin
     	if (is_file($tmplPath . '/css/font-awesome.min.css')) {
@@ -288,16 +289,16 @@ class PlgSystemHelixultimate extends CMSPlugin
 			return false;
 		}
 
-		$templatePath = JPATH_SITE . '/templates/' . $templateName;
+		$templatePath = JPATH_SITE . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $templateName;
 
 		// Check if the template has an options.json file (Helix Ultimate indicator)
-		if (file_exists($templatePath . '/options.json'))
+		if (file_exists($templatePath . DIRECTORY_SEPARATOR . 'options.json'))
 		{
 			return true;
 		}
 
 		// Check if the template's index.php includes the Helix Ultimate bootstrap
-		$indexPath = $templatePath . '/index.php';
+		$indexPath = $templatePath . DIRECTORY_SEPARATOR . 'index.php';
 		if (file_exists($indexPath))
 		{
 			$content = @file_get_contents($indexPath);
@@ -393,7 +394,7 @@ class PlgSystemHelixultimate extends CMSPlugin
 			? Helper::getTemplateStyle($activeMenu->template_style_id)
 			: Helper::loadTemplateData();
 
-		$webAssetUri = '/templates/' . $template->template . '/joomla.asset.json';
+		$webAssetUri = DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->template . DIRECTORY_SEPARATOR . 'joomla.asset.json';
 
 		if(JVERSION >= 4 && \file_exists(JPATH_ROOT . $webAssetUri))
 		{

@@ -61,21 +61,21 @@ class JFormFieldHelixgallery extends FormField
             foreach ($values as $key => $value) {
                 $data_src = $value;
 
-                $src = Uri::root(true) . '/' . $value;
+                $src = Uri::root(true) . DIRECTORY_SEPARATOR . $value;
 
                 $basename = basename($src);
 
                 // Check for the image's existence in the media folder
-                $absolutePath = JPATH_ROOT . '/' . $value;
-                $thumbnail    = JPATH_ROOT . '/' . dirname($value) . '/' . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
-                $small_size   = JPATH_ROOT . '/' . dirname($value) . '/' . File::stripExt($basename) . '_small.' . Helper::getExt($basename);
+                $absolutePath = JPATH_ROOT . DIRECTORY_SEPARATOR . $value;
+                $thumbnail    = JPATH_ROOT . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
+                $small_size   = JPATH_ROOT . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_small.' . Helper::getExt($basename);
 
                 // Only show images that actually exist (thumbnail or small size)
                 if (file_exists($absolutePath) || file_exists($thumbnail) || file_exists($small_size)) {
                     if (file_exists($thumbnail)) {
-                        $src = Uri::root(true) . '/' . dirname($value) . '/' . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
+                        $src = Uri::root(true) . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_thumbnail.' . Helper::getExt($basename);
                     } elseif (file_exists($small_size)) {
-                        $src = Uri::root(true) . '/' . dirname($value) . '/' . File::stripExt($basename) . '_small.' . Helper::getExt($basename);
+                        $src = Uri::root(true) . DIRECTORY_SEPARATOR . dirname($value) . DIRECTORY_SEPARATOR . File::stripExt($basename) . '_small.' . Helper::getExt($basename);
                     }
 
                     $output .= '<li class="hu-gallery-item" data-src="' . $data_src . '">

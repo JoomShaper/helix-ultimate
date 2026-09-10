@@ -14,11 +14,12 @@ use Joomla\CMS\Language\Text;
 
 $params = $displayData->params;
 $template = $displayData->template->template;
+$feature_folder_path = JPATH_THEMES . DIRECTORY_SEPARATOR . $template . DIRECTORY_SEPARATOR . 'features' . DIRECTORY_SEPARATOR;
 
-include_once JPATH_THEMES . '/' . $template . '/features/menu.php';
-include_once JPATH_THEMES . '/' . $template . '/features/social.php';
-include_once JPATH_THEMES . '/' . $template . '/features/contact.php';
-include_once JPATH_THEMES . '/' . $template . '/features/logo.php';
+include_once $feature_folder_path . 'menu.php';
+include_once $feature_folder_path . 'social.php';
+include_once $feature_folder_path . 'contact.php';
+include_once $feature_folder_path . 'logo.php';
 
 $menu = new HelixUltimateFeatureMenu($params);
 $social = new HelixUltimateFeatureSocial($params);

@@ -129,7 +129,7 @@
 
             if (is_file($customCssPath)) {
                 $this->addStyleSheet(
-                    Uri::root(true) . '/templates/' . $template->template . '/css/custom.css?v=' . filemtime($customCssPath)
+                    Uri::root(true) . '/templates/' . $template->template . '/css/custom.css?' . filemtime($customCssPath)
                 );
             }
 

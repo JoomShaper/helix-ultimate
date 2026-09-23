@@ -11,6 +11,7 @@ defined ('_JEXEC') or die();
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\ParameterType;
 
 class TplShaperHelixultimateHelper
 {
@@ -30,6 +31,18 @@ class TplShaperHelixultimateHelper
         $input = $app->input;
         $article_id = (int) $input->post->get('article_id', 0, 'INT');
         $rating = (int) $input->post->get('rating', 0, 'INT');
+
+        if ($rating < 1 || $rating > 5)
+        {
+            $output['message'] = Text::_('HELIX_INVALID_RATING');
+            die(json_encode($output));
+        }
+
+        if (!self::isPublishedArticle($article_id))
+        {
+            $output['message'] = Text::_('HELIX_ARTICLE_NOT_FOUND');
+            die(json_encode($output));
+        }
 
         $userIP = $_SERVER['REMOTE_ADDR'];
         $lastip = '';
@@ -95,6 +108,26 @@ class TplShaperHelixultimateHelper
         }
 
         return self::getRating($id);
+    }
+
+    private static function isPublishedArticle($id)
+    {
+        if ($id < 1)
+        {
+            return false;
+        }
+
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('id'))
+            ->from($db->quoteName('#__content'))
+            ->where($db->quoteName('id') . ' = :articleId')
+            ->where($db->quoteName('state') . ' = 1')
+            ->bind(':articleId', $id, ParameterType::INTEGER);
+
+        $db->setQuery($query);
+
+        return (bool) $db->loadResult();
     }
 
     private static function getRating($id)

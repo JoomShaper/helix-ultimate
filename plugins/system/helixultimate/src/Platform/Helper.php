@@ -82,7 +82,7 @@ class Helper
                 ->where($db->quoteName('template') . ' = ' . $db->quote($template));
 
             if (Multilanguage::isEnabled()) {
-                $query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', ' . $db->quote('1', false));
+                $query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', ' . $db->quote('1', false) . ')');
             }
 
             $db->setQuery($query);
@@ -1274,7 +1274,9 @@ class Helper
      */
     public static function sanitizeMegaMenuBadge($value): string
     {
-        return htmlspecialchars(trim(strip_tags((string) $value)), ENT_QUOTES, 'UTF-8');
+        $filter = InputFilter::getInstance();
+
+        return trim(strip_tags((string) $filter->clean((string) $value, 'STRING')));
     }
 
     /**

@@ -146,10 +146,14 @@ if ($lang->hasKey('JLIB_HTML_BEHAVIOR_PM')) {
     Text::script('JLIB_HTML_BEHAVIOR_PM');
 }
 
+$calendarStyle = version_compare(JVERSION, '6.0.0', '>=')
+    ? 'field.calendar'
+    : 'field.calendar' . ($direction === 'rtl' ? '-rtl' : '');
+
 // Redefine locale/helper assets to use correct path, and load calendar assets
 $document->getWebAssetManager()
     ->registerAndUseScript('field.calendar.helper', $helperPath, [], ['defer' => true])
-    ->useStyle('field.calendar' . ($direction === 'rtl' ? '-rtl' : ''))
+    ->useStyle($calendarStyle)
     ->useScript('field.calendar');
 
 ?>

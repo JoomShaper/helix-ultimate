@@ -97,8 +97,11 @@ class HelixUltimateFeatureLogo
 
 		$custom_logo_class = '';
 		$sitename = Factory::getApplication()->get('sitename');
+		$mobileLogo = $this->params->get('mobile_logo');
+		$stickyLogo = $this->params->get('sticky_logo');
+		$mobileStickyLogo = $this->params->get('mobile_sticky_logo');
 
-		if ($this->params->get('mobile_logo'))
+		if ($mobileLogo)
 		{
 			$custom_logo_class = ' d-none d-lg-inline-block';
 		}
@@ -140,9 +143,14 @@ class HelixUltimateFeatureLogo
 			
 				// Add sticky logo class if sticky logo exists
 				$mainLogoClass = 'logo-image';
-				if ($this->params->get('sticky_logo'))
+				if ($stickyLogo)
 				{
 					$mainLogoClass .= ' logo-default';
+				}
+
+				if ($mobileStickyLogo && !$mobileLogo)
+				{
+					$mainLogoClass .= ' logo-mobile-default';
 				}
 				
 				$siteLogo = "
@@ -157,9 +165,8 @@ class HelixUltimateFeatureLogo
 				$html .= $siteLogo;
 
 				// Add sticky logo if set
-				if ($this->params->get('sticky_logo'))
+				if ($stickyLogo)
 				{
-					$stickyLogo = $this->params->get('sticky_logo', null);
 					$stickyLogoWithUrl = Uri::root() . $stickyLogo;
 					$attrStickyLogoHeightRaw = $this->params->get('sticky_logo_height', '');
 					$attrStickyLogoHeight = (int) filter_var($attrStickyLogoHeightRaw, FILTER_SANITIZE_NUMBER_INT);
@@ -170,13 +177,20 @@ class HelixUltimateFeatureLogo
 						$attrStickyLogoHeight = $attrLogoHeight;
 					}
 					
-					$html .= "<img class='logo-image logo-sticky {$custom_logo_class}' src='{$stickyLogoWithUrl}' height='{$attrStickyLogoHeight}' alt='{$altText}' />";
+					$html .= "<img class='logo-image logo-sticky' src='{$stickyLogoWithUrl}' height='{$attrStickyLogoHeight}' alt='{$altText}' />";
 				}
 
-				if ($this->params->get('mobile_logo'))
+				if ($mobileLogo)
 				{
-					$html .= '<img class="logo-image-phone d-inline-block d-lg-none" src="' .
-						Uri::root() .$this->params->get('mobile_logo') . '" alt="' . $altText . '" />';
+					$mobileLogoClass = $mobileStickyLogo ? ' logo-mobile-default' : '';
+					$html .= '<img class="logo-image-phone d-inline-block d-lg-none' . $mobileLogoClass . '" src="' .
+						Uri::root() . $mobileLogo . '" alt="' . $altText . '" />';
+				}
+
+				if ($mobileStickyLogo)
+				{
+					$html .= '<img class="logo-image-phone logo-sticky-mobile" src="' .
+						Uri::root() . $mobileStickyLogo . '" alt="' . $altText . '" />';
 				}
 
 				$html .= '</a>';

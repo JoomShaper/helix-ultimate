@@ -12,7 +12,7 @@ defined('_JEXEC') or die();
 use HelixUltimate\Framework\Platform\Builders\Builder;
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Menu\MenuItem;
 use Joomla\CMS\Menu\SiteMenu;
 use Joomla\Registry\Registry;

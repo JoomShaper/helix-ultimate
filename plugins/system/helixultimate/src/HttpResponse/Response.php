@@ -313,8 +313,9 @@ class Response
 		$response = self::updateMenuItem($itemId, $params);
 
 		return [
-			'status' => true,
-			'data'   => $response
+			'status'  => $response === true,
+			'data'    => $response,
+			'message' => $response === true ? '' : Text::_('JERROR_AN_ERROR_HAS_OCCURRED')
 		];
 	}
 
@@ -325,10 +326,9 @@ class Response
 			$data->id = $itemId;
 			$data->params = $params->toString();
 			$db = Factory::getDbo();
-			$db->updateObject('#__menu', $data, 'id', true);
 
-			return true;
-		} catch (\Exception $e) {
+			return $db->updateObject('#__menu', $data, 'id', true) !== false;
+		} catch (\Throwable $e) {
 			return $e->getMessage();
 		}
 	}

@@ -210,7 +210,12 @@ $theme_url = Uri::base(true) . '/templates/'. $this->template;
 		<link href="<?php echo $theme_url . '/css/template.css'; ?>" rel="stylesheet">
 		<?php
 			$custom_style = $params->get('custom_style');
-			$preset = ($custom_style) ? 'default' : json_decode($params->get('preset', '{"preset":"preset1"}'))->preset;
+			$presetData   = json_decode($params->get('preset', '{"preset":"preset1"}'));
+			$preset       = $custom_style ? 'default' : ($presetData->preset ?? 'default');
+
+			if (!is_string($preset) || !preg_match('/^[A-Za-z0-9_-]+$/', $preset)) {
+				$preset = 'default';
+			}
 		?>
 
 		<link href="<?php echo $theme_url . '/css/presets/' . htmlspecialchars($preset, ENT_QUOTES, 'UTF-8') . '.css'; ?>" rel="stylesheet">

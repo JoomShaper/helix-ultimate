@@ -1163,8 +1163,9 @@ class Helper
         $filter = InputFilter::getInstance(
             ['iframe', 'audio', 'video', 'source', 'a', 'img'],
             ['src', 'href', 'type', 'controls', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'alt', 'class', 'style'],
-            1,
-            1
+            0,
+            0,
+            0
         );
 
         return $filter->clean($html, 'html');

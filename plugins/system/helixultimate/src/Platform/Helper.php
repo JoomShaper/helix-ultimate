@@ -33,6 +33,14 @@ defined('_JEXEC') or die();
 class Helper
 {
     /**
+     * Preview token lifetime in minutes.
+     *
+     * @var int
+     * @since 2.2.11
+     */
+    private const PREVIEW_TOKEN_LIFETIME = 240;
+
+    /**
      * Get template styles from Database.
      *
      * @param    integer        $id        The template ID.
@@ -230,6 +238,63 @@ class Helper
         return md5($string);
     }
 
+    /**
+     * Create a temporary token for loading template drafts in the site preview.
+     *
+     * @param   int  $templateId  Template style ID.
+     *
+     * @return  string  The preview token, or an empty string when unauthorized.
+     * @since   2.2.11
+     */
+    public static function createPreviewToken(int $templateId): string
+    {
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
+
+        if ($templateId <= 0 || ! $user || ! $user->id || (! $user->authorise('core.edit', 'com_templates') && ! $user->authorise('core.admin'))) {
+            return '';
+        }
+
+        try {
+            $token = bin2hex(random_bytes(32));
+            $cache = new HelixCache(hash('sha256', 'helix-preview:' . $token), self::PREVIEW_TOKEN_LIFETIME);
+
+            $cache->setGroup('helixultimate-preview')->storeCache($templateId);
+
+            return $token;
+        } catch (\Throwable $e) {
+            return '';
+        }
+    }
+
+    /**
+     * Determine whether the current request may load a template draft preview.
+     *
+     * @param   int  $templateId  Template style ID.
+     *
+     * @return  bool
+     * @since   2.2.11
+     */
+    public static function isAuthorizedPreview(int $templateId): bool
+    {
+        $app = Factory::getApplication();
+
+        if ($templateId <= 0 || $app->input->get('helixMode', '') !== 'edit') {
+            return false;
+        }
+
+        $token = $app->input->get('helixPreview', '', 'STRING');
+
+        if (! is_string($token) || ! preg_match('/^[a-f0-9]{64}$/', $token)) {
+            return false;
+        }
+
+        $cache = new HelixCache(hash('sha256', 'helix-preview:' . $token), self::PREVIEW_TOKEN_LIFETIME);
+        $cache->setGroup('helixultimate-preview');
+
+        return (int) $cache->loadData() === $templateId;
+    }
+
     private static function checkTemplateStyleValidity(int $id): bool
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
@@ -290,14 +355,12 @@ class Helper
             $cache    = new HelixCache($draftKey);
 
             /**
-             * Check the fetch destination. If it is iframe and the user is authorized,
-             * then load the settings from draft. Otherwise load from saved cache or database.
+             * Only an authorized customizer preview may load draft settings.
+             * All other requests use the saved cache or database values.
              */
-            $user              = $app->getIdentity();
-            $canPreviewDraft   = $user && $user->id && ($user->authorise('core.edit', 'com_templates') || $user->authorise('core.admin'));
-            $requestFromIframe = ($app->input->get('helixMode', '') === 'edit') && $canPreviewDraft;
+            $canPreviewDraft = self::isAuthorizedPreview((int) $templateId);
 
-            if ($cache->contains() && $requestFromIframe) {
+            if ($cache->contains() && $canPreviewDraft) {
                 $template = $cache->loadData();
             } else {
                 $keyOptions = [

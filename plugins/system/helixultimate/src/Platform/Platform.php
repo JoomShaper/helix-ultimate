@@ -136,13 +136,27 @@ class Platform
 			$id = (int) $app->input->get('id', 0, 'INT');
 			$style = Helper::getTemplateStyle($id);
 
+			if (! $style || empty($style->id)) {
+				return '';
+			}
+
+			$previewToken = Helper::createPreviewToken((int) $style->id);
+			$previewQuery = [
+				'templateStyle' => (int) $style->id,
+				'helixMode'     => 'edit',
+			];
+
+			if ($previewToken !== '') {
+				$previewQuery['helixPreview'] = $previewToken;
+			}
+
 			$layoutData = array(
 				'style' => $style,
 				'id' 	=> $this->id,
 				'version' 	=> $this->version,
 				'view' 		=> $this->view,
 				'iframe'	=> [
-					'url' => Uri::root(true) . '/index.php?templateStyle=' . $style->id . "&helixMode=edit",
+					'url' => Uri::root(true) . '/index.php?' . http_build_query($previewQuery, '', '&', PHP_QUERY_RFC3986),
 					'width' => '100%',
 					'height' => '100%'
 				]

@@ -41,5 +41,5 @@ $style .= "width: {$width}; height: {$height}; box-shadow: rgba(139, 139, 143, 0
 
 ?>
 
-<iframe id="hu-template-preview" src="<?php echo $url; ?>" frameborder="0" style="<?php echo $style; ?>">
+<iframe id="hu-template-preview" src="<?php echo htmlspecialchars($url, ENT_QUOTES, 'UTF-8'); ?>" frameborder="0" style="<?php echo htmlspecialchars($style, ENT_QUOTES, 'UTF-8'); ?>" referrerpolicy="same-origin">
 </iframe>

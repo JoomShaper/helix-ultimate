@@ -16,7 +16,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
 <?php $fields = $this->form->getFieldset('params'); ?>
 <?php if (count($fields)) : ?>
-	<div id="users-profile-params">
+	<div id="users-profile-params" class="com-users-profile__params">
 		<div class="mb-3">
 			<strong><?php echo Text::_('COM_USERS_SETTINGS_FIELDSET_LABEL'); ?></strong>
 		</div>

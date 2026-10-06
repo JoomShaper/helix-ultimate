@@ -14,14 +14,10 @@ use Joomla\Utilities\ArrayHelper;
 
 $img = HTMLHelper::_('cleanImageURL', $displayData['src']);
 
-$displayData['src'] = $this->escape($img->url);
+$displayData['src'] = $img->url;
 
-if (isset($displayData['alt'])) {
-    if ($displayData['alt'] === false) {
-        unset($displayData['alt']);
-    } else {
-        $displayData['alt'] = $this->escape($displayData['alt']);
-    }
+if (isset($displayData['alt']) && $displayData['alt'] === false) {
+    unset($displayData['alt']);
 }
 
 if ($img->attributes['width'] > 0 && $img->attributes['height'] > 0) {
@@ -33,4 +29,14 @@ if ($img->attributes['width'] > 0 && $img->attributes['height'] > 0) {
     }
 }
 
-echo '<img ' . ArrayHelper::toString($displayData) . '>';
+$attributes = [];
+
+foreach ($displayData as $attributeName => $attributeValue) {
+    if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_:.-]*$/', $attributeName)) {
+        continue;
+    }
+
+    $attributes[$attributeName] = htmlspecialchars((string) $attributeValue, ENT_QUOTES, 'UTF-8');
+}
+
+echo '<img ' . ArrayHelper::toString($attributes) . '>';

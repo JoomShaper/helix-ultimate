@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -19,7 +20,7 @@ use Joomla\CMS\Router\Route;
 /** @var \Joomla\Component\Users\Site\View\Login\HtmlView $cookieLogin */
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
+$wa = $this->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
 
@@ -54,6 +55,7 @@ $usersConfig = ComponentHelper::getParams('com_users');
             <?php endif; ?>
 
             <form action="<?php echo Route::_('index.php?option=com_users&task=user.login'); ?>" method="post" class="com-users-login__form form-validate form-horizontal well" id="com-users-login__form">
+                <fieldset>
 
                 <?php foreach ($this->form->getFieldset('credentials') as $field) : ?>
                     <?php
@@ -128,9 +130,13 @@ $usersConfig = ComponentHelper::getParams('com_users');
                     </div>
                 </div>
 
-                <?php $return = $this->form->getValue('return', '', $this->params->get('login_redirect_url', $this->params->get('login_redirect_menuitem', ''))); ?>
-                <input type="hidden" name="return" value="<?php echo base64_encode($return); ?>">
-                <?php echo HTMLHelper::_('form.token'); ?>
+                <?php if (version_compare(JVERSION, '6.0.0', '>=')) : ?>
+                    <?php echo $this->form->renderControlFields(); ?>
+                <?php else : ?>
+                    <?php $return = $this->form->getValue('return', '', $this->params->get('login_redirect_url', $this->params->get('login_redirect_menuitem', ''))); ?>
+                    <input type="hidden" name="return" value="<?php echo base64_encode($return); ?>">
+                    <?php echo HTMLHelper::_('form.token'); ?>
+                <?php endif; ?>
                 </fieldset>
             </form>
             <div class="com-users-login__options list-group">
@@ -140,8 +146,19 @@ $usersConfig = ComponentHelper::getParams('com_users');
                 <a class="com-users-login__remind list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=remind'); ?>">
                     <?php echo Text::_('COM_USERS_LOGIN_REMIND'); ?>
                 </a>
-                <?php if ($usersConfig->get('allowUserRegistration')) : ?>
-                    <a class="com-users-login__register list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=registration'); ?>">
+                <?php
+                if ($usersConfig->get('allowUserRegistration')) :
+                    $registrationLink = 'index.php?option=com_users&view=registration';
+
+                    if (version_compare(JVERSION, '6.0.0', '>=')) {
+                        $registrationMenuId = $this->params->get('customRegLinkMenu');
+
+                        if ($registrationMenuId && Factory::getApplication()->getMenu()->getItem($registrationMenuId)) {
+                            $registrationLink = 'index.php?Itemid=' . (int) $registrationMenuId;
+                        }
+                    }
+                    ?>
+                    <a class="com-users-login__register list-group-item" href="<?php echo Route::_($registrationLink); ?>">
                         <?php echo Text::_('COM_USERS_LOGIN_REGISTER'); ?>
                     </a>
                 <?php endif; ?>

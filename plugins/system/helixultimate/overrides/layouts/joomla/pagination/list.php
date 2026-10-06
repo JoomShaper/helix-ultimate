@@ -8,6 +8,8 @@
 
 defined('JPATH_BASE') or die;
 
+use Joomla\CMS\Language\Text;
+
 $list = $displayData['list'];
 
 $startDisabled = $list['start']['active'] ? '' : ' disabled'; 
@@ -16,14 +18,16 @@ $nextDisabled  = $list['next']['active'] ? '' : ' disabled';
 $endDisabled   = $list['end']['active'] ? '' : ' disabled'; 
 
 ?>
-<ul class="pagination ms-0 mb-4">
-	<?php echo $list['start']['data']; ?>
-	<?php echo $list['previous']['data']; ?>
+<nav class="pagination__wrapper" aria-label="<?php echo Text::_('JLIB_HTML_PAGINATION'); ?>">
+	<ul class="pagination ms-0 mb-4">
+		<?php echo $list['start']['data']; ?>
+		<?php echo $list['previous']['data']; ?>
 
-	<?php foreach ($list['pages'] as $page) : ?>
-		<?php echo $page['data']; ?>
-	<?php endforeach; ?>
+		<?php foreach ($list['pages'] as $page) : ?>
+			<?php echo $page['data']; ?>
+		<?php endforeach; ?>
 
-	<?php echo $list['next']['data']; ?>
-	<?php echo $list['end']['data']; ?>
-</ul>
+		<?php echo $list['next']['data']; ?>
+		<?php echo $list['end']['data']; ?>
+	</ul>
+</nav>

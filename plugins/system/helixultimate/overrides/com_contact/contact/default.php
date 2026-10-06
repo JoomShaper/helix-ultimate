@@ -22,6 +22,7 @@ $canDo   = ContentHelper::getActions('com_contact', 'category', $this->item->cat
 $canEdit = $canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by === $this->getCurrentUser()->id);
 $htag    = $tparams->get('show_page_heading') ? 'h2' : 'h1';
 $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 'h3' : 'h2';
+$icon    = $this->params->get('contact_icons') == 0;
 
 ?>
 
@@ -38,13 +39,17 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
                 <?php if ($this->item->published == 0) : ?>
                     <span class="badge bg-warning text-light"><?php echo Text::_('JUNPUBLISHED'); ?></span>
                 <?php endif; ?>
-                <span class="contact-name"><?php echo $this->item->name; ?></span>
+                <span class="contact-name" itemprop="name"><?php echo $this->item->name; ?></span>
             </<?php echo $htag; ?>>
         </div>
     <?php endif; ?>
 
     <?php if ($canEdit) : ?>
-        <?php echo HTMLHelper::_('contacticon.edit', $this->item, $tparams); ?>
+        <div class="icons">
+            <div class="float-end">
+                <?php echo HTMLHelper::_('contacticon.edit', $this->item, $tparams); ?>
+            </div>
+        </div>
     <?php endif; ?>
 
     <?php $show_contact_category = $tparams->get('show_contact_category'); ?>
@@ -90,12 +95,12 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
     <?php echo $this->item->event->beforeDisplayContent; ?>
 
     <?php if ($this->params->get('show_info', 1)) : ?>
-        <div class="row">
+        <div class="com-contact__container row">
             <?php echo '<' . $htag2 . '>' . Text::_('COM_CONTACT_DETAILS') . '</' . $htag2 . '>'; ?>
 
             <div class="col">
                 <?php if ($this->item->con_position && $tparams->get('show_position')) : ?>
-                    <div class="contact-position d-flex mb-3">
+                    <div class="com-contact__position contact-position d-flex mb-3">
                             <div class="me-2 ">
                                 <strong><?php echo Text::_('COM_CONTACT_POSITION'); ?>:</strong>
                             </div>
@@ -105,7 +110,7 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
                     </div>
                 <?php endif; ?>
 
-                <div class="contact-info">
+                <div class="com-contact__info contact-info">
                     <?php echo $this->loadTemplate('address'); ?>
                     <?php if ($tparams->get('allow_vcard')) : ?>
                         <div class="mb-4">
@@ -119,12 +124,13 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
             </div>
 
             <?php if ($this->item->image && $tparams->get('show_image')) : ?>
-                <div class="col-lg-auto">
+                <div class="com-contact__thumbnail thumbnail col-lg-auto">
                     <?php echo LayoutHelper::render(
                         'joomla.html.image',
                         [
                             'src'      => $this->item->image,
                             'alt'      => $this->item->name,
+                            'itemprop' => 'image',
                         ]
                     ); ?>
                 </div>
@@ -167,14 +173,14 @@ $htag2   = ($tparams->get('show_page_heading') && $tparams->get('show_name')) ? 
         <div class="com-contact__miscinfo contact-miscinfo">
 			<div class="d-flex">
 				<div class="me-2">
-                    <?php if (!$this->params->get('marker_misc')) : ?>
+                    <?php if ($icon && !$this->params->get('marker_misc')) : ?>
                         <span class="fas fa-info-circle" aria-hidden="true"></span>
-                        <span class="visually-hidden"><?php echo Text::_('COM_CONTACT_OTHER_INFORMATION'); ?></span>
-                    <?php else : ?>
-                        <span class="<?php echo $this->params->get('marker_class'); ?>">
+                    <?php elseif ($icon && $this->params->get('marker_misc')) : ?>
+                        <span class="jicons-image">
                             <?php echo $this->params->get('marker_misc'); ?>
                         </span>
                     <?php endif; ?>
+					<span class="<?php echo $this->params->get('marker_class'); ?>"><?php echo Text::_('COM_CONTACT_OTHER_INFORMATION'); ?></span>
 				</div>
 				<div class="contact-misc">
                         <?php echo $this->item->misc; ?>

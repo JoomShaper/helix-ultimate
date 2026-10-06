@@ -210,10 +210,12 @@ $params = $this->params;
 </div>
 
 <?php if (($params->def('show_pagination', 1) == 1 || ($params->get('show_pagination') == 2)) && ($this->pagination->pagesTotal > 1)) : ?>
-    <nav class="pagination-wrapper d-lg-flex justify-content-between w-100">
-        <?php echo $this->pagination->getPagesLinks(); ?>
+    <nav class="com-content-archive__navigation pagination-wrapper d-lg-flex justify-content-between w-100">
+        <div class="com-content-archive__pagination">
+            <?php echo $this->pagination->getPagesLinks(); ?>
+        </div>
         <?php if ($params->def('show_pagination_results', 1)) : ?>
-            <div class="pagination-counter text-muted mb-4">
+            <div class="com-content-archive__counter pagination-counter text-muted mb-4">
                 <?php echo $this->pagination->getPagesCounter(); ?>
             </div>
         <?php endif; ?>

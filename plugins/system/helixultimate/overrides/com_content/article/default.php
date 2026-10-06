@@ -46,7 +46,7 @@ $images         = json_decode($this->item->images ?? '');
 $urls           = json_decode($this->item->urls ?? '');
 $attribs        = json_decode($this->item->attribs ?? '');
 $canEdit        = (bool) $params->get('access-edit');
-$user           = Factory::getUser();
+$user           = $this->getCurrentUser();
 $currentDate    = Factory::getDate()->format('Y-m-d H:i:s');
 $info           = (int) $params->get('info_block_position', 0);
 $pageHeaderTag  = $this->params->get('show_page_heading') ? 'h2' : 'h1';
@@ -183,7 +183,7 @@ $useDefList = (
             </div>
         <?php endif; ?>
 
-        <div itemprop="articleBody">
+        <div class="com-content-article__body" itemprop="articleBody">
             <?php echo $this->item->text; ?>
         </div>
 

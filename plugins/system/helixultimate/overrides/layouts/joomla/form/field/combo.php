@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 extract($displayData);
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 /**
@@ -45,7 +46,11 @@ use Joomla\CMS\HTML\HTMLHelper;
  * @var   array    $dataAttributes  Miscellaneous data attribute for eg, data-*.
  */
 
-HTMLHelper::_('behavior.combobox');
+if (version_compare(JVERSION, '6.0.0', '>=')) {
+    Factory::getApplication()->getDocument()->getWebAssetManager()->usePreset('awesomplete');
+} else {
+    HTMLHelper::_('behavior.combobox');
+}
 
 $attr = '';
 

@@ -155,6 +155,11 @@ if (!$doc->getScriptOptions('media-picker')) {
     ]);
 }
 
+$imagesOnly = count($mediaTypeNames) === 1 && in_array('images', $mediaTypeNames, true);
+$modalTitle = version_compare(JVERSION, '6.0.0', '>=') && !$imagesOnly
+    ? 'JLIB_FORM_CHANGE_FILE'
+    : 'JLIB_FORM_CHANGE_IMAGE';
+
 ?>
 
 <joomla-field-media class="field-media-wrapper"
@@ -165,7 +170,7 @@ if (!$doc->getScriptOptions('media-picker')) {
     input=".field-media-input"
     button-select=".button-select"
     button-clear=".button-clear"
-    modal-title="<?php echo $this->escape(Text::_('JLIB_FORM_CHANGE_IMAGE')); ?>"
+    modal-title="<?php echo $this->escape(Text::_($modalTitle)); ?>"
     preview="static"
     preview-container=".field-media-preview"
     preview-width="<?php echo $previewWidth; ?>"

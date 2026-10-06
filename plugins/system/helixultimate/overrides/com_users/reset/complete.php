@@ -13,7 +13,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
+$wa = $this->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
 
@@ -29,8 +29,12 @@ $wa->useScript('keepalive')
     <form action="<?php echo Route::_('index.php?option=com_users&task=reset.complete'); ?>" method="post" class="com-users-reset-complete__form form-validate form-horizontal well">
         <?php foreach ($this->form->getFieldsets() as $fieldset) : ?>
             <fieldset>
-                <?php if (isset($fieldset->label)) : ?>
-                    <legend><?php echo Text::_($fieldset->label); ?></legend>
+                <?php $legend = $fieldset->legend ?? $fieldset->label ?? null; ?>
+                <?php if ($legend !== null) : ?>
+                    <legend><?php echo Text::_($legend); ?></legend>
+                <?php endif; ?>
+                <?php if (isset($fieldset->description)) : ?>
+                    <p><?php echo Text::_($fieldset->description); ?></p>
                 <?php endif; ?>
                 <?php echo $this->form->renderFieldset($fieldset->name); ?>
             </fieldset>

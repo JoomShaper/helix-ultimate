@@ -15,7 +15,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
+$wa = $this->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
 
@@ -61,9 +61,13 @@ $this->useCoreUI        = true;
             <?php echo LayoutHelper::render('joomla.edit.params', $this); ?>
             <?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 
-            <input type="hidden" name="task" value=""/>
-            <input type="hidden" name="return" value="<?php echo $this->return_page; ?>"/>
-            <?php echo HTMLHelper::_('form.token'); ?>
+            <?php if (version_compare(JVERSION, '6.0.0', '>=')) : ?>
+                <?php echo $this->form->renderControlFields(); ?>
+            <?php else : ?>
+                <input type="hidden" name="task" value="">
+                <input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
+                <?php echo HTMLHelper::_('form.token'); ?>
+            <?php endif; ?>
         </fieldset>
         <div class="mb-2 mt-2">
             <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('contact.save')">

@@ -42,9 +42,9 @@ $linktype = $item->title;
 if ($item->menu_icon) {
     // The link is an icon
     if ($itemParams->get('menu_text', 1)) {
-        $linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
+        $linktype = '<span class="pe-2 pt-0 ' . $item->menu_icon . '" aria-hidden="true"></span>' . $item->title;
     } else {
-        $linktype = '<span class="pe-2 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
+        $linktype = '<span class="pe-2 pt-0 ' . $item->menu_icon . '" aria-hidden="true"></span><span class="visually-hidden">' . $item->title . '</span>';
     }
 } elseif ($item->menu_image) {
     // The link is an image, maybe with its own class

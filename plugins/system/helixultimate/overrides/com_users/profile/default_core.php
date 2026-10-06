@@ -10,18 +10,17 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
-use Joomla\CMS\Router\Route;    
+use Joomla\CMS\Router\Route;
 
 ?>
 
-<div id="users-profile-core">
-	<div class="d-flex mb-3">
+<div id="users-profile-core" class="com-users-profile__core">
+	<div class="com-users-profile__edit d-flex mb-3">
 		<div class="me-auto">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_CORE_LEGEND'); ?></strong>
 		</div>
 		<div>
-			<?php if (Factory::getUser()->id == $this->data->id): ?>
+			<?php if ($this->getCurrentUser()->id == $this->data->id): ?>
 				<a href="<?php echo Route::_('index.php?option=com_users&task=profile.edit&user_id=' . (int) $this->data->id); ?>">
 					<span class="fas fa-user-edit" aria-hidden="true"></span> <?php echo Text::_('COM_USERS_EDIT_PROFILE'); ?>
 				</a>
@@ -31,7 +30,7 @@ use Joomla\CMS\Router\Route;
 	<ul class="list-group">
 		<li class="list-group-item">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_NAME_LABEL'); ?></strong>:
-			<?php echo $this->data->name; ?>
+			<?php echo $this->escape($this->data->name); ?>
 		</li>
 		<li class="list-group-item">
 			<strong><?php echo Text::_('COM_USERS_PROFILE_USERNAME_LABEL'); ?></strong>:

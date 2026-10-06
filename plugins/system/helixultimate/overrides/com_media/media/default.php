@@ -20,7 +20,7 @@ $input  = $app->getInput();
 $user   = $app->getIdentity();
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
+$wa = $this->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useStyle('com_media.mediamanager')
     ->useScript('com_media.mediamanager')
@@ -61,9 +61,9 @@ $config = [
     'canEdit'             => $user->authorise('core.edit', 'com_media'),
     'canDelete'           => $user->authorise('core.delete', 'com_media'),
 ];
-$this->document->addScriptOptions('com_media', $config);
+$this->getDocument()->addScriptOptions('com_media', $config);
 
-$this->document->addScriptDeclaration(
+$this->getDocument()->addScriptDeclaration(
 	"
 		jQuery(function($) {
 			let element = '<div id=\"system-message-container\" aria-live=\"polite\"></div>';
@@ -75,4 +75,3 @@ $this->document->addScriptDeclaration(
 );
 ?>
 <div id="com-media"></div>
-

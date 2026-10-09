@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "helix-ultimate": {
+      "command": "node",
+      "args": [
+        "${workspaceFolder}/packages/helix-mcp-server/dist/cli.js",
+        "--path",
+        "${workspaceFolder}"
+      ]
+    }
+  }
+}

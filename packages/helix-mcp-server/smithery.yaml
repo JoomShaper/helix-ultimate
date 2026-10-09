@@ -1,0 +1,12 @@
+# Smithery configuration for automated MCP registry indexing
+# https://smithery.ai/docs/config
+
+startCommand:
+  type: stdio
+  config:
+    command: npx
+    args:
+      - -y
+      - "@joomshaper/helix-mcp-server"
+      - "--path"
+      - "."

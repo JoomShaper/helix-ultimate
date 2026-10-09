@@ -43,3 +43,7 @@ The framework is divided into two main components:
 - Use `document.addEventListener('DOMContentLoaded', ...)` for initialization.
 - Use `fetch` API instead of `jQuery.ajax`.
 - Utilize standard ES6 features (const/let, arrow functions, template literals).
+
+## Model Context Protocol (MCP) Server
+- The repository houses a production MCP server specification under [docs/mcp/](file:///Users/siddiqur/Sites/helixultimatedev/docs/mcp/README.md).
+- Any AI agent interacting with Helix Ultimate should consult `docs/mcp/specification.md` for layout, parameter, and scaffolding tool standards.

@@ -1,6 +1,7 @@
 {
   "name": "@joomshaper/helix-mcp-server",
   "version": "1.0.0",
+  "mcpName": "io.github.joomshaper/helix-mcp-server",
   "description": "Production Model Context Protocol (MCP) server for Helix Ultimate Joomla framework",
   "main": "dist/index.js",
   "bin": {

@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.joomshaper/helix-mcp-server",
+  "name": "io.github.siddik-web/helix-mcp-server",
   "description": "MCP server for Helix Ultimate Joomla: layout builder, code scaffolding, SCSS and audits.",
   "repository": {
     "url": "https://github.com/JoomShaper/helix-ultimate",
     "source": "github"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@joomshaper/helix-mcp-server",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "transport": {
         "type": "stdio"
       }

@@ -2,7 +2,11 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { JoomlaDetector } from '../core/joomla-detector.js';
 import { Logger } from '../core/logger.js';
+import { BackupService } from '../domain/backup/backup.service.js';
+import { LayoutService } from '../domain/layout/layout.service.js';
+import { ScaffoldService } from '../domain/scaffolding/scaffold.service.js';
 import { registerResources } from './resources.js';
+import { registerTools } from './tools.js';
 
 export interface HelixMcpServerOptions {
   workspacePath?: string;
@@ -12,6 +16,9 @@ export interface HelixMcpServerOptions {
 export class HelixMcpServer {
   private server: Server;
   private detector: JoomlaDetector;
+  private backupService: BackupService;
+  private layoutService: LayoutService;
+  private scaffoldService: ScaffoldService;
 
   constructor(options: HelixMcpServerOptions = {}) {
     if (options.verbose) {
@@ -19,6 +26,12 @@ export class HelixMcpServer {
     }
 
     this.detector = new JoomlaDetector(options.workspacePath || process.cwd());
+    const workspaceRoot = this.detector.getRoot();
+    const info = this.detector.detect();
+
+    this.backupService = new BackupService(workspaceRoot);
+    this.layoutService = new LayoutService(workspaceRoot, this.backupService, info.registeredPositions);
+    this.scaffoldService = new ScaffoldService(workspaceRoot);
 
     this.server = new Server(
       {
@@ -36,6 +49,14 @@ export class HelixMcpServer {
 
     // Register MCP Resource Handlers
     registerResources(this.server, this.detector);
+
+    // Register MCP Tool Handlers
+    registerTools(
+      this.server,
+      this.layoutService,
+      this.scaffoldService,
+      this.backupService
+    );
   }
 
   public async start(): Promise<void> {

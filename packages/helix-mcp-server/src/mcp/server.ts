@@ -3,6 +3,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
 import { JoomlaDetector } from '../core/joomla-detector.js';
 import { Logger } from '../core/logger.js';
+import { JoomlaDbClient } from '../core/db-client.js';
 import { BackupService } from '../domain/backup/backup.service.js';
 import { LayoutService } from '../domain/layout/layout.service.js';
 import { ScaffoldService } from '../domain/scaffolding/scaffold.service.js';
@@ -19,6 +20,7 @@ export interface HelixMcpServerOptions {
 export class HelixMcpServer {
   private server: Server;
   private detector: JoomlaDetector;
+  private dbClient: JoomlaDbClient;
   private backupService: BackupService;
   private layoutService: LayoutService;
   private scaffoldService: ScaffoldService;
@@ -34,8 +36,9 @@ export class HelixMcpServer {
     const workspaceRoot = this.detector.getRoot();
     const info = this.detector.detect();
 
+    this.dbClient = new JoomlaDbClient(workspaceRoot);
     this.backupService = new BackupService(workspaceRoot);
-    this.layoutService = new LayoutService(workspaceRoot, this.backupService, info.registeredPositions);
+    this.layoutService = new LayoutService(workspaceRoot, this.backupService, info.registeredPositions, this.dbClient);
     this.scaffoldService = new ScaffoldService(workspaceRoot);
     this.scssService = new ScssService(workspaceRoot);
     this.auditService = new AuditService(workspaceRoot, this.layoutService, info.registeredPositions);
@@ -73,7 +76,8 @@ export class HelixMcpServer {
     Logger.info(`Connected to Joomla workspace: ${workspaceInfo.joomlaRoot}`, {
       pluginVersion: workspaceInfo.pluginVersion,
       templateVersion: workspaceInfo.templateVersion,
-      positionsCount: workspaceInfo.registeredPositions.length
+      positionsCount: workspaceInfo.registeredPositions.length,
+      dbConfigured: this.dbClient.isConfigured()
     });
 
     const transport = customTransport || new StdioServerTransport();

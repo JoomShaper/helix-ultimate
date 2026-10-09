@@ -30,7 +30,7 @@ export class AuditService {
   /**
    * Performs full compatibility and architecture audit.
    */
-  public runAudit(targetRelativeDir?: string): AuditReport {
+  public async runAudit(targetRelativeDir?: string): Promise<AuditReport> {
     const startDir = targetRelativeDir || path.join('templates', 'shaper_helixultimate');
     const fullDir = PathGuard.assertWithin(startDir, this.workspaceRoot);
 
@@ -68,7 +68,7 @@ export class AuditService {
     // Also audit layout module positions if layout service is available
     if (this.layoutService && this.registeredPositions.length > 0) {
       try {
-        const layout = this.layoutService.getLayout();
+        const layout = await this.layoutService.getLayout();
         layout.forEach((row, rIndex) => {
           row.attr?.forEach((col) => {
             if (col.settings?.column_type === 0 && col.settings?.name) {

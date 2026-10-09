@@ -1,6 +1,7 @@
 export * from './core/logger.js';
 export * from './core/path-guard.js';
 export * from './core/joomla-detector.js';
+export * from './core/db-client.js';
 export * from './domain/backup/backup.service.js';
 export * from './domain/layout/layout.types.js';
 export * from './domain/layout/layout.validator.js';

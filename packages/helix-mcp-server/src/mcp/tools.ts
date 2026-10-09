@@ -26,21 +26,26 @@ export function registerTools(
       tools: [
         {
           name: 'helix_get_layout',
-          description: 'Retrieves the complete Helix Ultimate layout grid tree with all rows, columns, and assigned module positions.',
+          description: 'Retrieves the complete Helix Ultimate layout grid tree with all rows, columns, and assigned module positions from the active Joomla template style.',
           inputSchema: {
             type: 'object',
-            properties: {}
+            properties: {
+              styleId: {
+                type: 'integer',
+                description: 'Optional Joomla template style ID (defaults to active/default style)'
+              }
+            }
           }
         },
         {
           name: 'helix_update_row',
-          description: 'Updates an existing row or appends a new row in the Helix Ultimate layout builder. Enforces Bootstrap 12-column grid rule.',
+          description: 'Updates an existing row or inserts a new row in the Helix Ultimate layout builder (synced with Joomla database). Enforces Bootstrap 12-column grid rule.',
           inputSchema: {
             type: 'object',
             properties: {
               rowId: {
                 type: 'string',
-                description: 'Unique name or numeric index of the row to update (e.g. "Main Body", "header", "0")'
+                description: 'Unique name or numeric index of the row to update (e.g. "Main Body", "Header", "0")'
               },
               columns: {
                 type: 'array',
@@ -73,6 +78,18 @@ export function registerTools(
               rowSettings: {
                 type: 'object',
                 description: 'Optional row settings (fluidrow, custom_class, name, etc.)'
+              },
+              insertAbove: {
+                type: 'string',
+                description: 'Insert this row immediately above the named row (e.g. "Header")'
+              },
+              insertBelow: {
+                type: 'string',
+                description: 'Insert this row immediately below the named row'
+              },
+              styleId: {
+                type: 'integer',
+                description: 'Optional Joomla template style ID to modify'
               }
             },
             required: ['rowId', 'columns']
@@ -173,7 +190,11 @@ export function registerTools(
 
     try {
       if (name === 'helix_get_layout') {
-        const layout = layoutService.getLayout();
+        const schema = z.object({
+          styleId: z.number().int().optional()
+        });
+        const parsed = schema.parse(args || {});
+        const layout = await layoutService.getLayout(parsed.styleId);
         return {
           content: [
             {
@@ -195,21 +216,27 @@ export function registerTools(
               isComponent: z.boolean().optional()
             })
           ),
-          rowSettings: z.record(z.any()).optional()
+          rowSettings: z.record(z.any()).optional(),
+          insertAbove: z.string().optional(),
+          insertBelow: z.string().optional(),
+          styleId: z.number().int().optional()
         });
 
         const parsed = schema.parse(args);
-        const result = layoutService.updateRow(
-          parsed.rowId,
-          parsed.columns,
-          parsed.rowSettings
-        );
+        const result = await layoutService.updateRow({
+          rowId: parsed.rowId,
+          columns: parsed.columns,
+          rowSettings: parsed.rowSettings,
+          insertAbove: parsed.insertAbove,
+          insertBelow: parsed.insertBelow,
+          styleId: parsed.styleId
+        });
 
         return {
           content: [
             {
               type: 'text',
-              text: `Successfully updated row '${parsed.rowId}'. Snapshot '${result.snapshotId}' created for rollback.`
+              text: `Successfully updated row '${parsed.rowId}'. Saved to database and options.json. Snapshot '${result.snapshotId}' created for rollback.`
             }
           ]
         };
@@ -292,7 +319,7 @@ export function registerTools(
         });
 
         const parsed = schema.parse(args || {});
-        const report = auditService.runAudit(parsed.targetDir);
+        const report = await auditService.runAudit(parsed.targetDir);
 
         return {
           content: [

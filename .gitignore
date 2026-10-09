@@ -12,6 +12,7 @@ web.config
 .history/
 .idea/
 .vscode/
+.helix-mcp/
 .DS_Store
 /package
 /files

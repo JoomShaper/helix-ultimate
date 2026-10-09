@@ -6,6 +6,8 @@ export * from './domain/layout/layout.types.js';
 export * from './domain/layout/layout.validator.js';
 export * from './domain/layout/layout.service.js';
 export * from './domain/scaffolding/scaffold.service.js';
+export * from './domain/scss/scss.service.js';
+export * from './domain/audit/audit.service.js';
 export * from './mcp/server.js';
 export * from './mcp/resources.js';
 export * from './mcp/tools.js';

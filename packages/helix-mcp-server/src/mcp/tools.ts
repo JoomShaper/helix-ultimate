@@ -7,13 +7,17 @@ import { z } from 'zod';
 import { LayoutService } from '../domain/layout/layout.service.js';
 import { ScaffoldService } from '../domain/scaffolding/scaffold.service.js';
 import { BackupService } from '../domain/backup/backup.service.js';
+import { ScssService } from '../domain/scss/scss.service.js';
+import { AuditService } from '../domain/audit/audit.service.js';
 import { Logger } from '../core/logger.js';
 
 export function registerTools(
   server: Server,
   layoutService: LayoutService,
   scaffoldService: ScaffoldService,
-  backupService: BackupService
+  backupService: BackupService,
+  scssService: ScssService,
+  auditService: AuditService
 ): void {
   // 1. Tool Listing
   server.setRequestHandler(ListToolsRequestSchema, async () => {
@@ -120,6 +124,37 @@ export function registerTools(
           }
         },
         {
+          name: 'helix_compile_scss',
+          description: 'Compiles template SCSS (theme.scss) using embedded Sass engine and returns detailed syntax diagnostics or byte size.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              targetFile: {
+                type: 'string',
+                description: 'Optional relative path to target SCSS file (defaults to templates/shaper_helixultimate/scss/theme.scss)'
+              },
+              outputStyle: {
+                type: 'string',
+                enum: ['expanded', 'compressed'],
+                description: 'CSS output style format'
+              }
+            }
+          }
+        },
+        {
+          name: 'helix_audit_compatibility',
+          description: 'Audits template codebase for legacy jQuery calls, deprecated JFactory / JRequest methods, and unregistered layout positions.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              targetDir: {
+                type: 'string',
+                description: 'Optional relative directory to scan (defaults to templates/shaper_helixultimate)'
+              }
+            }
+          }
+        },
+        {
           name: 'helix_rollback',
           description: 'Reverts the most recent file or layout mutation using an atomic snapshot backup.',
           inputSchema: {
@@ -215,6 +250,55 @@ export function registerTools(
             {
               type: 'text',
               text: `Successfully created Helix feature at: ${result.relativePath}`
+            }
+          ]
+        };
+      }
+
+      if (name === 'helix_compile_scss') {
+        const schema = z.object({
+          targetFile: z.string().optional(),
+          outputStyle: z.enum(['expanded', 'compressed']).optional()
+        });
+
+        const parsed = schema.parse(args || {});
+        const result = scssService.compile(parsed);
+
+        if (result.success) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `SCSS compiled successfully in ${result.durationMs}ms (${result.cssSize} bytes).`
+              }
+            ]
+          };
+        } else {
+          return {
+            isError: true,
+            content: [
+              {
+                type: 'text',
+                text: `SCSS compilation failed:\n${result.error?.message}\nLine: ${result.error?.line}, Column: ${result.error?.column}`
+              }
+            ]
+          };
+        }
+      }
+
+      if (name === 'helix_audit_compatibility') {
+        const schema = z.object({
+          targetDir: z.string().optional()
+        });
+
+        const parsed = schema.parse(args || {});
+        const report = auditService.runAudit(parsed.targetDir);
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(report, null, 2)
             }
           ]
         };

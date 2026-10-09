@@ -1,0 +1,37 @@
+{
+  "name": "@joomshaper/helix-mcp-server",
+  "version": "1.0.0",
+  "description": "Production Model Context Protocol (MCP) server for Helix Ultimate Joomla framework",
+  "main": "dist/index.js",
+  "bin": {
+    "helix-mcp-server": "dist/cli.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/cli.js",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "joomla",
+    "helix-ultimate",
+    "joomshaper"
+  ],
+  "author": "JoomShaper <support@joomshaper.com>",
+  "license": "GPL-2.0-or-later",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.0",
+    "commander": "^13.1.0",
+    "fast-xml-parser": "^5.0.8",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.9",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.7"
+  }
+}

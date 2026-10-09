@@ -1,5 +1,6 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { Transport } from '@modelcontextprotocol/sdk/shared/transport.js';
 import { JoomlaDetector } from '../core/joomla-detector.js';
 import { Logger } from '../core/logger.js';
 import { BackupService } from '../domain/backup/backup.service.js';
@@ -67,8 +68,7 @@ export class HelixMcpServer {
     );
   }
 
-  public async start(): Promise<void> {
-    Logger.info('Initializing Helix Ultimate MCP Server over STDIO transport');
+  public async start(customTransport?: Transport): Promise<void> {
     const workspaceInfo = this.detector.detect();
     Logger.info(`Connected to Joomla workspace: ${workspaceInfo.joomlaRoot}`, {
       pluginVersion: workspaceInfo.pluginVersion,
@@ -76,8 +76,12 @@ export class HelixMcpServer {
       positionsCount: workspaceInfo.registeredPositions.length
     });
 
-    const transport = new StdioServerTransport();
+    const transport = customTransport || new StdioServerTransport();
     await this.server.connect(transport);
-    Logger.info('Helix Ultimate MCP Server listening on STDIO');
+    Logger.info(`Helix Ultimate MCP Server listening on ${customTransport ? 'custom transport' : 'STDIO'}`);
+  }
+
+  public getServerInstance(): Server {
+    return this.server;
   }
 }

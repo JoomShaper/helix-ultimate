@@ -333,11 +333,22 @@ export function registerTools(
 
       if (name === 'helix_rollback') {
         const result = backupService.rollbackLatest();
+
+        // If options.json was restored, also synchronize the database
+        if (result.restoredFile.includes('options.json')) {
+          try {
+            const restoredLayout = await layoutService.getLayout();
+            await layoutService.saveLayout(restoredLayout, 'sync_rollback');
+          } catch (syncErr) {
+            Logger.warn(`Could not sync restored layout to DB: ${syncErr}`);
+          }
+        }
+
         return {
           content: [
             {
               type: 'text',
-              text: `Successfully restored file '${result.restoredFile}' from snapshot '${result.snapshotId}'.`
+              text: `Successfully restored file '${result.restoredFile}' from snapshot '${result.snapshotId}' and synchronized database.`
             }
           ]
         };

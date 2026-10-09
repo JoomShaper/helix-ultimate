@@ -5,6 +5,8 @@ import { Logger } from '../core/logger.js';
 import { BackupService } from '../domain/backup/backup.service.js';
 import { LayoutService } from '../domain/layout/layout.service.js';
 import { ScaffoldService } from '../domain/scaffolding/scaffold.service.js';
+import { ScssService } from '../domain/scss/scss.service.js';
+import { AuditService } from '../domain/audit/audit.service.js';
 import { registerResources } from './resources.js';
 import { registerTools } from './tools.js';
 
@@ -19,6 +21,8 @@ export class HelixMcpServer {
   private backupService: BackupService;
   private layoutService: LayoutService;
   private scaffoldService: ScaffoldService;
+  private scssService: ScssService;
+  private auditService: AuditService;
 
   constructor(options: HelixMcpServerOptions = {}) {
     if (options.verbose) {
@@ -32,6 +36,8 @@ export class HelixMcpServer {
     this.backupService = new BackupService(workspaceRoot);
     this.layoutService = new LayoutService(workspaceRoot, this.backupService, info.registeredPositions);
     this.scaffoldService = new ScaffoldService(workspaceRoot);
+    this.scssService = new ScssService(workspaceRoot);
+    this.auditService = new AuditService(workspaceRoot, this.layoutService, info.registeredPositions);
 
     this.server = new Server(
       {
@@ -55,7 +61,9 @@ export class HelixMcpServer {
       this.server,
       this.layoutService,
       this.scaffoldService,
-      this.backupService
+      this.backupService,
+      this.scssService,
+      this.auditService
     );
   }
 

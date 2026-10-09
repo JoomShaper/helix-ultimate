@@ -25,6 +25,12 @@ export function registerResources(server: Server, detector: JoomlaDetector): voi
           description: 'All module positions officially declared in templateDetails.xml'
         },
         {
+          uri: 'helix://presets/all',
+          name: 'Helix Style Presets',
+          mimeType: 'application/json',
+          description: 'Color schemes and style presets configured in Helix Ultimate template'
+        },
+        {
           uri: 'helix://standards/architecture',
           name: 'Helix Architecture & Coding Rules',
           mimeType: 'text/markdown',
@@ -84,6 +90,34 @@ export function registerResources(server: Server, detector: JoomlaDetector): voi
               null,
               2
             )
+          }
+        ]
+      };
+    }
+
+    if (uri === 'helix://presets/all') {
+      let presetsData: Record<string, unknown> = {};
+      const optionsRel = 'templates/shaper_helixultimate/options.json';
+      if (detector.fileExists(optionsRel)) {
+        try {
+          const raw = detector.readFile(optionsRel);
+          const parsed = JSON.parse(raw);
+          if (parsed['presets-data']) {
+            presetsData = typeof parsed['presets-data'] === 'string'
+              ? JSON.parse(parsed['presets-data'])
+              : parsed['presets-data'];
+          }
+        } catch (err) {
+          Logger.warn(`Failed to parse presets from ${optionsRel}: ${err}`);
+        }
+      }
+
+      return {
+        contents: [
+          {
+            uri,
+            mimeType: 'application/json',
+            text: JSON.stringify(presetsData, null, 2)
           }
         ]
       };

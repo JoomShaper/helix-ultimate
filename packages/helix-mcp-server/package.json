@@ -6,6 +6,13 @@
   "bin": {
     "helix-mcp-server": "dist/cli.js"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "scripts": {
     "build": "tsup",

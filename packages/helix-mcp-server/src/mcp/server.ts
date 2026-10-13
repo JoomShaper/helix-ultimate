@@ -6,6 +6,7 @@ import { Logger } from '../core/logger.js';
 import { JoomlaDbClient } from '../core/db-client.js';
 import { BackupService } from '../domain/backup/backup.service.js';
 import { LayoutService } from '../domain/layout/layout.service.js';
+import { MegaMenuService } from '../domain/megamenu/megamenu.service.js';
 import { ScaffoldService } from '../domain/scaffolding/scaffold.service.js';
 import { ScssService } from '../domain/scss/scss.service.js';
 import { AuditService } from '../domain/audit/audit.service.js';
@@ -23,6 +24,7 @@ export class HelixMcpServer {
   private dbClient: JoomlaDbClient;
   private backupService: BackupService;
   private layoutService: LayoutService;
+  private megaMenuService: MegaMenuService;
   private scaffoldService: ScaffoldService;
   private scssService: ScssService;
   private auditService: AuditService;
@@ -39,6 +41,7 @@ export class HelixMcpServer {
     this.dbClient = new JoomlaDbClient(workspaceRoot);
     this.backupService = new BackupService(workspaceRoot);
     this.layoutService = new LayoutService(workspaceRoot, this.backupService, info.registeredPositions, this.dbClient);
+    this.megaMenuService = new MegaMenuService(workspaceRoot, this.backupService, this.dbClient);
     this.scaffoldService = new ScaffoldService(workspaceRoot);
     this.scssService = new ScssService(workspaceRoot);
     this.auditService = new AuditService(workspaceRoot, this.layoutService, info.registeredPositions);
@@ -46,7 +49,7 @@ export class HelixMcpServer {
     this.server = new Server(
       {
         name: 'helix-ultimate-mcp-server',
-        version: '1.0.0'
+        version: '1.1.0'
       },
       {
         capabilities: {
@@ -64,6 +67,7 @@ export class HelixMcpServer {
     registerTools(
       this.server,
       this.layoutService,
+      this.megaMenuService,
       this.scaffoldService,
       this.backupService,
       this.scssService,

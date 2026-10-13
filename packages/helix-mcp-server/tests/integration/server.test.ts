@@ -70,11 +70,51 @@ describe('HelixMcpServer Integration Test (Full Client-Server Roundtrip)', () =>
 
     expect(toolNames).toContain('helix_get_layout');
     expect(toolNames).toContain('helix_update_row');
+    expect(toolNames).toContain('helix_get_megamenu');
+    expect(toolNames).toContain('helix_update_megamenu');
     expect(toolNames).toContain('helix_scaffold_override');
     expect(toolNames).toContain('helix_scaffold_feature');
     expect(toolNames).toContain('helix_compile_scss');
     expect(toolNames).toContain('helix_audit_compatibility');
     expect(toolNames).toContain('helix_rollback');
+  });
+
+  it('invokes helix_get_megamenu tool', async () => {
+    const result = await client.callTool({
+      name: 'helix_get_megamenu',
+      arguments: {}
+    });
+
+    expect(result.isError).toBeFalsy();
+    const content = result.content as Array<{ type: string; text: string }>;
+    expect(content[0].text).toBeDefined();
+    const data = JSON.parse(content[0].text);
+    expect(typeof data).toBe('object');
+  });
+
+  it('invokes helix_update_megamenu tool', async () => {
+    const result = await client.callTool({
+      name: 'helix_update_megamenu',
+      arguments: {
+        menuItemId: '999',
+        enabled: true,
+        width: '750px',
+        align: 'center',
+        badge: 'New',
+        rows: [
+          {
+            columns: [
+              { colGrid: '6', items: [{ type: 'menu_item', id: '1001' }] },
+              { colGrid: '6', items: [{ type: 'module', id: '42' }] }
+            ]
+          }
+        ]
+      }
+    });
+
+    expect(result.isError).toBeFalsy();
+    const content = result.content as Array<{ type: string; text: string }>;
+    expect(content[0].text).toContain('Successfully updated Mega Menu');
   });
 
   it('invokes helix_get_layout tool', async () => {

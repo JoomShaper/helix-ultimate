@@ -138,6 +138,8 @@ The AI invokes `helix_rollback`, restores the latest snapshot from `.helix-mcp/s
 | :--- | :--- |
 | **`helix_get_layout`** | Retrieves active row and column structure. |
 | **`helix_update_row`** | Updates/inserts rows with 12-column validation & DB sync. |
+| **`helix_get_megamenu`** | Retrieves mega menu grid layout, widths, badges & assigned modules. |
+| **`helix_update_megamenu`** | Configures multi-column mega menu grids with 12-col validation & DB sync. |
 | **`helix_scaffold_override`** | Generates Joomla component/module overrides in `html/`. |
 | **`helix_scaffold_feature`** | Scaffolds new feature classes in `features/`. |
 | **`helix_compile_scss`** | Compiles `theme.scss` with embedded Dart Sass engine. |

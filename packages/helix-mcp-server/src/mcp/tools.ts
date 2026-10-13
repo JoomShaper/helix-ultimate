@@ -5,15 +5,18 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { LayoutService } from '../domain/layout/layout.service.js';
+import { MegaMenuService } from '../domain/megamenu/megamenu.service.js';
 import { ScaffoldService } from '../domain/scaffolding/scaffold.service.js';
 import { BackupService } from '../domain/backup/backup.service.js';
 import { ScssService } from '../domain/scss/scss.service.js';
 import { AuditService } from '../domain/audit/audit.service.js';
 import { Logger } from '../core/logger.js';
+import { MegaMenuRow } from '../domain/megamenu/megamenu.types.js';
 
 export function registerTools(
   server: Server,
   layoutService: LayoutService,
+  megaMenuService: MegaMenuService,
   scaffoldService: ScaffoldService,
   backupService: BackupService,
   scssService: ScssService,
@@ -93,6 +96,129 @@ export function registerTools(
               }
             },
             required: ['rowId', 'columns']
+          }
+        },
+        {
+          name: 'helix_get_megamenu',
+          description: 'Retrieves mega menu configuration, dropdown width, and row/column grid layouts for a specific menu item ID, or all configured mega menus.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              menuItemId: {
+                type: 'string',
+                description: 'Optional Joomla menu item ID (e.g. "101"). If omitted, returns all mega menu configurations.'
+              },
+              styleId: {
+                type: 'integer',
+                description: 'Optional Joomla template style ID'
+              }
+            }
+          }
+        },
+        {
+          name: 'helix_update_megamenu',
+          description: 'Configures or updates a Helix Ultimate Mega Menu layout for a specific menu item ID. Enforces Bootstrap 12-column grid rule per row and syncs with MySQL.',
+          inputSchema: {
+            type: 'object',
+            properties: {
+              menuItemId: {
+                type: 'string',
+                description: 'Joomla menu item ID to configure (e.g. "101")'
+              },
+              enabled: {
+                type: 'boolean',
+                description: 'Whether mega menu dropdown is enabled (true/false)'
+              },
+              width: {
+                type: 'string',
+                description: 'Dropdown width (e.g. "600px", "800px", "100%")'
+              },
+              align: {
+                type: 'string',
+                enum: ['left', 'right', 'center', 'full'],
+                description: 'Mega menu alignment'
+              },
+              dropdown: {
+                type: 'string',
+                enum: ['left', 'right'],
+                description: 'Dropdown direction'
+              },
+              badge: {
+                type: 'string',
+                description: 'Optional badge text (e.g. "Hot", "New")'
+              },
+              badgePosition: {
+                type: 'string',
+                enum: ['top', 'bottom'],
+                description: 'Badge position'
+              },
+              badgeBgColor: {
+                type: 'string',
+                description: 'Badge background color hex (e.g. "#ec430f")'
+              },
+              badgeTextColor: {
+                type: 'string',
+                description: 'Badge text color hex (e.g. "#ffffff")'
+              },
+              icon: {
+                type: 'string',
+                description: 'FontAwesome icon class (e.g. "fa fa-star")'
+              },
+              customClass: {
+                type: 'string',
+                description: 'Custom CSS class'
+              },
+              rows: {
+                type: 'array',
+                description: 'Array of rows for the mega menu grid layout. Each row contains columns whose colGrid values must sum to 12.',
+                items: {
+                  type: 'object',
+                  properties: {
+                    columns: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          colGrid: {
+                            type: 'string',
+                            description: 'Column grid width ("1" to "12")'
+                          },
+                          moduleId: {
+                            type: 'string',
+                            description: 'Optional Joomla module ID rendered in this column'
+                          },
+                          items: {
+                            type: 'array',
+                            description: 'Array of child menu items or modules in this column',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                type: {
+                                  type: 'string',
+                                  enum: ['menu_item', 'module']
+                                },
+                                id: {
+                                  type: 'string',
+                                  description: 'Item ID or Module ID'
+                                }
+                              },
+                              required: ['type', 'id']
+                            }
+                          }
+                        },
+                        required: ['colGrid']
+                      }
+                    }
+                  },
+                  required: ['columns']
+                }
+              },
+              styleId: {
+                type: 'integer',
+                description: 'Optional Joomla template style ID'
+              }
+            },
+            required: ['menuItemId']
           }
         },
         {
@@ -237,6 +363,117 @@ export function registerTools(
             {
               type: 'text',
               text: `Successfully updated row '${parsed.rowId}'. Saved to database and options.json. Snapshot '${result.snapshotId}' created for rollback.`
+            }
+          ]
+        };
+      }
+
+      if (name === 'helix_get_megamenu') {
+        const schema = z.object({
+          menuItemId: z.string().optional(),
+          styleId: z.number().int().optional()
+        });
+
+        const parsed = schema.parse(args || {});
+        if (parsed.menuItemId) {
+          const item = await megaMenuService.getMenuItemSettings(parsed.menuItemId, parsed.styleId);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(item || { megamenu: 0, message: `No mega menu configured for item #${parsed.menuItemId}` }, null, 2)
+              }
+            ]
+          };
+        } else {
+          const map = await megaMenuService.getMegaMenuMap(parsed.styleId);
+          return {
+            content: [
+              {
+                type: 'text',
+                text: JSON.stringify(map, null, 2)
+              }
+            ]
+          };
+        }
+      }
+
+      if (name === 'helix_update_megamenu') {
+        const schema = z.object({
+          menuItemId: z.string(),
+          enabled: z.boolean().optional(),
+          width: z.string().optional(),
+          align: z.enum(['left', 'right', 'center', 'full']).optional(),
+          dropdown: z.enum(['left', 'right']).optional(),
+          badge: z.string().optional(),
+          badgePosition: z.enum(['top', 'bottom']).optional(),
+          badgeBgColor: z.string().optional(),
+          badgeTextColor: z.string().optional(),
+          icon: z.string().optional(),
+          customClass: z.string().optional(),
+          rows: z.array(
+            z.object({
+              columns: z.array(
+                z.object({
+                  colGrid: z.string(),
+                  moduleId: z.string().optional(),
+                  items: z.array(
+                    z.object({
+                      type: z.enum(['menu_item', 'module']),
+                      id: z.string()
+                    })
+                  ).optional()
+                })
+              )
+            })
+          ).optional(),
+          styleId: z.number().int().optional()
+        });
+
+        const parsed = schema.parse(args);
+
+        // Convert rows to internal MegaMenuRow format
+        let convertedLayout: MegaMenuRow[] | undefined = undefined;
+        if (parsed.rows) {
+          convertedLayout = parsed.rows.map(r => ({
+            type: 'row',
+            attr: r.columns.map(c => ({
+              type: 'column',
+              colGrid: c.colGrid,
+              moduleId: c.moduleId,
+              items: c.items ? c.items.map(it => ({
+                type: it.type,
+                item_id: it.type === 'menu_item' ? it.id : undefined,
+                moduleId: it.type === 'module' ? it.id : undefined
+              })) : []
+            }))
+          }));
+        }
+
+        const settingsUpdate: any = {};
+        if (parsed.enabled !== undefined) settingsUpdate.megamenu = parsed.enabled ? 1 : 0;
+        if (parsed.width) settingsUpdate.width = parsed.width;
+        if (parsed.align) settingsUpdate.menualign = parsed.align;
+        if (parsed.dropdown) settingsUpdate.dropdown = parsed.dropdown;
+        if (parsed.badge !== undefined) settingsUpdate.badge = parsed.badge;
+        if (parsed.badgePosition) settingsUpdate.badge_position = parsed.badgePosition;
+        if (parsed.badgeBgColor) settingsUpdate.badge_bg_color = parsed.badgeBgColor;
+        if (parsed.badgeTextColor) settingsUpdate.badge_text_color = parsed.badgeTextColor;
+        if (parsed.icon !== undefined) settingsUpdate.faicon = parsed.icon;
+        if (parsed.customClass !== undefined) settingsUpdate.customclass = parsed.customClass;
+        if (convertedLayout) settingsUpdate.layout = convertedLayout;
+
+        const result = await megaMenuService.updateMenuItem(
+          parsed.menuItemId,
+          settingsUpdate,
+          parsed.styleId
+        );
+
+        return {
+          content: [
+            {
+              type: 'text',
+              text: `Successfully updated Mega Menu for menu item #${parsed.menuItemId}. Snapshot '${result.snapshotId}' created for rollback.`
             }
           ]
         };

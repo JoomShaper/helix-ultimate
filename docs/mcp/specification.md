@@ -76,7 +76,25 @@ Resources provide the AI with structured background context on demand.
 * **Parameters**: None.
 * **Returns**: Array of detected violations with file paths and line numbers.
 
-### 7. `helix_rollback`
+### 7. `helix_get_megamenu`
+* **Description**: Retrieves mega menu dropdown width, alignment, and column grid layout for a specific menu item ID, or all configured mega menus.
+* **Parameters**:
+  * `menuItemId` *(string, optional)*: Menu item ID (e.g. `"101"`).
+  * `styleId` *(integer, optional)*: Template style ID.
+
+### 8. `helix_update_megamenu`
+* **Description**: Configures a Helix Ultimate Mega Menu layout for a specific menu item. Enforces Bootstrap 12-column rules per row and synchronizes with MySQL.
+* **Parameters**:
+  * `menuItemId` *(string, required)*: Menu item ID (e.g. `"101"`).
+  * `enabled` *(boolean, optional)*: Enable or disable mega menu.
+  * `width` *(string, optional)*: Dropdown width (e.g. `"800px"`, `"full"`).
+  * `align` *(enum: `"left"` | `"right"` | `"center"` | `"full"`, optional)*: Alignment.
+  * `badge` *(string, optional)*: Badge text (e.g. `"Hot"`).
+  * `badgeBgColor` *(string, optional)*: Badge background hex.
+  * `badgeTextColor` *(string, optional)*: Badge text hex.
+  * `rows` *(array, optional)*: Array of grid rows, each with columns summing to 12.
+
+### 9. `helix_rollback`
 * **Description**: Restores the last recorded snapshot before a mutation tool was executed.
 * **Parameters**: None.
 * **Returns**: Confirmation and timestamp of restored state.

@@ -33,9 +33,7 @@ export class MegaMenuService {
           const params = await this.dbClient.getStyleParams(activeStyleId);
           if (params?.helixultimatemenulayout) {
             const raw = params.helixultimatemenulayout;
-            const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
-            Logger.debug(`Loaded mega menu map from database for style #${activeStyleId} (${targetTemplate})`);
-            return parsed || {};
+            return this.normalizeMap(raw);
           }
         }
       } catch (err) {
@@ -54,11 +52,47 @@ export class MegaMenuService {
       const raw = fs.readFileSync(fullPath, 'utf-8');
       const options = JSON.parse(raw);
       if (options.helixultimatemenulayout) {
-        const rawLayout = options.helixultimatemenulayout;
-        return typeof rawLayout === 'string' ? JSON.parse(rawLayout) : rawLayout;
+        return this.normalizeMap(options.helixultimatemenulayout);
       }
     } catch (err) {
       Logger.warn(`Could not read mega menu from options.json for ${targetTemplate}: ${err}`);
+    }
+
+    return {};
+  }
+
+  /**
+   * Ensures the mega menu map is always a clean object dictionary, never a sparse array of nulls.
+   */
+  public normalizeMap(raw: unknown): HelixMegaMenuMap {
+    if (!raw) return {};
+    let parsed: any = raw;
+    if (typeof raw === 'string') {
+      try {
+        parsed = JSON.parse(raw);
+      } catch {
+        return {};
+      }
+    }
+
+    if (Array.isArray(parsed)) {
+      const obj: HelixMegaMenuMap = {};
+      parsed.forEach((val, idx) => {
+        if (val !== null && val !== undefined && typeof val === 'object') {
+          obj[String(idx)] = val;
+        }
+      });
+      return obj;
+    }
+
+    if (typeof parsed === 'object') {
+      const cleanObj: HelixMegaMenuMap = {};
+      for (const [key, val] of Object.entries(parsed)) {
+        if (val !== null && val !== undefined) {
+          cleanObj[key] = val as any;
+        }
+      }
+      return cleanObj;
     }
 
     return {};
@@ -84,7 +118,7 @@ export class MegaMenuService {
     const targetTemplate = templateName || this.defaultTemplate;
     const optionsPath = this.getOptionsPath(targetTemplate);
     const fullPath = PathGuard.assertWithin(optionsPath, this.workspaceRoot);
-    const map = await this.getMegaMenuMap(styleId, targetTemplate);
+    const map = this.normalizeMap(await this.getMegaMenuMap(styleId, targetTemplate));
 
     const existing: MegaMenuItemSettings = map[String(menuItemId)] || {
       megamenu: 1,

@@ -11,38 +11,42 @@ export interface UpdateRowOptions {
   rowId: string | number;
   columns: Array<{ width: number; position?: string; customClass?: string; isComponent?: boolean }>;
   rowSettings?: Partial<HelixRow['settings']>;
-  insertAbove?: string; // e.g. "Header"
+  insertAbove?: string;
   insertBelow?: string;
   styleId?: number;
+  templateName?: string;
 }
 
 export class LayoutService {
-  private optionsPath: string;
-
   constructor(
     private workspaceRoot: string,
     private backupService: BackupService,
     private registeredPositions: string[] = [],
-    private dbClient?: JoomlaDbClient
-  ) {
-    this.optionsPath = path.join('templates', 'shaper_helixultimate', 'options.json');
+    private dbClient?: JoomlaDbClient,
+    private defaultTemplate: string = 'shaper_helixultimate'
+  ) {}
+
+  public getOptionsPath(templateName?: string): string {
+    return path.join('templates', templateName || this.defaultTemplate, 'options.json');
   }
 
   /**
    * Reads and parses the active Helix Ultimate layout tree.
    * Prioritizes live database if connected, else falls back to options.json.
    */
-  public async getLayout(styleId?: number): Promise<HelixLayout> {
+  public async getLayout(styleId?: number, templateName?: string): Promise<HelixLayout> {
+    const targetTemplate = templateName || this.defaultTemplate;
+
     // 1. Try from live database
     if (this.dbClient && this.dbClient.isConfigured()) {
       try {
-        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId();
+        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId(targetTemplate);
         if (activeStyleId) {
           const params = await this.dbClient.getStyleParams(activeStyleId);
           if (params?.layout) {
             const layout = typeof params.layout === 'string' ? JSON.parse(params.layout) : params.layout;
             if (Array.isArray(layout) && layout.length > 0) {
-              Logger.debug(`Loaded layout for style #${activeStyleId} directly from database`);
+              Logger.debug(`Loaded layout for style #${activeStyleId} (${targetTemplate}) directly from database`);
               return layout;
             }
           }
@@ -53,16 +57,17 @@ export class LayoutService {
     }
 
     // 2. Fallback to options.json
-    const fullPath = PathGuard.assertWithin(this.optionsPath, this.workspaceRoot);
+    const optionsPath = this.getOptionsPath(targetTemplate);
+    const fullPath = PathGuard.assertWithin(optionsPath, this.workspaceRoot);
     if (!fs.existsSync(fullPath)) {
-      throw new Error(`Options file not found: ${this.optionsPath}`);
+      throw new Error(`Options file not found for template '${targetTemplate}': ${optionsPath}`);
     }
 
     const raw = fs.readFileSync(fullPath, 'utf-8');
     const options = JSON.parse(raw);
 
     if (!options.layout) {
-      throw new Error('No layout found in options.json');
+      throw new Error(`No layout found in options.json for template '${targetTemplate}'`);
     }
 
     return typeof options.layout === 'string'
@@ -74,8 +79,8 @@ export class LayoutService {
    * Updates an existing row or inserts a new row in the layout.
    */
   public async updateRow(options: UpdateRowOptions): Promise<{ layout: HelixLayout; snapshotId: string }> {
-    const layout = await this.getLayout(options.styleId);
-    const { rowId, columns, rowSettings, insertAbove, insertBelow } = options;
+    const layout = await this.getLayout(options.styleId, options.templateName);
+    const { rowId, columns, rowSettings, insertAbove, insertBelow, templateName } = options;
 
     // Find row by index or name
     let rowIndex = -1;
@@ -151,15 +156,17 @@ export class LayoutService {
       Logger.info(`Appended new row (${targetRow.settings.name})`);
     }
 
-    const snapshotId = await this.saveLayout(layout, `update_row_${rowId}`, options.styleId);
+    const snapshotId = await this.saveLayout(layout, `update_row_${rowId}`, options.styleId, templateName);
     return { layout, snapshotId };
   }
 
   /**
    * Validates and saves layout changes to both database (if configured) and options.json.
    */
-  public async saveLayout(layout: HelixLayout, action: string, styleId?: number): Promise<string> {
-    const fullPath = PathGuard.assertWithin(this.optionsPath, this.workspaceRoot);
+  public async saveLayout(layout: HelixLayout, action: string, styleId?: number, templateName?: string): Promise<string> {
+    const targetTemplate = templateName || this.defaultTemplate;
+    const optionsPath = this.getOptionsPath(targetTemplate);
+    const fullPath = PathGuard.assertWithin(optionsPath, this.workspaceRoot);
 
     // 1. Validate full layout
     const validation = LayoutValidator.validateLayout(layout, this.registeredPositions);
@@ -168,17 +175,17 @@ export class LayoutService {
     }
 
     // 2. Snapshot
-    const snapshotId = this.backupService.captureSnapshot(this.optionsPath, action);
+    const snapshotId = this.backupService.captureSnapshot(optionsPath, action);
 
     // 3. Update database if client is configured
     if (this.dbClient && this.dbClient.isConfigured()) {
       try {
-        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId();
+        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId(targetTemplate);
         if (activeStyleId) {
           const params = await this.dbClient.getStyleParams(activeStyleId) || {};
           params.layout = JSON.stringify(layout);
           await this.dbClient.updateStyleParams(activeStyleId, params);
-          Logger.info(`Synchronized layout to MySQL database for style #${activeStyleId}`);
+          Logger.info(`Synchronized layout to MySQL database for style #${activeStyleId} (${targetTemplate})`);
         }
       } catch (err) {
         Logger.warn(`Database sync failed (persisting to options.json): ${err}`);
@@ -186,12 +193,14 @@ export class LayoutService {
     }
 
     // 4. Update options.json file
-    const raw = fs.readFileSync(fullPath, 'utf-8');
-    const options = JSON.parse(raw);
-    options.layout = JSON.stringify(layout);
+    if (fs.existsSync(fullPath)) {
+      const raw = fs.readFileSync(fullPath, 'utf-8');
+      const options = JSON.parse(raw);
+      options.layout = JSON.stringify(layout);
 
-    fs.writeFileSync(fullPath, JSON.stringify(options, null, '\t'), 'utf-8');
-    Logger.info(`Layout saved successfully to ${this.optionsPath}`);
+      fs.writeFileSync(fullPath, JSON.stringify(options, null, '\t'), 'utf-8');
+      Logger.info(`Layout saved successfully to ${optionsPath}`);
+    }
 
     return snapshotId;
   }

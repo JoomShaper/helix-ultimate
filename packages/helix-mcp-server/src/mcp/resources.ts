@@ -62,8 +62,10 @@ export function registerResources(server: Server, detector: JoomlaDetector): voi
                   version: info.pluginVersion
                 },
                 template: {
+                  name: info.templateName,
                   path: info.templatePath,
-                  version: info.templateVersion
+                  version: info.templateVersion,
+                  detectedTemplates: info.detectedTemplates
                 },
                 nodeVersion: process.version,
                 platform: process.platform
@@ -84,6 +86,7 @@ export function registerResources(server: Server, detector: JoomlaDetector): voi
             mimeType: 'application/json',
             text: JSON.stringify(
               {
+                template: info.templateName,
                 totalPositions: info.registeredPositions.length,
                 positions: info.registeredPositions
               },
@@ -97,7 +100,7 @@ export function registerResources(server: Server, detector: JoomlaDetector): voi
 
     if (uri === 'helix://presets/all') {
       let presetsData: Record<string, unknown> = {};
-      const optionsRel = 'templates/shaper_helixultimate/options.json';
+      const optionsRel = `templates/${info.templateName}/options.json`;
       if (detector.fileExists(optionsRel)) {
         try {
           const raw = detector.readFile(optionsRel);

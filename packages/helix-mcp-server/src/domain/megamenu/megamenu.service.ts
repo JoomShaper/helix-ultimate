@@ -8,30 +8,33 @@ import { PathGuard } from '../../core/path-guard.js';
 import { Logger } from '../../core/logger.js';
 
 export class MegaMenuService {
-  private optionsPath: string;
-
   constructor(
     private workspaceRoot: string,
     private backupService: BackupService,
-    private dbClient?: JoomlaDbClient
-  ) {
-    this.optionsPath = path.join('templates', 'shaper_helixultimate', 'options.json');
+    private dbClient?: JoomlaDbClient,
+    private defaultTemplate: string = 'shaper_helixultimate'
+  ) {}
+
+  public getOptionsPath(templateName?: string): string {
+    return path.join('templates', templateName || this.defaultTemplate, 'options.json');
   }
 
   /**
    * Retrieves all mega menu configurations across all menu items.
    */
-  public async getMegaMenuMap(styleId?: number): Promise<HelixMegaMenuMap> {
+  public async getMegaMenuMap(styleId?: number, templateName?: string): Promise<HelixMegaMenuMap> {
+    const targetTemplate = templateName || this.defaultTemplate;
+
     // 1. Try from live database
     if (this.dbClient && this.dbClient.isConfigured()) {
       try {
-        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId();
+        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId(targetTemplate);
         if (activeStyleId) {
           const params = await this.dbClient.getStyleParams(activeStyleId);
           if (params?.helixultimatemenulayout) {
             const raw = params.helixultimatemenulayout;
             const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
-            Logger.debug(`Loaded mega menu map from database for style #${activeStyleId}`);
+            Logger.debug(`Loaded mega menu map from database for style #${activeStyleId} (${targetTemplate})`);
             return parsed || {};
           }
         }
@@ -41,7 +44,8 @@ export class MegaMenuService {
     }
 
     // 2. Fallback to options.json
-    const fullPath = PathGuard.assertWithin(this.optionsPath, this.workspaceRoot);
+    const optionsPath = this.getOptionsPath(targetTemplate);
+    const fullPath = PathGuard.assertWithin(optionsPath, this.workspaceRoot);
     if (!fs.existsSync(fullPath)) {
       return {};
     }
@@ -54,7 +58,7 @@ export class MegaMenuService {
         return typeof rawLayout === 'string' ? JSON.parse(rawLayout) : rawLayout;
       }
     } catch (err) {
-      Logger.warn(`Could not read mega menu from options.json: ${err}`);
+      Logger.warn(`Could not read mega menu from options.json for ${targetTemplate}: ${err}`);
     }
 
     return {};
@@ -63,8 +67,8 @@ export class MegaMenuService {
   /**
    * Retrieves mega menu settings for a specific menu item ID.
    */
-  public async getMenuItemSettings(menuItemId: string, styleId?: number): Promise<MegaMenuItemSettings | null> {
-    const map = await this.getMegaMenuMap(styleId);
+  public async getMenuItemSettings(menuItemId: string, styleId?: number, templateName?: string): Promise<MegaMenuItemSettings | null> {
+    const map = await this.getMegaMenuMap(styleId, templateName);
     return map[String(menuItemId)] || null;
   }
 
@@ -74,10 +78,13 @@ export class MegaMenuService {
   public async updateMenuItem(
     menuItemId: string,
     settings: Partial<MegaMenuItemSettings>,
-    styleId?: number
+    styleId?: number,
+    templateName?: string
   ): Promise<{ settings: MegaMenuItemSettings; snapshotId: string }> {
-    const fullPath = PathGuard.assertWithin(this.optionsPath, this.workspaceRoot);
-    const map = await this.getMegaMenuMap(styleId);
+    const targetTemplate = templateName || this.defaultTemplate;
+    const optionsPath = this.getOptionsPath(targetTemplate);
+    const fullPath = PathGuard.assertWithin(optionsPath, this.workspaceRoot);
+    const map = await this.getMegaMenuMap(styleId, targetTemplate);
 
     const existing: MegaMenuItemSettings = map[String(menuItemId)] || {
       megamenu: 1,
@@ -98,7 +105,7 @@ export class MegaMenuService {
     }
 
     // Capture backup snapshot before saving
-    const snapshotId = this.backupService.captureSnapshot(this.optionsPath, `update_megamenu_${menuItemId}`);
+    const snapshotId = this.backupService.captureSnapshot(optionsPath, `update_megamenu_${menuItemId}`);
 
     // Update map
     map[String(menuItemId)] = merged;
@@ -106,12 +113,12 @@ export class MegaMenuService {
     // 1. Update live MySQL database if client is configured
     if (this.dbClient && this.dbClient.isConfigured()) {
       try {
-        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId();
+        const activeStyleId = styleId || await this.dbClient.getActiveHelixStyleId(targetTemplate);
         if (activeStyleId) {
           const params = await this.dbClient.getStyleParams(activeStyleId) || {};
           params.helixultimatemenulayout = JSON.stringify(map);
           await this.dbClient.updateStyleParams(activeStyleId, params);
-          Logger.info(`Synchronized mega menu layout to MySQL database for style #${activeStyleId}`);
+          Logger.info(`Synchronized mega menu layout to MySQL database for style #${activeStyleId} (${targetTemplate})`);
         }
       } catch (err) {
         Logger.warn(`Database sync for mega menu failed: ${err}`);
@@ -125,7 +132,7 @@ export class MegaMenuService {
         const options = JSON.parse(raw);
         options.helixultimatemenulayout = JSON.stringify(map);
         fs.writeFileSync(fullPath, JSON.stringify(options, null, '\t'), 'utf-8');
-        Logger.info(`Updated helixultimatemenulayout in ${this.optionsPath}`);
+        Logger.info(`Updated helixultimatemenulayout in ${optionsPath}`);
       }
     } catch (err) {
       Logger.warn(`Could not update options.json for mega menu: ${err}`);

@@ -40,11 +40,11 @@ export class HelixMcpServer {
 
     this.dbClient = new JoomlaDbClient(workspaceRoot);
     this.backupService = new BackupService(workspaceRoot);
-    this.layoutService = new LayoutService(workspaceRoot, this.backupService, info.registeredPositions, this.dbClient);
-    this.megaMenuService = new MegaMenuService(workspaceRoot, this.backupService, this.dbClient);
-    this.scaffoldService = new ScaffoldService(workspaceRoot);
-    this.scssService = new ScssService(workspaceRoot);
-    this.auditService = new AuditService(workspaceRoot, this.layoutService, info.registeredPositions);
+    this.layoutService = new LayoutService(workspaceRoot, this.backupService, info.registeredPositions, this.dbClient, info.templateName);
+    this.megaMenuService = new MegaMenuService(workspaceRoot, this.backupService, this.dbClient, info.templateName);
+    this.scaffoldService = new ScaffoldService(workspaceRoot, info.templateName);
+    this.scssService = new ScssService(workspaceRoot, info.templateName);
+    this.auditService = new AuditService(workspaceRoot, this.layoutService, info.registeredPositions, info.templateName);
 
     this.server = new Server(
       {
@@ -79,7 +79,8 @@ export class HelixMcpServer {
     const workspaceInfo = this.detector.detect();
     Logger.info(`Connected to Joomla workspace: ${workspaceInfo.joomlaRoot}`, {
       pluginVersion: workspaceInfo.pluginVersion,
-      templateVersion: workspaceInfo.templateVersion,
+      activeTemplate: workspaceInfo.templateName,
+      detectedTemplates: workspaceInfo.detectedTemplates,
       positionsCount: workspaceInfo.registeredPositions.length,
       dbConfigured: this.dbClient.isConfigured()
     });

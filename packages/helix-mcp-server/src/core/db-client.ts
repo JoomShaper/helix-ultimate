@@ -67,15 +67,22 @@ export class JoomlaDbClient {
     }
   }
 
-  public async getActiveHelixStyleId(): Promise<number | null> {
+  public async getActiveHelixStyleId(templateName?: string): Promise<number | null> {
     const conn = await this.getConnection();
     if (!conn) return null;
 
     try {
       const tableName = `${this.config!.prefix}template_styles`;
-      const [rows]: any = await conn.execute(
-        `SELECT id FROM \`${tableName}\` WHERE template = 'shaper_helixultimate' AND client_id = 0 ORDER BY home DESC, id ASC LIMIT 1`
-      );
+      let query = `SELECT id, template FROM \`${tableName}\` WHERE client_id = 0`;
+      const params: any[] = [];
+
+      if (templateName) {
+        query += ` AND template = ?`;
+        params.push(templateName);
+      }
+      query += ` ORDER BY home DESC, id ASC LIMIT 1`;
+
+      const [rows]: any = await conn.execute(query, params);
 
       await conn.end();
       if (Array.isArray(rows) && rows.length > 0) {

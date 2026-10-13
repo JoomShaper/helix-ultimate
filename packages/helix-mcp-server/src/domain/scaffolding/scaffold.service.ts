@@ -8,24 +8,30 @@ export interface ScaffoldOverrideOptions {
   extension: string; // e.g., 'com_content', 'mod_menu'
   view: string;      // e.g., 'article', 'default'
   layoutFile?: string; // e.g., 'default.php'
+  templateName?: string;
 }
 
 export interface ScaffoldFeatureOptions {
   featureName: string; // e.g., 'promo_bar'
   position?: string;   // e.g., 'top1'
+  templateName?: string;
 }
 
 export class ScaffoldService {
-  constructor(private workspaceRoot: string) {}
+  constructor(
+    private workspaceRoot: string,
+    private defaultTemplate: string = 'shaper_helixultimate'
+  ) {}
 
   /**
-   * Scaffolds a clean Joomla 4/5/6 template override inside templates/shaper_helixultimate/html/
+   * Scaffolds a clean Joomla 4/5/6 template override inside templates/<templateName>/html/
    */
   public scaffoldOverride(options: ScaffoldOverrideOptions): { relativePath: string; fullPath: string } {
+    const template = options.templateName || this.defaultTemplate;
     const layoutFileName = options.layoutFile || 'default.php';
     const relativeDir = path.join(
       'templates',
-      'shaper_helixultimate',
+      template,
       'html',
       options.extension,
       options.view
@@ -46,7 +52,7 @@ export class ScaffoldService {
     const content = `<?php
 /**
  * @package     Helix Ultimate Framework
- * @subpackage  shaper_helixultimate
+ * @subpackage  ${template}
  * @copyright   Copyright (C) ${new Date().getFullYear()} JoomShaper. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -58,17 +64,18 @@ use Joomla\\CMS\\HTML\\HTMLHelper;
 use Joomla\\CMS\\Language\\Text;
 
 /**
- * Modern Joomla 4/5/6 Helix Ultimate override for ${options.extension} / ${options.view}
+ * Modern Joomla 4/5/6 Template Override
+ * Standardized for Helix Ultimate template: ${template}
  */
 ?>
 <div class="${options.extension}-${options.view} helix-override">
-    <div class="container my-3">
-        <div class="row">
-            <div class="col-12">
-                <!-- Custom Helix Override content goes here -->
-                <p class="lead"><?php echo Text::_('JGLOBAL_ARTICLE_CONTENT'); ?></p>
-            </div>
-        </div>
+    <!-- Helix Ultimate template override content -->
+    <header class="page-header mb-4">
+        <h2><?php echo Text::_('JGLOBAL_ARTICLES'); ?></h2>
+    </header>
+
+    <div class="content-body">
+        <?php // Custom template override logic goes here ?>
     </div>
 </div>
 `;
@@ -80,22 +87,23 @@ use Joomla\\CMS\\Language\\Text;
   }
 
   /**
-   * Scaffolds a new Helix feature class inside templates/shaper_helixultimate/features/
+   * Scaffolds a new Helix feature class inside templates/<templateName>/features/
    */
   public scaffoldFeature(options: ScaffoldFeatureOptions): { relativePath: string; fullPath: string } {
+    const template = options.templateName || this.defaultTemplate;
     const normalizedName = options.featureName.toLowerCase().replace(/[^a-z0-9_]/g, '_');
     const className = normalizedName
       .split('_')
       .map(part => part.charAt(0).toUpperCase() + part.slice(1))
       .join('');
 
-    const relativePath = path.join(
-      'templates',
-      'shaper_helixultimate',
-      'features',
-      `${normalizedName}.php`
-    );
+    const relativeDir = path.join('templates', template, 'features');
+    const fullDir = PathGuard.assertWithin(relativeDir, this.workspaceRoot);
+    if (!fs.existsSync(fullDir)) {
+      fs.mkdirSync(fullDir, { recursive: true });
+    }
 
+    const relativePath = path.join(relativeDir, `${normalizedName}.php`);
     const fullPath = PathGuard.assertWithin(relativePath, this.workspaceRoot);
     if (fs.existsSync(fullPath)) {
       throw new Error(`Feature file already exists at: ${relativePath}`);
@@ -104,7 +112,7 @@ use Joomla\\CMS\\Language\\Text;
     const content = `<?php
 /**
  * @package     Helix Ultimate Framework
- * @subpackage  shaper_helixultimate
+ * @subpackage  ${template}
  * @copyright   Copyright (C) ${new Date().getFullYear()} JoomShaper. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
@@ -119,43 +127,42 @@ use Joomla\\CMS\\Language\\Text;
  */
 class HelixUltimateFeature${className}
 {
-    private $params;
+    protected $helix;
+    protected $params;
+    protected $position = '${options.position || 'top1'}';
 
-    public function __construct($params)
+    public function __construct($helix = null)
     {
-        $this->params = $params;
+        $this->helix  = $helix;
+        $this->params = $helix ? $helix->params : null;
     }
 
     /**
-     * Initializes assets or dependencies for the feature
+     * Initializes feature settings and prerequisites.
      */
     public function init()
     {
-        // Feature initialization logic (Vanilla JS & SCSS preferred)
+        // Feature initialization logic
     }
 
     /**
-     * Renders the feature output
+     * Renders feature HTML output.
      *
-     * @return string HTML output
+     * @return string|void
      */
     public function render()
     {
-        $enabled = $this->params->get('${normalizedName}_enable', 1);
-
-        if (!$enabled) {
-            return '';
+        if (!$this->params || !$this->params->get('${normalizedName}_enable', 1)) {
+            return;
         }
 
-        ob_start();
-        ?>
-        <div class="helix-feature-${normalizedName} d-flex align-items-center">
-            <div class="feature-content">
-                <!-- Feature output markup -->
-            </div>
-        </div>
-        <?php
-        return ob_get_clean();
+        $output  = '<div class="helix-feature-${normalizedName} d-flex align-items-center">';
+        $output .= '    <span class="feature-content">';
+        $output .= '        ' . htmlspecialchars($this->params->get('${normalizedName}_text', '${className} Feature'), ENT_QUOTES, 'UTF-8');
+        $output .= '    </span>';
+        $output .= '</div>';
+
+        return $output;
     }
 }
 `;

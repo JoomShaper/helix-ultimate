@@ -24,14 +24,15 @@ export class AuditService {
   constructor(
     private workspaceRoot: string,
     private layoutService?: LayoutService,
-    private registeredPositions: string[] = []
+    private registeredPositions: string[] = [],
+    private defaultTemplate: string = 'shaper_helixultimate'
   ) {}
 
   /**
    * Performs full compatibility and architecture audit.
    */
   public async runAudit(targetRelativeDir?: string): Promise<AuditReport> {
-    const startDir = targetRelativeDir || path.join('templates', 'shaper_helixultimate');
+    const startDir = targetRelativeDir || path.join('templates', this.defaultTemplate);
     const fullDir = PathGuard.assertWithin(startDir, this.workspaceRoot);
 
     const violations: AuditViolation[] = [];
@@ -75,12 +76,12 @@ export class AuditService {
               const posName = col.settings.name;
               if (!this.registeredPositions.includes(posName)) {
                 violations.push({
-                  file: 'templates/shaper_helixultimate/options.json',
+                  file: path.join('templates', this.defaultTemplate, 'options.json'),
                   line: rIndex + 1,
                   rule: 'unregistered-module-position',
                   severity: 'warning',
                   snippet: `Position: "${posName}" in row "${row.settings?.name || rIndex}"`,
-                  recommendation: `Add <position>${posName}</position> to templates/shaper_helixultimate/templateDetails.xml.`
+                  recommendation: `Add <position>${posName}</position> to templates/${this.defaultTemplate}/templateDetails.xml.`
                 });
               }
             }

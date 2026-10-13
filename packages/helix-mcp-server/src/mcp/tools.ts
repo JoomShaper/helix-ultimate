@@ -36,6 +36,10 @@ export function registerTools(
               styleId: {
                 type: 'integer',
                 description: 'Optional Joomla template style ID (defaults to active/default style)'
+              },
+              template: {
+                type: 'string',
+                description: 'Optional template folder name (e.g. "shaper_helixultimate", "shaper_educon"). Defaults to active Helix template.'
               }
             }
           }
@@ -93,6 +97,10 @@ export function registerTools(
               styleId: {
                 type: 'integer',
                 description: 'Optional Joomla template style ID to modify'
+              },
+              template: {
+                type: 'string',
+                description: 'Optional template folder name (e.g. "shaper_helixultimate", "shaper_educon"). Defaults to active Helix template.'
               }
             },
             required: ['rowId', 'columns']
@@ -111,6 +119,10 @@ export function registerTools(
               styleId: {
                 type: 'integer',
                 description: 'Optional Joomla template style ID'
+              },
+              template: {
+                type: 'string',
+                description: 'Optional template folder name. Defaults to active Helix template.'
               }
             }
           }
@@ -216,6 +228,10 @@ export function registerTools(
               styleId: {
                 type: 'integer',
                 description: 'Optional Joomla template style ID'
+              },
+              template: {
+                type: 'string',
+                description: 'Optional template folder name. Defaults to active Helix template.'
               }
             },
             required: ['menuItemId']
@@ -223,7 +239,7 @@ export function registerTools(
         },
         {
           name: 'helix_scaffold_override',
-          description: 'Generates a clean Joomla 4/5/6 template override in templates/shaper_helixultimate/html/ adhering to Helix Ultimate standards.',
+          description: 'Generates a clean Joomla 4/5/6 template override inside the active or specified Helix template HTML directory.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -243,6 +259,10 @@ export function registerTools(
               layoutFile: {
                 type: 'string',
                 description: 'Layout filename (defaults to default.php)'
+              },
+              template: {
+                type: 'string',
+                description: 'Optional target template folder name (e.g. "shaper_helixultimate", "shaper_raw"). Defaults to active Helix template.'
               }
             },
             required: ['type', 'extension', 'view']
@@ -250,7 +270,7 @@ export function registerTools(
         },
         {
           name: 'helix_scaffold_feature',
-          description: 'Creates a new Helix Ultimate feature class in templates/shaper_helixultimate/features/.',
+          description: 'Creates a new Helix Ultimate feature class inside the active or specified Helix template features directory.',
           inputSchema: {
             type: 'object',
             properties: {
@@ -261,6 +281,10 @@ export function registerTools(
               position: {
                 type: 'string',
                 description: 'Default position hook'
+              },
+              template: {
+                type: 'string',
+                description: 'Optional target template folder name. Defaults to active Helix template.'
               }
             },
             required: ['featureName']
@@ -268,13 +292,17 @@ export function registerTools(
         },
         {
           name: 'helix_compile_scss',
-          description: 'Compiles template SCSS (theme.scss) using embedded Sass engine and returns detailed syntax diagnostics or byte size.',
+          description: 'Compiles template SCSS using embedded Sass engine and returns detailed syntax diagnostics or byte size.',
           inputSchema: {
             type: 'object',
             properties: {
               targetFile: {
                 type: 'string',
-                description: 'Optional relative path to target SCSS file (defaults to templates/shaper_helixultimate/scss/theme.scss)'
+                description: 'Optional relative path to target SCSS file'
+              },
+              template: {
+                type: 'string',
+                description: 'Optional target template folder name (e.g. "shaper_helixultimate", "shaper_educon"). Defaults to active Helix template.'
               },
               outputStyle: {
                 type: 'string',
@@ -292,7 +320,7 @@ export function registerTools(
             properties: {
               targetDir: {
                 type: 'string',
-                description: 'Optional relative directory to scan (defaults to templates/shaper_helixultimate)'
+                description: 'Optional relative directory to scan (defaults to active Helix template directory)'
               }
             }
           }
@@ -317,10 +345,11 @@ export function registerTools(
     try {
       if (name === 'helix_get_layout') {
         const schema = z.object({
-          styleId: z.number().int().optional()
+          styleId: z.number().int().optional(),
+          template: z.string().optional()
         });
         const parsed = schema.parse(args || {});
-        const layout = await layoutService.getLayout(parsed.styleId);
+        const layout = await layoutService.getLayout(parsed.styleId, parsed.template);
         return {
           content: [
             {
@@ -345,7 +374,8 @@ export function registerTools(
           rowSettings: z.record(z.any()).optional(),
           insertAbove: z.string().optional(),
           insertBelow: z.string().optional(),
-          styleId: z.number().int().optional()
+          styleId: z.number().int().optional(),
+          template: z.string().optional()
         });
 
         const parsed = schema.parse(args);
@@ -355,7 +385,8 @@ export function registerTools(
           rowSettings: parsed.rowSettings,
           insertAbove: parsed.insertAbove,
           insertBelow: parsed.insertBelow,
-          styleId: parsed.styleId
+          styleId: parsed.styleId,
+          templateName: parsed.template
         });
 
         return {
@@ -371,12 +402,13 @@ export function registerTools(
       if (name === 'helix_get_megamenu') {
         const schema = z.object({
           menuItemId: z.string().optional(),
-          styleId: z.number().int().optional()
+          styleId: z.number().int().optional(),
+          template: z.string().optional()
         });
 
         const parsed = schema.parse(args || {});
         if (parsed.menuItemId) {
-          const item = await megaMenuService.getMenuItemSettings(parsed.menuItemId, parsed.styleId);
+          const item = await megaMenuService.getMenuItemSettings(parsed.menuItemId, parsed.styleId, parsed.template);
           return {
             content: [
               {
@@ -386,7 +418,7 @@ export function registerTools(
             ]
           };
         } else {
-          const map = await megaMenuService.getMegaMenuMap(parsed.styleId);
+          const map = await megaMenuService.getMegaMenuMap(parsed.styleId, parsed.template);
           return {
             content: [
               {
@@ -427,12 +459,12 @@ export function registerTools(
               )
             })
           ).optional(),
-          styleId: z.number().int().optional()
+          styleId: z.number().int().optional(),
+          template: z.string().optional()
         });
 
         const parsed = schema.parse(args);
 
-        // Convert rows to internal MegaMenuRow format
         let convertedLayout: MegaMenuRow[] | undefined = undefined;
         if (parsed.rows) {
           convertedLayout = parsed.rows.map(r => ({
@@ -466,7 +498,8 @@ export function registerTools(
         const result = await megaMenuService.updateMenuItem(
           parsed.menuItemId,
           settingsUpdate,
-          parsed.styleId
+          parsed.styleId,
+          parsed.template
         );
 
         return {
@@ -484,11 +517,15 @@ export function registerTools(
           type: z.enum(['component', 'module']),
           extension: z.string(),
           view: z.string(),
-          layoutFile: z.string().optional()
+          layoutFile: z.string().optional(),
+          template: z.string().optional()
         });
 
         const parsed = schema.parse(args);
-        const result = scaffoldService.scaffoldOverride(parsed);
+        const result = scaffoldService.scaffoldOverride({
+          ...parsed,
+          templateName: parsed.template
+        });
 
         return {
           content: [
@@ -503,11 +540,15 @@ export function registerTools(
       if (name === 'helix_scaffold_feature') {
         const schema = z.object({
           featureName: z.string(),
-          position: z.string().optional()
+          position: z.string().optional(),
+          template: z.string().optional()
         });
 
         const parsed = schema.parse(args);
-        const result = scaffoldService.scaffoldFeature(parsed);
+        const result = scaffoldService.scaffoldFeature({
+          ...parsed,
+          templateName: parsed.template
+        });
 
         return {
           content: [
@@ -522,11 +563,16 @@ export function registerTools(
       if (name === 'helix_compile_scss') {
         const schema = z.object({
           targetFile: z.string().optional(),
+          template: z.string().optional(),
           outputStyle: z.enum(['expanded', 'compressed']).optional()
         });
 
         const parsed = schema.parse(args || {});
-        const result = scssService.compile(parsed);
+        const result = scssService.compile({
+          targetFile: parsed.targetFile,
+          templateName: parsed.template,
+          outputStyle: parsed.outputStyle
+        });
 
         if (result.success) {
           return {

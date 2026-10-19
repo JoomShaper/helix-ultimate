@@ -199,7 +199,7 @@ class Blog
         $src       = $input->post->get('src', '', 'STRING');
         $articleId = (int) $input->get('id', 0, 'INT');
 
-        if (! Helper::canEditArticle($articleId)) {
+        if ($articleId <= 0 || ! Helper::canEditArticle($articleId)) {
             $report['output'] = Text::_('JERROR_ALERTNOAUTHOR');
             echo json_encode($report);
             die();
@@ -227,8 +227,11 @@ class Blog
             $attribsDecoded = [];
         }
 
+        $isReferenced = false;
+
         if (($attribsDecoded['helix_ultimate_image'] ?? '') === $src) {
             $attribsDecoded['helix_ultimate_image'] = '';
+            $isReferenced                           = true;
         }
 
         if (! empty($attribsDecoded['helix_ultimate_gallery'])) {
@@ -238,12 +241,18 @@ class Blog
                 foreach ($galleryImages['helix_ultimate_gallery_images'] as $key => $image) {
                     if ($image === $src) {
                         unset($galleryImages['helix_ultimate_gallery_images'][$key]);
+                        $isReferenced = true;
                     }
                 }
 
                 $galleryImages['helix_ultimate_gallery_images'] = array_values($galleryImages['helix_ultimate_gallery_images']);
                 $attribsDecoded['helix_ultimate_gallery']       = json_encode($galleryImages);
             }
+        }
+
+        if (! $isReferenced) {
+            $report['output'] = Text::_('HELIX_ULTIMATE_DELETE_FAILED');
+            die(json_encode($report));
         }
 
         $attribsJson = json_encode($attribsDecoded);
@@ -260,7 +269,7 @@ class Blog
         if ($db->execute()) {
             $report['status'] = true;
         } else {
-            $report['output'] = Text::_('Database update failed');
+            $report['output'] = Text::_('HELIX_ULTIMATE_DELETE_FAILED');
         }
 
         die(json_encode($report));

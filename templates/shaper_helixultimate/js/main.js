@@ -310,6 +310,13 @@ jQuery(function ($) {
 			article_id: $parent.data('id'),
 			format: 'json',
 		};
+		var csrfToken = window.Joomla && typeof Joomla.getOptions === 'function'
+			? Joomla.getOptions('csrf.token', '')
+			: '';
+
+		if (csrfToken) {
+			request[csrfToken] = 1;
+		}
 
 		$.ajax({
 			type: 'POST',
@@ -738,5 +745,4 @@ jQuery(function ($) {
 	});
 
 });
-
 

@@ -85,7 +85,10 @@ jQuery(function ($) {
 
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
-    let $previewFrame = document.getElementById('hu-template-preview');
+    const $previewFrame = document.getElementById('hu-template-preview');
+    const previewUrl = new URL($previewFrame.getAttribute('src'), window.location.href);
+    const previewToken = previewUrl.searchParams.get('helixPreview');
+    const previewStyle = previewUrl.searchParams.get('templateStyle');
 
     /** Reload the preview Iframe */
     function reloadPreview() {
@@ -103,25 +106,22 @@ jQuery(function ($) {
         let iDocument = $previewFrame.contentWindow.document;
         let innerWrapper = iDocument.querySelector('.body-innerwrapper');
 
-        /**
-         * Update all the anchor tags inside the iframe.
-         * Append a query string `helixMode=edit` which
-         * will uniquely identify the iframe and the document.
-         */
-        let anchors = iDocument.querySelectorAll('a');
+        /** Keep preview authorization on same-origin links inside the iframe. */
+        const anchors = iDocument.querySelectorAll('a');
         anchors.forEach(anchor => {
-            let href = anchor.getAttribute('href') || '';
-            if (href === '#' || href === '') return;
+            const href = anchor.getAttribute('href') || '';
+            if (href === '' || href.startsWith('#')) return;
 
-            let url = new URLSearchParams(new URL(anchor.href).search);
+            const anchorUrl = new URL(anchor.href, previewUrl);
 
-            if (url.has('helixMode')) return;
-            url.append('helixMode', 'edit');
+            if (anchorUrl.origin !== previewUrl.origin) return;
 
-            let urlArr = anchor.href.split('?');
-            urlArr[1] = url.toString();
+            anchorUrl.searchParams.set('helixMode', 'edit');
 
-            anchor.setAttribute('href', urlArr.join('?'));
+            if (previewToken) anchorUrl.searchParams.set('helixPreview', previewToken);
+            if (previewStyle) anchorUrl.searchParams.set('templateStyle', previewStyle);
+
+            anchor.setAttribute('href', anchorUrl.toString());
         });
 
         /**

@@ -10,11 +10,11 @@ defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Helper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Filesystem\File;
 
 /**
  * Form field for Helix image.

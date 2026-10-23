@@ -69,7 +69,7 @@ if (!class_exists('Joomla\\CMS\\Filter\\InputFilter'))
 			$this->allowedTags = $allowedTags;
 		}
 
-		public static function getInstance(array $tags, array $attributes, int $tagsFlag, int $attrFlag): self
+		public static function getInstance(array $tags = [], array $attributes = [], int $tagsFlag = 0, int $attrFlag = 0): self
 		{
 			return new self($tags);
 		}

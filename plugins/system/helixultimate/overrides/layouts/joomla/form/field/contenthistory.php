@@ -10,6 +10,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -51,27 +52,45 @@ extract($displayData);
  * @var   array    $dataAttributes  Miscellaneous data attributes for eg, data-*.
  */
 
-echo HTMLHelper::_(
-    'bootstrap.renderModal',
-    'versionsModal',
-    [
-        'url'    => Route::_($link),
-        'title'  => $label,
-        'height' => '100%',
-        'width'  => '100%',
-        'modalWidth'  => '80',
-        'bodyHeight'  => '60',
-        'footer' => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">'
-            . Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
-    ]
-);
+$usesJoomlaDialog = version_compare(JVERSION, '5.1.0', '>=');
+
+if ($usesJoomlaDialog) {
+    /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+    $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
+    $wa->useScript('joomla.dialog-autocreate');
+
+    $dialogOptions = [
+        'popupType'  => 'iframe',
+        'src'        => Route::_($link, false),
+        'textHeader' => $label,
+    ];
+} else {
+    echo HTMLHelper::_(
+        'bootstrap.renderModal',
+        'versionsModal',
+        [
+            'url'         => Route::_($link),
+            'title'       => $label,
+            'height'      => '100%',
+            'width'       => '100%',
+            'modalWidth'  => '80',
+            'bodyHeight'  => '60',
+            'footer'      => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">'
+                . Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>',
+        ]
+    );
+}
 
 ?>
 <button
     type="button"
     class="btn btn-secondary"
-    data-bs-toggle="modal"
-    data-bs-target="#versionsModal"
+    <?php if ($usesJoomlaDialog) : ?>
+        data-joomla-dialog="<?php echo $this->escape(json_encode($dialogOptions, JSON_UNESCAPED_SLASHES)); ?>"
+    <?php else : ?>
+        data-bs-toggle="modal"
+        data-bs-target="#versionsModal"
+    <?php endif; ?>
     <?php echo $dataAttribute; ?>>
         <span class="icon-code-branch" aria-hidden="true"></span>
         <?php echo $label; ?>

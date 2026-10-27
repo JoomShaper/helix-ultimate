@@ -13,7 +13,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
+$wa = $this->getDocument()->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate');
 
@@ -56,7 +56,11 @@ $wa->useScript('keepalive')
                         <input type="hidden" name="task" value="registration.register">
                     </div>
                 </div>
-                <?php echo HTMLHelper::_('form.token'); ?>
+                <?php if (version_compare(JVERSION, '6.0.0', '>=')) : ?>
+                    <?php echo $this->form->renderControlFields(); ?>
+                <?php else : ?>
+                    <?php echo HTMLHelper::_('form.token'); ?>
+                <?php endif; ?>
             </form>
         </div>
     </div>

@@ -16,7 +16,7 @@ HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
 $params = $this->params;
 ?>
-<div class="archive<?php echo $this->pageclass_sfx; ?>">
+<div class="com-content-archive archive<?php echo $this->pageclass_sfx; ?>">
     <?php if ($params->get('show_page_heading')) : ?>
         <div class="page-header">
             <h1>
@@ -25,13 +25,13 @@ $params = $this->params;
         </div>
     <?php endif; ?>
 
-    <form id="adminForm" action="<?php echo Route::_('index.php'); ?>" method="post">
-        <fieldset class="filters">
+    <form id="adminForm" action="<?php echo Route::_('index.php'); ?>" method="post" class="com-content-archive__form">
+        <fieldset class="com-content-archive__filters filters">
             <legend class="visually-hidden">
                 <?php echo Text::_('COM_CONTENT_FORM_FILTER_LEGEND'); ?>
             </legend>
 
-            <div class="filter-search row g-3 align-items-center mb-4">
+            <div class="filter-search form-inline row g-3 align-items-center mb-4">
                 <?php if ($params->get('filter_field') !== 'hide') : ?>
                     <div class="col-auto">
                         <label class="filter-search-lbl visually-hidden" for="filter-search">

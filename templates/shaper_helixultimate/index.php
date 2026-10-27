@@ -45,7 +45,7 @@
     Helper::flushSettingsDataToJs();
 
     $user                = Factory::getUser();
-    $isAuthorizedPreview = ($app->input->get('helixMode', '') === 'edit') && ($user->authorise('core.edit', 'com_templates') || $user->authorise('core.admin'));
+    $isAuthorizedPreview = Helper::isAuthorizedPreview((int) ($template->id ?? 0));
 
     // Coming Soon
     if (! $isAuthorizedPreview) {

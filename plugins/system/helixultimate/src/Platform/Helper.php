@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
@@ -82,7 +83,11 @@ class Helper
                 ->where($db->quoteName('template') . ' = ' . $db->quote($template));
 
             if (Multilanguage::isEnabled()) {
-                $query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', ' . $db->quote('1', false) . ')');
+                $query->whereIn(
+                    $db->quoteName('home'),
+                    [Factory::getLanguage()->getTag(), '1'],
+                    ParameterType::STRING
+                );
             }
 
             $db->setQuery($query);

@@ -490,7 +490,8 @@ div.mod-languages {
     }
 
     // Hide sticky logo by default
-    .logo-sticky {
+    .logo-sticky,
+    .logo-sticky-mobile {
       display: none !important;
     }
 
@@ -504,13 +505,26 @@ div.mod-languages {
     width: 100%;
     animation: spFadeInDown 0.5s;
 
-    // Show sticky logo and hide default logo when header is sticky
-    .logo-sticky {
-      display: block !important;
+    // Show desktop sticky logo and hide default logo when header is sticky
+    @media (min-width: 992px) {
+      .logo-sticky {
+        display: block !important;
+      }
+
+      .logo-default {
+        display: none !important;
+      }
     }
 
-    .logo-default {
-      display: none !important;
+    // Show mobile sticky logo and hide default logo when header is sticky
+    @media (max-width: 991.98px) {
+      .logo-sticky-mobile {
+        display: block !important;
+      }
+
+      .logo-mobile-default {
+        display: none !important;
+      }
     }
 
   }

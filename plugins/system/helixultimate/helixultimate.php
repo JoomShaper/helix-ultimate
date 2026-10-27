@@ -423,7 +423,11 @@ class PlgSystemHelixultimate extends CMSPlugin
 		$this->attachWebAsset();
 
 		// Legacy framework identifier consumed by downstream Helix scripts.
-		$this->app->input->set('helix_id', 9);
+
+		if ($this->app->isClient('administrator') && $option === 'com_ajax')
+		{
+			$this->app->input->set('helix_id', 9);
+		}
 
 		if ($this->app->isClient('administrator') && $option === 'com_ajax' && $helix === 'ultimate' && !empty($id))
 		{

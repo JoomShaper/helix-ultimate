@@ -86,55 +86,90 @@ jQuery(function ($) {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
     const $previewFrame = document.getElementById('hu-template-preview');
-    const previewUrl = new URL($previewFrame.getAttribute('src'), window.location.href);
-    const previewToken = previewUrl.searchParams.get('helixPreview');
-    const previewStyle = previewUrl.searchParams.get('templateStyle');
+    let previewUrl = null;
+    let previewToken = null;
+    let previewStyle = null;
+
+    if ($previewFrame && $previewFrame.getAttribute('src')) {
+        try {
+            previewUrl = new URL($previewFrame.getAttribute('src'), window.location.href);
+            previewToken = previewUrl.searchParams.get('helixPreview');
+            previewStyle = previewUrl.searchParams.get('templateStyle');
+        } catch (e) {
+            previewUrl = null;
+        }
+    }
 
     /** Reload the preview Iframe */
     function reloadPreview() {
-        const url = $previewFrame.contentWindow.location.href;
+        if (!$previewFrame || !$previewFrame.contentWindow) return;
 
-        /** Check if the iframe url is not `about:blank` then reload. */
-        if (url.length && url !== 'about:blank') {
+        try {
+            const url = $previewFrame.contentWindow.location.href;
+
+            /** Check if the iframe url is not `about:blank` then reload. */
+            if (url.length && url !== 'about:blank') {
+                $previewFrame.src = $previewFrame.getAttribute('src');
+            }
+        } catch (e) {
             $previewFrame.src = $previewFrame.getAttribute('src');
         }
     }
 
     Joomla.reloadPreview = reloadPreview;
 
-    $previewFrame.addEventListener('load', function () {
-        let iDocument = $previewFrame.contentWindow.document;
-        let innerWrapper = iDocument.querySelector('.body-innerwrapper');
+    if ($previewFrame) {
+        $previewFrame.addEventListener('load', function () {
+            let iDocument;
+            try {
+                iDocument = $previewFrame.contentWindow.document;
+            } catch (e) {
+                return;
+            }
 
-        /** Keep preview authorization on same-origin links inside the iframe. */
-        const anchors = iDocument.querySelectorAll('a');
-        anchors.forEach(anchor => {
-            const href = anchor.getAttribute('href') || '';
-            if (href === '' || href.startsWith('#')) return;
+            if (!iDocument) return;
 
-            const anchorUrl = new URL(anchor.href, previewUrl);
+            let innerWrapper = iDocument.querySelector('.body-innerwrapper');
 
-            if (anchorUrl.origin !== previewUrl.origin) return;
+            /** Keep preview authorization on same-origin links inside the iframe. */
+            if (previewUrl) {
+                const anchors = iDocument.querySelectorAll('a');
+                anchors.forEach(anchor => {
+                    const href = anchor.getAttribute('href') || '';
+                    if (href === '' || href.startsWith('#')) return;
 
-            anchorUrl.searchParams.set('helixMode', 'edit');
+                    let anchorUrl;
+                    try {
+                        anchorUrl = new URL(anchor.href, previewUrl);
+                    } catch (e) {
+                        return;
+                    }
 
-            if (previewToken) anchorUrl.searchParams.set('helixPreview', previewToken);
-            if (previewStyle) anchorUrl.searchParams.set('templateStyle', previewStyle);
+                    if (anchorUrl.origin !== previewUrl.origin) return;
 
-            anchor.setAttribute('href', anchorUrl.toString());
+                    anchorUrl.searchParams.set('helixMode', 'edit');
+
+                    if (previewToken) anchorUrl.searchParams.set('helixPreview', previewToken);
+                    if (previewStyle) anchorUrl.searchParams.set('templateStyle', previewStyle);
+
+                    anchor.setAttribute('href', anchorUrl.toString());
+                });
+            }
+
+            /**
+             * Set a class into preview iframe body
+             * as we can distinguish the original preview
+             * and the backend iframe preview.
+             */
+            if (iDocument.body) {
+                iDocument.body.classList.add('back-panel');
+            }
+
+            if (innerWrapper) {
+                innerWrapper.style.marginTop = `${settings.topbarHeight}px`;
+            }
         });
-
-        /**
-         * Set a class into preview iframe body
-         * as we can distinguish the original preview
-         * and the backend iframe preview.
-         */
-        iDocument.body.classList.add('back-panel');
-
-        if (innerWrapper) {
-            innerWrapper.style.marginTop = `${settings.topbarHeight}px`;
-        }
-    });
+    }
 
     $(document).on('keyup', function (e) {
         if (e.which === 27) {
@@ -157,9 +192,11 @@ jQuery(function ($) {
         reloadPreview();
         $(this).addClass('spin');
 
-        $previewFrame.addEventListener('load', function () {
-            $(that).removeClass('spin');
-        });
+        if ($previewFrame) {
+            $previewFrame.addEventListener('load', function () {
+                $(that).removeClass('spin');
+            });
+        }
     });
 
     (function initTooltips() {

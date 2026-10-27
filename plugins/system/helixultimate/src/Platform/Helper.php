@@ -38,7 +38,7 @@ class Helper
      * @var int
      * @since 2.2.11
      */
-    private const PREVIEW_TOKEN_LIFETIME = 240;
+    private const PREVIEW_TOKEN_LIFETIME = 60;
 
     /**
      * Get template styles from Database.
@@ -277,22 +277,41 @@ class Helper
      */
     public static function isAuthorizedPreview(int $templateId): bool
     {
+        static $authorized = [];
+
+        if (isset($authorized[$templateId])) {
+            return $authorized[$templateId];
+        }
+
         $app = Factory::getApplication();
 
         if ($templateId <= 0 || $app->input->get('helixMode', '') !== 'edit') {
-            return false;
+            return $authorized[$templateId] = false;
         }
 
         $token = $app->input->get('helixPreview', '', 'STRING');
 
         if (! is_string($token) || ! preg_match('/^[a-f0-9]{64}$/', $token)) {
-            return false;
+            return $authorized[$templateId] = false;
         }
 
         $cache = new HelixCache(hash('sha256', 'helix-preview:' . $token), self::PREVIEW_TOKEN_LIFETIME);
         $cache->setGroup('helixultimate-preview');
 
-        return (int) $cache->loadData() === $templateId;
+        $isAuthorized = (int) $cache->loadData() === $templateId;
+
+        if ($isAuthorized) {
+            if (method_exists($app, 'allowCache')) {
+                $app->allowCache(false);
+            }
+
+            if (method_exists($app, 'setHeader')) {
+                $app->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+                $app->setHeader('Pragma', 'no-cache', true);
+            }
+        }
+
+        return $authorized[$templateId] = $isAuthorized;
     }
 
     private static function checkTemplateStyleValidity(int $id): bool

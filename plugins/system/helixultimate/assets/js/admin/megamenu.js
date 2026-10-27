@@ -625,9 +625,9 @@ var megaMenu = {
 
 				if (res && res.status) {
 					Joomla.reloadPreview();
-					Joomla.HelixToaster.success('Saved mega menu settings!', 'Success');
+					Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_MEGAMENU_SETTINGS_SAVED'), 'Success');
 				} else {
-					Joomla.HelixToaster.error(res && res.message ? res.message : 'Unable to save mega menu settings.', 'Error');
+					Joomla.HelixToaster.error(res && res.message ? res.message : Joomla.Text._('HELIX_ULTIMATE_MEGAMENU_SETTINGS_SAVE_FAILED'), 'Error');
 				}
 			},
 			error(err) {

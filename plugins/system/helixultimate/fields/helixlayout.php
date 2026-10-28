@@ -10,7 +10,7 @@ defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 use HelixUltimate\Framework\Platform\Helper;
 
 

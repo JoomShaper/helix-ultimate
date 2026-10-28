@@ -136,13 +136,27 @@ class Platform
 			$id = (int) $app->input->get('id', 0, 'INT');
 			$style = Helper::getTemplateStyle($id);
 
+			if (! $style || empty($style->id)) {
+				return '';
+			}
+
+			$previewToken = Helper::createPreviewToken((int) $style->id);
+			$previewQuery = [
+				'templateStyle' => (int) $style->id,
+				'helixMode'     => 'edit',
+			];
+
+			if ($previewToken !== '') {
+				$previewQuery['helixPreview'] = $previewToken;
+			}
+
 			$layoutData = array(
 				'style' => $style,
 				'id' 	=> $this->id,
 				'version' 	=> $this->version,
 				'view' 		=> $this->view,
 				'iframe'	=> [
-					'url' => Uri::root(true) . '/index.php?templateStyle=' . $style->id . "&helixMode=edit",
+					'url' => Uri::root(true) . '/index.php?' . http_build_query($previewQuery, '', '&', PHP_QUERY_RFC3986),
 					'width' => '100%',
 					'height' => '100%'
 				]
@@ -287,8 +301,28 @@ class Platform
 	private static function registerLanguageScripts()
 	{
 		Text::script('HELIX_ULTIMATE_SELECT_ICON_LABEL');
-		Text::script('HELIX_ULTIMATE_MEGAMENU_SETTINGS_SAVED');
-		Text::script('HELIX_ULTIMATE_MEGAMENU_SETTINGS_SAVE_FAILED');
+		Text::script('HELIX_ULTIMATE_TOAST_SUCCESS');
+		Text::script('HELIX_ULTIMATE_TOAST_ERROR');
+		Text::script('HELIX_ULTIMATE_TOAST_SAVED');
+		Text::script('HELIX_ULTIMATE_TOAST_UPDATED');
+		Text::script('HELIX_ULTIMATE_TOAST_FAILED');
+		Text::script('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS');
+		Text::script('HELIX_ULTIMATE_TOAST_SOMETHING_WENT_WRONG');
+		Text::script('HELIX_ULTIMATE_TOAST_MENU_ITEM_REMOVED');
+		Text::script('HELIX_ULTIMATE_TOAST_MENU_ITEM_ADDED');
+		Text::script('HELIX_ULTIMATE_TOAST_CHANGES_SAVED');
+		Text::script('HELIX_ULTIMATE_TOAST_COLUMNS_MOVED');
+		Text::script('HELIX_ULTIMATE_TOAST_ROWS_MOVED');
+		Text::script('HELIX_ULTIMATE_TOAST_CHANGES_APPLIED');
+		Text::script('HELIX_ULTIMATE_TOAST_GRID_UPDATED');
+		Text::script('HELIX_ULTIMATE_TOAST_ROW_ADDED');
+		Text::script('HELIX_ULTIMATE_TOAST_ROW_REMOVED');
+		Text::script('HELIX_ULTIMATE_TOAST_ROLLBACK_SUCCESS');
+		Text::script('HELIX_ULTIMATE_TOAST_SETTINGS_IMPORTED');
+		Text::script('HELIX_ULTIMATE_TOAST_SETTINGS_IMPORT_FAILED');
+		Text::script('HELIX_ULTIMATE_TOAST_MEGAMENU_SETTINGS_SAVED');
+		Text::script('HELIX_ULTIMATE_TOAST_DUPLICATE_ALIAS');
+		Text::script('HELIX_ULTIMATE_TOAST_ERROR_MESSAGE');
 		Text::script('HELIX_ULTIMATE_MEDIA_SVG_NOT_SUPPORTED_FOR_UPLOAD');
 		Text::script('COM_SPPAGEBUILDER_MEDIA_MANAGER_FILE_NOT_SUPPORTED');
 	}

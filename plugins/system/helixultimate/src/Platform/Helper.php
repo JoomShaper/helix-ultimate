@@ -19,6 +19,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Joomla\Filesystem\Path;
 use Joomla\Registry\Registry;
 use Joomla\Utilities\ArrayHelper;
@@ -32,6 +33,14 @@ defined('_JEXEC') or die();
  */
 class Helper
 {
+    /**
+     * Preview token lifetime in minutes.
+     *
+     * @var int
+     * @since 2.2.11
+     */
+    private const PREVIEW_TOKEN_LIFETIME = 60;
+
     /**
      * Get template styles from Database.
      *
@@ -82,7 +91,11 @@ class Helper
                 ->where($db->quoteName('template') . ' = ' . $db->quote($template));
 
             if (Multilanguage::isEnabled()) {
-                $query->where($db->quoteName('home') . ' IN(' . $db->quote(Factory::getLanguage()->getTag()) . ', ' . $db->quote('1', false));
+                $query->whereIn(
+                    $db->quoteName('home'),
+                    [Factory::getLanguage()->getTag(), '1'],
+                    ParameterType::STRING
+                );
             }
 
             $db->setQuery($query);
@@ -230,6 +243,82 @@ class Helper
         return md5($string);
     }
 
+    /**
+     * Create a temporary token for loading template drafts in the site preview.
+     *
+     * @param   int  $templateId  Template style ID.
+     *
+     * @return  string  The preview token, or an empty string when unauthorized.
+     * @since   2.2.11
+     */
+    public static function createPreviewToken(int $templateId): string
+    {
+        $app  = Factory::getApplication();
+        $user = $app->getIdentity();
+
+        if ($templateId <= 0 || ! $user || ! $user->id || (! $user->authorise('core.edit', 'com_templates') && ! $user->authorise('core.admin'))) {
+            return '';
+        }
+
+        try {
+            $token = bin2hex(random_bytes(32));
+            $cache = new HelixCache(hash('sha256', 'helix-preview:' . $token), self::PREVIEW_TOKEN_LIFETIME);
+
+            $cache->setGroup('helixultimate-preview')->storeCache($templateId);
+
+            return $token;
+        } catch (\Throwable $e) {
+            return '';
+        }
+    }
+
+    /**
+     * Determine whether the current request may load a template draft preview.
+     *
+     * @param   int  $templateId  Template style ID.
+     *
+     * @return  bool
+     * @since   2.2.11
+     */
+    public static function isAuthorizedPreview(int $templateId): bool
+    {
+        static $authorized = [];
+
+        if (isset($authorized[$templateId])) {
+            return $authorized[$templateId];
+        }
+
+        $app = Factory::getApplication();
+
+        if ($templateId <= 0 || $app->input->get('helixMode', '') !== 'edit') {
+            return $authorized[$templateId] = false;
+        }
+
+        $token = $app->input->get('helixPreview', '', 'STRING');
+
+        if (! is_string($token) || ! preg_match('/^[a-f0-9]{64}$/', $token)) {
+            return $authorized[$templateId] = false;
+        }
+
+        $cache = new HelixCache(hash('sha256', 'helix-preview:' . $token), self::PREVIEW_TOKEN_LIFETIME);
+        $cache->setGroup('helixultimate-preview');
+
+        $isAuthorized = (int) $cache->loadData() === $templateId;
+
+        if ($isAuthorized) {
+            if (method_exists($app, 'allowCache')) {
+                $app->allowCache(false);
+            }
+
+            if (method_exists($app, 'setHeader')) {
+                $app->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+                $app->setHeader('Pragma', 'no-cache', true);
+            }
+        }
+
+        return $authorized[$templateId] = $isAuthorized;
+    }
+
     private static function checkTemplateStyleValidity(int $id): bool
     {
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
@@ -290,14 +379,12 @@ class Helper
             $cache    = new HelixCache($draftKey);
 
             /**
-             * Check the fetch destination. If it is iframe and the user is authorized,
-             * then load the settings from draft. Otherwise load from saved cache or database.
+             * Only an authorized customizer preview may load draft settings.
+             * All other requests use the saved cache or database values.
              */
-            $user              = $app->getIdentity();
-            $canPreviewDraft   = $user && $user->id && ($user->authorise('core.edit', 'com_templates') || $user->authorise('core.admin'));
-            $requestFromIframe = ($app->input->get('helixMode', '') === 'edit') && $canPreviewDraft;
+            $canPreviewDraft = self::isAuthorizedPreview((int) $templateId);
 
-            if ($cache->contains() && $requestFromIframe) {
+            if ($cache->contains() && $canPreviewDraft) {
                 $template = $cache->loadData();
             } else {
                 $keyOptions = [
@@ -1044,7 +1131,7 @@ class Helper
         foreach ($allowedRoots as $root) {
             $allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
 
-            if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0) {
+            if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . DIRECTORY_SEPARATOR) === 0) {
                 // Canonical symlink containment check
                 $realAllowedRoot = is_dir($allowedPath) ? realpath($allowedPath) : false;
 
@@ -1163,8 +1250,9 @@ class Helper
         $filter = InputFilter::getInstance(
             ['iframe', 'audio', 'video', 'source', 'a', 'img'],
             ['src', 'href', 'type', 'controls', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'alt', 'class', 'style'],
-            1,
-            1
+            0,
+            0,
+            0
         );
 
         return $filter->clean($html, 'html');
@@ -1274,7 +1362,9 @@ class Helper
      */
     public static function sanitizeMegaMenuBadge($value): string
     {
-        return htmlspecialchars(trim(strip_tags((string) $value)), ENT_QUOTES, 'UTF-8');
+        $filter = InputFilter::getInstance();
+
+        return trim(strip_tags((string) $filter->clean((string) $value, 'STRING')));
     }
 
     /**

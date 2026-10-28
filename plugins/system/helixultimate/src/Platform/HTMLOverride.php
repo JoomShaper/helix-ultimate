@@ -92,13 +92,12 @@ final class HTMLOverride
 
 		$path = self::extractPath($path);
 
-		$version = JVERSION;
 		$extension = $path[0];
 
 		/** If the path is for a component- */
 		if (\strpos($extension, 'com_') === 0)
 		{
-			if ($version < 4)
+			if (\version_compare(JVERSION, '4.0.0', '<'))
 			{
 				\array_splice($path, 1, 0, ['views']);
 				\array_splice($path, 3, 0, ['tmpl']);
@@ -153,7 +152,7 @@ final class HTMLOverride
 		$staticHtmlPath = self::parsePath(self::$htmlPath);
 		$staticOverridePath = self::parsePath(self::$overridePath);
 
-		if (JVERSION < 5) {
+		if (\version_compare(JVERSION, '5.0.0', '<')) {
 			$staticOverridePath = self::parsePath(self::$overridePathLegacy);
 		}
 		

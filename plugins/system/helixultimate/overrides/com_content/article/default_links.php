@@ -11,6 +11,13 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 
+$isJoomla6 = version_compare(JVERSION, '6.0.0', '>=');
+
+if ($isJoomla6) {
+    /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+    $wa = $this->getDocument()->getWebAssetManager();
+}
+
 // Create shortcut
 $urls = json_decode($this->item->urls);
 
@@ -60,22 +67,37 @@ if ($urls && (!empty($urls->urla) || !empty($urls->urlb) || !empty($urls->urlc))
                             htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . '</a>';
                         break;
                     case 3:
-                        echo '<a href="' . htmlspecialchars($link, ENT_COMPAT, 'UTF-8') . '" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#linkModal">' .
-                            htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . ' </a>';
-                        echo HTMLHelper::_(
-                            'bootstrap.renderModal',
-                            'linkModal',
-                            [
-                                'url'    => $link,
-                                'title'  => $label,
-                                'height' => '100%',
-                                'width'  => '100%',
-                                'modalWidth'  => '500',
-                                'bodyHeight'  => '500',
-                                'footer' => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">'
-                                    . \Joomla\CMS\Language\Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>'
-                            ]
-                        );
+                        if ($isJoomla6) {
+                            $wa->useScript('joomla.dialog-autocreate');
+                            $popupOptions = [
+                                'textHeader'      => $label,
+                                'className'       => 'dialog-content-link',
+                                'width'           => '800px',
+                                'height'          => '500px',
+                                'preferredParent' => 'body',
+                            ];
+
+                            echo '<a href="' . htmlspecialchars($link, ENT_COMPAT, 'UTF-8') . '" rel="noopener noreferrer"'
+                                . ' data-joomla-dialog="' . htmlspecialchars(json_encode($popupOptions, JSON_UNESCAPED_SLASHES), ENT_COMPAT, 'UTF-8') . '">' .
+                                htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . ' </a>';
+                        } else {
+                            echo '<a href="' . htmlspecialchars($link, ENT_COMPAT, 'UTF-8') . '" rel="noopener noreferrer" data-bs-toggle="modal" data-bs-target="#linkModal">' .
+                                htmlspecialchars($label, ENT_COMPAT, 'UTF-8') . ' </a>';
+                            echo HTMLHelper::_(
+                                'bootstrap.renderModal',
+                                'linkModal',
+                                [
+                                    'url'         => $link,
+                                    'title'       => $label,
+                                    'height'      => '100%',
+                                    'width'       => '100%',
+                                    'modalWidth'  => '500',
+                                    'bodyHeight'  => '500',
+                                    'footer'      => '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-hidden="true">'
+                                        . \Joomla\CMS\Language\Text::_('JLIB_HTML_BEHAVIOR_CLOSE') . '</button>',
+                                ]
+                            );
+                        }
                         break;
 
                     default:

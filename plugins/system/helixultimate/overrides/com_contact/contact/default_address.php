@@ -28,12 +28,13 @@ $icon = $this->params->get('contact_icons') == 0;
         <div class="d-flex">
             <div class="me-2">
                 <?php if ($icon && !$this->params->get('marker_address')) : ?>
-                    <span class="icon-address" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('COM_CONTACT_ADDRESS'); ?></span>
-                <?php else : ?>
-                    <span class="<?php echo $this->params->get('marker_class'); ?>">
+                    <span class="icon-address" aria-hidden="true"></span>
+                <?php elseif ($icon && $this->params->get('marker_address')) : ?>
+                    <span class="jicons-image">
                         <?php echo $this->params->get('marker_address'); ?>
                     </span>
                 <?php endif; ?>
+                <span class="<?php echo $this->params->get('marker_class'); ?>"><?php echo Text::_('COM_CONTACT_ADDRESS'); ?>:</span>
             </div>
 
             <div>
@@ -74,12 +75,13 @@ $icon = $this->params->get('contact_icons') == 0;
         <div class="d-flex mt-2">
             <div class="me-2">
                 <?php if ($icon && !$this->params->get('marker_email')) : ?>
-                    <span class="icon-envelope" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('COM_CONTACT_EMAIL_LABEL'); ?></span>
-                <?php else : ?>
-                    <span class="<?php echo $this->params->get('marker_class'); ?>">
+                    <span class="icon-envelope" aria-hidden="true"></span>
+                <?php elseif ($icon && $this->params->get('marker_email')) : ?>
+                    <span class="jicons-icon">
                         <?php echo $this->params->get('marker_email'); ?>
                     </span>
                 <?php endif; ?>
+                <span class="<?php echo $this->params->get('marker_class'); ?>"><?php echo Text::_('COM_CONTACT_EMAIL_LABEL'); ?>:</span>
             </div>
             <div class="contact-emailto">
                 <?php echo $this->item->email_to; ?>
@@ -91,12 +93,13 @@ $icon = $this->params->get('contact_icons') == 0;
         <div class="d-flex mt-2">
             <div class="me-2">
                 <?php if ($icon && !$this->params->get('marker_telephone')) : ?>
-                    <span class="icon-phone" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('COM_CONTACT_TELEPHONE'); ?></span>
-                <?php else : ?>
-                    <span class="<?php echo $this->params->get('marker_class'); ?>">
+                    <span class="icon-phone" aria-hidden="true"></span>
+                <?php elseif ($icon && $this->params->get('marker_telephone')) : ?>
+                    <span class="jicons-image">
                         <?php echo $this->params->get('marker_telephone'); ?>
                     </span>
                 <?php endif; ?>
+                <span class="<?php echo $this->params->get('marker_class'); ?>"><?php echo Text::_('COM_CONTACT_TELEPHONE'); ?>:</span>
             </div>
             <div class="contact-telephone" itemprop="telephone">
                 <?php echo $this->item->telephone; ?>
@@ -108,14 +111,15 @@ $icon = $this->params->get('contact_icons') == 0;
         <div class="d-flex mt-2">
             <div class="me-2">
                 <?php if ($icon && !$this->params->get('marker_fax')) : ?>
-                    <span class="icon-fax" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('COM_CONTACT_FAX'); ?></span>
-                <?php else : ?>
-                    <span class="<?php echo $this->params->get('marker_class'); ?>">
+                    <span class="icon-fax" aria-hidden="true"></span>
+                <?php elseif ($icon && $this->params->get('marker_fax')) : ?>
+                    <span class="jicons-image">
                         <?php echo $this->params->get('marker_fax'); ?>
                     </span>
                 <?php endif; ?>
+                <span class="<?php echo $this->params->get('marker_class'); ?>"><?php echo Text::_('COM_CONTACT_FAX'); ?>:</span>
             </div>
-            <div class="contact-fax">
+            <div class="contact-fax" itemprop="faxNumber">
                 <?php echo $this->item->fax; ?>
             </div>
         </div>
@@ -125,14 +129,15 @@ $icon = $this->params->get('contact_icons') == 0;
         <div class="d-flex mt-2">
             <div class="me-2">
                 <?php if ($icon && !$this->params->get('marker_mobile')) : ?>
-                    <span class="icon-mobile" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('COM_CONTACT_MOBILE'); ?></span>
-                <?php else : ?>
-                    <span class="<?php echo $this->params->get('marker_class'); ?>">
+                    <span class="icon-mobile" aria-hidden="true"></span>
+                <?php elseif ($icon && $this->params->get('marker_mobile')) : ?>
+                    <span class="jicons-image">
                         <?php echo $this->params->get('marker_mobile'); ?>
                     </span>
                 <?php endif; ?>
+                <span class="<?php echo $this->params->get('marker_class'); ?>"><?php echo Text::_('COM_CONTACT_MOBILE'); ?>:</span>
             </div>
-            <div class="contact-mobile">
+            <div class="contact-mobile" itemprop="telephone">
                 <?php echo $this->item->mobile; ?>
 
             </div>
@@ -143,16 +148,17 @@ $icon = $this->params->get('contact_icons') == 0;
         <div class="d-flex mt-2">
             <div class="me-2">
                 <?php if ($icon && !$this->params->get('marker_webpage')) : ?>
-                    <span class="icon-globe" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('COM_CONTACT_WEBPAGE'); ?></span>
-                <?php else : ?>
-                    <span class="<?php echo $this->params->get('marker_class'); ?>">
+                    <span class="icon-globe" aria-hidden="true"></span>
+                <?php elseif ($icon && $this->params->get('marker_webpage')) : ?>
+                    <span class="jicons-image">
                         <?php echo $this->params->get('marker_webpage'); ?>
                     </span>
                 <?php endif; ?>
+                <span class="<?php echo $this->params->get('marker_class'); ?>"><?php echo Text::_('COM_CONTACT_WEBPAGE'); ?>:</span>
             </div>
             <div class="contact-webpage">
-                <a href="<?php echo $this->item->webpage; ?>" target="_blank" rel="noopener noreferrer">
-                    <?php echo PunycodeHelper::urlToUTF8($this->item->webpage); ?></a>
+                <a href="<?php echo htmlspecialchars($this->item->webpage, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" itemprop="url">
+                    <?php echo $this->escape(PunycodeHelper::urlToUTF8($this->item->webpage)); ?></a>
             </div>
         </div>
     <?php endif; ?>

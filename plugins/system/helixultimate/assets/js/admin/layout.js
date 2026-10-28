@@ -42,7 +42,7 @@ jQuery(function ($) {
 
 					if (originalIndex !== currentIndex) {
 						updateLayoutField();
-						Joomla.HelixToaster.success('Columns position changed!', 'Layout Settings');
+						Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_COLUMNS_MOVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS'));
 					}
 				},
 			})
@@ -68,7 +68,7 @@ jQuery(function ($) {
 					currentIndex = ui.item.index();
 					if (originalIndex !== currentIndex) {
 						updateLayoutField();
-						Joomla.HelixToaster.success('Rows position changed!', 'Layout Settings');
+						Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_ROWS_MOVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS'));
 					}
 				},
 			})
@@ -344,7 +344,7 @@ jQuery(function ($) {
 		}
 
 		updateLayoutField();
-		Joomla.HelixToaster.success('Changes applied successfully!', 'Layout Settings');
+		Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_CHANGES_APPLIED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS'));
 	});
 
 	// Cancel Modal
@@ -439,8 +439,8 @@ jQuery(function ($) {
 		jqueryUiLayout();
 
 		Joomla.HelixToaster.success(
-			'Grid pattern updated to <strong>' + newLayout.join('+') + '</strong>',
-			'Layout Settings',
+			Joomla.Text._('HELIX_ULTIMATE_TOAST_GRID_UPDATED').replace('%s', () => newLayout.join('+')),
+			Joomla.Text._('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS'),
 		);
 		updateLayoutField();
 	});
@@ -539,8 +539,8 @@ jQuery(function ($) {
 		jqueryUiLayout();
 
 		Joomla.HelixToaster.success(
-			'Grid pattern updated to <strong>' + newLayout.join('+') + '</strong>',
-			'Layout Settings',
+			Joomla.Text._('HELIX_ULTIMATE_TOAST_GRID_UPDATED').replace('%s', () => newLayout.join('+')),
+			Joomla.Text._('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS'),
 		);
 		updateLayoutField();
 
@@ -558,7 +558,7 @@ jQuery(function ($) {
 		$($rowClone).insertAfter($parent);
 
 		jqueryUiLayout();
-		Joomla.HelixToaster.success('New row added!', 'Layout Settings');
+		Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_ROW_ADDED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS'));
 		updateLayoutField();
 	});
 
@@ -571,7 +571,7 @@ jQuery(function ($) {
 				.closest('.hu-layout-section')
 				.slideUp(500, function () {
 					$(this).remove();
-					Joomla.HelixToaster.error('Row is removed!', 'Layout Settings');
+					Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_ROW_REMOVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_LAYOUT_SETTINGS'));
 					updateLayoutField();
 				});
 		}

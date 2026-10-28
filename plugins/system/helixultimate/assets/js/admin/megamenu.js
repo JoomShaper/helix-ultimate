@@ -629,7 +629,7 @@ var megaMenu = {
 			},
 			complete() {
 				$(document).closeModal();
-				Joomla.HelixToaster.success('Saved mega menu settings!', 'Success');
+				Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_MEGAMENU_SETTINGS_SAVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_SUCCESS'));
 			},
 		});
 	},

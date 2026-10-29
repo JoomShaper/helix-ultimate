@@ -1131,7 +1131,7 @@ class Helper
         foreach ($allowedRoots as $root) {
             $allowedPath = Path::clean(JPATH_ROOT . '/' . $root);
 
-            if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . '/') === 0) {
+            if ($fullPath === $allowedPath || strpos($fullPath, $allowedPath . DIRECTORY_SEPARATOR) === 0) {
                 // Canonical symlink containment check
                 $realAllowedRoot = is_dir($allowedPath) ? realpath($allowedPath) : false;
 

@@ -164,11 +164,11 @@ jQuery(function ($) {
 				fetchMenuItems(menuType);
 			},
 			error(err) {
-				Joomla.HelixToaster.error('Something went wrong!', 'Error');
+				Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_SOMETHING_WENT_WRONG'), Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
 			},
 			complete() {
 				rebuildMenu();
-				Joomla.HelixToaster.error('Menu item has been successfully removed!', 'Success');
+				Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_MENU_ITEM_REMOVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_SUCCESS'));
 			},
 		});
 	}
@@ -427,7 +427,7 @@ jQuery(function ($) {
 							const $errorAlert = $element.find('.alert-danger');
 
 							if ($errorAlert.length > 0) {
-								Joomla.HelixToaster.error($messageContainer.html(), 'Error');
+								Joomla.HelixToaster.error($messageContainer.html(), Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
 								showSpinner(false);
 								return;
 							}
@@ -437,17 +437,17 @@ jQuery(function ($) {
 								$(this).closeModal();
 
 								if (task === 'item.apply') {
-									Joomla.HelixToaster.success('Menu item has been successfully added!', 'Saved');
+									Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_MENU_ITEM_ADDED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_SAVED'));
 								} else if (task === 'item.save') {
-									Joomla.HelixToaster.success('Changes have been successfully saved!', 'Updated');
+									Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_CHANGES_SAVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_UPDATED'));
 								}
 							} else {
-								Joomla.HelixToaster.error(message, 'Error');
+								Joomla.HelixToaster.error(message, Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
 							}
 
 							showSpinner(false);
 						} catch (err) {
-							Joomla.HelixToaster.error('Something went wrong!', 'Error');
+							Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_SOMETHING_WENT_WRONG'), Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
 							showSpinner(false);
 						}
 					} else {

@@ -622,14 +622,20 @@ var megaMenu = {
 			data,
 			success(res) {
 				res = typeof res === 'string' && res.length > 0 ? JSON.parse(res) : false;
-				if (res.status) Joomla.reloadPreview();
+
+				if (res && res.status) {
+					Joomla.reloadPreview();
+					Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_MEGAMENU_SETTINGS_SAVED'), 'Success');
+				} else {
+					Joomla.HelixToaster.error(res && res.message ? res.message : Joomla.Text._('HELIX_ULTIMATE_MEGAMENU_SETTINGS_SAVE_FAILED'), 'Error');
+				}
 			},
 			error(err) {
-				alert('Something went wrong!');
+				Joomla.HelixToaster.error('Something went wrong!', 'Error');
 			},
 			complete() {
 				$(document).closeModal();
-				Joomla.HelixToaster.success('Saved mega menu settings!', 'Success');
+				Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_MEGAMENU_SETTINGS_SAVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_SUCCESS'));
 			},
 		});
 	},

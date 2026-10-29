@@ -6,6 +6,15 @@
  */
 
 jQuery(function ($) {
+	const getCsrfHeaders = () => {
+		const token = Joomla.getOptions('csrf.token') ||
+			Array.from(document.querySelectorAll('input[type="hidden"]')).find(
+				input => input.value === '1' && /^[a-f0-9]{32}$/i.test(input.name)
+			)?.name;
+
+		return token ? { 'X-CSRF-Token': token } : {};
+	};
+
 	// Media
 	$('.hu-media-picker').on('click', function (e) {
 		e.preventDefault();
@@ -36,6 +45,7 @@ jQuery(function ($) {
 
 		$.ajax({
 			type: 'POST',
+			headers: getCsrfHeaders(),
 			data: request,
 			beforeSend: function () {
 				$(self).find('.fa').removeClass('fa-picture-o').addClass('fa-spinner fa-spin');
@@ -73,6 +83,7 @@ jQuery(function ($) {
 
 		$.ajax({
 			type: 'POST',
+			headers: getCsrfHeaders(),
 			data: request,
 			beforeSend: function () {
 				$('.hu-media-selected').removeClass('hu-media-selected');
@@ -112,6 +123,7 @@ jQuery(function ($) {
 
 		$.ajax({
 			type: 'POST',
+			headers: getCsrfHeaders(),
 			data: request,
 			beforeSend: function () {
 				$('.hu-modal-inner').html(
@@ -247,6 +259,7 @@ jQuery(function ($) {
 
 			$.ajax({
 				type: 'POST',
+				headers: getCsrfHeaders(),
 				data: request,
 				success: function (response) {
 					var data = $.parseJSON(response);
@@ -285,6 +298,7 @@ jQuery(function ($) {
 
 			$.ajax({
 				type: 'POST',
+				headers: getCsrfHeaders(),
 				data: request,
 				success: function (response) {
 					var data = $.parseJSON(response);
@@ -312,6 +326,7 @@ jQuery(function ($) {
 
 		$.ajax({
 			type: 'POST',
+			headers: getCsrfHeaders(),
 			url:
 				'index.php?option=com_ajax&helix=ultimate&request=task&action=upload-media&format=json&helix_id=' +
 				helixUltimateStyleId,

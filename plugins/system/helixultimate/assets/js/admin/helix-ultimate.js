@@ -416,7 +416,7 @@ jQuery(function ($) {
             },
             error: function (err) {
                 console.error('error: Something went wrong!', err);
-                Joomla.HelixToaster.error('Error:' + err.message, 'Error');
+                Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR_MESSAGE').replace('%s', () => err.message), Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
             },
         });
     }
@@ -537,7 +537,7 @@ jQuery(function ($) {
                 },
                 complete: function () {
                     resetBySafepointValue();
-                    Joomla.HelixToaster.success('Successfully rolled back to the previous state!', 'Success');
+                    Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_ROLLBACK_SUCCESS'), Joomla.Text._('HELIX_ULTIMATE_TOAST_SUCCESS'));
                     $('.hu-loading-msg').hide();
                     $('.hu-done-msg').hide();
                     $('.action-reset-drafts').hide();
@@ -603,13 +603,13 @@ jQuery(function ($) {
                         let $previewFrame = document.getElementById('hu-template-preview');
                         $previewFrame.contentWindow.location.reload(true);
 
-                        Joomla.HelixToaster.success('Changes have been successfully saved!', 'Success');
+                        Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_CHANGES_SAVED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_SUCCESS'));
                         $('.hu-loading-msg').hide();
                         $('.hu-done-msg').hide();
                         $('.action-reset-drafts').hide();
                         showSaveLoader(false);
                     } else {
-                        Joomla.HelixToaster.error(data.message, 'Failed');
+                        Joomla.HelixToaster.error(data.message, Joomla.Text._('HELIX_ULTIMATE_TOAST_FAILED'));
                         $('.hu-loading-msg').hide();
                         $('.hu-done-msg').hide();
                         $('.action-reset-drafts').hide();
@@ -624,7 +624,7 @@ jQuery(function ($) {
                 },
                 error: function (err) {
                     console.error('error', err);
-                    Joomla.HelixToaster.error('Error: ' + err.message, 'Error');
+                    Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR_MESSAGE').replace('%s', () => err.message), Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
                     showSaveLoader(false);
                 },
             });
@@ -1062,10 +1062,10 @@ jQuery(function ($) {
                     }
                 },
                 complete() {
-                    Joomla.HelixToaster.success('Settings have been successfully imported!', 'Success');
+                    Joomla.HelixToaster.success(Joomla.Text._('HELIX_ULTIMATE_TOAST_SETTINGS_IMPORTED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_SUCCESS'));
                 },
                 error: function () {
-                    Joomla.HelixToaster.error('Something went wrong importing settings!', 'Error');
+                    Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_SETTINGS_IMPORT_FAILED'), Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
                 },
             });
             return false;

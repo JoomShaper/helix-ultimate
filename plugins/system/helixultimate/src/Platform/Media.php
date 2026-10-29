@@ -52,6 +52,7 @@ class Media
 
         if ($absolutePath === null || ! is_dir($absolutePath)) {
             $media['message'] = 'Invalid media path';
+            $media['output']  = $media['message'];
             die(json_encode($media));
         }
 
@@ -316,7 +317,9 @@ class Media
                     if (in_array($file_ext, $accepted_file_formats, true) && Helper::isValidImageContent($file['tmp_name'], $file_ext)) {
                         $name        = $file['name'];
                         $source_path = $file['tmp_name'];
-                        $folder      = ltrim(str_replace(JPATH_ROOT . '/', '', $uploadDir), '/');
+
+                        $rootPath = rtrim(str_replace('\\', '/', JPATH_ROOT), '/');
+                        $folder   = ltrim(substr(str_replace('\\', '/', $uploadDir), strlen($rootPath)), '/');
 
                         // Do no override existing file
                         $media_file = preg_replace('#\s+#', "-", File::makeSafe(basename(strtolower($name))));

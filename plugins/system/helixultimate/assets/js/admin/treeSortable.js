@@ -368,7 +368,7 @@ var treeSortable = {
 				 * level then shows error message for the users.
 				 */
 				if (aliasExists) {
-					Joomla.HelixToaster.error(`Can't set the same alias <strong>${ui.item.data('alias')}</strong> in the same menu level!`, 'Error');
+					Joomla.HelixToaster.error(Joomla.Text._('HELIX_ULTIMATE_TOAST_DUPLICATE_ALIAS').replace('%s', () => ui.item.data('alias')), Joomla.Text._('HELIX_ULTIMATE_TOAST_ERROR'));
 				}
 				/**
 				 * Place the children after the sorted item,

@@ -351,8 +351,11 @@ class Helper
              * then get the template ID.
              */
             $activeMenu = $app->getMenu()->getActive();
+            $previewStyle = $app->input->get('templateStyle', 0, 'INT');
 
-            if (! empty($activeMenu) && ! empty($activeMenu->template_style_id)) {
+            if ($previewStyle > 0 && self::isAuthorizedPreview((int) $previewStyle)) {
+                $templateId = $previewStyle;
+            } elseif (! empty($activeMenu) && ! empty($activeMenu->template_style_id)) {
                 $templateId = $activeMenu->template_style_id;
             }
         } else {

@@ -10,6 +10,7 @@ namespace HelixUltimate\Framework\System;
 defined('_JEXEC') or die();
 
 use Joomla\CMS\Cache\Cache;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 
 /**
@@ -115,6 +116,7 @@ class HelixCache
 		$options = [
 			'caching' 	=> true,
 			'cachebase' => $config->get('cache_path', JPATH_ROOT . '/cache'),
+			'language'  => ComponentHelper::getParams('com_languages')->get('administrator', 'en-GB'),
 			'lifetime' 	=> $lifetime
 		];
 

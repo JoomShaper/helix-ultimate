@@ -31,8 +31,8 @@ $missingItems = $builder->getMissingItems();
 
 if (!empty($missingItems) && isset($grid[0]) && isset($grid[0]->attr[0]))
 {
-    $items = array_merge($grid[0]->attr[0]->items, $missingItems);
-    $grid[0]->attr[0]->items = $items;
+    $items = is_array($grid[0]->attr[0]->items ?? null) ? $grid[0]->attr[0]->items : [];
+    $grid[0]->attr[0]->items = array_merge($items, $missingItems);
 }
 
 $rowLayout = new FileLayout('megaMenu.row', HELIX_LAYOUT_PATH);

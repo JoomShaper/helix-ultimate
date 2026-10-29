@@ -10,6 +10,7 @@ defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Settings;
 use Joomla\CMS\Language\Text;
+use Joomla\Component\Menus\Administrator\Model\MenutypesModel;
 
 /**
  * Text field.
@@ -125,20 +126,30 @@ class HelixultimateFieldMenuType
 
 	public static function getMenuTypes()
 	{
-		$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/menutypes.php';
-		$helperUrl = JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
-
-		if (!\class_exists('MenusModelMenutypes'))
+		
+		if (version_compare(JVERSION, '4.0.0', '<'))
 		{
-			require_once $classUrl;
+			$classUrl = JPATH_ADMINISTRATOR . '/components/com_menus/models/menutypes.php';
+			$helperUrl = JPATH_ADMINISTRATOR . '/components/com_menus/helpers/menus.php';
+
+			if (!\class_exists('MenusModelMenutypes'))
+			{
+				require_once $classUrl;
+			}
+			if (!\class_exists('MenusHelper'))
+			{
+				require_once $helperUrl;
+			}
+
+
+			$model = new \MenusModelMenutypes;
+		}
+		else
+		{
+			$model = new MenutypesModel;
 		}
 
-		if (!\class_exists('MenusHelper'))
-		{
-			require_once $helperUrl;
-		}
-
-		$model = new \MenusModelMenutypes;
+		
 
 		$types = $model->getTypeOptions();
 

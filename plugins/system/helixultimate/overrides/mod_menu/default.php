@@ -12,13 +12,22 @@ use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Registry\Registry;
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $app->getDocument()->getWebAssetManager();
-$wa->registerAndUseScript('mod_menu', 'mod_menu/menu.min.js', [], ['type' => 'module']);
+
+if (version_compare(JVERSION, '6.0.0', '>='))
+{
+	$wa->getRegistry()->addExtensionRegistryFile('mod_menu');
+	$wa->useScript('mod_menu.menu');
+}
+else
+{
+	$wa->registerAndUseScript('mod_menu', 'mod_menu/menu.min.js', [], ['type' => 'module']);
+}
 
 $id = '';
 
 if ($tagId = $params->get('tag_id', ''))
 {
-	$id = ' id="' . $tagId . '"';
+	$id = ' id="' . htmlspecialchars($tagId, ENT_QUOTES, 'UTF-8') . '"';
 }
 
 

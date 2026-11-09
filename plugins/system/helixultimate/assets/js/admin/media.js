@@ -402,22 +402,14 @@ jQuery(function ($) {
 		for (i = 0; i < files.length; i++) {
 			var file_ext = files[i].name.split('.').pop().toLowerCase();
 
-			if (file_ext === 'svg') {
-				alert(
-					Joomla.Text._(
-						'HELIX_ULTIMATE_MEDIA_SVG_NOT_SUPPORTED_FOR_UPLOAD',
-						'SVG is not supported for upload. Upload via Joomla Media, then select the file here.'
-					)
-				);
-				continue;
-			}
 
 			var allowed =
 				file_ext == 'png' ||
 				file_ext == 'jpg' ||
 				file_ext == 'jpeg' ||
 				file_ext == 'webp' ||
-				file_ext == 'gif';
+				file_ext == 'gif' ||
+				file_ext == 'svg';
 			if (allowed) {
 				var formdata = new FormData();
 				formdata.append('file', files[i]);

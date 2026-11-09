@@ -307,14 +307,28 @@ class Media
                     $error             = true;
                 }
 
-                // File formats (vector/icon types excluded to reduce stored XSS risk)
-                $accepted_file_formats = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                $accepted_file_formats = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
 
                 // Upload if no error found
                 if (! $error) {
                     $file_ext = strtolower(Helper::getExt($file['name']));
+                    $validContent = false;
 
-                    if (in_array($file_ext, $accepted_file_formats, true) && Helper::isValidImageContent($file['tmp_name'], $file_ext)) {
+                    if ($file_ext === 'svg') {
+                        // modify a real HTTP upload
+                        if (is_uploaded_file($file['tmp_name']) && filesize($file['tmp_name']) <= 2 * 1024 * 1024) {
+                            $source = file_get_contents($file['tmp_name']);
+                            $sanitized = $source === false ? null : Helper::sanitizeSvg($source);
+
+                            if ($sanitized !== null) {
+                                $validContent = file_put_contents($file['tmp_name'], $sanitized) === strlen($sanitized);
+                            }
+                        }
+                    } elseif (in_array($file_ext, $accepted_file_formats, true)) {
+                        $validContent = Helper::isValidImageContent($file['tmp_name'], $file_ext);
+                    }
+
+                    if ($validContent) {
                         $name        = $file['name'];
                         $source_path = $file['tmp_name'];
 

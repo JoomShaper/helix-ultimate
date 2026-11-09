@@ -1557,6 +1557,182 @@ class Helper
     }
 
     /**
+     * Rebuild an SVG using only static drawing elements and attributes.
+     *
+     * Safe presentation styles are converted to attributes. Animation, embedded
+     * documents, links and external resources are omitted.
+     * Returns null for invalid XML or when safe XML parsing is unavailable.
+     */
+    public static function sanitizeSvg(string $source): ?string
+    {
+        if (!class_exists('DOMDocument') || $source === '' || strlen($source) > 2 * 1024 * 1024) {
+            return null;
+        }
+
+        // Require UTF-8 and reject DTDs before parsing;
+        if (preg_match('//u', $source) !== 1 || strpos($source, "\0") !== false
+            || preg_match('/<!DOCTYPE|<!ENTITY/i', $source)) {
+            return null;
+        }
+
+        $previousErrors = libxml_use_internal_errors(true);
+
+        try {
+            $document = new \DOMDocument();
+
+            if (!$document->loadXML($source, LIBXML_NONET) || $document->doctype !== null) {
+                return null;
+            }
+
+            $root = $document->documentElement;
+            $namespace = 'http://www.w3.org/2000/svg';
+
+            if (!$root || $root->localName !== 'svg' || $root->namespaceURI !== $namespace) {
+                return null;
+            }
+
+            $elements = array_flip([
+                'svg', 'g', 'defs', 'path', 'rect', 'circle', 'ellipse', 'line',
+                'polyline', 'polygon', 'text', 'tspan', 'title', 'desc',
+                'linearGradient', 'radialGradient', 'stop', 'clipPath', 'mask',
+            ]);
+            $attributes = array_flip([
+                'id', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'dx', 'dy', 'width', 'height',
+                'viewBox', 'preserveAspectRatio', 'd', 'points', 'cx', 'cy', 'r', 'rx', 'ry',
+                'transform', 'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width',
+                'stroke-opacity', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit',
+                'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'clip-path', 'clip-rule',
+                'mask', 'maskUnits', 'maskContentUnits', 'clipPathUnits', 'gradientUnits',
+                'gradientTransform', 'spreadMethod', 'offset', 'stop-color', 'stop-opacity',
+                'fx', 'fy', 'fr', 'color', 'font-family', 'font-size', 'font-weight',
+                'font-style', 'text-anchor', 'dominant-baseline', 'letter-spacing',
+                'textLength', 'lengthAdjust', 'visibility', 'display',
+            ]);
+            $paintAttributes = ['fill', 'stroke', 'clip-path', 'mask', 'color', 'stop-color'];
+            $presentation = array_flip([
+                'fill', 'fill-opacity', 'fill-rule', 'stroke', 'stroke-width',
+                'stroke-opacity', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit',
+                'stroke-dasharray', 'stroke-dashoffset', 'opacity', 'clip-path', 'clip-rule',
+                'mask', 'stop-color', 'stop-opacity', 'color', 'font-family', 'font-size',
+                'font-weight', 'font-style', 'text-anchor', 'dominant-baseline',
+                'letter-spacing', 'visibility', 'display',
+            ]);
+            $parseDeclarations = static function (string $css) use ($presentation): array {
+                $values = [];
+
+                foreach (explode(';', $css) as $declaration) {
+                    $parts = explode(':', $declaration, 2);
+                    $property = strtolower(trim($parts[0]));
+
+                    if (count($parts) === 2 && isset($presentation[$property])) {
+                        $values[$property] = trim($parts[1]);
+                    }
+                }
+
+                return $values;
+            };
+            // Support simple SVG export selectors only.
+            $rules = [];
+
+            foreach ($document->getElementsByTagNameNS($namespace, 'style') as $style) {
+                $css = preg_replace('#/\*.*?\*/#s', '', $style->textContent);
+                preg_match_all('/([^{}]+)\{([^{}]*)\}/', $css, $blocks, PREG_SET_ORDER);
+
+                foreach ($blocks as $block) {
+                    foreach (explode(',', $block[1]) as $selector) {
+                        $selector = trim($selector);
+
+                        if (preg_match('/\A([a-zA-Z][a-zA-Z0-9]*)?([.#][a-zA-Z_][a-zA-Z0-9_-]*)?\z/D', $selector, $match)
+                            && $selector !== '') {
+                            $qualifier = $match[2] ?? '';
+                            $rules[] = [
+                                'tag' => $match[1], 'qualifier' => $qualifier,
+                                'specificity' => ($qualifier === '' ? 0 : ($qualifier[0] === '#' ? 100 : 10)) + ($match[1] === '' ? 0 : 1),
+                                'values' => $parseDeclarations($block[2]),
+                            ];
+                        }
+                    }
+                }
+            }
+
+            // PHP's stable sort preserves source order for equal specificity.
+            usort($rules, static function (array $a, array $b): int {
+                return $a['specificity'] <=> $b['specificity'];
+            });
+            $clean = new \DOMDocument('1.0', 'UTF-8');
+            $copy = function (\DOMElement $element, \DOMNode $parent) use (&$copy, $clean, $namespace, $elements, $attributes, $paintAttributes, $rules, $parseDeclarations): void {
+                if ($element->namespaceURI !== $namespace || !isset($elements[$element->localName])) {
+                    return;
+                }
+
+                $node = $clean->createElementNS($namespace, $element->localName);
+                $parent->appendChild($node);
+                $values = [];
+
+                foreach ($element->attributes as $attribute) {
+                    if ($attribute->namespaceURI !== null || !isset($attributes[$attribute->name])) {
+                        continue;
+                    }
+
+                    $values[$attribute->name] = trim($attribute->value);
+                }
+
+                foreach ($rules as $rule) {
+                    if ($rule['tag'] !== '' && $rule['tag'] !== $element->localName) {
+                        continue;
+                    }
+
+                    $qualifier = $rule['qualifier'];
+
+                    if ($qualifier !== '') {
+                        $identifier = substr($qualifier, 1);
+
+                        if ($qualifier[0] === '#' && $element->getAttribute('id') !== $identifier) {
+                            continue;
+                        }
+
+                        if ($qualifier[0] === '.' && !in_array($identifier, preg_split('/\s+/', trim($element->getAttribute('class'))), true)) {
+                            continue;
+                        }
+                    }
+
+                    $values = array_replace($values, $rule['values']);
+                }
+
+                $values = array_replace($values, $parseDeclarations($element->getAttribute('style')));
+
+                foreach ($values as $name => $value) {
+
+                    // Paint accepts plain colors/keywords or a single local fragment URL.
+                    // No CSS escapes, comments, schemes or external URL values survive.
+                    if (in_array($name, $paintAttributes, true)
+                        && !preg_match('/\A(?:[a-zA-Z]+|#[a-fA-F0-9]{3,8}|(?:rgb|rgba|hsl|hsla)\([0-9.,%+\s-]+\)|url\(#[a-zA-Z_][a-zA-Z0-9_.-]*\))\z/D', $value)) {
+                        continue;
+                    }
+
+                    $node->setAttribute($name, $value);
+                }
+
+                foreach ($element->childNodes as $child) {
+                    if ($child instanceof \DOMElement) {
+                        $copy($child, $node);
+                    } elseif (($child instanceof \DOMText || $child instanceof \DOMCdataSection)
+                        && in_array($element->localName, ['text', 'tspan', 'title', 'desc'], true)) {
+                        $node->appendChild($clean->createTextNode($child->nodeValue));
+                    }
+                }
+            };
+            $copy($root, $clean);
+            $result = $clean->saveXML($clean->documentElement);
+
+            return $result === false ? null : $result;
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors($previousErrors);
+        }
+    }
+
+    /**
      * Verify whether an uploaded file is a genuine and permitted raster image.
      *
      * @param   string  $filePath   Absolute path to the temporary or stored file.

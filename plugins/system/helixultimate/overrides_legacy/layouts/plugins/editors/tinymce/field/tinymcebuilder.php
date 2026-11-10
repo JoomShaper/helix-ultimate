@@ -58,7 +58,7 @@ extract($displayData);
 HTMLHelper::_('behavior.core');
 
 $helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
-Factory::getDocument()->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
+Factory::getDocument()->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js', ['version' => 'auto']);
 
 HTMLHelper::_('stylesheet', 'media/vendor/tinymce/skins/lightgray/skin.min.css', array('version' => 'auto', 'relative' => false));
 HTMLHelper::_('stylesheet', 'editors/tinymce/tinymce-builder.css', array('version' => 'auto', 'relative' => true));

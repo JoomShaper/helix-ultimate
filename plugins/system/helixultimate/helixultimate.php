@@ -137,7 +137,6 @@ class PlgSystemHelixultimate extends CMSPlugin
     	// For menu item form
     	if ($form->getName() === 'com_menus.item') {
     	    HTMLHelper::_('jquery.framework');
-    	    $doc->addScript($plgPath . '/assets/js/admin/jquery-ui.min.js', ['relative' => false, 'version' => 'auto']);
     	    $doc->addStyleSheet($plgPath . '/assets/css/admin/modal.css', ['relative' => false, 'version' => 'auto']);
     	    $doc->addScript($plgPath . '/assets/js/admin/modal.js', ['relative' => false, 'version' => 'auto']);
     	    $form->loadFile('megamenu', false);

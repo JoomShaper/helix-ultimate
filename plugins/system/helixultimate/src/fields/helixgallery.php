@@ -43,7 +43,7 @@ class JFormFieldHelixgallery extends FormField
 
         HTMLHelper::_('jquery.framework');
         $helix_plg_url = Uri::root(true) . '/plugins/system/helixultimate';
-        $doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js');
+        $doc->addScript($helix_plg_url . '/assets/js/admin/jquery-ui.min.js', ['version' => 'auto']);
 
         $values = json_decode($this->value ?? "");
 

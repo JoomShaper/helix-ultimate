@@ -118,7 +118,7 @@ use Joomla\CMS\WebAsset\WebAssetManager;
         /** @var WebAssetManager $wa */
         $wa = $app->getDocument()->getWebAssetManager();
         $prettyPrint = JDEBUG ? JSON_PRETTY_PRINT : 0;
-        $wa->addInline('script', json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | $prettyPrint), [], ['type' => 'application/ld+json']);
+        $wa->addInline('script', json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | $prettyPrint), [], ['type' => 'application/ld+json']);
     }
     ?>
 </nav>

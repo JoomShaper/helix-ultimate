@@ -119,12 +119,16 @@ Text::script('JHIDEPASSWORD');
 
         <?php $usersConfig = ComponentHelper::getParams('com_users'); ?>
         <div class="mod-login__options  list-group">
-            <a class="mod-login__reset list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=reset'); ?>">
-                <?php echo Text::_('MOD_LOGIN_FORGOT_YOUR_PASSWORD'); ?>
-            </a>
-            <a class="mod-login__remind list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=remind'); ?>">
-                <?php echo Text::_('MOD_LOGIN_FORGOT_YOUR_USERNAME'); ?>
-            </a>
+            <?php if ($params->get('showPasswordReset', 1)) : ?>
+                <a class="mod-login__reset list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=reset'); ?>">
+                    <?php echo Text::_('MOD_LOGIN_FORGOT_YOUR_PASSWORD'); ?>
+                </a>
+            <?php endif; ?>
+            <?php if ($params->get('showUsernameReminder', 1)) : ?>
+                <a class="mod-login__remind list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=remind'); ?>">
+                    <?php echo Text::_('MOD_LOGIN_FORGOT_YOUR_USERNAME'); ?>
+                </a>
+            <?php endif; ?>
             <?php if ($usersConfig->get('allowUserRegistration')) : ?>
                 <a class="mod-login__register list-group-item" href="<?php echo Route::_('index.php?option=com_users&view=registration'); ?>">
                     <?php echo Text::_('MOD_LOGIN_REGISTER'); ?>	               

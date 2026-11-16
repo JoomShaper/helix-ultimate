@@ -1,6 +1,6 @@
 // Global CSS Variables
 :root {
-  --header_height: $header_height;
+  --header_height: #{$header_height};
 }
 
 body {
@@ -33,7 +33,7 @@ body {
       margin-left: -24px;
       width: 48px;
       height: 48px;
-      line-break: 48px;
+      line-height: 48px;
       text-align: center;
       color: #007bff;
       -webkit-animation: fa-spin 2s infinite linear;
@@ -45,13 +45,13 @@ body {
 
 a {
   transition: color 400ms, background-color 400ms;
-}
 
-a,
-a:hover,
-a:focus,
-a:active {
-  text-decoration: none;
+  &,
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
 }
 
 label {
@@ -69,13 +69,9 @@ img {
 }
 
 //Bootstrap 5 customize
-.row {
-  --bs-gutter-x: 1.875rem;
-}
-
+.row,
 .container {
-  padding-left: 15px;
-  padding-right: 15px;
+  --bs-gutter-x: 1.875rem;
 }
 
 .element-invisible {
@@ -269,7 +265,7 @@ div.mod-languages {
 
 // Header
 #sp-header {
-  height: $header_height;
+  height: var(--header_height);
   width: 100%;
   position: relative;
   z-index: 99;
@@ -473,7 +469,7 @@ div.mod-languages {
   }
 
   .logo {
-    height: $header_height;
+    height: var(--header_height);
     display: inline-flex;
     margin: 0;
     align-items: center;
@@ -578,7 +574,7 @@ div.mod-languages {
     border-bottom: 1px solid #e5e5e5;
 
     >.row {
-      min-height: $header_height;
+      min-height: var(--header_height);
     }
   }
 
@@ -675,7 +671,7 @@ body.modal-menu-active {
 #modal-menu {
   background: #f9f9f9;
   position: fixed !important;
-  top: $header_height;
+  top: var(--header_height);
   left: 0;
   right: 0;
   transition: 0.5s;
@@ -1477,8 +1473,6 @@ body.view-article.remove-container {
 }
 
 .article-info {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
@@ -1945,8 +1939,8 @@ html.coming-soon {
     width: 100%;
     height: 100%;
     min-height: 100%;
-    display: -ms-flexbox;
-    display: -webkit-box;
+
+
     display: flex;
     -ms-flex-align: center;
     -ms-flex-pack: center;
@@ -2014,8 +2008,8 @@ html.error-page {
   body {
     width: 100%;
     height: 100%;
-    display: -ms-flexbox;
-    display: -webkit-box;
+
+
     display: flex;
     -ms-flex-align: center;
     -ms-flex-pack: center;

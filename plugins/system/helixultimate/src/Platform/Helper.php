@@ -1246,13 +1246,49 @@ class Helper
      */
     public static function sanitizeEmbed(string $html): string
     {
-        if ($html === '') {
+        if ($html === '' || !class_exists('DOMDocument')) {
             return '';
+        }
+
+        $attributes = [
+            'src', 'href', 'type', 'controls', 'width', 'height', 'allow',
+            'allowfullscreen', 'frameborder', 'alt', 'class', 'style', 'title',
+            'autoplay', 'muted', 'loop', 'playsinline', 'poster',
+        ];
+        $booleanAttributes = ['controls', 'allowfullscreen', 'autoplay', 'muted', 'loop', 'playsinline'];
+        $previousErrors = libxml_use_internal_errors(true);
+
+        try {
+            $document = new \DOMDocument('1.0', 'UTF-8');
+
+            if (!$document->loadHTML('<?xml encoding="UTF-8"><html><body>' . $html . '</body></html>', LIBXML_NONET)) {
+                return '';
+            }
+
+            foreach ($document->getElementsByTagName('*') as $element) {
+                foreach ($booleanAttributes as $name) {
+                    if ($element->hasAttribute($name)) {
+                        $element->setAttribute($name, $name);
+                    }
+                }
+            }
+
+            $body = $document->getElementsByTagName('body')->item(0);
+            $html = '';
+
+            if ($body !== null) {
+                foreach ($body->childNodes as $node) {
+                    $html .= $document->saveHTML($node);
+                }
+            }
+        } finally {
+            libxml_clear_errors();
+            libxml_use_internal_errors($previousErrors);
         }
 
         $filter = InputFilter::getInstance(
             ['iframe', 'audio', 'video', 'source', 'a', 'img'],
-            ['src', 'href', 'type', 'controls', 'width', 'height', 'allow', 'allowfullscreen', 'frameborder', 'alt', 'class', 'style'],
+            $attributes,
             0,
             0,
             0

@@ -9,29 +9,56 @@
 defined('_JEXEC') or die();
 
 use HelixUltimate\Framework\Platform\Helper;
+use Joomla\CMS\Event\Content\AfterDisplayEvent;
+use Joomla\CMS\Event\Content\AfterTitleEvent;
+use Joomla\CMS\Event\Content\BeforeDisplayEvent;
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\FileLayout;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\Event\DispatcherInterface;
 
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers');
 
-$app = Factory::getApplication();
-
 // Content events
 $this->category->text = $this->category->description;
-$app->triggerEvent('onContentPrepare', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
-$this->category->description = $this->category->text;
+if (class_exists(ContentPrepareEvent::class)) {
+    $dispatcher = Factory::getContainer()->get(DispatcherInterface::class);
+    $contentEventArguments = [
+        'context' => $this->category->extension . '.categories',
+        'subject' => $this->category,
+        'params'  => $this->params,
+        'page'    => 0,
+    ];
 
-$results = $app->triggerEvent('onContentAfterTitle', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
-$afterDisplayTitle = trim(implode("\n", $results));
+    $dispatcher->dispatch('onContentPrepare', new ContentPrepareEvent('onContentPrepare', $contentEventArguments));
+    $this->category->description = $this->category->text;
 
-$results = $app->triggerEvent('onContentBeforeDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
-$beforeDisplayContent = trim(implode("\n", $results));
+    $results = $dispatcher->dispatch('onContentAfterTitle', new AfterTitleEvent('onContentAfterTitle', $contentEventArguments))->getArgument('result', []);
+    $afterDisplayTitle = trim(implode("\n", $results));
 
-$results = $app->triggerEvent('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
-$afterDisplayContent = trim(implode("\n", $results));
+    $results = $dispatcher->dispatch('onContentBeforeDisplay', new BeforeDisplayEvent('onContentBeforeDisplay', $contentEventArguments))->getArgument('result', []);
+    $beforeDisplayContent = trim(implode("\n", $results));
+
+    $results = $dispatcher->dispatch('onContentAfterDisplay', new AfterDisplayEvent('onContentAfterDisplay', $contentEventArguments))->getArgument('result', []);
+    $afterDisplayContent = trim(implode("\n", $results));
+} else {
+    // Joomla 4 does not provide the typed content events.
+    $app = Factory::getApplication();
+    $app->triggerEvent('onContentPrepare', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+    $this->category->description = $this->category->text;
+
+    $results = $app->triggerEvent('onContentAfterTitle', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+    $afterDisplayTitle = trim(implode("\n", $results));
+
+    $results = $app->triggerEvent('onContentBeforeDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+    $beforeDisplayContent = trim(implode("\n", $results));
+
+    $results = $app->triggerEvent('onContentAfterDisplay', array($this->category->extension . '.categories', &$this->category, &$this->params, 0));
+    $afterDisplayContent = trim(implode("\n", $results));
+}
 
 // Columns + Helix blog list type
 $columns = !empty((int) $this->params->get('num_columns')) ? (int) $this->params->get('num_columns') : 3;
@@ -188,7 +215,9 @@ $htag = $this->params->get('show_page_heading') ? 'h2' : 'h1';
 		</div>
 	<?php endif; ?>
 
-    <?php if ($this->maxLevel != 0 && !empty($this->children[$this->category->id])) : ?>
+    <?php if ($this->maxLevel != 0 && (method_exists($this->category, 'hasVisibleChildren')
+        ? $this->category->hasVisibleChildren($this->getCurrentUser()->getAuthorisedViewLevels(), (bool) $this->params->get('show_empty_categories', 0))
+        : !empty($this->children[$this->category->id]))) : ?>
         <div class="com-content-category-blog__children cat-children">
             <?php if ($this->params->get('show_category_heading_title_text', 1) == 1) : ?>
                 <h3> <?php echo Text::_('JGLOBAL_SUBCATEGORIES'); ?> </h3>

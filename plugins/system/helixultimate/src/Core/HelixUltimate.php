@@ -751,25 +751,24 @@ class HelixUltimate
 	 */
 	private function get_current_row($row)
 	{
-		// Absence span
-		$inactive_col   = 0;
-		$has_component  = false;
+		$inactive_columns = array_fill_keys(['xs', 'sm', 'md', 'lg', 'xl', 'xxl'], 0);
+		$has_inactive_columns = false;
+		$has_component = false;
 
-		foreach ($row->attr as $key => &$column)
+		foreach ($row->attr as $key => $column)
 		{
 			$column->settings->disable_modules = isset($column->settings->name) ? $this->disable_article_page_modules($column->settings->name) : false;
 
 			if (!$column->settings->column_type)
 			{
-				if (!$this->count_modules($column->settings->name))
+				if (!$this->count_modules($column->settings->name) || $column->settings->disable_modules)
 				{
-					$inactive_col += $column->settings->grid_size;
-					unset($row->attr[$key]);
-				}
+					foreach ($this->get_column_grid_sizes($column->settings) as $breakpoint => $width)
+					{
+						$inactive_columns[$breakpoint] += $width;
+					}
 
-				if ($column->settings->disable_modules && $this->count_modules($column->settings->name))
-				{
-					$inactive_col += $column->settings->grid_size;
+					$has_inactive_columns = true;
 					unset($row->attr[$key]);
 				}
 			}
@@ -780,67 +779,67 @@ class HelixUltimate
 			}
 		}
 
-		foreach ($row->attr as &$column)
+		$row_columns = $row->attr;
+		$last_column = end($row_columns);
+
+		foreach ($row->attr as $column)
 		{
 			$options = $column->settings;
-			$col_grid_size = $options->grid_size;
-			$className = '';
+			$absorb = $has_inactive_columns && ($has_component ? !empty($options->column_type) : $column === $last_column);
+			$classes = [];
+			$previous_width = 12;
 
-			if (!$has_component)
+			foreach ($this->get_column_grid_sizes($options) as $breakpoint => $width)
 			{
-				$rowAttr = $row->attr;
-				if (end($rowAttr) === $column)
+				if ($absorb)
 				{
-					$col_grid_size += $inactive_col;
+					$width = count($row->attr) === 1 ? 12 : min(12, $width + $inactive_columns[$breakpoint]);
 				}
-			}
-			else
-			{
-				if (!empty($options->column_type))
+
+				if ($breakpoint === 'lg' || !empty($options->{$breakpoint . '_col'}) || $width !== $previous_width)
 				{
-					$col_grid_size += $inactive_col;
+					$prefix = $breakpoint === 'xs' ? 'col-' : 'col-' . $breakpoint . '-';
+					$classes[] = $prefix . $width;
 				}
+
+				$previous_width = $width;
 			}
 
-			if (isset($options->lg_col) && $options->lg_col)
-			{
-				$className = $className . ' col-lg-' . $options->lg_col;
-			}
-			else
-			{
-				$className = 'col-lg-' . $col_grid_size;
-			}
-
-			if (isset($options->xxl_col) && $options->xxl_col)
-			{
-				$className = $className . ' col-xxl-' . $options->xxl_col;
-			}
-
-			if (isset($options->xl_col) && $options->xl_col)
-			{
-				$className = $className . ' col-xl-' . $options->xl_col;
-			}
-
-			if (isset($options->md_col) && $options->md_col)
-			{
-				$className = 'col-md-' . $options->md_col . ' ' . $className;
-			}
-
-			if (isset($options->sm_col) && $options->sm_col)
-			{
-				$className = 'col-sm-' . $options->sm_col . ' ' . $className;
-			}
-
-			if (isset($options->xs_col) && $options->xs_col)
-			{
-				$className = 'col-' . $options->xs_col . ' ' . $className;
-			}
-
-			$device_class = $this->get_device_class($options);
-			$column->settings->className = $className . ' ' . $device_class;
+			$column->settings->className = implode(' ', $classes) . ' ' . $this->get_device_class($options);
 		}
 
 		return $row;
+	}
+
+	/**
+	 * Resolve Bootstrap grid widths before empty columns are removed.
+	 * Below lg, columns default to full width. At lg, the base grid takes over;
+	 * other inherited breakpoints retain the preceding breakpoint's width.
+	 *
+	 * @param   object  $options  Column settings.
+	 *
+	 * @return  array  Effective widths keyed by breakpoint.
+	 */
+	private function get_column_grid_sizes($options)
+	{
+		$widths = [];
+		$width = 12;
+
+		foreach (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'] as $breakpoint)
+		{
+			if (!empty($options->{$breakpoint . '_col'}))
+			{
+				$width = (int) $options->{$breakpoint . '_col'};
+			}
+			elseif ($breakpoint === 'lg')
+			{
+				$width = (int) $options->grid_size;
+			}
+
+			$widths[$breakpoint] = $width;
+		}
+
+		return $widths;
 	}
 
 	/**
